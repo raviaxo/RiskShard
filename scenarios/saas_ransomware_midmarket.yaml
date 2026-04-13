@@ -1,0 +1,27 @@
+id: SR-2026-001
+name: Ransomware Encryption of Production Payroll
+industry: SaaS
+org_size: 1000-5000_employees
+threat_actor: Cyber-Criminal_Syndicate
+asset: Primary_Database_Cluster
+
+# FAIR Quantitative Parameters
+# Calculation: $ALE = ARO \times SLE$
+loss_event_frequency:
+  min: 0.05
+  max: 0.25
+  mode: 0.12
+  confidence: 0.8
+
+primary_loss_magnitude:
+  currency: USD
+  response_costs: { min: 50000, max: 250000, mode: 120000 }
+  legal_fines: { min: 0, max: 1000000, mode: 250000 }
+  replacement_costs: { min: 20000, max: 100000, mode: 45000 }
+
+secondary_loss_magnitude:
+  reputational_churn_percent: { min: 2, max: 15, mode: 5 }
+
+sources:
+  - https://www.verizon.com/business/resources/reports/dbir/
+  - https://www.cisa.gov/news-events/cybersecurity-advisories/
