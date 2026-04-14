@@ -7,7 +7,7 @@ Most GRC data is trapped in expensive, private PDF reports. We are open-sourcing
 the **Loss Event** parameters so any GRC professional can run a professional math model.
 
 ### 🛠️ How to Use
-1. **Clone:** `git clone https://github.com/your-username/OpenRiskData.git`
+1. **Clone:** `git clone https://github.com/your-username/RiskShard.git`
 2. **Explore:** Check `/scenarios` for your industry-specific YAML shards.
 3. **Automate:** Point your **OpenClaw** or **NemoClaw** agents to this repo to 
    ingest real-world benchmarks for your internal Risk Register.
