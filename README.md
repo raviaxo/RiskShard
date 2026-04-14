@@ -1,4 +1,4 @@
-# 🛡️ OpenRiskData
+# 🛡️ RiskShard
 > **The Global GRC Intelligence Base.** Stop guessing your "High/Medium/Low" heatmaps. Use community-driven, 
 actuarial-style data to drive your FAIR risk assessments.
 
