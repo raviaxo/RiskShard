@@ -1,6 +1,16 @@
-# This is a Risk Shard - The LEGO brick of risk
-title: "SaaS Ransomware Attack"
-description: "A scenario where a critical SaaS provider is locked by ransomware."
-min: 25000
-likely: 80000
-max: 450000
+metadata:
+  name: "SaaS Ransomware Attack"
+  version: "2.0"
+
+# Magnitude of a single event
+impact:
+  min: 150000
+  likely: 450000
+  max: 1200000
+
+# Probability of occurrence per year
+# 0.1 = 1 in 10 years | 1.0 = once a year
+frequency:
+  min: 0.05
+  likely: 0.2
+  max: 0.5

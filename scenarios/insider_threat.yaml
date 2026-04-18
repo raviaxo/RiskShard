@@ -1,0 +1,11 @@
+metadata:
+  name: "Insider Data Exfiltration"
+  version: "1.0"
+impact:
+  min: 50000
+  likely: 200000
+  max: 1500000
+frequency:
+  min: 0.1
+  likely: 0.5
+  max: 2.0
