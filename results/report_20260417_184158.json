@@ -1,0 +1,22 @@
+{
+    "timestamp": "2026-04-17T18:41:58.412350",
+    "trials": 10000,
+    "distribution": "pert",
+    "shards": {
+        "SaaS Ransomware Attack": {
+            "avg_ale": 117852.86224461449
+        },
+        "SaaS Ransomware Midmarket": {
+            "avg_ale": 67547.85432620489
+        },
+        "Insider Data Exfiltration": {
+            "avg_ale": 263609.3230753389
+        }
+    },
+    "aggregate": {
+        "mean": 449010.0396461583,
+        "p50": 394700.292300649,
+        "p95": 891945.9595282235,
+        "p99": 1199079.9220151268
+    }
+}

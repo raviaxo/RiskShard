@@ -1,11 +1,14 @@
-# RiskShard Manifest
-**Current Phase:** 3.1 (Portfolio & Hardening)
-**Last Sync:** 2026-04-17
+# RiskShard Manifest (Transition State)
+**Version:** 3.2 (The Export Update)
+**Status:** Operational & Synced
 
-## Technical State
-- `scripts/fair_calc.py`: v3.1 Engine (Portfolio-aware, Schema-validated).
-- `schemas/shard_schema.json`: Active and enforcing YAML structure.
-- `scenarios/`: Contains 3 active shards (Ransomware, Insider Threat, Midmarket).
+## Current Engineering Truth
+- **Engine:** `fair_calc.py` supports ALE, PERT, Portfolio Aggregation, and JSON Export.
+- **Data:** Scenarios are validated against `schemas/shard_schema.json`.
+- **Logic:** $ALE = \text{Simulated Frequency} \times \text{Simulated Impact}$ (Monte Carlo).
 
-## Immediate Command
-- `python scripts/fair_calc.py scenarios/`
+## Resume Command
+- `python scripts/fair_calc.py scenarios/ --export`
+
+## Next Session Goal
+- Implement Phase 4: Data libraries for DBIR and Cyentia auto-ingestion.
