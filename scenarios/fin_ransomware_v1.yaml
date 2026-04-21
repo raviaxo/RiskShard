@@ -1,0 +1,12 @@
+metadata:
+  name: Finance Ransomware Shard
+  version: '1.0'
+  source: DBIR 2025 / IRIS 2024
+frequency:
+  min: 0.075
+  likely: 0.15
+  max: 0.3
+impact:
+  min: 140000.0
+  likely: 1400000
+  max: 50000000

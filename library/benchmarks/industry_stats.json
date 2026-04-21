@@ -1,0 +1,18 @@
+{
+  "finance": {
+    "ransomware": {
+      "freq_likely": 0.15,
+      "impact_median": 1400000,
+      "impact_p95": 50000000,
+      "source": "DBIR 2025 (Fig 42) / Cyentia IRIS 2024"
+    }
+  },
+  "saas": {
+    "data_breach": {
+      "freq_likely": 0.22,
+      "impact_median": 850000,
+      "impact_p95": 15000000,
+      "source": "DBIR 2025 (Cloud Assets) / Cyentia IRIS 2024"
+    }
+  }
+}
