@@ -1,0 +1,12 @@
+metadata:
+  name: Ransomware Attack
+
+frequency:
+  min: 0.1
+  likely: 0.3
+  max: 0.7
+
+impact:
+  min: 50000
+  likely: 150000
+  max: 500000

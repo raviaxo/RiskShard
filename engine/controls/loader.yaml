@@ -1,0 +1,36 @@
+import yaml
+from typing import List
+
+from engine.controls.library import (
+    FrequencyReduction,
+    ImpactReduction
+)
+from engine.controls.base import Control
+
+
+CONTROL_MAP = {
+    "frequency_reduction": FrequencyReduction,
+    "impact_reduction": ImpactReduction,
+}
+
+
+def load_controls(path: str) -> List[Control]:
+    with open(path) as f:
+        data = yaml.safe_load(f)
+
+    controls = []
+
+    for c in data.get("controls", []):
+        control_type = c.get("type")
+
+        if control_type not in CONTROL_MAP:
+            raise ValueError(f"Unknown control type: {control_type}")
+
+        cls = CONTROL_MAP[control_type]
+
+        # remove "type" and pass rest as kwargs
+        params = {k: v for k, v in c.items() if k != "type"}
+
+        controls.append(cls(**params))
+
+    return controls

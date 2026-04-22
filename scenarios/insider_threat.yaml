@@ -1,11 +1,12 @@
 metadata:
-  name: "Insider Data Exfiltration"
-  version: "1.0"
-impact:
-  min: 50000
-  likely: 200000
-  max: 1500000
+  name: Insider Threat
+
 frequency:
-  min: 0.1
+  min: 0.2
   likely: 0.5
-  max: 2.0
+  max: 0.9
+
+impact:
+  min: 10000
+  likely: 50000
+  max: 200000

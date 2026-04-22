@@ -1,0 +1,6 @@
+controls:
+  - type: frequency_reduction
+    reduction_pct: 0.3
+
+  - type: impact_reduction
+    reduction_pct: 0.2

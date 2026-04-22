@@ -1,0 +1,12 @@
+metadata:
+  name: Data Breach
+
+frequency:
+  min: 0.05
+  likely: 0.2
+  max: 0.5
+
+impact:
+  min: 100000
+  likely: 400000
+  max: 2000000
