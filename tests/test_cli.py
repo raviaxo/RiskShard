@@ -56,6 +56,10 @@ class CliSmokeTests(unittest.TestCase):
                     "control_profiles/ransomware_basic_controls.yaml",
                     "--provenance",
                     "provenance/au_finance_ransomware_midmarket.yaml",
+                    "--threat",
+                    "ransomware",
+                    "--evidence",
+                    "evidence",
                     "--trials",
                     "25",
                     "--seed",
@@ -78,6 +82,7 @@ class CliSmokeTests(unittest.TestCase):
 
         self.assertIn("=== CONTEXTUAL ANALYSIS ===", result.stdout)
         self.assertIn("Confidence: low", result.stdout)
+        self.assertIn("Evidence matches:", result.stdout)
 
 
 if __name__ == "__main__":

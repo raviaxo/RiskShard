@@ -1,0 +1,20 @@
+taxonomy: countries
+items:
+  - id: global
+    label: Global
+    aliases:
+      - worldwide
+      - international
+
+  - id: AU
+    label: Australia
+    aliases:
+      - australia
+      - aus
+
+  - id: US
+    label: United States
+    aliases:
+      - united states
+      - usa
+      - us

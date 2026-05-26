@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RiskShard Evidence Records Schema",
+  "type": "object",
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "parameter": { "type": "string" },
+          "value": { "type": "number" },
+          "unit": { "type": "string" },
+          "currency": { "type": "string" },
+          "source_name": { "type": "string" },
+          "source_type": { "type": "string" },
+          "source_url_or_citation": { "type": "string" },
+          "publication_date": { "type": "string" },
+          "extraction_date": { "type": "string" },
+          "extraction_notes": { "type": "string" },
+          "normalization_notes": { "type": "string" },
+          "limitations": { "type": "string" },
+          "confidence": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          },
+          "evidence_type": {
+            "type": "string",
+            "enum": ["source_backed", "estimated", "synthetic"]
+          },
+          "applicability": {
+            "type": "object",
+            "properties": {
+              "industries": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1
+              },
+              "countries": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1
+              },
+              "company_size_bands": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1
+              },
+              "threats": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1
+              }
+            },
+            "required": ["industries", "countries", "company_size_bands", "threats"]
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "parameter",
+          "value",
+          "unit",
+          "source_name",
+          "source_type",
+          "source_url_or_citation",
+          "publication_date",
+          "extraction_date",
+          "extraction_notes",
+          "normalization_notes",
+          "limitations",
+          "confidence",
+          "evidence_type",
+          "applicability"
+        ]
+      }
+    }
+  },
+  "required": ["records"]
+}

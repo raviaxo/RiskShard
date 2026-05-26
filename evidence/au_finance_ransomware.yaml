@@ -1,0 +1,129 @@
+records:
+  - id: sophos_fin_services_ransomware_frequency_2024
+    title: Financial-services organizations hit by ransomware
+    parameter: frequency.likely
+    value: 0.65
+    unit: annual_probability
+    source_name: Sophos State of Ransomware in Financial Services 2024
+    source_type: industry_survey
+    source_url_or_citation: https://news.sophos.com/en-us/2024/06/24/the-state-of-ransomware-in-financial-services-2024/
+    publication_date: "2024-06-24"
+    extraction_date: "2026-05-26"
+    extraction_notes: Sophos reported that 65% of surveyed financial-services organizations were hit by ransomware in the prior year.
+    normalization_notes: Used directly as annual frequency likely value.
+    limitations: Global financial-services survey, not Australia-specific.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [ransomware]
+
+  - id: asd_sme_cybercrime_frequency_2025
+    title: Australian SMEs impacted by cybercrime
+    parameter: frequency.min
+    value: 0.22
+    unit: annual_probability
+    source_name: ASD Annual Cyber Threat Report 2024-2025
+    source_type: government_report
+    source_url_or_citation: https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025
+    publication_date: "2025-11-12"
+    extraction_date: "2026-05-26"
+    extraction_notes: ASD reported that 22% of Australian SME owners surveyed said their business was impacted by cybercrime.
+    normalization_notes: Used as a conservative lower frequency bound for the Australia mid-market example.
+    limitations: Cybercrime-wide statistic, not ransomware-specific and not financial-services-specific.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [small, mid_market]
+      threats: [ransomware]
+
+  - id: riskshard_ransomware_frequency_upper_bound_2026
+    title: Estimated ransomware frequency stress bound
+    parameter: frequency.max
+    value: 0.85
+    unit: annual_probability
+    source_name: RiskShard range calibration
+    source_type: model_assumption
+    source_url_or_citation: Derived from source-backed frequency evidence in this file.
+    publication_date: "2026-05-26"
+    extraction_date: "2026-05-26"
+    extraction_notes: Estimated stress-case upper bound above the Sophos financial-services ransomware rate.
+    normalization_notes: Kept explicit so the simulation range is inspectable.
+    limitations: Not directly source-backed; replace with tail-frequency evidence when available.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU, global]
+      company_size_bands: [mid_market]
+      threats: [ransomware]
+
+  - id: asd_medium_business_cybercrime_cost_2025
+    title: Average cybercrime cost for Australian medium businesses
+    parameter: impact.min
+    value: 100000
+    unit: currency
+    currency: AUD
+    source_name: ASD Annual Cyber Threat Report 2024-2025
+    source_type: government_report
+    source_url_or_citation: https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025
+    publication_date: "2025-11-12"
+    extraction_date: "2026-05-26"
+    extraction_notes: ASD reported an average self-reported cybercrime cost of AUD 97,166 for medium businesses.
+    normalization_notes: Rounded to AUD 100,000 for the lower impact bound.
+    limitations: Cybercrime-wide statistic, not ransomware-specific and not financial-services-specific.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [ransomware]
+
+  - id: sophos_fin_services_ransomware_recovery_cost_2024
+    title: Financial-services ransomware recovery cost
+    parameter: impact.likely
+    value: 3900000
+    unit: currency
+    currency: AUD
+    source_name: Sophos State of Ransomware in Financial Services 2024
+    source_type: industry_survey
+    source_url_or_citation: https://news.sophos.com/en-us/2024/06/24/the-state-of-ransomware-in-financial-services-2024/
+    publication_date: "2024-06-24"
+    extraction_date: "2026-05-26"
+    extraction_notes: Sophos reported mean recovery costs of USD 2.58 million for financial-services ransomware victims, excluding ransom payment.
+    normalization_notes: Normalized to approximately AUD 3.9 million using a planning conversion of 1 USD to 1.5 AUD.
+    limitations: Global financial-services value, not Australia-specific; currency conversion is approximate.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [ransomware]
+
+  - id: riskshard_ransomware_impact_upper_bound_2026
+    title: Estimated ransomware impact stress bound
+    parameter: impact.max
+    value: 9000000
+    unit: currency
+    currency: AUD
+    source_name: RiskShard range calibration
+    source_type: model_assumption
+    source_url_or_citation: Derived from source-backed recovery-cost evidence in this file.
+    publication_date: "2026-05-26"
+    extraction_date: "2026-05-26"
+    extraction_notes: Estimated stress-case upper bound above the Sophos mean recovery-cost value.
+    normalization_notes: Kept explicit so the simulation range is inspectable.
+    limitations: Not directly source-backed; replace with tail-loss evidence when available.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU, global]
+      company_size_bands: [mid_market]
+      threats: [ransomware]
