@@ -126,10 +126,12 @@ def summarize_match(match_result):
             parameter: {
                 "id": match["record"]["id"],
                 "title": match["record"]["title"],
+                "source_id": match["record"].get("source_id"),
                 "source_name": match["record"]["source_name"],
                 "value": match["record"]["value"],
                 "unit": match["record"]["unit"],
                 "currency": match["record"].get("currency"),
+                "citation_detail": match["record"].get("citation_detail"),
                 "confidence": match["record"]["confidence"],
                 "evidence_type": match["record"]["evidence_type"],
                 "score": match["score"],

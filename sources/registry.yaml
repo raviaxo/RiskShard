@@ -99,7 +99,7 @@ sources:
     publisher: Office of the Australian Information Commissioner
     source_type: regulator_report
     url: https://www.oaic.gov.au/__data/assets/pdf_file/0021/251184/Notifiable-data-breaches-report-July-to-December-2024.pdf
-    publication_date: "2025-04-01"
+    publication_date: "2025-05-13"
     access_mode: public_pdf
     intended_use:
       - Australia sector breach reporting
