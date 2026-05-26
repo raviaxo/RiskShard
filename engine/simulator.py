@@ -1,8 +1,8 @@
-def simulate_with_controls(
-    scenario: dict,
-    controls: list,
-    simulate_fn
-):
+from engine.analysis.comparator import compare_runs
+from engine.controls.engine import apply_controls
+
+
+def simulate_with_controls(scenario: dict, controls: list, simulate_fn):
     # Baseline
     baseline_results = simulate_fn(scenario)
 
@@ -19,4 +19,4 @@ def simulate_with_controls(
         "baseline": baseline_results,
         "controlled": controlled_results,
         "comparison": comparison
-    }de
+    }

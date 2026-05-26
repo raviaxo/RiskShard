@@ -1,0 +1,28 @@
+scenario_name: Australia Finance Ransomware Midmarket
+summary: >
+  Placeholder evidence record for a canonical Australia financial-services
+  ransomware example. This is structured for the provenance workflow, but the
+  quantitative values remain synthetic until replaced with cited benchmark data.
+
+records:
+  - parameter: frequency
+    source_name: Placeholder ransomware frequency benchmark
+    source_type: internal_placeholder
+    source_url_or_citation: Pending source-backed calibration from public reports or licensed data.
+    publication_date: "2026-05-01"
+    extraction_date: "2026-05-01"
+    extraction_notes: Synthetic placeholder for workflow testing; not extracted from a published statistic.
+    applicability: Small or mid-market financial-services organization in Australia; directional only.
+    confidence: low
+    evidence_type: synthetic
+
+  - parameter: impact
+    source_name: Placeholder ransomware impact benchmark
+    source_type: internal_placeholder
+    source_url_or_citation: Pending source-backed calibration from public reports, claims datasets, or internal loss data.
+    publication_date: "2026-05-01"
+    extraction_date: "2026-05-01"
+    extraction_notes: Synthetic placeholder for workflow testing; not extracted from a published statistic.
+    applicability: Small or mid-market financial-services organization in Australia; directional only.
+    confidence: low
+    evidence_type: synthetic

@@ -212,3 +212,8 @@ __pycache__/
 
 # macOS system files (Fixes the noise in your screenshot)
 .DS_Store
+
+# RiskShard generated outputs
+results/*
+!results/.gitkeep
+!results/README.md
