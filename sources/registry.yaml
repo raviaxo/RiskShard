@@ -1,0 +1,139 @@
+sources:
+  - id: verizon_dbir_2026
+    title: 2026 Data Breach Investigations Report
+    publisher: Verizon Business
+    source_type: breach_report
+    url: https://www.verizon.com/business/resources/T766/reports/2026-dbir-data-breach-investigations-report.pdf
+    publication_date: "2026-05-20"
+    access_mode: public_pdf
+    intended_use:
+      - threat patterns
+      - breach vectors
+      - ransomware prevalence
+      - third-party involvement
+    usage_notes: >
+      Use as a threat-pattern and breach-vector source. DBIR is not a direct
+      actuarial loss table and should not be treated as complete representation
+      of all breaches.
+
+  - id: verizon_dbir_2025
+    title: 2025 Data Breach Investigations Report
+    publisher: Verizon Business
+    source_type: breach_report
+    url: https://www.verizon.com/business/resources/Ta96/reports/2025-dbir-data-breach-investigations-report.pdf
+    publication_date: "2025-04-23"
+    access_mode: public_pdf
+    intended_use:
+      - threat patterns
+      - breach vectors
+      - third-party involvement
+      - vulnerability exploitation
+    usage_notes: >
+      Use as a threat-pattern and breach-vector source. It supports likelihood
+      and applicability reasoning more than direct financial impact modeling.
+
+  - id: cyentia_iris_2025
+    title: Information Risk Insights Study 2025
+    publisher: Cyentia Institute
+    source_type: cyber_loss_research
+    url: https://www.cyentia.com/publication/iris2025/
+    publication_date: "2025-06-10"
+    access_mode: public_html
+    intended_use:
+      - incident frequency
+      - loss magnitude
+      - tail loss
+      - organization size modifiers
+    usage_notes: >
+      Use as a quantitative cyber loss and frequency source. Preserve notes
+      about public-record bias and applicability when deriving benchmarks.
+      The source page links to the full PDF, but the automated gatherer stores
+      the public page when direct PDF access is unavailable from the runtime.
+
+  - id: cyentia_iris_2022
+    title: Information Risk Insights Study 2022
+    publisher: Cyentia Institute
+    source_type: cyber_loss_research
+    url: https://www.cyentia.com/publication/iris-2022/
+    publication_date: "2022-01-01"
+    access_mode: public_html
+    intended_use:
+      - incident frequency
+      - loss magnitude
+      - tail loss
+      - sector modifiers
+    usage_notes: >
+      Use as a historical quantitative cyber loss source and method reference.
+
+  - id: cyentia_iris_ransomware
+    title: IRIS Ransomware
+    publisher: Cyentia Institute
+    source_type: ransomware_research
+    url: https://www.cyentia.com/publication/iris-ransomware/
+    publication_date: "2025-04-21"
+    access_mode: public_html
+    intended_use:
+      - ransomware frequency
+      - ransomware sector applicability
+      - ransomware loss contribution
+    usage_notes: >
+      Use as a ransomware-specific source. If a direct PDF is later available,
+      add it as a separate registry entry.
+
+  - id: asd_annual_cyber_threat_report_2024_2025
+    title: Annual Cyber Threat Report 2024-2025
+    publisher: Australian Signals Directorate
+    source_type: government_report
+    url: https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025
+    publication_date: "2025-10-14"
+    access_mode: public_html
+    intended_use:
+      - Australia context
+      - SME cybercrime cost
+      - local threat environment
+    usage_notes: >
+      Use for Australia-specific context and local cybercrime cost anchors.
+
+  - id: oaic_ndb_jul_dec_2024
+    title: Notifiable Data Breaches Report July to December 2024
+    publisher: Office of the Australian Information Commissioner
+    source_type: regulator_report
+    url: https://www.oaic.gov.au/__data/assets/pdf_file/0021/251184/Notifiable-data-breaches-report-July-to-December-2024.pdf
+    publication_date: "2025-04-01"
+    access_mode: public_pdf
+    intended_use:
+      - Australia sector breach reporting
+      - finance sector applicability
+      - privacy breach patterns
+    usage_notes: >
+      Use for Australian notifiable data breach patterns and sector relevance.
+
+  - id: apra_cps_230
+    title: CPS 230 Operational Risk Management
+    publisher: Australian Prudential Regulation Authority
+    source_type: regulator_standard
+    url: https://handbook.apra.gov.au/standard/cps-230
+    publication_date: "2025-07-01"
+    access_mode: public_html
+    intended_use:
+      - Australia financial services regulatory intensity
+      - operational risk context
+      - business continuity context
+    usage_notes: >
+      Use to support regulatory-context assumptions for APRA-regulated
+      financial-services organizations.
+
+  - id: sophos_state_ransomware_financial_services_2024
+    title: State of Ransomware in Financial Services 2024
+    publisher: Sophos
+    source_type: industry_survey
+    url: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-financial-services-2024
+    publication_date: "2024-06-24"
+    access_mode: public_html
+    intended_use:
+      - ransomware frequency
+      - ransomware recovery cost
+      - financial services context
+    usage_notes: >
+      Use as a survey-based ransomware benchmark. Preserve survey-bias and
+      geography limitations in evidence records.
