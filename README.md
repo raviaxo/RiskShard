@@ -132,7 +132,7 @@ Organization profiles live in `org_profiles/` and include:
 
 Control profiles live in `control_profiles/` and remain transformations over the scenario, not embedded scenario properties.
 
-Provenance files live in `provenance/` and label every evidence record as `source_backed`, `estimated`, or `synthetic`. The canonical Australia finance ransomware example currently uses synthetic placeholder evidence and is labeled honestly as low confidence.
+Provenance files live in `provenance/` and label every evidence record as `source_backed`, `estimated`, or `synthetic`. The canonical Australia finance ransomware example now uses public source-backed evidence for key frequency, impact, sector applicability, and regulatory context. Its range bounds still include estimated model assumptions, so the overall confidence remains low until better Australia-specific tail-loss evidence is added.
 
 ## Strategy Docs
 
