@@ -144,6 +144,8 @@ Taxonomies live in `taxonomies/` and are the vetted source for dropdown-style ID
 
 Evidence records live in `evidence/`. They are separate from scenarios: evidence records capture extracted facts and applicability, while scenarios remain simulation-ready inputs. Evidence matching explains whether each record is an exact match or a fallback for the supplied organization profile and threat.
 
+Source-backed evidence records should include `source_id` values that map to `sources/manifest.json`, plus a concise `citation_detail` describing where the fact appears in the source. Estimated or synthetic model assumptions must remain labeled as `estimated` or `synthetic`.
+
 ## Source Baseline
 
 RiskShard can gather a curated baseline of public source materials and write an auditable manifest:
