@@ -1,28 +1,144 @@
 scenario_name: Australia Finance Ransomware Midmarket
 summary: >
-  Placeholder evidence record for a canonical Australia financial-services
-  ransomware example. This is structured for the provenance workflow, but the
-  quantitative values remain synthetic until replaced with cited benchmark data.
+  Source-backed evidence package for the canonical Australia financial-services
+  ransomware example. The likely ransomware frequency and central recovery cost
+  are anchored to public reporting. Australian cybercrime and breach statistics
+  are used for local applicability context. The upper and lower simulation
+  bounds remain estimated because public, Australia-specific, mid-market
+  financial-services ransomware loss distributions are not yet available in this
+  repo.
 
 records:
-  - parameter: frequency
-    source_name: Placeholder ransomware frequency benchmark
-    source_type: internal_placeholder
-    source_url_or_citation: Pending source-backed calibration from public reports or licensed data.
-    publication_date: "2026-05-01"
-    extraction_date: "2026-05-01"
-    extraction_notes: Synthetic placeholder for workflow testing; not extracted from a published statistic.
-    applicability: Small or mid-market financial-services organization in Australia; directional only.
-    confidence: low
-    evidence_type: synthetic
+  - parameter: frequency.likely
+    source_name: Sophos State of Ransomware in Financial Services 2024
+    source_type: industry_survey
+    source_url_or_citation: https://news.sophos.com/en-us/2024/06/24/the-state-of-ransomware-in-financial-services-2024/
+    publication_date: "2024-06-24"
+    extraction_date: "2026-05-26"
+    extraction_notes: >
+      Sophos reported that 65% of surveyed financial-services organizations were
+      hit by ransomware in the prior year. RiskShard uses 0.65 as the likely
+      annual ransomware frequency for this benchmark shard.
+    applicability: >
+      Applies to financial-services organizations broadly. The survey is not
+      Australia-only, so it is suitable as a directional benchmark rather than a
+      local actuarial estimate.
+    confidence: medium
+    evidence_type: source_backed
 
-  - parameter: impact
-    source_name: Placeholder ransomware impact benchmark
-    source_type: internal_placeholder
-    source_url_or_citation: Pending source-backed calibration from public reports, claims datasets, or internal loss data.
-    publication_date: "2026-05-01"
-    extraction_date: "2026-05-01"
-    extraction_notes: Synthetic placeholder for workflow testing; not extracted from a published statistic.
-    applicability: Small or mid-market financial-services organization in Australia; directional only.
+  - parameter: frequency.min
+    source_name: ASD Annual Cyber Threat Report 2024-2025
+    source_type: government_report
+    source_url_or_citation: https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025
+    publication_date: "2025-11-12"
+    extraction_date: "2026-05-26"
+    extraction_notes: >
+      ASD reported that 22% of Australian SME owners surveyed said their
+      business was impacted by cybercrime. RiskShard uses 0.22 as a conservative
+      lower bound for the frequency range, with the limitation that this is
+      cybercrime broadly rather than ransomware specifically.
+    applicability: >
+      Applies to Australian SMEs generally. This supports Australian context but
+      is not financial-services-specific and is not ransomware-specific.
     confidence: low
-    evidence_type: synthetic
+    evidence_type: source_backed
+
+  - parameter: frequency.max
+    source_name: RiskShard range calibration
+    source_type: model_assumption
+    source_url_or_citation: Derived from source-backed frequency records in this provenance file.
+    publication_date: "2026-05-26"
+    extraction_date: "2026-05-26"
+    extraction_notes: >
+      The 0.85 upper bound is an estimated stress-case bound above the Sophos
+      financial-services ransomware rate. It is not directly extracted from a
+      public source.
+    applicability: >
+      Useful for simulation sensitivity only. Replace with sourced tail
+      frequency data when available.
+    confidence: low
+    evidence_type: estimated
+
+  - parameter: impact.min
+    source_name: ASD Annual Cyber Threat Report 2024-2025
+    source_type: government_report
+    source_url_or_citation: https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025
+    publication_date: "2025-11-12"
+    extraction_date: "2026-05-26"
+    extraction_notes: >
+      ASD reported an average self-reported cybercrime cost of AUD 97,166 for
+      medium businesses. RiskShard rounds this to AUD 100,000 for the lower
+      impact bound.
+    applicability: >
+      Applies to Australian medium businesses and is denominated in AUD. It is
+      cybercrime-wide rather than ransomware-specific, so it is treated as a
+      lower-bound anchor.
+    confidence: medium
+    evidence_type: source_backed
+
+  - parameter: impact.likely
+    source_name: Sophos State of Ransomware in Financial Services 2024
+    source_type: industry_survey
+    source_url_or_citation: https://news.sophos.com/en-us/2024/06/24/the-state-of-ransomware-in-financial-services-2024/
+    publication_date: "2024-06-24"
+    extraction_date: "2026-05-26"
+    extraction_notes: >
+      Sophos reported mean recovery costs of USD 2.58 million for
+      financial-services ransomware victims, excluding ransom payment. RiskShard
+      normalizes this to approximately AUD 3.9 million using a planning
+      conversion of 1 USD to 1.5 AUD.
+    applicability: >
+      Applies to financial-services ransomware recovery costs broadly. It is not
+      Australia-only and uses an approximate currency normalization, so the
+      confidence is medium rather than high.
+    confidence: medium
+    evidence_type: source_backed
+
+  - parameter: impact.max
+    source_name: RiskShard range calibration
+    source_type: model_assumption
+    source_url_or_citation: Derived from source-backed recovery-cost evidence in this provenance file.
+    publication_date: "2026-05-26"
+    extraction_date: "2026-05-26"
+    extraction_notes: >
+      The AUD 9 million upper bound is an estimated stress-case bound above the
+      Sophos mean recovery-cost value. It is included to keep the simulation
+      range explicit while the repo lacks sourced Australia-specific tail-loss
+      data for financial-services ransomware.
+    applicability: >
+      Useful for simulation sensitivity only. Replace with sourced tail-loss
+      data when available.
+    confidence: low
+    evidence_type: estimated
+
+  - parameter: sector_applicability
+    source_name: OAIC Notifiable Data Breaches Report July to December 2024
+    source_type: regulator_report
+    source_url_or_citation: https://www.oaic.gov.au/__data/assets/pdf_file/0021/251184/Notifiable-data-breaches-report-July-to-December-2024.pdf
+    publication_date: "2025-04-01"
+    extraction_date: "2026-05-26"
+    extraction_notes: >
+      OAIC reported 54 notifications from finance, representing 9% of all
+      notifications in the July-December 2024 period. This supports financial
+      services as a material Australian breach-reporting sector.
+    applicability: >
+      Applies to Australian notifiable data breaches in finance. It supports
+      local sector relevance but does not directly estimate ransomware loss.
+    confidence: medium
+    evidence_type: source_backed
+
+  - parameter: regulatory_intensity
+    source_name: APRA CPS 230 Operational Risk Management
+    source_type: regulator_standard
+    source_url_or_citation: https://www.apra.gov.au/cross-industry-prudential-standard-cps-230-operational-risk-management
+    publication_date: "2024-07-01"
+    extraction_date: "2026-05-26"
+    extraction_notes: >
+      APRA CPS 230 applies operational risk management requirements to regulated
+      Australian financial institutions, including operational risk controls,
+      material service provider management, and business continuity.
+    applicability: >
+      Applies directly to APRA-regulated Australian financial institutions and
+      supports the high regulatory-intensity organization profile setting.
+    confidence: high
+    evidence_type: source_backed

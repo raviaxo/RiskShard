@@ -43,8 +43,11 @@ class ProvenanceValidationTests(unittest.TestCase):
             ROOT / "provenance" / "au_finance_ransomware_midmarket.yaml"
         )
 
-        self.assertEqual(provenance["records"][0]["evidence_type"], "synthetic")
-        self.assertEqual(provenance["records"][0]["confidence"], "low")
+        evidence_types = {record["evidence_type"] for record in provenance["records"]}
+
+        self.assertIn("source_backed", evidence_types)
+        self.assertIn("estimated", evidence_types)
+        self.assertNotIn("synthetic", evidence_types)
 
     def test_provenance_rejects_unknown_evidence_type(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -84,7 +87,7 @@ class ContextualAnalysisTests(unittest.TestCase):
         self.assertEqual(report["confidence"]["overall"], "low")
         self.assertEqual(
             report["source_provenance_summary"]["evidence_types"],
-            ["synthetic"],
+            ["estimated", "source_backed"],
         )
         self.assertIn("baseline_results", report)
         self.assertIn("control_adjusted_results", report)
