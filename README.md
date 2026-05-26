@@ -43,6 +43,7 @@ org_profiles/            YAML organization context profiles
 provenance/              YAML source and evidence metadata
 taxonomies/              Vetted IDs and labels for dropdown-style inputs
 evidence/                Structured evidence records for benchmark matching
+sources/                 Curated source registry and generated gather manifest
 library/benchmarks/      Benchmark source data and shard generation helper
 library/adapters/        Adapter/helper experiments
 scenarios/               Example YAML risk shards
@@ -142,6 +143,18 @@ Provenance files live in `provenance/` and label every evidence record as `sourc
 Taxonomies live in `taxonomies/` and are the vetted source for dropdown-style IDs such as `financial_services`, `AU`, `mid_market`, and `ransomware`.
 
 Evidence records live in `evidence/`. They are separate from scenarios: evidence records capture extracted facts and applicability, while scenarios remain simulation-ready inputs. Evidence matching explains whether each record is an exact match or a fallback for the supplied organization profile and threat.
+
+## Source Baseline
+
+RiskShard can gather a curated baseline of public source materials and write an auditable manifest:
+
+```bash
+python scripts/gather_sources.py
+```
+
+The source registry lives in `sources/registry.yaml`. The generated manifest lives in `sources/manifest.json` and records each source's publication date, gather timestamp, final URL, HTTP status, content type, byte count, SHA-256 hash, and raw artifact path. Raw downloaded artifacts are stored under `sources/raw/` and ignored by Git.
+
+Gathering a source does not automatically make it a benchmark parameter. Extracted facts should still be reviewed and stored as evidence records with applicability, confidence, limitations, and honest evidence-type labels.
 
 ## Strategy Docs
 
