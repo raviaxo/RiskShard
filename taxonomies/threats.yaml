@@ -1,0 +1,38 @@
+taxonomy: threats
+items:
+  - id: all
+    label: All Threats
+    aliases:
+      - any
+      - general
+
+  - id: ransomware
+    label: Ransomware
+    aliases:
+      - extortion
+      - cyber extortion
+
+  - id: data_breach
+    label: Data Breach
+    aliases:
+      - privacy breach
+      - information disclosure
+
+  - id: business_email_compromise
+    label: Business Email Compromise
+    aliases:
+      - bec
+      - payment fraud
+      - invoice fraud
+
+  - id: third_party_outage
+    label: Third-Party Outage
+    aliases:
+      - supplier outage
+      - vendor outage
+
+  - id: cloud_compromise
+    label: Cloud or SaaS Compromise
+    aliases:
+      - cloud breach
+      - saas compromise

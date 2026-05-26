@@ -1,0 +1,34 @@
+taxonomy: company_sizes
+items:
+  - id: all
+    label: All Company Sizes
+    employee_min: 1
+    employee_max: null
+    aliases:
+      - any
+      - all
+
+  - id: small
+    label: Small
+    employee_min: 1
+    employee_max: 99
+    aliases:
+      - smb
+      - small business
+
+  - id: mid_market
+    label: Mid-Market
+    employee_min: 100
+    employee_max: 999
+    aliases:
+      - medium
+      - midsize
+      - mid market
+
+  - id: enterprise
+    label: Enterprise
+    employee_min: 1000
+    employee_max: null
+    aliases:
+      - large
+      - large enterprise

@@ -21,6 +21,8 @@ def build_parser():
     parser.add_argument("--org-profile", help="Organization profile YAML for contextual analysis")
     parser.add_argument("--control-profile", help="Control profile YAML for contextual analysis")
     parser.add_argument("--provenance", help="Provenance YAML for contextual analysis")
+    parser.add_argument("--threat", help="Canonical threat id or alias for evidence matching")
+    parser.add_argument("--evidence", help="Evidence YAML file or directory for evidence matching")
     parser.add_argument("--report-output", help="Path for contextual JSON report output")
     return parser
 
@@ -57,6 +59,8 @@ def main(argv=None):
                 trials=args.trials,
                 dist_type=args.dist,
                 seed=args.seed,
+                threat=args.threat,
+                evidence_path=args.evidence,
             )
             report_path = write_contextual_report(report, args.report_output)
         except Exception as exc:
@@ -68,6 +72,10 @@ def main(argv=None):
         print(f"Scenario : {report['scenario']['metadata'].get('name', args.path)}")
         print(f"Org      : {report['org_context'].get('metadata', {}).get('name', 'Unnamed org')}")
         print(f"Confidence: {report['confidence']['overall']}")
+        if report.get("evidence_match"):
+            match = report["evidence_match"]
+            print(f"Evidence matches: {match['match_count']}")
+            print(f"Evidence context: {match['target_context']}")
         print("\n=== BASELINE ===")
         print(f"AVG : ${report['baseline_results']['mean']:,.2f}")
         print(f"P95 : ${report['baseline_results']['p95']:,.2f}")

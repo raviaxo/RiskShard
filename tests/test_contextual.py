@@ -80,6 +80,8 @@ class ContextualAnalysisTests(unittest.TestCase):
             ROOT / "provenance" / "au_finance_ransomware_midmarket.yaml",
             trials=50,
             seed=7,
+            threat="ransomware",
+            evidence_path=ROOT / "evidence",
         )
 
         self.assertEqual(report["report_type"], "contextual_analysis")
@@ -90,6 +92,8 @@ class ContextualAnalysisTests(unittest.TestCase):
             ["estimated", "source_backed"],
         )
         self.assertIn("baseline_results", report)
+        self.assertEqual(report["evidence_match"]["target_context"]["company_size"], "mid_market")
+        self.assertIn("frequency.likely", report["evidence_match"]["best_by_parameter"])
         self.assertIn("control_adjusted_results", report)
         self.assertLess(report["control_adjusted_results"]["p95"], report["baseline_results"]["p95"])
         self.assertLess(report["delta"]["p95_delta"], 0)

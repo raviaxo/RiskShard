@@ -23,6 +23,7 @@ RiskShard aims to become a shared computation layer for cyber risk:
 - Optional JSON report export
 - Early benchmark-to-scenario generation helpers
 - Contextual single-scenario analysis using separate organization, control, and provenance inputs
+- Vetted YAML taxonomies and evidence matching for industry, country, company size, and threat context
 
 ## In Progress
 
@@ -40,6 +41,8 @@ engine/controls/         Early control simulation layer
 control_profiles/        YAML control transformation profiles
 org_profiles/            YAML organization context profiles
 provenance/              YAML source and evidence metadata
+taxonomies/              Vetted IDs and labels for dropdown-style inputs
+evidence/                Structured evidence records for benchmark matching
 library/benchmarks/      Benchmark source data and shard generation helper
 library/adapters/        Adapter/helper experiments
 scenarios/               Example YAML risk shards
@@ -72,13 +75,15 @@ python scripts/fair_calc.py scenarios/au_finance_ransomware_midmarket.yaml \
   --org-profile org_profiles/au_finance_midmarket.yaml \
   --control-profile control_profiles/ransomware_basic_controls.yaml \
   --provenance provenance/au_finance_ransomware_midmarket.yaml \
+  --threat ransomware \
+  --evidence evidence \
   --trials 10000 \
   --dist pert \
   --seed 42 \
   --report-output results/au_finance_ransomware_contextual.json
 ```
 
-The contextual report is JSON and includes scenario parameters, organization context, control context, explicit assumptions, provenance records, confidence, baseline results, control-adjusted results, and delta.
+The contextual report is JSON and includes scenario parameters, organization context, control context, explicit assumptions, provenance records, evidence match rationale, confidence, baseline results, control-adjusted results, and delta.
 
 The current contextual multipliers are minimal estimated heuristics. They are labeled as estimated in the report and should be replaced with benchmark-backed calibration before real decision support.
 
@@ -133,6 +138,10 @@ Organization profiles live in `org_profiles/` and include:
 Control profiles live in `control_profiles/` and remain transformations over the scenario, not embedded scenario properties.
 
 Provenance files live in `provenance/` and label every evidence record as `source_backed`, `estimated`, or `synthetic`. The canonical Australia finance ransomware example now uses public source-backed evidence for key frequency, impact, sector applicability, and regulatory context. Its range bounds still include estimated model assumptions, so the overall confidence remains low until better Australia-specific tail-loss evidence is added.
+
+Taxonomies live in `taxonomies/` and are the vetted source for dropdown-style IDs such as `financial_services`, `AU`, `mid_market`, and `ransomware`.
+
+Evidence records live in `evidence/`. They are separate from scenarios: evidence records capture extracted facts and applicability, while scenarios remain simulation-ready inputs. Evidence matching explains whether each record is an exact match or a fallback for the supplied organization profile and threat.
 
 ## Strategy Docs
 

@@ -7,6 +7,7 @@ from pathlib import Path
 from engine.analysis.comparator import compare_runs
 from engine.controls.engine import apply_controls
 from engine.controls.loader import load_control_profile, load_controls
+from engine.evidence import load_evidence_records, match_evidence, summarize_match
 from engine.fair_calc import (
     RESULTS_DIR,
     compute_stats,
@@ -114,6 +115,7 @@ def build_report(
     baseline_stats,
     controlled_stats,
     delta,
+    evidence_match=None,
 ):
     provenance_summary = summarize_provenance(provenance)
     control_assumptions = [
@@ -144,6 +146,7 @@ def build_report(
         "control_context": control_profile,
         "key_assumptions": assumptions + control_assumptions,
         "source_provenance_summary": provenance_summary,
+        "evidence_match": evidence_match,
         "confidence": {
             "overall": provenance_summary["confidence"],
             "note": "Overall confidence is the lowest confidence among supplied provenance records.",
@@ -162,12 +165,21 @@ def run_contextual_analysis(
     trials=10000,
     dist_type="pert",
     seed=None,
+    threat=None,
+    evidence_path=None,
 ):
     scenario = load_and_validate(scenario_path)
     org_profile = load_org_profile(org_profile_path)
     control_profile = load_control_profile(control_profile_path)
     controls = load_controls(control_profile_path)
     provenance = load_provenance(provenance_path)
+    evidence_match = None
+
+    if evidence_path is not None:
+        if threat is None:
+            raise ValueError("threat is required when evidence_path is provided")
+        evidence_records = load_evidence_records(evidence_path)
+        evidence_match = summarize_match(match_evidence(evidence_records, org_profile, threat))
 
     contextualized_scenario, assumptions = contextualize_scenario(scenario, org_profile)
     controlled_scenario = apply_controls(contextualized_scenario, controls)
@@ -202,6 +214,7 @@ def run_contextual_analysis(
         baseline_stats,
         controlled_stats,
         delta,
+        evidence_match=evidence_match,
     )
 
 

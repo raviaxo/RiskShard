@@ -1,0 +1,29 @@
+taxonomy: industries
+items:
+  - id: all
+    label: All Industries
+    aliases:
+      - any
+      - general
+
+  - id: financial_services
+    label: Financial Services
+    aliases:
+      - finance
+      - banking
+      - finserv
+      - financial institutions
+
+  - id: technology
+    label: Technology
+    aliases:
+      - tech
+      - software
+      - saas
+
+  - id: healthcare
+    label: Healthcare
+    aliases:
+      - health
+      - hospitals
+      - medical
