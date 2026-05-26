@@ -1,0 +1,19 @@
+metadata:
+  name: Australia Finance Ransomware Midmarket
+  version: "0.1"
+  currency: AUD
+  benchmark_status: placeholder
+  description: >
+    Canonical placeholder benchmark-backed shard for a small or mid-market
+    financial-services organization in Australia. Values are directional and
+    must be replaced with stronger evidence before real decision support.
+
+frequency:
+  min: 0.06
+  likely: 0.14
+  max: 0.28
+
+impact:
+  min: 150000
+  likely: 1250000
+  max: 12000000

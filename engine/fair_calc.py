@@ -1,77 +1,94 @@
-import argparse
 import json
 import random
 import statistics
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 import yaml
-import matplotlib.pyplot as plt
 from jsonschema import validate
 
-# -----------------------------
-# CONFIG
-# -----------------------------
-PROJECT_ROOT = Path(__file__).parent.parent
 
-# -----------------------------
-# UTILITIES
-# -----------------------------
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+SCHEMA_PATH = PROJECT_ROOT / "schemas" / "shard_schema.json"
+RESULTS_DIR = PROJECT_ROOT / "results"
+VALID_DISTRIBUTIONS = {"pert", "triangular"}
 
-def load_schema():
-    schema_path = PROJECT_ROOT / 'schemas' / 'shard_schema.json'
+
+def load_schema(schema_path=SCHEMA_PATH):
+    schema_path = Path(schema_path)
     if not schema_path.exists():
         raise FileNotFoundError(f"Schema not found at {schema_path}")
-    with open(schema_path, 'r') as f:
+
+    with open(schema_path, "r") as f:
         return json.load(f)
+
+
+def load_and_validate(path, schema=None):
+    path = Path(path)
+    schema = schema or load_schema()
+
+    with open(path, "r") as f:
+        config = yaml.safe_load(f)
+
+    if config is None:
+        raise ValueError(f"Empty or invalid YAML file: {path}")
+
+    validate(instance=config, schema=schema)
+    return config
+
+
+def scenario_files(input_path):
+    input_path = Path(input_path)
+    if input_path.is_dir():
+        return sorted(input_path.glob("*.yaml"))
+    return [input_path]
 
 
 def percentile(data, p):
     if not data:
         return 0
+
     k = int(len(data) * p)
     return data[min(k, len(data) - 1)]
 
 
-def beta_pert(low, likely, high, confidence=4):
+def beta_pert(low, likely, high, confidence=4, rng=None):
     if low >= high:
         return low
-    a = 1 + confidence * (likely - low) / (high - low)
-    b = 1 + confidence * (high - likely) / (high - low)
-    return low + random.betavariate(a, b) * (high - low)
 
-# -----------------------------
-# CORE SIMULATION
-# -----------------------------
+    rng = rng or random
+    alpha = 1 + confidence * (likely - low) / (high - low)
+    beta = 1 + confidence * (high - likely) / (high - low)
+    return low + rng.betavariate(alpha, beta) * (high - low)
 
-def run_simulation(config, trials, dist_type):
-    impact = config['impact']
-    freq = config['frequency']
-    name = config['metadata']['name']
+
+def sample_range(values, dist_type, rng):
+    if dist_type == "pert":
+        return beta_pert(values["min"], values["likely"], values["max"], rng=rng)
+    if dist_type == "triangular":
+        return rng.triangular(values["min"], values["max"], values["likely"])
+    raise ValueError(f"Unsupported distribution: {dist_type}")
+
+
+def run_simulation(config, trials, dist_type="pert", rng=None):
+    if trials <= 0:
+        raise ValueError("trials must be greater than zero")
+    if dist_type not in VALID_DISTRIBUTIONS:
+        raise ValueError(f"Unsupported distribution: {dist_type}")
+
+    rng = rng or random.Random()
+    impact = config["impact"]
+    frequency = config["frequency"]
+    name = config["metadata"]["name"]
 
     results = []
     for _ in range(trials):
-        if dist_type == 'pert':
-            f = beta_pert(freq['min'], freq['likely'], freq['max'])
-            i = beta_pert(impact['min'], impact['likely'], impact['max'])
-        else:
-            f = random.triangular(freq['min'], freq['likely'], freq['max'])
-            i = random.triangular(impact['min'], impact['likely'], impact['max'])
-
-        results.append(f * i)
+        sampled_frequency = sample_range(frequency, dist_type, rng)
+        sampled_impact = sample_range(impact, dist_type, rng)
+        results.append(sampled_frequency * sampled_impact)
 
     return name, results
 
-
-def load_and_validate(path, schema):
-    with open(path, 'r') as f:
-        config = yaml.safe_load(f)
-    validate(instance=config, schema=schema)
-    return config
-
-# -----------------------------
-# AGGREGATION
-# -----------------------------
 
 def aggregate_portfolio(portfolio_results):
     lengths = {len(v) for v in portfolio_results.values()}
@@ -91,99 +108,83 @@ def compute_stats(results):
         "p99": percentile(results_sorted, 0.99),
     }
 
-# -----------------------------
-# OUTPUTS
-# -----------------------------
 
-def plot_lec(results, name):
-    sorted_res = sorted(results, reverse=True)
-    prob = [i / len(sorted_res) for i in range(len(sorted_res))]
+def compute_all_stats(portfolio):
+    shard_stats = {}
+
+    for name, results in portfolio.items():
+        shard_stats[name] = compute_stats(results)
+
+    aggregate = aggregate_portfolio(portfolio)
+    portfolio_stats = compute_stats(aggregate)
+
+    return shard_stats, portfolio_stats, aggregate
+
+
+def run_portfolio(path, trials=10000, dist_type="pert", seed=None, schema_path=SCHEMA_PATH):
+    rng = random.Random(seed) if seed is not None else random.Random()
+    schema = load_schema(schema_path)
+    portfolio = {}
+    failures = []
+
+    for scenario_path in scenario_files(path):
+        try:
+            config = load_and_validate(scenario_path, schema)
+            name, results = run_simulation(config, trials, dist_type, rng)
+            portfolio[name] = results
+        except Exception as exc:
+            failures.append((scenario_path, exc))
+
+    if not portfolio:
+        raise ValueError("No valid simulations.")
+
+    shard_stats, portfolio_stats, aggregate = compute_all_stats(portfolio)
+    return {
+        "shards": shard_stats,
+        "portfolio": portfolio_stats,
+        "aggregate": aggregate,
+        "failures": failures,
+    }
+
+
+def plot_lec(results, name, output_dir=RESULTS_DIR):
+    import matplotlib.pyplot as plt
+
+    output_dir = Path(output_dir)
+    output_dir.mkdir(exist_ok=True)
+
+    sorted_results = sorted(results, reverse=True)
+    probabilities = [i / len(sorted_results) for i in range(len(sorted_results))]
 
     plt.figure(figsize=(10, 6))
-    plt.plot(sorted_res, prob, linewidth=2)
-    plt.fill_between(sorted_res, prob, alpha=0.1)
-
+    plt.plot(sorted_results, probabilities, linewidth=2)
+    plt.fill_between(sorted_results, probabilities, alpha=0.1)
     plt.title(f"Loss Exceedance Curve: {name}")
     plt.xlabel("Loss ($)")
     plt.ylabel("Exceedance Probability")
-    plt.grid(True, linestyle='--', alpha=0.3)
+    plt.grid(True, linestyle="--", alpha=0.3)
 
-    out = PROJECT_ROOT / f"results/lec_{name.replace(' ', '_')}.png"
-    out.parent.mkdir(exist_ok=True)
-    plt.savefig(out)
-    print(f"📊 LEC saved: {out}")
-
-
-def print_report(stats):
-    print("\n=== PORTFOLIO RESULTS ===")
-    print(f"AVG : ${stats['mean']:,.2f}")
-    print(f"P50 : ${stats['p50']:,.2f}")
-    print(f"P95 : ${stats['p95']:,.2f}")
-    print(f"P99 : ${stats['p99']:,.2f}")
+    path = output_dir / f"lec_{name.replace(' ', '_')}.png"
+    plt.savefig(path)
+    plt.close()
+    return path
 
 
-def export_report(stats):
-    out_dir = PROJECT_ROOT / 'results'
-    out_dir.mkdir(exist_ok=True)
+def export_report(shard_stats, portfolio_stats, output_dir=RESULTS_DIR, timestamp=None):
+    output_dir = Path(output_dir)
+    output_dir.mkdir(exist_ok=True)
 
-    filename = f"report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-    path = out_dir / filename
+    timestamp = timestamp or datetime.now()
+    filename = f"report_{timestamp.strftime('%Y%m%d_%H%M%S')}.json"
+    path = output_dir / filename
 
     payload = {
-        "timestamp": datetime.now().isoformat(),
-        "aggregate": stats
+        "timestamp": timestamp.isoformat(),
+        "shards": shard_stats,
+        "portfolio": portfolio_stats,
     }
 
-    with open(path, 'w') as f:
+    with open(path, "w") as f:
         json.dump(payload, f, indent=4)
 
-    print(f"✅ Exported: {path}")
-
-# -----------------------------
-# MAIN
-# -----------------------------
-
-def main():
-    parser = argparse.ArgumentParser(description="RiskShard Engine v4")
-    parser.add_argument("path", help="Path to shard or directory")
-    parser.add_argument("--trials", type=int, default=10000)
-    parser.add_argument("--dist", choices=['triangular', 'pert'], default='pert')
-    parser.add_argument("--export", action="store_true")
-    parser.add_argument("--seed", type=int, help="Random seed for reproducibility")
-
-    args = parser.parse_args()
-
-    if args.seed is not None:
-        random.seed(args.seed)
-
-    schema = load_schema()
-    input_path = Path(args.path)
-
-    files = list(input_path.glob('*.yaml')) if input_path.is_dir() else [input_path]
-
-    portfolio = {}
-
-    for f in files:
-        try:
-            config = load_and_validate(f, schema)
-            name, results = run_simulation(config, args.trials, args.dist)
-            portfolio[name] = results
-        except Exception as e:
-            print(f"❌ Failed: {f} -> {e}")
-
-    if not portfolio:
-        print("No valid simulations.")
-        return
-
-    aggregate = aggregate_portfolio(portfolio)
-    stats = compute_stats(aggregate)
-
-    plot_lec(aggregate, "Portfolio")
-    print_report(stats)
-
-    if args.export:
-        export_report(stats)
-
-
-if __name__ == "__main__":
-    main()
+    return path

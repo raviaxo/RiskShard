@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RiskShard Organization Profile Schema",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" }
+      }
+    },
+    "org_type": { "type": "string" },
+    "industry": { "type": "string" },
+    "country": { "type": "string" },
+    "employees": { "type": "integer", "minimum": 1 },
+    "annual_revenue_or_budget": { "type": "number", "minimum": 0 },
+    "data_sensitivity": {
+      "type": "string",
+      "enum": ["low", "moderate", "high", "very_high"]
+    },
+    "internet_exposure": {
+      "type": "string",
+      "enum": ["low", "moderate", "high", "very_high"]
+    },
+    "third_party_dependency": {
+      "type": "string",
+      "enum": ["low", "moderate", "high", "very_high"]
+    },
+    "regulatory_intensity": {
+      "type": "string",
+      "enum": ["low", "moderate", "high", "very_high"]
+    }
+  },
+  "required": [
+    "org_type",
+    "industry",
+    "country",
+    "employees",
+    "annual_revenue_or_budget",
+    "data_sensitivity",
+    "internet_exposure",
+    "third_party_dependency",
+    "regulatory_intensity"
+  ]
+}

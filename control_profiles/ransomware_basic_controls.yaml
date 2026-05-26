@@ -1,0 +1,15 @@
+metadata:
+  name: Basic Ransomware Control Profile
+  version: "0.1"
+
+assumptions:
+  - Frequency reduction represents preventive controls such as hardened access, MFA, EDR coverage, and patch discipline.
+  - Impact reduction represents recovery controls such as tested backups, incident response readiness, and restoration playbooks.
+  - Reduction percentages are estimated placeholders and should be calibrated with internal evidence before real decisions.
+
+controls:
+  - type: frequency_reduction
+    reduction_pct: 0.25
+
+  - type: impact_reduction
+    reduction_pct: 0.15
