@@ -1,0 +1,13 @@
+rates:
+  - id: usd_to_aud_planning_2026_05_26
+    from: USD
+    to: AUD
+    rate: 1.5
+    as_of: "2026-05-26"
+    source_name: RiskShard planning assumption
+    source_type: model_assumption
+    evidence_type: estimated
+    notes: >
+      Planning conversion used only for local scenario calibration. Replace with
+      an externally sourced FX rate before relying on monetary outputs for
+      decisions.

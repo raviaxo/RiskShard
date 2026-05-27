@@ -36,3 +36,10 @@ items:
     aliases:
       - cloud breach
       - saas compromise
+
+  - id: insider_misuse
+    label: Insider Misuse
+    aliases:
+      - insider threat
+      - malicious insider
+      - privileged misuse

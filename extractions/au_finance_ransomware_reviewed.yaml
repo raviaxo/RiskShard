@@ -1,0 +1,122 @@
+extractions:
+  - id: sophos_fin_services_hit_rate_2024
+    source_id: sophos_state_ransomware_financial_services_2024
+    source_name: Sophos State of Ransomware in Financial Services 2024
+    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-financial-services-2024
+    publication_date: "2024-06-24"
+    extraction_date: "2026-05-26"
+    citation_detail: Article section "Attack rates have remained steady, but recovery is more expensive."
+    fact: Sophos reported that 65% of financial-services organizations were hit by ransomware in 2024.
+    value: 0.65
+    unit: annual_probability
+    normalization_notes: Stored directly as a financial-services ransomware frequency anchor.
+    limitations: Global financial-services survey, not Australia-specific.
+    evidence_record_ids:
+      - sophos_fin_services_ransomware_frequency_2024
+
+  - id: sophos_fin_services_recovery_cost_2024
+    source_id: sophos_state_ransomware_financial_services_2024
+    source_name: Sophos State of Ransomware in Financial Services 2024
+    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-financial-services-2024
+    publication_date: "2024-06-24"
+    extraction_date: "2026-05-26"
+    citation_detail: Article section "Attack rates have remained steady, but recovery is more expensive."
+    fact: Sophos reported a USD 2.58 million mean ransomware recovery cost for financial-services organizations.
+    value: 2580000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored in source currency; calibration converts to AUD with an explicit FX assumption.
+    limitations: Global financial-services survey, not Australia-specific.
+    evidence_record_ids:
+      - sophos_fin_services_ransomware_recovery_cost_2024
+
+  - id: cyentia_global_ransomware_likelihood_2025
+    source_id: cyentia_iris_ransomware
+    source_name: Cyentia IRIS Ransomware
+    source_url_or_citation: https://www.cyentia.com/publication/iris-ransomware/
+    publication_date: "2025-04-21"
+    extraction_date: "2026-05-26"
+    citation_detail: Key findings on the public IRIS Ransomware source page.
+    fact: Cyentia reported that approximately 10% of organizations are likely to experience a ransomware incident within the next year.
+    value: 0.10
+    unit: annual_probability
+    normalization_notes: Stored as a generic global lower-frequency context point.
+    limitations: Global cross-sector statistic, not Australia-specific or financial-services-specific.
+    evidence_record_ids:
+      - cyentia_global_ransomware_probability_2025
+
+  - id: cyentia_fin_services_ransomware_incident_share_2025
+    source_id: cyentia_iris_ransomware
+    source_name: Cyentia IRIS Ransomware
+    source_url_or_citation: https://www.cyentia.com/publication/iris-ransomware/
+    publication_date: "2025-04-21"
+    extraction_date: "2026-05-26"
+    citation_detail: Key findings on the public IRIS Ransomware source page.
+    fact: Cyentia reported that ransomware affects 15% of incidents in Financial Services.
+    value: 0.15
+    unit: share_of_sector_incidents
+    normalization_notes: Stored as contextual applicability evidence, not direct annual frequency.
+    limitations: Incident-share statistic, not annual probability or loss magnitude.
+    evidence_record_ids:
+      - cyentia_fin_services_ransomware_incident_share_2025
+
+  - id: cyentia_ransomware_security_incident_share_2025
+    source_id: cyentia_iris_ransomware
+    source_name: Cyentia IRIS Ransomware
+    source_url_or_citation: https://www.cyentia.com/publication/iris-ransomware/
+    publication_date: "2025-04-21"
+    extraction_date: "2026-05-26"
+    citation_detail: Key findings on the public IRIS Ransomware source page.
+    fact: Cyentia reported that ransomware accounted for 32% of security incidents over the prior five years.
+    value: 0.32
+    unit: share_of_security_incidents
+    normalization_notes: Stored as contextual threat-prevalence evidence.
+    limitations: Global cross-sector incident-share statistic.
+    evidence_record_ids:
+      - cyentia_ransomware_security_incident_share_2025
+
+  - id: oaic_au_ransomware_notifications_2024_h2
+    source_id: oaic_ndb_jul_dec_2024
+    source_name: OAIC Notifiable Data Breaches Report July to December 2024
+    source_url_or_citation: https://www.oaic.gov.au/__data/assets/pdf_file/0021/251184/Notifiable-data-breaches-report-July-to-December-2024.pdf
+    publication_date: "2025-05-13"
+    extraction_date: "2026-05-26"
+    citation_detail: Page 10, Table 3, cyber incident breakdown.
+    fact: OAIC reported 60 ransomware notifications under the Notifiable Data Breaches scheme for July to December 2024.
+    value: 60
+    unit: notifications
+    normalization_notes: Stored as a regulator notification count, not a probability.
+    limitations: Covers eligible Australian notifiable data breaches, not all ransomware events.
+    evidence_record_ids:
+      - oaic_au_ransomware_ndb_notifications_2024_h2
+
+  - id: oaic_au_finance_notifications_2024_h2
+    source_id: oaic_ndb_jul_dec_2024
+    source_name: OAIC Notifiable Data Breaches Report July to December 2024
+    source_url_or_citation: https://www.oaic.gov.au/__data/assets/pdf_file/0021/251184/Notifiable-data-breaches-report-July-to-December-2024.pdf
+    publication_date: "2025-05-13"
+    extraction_date: "2026-05-26"
+    citation_detail: Page 15, Table 5, top sectors by notifications.
+    fact: OAIC reported 54 notifications from Finance, including superannuation, for July to December 2024.
+    value: 54
+    unit: notifications
+    normalization_notes: Stored as sector context for Australian financial services.
+    limitations: Sector notification count is not ransomware-specific.
+    evidence_record_ids:
+      - oaic_au_finance_ndb_notifications_2024_h2
+
+  - id: asd_medium_business_cost_2025
+    source_id: asd_annual_cyber_threat_report_2024_2025
+    source_name: ASD Annual Cyber Threat Report 2024-2025
+    source_url_or_citation: https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025
+    publication_date: "2025-10-14"
+    extraction_date: "2026-05-26"
+    citation_detail: Average self-reported cybercrime cost for medium businesses; latest automated gather recorded a timeout for this source.
+    fact: ASD reported an average self-reported cybercrime cost of AUD 97,166 for medium businesses.
+    value: 97166
+    unit: currency
+    currency: AUD
+    normalization_notes: Rounded in evidence to AUD 100,000 for a conservative lower impact bound.
+    limitations: Latest source gather did not retrieve the raw ASD artifact; statistic is cybercrime-wide, not ransomware-specific.
+    evidence_record_ids:
+      - asd_medium_business_cybercrime_cost_2025
