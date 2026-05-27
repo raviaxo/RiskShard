@@ -43,6 +43,9 @@ org_profiles/            YAML organization context profiles
 provenance/              YAML source and evidence metadata
 taxonomies/              Vetted IDs and labels for dropdown-style inputs
 evidence/                Structured evidence records for benchmark matching
+extractions/             Reviewed source fact extractions mapped to evidence
+calibrations/            Calibration profiles and FX assumptions
+threat_library/          Starter threat scaffold for future top-risk workflows
 sources/                 Curated source registry and generated gather manifest
 library/benchmarks/      Benchmark source data and shard generation helper
 library/adapters/        Adapter/helper experiments
@@ -87,6 +90,28 @@ python scripts/fair_calc.py scenarios/au_finance_ransomware_midmarket.yaml \
 The contextual report is JSON and includes scenario parameters, organization context, control context, explicit assumptions, provenance records, evidence match rationale, confidence, baseline results, control-adjusted results, and delta.
 
 The current contextual multipliers are minimal estimated heuristics. They are labeled as estimated in the report and should be replaced with benchmark-backed calibration before real decision support.
+
+## Evidence Calibration
+
+RiskShard can generate a draft calibrated scenario from reviewed evidence:
+
+```bash
+python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.yaml \
+  --org-profile org_profiles/au_finance_midmarket.yaml \
+  --evidence evidence \
+  --calibration calibrations/au_finance_ransomware.yaml \
+  --threat ransomware \
+  --report-output results/au_finance_ransomware_calibration.json \
+  --scenario-output results/au_finance_ransomware_calibrated.yaml
+```
+
+The calibration report shows selected evidence, applicable but excluded evidence, normalization assumptions, currency conversion assumptions, warnings, and the generated `frequency.min/likely/max` and `impact.min/likely/max` ranges. Current FX rates live in `calibrations/fx_rates.yaml`; the included USD-to-AUD rate is an estimated planning assumption and must be replaced with a sourced rate before real decision use.
+
+Validate evidence quality gates with:
+
+```bash
+python scripts/validate_evidence.py
+```
 
 ## Tests
 
@@ -145,6 +170,10 @@ Taxonomies live in `taxonomies/` and are the vetted source for dropdown-style ID
 Evidence records live in `evidence/`. They are separate from scenarios: evidence records capture extracted facts and applicability, while scenarios remain simulation-ready inputs. Evidence matching explains whether each record is an exact match or a fallback for the supplied organization profile and threat.
 
 Source-backed evidence records should include `source_id` values that map to `sources/manifest.json`, plus a concise `citation_detail` describing where the fact appears in the source. Estimated or synthetic model assumptions must remain labeled as `estimated` or `synthetic`.
+
+Reviewed extraction records live in `extractions/` and document the fact pulled from a source before it becomes one or more structured evidence records.
+
+The starter threat library lives in `threat_library/`. It is a scaffold for future "top risks" workflows, not a complete calibrated benchmark library.
 
 ## Source Baseline
 

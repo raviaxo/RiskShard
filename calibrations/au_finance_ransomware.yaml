@@ -1,0 +1,44 @@
+metadata:
+  name: Australia financial-services ransomware calibration
+  scenario_name: Australia Finance Ransomware Midmarket - Calibrated Draft
+  version: "0.1"
+  notes: >
+    Minimal reviewed calibration profile. It uses source-backed facts where
+    available and keeps stress bounds as explicit estimated assumptions.
+
+target_currency: AUD
+
+parameters:
+  frequency:
+    min:
+      evidence_id: cyentia_global_ransomware_probability_2025
+      transform: direct
+      rationale: Global ransomware likelihood floor from Cyentia IRIS Ransomware.
+    likely:
+      evidence_id: sophos_fin_services_ransomware_frequency_2024
+      transform: direct
+      rationale: Financial-services ransomware survey rate from Sophos.
+    max:
+      evidence_id: riskshard_ransomware_frequency_upper_bound_2026
+      transform: direct
+      rationale: Explicit estimated stress bound until tail-frequency evidence is available.
+
+  impact:
+    min:
+      evidence_id: asd_medium_business_cybercrime_cost_2025
+      transform: direct
+      target_currency: AUD
+      round_to: 1000
+      rationale: Australia medium-business cybercrime cost context from ASD.
+    likely:
+      evidence_id: sophos_fin_services_ransomware_recovery_cost_2024
+      transform: currency_convert
+      target_currency: AUD
+      round_to: 10000
+      rationale: Sophos financial-services ransomware recovery cost converted from USD to AUD.
+    max:
+      evidence_id: riskshard_ransomware_impact_upper_bound_2026
+      transform: direct
+      target_currency: AUD
+      round_to: 10000
+      rationale: Explicit estimated stress bound until Australia-specific tail-loss evidence is available.

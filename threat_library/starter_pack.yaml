@@ -1,0 +1,87 @@
+metadata:
+  name: RiskShard starter threat library
+  version: "0.1"
+  notes: >
+    Vetted starter scaffold for future top-risk workflows. These entries are
+    not calibrated benchmark packs yet.
+
+threats:
+  - id: ransomware
+    label: Ransomware
+    status: evidence_pack_started
+    primary_loss_modes:
+      - recovery_cost
+      - business_interruption
+      - data_disclosure
+    required_evidence:
+      - annual_frequency
+      - sector_applicability
+      - recovery_cost
+      - tail_loss
+    starter_sources:
+      - verizon_dbir_2026
+      - cyentia_iris_ransomware
+      - sophos_state_ransomware_financial_services_2024
+
+  - id: data_breach
+    label: Data Breach
+    status: scaffold_only
+    primary_loss_modes:
+      - notification_cost
+      - response_cost
+      - regulatory_cost
+      - customer_impact
+    required_evidence:
+      - sector_notification_frequency
+      - breach_vector_mix
+      - records_impacted
+      - response_cost
+    starter_sources:
+      - verizon_dbir_2026
+      - oaic_ndb_jul_dec_2024
+
+  - id: business_email_compromise
+    label: Business Email Compromise
+    status: scaffold_only
+    primary_loss_modes:
+      - fraudulent_payment
+      - investigation_cost
+      - recovery_cost
+    required_evidence:
+      - payment-fraud frequency
+      - average fraudulent transfer
+      - recovery rate
+      - control effectiveness
+    starter_sources:
+      - verizon_dbir_2026
+
+  - id: third_party_outage
+    label: Third-Party Outage
+    status: scaffold_only
+    primary_loss_modes:
+      - business_interruption
+      - recovery_cost
+      - contractual_penalty
+    required_evidence:
+      - outage frequency
+      - duration distribution
+      - dependency criticality
+      - sector exposure
+    starter_sources:
+      - apra_cps_230
+      - verizon_dbir_2026
+
+  - id: insider_misuse
+    label: Insider Misuse
+    status: scaffold_only
+    primary_loss_modes:
+      - investigation_cost
+      - data_disclosure
+      - fraud_loss
+    required_evidence:
+      - insider incident frequency
+      - privilege level
+      - records_or_assets_impacted
+      - response_cost
+    starter_sources:
+      - verizon_dbir_2026

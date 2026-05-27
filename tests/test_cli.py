@@ -84,6 +84,48 @@ class CliSmokeTests(unittest.TestCase):
         self.assertIn("Confidence: low", result.stdout)
         self.assertIn("Evidence matches:", result.stdout)
 
+    def test_calibration_cli_writes_report_and_scenario(self):
+        env = os.environ.copy()
+        env["PYTHONPATH"] = str(ROOT)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            report_path = Path(tmp) / "calibration.json"
+            scenario_path = Path(tmp) / "calibrated.yaml"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    "scripts/calibrate_scenario.py",
+                    "scenarios/au_finance_ransomware_midmarket.yaml",
+                    "--org-profile",
+                    "org_profiles/au_finance_midmarket.yaml",
+                    "--evidence",
+                    "evidence",
+                    "--calibration",
+                    "calibrations/au_finance_ransomware.yaml",
+                    "--threat",
+                    "ransomware",
+                    "--report-output",
+                    str(report_path),
+                    "--scenario-output",
+                    str(scenario_path),
+                ],
+                cwd=ROOT,
+                env=env,
+                text=True,
+                capture_output=True,
+            )
+
+            self.assertEqual(
+                result.returncode,
+                0,
+                msg=f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}",
+            )
+            self.assertTrue(report_path.exists())
+            self.assertTrue(scenario_path.exists())
+
+        self.assertIn("=== CALIBRATED SCENARIO ===", result.stdout)
+        self.assertIn("Warnings :", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

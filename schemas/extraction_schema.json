@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RiskShard Reviewed Source Extractions Schema",
+  "type": "object",
+  "properties": {
+    "extractions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "source_id": { "type": "string" },
+          "source_name": { "type": "string" },
+          "source_url_or_citation": { "type": "string" },
+          "publication_date": { "type": "string" },
+          "extraction_date": { "type": "string" },
+          "citation_detail": { "type": "string" },
+          "fact": { "type": "string" },
+          "value": { "type": "number" },
+          "unit": { "type": "string" },
+          "currency": { "type": "string" },
+          "normalization_notes": { "type": "string" },
+          "limitations": { "type": "string" },
+          "evidence_record_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "id",
+          "source_id",
+          "source_name",
+          "source_url_or_citation",
+          "publication_date",
+          "extraction_date",
+          "citation_detail",
+          "fact",
+          "value",
+          "unit",
+          "normalization_notes",
+          "limitations",
+          "evidence_record_ids"
+        ]
+      }
+    }
+  },
+  "required": ["extractions"]
+}
