@@ -191,6 +191,8 @@ Gathering a source does not automatically make it a benchmark parameter. Extract
 
 For strategy brainstorming, start with:
 
+- [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md)
+- [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md)
 - [docs/CHATGPT_STRATEGY_BRIEF.md](docs/CHATGPT_STRATEGY_BRIEF.md)
 - [docs/CODEX_REPO_REVIEW.md](docs/CODEX_REPO_REVIEW.md)
 - [docs/roadmap.md](docs/roadmap.md)
