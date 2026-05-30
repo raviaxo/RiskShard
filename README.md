@@ -22,7 +22,6 @@ RiskShard aims to become a shared computation layer for cyber risk:
 - Loss Exceedance Curve chart generation
 - Optional JSON report export
 - Early benchmark-to-scenario generation helpers
-- Contextual single-scenario analysis using separate organization, control, and provenance inputs
 - Vetted YAML taxonomies and evidence matching for industry, country, company size, and threat context
 
 ## In Progress
@@ -70,26 +69,21 @@ python scripts/fair_calc.py scenarios --trials 10000 --dist pert --seed 42 --exp
 
 The command above runs every YAML scenario in `scenarios/`, prints portfolio statistics, saves a Loss Exceedance Curve to `results/`, and writes a JSON report when `--export` is included.
 
-## Contextual Analysis
+## Evidence Calibration
 
-RiskShard can also run one scenario against separate organization, control, and provenance inputs:
+RiskShard can generate a draft calibrated scenario from reviewed evidence:
 
 ```bash
-python scripts/fair_calc.py scenarios/au_finance_ransomware_midmarket.yaml \
+python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.yaml \
   --org-profile org_profiles/au_finance_midmarket.yaml \
-  --control-profile control_profiles/ransomware_basic_controls.yaml \
-  --provenance provenance/au_finance_ransomware_midmarket.yaml \
-  --threat ransomware \
   --evidence evidence \
-  --trials 10000 \
-  --dist pert \
-  --seed 42 \
-  --report-output results/au_finance_ransomware_contextual.json
+  --calibration calibrations/au_finance_ransomware.yaml \
+  --threat ransomware \
+  --report-output results/au_finance_ransomware_calibration.json \
+  --scenario-output results/au_finance_ransomware_calibrated.yaml
 ```
 
-The contextual report is JSON and includes scenario parameters, organization context, control context, explicit assumptions, provenance records, evidence match rationale, confidence, baseline results, control-adjusted results, and delta.
-
-The current contextual multipliers are minimal estimated heuristics. They are labeled as estimated in the report and should be replaced with benchmark-backed calibration before real decision support.
+The calibration report shows selected evidence, applicable but excluded evidence, normalization assumptions, currency conversion assumptions, warnings, and the generated `frequency.min/likely/max` and `impact.min/likely/max` ranges. Current FX rates live in `calibrations/fx_rates.yaml`; the included USD-to-AUD rate is an estimated planning assumption and must be replaced with a sourced rate before real decision use.
 
 ## Evidence Calibration
 
@@ -147,7 +141,7 @@ impact:
 
 The schema is intentionally small at this stage. The strategic question is whether RiskShard should remain a minimal simulation schema or evolve into a richer FAIR-style ontology for threat events, loss forms, controls, assumptions, confidence, and data provenance.
 
-## Context Input Files
+## Input Files
 
 Organization profiles live in `org_profiles/` and include:
 
@@ -160,6 +154,8 @@ Organization profiles live in `org_profiles/` and include:
 - `internet_exposure`
 - `third_party_dependency`
 - `regulatory_intensity`
+
+Organization profiles are used for evidence matching to find the most relevant evidence records for a specific organization context.
 
 Control profiles live in `control_profiles/` and remain transformations over the scenario, not embedded scenario properties.
 
