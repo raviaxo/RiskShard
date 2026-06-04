@@ -7,7 +7,16 @@ from engine.calibration import (
     write_calibration_markdown_report,
     write_calibration_report,
 )
+from engine.calibration_assistant import (
+    format_module_calibration_proposal,
+    propose_module_calibration,
+)
 from engine.evidence_quality import has_errors, validate_evidence_quality
+from engine.evidence_packs import (
+    build_evidence_pack_registry,
+    format_evidence_pack_detail,
+    format_evidence_pack_registry,
+)
 from engine.experience import analyze_gaps, format_gap_analysis, format_top_risks, rank_top_risks
 from engine.experience import format_calibration_proposal, propose_calibration
 from engine.fair_calc import export_report, load_and_validate, plot_lec, run_portfolio
@@ -20,6 +29,13 @@ from engine.data_packs import build_data_pack_manifest, format_data_pack_manifes
 from engine.contributor import build_contributor_preflight, format_contributor_preflight
 from engine.doctor import build_doctor_report, format_doctor_report
 from engine.readiness import build_readiness_dashboard, format_next_actions, format_readiness_dashboard
+from engine.risk_modules import (
+    find_risk_module,
+    format_module_detail,
+    format_module_list,
+    module_for_scenario,
+    search_risk_modules,
+)
 from engine.scenarios import scenario_paths, scenario_stage_label
 
 
@@ -37,6 +53,7 @@ class RiskShardConsole(cmd.Cmd):
         self.root = Path(root)
         self.scenario_path = None
         self.active_run_path = None
+        self.module_id = None
         self.last_calibration_report = None
         self.last_run = None
         self.last_paths = {}
@@ -86,35 +103,47 @@ class RiskShardConsole(cmd.Cmd):
         del arg
         self.write("First-run workflow\n")
         self.write("1. toprisks\n")
-        self.write("2. feeds\n")
-        self.write("3. doctor\n")
-        self.write("4. readiness\n")
-        self.write("5. next\n")
-        self.write("6. preflight\n")
-        self.write("7. search ransomware\n")
-        self.write("8. use au_finance_ransomware_midmarket\n")
-        self.write("9. show options\n")
-        self.write("10. show gaps\n")
-        self.write("11. propose\n")
-        self.write("12. calibrate\n")
-        self.write("13. show evidence\n")
-        self.write("14. explain\n")
-        self.write("15. run\n")
-        self.write("16. report json\n")
+        self.write("2. modules\n")
+        self.write("3. modules info au_finance_ransomware_midmarket\n")
+        self.write("4. packs au_finance_ransomware_midmarket\n")
+        self.write("5. feeds\n")
+        self.write("6. doctor\n")
+        self.write("7. readiness\n")
+        self.write("8. next\n")
+        self.write("9. preflight\n")
+        self.write("10. use au_finance_ransomware_midmarket\n")
+        self.write("11. show options\n")
+        self.write("12. show gaps\n")
+        self.write("13. propose\n")
+        self.write("14. calibrate\n")
+        self.write("15. show evidence\n")
+        self.write("16. explain\n")
+        self.write("17. run\n")
+        self.write("18. report json\n")
         return None
 
     def help_workflow(self):
         self.do_workflow("")
 
     def do_use(self, arg):
-        """use <scenario-id|path> - Select a scenario and apply obvious defaults."""
+        """use <module-id|scenario-id|path> - Select a module or scenario."""
+        module = find_risk_module(arg.strip(), self.root)
+        if module is not None:
+            self.select_module(module)
+            self.refresh_prompt()
+            self.write(f"Using module {module['id']}: {module['title']}\n")
+            self.write("Run 'packs', 'show options', then 'propose', 'calibrate', or 'run'.\n")
+            return None
+
         path = resolve_scenario(self.root, arg.strip())
         if path is None:
-            self.write("Scenario not found. Try 'search'.\n")
+            self.write("Module or scenario not found. Try 'modules' or 'search'.\n")
             return None
 
         self.scenario_path = path
         self.active_run_path = path
+        module = module_for_scenario(path, self.root)
+        self.module_id = module["id"] if module else None
         self.apply_recommendations(path)
         self.refresh_prompt()
 
@@ -142,6 +171,25 @@ class RiskShardConsole(cmd.Cmd):
         if metadata.get("description"):
             self.write(f"Notes     : {metadata['description'].strip()}\n")
         return None
+
+    def do_modules(self, arg):
+        """modules [search terms]|info <module-id> - Search or inspect risk modules."""
+        parts = arg.split(maxsplit=1)
+        if parts and parts[0] == "info":
+            module = find_risk_module(parts[1] if len(parts) > 1 else self.module_id, self.root)
+            if module is None:
+                self.write("Module not found. Try 'modules'.\n")
+                return None
+            self.write(format_module_detail(module))
+            return None
+
+        query = arg.strip()
+        self.write(format_module_list(search_risk_modules(query, self.root)))
+        return None
+
+    def do_module(self, arg):
+        """module - Alias for modules."""
+        return self.do_modules(arg)
 
     def do_show(self, arg):
         """show options|evidence|warnings|assumptions|gaps - Inspect current state."""
@@ -350,6 +398,23 @@ class RiskShardConsole(cmd.Cmd):
         self.write(format_feed_detail(feed))
         return None
 
+    def do_packs(self, arg):
+        """packs [module-id] - Inspect governed evidence packs for risk modules."""
+        module_id = arg.strip() or self.module_id
+        registry = build_evidence_pack_registry(self.root, module_id=module_id)
+        if module_id:
+            if not registry["packs"]:
+                self.write(f"Unknown evidence pack module: {module_id}\n")
+                return None
+            self.write(format_evidence_pack_detail(registry["packs"][0]))
+            return None
+        self.write(format_evidence_pack_registry(registry))
+        return None
+
+    def do_evidencepacks(self, arg):
+        """evidencepacks - Alias for packs."""
+        return self.do_packs(arg)
+
     def do_sources(self, arg):
         """sources [source-id] - Alias for feeds."""
         return self.do_feeds(arg)
@@ -380,8 +445,19 @@ class RiskShardConsole(cmd.Cmd):
         return None
 
     def do_propose(self, arg):
-        """propose [threat] - Propose best evidence selectors for calibration."""
-        threat = arg.strip() or self.options["threat"] or infer_threat(self.scenario_path) or "ransomware"
+        """propose [module-id|threat] - Propose evidence selectors for calibration."""
+        target = arg.strip() or self.module_id or self.options["threat"] or "au_finance_ransomware_midmarket"
+        module = find_risk_module(target, self.root) if target else None
+        if module is not None:
+            proposal = propose_module_calibration(
+                module["id"],
+                root=self.root,
+                org_profile_path=self.options["org_profile"] or self.root / module["artifacts"]["org_profile"],
+            )
+            self.write(format_module_calibration_proposal(proposal))
+            return None
+
+        threat = target or self.options["threat"] or infer_threat(self.scenario_path) or "ransomware"
         proposal = propose_calibration(self.ensure_org_profile(), threat)
         self.write(format_calibration_proposal(proposal))
         return None
@@ -436,6 +512,7 @@ class RiskShardConsole(cmd.Cmd):
         return self.do_exit(arg)
 
     def show_options(self):
+        self.write(f"Module        : {self.module_id or 'unset'}\n")
         self.write(f"Scenario      : {format_option(self.scenario_path, self.root)}\n")
         self.write(f"Run target    : {format_option(self.active_run_path, self.root)}\n")
         for key in [
@@ -515,6 +592,19 @@ class RiskShardConsole(cmd.Cmd):
             self.options["org_profile"] = self.root / "org_profiles" / "au_finance_midmarket.yaml"
             self.options["calibration"] = self.root / "calibrations" / "au_finance_business_email_compromise.yaml"
             self.options["threat"] = "business_email_compromise"
+        if stem == "data_breach":
+            self.options["org_profile"] = self.root / "org_profiles" / "au_finance_midmarket.yaml"
+            self.options["calibration"] = self.root / "calibrations" / "au_finance_data_breach.yaml"
+            self.options["threat"] = "data_breach"
+
+    def select_module(self, module):
+        self.module_id = module["id"]
+        artifacts = module["artifacts"]
+        self.scenario_path = self.root / artifacts["scenario"]
+        self.active_run_path = self.scenario_path
+        self.options["org_profile"] = self.root / artifacts["org_profile"]
+        self.options["calibration"] = self.root / artifacts["calibration"]
+        self.options["threat"] = module["threat"]
 
     def refresh_prompt(self):
         if self.scenario_path:

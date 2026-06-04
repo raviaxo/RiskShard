@@ -24,6 +24,8 @@ RiskShard aims to become a shared computation layer for cyber risk:
 - Per-scenario RNG isolation and seed metadata for seeded JSON exports
 - Interactive practitioner console for search, calibration, simulation, reports, and validation
 - Local `doctor` command for environment, source, evidence, extraction, scenario, readiness, package, data-pack, and test-readiness checks
+- Risk module catalog for Metasploit-style `modules`, `info`, `use`, `packs`, `propose`, `calibrate`, and `run` workflows
+- Evidence-pack registry that shows source gather dates, evidence ingestion dates, trust tier, confidence, renewal status, and remaining assumptions per module
 - Reviewed source-to-extraction-to-evidence-to-calibration workflow
 - Governed starter vs demo fixture labels in scenario metadata, CLI output, readiness, and console search
 - Vetted YAML taxonomies and evidence matching for industry, country, company size, and threat context
@@ -49,6 +51,7 @@ evidence/                Structured evidence records for benchmark matching
 extractions/             Reviewed source fact extractions mapped to evidence
 calibrations/            Calibration profiles and FX assumptions
 threat_library/          Starter threat scaffold for future top-risk workflows
+risk_modules/            Practitioner-facing module descriptors
 sources/                 Curated source registry and generated gather manifest
 library/benchmarks/      Legacy benchmark fixture data
 scenarios/               YAML risk shards and demo fixtures
@@ -91,14 +94,17 @@ Then try:
 ```text
 riskshard> workflow
 riskshard> toprisks
+riskshard> modules
+riskshard> modules info au_finance_ransomware_midmarket
+riskshard> packs au_finance_ransomware_midmarket
 riskshard> doctor
 riskshard> readiness
 riskshard> next
 riskshard> feeds
-riskshard> search ransomware
 riskshard> use au_finance_ransomware_midmarket
 riskshard(au_finance_ransomware_midmarket)> show options
 riskshard(au_finance_ransomware_midmarket)> show gaps
+riskshard(au_finance_ransomware_midmarket)> propose
 riskshard(au_finance_ransomware_midmarket)> calibrate
 riskshard(au_finance_ransomware_midmarket)> show evidence
 riskshard(au_finance_ransomware_midmarket)> explain
@@ -155,6 +161,19 @@ python scripts/readiness_dashboard.py
 
 The readiness view also exposes a gate and prioritized next actions so practitioners can see whether a shard is blocked, source-review-needed, assumption-review-needed, or ready for a local calibrated run.
 
+Inspect risk modules and evidence packs with:
+
+```bash
+python scripts/riskshard_modules.py list
+python scripts/riskshard_modules.py info au_finance_ransomware_midmarket
+python scripts/riskshard_modules.py packs au_finance_ransomware_midmarket
+python scripts/riskshard_modules.py propose au_finance_ransomware_midmarket
+```
+
+Risk modules are the current Metasploit-style front door: they bind a scenario,
+organization profile, calibration profile, evidence files, extraction files,
+control profiles, and governed source feeds into one searchable unit.
+
 Run the local doctor with:
 
 ```bash
@@ -183,6 +202,7 @@ RiskShard can still be run directly from `scripts/`, but `pyproject.toml` also d
 - `riskshard-data-pack`
 - `riskshard-preflight`
 - `riskshard-doctor`
+- `riskshard-modules`
 
 ## Tests
 
@@ -243,6 +263,11 @@ Provenance files live in `provenance/` and label every evidence record as `sourc
 Taxonomies live in `taxonomies/` and are the vetted source for dropdown-style IDs such as `financial_services`, `AU`, `mid_market`, and `ransomware`.
 
 Evidence records live in `evidence/`. They are separate from scenarios: evidence records capture extracted facts and applicability, while scenarios remain simulation-ready inputs. Evidence matching explains whether each record is an exact match or a fallback for the supplied organization profile and threat.
+
+Risk modules live in `risk_modules/`. They do not change the simulation schema;
+they describe the practitioner workflow around a shard: scenario, default
+organization profile, calibration profile, evidence pack, reviewed extractions,
+controls, tags, and what the module is or is not good for.
 
 Source-backed evidence records should include `source_id` values that map to `sources/manifest.json`, plus a concise `citation_detail` describing where the fact appears in the source. Estimated or synthetic model assumptions must remain labeled as `estimated` or `synthetic`.
 

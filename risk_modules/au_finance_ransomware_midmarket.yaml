@@ -1,0 +1,38 @@
+id: au_finance_ransomware_midmarket
+title: Australia Finance Ransomware Midmarket
+version: "0.1"
+status: governed_starter
+threat: ransomware
+description: >
+  Starter ransomware risk shard for an Australian mid-market financial-services
+  organization. It is runnable and source-governed, but still has estimated
+  frequency and tail-impact assumptions.
+context:
+  industry: financial_services
+  country: AU
+  company_size: mid_market
+artifacts:
+  scenario: scenarios/au_finance_ransomware_midmarket.yaml
+  org_profile: org_profiles/au_finance_midmarket.yaml
+  calibration: calibrations/au_finance_ransomware.yaml
+  evidence:
+    - evidence/au_finance_ransomware.yaml
+  extractions:
+    - extractions/au_finance_ransomware_reviewed.yaml
+  controls:
+    - control_profiles/ransomware_basic_controls.yaml
+required_parameters:
+  - frequency.min
+  - frequency.likely
+  - frequency.max
+  - impact.min
+  - impact.likely
+  - impact.max
+tags:
+  - au
+  - financial_services
+  - mid_market
+  - ransomware
+practitioner_notes:
+  good_for: Local calibrated run, evidence review, control comparison walkthrough.
+  not_good_for: Benchmark-grade Australia ransomware frequency or stress-loss decisions.

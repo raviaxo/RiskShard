@@ -320,6 +320,9 @@ INDEX_HTML = """<!doctype html>
         <button data-command="doctor">Doctor</button>
         <button class="primary" data-command="next">Next actions</button>
         <button data-command="toprisks">Top risks</button>
+        <button data-command="modules">Risk modules</button>
+        <button data-command="modules info au_finance_ransomware_midmarket">Module info</button>
+        <button data-command="packs au_finance_ransomware_midmarket">Evidence pack</button>
         <button data-command="feeds">Data feeds</button>
         <button data-command="pack">Data pack</button>
         <button data-command="preflight">Contributor check</button>
@@ -404,6 +407,8 @@ INDEX_HTML = """<!doctype html>
       const localization = data.localization;
       const gate = data.readiness_gate;
       const scenarios = data.scenarios?.stage_counts || {};
+      const modules = data.risk_modules || {};
+      const packs = data.evidence_packs || {};
       const actions = data.next_actions.slice(0, 4);
       const problemFeeds = feeds.problem_feeds.slice(0, 3);
       const topRisks = data.top_risks.slice(0, 5);
@@ -412,7 +417,7 @@ INDEX_HTML = """<!doctype html>
           <div class="metric"><div class="metric-label">Readiness gate</div><div class="metric-value">${displayStatus(gate.status)}</div></div>
           <div class="metric"><div class="metric-label">Evidence records</div><div class="metric-value">${coverage.evidence_records}</div></div>
           <div class="metric"><div class="metric-label">Source-backed</div><div class="metric-value">${coverage.source_backed_records}</div></div>
-          <div class="metric"><div class="metric-label">Governed starters</div><div class="metric-value">${scenarios.governed_starter || 0}</div></div>
+          <div class="metric"><div class="metric-label">Risk modules</div><div class="metric-value">${modules.module_count || 0}</div></div>
         </div>
         <div class="section">
           <div class="section-title"><span>Next Actions</span><span class="badge ${badgeClass(gate.status)}">${displayStatus(gate.status)}</span></div>
@@ -453,6 +458,14 @@ INDEX_HTML = """<!doctype html>
               <div class="item">
                 <div class="item-row"><strong>Scenarios</strong><span class="badge good">${scenarios.governed_starter || 0} governed</span></div>
                 <div class="item-meta">${scenarios.demo_fixture || 0} demo fixtures; labels are stored in scenario metadata</div>
+              </div>
+              <div class="item">
+                <div class="item-row"><strong>Risk modules</strong><span class="badge good">${modules.module_count || 0} modules</span></div>
+                <div class="item-meta">${Object.keys(modules.status_counts || {}).join(", ") || "no modules"}; threats ${(modules.threats || []).join(", ") || "none"}</div>
+              </div>
+              <div class="item">
+                <div class="item-row"><strong>Evidence packs</strong><span class="badge ${packs.low_confidence_packs?.length ? "warn" : "good"}">${packs.pack_count || 0} packs</span></div>
+                <div class="item-meta">${Object.keys(packs.freshness_counts || {}).join(", ") || "no pack freshness"}; low confidence ${(packs.low_confidence_packs || []).length}</div>
               </div>
               <div class="item">
                 <div class="item-row"><strong>Localization</strong><span class="badge ${localization.covered_countries.length ? "warn" : "bad"}">${localization.covered_countries.length} countries</span></div>

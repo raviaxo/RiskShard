@@ -16,8 +16,13 @@ class DataPackTests(unittest.TestCase):
         self.assertGreater(manifest["file_count"], 10)
         self.assertEqual(len(manifest["fingerprint"]), 64)
         self.assertIn("sources/manifest.json", manifest["paths"])
+        self.assertIn("risk_modules", manifest["paths"])
         self.assertIn(
             "evidence/au_finance_ransomware.yaml",
+            {item["path"] for item in manifest["files"]},
+        )
+        self.assertIn(
+            "risk_modules/au_finance_ransomware_midmarket.yaml",
             {item["path"] for item in manifest["files"]},
         )
 

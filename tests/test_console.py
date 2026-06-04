@@ -23,6 +23,7 @@ class ConsoleTests(unittest.TestCase):
     def test_search_and_use_selects_recommended_calibration_inputs(self):
         workflow_output = self.command("workflow")
         self.assertIn("First-run workflow", workflow_output)
+        self.assertIn("modules", workflow_output)
         self.assertIn("use au_finance_ransomware_midmarket", workflow_output)
 
         search_output = self.command("search ransomware")
@@ -32,17 +33,18 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn("Ransomware", search_output)
 
         use_output = self.command("use au_finance_ransomware_midmarket")
-        self.assertIn("Using Australia Finance Ransomware Midmarket", use_output)
+        self.assertIn("Using module au_finance_ransomware_midmarket", use_output)
         self.assertIn("show options", use_output)
 
         options_output = self.command("show options")
+        self.assertIn("Module        : au_finance_ransomware_midmarket", options_output)
         self.assertIn("scenarios/au_finance_ransomware_midmarket.yaml", options_output)
         self.assertIn("org_profiles/au_finance_midmarket.yaml", options_output)
         self.assertIn("calibrations/au_finance_ransomware.yaml", options_output)
         self.assertIn("threat       : ransomware", options_output)
 
         bec_output = self.command("use business_email_compromise")
-        self.assertIn("Using Business Email Compromise", bec_output)
+        self.assertIn("Using module au_finance_bec_midmarket", bec_output)
         bec_options = self.command("show options")
         self.assertIn("calibrations/au_finance_business_email_compromise.yaml", bec_options)
         self.assertIn("threat       : business_email_compromise", bec_options)
@@ -113,8 +115,23 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn("Fingerprint:", pack_output)
 
         proposal_output = self.command("propose data_breach")
-        self.assertIn("Calibration proposal: data_breach", proposal_output)
-        self.assertIn("Candidate selectors", proposal_output)
+        self.assertIn("Module calibration proposal: au_finance_data_breach_midmarket", proposal_output)
+        self.assertIn("Selectors", proposal_output)
+
+        modules_output = self.command("modules")
+        self.assertIn("Risk modules", modules_output)
+        self.assertIn("au_finance_ransomware_midmarket", modules_output)
+
+        module_info = self.command("modules info au_finance_ransomware_midmarket")
+        self.assertIn("Risk module: au_finance_ransomware_midmarket", module_info)
+
+        packs_output = self.command("packs au_finance_ransomware_midmarket")
+        self.assertIn("Evidence pack: au_finance_ransomware_midmarket", packs_output)
+        self.assertIn("source_gathered", packs_output)
+
+        module_proposal = self.command("propose au_finance_ransomware_midmarket")
+        self.assertIn("Module calibration proposal: au_finance_ransomware_midmarket", module_proposal)
+        self.assertIn("selected_assumption", module_proposal)
 
         preflight_output = self.command("preflight")
         self.assertIn("Contributor preflight", preflight_output)

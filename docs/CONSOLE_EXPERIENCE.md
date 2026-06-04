@@ -1,12 +1,14 @@
 # RiskShard Console Experience
 
-Last updated: 2026-06-03
+Last updated: 2026-06-04
 
 The RiskShard console is a lightweight interactive shell for practitioners who want a guided workflow without leaving the CLI.
 
 It is intentionally closer to a Metasploit-style console than a web app:
 
-- Find available risk shards with `search`.
+- Find available risk shards with `modules` or `search`.
+- Inspect module metadata with `modules info <module-id>`.
+- Inspect governed evidence packs with `packs <module-id>`.
 - Select one with `use`.
 - Inspect ranges and context with `info` and `show options`.
 - Inspect global readiness with `readiness`.
@@ -34,12 +36,14 @@ python scripts/riskshard_web_console.py
 python scripts/riskshard_console.py
 riskshard> workflow
 riskshard> toprisks
+riskshard> modules
+riskshard> modules info au_finance_ransomware_midmarket
+riskshard> packs au_finance_ransomware_midmarket
 riskshard> doctor
 riskshard> readiness
 riskshard> next
 riskshard> feeds
 riskshard> pack
-riskshard> search ransomware
 riskshard> use au_finance_ransomware_midmarket
 riskshard(au_finance_ransomware_midmarket)> show options
 riskshard(au_finance_ransomware_midmarket)> show gaps
@@ -51,7 +55,18 @@ riskshard(au_finance_ransomware_midmarket)> run
 riskshard(au_finance_ransomware_midmarket)> report json
 ```
 
-For the canonical Australia finance ransomware shard, `use` pre-fills the known org profile, calibration profile, and threat ID so a junior practitioner can reach a calibrated scenario quickly while still seeing every input.
+For governed starter modules, `use` pre-fills the known org profile, calibration profile, and threat ID so a junior practitioner can reach a calibrated scenario quickly while still seeing every input.
+
+## Module And Pack UX
+
+Risk modules live in `risk_modules/` and bind together the scenario, default
+organization profile, calibration profile, evidence files, reviewed extractions,
+and optional control profiles for a practitioner workflow.
+
+Evidence packs are derived from those module descriptors. The `packs` command
+shows direct parameter coverage, assumption-only parameters, source-backed
+record counts, source gather timestamps, evidence ingestion dates, trust tiers,
+confidence, renewal status, and renewal due dates.
 
 Scenario search and readiness output label each scenario as either `governed starter` or `demo fixture`. This keeps older smoke-test examples useful without making them look decision-ready.
 
