@@ -2,6 +2,11 @@
 
 RiskShard scenarios remain intentionally small: `frequency.min/likely/max` and `impact.min/likely/max`.
 
+Each scenario should include `metadata.scenario_stage`:
+
+- `governed_starter`: calibrated workflow starter with matching evidence and calibration profile.
+- `demo_fixture`: smoke-test or example fixture that is not decision-ready.
+
 ## Current Calibrated-Workflow Starters
 
 These are the best first-run shards because they have matching evidence and calibration profiles:

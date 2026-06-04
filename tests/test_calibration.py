@@ -172,10 +172,10 @@ class CalibrationTests(unittest.TestCase):
         }
 
         self.assertEqual(scenario["frequency"], {"min": 0.04, "likely": 0.12, "max": 0.25})
-        self.assertEqual(scenario["impact"], {"min": 25000, "likely": 170000, "max": 1500000})
+        self.assertEqual(scenario["impact"], {"min": 33000, "likely": 170000, "max": 1500000})
         self.assertEqual(
             warning_codes.count("parameter_from_non_source_backed_evidence"),
-            5,
+            4,
         )
         self.assertEqual(
             selected_types,
@@ -183,7 +183,7 @@ class CalibrationTests(unittest.TestCase):
                 "frequency.min": "estimated",
                 "frequency.likely": "estimated",
                 "frequency.max": "estimated",
-                "impact.min": "estimated",
+                "impact.min": "source_backed",
                 "impact.likely": "source_backed",
                 "impact.max": "estimated",
             },

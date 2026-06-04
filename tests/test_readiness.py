@@ -20,6 +20,8 @@ class ReadinessTests(unittest.TestCase):
         self.assertTrue(dashboard["install_release"]["pyproject"])
         self.assertEqual(len(dashboard["data_pack"]["fingerprint"]), 64)
         self.assertGreaterEqual(len(dashboard["top_risks"]), 5)
+        self.assertEqual(dashboard["scenarios"]["stage_counts"]["governed_starter"], 3)
+        self.assertEqual(dashboard["scenarios"]["stage_counts"]["demo_fixture"], 5)
         self.assertEqual(
             dashboard["readiness_gate"]["status"],
             "ready_for_local_calibrated_run",
@@ -36,6 +38,7 @@ class ReadinessTests(unittest.TestCase):
         self.assertIn("Gate: ready_for_local_calibrated_run", output)
         self.assertIn("Next actions", output)
         self.assertIn("Data pack:", output)
+        self.assertIn("Scenarios: demo_fixture=5, governed_starter=3", output)
         self.assertIn("Installable package: True", output)
 
 

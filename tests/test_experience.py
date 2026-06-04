@@ -34,7 +34,7 @@ class ExperienceTests(unittest.TestCase):
         self.assertEqual(by_id["data_breach"]["assumption_parameters"], 2)
         self.assertEqual(by_id["ransomware"]["assumption_parameters"], 2)
         self.assertTrue(by_id["business_email_compromise"]["calibration_profile_exists"])
-        self.assertEqual(by_id["business_email_compromise"]["assumption_parameters"], 5)
+        self.assertEqual(by_id["business_email_compromise"]["assumption_parameters"], 4)
         self.assertEqual(rows[0]["id"], "data_breach")
         self.assertEqual(rows[1]["id"], "ransomware")
         self.assertEqual(rows[2]["id"], "business_email_compromise")

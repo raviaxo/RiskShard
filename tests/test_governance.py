@@ -35,7 +35,7 @@ class GovernanceTests(unittest.TestCase):
         self.assertEqual(fbi["trust_tier"], "high")
         self.assertEqual(fbi["evidence_record_count"], 3)
         self.assertEqual(accc["trust_tier"], "high")
-        self.assertEqual(accc["evidence_record_count"], 4)
+        self.assertEqual(accc["evidence_record_count"], 5)
         self.assertEqual(business_qld["source_status"], "fetched")
         self.assertEqual(business_qld["trust_tier"], "medium")
         self.assertEqual(business_qld["evidence_record_count"], 1)

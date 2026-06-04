@@ -10,6 +10,7 @@ It is intentionally closer to a Metasploit-style console than a web app:
 - Select one with `use`.
 - Inspect ranges and context with `info` and `show options`.
 - Inspect global readiness with `readiness`.
+- Run local setup/source/evidence/scenario/package checks with `doctor`.
 - Get prioritized blockers and next commands with `next`.
 - Inspect data-pack fingerprints with `pack`.
 - Rank starter threats with `toprisks`.
@@ -33,6 +34,7 @@ python scripts/riskshard_web_console.py
 python scripts/riskshard_console.py
 riskshard> workflow
 riskshard> toprisks
+riskshard> doctor
 riskshard> readiness
 riskshard> next
 riskshard> feeds
@@ -51,6 +53,8 @@ riskshard(au_finance_ransomware_midmarket)> report json
 
 For the canonical Australia finance ransomware shard, `use` pre-fills the known org profile, calibration profile, and threat ID so a junior practitioner can reach a calibrated scenario quickly while still seeing every input.
 
+Scenario search and readiness output label each scenario as either `governed starter` or `demo fixture`. This keeps older smoke-test examples useful without making them look decision-ready.
+
 ## Design Rules
 
 - Keep commands discoverable and boring.
@@ -61,7 +65,6 @@ For the canonical Australia finance ransomware shard, `use` pre-fills the known 
 
 ## Next Console Improvements
 
-- Add clearer BEC workflow shortcuts now that the starter calibration profile exists.
 - Add clearer guidance for moving `calibrated_with_assumptions` shards to fully source-backed `calibrated` status.
 - Add one-click source/feed details from each dashboard action.
 - Add copyable run/calibration commands for selected shards.

@@ -1,6 +1,7 @@
 metadata:
   name: Finance Ransomware Shard
   version: '1.0'
+  scenario_stage: demo_fixture
   source: DBIR 2025 / IRIS 2024
 frequency:
   min: 0.075

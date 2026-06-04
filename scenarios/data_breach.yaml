@@ -1,5 +1,9 @@
 metadata:
   name: Data Breach
+  version: "0.1"
+  currency: AUD
+  scenario_stage: governed_starter
+  benchmark_status: starter_with_source_backed_impact
 
 frequency:
   min: 0.05

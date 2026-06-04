@@ -2,6 +2,7 @@ metadata:
   name: Australia Finance Ransomware Midmarket
   version: "0.2"
   currency: AUD
+  scenario_stage: governed_starter
   benchmark_status: source_backed_with_estimated_bounds
   description: >
     Canonical benchmark-backed shard for a small or mid-market

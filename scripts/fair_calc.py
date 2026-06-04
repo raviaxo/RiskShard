@@ -20,11 +20,17 @@ def build_parser():
     return parser
 
 
-def print_full_report(shard_stats, portfolio_stats):
+def print_full_report(shard_stats, portfolio_stats, metadata=None):
+    scenario_meta = {
+        item["name"]: item
+        for item in (metadata or {}).get("reproducibility", {}).get("scenarios", [])
+    }
     print("\n=== SHARD RESULTS ===")
 
     for name, stats in shard_stats.items():
+        stage = scenario_meta.get(name, {}).get("stage_label", "unknown stage")
         print(f"\n{name}")
+        print(f"  STAGE: {stage}")
         print(f"  AVG : ${stats['mean']:,.2f}")
         print(f"  P95 : ${stats['p95']:,.2f}")
 
@@ -55,7 +61,7 @@ def main(argv=None):
     lec_path = plot_lec(run["aggregate"], "Portfolio")
     print(f"LEC saved: {lec_path}")
 
-    print_full_report(run["shards"], run["portfolio"])
+    print_full_report(run["shards"], run["portfolio"], run["metadata"])
 
     if args.export:
         report_path = export_report(run["shards"], run["portfolio"], metadata=run["metadata"])

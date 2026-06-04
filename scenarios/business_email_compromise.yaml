@@ -2,6 +2,7 @@ metadata:
   name: Business Email Compromise
   version: "0.1"
   currency: AUD
+  scenario_stage: governed_starter
   benchmark_status: starter_with_source_backed_likely_loss
   description: >
     Starter Australia financial-services BEC shard. Frequency and impact bounds

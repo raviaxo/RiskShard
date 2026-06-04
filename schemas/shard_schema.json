@@ -7,7 +7,15 @@
       "type": "object",
       "properties": {
         "name": { "type": "string" },
-        "version": { "type": "string" }
+        "version": { "type": "string" },
+        "currency": { "type": "string" },
+        "benchmark_status": { "type": "string" },
+        "scenario_stage": {
+          "type": "string",
+          "enum": ["governed_starter", "demo_fixture"]
+        },
+        "description": { "type": "string" },
+        "source": { "type": "string" }
       },
       "required": ["name"]
     },

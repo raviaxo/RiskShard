@@ -1,6 +1,7 @@
 metadata:
   name: "SaaS Ransomware Attack"
   version: "2.0"
+  scenario_stage: demo_fixture
 
 # Magnitude of a single event
 impact:

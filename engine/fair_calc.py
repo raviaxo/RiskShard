@@ -8,6 +8,8 @@ from pathlib import Path
 import yaml
 from jsonschema import validate
 
+from engine.scenarios import scenario_stage, scenario_stage_label
+
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 SCHEMA_PATH = PROJECT_ROOT / "schemas" / "shard_schema.json"
@@ -166,6 +168,9 @@ def run_portfolio(path, trials=10000, dist_type="pert", seed=None, schema_path=S
             metadata["reproducibility"]["scenarios"].append({
                 "name": name,
                 "path": str(scenario_path),
+                "stage": scenario_stage(config),
+                "stage_label": scenario_stage_label(config),
+                "benchmark_status": config.get("metadata", {}).get("benchmark_status", "unspecified"),
                 "seed": scenario_seed,
                 "fingerprint": scenario_fingerprint(config),
             })
