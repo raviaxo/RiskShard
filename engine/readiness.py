@@ -183,7 +183,7 @@ def module_next_gap(pack):
         )
         if parameter:
             return f"{label} {parameter}"
-    if pack["pack_confidence"] == "low":
+    if pack["pack_confidence"] in {"low", "medium"}:
         return "review low-confidence source-backed evidence"
     return "ready for practitioner review"
 

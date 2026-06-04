@@ -30,9 +30,9 @@ class ReadinessTests(unittest.TestCase):
             row for row in dashboard["evidence_packs"]["coverage_matrix"]
             if row["module_id"] == "gb_finance_data_breach_midmarket"
         )
-        self.assertEqual(gb["source_backed_direct"], 5)
-        self.assertEqual(gb["assumption_only_direct"], 1)
-        self.assertIn("impact.max", gb["next_gap"])
+        self.assertEqual(gb["source_backed_direct"], 6)
+        self.assertEqual(gb["assumption_only_direct"], 0)
+        self.assertEqual(gb["next_gap"], "review low-confidence source-backed evidence")
         self.assertEqual(
             dashboard["readiness_gate"]["status"],
             "ready_for_local_calibrated_run",
@@ -53,7 +53,7 @@ class ReadinessTests(unittest.TestCase):
         self.assertIn("Risk modules: 5", output)
         self.assertIn("Evidence packs: 5", output)
         self.assertIn("Module coverage matrix", output)
-        self.assertIn("gb_finance_data_breach_midmarket: 5/6 source-backed", output)
+        self.assertIn("gb_finance_data_breach_midmarket: 6/6 source-backed", output)
         self.assertIn("Installable package: True", output)
 
 

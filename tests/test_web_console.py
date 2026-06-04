@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from engine.web_console import WebConsoleApp
+from engine.web_console import INDEX_HTML, WebConsoleApp
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -50,6 +50,10 @@ class WebConsoleTests(unittest.TestCase):
         proposal = app.run_command("propose")
         self.assertIn("Module calibration proposal: au_finance_ransomware_midmarket", proposal["output"])
 
+        gb_proposal = app.run_command("propose gb_finance_data_breach_midmarket")
+        self.assertIn("country=GB", gb_proposal["output"])
+        self.assertIn("Ready without assumptions: True", gb_proposal["output"])
+
         actions = app.run_command("next")
         self.assertIn("Next best actions", actions["output"])
         self.assertIn("Replace assumptions", actions["output"])
@@ -64,6 +68,12 @@ class WebConsoleTests(unittest.TestCase):
         self.assertEqual(dashboard["evidence_packs"]["pack_count"], 5)
         self.assertEqual(dashboard["readiness_gate"]["status"], "ready_for_local_calibrated_run")
         self.assertGreaterEqual(len(dashboard["top_risks"]), 5)
+
+    def test_coverage_matrix_cells_and_rows_have_actions(self):
+        self.assertIn('data-command="${command}" title="${parameter}:', INDEX_HTML)
+        self.assertIn('commandButton(`use ${row.module_id}`, "Use")', INDEX_HTML)
+        self.assertIn('commandButton(`packs ${row.module_id}`, "Pack")', INDEX_HTML)
+        self.assertIn('commandButton(`propose ${row.module_id}`, "Fix gap"', INDEX_HTML)
 
 
 if __name__ == "__main__":

@@ -201,7 +201,7 @@ class CalibrationTests(unittest.TestCase):
             {item["id"] for item in report["excluded_evidence"]},
         )
 
-    def test_gb_data_breach_calibration_uses_uk_frequency_and_likely_loss(self):
+    def test_gb_data_breach_calibration_uses_source_backed_direct_parameters(self):
         report = run_calibration(
             ROOT / "scenarios" / "gb_finance_data_breach_midmarket.yaml",
             ROOT / "org_profiles" / "gb_finance_midmarket.yaml",
@@ -217,7 +217,7 @@ class CalibrationTests(unittest.TestCase):
         }
 
         self.assertEqual(scenario["frequency"], {"min": 0.43, "likely": 0.65, "max": 0.69})
-        self.assertEqual(scenario["impact"], {"min": 10000, "likely": 5740000, "max": 25000000})
+        self.assertEqual(scenario["impact"], {"min": 10000, "likely": 5740000, "max": 11164400})
         self.assertEqual(
             selected_types,
             {
@@ -226,12 +226,20 @@ class CalibrationTests(unittest.TestCase):
                 "frequency.max": "source_backed",
                 "impact.min": "source_backed",
                 "impact.likely": "source_backed",
-                "impact.max": "estimated",
+                "impact.max": "source_backed",
             },
+        )
+        selected_by_parameter = {
+            item["parameter"]: item
+            for item in report["selected_evidence"]
+        }
+        self.assertEqual(
+            selected_by_parameter["impact.max"]["evidence_id"],
+            "fca_equifax_2023_cyber_breach_fine_gbp",
         )
         self.assertEqual(
             [warning["code"] for warning in report["warnings"]].count("parameter_from_non_source_backed_evidence"),
-            1,
+            0,
         )
 
 

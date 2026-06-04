@@ -90,3 +90,19 @@ extractions:
     limitations: IBM studied breach population; not an annual probability or loss magnitude.
     evidence_record_ids:
       - ibm_uk_2025_supply_chain_breach_cause_share
+
+  - id: fca_equifax_2023_cyber_breach_fine_gbp
+    source_id: fca_equifax_cyber_breach_fine_2023
+    source_name: FCA fines Equifax Ltd over cyber security breach
+    source_url_or_citation: https://www.fca.org.uk/news/press-releases/equifax-ltd-fine-cyber-security-breach
+    publication_date: "2023-10-13"
+    extraction_date: "2026-06-04"
+    citation_detail: FCA press release financial penalty and breach context.
+    fact: The FCA fined Equifax Ltd GBP 11,164,400 for failing to manage and monitor the security of UK consumer data outsourced to its US parent after a cyber breach.
+    value: 11164400
+    unit: currency
+    currency: GBP
+    normalization_notes: Stored directly in GBP as a UK financial-services regulatory penalty stress anchor.
+    limitations: Regulatory penalty only; not total event loss, insurance claim severity, or a full loss distribution.
+    evidence_record_ids:
+      - fca_equifax_2023_cyber_breach_fine_gbp

@@ -13,3 +13,18 @@ rates:
     notes: >
       RBA F11.1 quotes AUD to USD. USD to AUD calibration conversions invert
       this rate and disclose the source rate ID in the calibration report.
+  - id: gbp_to_usd_ecb_cross_2026_06_04
+    from: GBP
+    to: USD
+    rate: 1.345820326049254
+    as_of: "2026-06-04"
+    source_name: European Central Bank euro foreign exchange reference rates
+    source_type: official_reference_rate
+    source_url: https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html
+    retrieved_at: "2026-06-04"
+    citation_detail: "ECB 4 June 2026 reference rates quote EUR/USD 1.1640 and EUR/GBP 0.86490; RiskShard derives GBP/USD as 1.1640 / 0.86490 = 1.345820326049254."
+    evidence_type: source_backed
+    notes: >
+      ECB rates are quoted against EUR. RiskShard stores the derived GBP to
+      USD cross-rate explicitly so UK evidence currency coverage is visible in
+      readiness and governance checks.

@@ -467,13 +467,17 @@ class RiskShardConsole(cmd.Cmd):
 
     def do_propose(self, arg):
         """propose [module-id|threat] - Propose evidence selectors for calibration."""
-        target = arg.strip() or self.module_id or self.options["threat"] or "au_finance_ransomware_midmarket"
+        explicit_target = arg.strip()
+        target = explicit_target or self.module_id or self.options["threat"] or "au_finance_ransomware_midmarket"
         module = find_risk_module(target, self.root) if target else None
         if module is not None:
+            org_profile_path = self.root / module["artifacts"]["org_profile"]
+            if not explicit_target and module["id"] == self.module_id and self.options["org_profile"]:
+                org_profile_path = self.options["org_profile"]
             proposal = propose_module_calibration(
                 module["id"],
                 root=self.root,
-                org_profile_path=self.options["org_profile"] or self.root / module["artifacts"]["org_profile"],
+                org_profile_path=org_profile_path,
             )
             self.write(format_module_calibration_proposal(proposal))
             return None

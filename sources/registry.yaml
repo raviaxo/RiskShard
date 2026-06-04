@@ -83,6 +83,23 @@ sources:
       sponsor methodology, studied breach population, and applicability to a
       mid-market organization.
 
+  - id: fca_equifax_cyber_breach_fine_2023
+    title: FCA fines Equifax Ltd over cyber security breach
+    publisher: Financial Conduct Authority
+    source_type: regulator_report
+    url: https://www.fca.org.uk/news/press-releases/equifax-ltd-fine-cyber-security-breach
+    publication_date: "2023-10-13"
+    access_mode: public_html
+    intended_use:
+      - United Kingdom financial-services cyber breach penalty
+      - data breach stress impact anchor
+      - outsourcing and third-party cyber risk context
+    usage_notes: >
+      Use as a UK financial-services regulatory penalty stress anchor for data
+      breach scenarios. Preserve the limitation that the FCA fine is not a
+      total event-loss estimate, insurance claim distribution, or
+      mid-market-specific cost benchmark.
+
   - id: abs_counts_australian_businesses_2025
     title: Counts of Australian Businesses, including Entries and Exits, July 2021 - June 2025
     publisher: Australian Bureau of Statistics

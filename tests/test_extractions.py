@@ -24,6 +24,10 @@ class ExtractionTests(unittest.TestCase):
             "uk_dsit_2026_medium_business_breach_prevalence",
             {record["id"] for record in records},
         )
+        self.assertIn(
+            "fca_equifax_2023_cyber_breach_fine_gbp",
+            {record["id"] for record in records},
+        )
 
     def test_reviewed_extractions_have_no_mapping_errors(self):
         issues = validate_extractions(
