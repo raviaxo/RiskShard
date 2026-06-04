@@ -18,3 +18,135 @@ items:
       - united states
       - usa
       - us
+
+  - id: GB
+    label: United Kingdom
+    aliases:
+      - united kingdom
+      - uk
+      - britain
+      - great britain
+
+  - id: CA
+    label: Canada
+    aliases:
+      - canada
+
+  - id: DE
+    label: Germany
+    aliases:
+      - germany
+      - deutschland
+
+  - id: SG
+    label: Singapore
+    aliases:
+      - singapore
+
+  - id: JP
+    label: Japan
+    aliases:
+      - japan
+
+  - id: IN
+    label: India
+    aliases:
+      - india
+
+  - id: FR
+    label: France
+    aliases:
+      - france
+
+  - id: NL
+    label: Netherlands
+    aliases:
+      - netherlands
+      - holland
+
+  - id: BR
+    label: Brazil
+    aliases:
+      - brazil
+      - brasil
+
+  - id: MX
+    label: Mexico
+    aliases:
+      - mexico
+
+  - id: ES
+    label: Spain
+    aliases:
+      - spain
+      - espana
+
+  - id: IT
+    label: Italy
+    aliases:
+      - italy
+      - italia
+
+  - id: KR
+    label: South Korea
+    aliases:
+      - south korea
+      - korea
+      - republic of korea
+
+  - id: CH
+    label: Switzerland
+    aliases:
+      - switzerland
+      - suisse
+      - schweiz
+
+  - id: SE
+    label: Sweden
+    aliases:
+      - sweden
+      - sverige
+
+  - id: AE
+    label: United Arab Emirates
+    aliases:
+      - united arab emirates
+      - uae
+
+  - id: SA
+    label: Saudi Arabia
+    aliases:
+      - saudi arabia
+      - ksa
+
+  - id: ZA
+    label: South Africa
+    aliases:
+      - south africa
+
+  - id: NO
+    label: Norway
+    aliases:
+      - norway
+      - norge
+
+  - id: DK
+    label: Denmark
+    aliases:
+      - denmark
+      - danmark
+
+  - id: NZ
+    label: New Zealand
+    aliases:
+      - new zealand
+
+  - id: IE
+    label: Ireland
+    aliases:
+      - ireland
+
+  - id: IL
+    label: Israel
+    aliases:
+      - israel

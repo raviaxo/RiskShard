@@ -42,12 +42,21 @@ RiskShard content should grow through reviewed source, extraction, evidence, and
 - Keep module descriptors as catalog metadata; do not move evidence into the module file.
 - Run `python scripts/riskshard_modules.py packs <module-id>` and `python scripts/riskshard_modules.py propose <module-id>`.
 
+## Country Pack Checklist
+
+- Start with `python scripts/riskshard_modules.py countries`.
+- Pick a country where you can review local sources in context.
+- Prefer the recommended first module unless you have stronger local evidence for another threat.
+- Add sources, reviewed extractions, evidence, calibration, and module metadata together.
+- Keep translations and source limitations visible when sources are not in English.
+
 ## Review Commands
 
 ```bash
 python scripts/gather_sources.py
 python scripts/validate_evidence.py
 python scripts/riskshard_modules.py list
+python scripts/riskshard_modules.py countries
 python scripts/riskshard_modules.py packs au_finance_ransomware_midmarket
 python scripts/riskshard_modules.py propose au_finance_ransomware_midmarket
 python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.yaml \

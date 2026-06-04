@@ -12,10 +12,11 @@ The intended console pattern is:
 
 ```text
 modules
-modules info au_finance_ransomware_midmarket
-packs au_finance_ransomware_midmarket
-use au_finance_ransomware_midmarket
-propose au_finance_ransomware_midmarket
+countries
+modules info us_finance_bec_midmarket
+packs us_finance_bec_midmarket
+use us_finance_bec_midmarket
+propose us_finance_bec_midmarket
 calibrate
 run
 ```

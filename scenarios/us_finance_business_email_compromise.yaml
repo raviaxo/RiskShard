@@ -1,0 +1,21 @@
+metadata:
+  name: US Finance Business Email Compromise Midmarket
+  version: "0.1"
+  currency: USD
+  scenario_stage: governed_starter
+  benchmark_status: starter_with_source_backed_us_likely_loss
+  description: >
+    Starter United States financial-services BEC shard. Likely impact uses
+    source-backed FBI IC3 complaint-average loss evidence; frequency and loss
+    bounds remain explicit estimates until denominator-aware US sector evidence
+    is reviewed.
+
+frequency:
+  min: 0.04
+  likely: 0.12
+  max: 0.25
+
+impact:
+  min: 25000
+  likely: 123000
+  max: 1200000

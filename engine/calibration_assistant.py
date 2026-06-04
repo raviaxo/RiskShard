@@ -4,7 +4,7 @@ from engine.evidence import load_evidence_records, match_evidence
 from engine.evidence_packs import source_ids_for_records
 from engine.experience import load_calibration_selections
 from engine.governance import build_data_feed_inventory
-from engine.profiles import load_org_profile
+from engine.profiles import load_org_profile, load_yaml_file
 from engine.risk_modules import REQUIRED_PARAMETERS, find_risk_module
 
 
@@ -35,6 +35,8 @@ def propose_module_calibration(module_id, root=PROJECT_ROOT, org_profile_path=No
         parameters=module.get("required_parameters") or REQUIRED_PARAMETERS,
     )
     calibration_path = root / module["artifacts"]["calibration"]
+    calibration_profile = load_yaml_file(calibration_path) if calibration_path.exists() else {}
+    target_currency = calibration_profile.get("target_currency")
     current_selections = (
         load_calibration_selections(calibration_path, evidence_by_id)
         if calibration_path.exists()
@@ -60,7 +62,7 @@ def propose_module_calibration(module_id, root=PROJECT_ROOT, org_profile_path=No
                 summarize_candidate(candidate, feeds_by_id)
                 for candidate in candidates[:3]
             ],
-            "draft_selector": draft_selector(parameter, best),
+            "draft_selector": draft_selector(parameter, best, target_currency),
         })
 
     return {
@@ -139,7 +141,7 @@ def summarize_record(record, feeds_by_id):
     }
 
 
-def draft_selector(parameter, best):
+def draft_selector(parameter, best, target_currency=None):
     if best is None:
         return None
     group, bound = parameter.split(".")
@@ -151,9 +153,14 @@ def draft_selector(parameter, best):
         "transform": "direct",
         "rationale": "Proposed from highest-scoring evidence match for this module context.",
     }
-    if record["unit"] == "currency" and record.get("currency") and record.get("currency") != "AUD":
+    if (
+        record["unit"] == "currency"
+        and target_currency
+        and record.get("currency")
+        and record.get("currency") != target_currency
+    ):
         selector["transform"] = "currency_convert"
-        selector["target_currency"] = "AUD"
+        selector["target_currency"] = target_currency
     return selector
 
 

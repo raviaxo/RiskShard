@@ -1,0 +1,47 @@
+extractions:
+  - id: fbi_ic3_2025_us_bec_complaints
+    source_id: fbi_ic3_2025_report
+    source_name: FBI IC3 2025 Annual Report
+    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    extraction_date: "2026-06-04"
+    citation_detail: 2025 Crime Types by complaint count table.
+    fact: FBI IC3 reported 24,768 Business Email Compromise complaints in 2025.
+    value: 24768
+    unit: complaints
+    normalization_notes: Stored as US BEC context; not a direct annual frequency without a population denominator.
+    limitations: Complaint-based reporting; not financial-services-specific or a complete event population.
+    evidence_record_ids:
+      - fbi_ic3_2025_us_bec_complaints
+
+  - id: fbi_ic3_2025_us_bec_adjusted_losses_usd
+    source_id: fbi_ic3_2025_report
+    source_name: FBI IC3 2025 Annual Report
+    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    extraction_date: "2026-06-04"
+    citation_detail: 2025 Crime Types by complaint loss table.
+    fact: FBI IC3 reported USD 3,046,598,558 in adjusted losses for Business Email Compromise in 2025.
+    value: 3046598558
+    unit: currency
+    currency: USD
+    normalization_notes: Stored in source currency as US BEC loss magnitude context.
+    limitations: Complaint-based adjusted loss total; not financial-services-specific or a complete loss distribution.
+    evidence_record_ids:
+      - fbi_ic3_2025_us_bec_adjusted_losses_usd
+
+  - id: fbi_ic3_2025_us_bec_average_loss_per_complaint_usd
+    source_id: fbi_ic3_2025_report
+    source_name: FBI IC3 2025 Annual Report
+    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    extraction_date: "2026-06-04"
+    citation_detail: Derived from the 2025 Crime Types complaint count and complaint loss tables.
+    fact: Dividing USD 3,046,598,558 in BEC adjusted losses by 24,768 BEC complaints gives USD 123,005.43 average adjusted loss per complaint.
+    value: 123005.43
+    unit: currency
+    currency: USD
+    normalization_notes: Stored directly in USD for US BEC likely impact calibration.
+    limitations: Derived complaint average; not a tail estimate, financial-services-specific benchmark, or complete event-severity distribution.
+    evidence_record_ids:
+      - fbi_ic3_2025_us_bec_average_loss_per_complaint_usd

@@ -1,0 +1,264 @@
+taxonomy: country_expansion_priorities
+method:
+  version: "0.1"
+  updated: "2026-06-04"
+  basis:
+    - market_size
+    - cyber_regulatory_maturity
+    - public_source_availability
+    - regional_coverage
+    - contributor_likelihood
+  notes: >
+    Priority is a pragmatic contributor roadmap, not a claim about absolute
+    national cyber risk. It favors countries where risk professionals can add
+    public sources, reviewed extractions, and usable calibration profiles.
+items:
+  - rank: 1
+    country_id: US
+    label: United States
+    region: North America
+    tier: launch
+    status: module_seeded
+    recommended_first_module: us_finance_bec_midmarket
+    why: Large market, strong public cyber/law-enforcement sources, and existing FBI IC3 source coverage.
+    collaboration_prompt: Add US sector denominators, breach/loss sources, and control/regulatory context.
+
+  - rank: 2
+    country_id: GB
+    label: United Kingdom
+    region: Europe
+    tier: launch
+    status: target
+    recommended_first_module: gb_finance_ransomware_midmarket
+    why: Mature cyber/regulatory ecosystem, strong public reporting, and high practitioner overlap with FAIR/CRQ.
+    collaboration_prompt: Add NCSC, ICO, FCA/PRA, and UK cyber survey evidence.
+
+  - rank: 3
+    country_id: CA
+    label: Canada
+    region: North America
+    tier: launch
+    status: target
+    recommended_first_module: ca_finance_data_breach_midmarket
+    why: Strong regulatory/public-sector source base and natural comparison point for US/AU common-law workflows.
+    collaboration_prompt: Add OPC, Statistics Canada, CSE, and financial-sector sources.
+
+  - rank: 4
+    country_id: DE
+    label: Germany
+    region: Europe
+    tier: launch
+    status: target
+    recommended_first_module: de_industrial_ransomware_midmarket
+    why: Large EU economy, strong industrial base, and mature BSI/regulatory reporting.
+    collaboration_prompt: Add BSI, BaFin, sector, and SME cyber-loss evidence.
+
+  - rank: 5
+    country_id: SG
+    label: Singapore
+    region: Asia-Pacific
+    tier: launch
+    status: target
+    recommended_first_module: sg_finance_bec_midmarket
+    why: High cyber maturity, strong regional financial hub, and useful ASEAN anchor.
+    collaboration_prompt: Add CSA Singapore, MAS, scam/fraud, and financial-sector evidence.
+
+  - rank: 6
+    country_id: JP
+    label: Japan
+    region: Asia-Pacific
+    tier: scale
+    status: target
+    recommended_first_module: jp_manufacturing_ransomware_midmarket
+    why: Large economy, major manufacturing exposure, and useful APAC loss/localization test.
+    collaboration_prompt: Add NISC, IPA, JPCERT, regulator, and industry sources.
+
+  - rank: 7
+    country_id: IN
+    label: India
+    region: Asia-Pacific
+    tier: scale
+    status: target
+    recommended_first_module: in_finance_bec_midmarket
+    why: Large digital economy, major payments ecosystem, and high need for local practitioner contribution.
+    collaboration_prompt: Add CERT-In, RBI, payments fraud, breach, and sector denominator sources.
+
+  - rank: 8
+    country_id: FR
+    label: France
+    region: Europe
+    tier: scale
+    status: target
+    recommended_first_module: fr_finance_data_breach_midmarket
+    why: Large EU economy with mature cyber agency and privacy-regulator context.
+    collaboration_prompt: Add ANSSI, CNIL, Banque de France, and sector evidence.
+
+  - rank: 9
+    country_id: NL
+    label: Netherlands
+    region: Europe
+    tier: scale
+    status: target
+    recommended_first_module: nl_logistics_ransomware_midmarket
+    why: Digitally mature economy with strong logistics/financial-services relevance.
+    collaboration_prompt: Add NCSC-NL, DNB, privacy, logistics, and sector evidence.
+
+  - rank: 10
+    country_id: BR
+    label: Brazil
+    region: Latin America
+    tier: scale
+    status: target
+    recommended_first_module: br_finance_bec_midmarket
+    why: Largest Latin American economy and important test for non-English contribution workflow.
+    collaboration_prompt: Add CERT.br, ANPD, Central Bank, fraud, and sector denominator sources.
+
+  - rank: 11
+    country_id: AU
+    label: Australia
+    region: Asia-Pacific
+    tier: seeded_reference
+    status: seeded
+    recommended_first_module: au_finance_ransomware_midmarket
+    why: Existing reference geography with ransomware, data breach, and BEC governed starters.
+    collaboration_prompt: Replace remaining assumptions and use AU as the contributor example.
+
+  - rank: 12
+    country_id: MX
+    label: Mexico
+    region: Latin America
+    tier: scale
+    status: target
+    recommended_first_module: mx_finance_bec_midmarket
+    why: Large regional economy and useful Latin America localization partner after Brazil.
+    collaboration_prompt: Add regulator, banking, fraud, breach, and industry sources.
+
+  - rank: 13
+    country_id: ES
+    label: Spain
+    region: Europe
+    tier: scale
+    status: target
+    recommended_first_module: es_finance_data_breach_midmarket
+    why: EU privacy/regulatory coverage and Spanish-language contribution path.
+    collaboration_prompt: Add INCIBE, AEPD, Banco de Espana, and sector evidence.
+
+  - rank: 14
+    country_id: IT
+    label: Italy
+    region: Europe
+    tier: scale
+    status: target
+    recommended_first_module: it_manufacturing_ransomware_midmarket
+    why: Large EU economy with manufacturing and financial-services relevance.
+    collaboration_prompt: Add ACN, Garante, Bank of Italy, and industry evidence.
+
+  - rank: 15
+    country_id: KR
+    label: South Korea
+    region: Asia-Pacific
+    tier: scale
+    status: target
+    recommended_first_module: kr_technology_data_breach_midmarket
+    why: Major digital economy and APAC source/localization test beyond English-speaking geographies.
+    collaboration_prompt: Add KISA, PIPC, FSC, and technology-sector sources.
+
+  - rank: 16
+    country_id: CH
+    label: Switzerland
+    region: Europe
+    tier: contributor_led
+    status: target
+    recommended_first_module: ch_finance_data_breach_midmarket
+    why: High-value financial-services market with strong regulatory context.
+    collaboration_prompt: Add NCSC-CH, FINMA, FDPIC, and financial-sector evidence.
+
+  - rank: 17
+    country_id: SE
+    label: Sweden
+    region: Europe
+    tier: contributor_led
+    status: target
+    recommended_first_module: se_technology_ransomware_midmarket
+    why: Digitally mature Nordic economy and strong public-sector source culture.
+    collaboration_prompt: Add MSB, IMY, financial, and technology-sector sources.
+
+  - rank: 18
+    country_id: AE
+    label: United Arab Emirates
+    region: Middle East
+    tier: contributor_led
+    status: target
+    recommended_first_module: ae_finance_bec_midmarket
+    why: Regional financial hub and useful Middle East contributor anchor.
+    collaboration_prompt: Add UAE cyber, central bank, privacy, and sector evidence.
+
+  - rank: 19
+    country_id: SA
+    label: Saudi Arabia
+    region: Middle East
+    tier: contributor_led
+    status: target
+    recommended_first_module: sa_energy_ransomware_midmarket
+    why: Major economy with energy/critical infrastructure relevance.
+    collaboration_prompt: Add NCA, SDAIA, energy, financial, and incident-cost sources.
+
+  - rank: 20
+    country_id: ZA
+    label: South Africa
+    region: Africa
+    tier: contributor_led
+    status: target
+    recommended_first_module: za_finance_bec_midmarket
+    why: Strong Africa anchor with financial-services and fraud relevance.
+    collaboration_prompt: Add FSCA, Information Regulator, banking fraud, and sector sources.
+
+  - rank: 21
+    country_id: NO
+    label: Norway
+    region: Europe
+    tier: contributor_led
+    status: target
+    recommended_first_module: no_energy_ransomware_midmarket
+    why: Energy and maritime relevance plus Nordic public-source maturity.
+    collaboration_prompt: Add NSM, Datatilsynet, energy, maritime, and sector evidence.
+
+  - rank: 22
+    country_id: DK
+    label: Denmark
+    region: Europe
+    tier: contributor_led
+    status: target
+    recommended_first_module: dk_logistics_ransomware_midmarket
+    why: Digitally mature economy with logistics, shipping, and financial-services relevance.
+    collaboration_prompt: Add CFCS, Datatilsynet, shipping, logistics, and sector evidence.
+
+  - rank: 23
+    country_id: NZ
+    label: New Zealand
+    region: Asia-Pacific
+    tier: contributor_led
+    status: target
+    recommended_first_module: nz_finance_data_breach_midmarket
+    why: Natural AU/NZ comparison geography with public incident and privacy reporting.
+    collaboration_prompt: Add CERT NZ, Privacy Commissioner, FMA, and sector evidence.
+
+  - rank: 24
+    country_id: IE
+    label: Ireland
+    region: Europe
+    tier: contributor_led
+    status: target
+    recommended_first_module: ie_technology_data_breach_midmarket
+    why: EU technology hub with privacy/regulatory evidence relevance.
+    collaboration_prompt: Add NCSC-IE, DPC, Central Bank, and technology-sector sources.
+
+  - rank: 25
+    country_id: IL
+    label: Israel
+    region: Middle East
+    tier: contributor_led
+    status: target
+    recommended_first_module: il_technology_ransomware_midmarket
+    why: Cybersecurity ecosystem relevance and technology-sector concentration.
+    collaboration_prompt: Add INCD, privacy, financial, and technology-sector sources.

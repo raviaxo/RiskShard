@@ -13,6 +13,12 @@ from engine.calibration_assistant import (  # noqa: E402
     format_module_calibration_proposal,
     propose_module_calibration,
 )
+from engine.country_priorities import (  # noqa: E402
+    find_country_priority,
+    format_country_priorities,
+    format_country_priority_detail,
+    top_country_priorities,
+)
 from engine.evidence_packs import (  # noqa: E402
     build_evidence_pack_registry,
     format_evidence_pack_detail,
@@ -46,6 +52,11 @@ def parse_args(argv=None):
     proposal_parser.add_argument("module_id")
     proposal_parser.add_argument("--org-profile", type=Path)
     proposal_parser.add_argument("--json", action="store_true")
+
+    countries_parser = subparsers.add_parser("countries", help="Show prioritized country expansion targets.")
+    countries_parser.add_argument("country_id", nargs="?")
+    countries_parser.add_argument("--limit", default=25, type=int)
+    countries_parser.add_argument("--json", action="store_true")
 
     return parser.parse_args(argv)
 
@@ -100,6 +111,25 @@ def main(argv=None):
             print(json.dumps(proposal, indent=2, sort_keys=True))
         else:
             print(format_module_calibration_proposal(proposal), end="")
+        return 0
+
+    if command == "countries":
+        if args.country_id:
+            item = find_country_priority(args.country_id)
+            if item is None:
+                print(f"Unknown country priority: {args.country_id}", file=sys.stderr)
+                return 1
+            if args.json:
+                print(json.dumps(item, indent=2, sort_keys=True))
+            else:
+                print(format_country_priority_detail(item), end="")
+            return 0
+
+        priorities = top_country_priorities(args.limit)
+        if args.json:
+            print(json.dumps(priorities, indent=2, sort_keys=True))
+        else:
+            print(format_country_priorities(priorities), end="")
         return 0
 
     return 0
