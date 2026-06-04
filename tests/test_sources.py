@@ -5,8 +5,10 @@ from unittest.mock import patch
 
 from engine.sources import (
     SourceRegistryError,
+    active_sources,
     build_success_record,
     fetch_source,
+    gather_sources,
     load_source_registry,
     raw_filename_for_source,
     source_urls,
@@ -30,6 +32,11 @@ class SourceRegistryTests(unittest.TestCase):
         self.assertIn("accc_targeting_scams_2025", source_ids)
         self.assertIn("cyentia_iris_2025", source_ids)
         self.assertIn("asd_annual_cyber_threat_report_2024_2025", source_ids)
+        asd = next(
+            source for source in registry["sources"]
+            if source["id"] == "asd_annual_cyber_threat_report_2024_2025"
+        )
+        self.assertFalse(asd["active"])
 
     def test_registry_validation_rejects_missing_publication_date(self):
         source = {
@@ -103,6 +110,49 @@ class SourceRegistryTests(unittest.TestCase):
         self.assertEqual(record["status"], "fetched")
         self.assertEqual(record["final_url"], "https://example.com/report.pdf")
         self.assertEqual(record["content_type"], "application/pdf")
+
+    def test_gather_sources_skips_inactive_registry_entries(self):
+        registry_text = """
+sources:
+  - id: active_report
+    title: Active Report
+    publisher: Example
+    source_type: report
+    url: https://example.com/active.pdf
+    publication_date: "2026-01-01"
+    access_mode: public_pdf
+    intended_use: [testing]
+    usage_notes: Active source.
+  - id: inactive_report
+    title: Inactive Report
+    publisher: Example
+    source_type: report
+    active: false
+    url: https://example.com/inactive.pdf
+    publication_date: "2026-01-01"
+    access_mode: public_pdf
+    intended_use: [testing]
+    usage_notes: Inactive source.
+"""
+
+        def fake_fetch(url, *, timeout):
+            return {
+                "payload": b"%PDF active",
+                "final_url": url,
+                "http_status": 200,
+                "headers": {"Content-Type": "application/pdf"},
+            }
+
+        with TemporaryDirectory() as tmp, patch("engine.sources.fetch_url", side_effect=fake_fetch) as mocked:
+            registry_path = Path(tmp) / "registry.yaml"
+            registry_path.write_text(registry_text)
+            registry = load_source_registry(registry_path)
+            manifest = gather_sources(registry_path, Path(tmp) / "raw", retries=0)
+
+        self.assertEqual([source["id"] for source in active_sources(registry)], ["active_report"])
+        self.assertEqual(mocked.call_count, 1)
+        self.assertEqual(manifest["source_count"], 1)
+        self.assertEqual(manifest["sources"][0]["id"], "active_report")
 
 
 class SourceManifestTests(unittest.TestCase):

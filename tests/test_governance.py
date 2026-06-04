@@ -36,15 +36,13 @@ class GovernanceTests(unittest.TestCase):
         self.assertEqual(accc["trust_tier"], "high")
         self.assertEqual(accc["evidence_record_count"], 4)
 
-    def test_governance_flags_gather_errors(self):
+    def test_governance_skips_inactive_sources(self):
         inventory = build_data_feed_inventory(today=date(2026, 6, 3))
         by_id = {feed["id"]: feed for feed in inventory["feeds"]}
-        asd = by_id["asd_annual_cyber_threat_report_2024_2025"]
         output = format_data_feed_inventory(inventory)
 
-        self.assertEqual(asd["renewal_status"], "gather_error")
-        self.assertEqual(asd["source_status"], "error")
-        self.assertIn("gather_error", output)
+        self.assertNotIn("asd_annual_cyber_threat_report_2024_2025", by_id)
+        self.assertNotIn("gather_error", inventory["status_counts"])
         self.assertIn("source gathered", output.replace("_", " "))
 
 

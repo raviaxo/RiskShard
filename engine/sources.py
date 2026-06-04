@@ -90,6 +90,16 @@ def validate_source(source, seen_ids=None):
     if not isinstance(source["intended_use"], list) or not source["intended_use"]:
         raise SourceRegistryError(f"source {source_id} intended_use must be a non-empty list")
 
+    if "active" in source and not isinstance(source["active"], bool):
+        raise SourceRegistryError(f"source {source_id} active must be true or false")
+
+
+def active_sources(registry):
+    return [
+        source for source in registry["sources"]
+        if source.get("active", True)
+    ]
+
 
 def raw_filename_for_source(source, content_type=None):
     source_id = source["id"]
@@ -239,7 +249,7 @@ def gather_sources(registry_path, raw_dir, *, timeout=30, retries=1):
     generated_at = utc_now_iso()
     records = [
         fetch_source(source, raw_dir, gathered_at=generated_at, timeout=timeout, retries=retries)
-        for source in registry["sources"]
+        for source in active_sources(registry)
     ]
 
     return {

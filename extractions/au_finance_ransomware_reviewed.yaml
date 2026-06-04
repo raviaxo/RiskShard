@@ -104,19 +104,3 @@ extractions:
     limitations: Sector notification count is not ransomware-specific.
     evidence_record_ids:
       - oaic_au_finance_ndb_notifications_2024_h2
-
-  - id: asd_medium_business_cost_2025
-    source_id: asd_annual_cyber_threat_report_2024_2025
-    source_name: ASD Annual Cyber Threat Report 2024-2025
-    source_url_or_citation: https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025
-    publication_date: "2025-10-14"
-    extraction_date: "2026-05-26"
-    citation_detail: Average self-reported cybercrime cost for medium businesses; latest automated gather recorded a timeout for this source.
-    fact: ASD reported an average self-reported cybercrime cost of AUD 97,166 for medium businesses.
-    value: 97166
-    unit: currency
-    currency: AUD
-    normalization_notes: Rounded in evidence to AUD 100,000 for a conservative lower impact bound.
-    limitations: Latest source gather did not retrieve the raw ASD artifact; statistic is cybercrime-wide, not ransomware-specific.
-    evidence_record_ids:
-      - asd_medium_business_cybercrime_cost_2025
