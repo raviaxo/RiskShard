@@ -3,9 +3,11 @@ from pathlib import Path
 
 from engine.data_packs import build_data_pack_manifest
 from engine.evidence import load_evidence_records
+from engine.evidence_packs import build_evidence_pack_registry
 from engine.experience import rank_top_risks
 from engine.governance import build_data_feed_inventory
 from engine.profiles import load_org_profile, load_yaml_file
+from engine.risk_modules import load_risk_modules
 from engine.scenarios import summarize_scenario_stages
 
 
@@ -31,6 +33,8 @@ def build_readiness_dashboard(root=PROJECT_ROOT, org_profile_path=DEFAULT_ORG_PR
     )
     pack = build_data_pack_manifest(root)
     org_profile = load_org_profile(org_profile_path)
+    modules = load_risk_modules(root)
+    evidence_packs = build_evidence_pack_registry(root)
 
     dashboard = {
         "org_profile": {
@@ -44,6 +48,22 @@ def build_readiness_dashboard(root=PROJECT_ROOT, org_profile_path=DEFAULT_ORG_PR
         "coverage": coverage_summary(evidence_records),
         "scenarios": {
             "stage_counts": summarize_scenario_stages(root),
+        },
+        "risk_modules": {
+            "module_count": len(modules),
+            "status_counts": dict(Counter(module["status"] for module in modules)),
+            "threats": sorted({module["threat"] for module in modules}),
+        },
+        "evidence_packs": {
+            "pack_count": evidence_packs["pack_count"],
+            "freshness_counts": dict(Counter(
+                pack["freshness_status"] for pack in evidence_packs["packs"]
+            )),
+            "low_confidence_packs": [
+                pack["module_id"]
+                for pack in evidence_packs["packs"]
+                if pack["pack_confidence"] == "low"
+            ],
         },
         "top_risks": top_risks,
         "feed_governance": {
@@ -300,6 +320,8 @@ def format_readiness_dashboard(dashboard):
     install = dashboard["install_release"]
     gate = dashboard["readiness_gate"]
     scenario_counts = dashboard["scenarios"]["stage_counts"]
+    module_counts = dashboard["risk_modules"]["status_counts"]
+    pack_counts = dashboard["evidence_packs"]["freshness_counts"]
     lines = [
         "Global readiness dashboard",
         f"Org: {dashboard['org_profile']['name']} ({dashboard['org_profile']['country']} / {dashboard['org_profile']['industry']})",
@@ -312,6 +334,8 @@ def format_readiness_dashboard(dashboard):
         "",
         f"Feeds: {feeds['feed_count']} ({format_counts(feeds['status_counts'])})",
         f"Scenarios: {format_counts(scenario_counts)}",
+        f"Risk modules: {dashboard['risk_modules']['module_count']} ({format_counts(module_counts)})",
+        f"Evidence packs: {dashboard['evidence_packs']['pack_count']} ({format_counts(pack_counts)})",
         f"Data pack: {pack['pack_version']} {pack['fingerprint'][:12]} files={pack['file_count']}",
         f"Installable package: {install['pyproject']}",
         "",

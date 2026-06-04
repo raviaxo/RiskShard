@@ -16,7 +16,7 @@ class WebConsoleTests(unittest.TestCase):
         self.assertEqual(workflow["prompt"], "riskshard> ")
 
         selected = app.run_command("use au_finance_ransomware_midmarket")
-        self.assertIn("Using Australia Finance Ransomware Midmarket", selected["output"])
+        self.assertIn("Using module au_finance_ransomware_midmarket", selected["output"])
         self.assertEqual(selected["prompt"], "riskshard(au_finance_ransomware_midmarket)> ")
 
         options = app.run_command("show options")
@@ -31,6 +31,15 @@ class WebConsoleTests(unittest.TestCase):
         self.assertIn("Data feed governance", feeds["output"])
         self.assertIn("source_gathered:", feeds["output"])
 
+        modules = app.run_command("modules")
+        self.assertIn("Risk modules", modules["output"])
+
+        packs = app.run_command("packs")
+        self.assertIn("Evidence pack: au_finance_ransomware_midmarket", packs["output"])
+
+        proposal = app.run_command("propose")
+        self.assertIn("Module calibration proposal: au_finance_ransomware_midmarket", proposal["output"])
+
         actions = app.run_command("next")
         self.assertIn("Next best actions", actions["output"])
         self.assertIn("Replace assumptions", actions["output"])
@@ -39,6 +48,8 @@ class WebConsoleTests(unittest.TestCase):
         self.assertIn("coverage", dashboard)
         self.assertIn("data_pack", dashboard)
         self.assertIn("next_actions", dashboard)
+        self.assertEqual(dashboard["risk_modules"]["module_count"], 3)
+        self.assertEqual(dashboard["evidence_packs"]["pack_count"], 3)
         self.assertEqual(dashboard["readiness_gate"]["status"], "ready_for_local_calibrated_run")
         self.assertGreaterEqual(len(dashboard["top_risks"]), 5)
 

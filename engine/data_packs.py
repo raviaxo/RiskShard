@@ -13,6 +13,7 @@ PACK_PATHS = (
     "calibrations",
     "taxonomies",
     "threat_library",
+    "risk_modules",
     "schemas",
 )
 

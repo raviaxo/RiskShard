@@ -175,6 +175,56 @@ class CliSmokeTests(unittest.TestCase):
         self.assertIn("RiskShard doctor", result.stdout)
         self.assertIn("Status: pass", result.stdout)
 
+    def test_modules_cli_reports_catalog_packs_and_proposals(self):
+        env = os.environ.copy()
+        env["PYTHONPATH"] = str(ROOT)
+
+        list_result = subprocess.run(
+            [sys.executable, "scripts/riskshard_modules.py", "list"],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(list_result.returncode, 0, msg=list_result.stderr)
+        self.assertIn("Risk modules", list_result.stdout)
+        self.assertIn("au_finance_ransomware_midmarket", list_result.stdout)
+
+        pack_result = subprocess.run(
+            [
+                sys.executable,
+                "scripts/riskshard_modules.py",
+                "packs",
+                "au_finance_ransomware_midmarket",
+            ],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(pack_result.returncode, 0, msg=pack_result.stderr)
+        self.assertIn("Evidence pack: au_finance_ransomware_midmarket", pack_result.stdout)
+        self.assertIn("source_gathered", pack_result.stdout)
+
+        proposal_result = subprocess.run(
+            [
+                sys.executable,
+                "scripts/riskshard_modules.py",
+                "propose",
+                "au_finance_ransomware_midmarket",
+            ],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(proposal_result.returncode, 0, msg=proposal_result.stderr)
+        self.assertIn(
+            "Module calibration proposal: au_finance_ransomware_midmarket",
+            proposal_result.stdout,
+        )
+        self.assertIn("selected_assumption", proposal_result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

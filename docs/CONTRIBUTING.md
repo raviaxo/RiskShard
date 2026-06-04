@@ -34,11 +34,22 @@ RiskShard content should grow through reviewed source, extraction, evidence, and
 - Use `scripts/update_fx_rates.py` when FX rates need refresh.
 - Run calibration with both JSON and Markdown output for review.
 
+## Risk Module Checklist
+
+- Add a module descriptor to `risk_modules/` when a scenario is intended to be practitioner-facing.
+- Link the scenario, default org profile, calibration profile, evidence files, reviewed extractions, and any control profiles.
+- Include `good_for` and `not_good_for` practitioner notes.
+- Keep module descriptors as catalog metadata; do not move evidence into the module file.
+- Run `python scripts/riskshard_modules.py packs <module-id>` and `python scripts/riskshard_modules.py propose <module-id>`.
+
 ## Review Commands
 
 ```bash
 python scripts/gather_sources.py
 python scripts/validate_evidence.py
+python scripts/riskshard_modules.py list
+python scripts/riskshard_modules.py packs au_finance_ransomware_midmarket
+python scripts/riskshard_modules.py propose au_finance_ransomware_midmarket
 python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.yaml \
   --org-profile org_profiles/au_finance_midmarket.yaml \
   --evidence evidence \

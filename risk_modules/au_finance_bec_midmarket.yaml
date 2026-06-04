@@ -1,0 +1,38 @@
+id: au_finance_bec_midmarket
+title: Australia Finance Business Email Compromise Midmarket
+version: "0.1"
+status: governed_starter
+threat: business_email_compromise
+description: >
+  Starter business-email-compromise shard for an Australian mid-market
+  financial-services organization. It combines FBI IC3 BEC loss evidence with
+  ACCC Australia small-business scam context and explicit frequency assumptions.
+context:
+  industry: financial_services
+  country: AU
+  company_size: mid_market
+artifacts:
+  scenario: scenarios/business_email_compromise.yaml
+  org_profile: org_profiles/au_finance_midmarket.yaml
+  calibration: calibrations/au_finance_business_email_compromise.yaml
+  evidence:
+    - evidence/au_finance_bec.yaml
+  extractions:
+    - extractions/au_finance_bec_reviewed.yaml
+  controls: []
+required_parameters:
+  - frequency.min
+  - frequency.likely
+  - frequency.max
+  - impact.min
+  - impact.likely
+  - impact.max
+tags:
+  - au
+  - financial_services
+  - mid_market
+  - bec
+  - fraud
+practitioner_notes:
+  good_for: Reviewing BEC impact evidence and frequency gaps.
+  not_good_for: Benchmark-grade BEC frequency or tail-loss decisions.
