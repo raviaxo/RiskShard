@@ -28,11 +28,11 @@ parameters:
 
   impact:
     min:
-      evidence_id: riskshard_bec_impact_floor_2026
+      evidence_id: accc_2025_small_business_average_scam_loss_aud
       transform: direct
       target_currency: AUD
       round_to: 1000
-      rationale: Explicit estimated lower loss bound until reviewed fraudulent-payment floor evidence exists.
+      rationale: Australia small-business Scamwatch average loss per loss report as a source-backed lower impact floor.
     likely:
       evidence_id: fbi_ic3_2025_bec_average_loss_per_complaint_usd
       transform: currency_convert

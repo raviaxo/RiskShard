@@ -37,6 +37,8 @@ class CliSmokeTests(unittest.TestCase):
         )
         self.assertIn("=== PORTFOLIO ===", result.stdout)
         self.assertIn("Ransomware Attack", result.stdout)
+        self.assertIn("STAGE: demo fixture", result.stdout)
+        self.assertIn("STAGE: governed starter", result.stdout)
         self.assertIn("LEC saved:", result.stdout)
 
     def test_calibrated_scenario_can_be_simulated(self):
@@ -149,6 +151,29 @@ class CliSmokeTests(unittest.TestCase):
         self.assertIn("=== CALIBRATED SCENARIO ===", result.stdout)
         self.assertIn("Markdown report saved:", result.stdout)
         self.assertIn("Warnings :", result.stdout)
+
+    def test_doctor_cli_reports_ready_status(self):
+        env = os.environ.copy()
+        env["PYTHONPATH"] = str(ROOT)
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "scripts/riskshard_doctor.py",
+            ],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+        )
+
+        self.assertEqual(
+            result.returncode,
+            0,
+            msg=f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}",
+        )
+        self.assertIn("RiskShard doctor", result.stdout)
+        self.assertIn("Status: pass", result.stdout)
 
 
 if __name__ == "__main__":

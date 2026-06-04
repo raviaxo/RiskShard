@@ -23,7 +23,9 @@ RiskShard aims to become a shared computation layer for cyber risk:
 - Optional JSON report export
 - Per-scenario RNG isolation and seed metadata for seeded JSON exports
 - Interactive practitioner console for search, calibration, simulation, reports, and validation
+- Local `doctor` command for environment, source, evidence, extraction, scenario, readiness, package, data-pack, and test-readiness checks
 - Reviewed source-to-extraction-to-evidence-to-calibration workflow
+- Governed starter vs demo fixture labels in scenario metadata, CLI output, readiness, and console search
 - Vetted YAML taxonomies and evidence matching for industry, country, company size, and threat context
 
 ## In Progress
@@ -89,6 +91,7 @@ Then try:
 ```text
 riskshard> workflow
 riskshard> toprisks
+riskshard> doctor
 riskshard> readiness
 riskshard> next
 riskshard> feeds
@@ -152,6 +155,15 @@ python scripts/readiness_dashboard.py
 
 The readiness view also exposes a gate and prioritized next actions so practitioners can see whether a shard is blocked, source-review-needed, assumption-review-needed, or ready for a local calibrated run.
 
+Run the local doctor with:
+
+```bash
+python scripts/riskshard_doctor.py
+python scripts/riskshard_doctor.py --run-tests
+```
+
+The doctor combines environment, source, evidence, extraction, scenario-stage, readiness, package entry-point, data-pack, and test-readiness checks.
+
 Generate a data-pack fingerprint for governed inputs with:
 
 ```bash
@@ -170,6 +182,7 @@ RiskShard can still be run directly from `scripts/`, but `pyproject.toml` also d
 - `riskshard-readiness`
 - `riskshard-data-pack`
 - `riskshard-preflight`
+- `riskshard-doctor`
 
 ## Tests
 
@@ -235,7 +248,7 @@ Source-backed evidence records should include `source_id` values that map to `so
 
 Reviewed extraction records live in `extractions/` and document the fact pulled from a source before it becomes one or more structured evidence records.
 
-The starter threat library lives in `threat_library/`. Ransomware, data breach, and business email compromise now have Australia financial-services calibration profiles, but all still carry explicit assumption warnings. Data breach has DBIR/OAIC context evidence, a denominator-derived reported-breach frequency floor, and source-backed global impact anchors; its likely and stress frequency parameters remain estimated until stronger organization-level likelihood evidence is reviewed. Business email compromise has FBI IC3 source-backed likely-loss evidence and ACCC Australia small-business false-billing context; its frequency and loss bounds remain estimated until denominator-aware BEC evidence is reviewed.
+The starter threat library lives in `threat_library/`. Ransomware, data breach, and business email compromise now have Australia financial-services calibration profiles, but all still carry explicit assumption warnings. Data breach has DBIR/OAIC context evidence, a denominator-derived reported-breach frequency floor, and source-backed global impact anchors; its likely and stress frequency parameters remain estimated until stronger organization-level likelihood evidence is reviewed. Business email compromise has FBI IC3 source-backed likely-loss evidence and ACCC Australia small-business loss context; frequency and stress loss bounds remain estimated until denominator-aware BEC evidence is reviewed.
 
 ## Source Baseline
 

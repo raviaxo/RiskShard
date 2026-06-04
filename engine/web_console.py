@@ -317,6 +317,7 @@ INDEX_HTML = """<!doctype html>
         <button class="primary" data-command="workflow">Workflow</button>
         <button data-command="set org org_profiles/au_finance_midmarket.yaml">Load org</button>
         <button data-command="readiness">Readiness</button>
+        <button data-command="doctor">Doctor</button>
         <button class="primary" data-command="next">Next actions</button>
         <button data-command="toprisks">Top risks</button>
         <button data-command="feeds">Data feeds</button>
@@ -402,6 +403,7 @@ INDEX_HTML = """<!doctype html>
       const install = data.install_release;
       const localization = data.localization;
       const gate = data.readiness_gate;
+      const scenarios = data.scenarios?.stage_counts || {};
       const actions = data.next_actions.slice(0, 4);
       const problemFeeds = feeds.problem_feeds.slice(0, 3);
       const topRisks = data.top_risks.slice(0, 5);
@@ -410,7 +412,7 @@ INDEX_HTML = """<!doctype html>
           <div class="metric"><div class="metric-label">Readiness gate</div><div class="metric-value">${displayStatus(gate.status)}</div></div>
           <div class="metric"><div class="metric-label">Evidence records</div><div class="metric-value">${coverage.evidence_records}</div></div>
           <div class="metric"><div class="metric-label">Source-backed</div><div class="metric-value">${coverage.source_backed_records}</div></div>
-          <div class="metric"><div class="metric-label">Feed issues</div><div class="metric-value">${feeds.problem_feeds.length}</div></div>
+          <div class="metric"><div class="metric-label">Governed starters</div><div class="metric-value">${scenarios.governed_starter || 0}</div></div>
         </div>
         <div class="section">
           <div class="section-title"><span>Next Actions</span><span class="badge ${badgeClass(gate.status)}">${displayStatus(gate.status)}</span></div>
@@ -447,6 +449,10 @@ INDEX_HTML = """<!doctype html>
               <div class="item">
                 <div class="item-row"><strong>Coverage</strong><span class="badge warn">${Object.keys(coverage.threats).length} threats</span></div>
                 <div class="item-meta">${Object.keys(coverage.countries).join(", ") || "no country coverage"}; ${coverage.direct_parameter_records} direct parameter records</div>
+              </div>
+              <div class="item">
+                <div class="item-row"><strong>Scenarios</strong><span class="badge good">${scenarios.governed_starter || 0} governed</span></div>
+                <div class="item-meta">${scenarios.demo_fixture || 0} demo fixtures; labels are stored in scenario metadata</div>
               </div>
               <div class="item">
                 <div class="item-row"><strong>Localization</strong><span class="badge ${localization.covered_countries.length ? "warn" : "bad"}">${localization.covered_countries.length} countries</span></div>

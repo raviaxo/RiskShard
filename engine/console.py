@@ -18,7 +18,9 @@ from engine.governance import (
 )
 from engine.data_packs import build_data_pack_manifest, format_data_pack_manifest
 from engine.contributor import build_contributor_preflight, format_contributor_preflight
+from engine.doctor import build_doctor_report, format_doctor_report
 from engine.readiness import build_readiness_dashboard, format_next_actions, format_readiness_dashboard
+from engine.scenarios import scenario_paths, scenario_stage_label
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -66,17 +68,17 @@ class RiskShardConsole(cmd.Cmd):
             haystack = " ".join([path.stem, str(path), name, text]).lower()
             if terms and not all(term in haystack for term in terms):
                 continue
-            rows.append((path.stem, name, relative_to_root(path, self.root)))
+            rows.append((path.stem, name, scenario_stage_label(config), relative_to_root(path, self.root)))
 
         if not rows:
             self.write("No matching scenarios.\n")
             return None
 
         self.write("Scenarios\n")
-        self.write("ID                                      Name\n")
-        self.write("--                                      ----\n")
-        for scenario_id, name, rel_path in rows:
-            self.write(f"{scenario_id:<39} {name} ({rel_path})\n")
+        self.write("ID                                      Stage              Name\n")
+        self.write("--                                      -----              ----\n")
+        for scenario_id, name, stage, rel_path in rows:
+            self.write(f"{scenario_id:<39} {stage:<18} {name} ({rel_path})\n")
         return None
 
     def do_workflow(self, arg):
@@ -85,19 +87,20 @@ class RiskShardConsole(cmd.Cmd):
         self.write("First-run workflow\n")
         self.write("1. toprisks\n")
         self.write("2. feeds\n")
-        self.write("3. readiness\n")
-        self.write("4. next\n")
-        self.write("5. preflight\n")
-        self.write("6. search ransomware\n")
-        self.write("7. use au_finance_ransomware_midmarket\n")
-        self.write("8. show options\n")
-        self.write("9. show gaps\n")
-        self.write("10. propose\n")
-        self.write("11. calibrate\n")
-        self.write("12. show evidence\n")
-        self.write("13. explain\n")
-        self.write("14. run\n")
-        self.write("15. report json\n")
+        self.write("3. doctor\n")
+        self.write("4. readiness\n")
+        self.write("5. next\n")
+        self.write("6. preflight\n")
+        self.write("7. search ransomware\n")
+        self.write("8. use au_finance_ransomware_midmarket\n")
+        self.write("9. show options\n")
+        self.write("10. show gaps\n")
+        self.write("11. propose\n")
+        self.write("12. calibrate\n")
+        self.write("13. show evidence\n")
+        self.write("14. explain\n")
+        self.write("15. run\n")
+        self.write("16. report json\n")
         return None
 
     def help_workflow(self):
@@ -131,6 +134,8 @@ class RiskShardConsole(cmd.Cmd):
         metadata = config.get("metadata", {})
         self.write(f"Name      : {metadata.get('name')}\n")
         self.write(f"Version   : {metadata.get('version', 'n/a')}\n")
+        self.write(f"Stage     : {scenario_stage_label(config)}\n")
+        self.write(f"Benchmark : {metadata.get('benchmark_status', 'unspecified')}\n")
         self.write(f"Path      : {relative_to_root(path, self.root)}\n")
         self.write(f"Frequency : {config['frequency']}\n")
         self.write(f"Impact    : {config['impact']}\n")
@@ -387,6 +392,12 @@ class RiskShardConsole(cmd.Cmd):
         self.write(format_contributor_preflight(build_contributor_preflight(self.root)))
         return None
 
+    def do_doctor(self, arg):
+        """doctor - Run local setup, source, evidence, scenario, readiness, and package checks."""
+        run_tests = "--run-tests" in arg.split()
+        self.write(format_doctor_report(build_doctor_report(self.root, run_tests=run_tests)))
+        return None
+
     def do_contribute(self, arg):
         """contribute - Alias for preflight."""
         return self.do_preflight(arg)
@@ -521,10 +532,6 @@ class RiskShardConsole(cmd.Cmd):
 
     def write(self, text):
         self.stdout.write(text)
-
-
-def scenario_paths(root):
-    return sorted((Path(root) / "scenarios").glob("*.yaml"))
 
 
 def resolve_scenario(root, value):

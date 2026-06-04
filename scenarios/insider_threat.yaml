@@ -1,5 +1,7 @@
 metadata:
   name: Insider Threat
+  version: "0.1"
+  scenario_stage: demo_fixture
 
 frequency:
   min: 0.2

@@ -6,6 +6,7 @@ from engine.evidence import load_evidence_records
 from engine.experience import rank_top_risks
 from engine.governance import build_data_feed_inventory
 from engine.profiles import load_org_profile, load_yaml_file
+from engine.scenarios import summarize_scenario_stages
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -41,6 +42,9 @@ def build_readiness_dashboard(root=PROJECT_ROOT, org_profile_path=DEFAULT_ORG_PR
             "regulatory_intensity": org_profile["regulatory_intensity"],
         },
         "coverage": coverage_summary(evidence_records),
+        "scenarios": {
+            "stage_counts": summarize_scenario_stages(root),
+        },
         "top_risks": top_risks,
         "feed_governance": {
             "feed_count": feeds["feed_count"],
@@ -295,6 +299,7 @@ def format_readiness_dashboard(dashboard):
     pack = dashboard["data_pack"]
     install = dashboard["install_release"]
     gate = dashboard["readiness_gate"]
+    scenario_counts = dashboard["scenarios"]["stage_counts"]
     lines = [
         "Global readiness dashboard",
         f"Org: {dashboard['org_profile']['name']} ({dashboard['org_profile']['country']} / {dashboard['org_profile']['industry']})",
@@ -306,6 +311,7 @@ def format_readiness_dashboard(dashboard):
         f"Countries: {', '.join(dashboard['localization']['covered_countries']) or 'none'}",
         "",
         f"Feeds: {feeds['feed_count']} ({format_counts(feeds['status_counts'])})",
+        f"Scenarios: {format_counts(scenario_counts)}",
         f"Data pack: {pack['pack_version']} {pack['fingerprint'][:12]} files={pack['file_count']}",
         f"Installable package: {install['pyproject']}",
         "",

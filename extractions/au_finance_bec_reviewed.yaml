@@ -107,3 +107,19 @@ extractions:
     limitations: Small and micro business aggregate Scamwatch losses; not financial-services-specific or mid-market-specific.
     evidence_record_ids:
       - accc_2025_small_business_false_billing_losses_aud
+
+  - id: accc_2025_small_business_average_scam_loss_aud
+    source_id: accc_targeting_scams_2025
+    source_name: ACCC Targeting Scams Report 2025
+    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
+    publication_date: "2026-03-30"
+    extraction_date: "2026-06-04"
+    citation_detail: Small-business Scamwatch section.
+    fact: Small-business Scamwatch reports with financial loss amounted to AUD 9.5 million across 287 loss-reporting small-business reports in 2025.
+    value: 33101.05
+    unit: currency
+    currency: AUD
+    normalization_notes: Calculated as AUD 9,500,000 divided by 287 reports with financial loss.
+    limitations: Scam-wide small-business average, not BEC-only or mid-market-specific.
+    evidence_record_ids:
+      - accc_2025_small_business_average_scam_loss_aud

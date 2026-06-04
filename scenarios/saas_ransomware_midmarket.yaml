@@ -1,6 +1,7 @@
 metadata:
   name: "SaaS Ransomware Midmarket"
   version: "1.0"
+  scenario_stage: demo_fixture
 
 # Mapping from your previous 'primary_loss_magnitude'
 impact:

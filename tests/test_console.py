@@ -27,6 +27,8 @@ class ConsoleTests(unittest.TestCase):
 
         search_output = self.command("search ransomware")
         self.assertIn("au_finance_ransomware_midmarket", search_output)
+        self.assertIn("governed starter", search_output)
+        self.assertIn("demo fixture", search_output)
         self.assertIn("Ransomware", search_output)
 
         use_output = self.command("use au_finance_ransomware_midmarket")
@@ -44,6 +46,10 @@ class ConsoleTests(unittest.TestCase):
         bec_options = self.command("show options")
         self.assertIn("calibrations/au_finance_business_email_compromise.yaml", bec_options)
         self.assertIn("threat       : business_email_compromise", bec_options)
+
+        info_output = self.command("info business_email_compromise")
+        self.assertIn("Stage     : governed starter", info_output)
+        self.assertIn("Benchmark :", info_output)
 
     def test_calibrate_writes_artifacts_and_exposes_selected_evidence(self):
         self.command("use au_finance_ransomware_midmarket")
@@ -113,6 +119,11 @@ class ConsoleTests(unittest.TestCase):
         preflight_output = self.command("preflight")
         self.assertIn("Contributor preflight", preflight_output)
         self.assertIn("data pack fingerprint", preflight_output)
+
+        doctor_output = self.command("doctor")
+        self.assertIn("RiskShard doctor", doctor_output)
+        self.assertIn("package entry points", doctor_output)
+        self.assertIn("scenarios", doctor_output)
 
     def test_run_simulates_selected_scenario(self):
         self.command("use ransomware")
