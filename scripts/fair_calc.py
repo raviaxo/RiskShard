@@ -58,7 +58,7 @@ def main(argv=None):
     print_full_report(run["shards"], run["portfolio"])
 
     if args.export:
-        report_path = export_report(run["shards"], run["portfolio"])
+        report_path = export_report(run["shards"], run["portfolio"], metadata=run["metadata"])
         print(f"Exported: {report_path}")
 
     return 0

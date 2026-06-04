@@ -1,3 +1,4 @@
+import hashlib
 import json
 import random
 import statistics
@@ -42,6 +43,17 @@ def scenario_files(input_path):
     if input_path.is_dir():
         return sorted(input_path.glob("*.yaml"))
     return [input_path]
+
+
+def scenario_fingerprint(config):
+    payload = json.dumps(config, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def derive_scenario_seed(base_seed, scenario_path, config):
+    fingerprint = scenario_fingerprint(config)
+    payload = f"{base_seed}:{Path(scenario_path).as_posix()}:{fingerprint}"
+    return int(hashlib.sha256(payload.encode("utf-8")).hexdigest()[:8], 16)
 
 
 def percentile(data, p):
@@ -122,16 +134,41 @@ def compute_all_stats(portfolio):
 
 
 def run_portfolio(path, trials=10000, dist_type="pert", seed=None, schema_path=SCHEMA_PATH):
-    rng = random.Random(seed) if seed is not None else random.Random()
     schema = load_schema(schema_path)
     portfolio = {}
     failures = []
+    metadata = {
+        "input_path": str(path),
+        "trials": trials,
+        "distribution": dist_type,
+        "reproducibility": {
+            "deterministic": seed is not None,
+            "base_seed": seed,
+            "seed_source": "cli" if seed is not None else None,
+            "rng_isolation": "per_scenario" if seed is not None else "per_scenario_nondeterministic",
+            "reproduction_command": reproduction_command(path, trials, dist_type, seed),
+            "scenarios": [],
+        },
+    }
 
     for scenario_path in scenario_files(path):
         try:
             config = load_and_validate(scenario_path, schema)
+            scenario_seed = None
+            if seed is not None:
+                scenario_seed = derive_scenario_seed(seed, scenario_path, config)
+                rng = random.Random(scenario_seed)
+            else:
+                rng = random.Random()
+
             name, results = run_simulation(config, trials, dist_type, rng)
             portfolio[name] = results
+            metadata["reproducibility"]["scenarios"].append({
+                "name": name,
+                "path": str(scenario_path),
+                "seed": scenario_seed,
+                "fingerprint": scenario_fingerprint(config),
+            })
         except Exception as exc:
             failures.append((scenario_path, exc))
 
@@ -144,6 +181,7 @@ def run_portfolio(path, trials=10000, dist_type="pert", seed=None, schema_path=S
         "portfolio": portfolio_stats,
         "aggregate": aggregate,
         "failures": failures,
+        "metadata": metadata,
     }
 
 
@@ -170,7 +208,22 @@ def plot_lec(results, name, output_dir=RESULTS_DIR):
     return path
 
 
-def export_report(shard_stats, portfolio_stats, output_dir=RESULTS_DIR, timestamp=None):
+def reproduction_command(path, trials, dist_type, seed):
+    command = [
+        "python",
+        "scripts/fair_calc.py",
+        str(path),
+        "--trials",
+        str(trials),
+        "--dist",
+        dist_type,
+    ]
+    if seed is not None:
+        command.extend(["--seed", str(seed)])
+    return " ".join(command)
+
+
+def export_report(shard_stats, portfolio_stats, output_dir=RESULTS_DIR, timestamp=None, metadata=None):
     output_dir = Path(output_dir)
     output_dir.mkdir(exist_ok=True)
 
@@ -183,6 +236,8 @@ def export_report(shard_stats, portfolio_stats, output_dir=RESULTS_DIR, timestam
         "shards": shard_stats,
         "portfolio": portfolio_stats,
     }
+    if metadata is not None:
+        payload["metadata"] = metadata
 
     with open(path, "w") as f:
         json.dump(payload, f, indent=4)

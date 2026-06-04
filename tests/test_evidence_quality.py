@@ -90,6 +90,58 @@ class EvidenceQualityTests(unittest.TestCase):
         self.assertIn("source_not_fetched", {issue["code"] for issue in issues})
         self.assertIn("source_not_fetched_not_disclosed", {issue["code"] for issue in issues})
 
+    def test_multi_source_records_must_include_known_sources_and_primary_source(self):
+        record = {
+            "id": "multi_source_record",
+            "title": "Multi-source record",
+            "parameter": "frequency.min",
+            "value": 0.1,
+            "unit": "annual_probability",
+            "source_id": "source_a",
+            "source_ids": ["source_b", "missing_source"],
+            "source_name": "Example Sources",
+            "source_type": "derived_benchmark",
+            "source_url_or_citation": "https://example.com/a",
+            "publication_date": "2026-01-01",
+            "extraction_date": "2026-05-26",
+            "citation_detail": "Example section.",
+            "extraction_notes": "test",
+            "normalization_notes": "test",
+            "limitations": "test",
+            "confidence": "low",
+            "evidence_type": "source_backed",
+            "applicability": {
+                "industries": ["all"],
+                "countries": ["global"],
+                "company_size_bands": ["all"],
+                "threats": ["all"],
+            },
+        }
+        manifest = {
+            "source_a": {
+                "id": "source_a",
+                "url": "https://example.com/a",
+                "final_url": "https://example.com/a",
+                "publication_date": "2026-01-01",
+                "status": "fetched",
+            },
+            "source_b": {
+                "id": "source_b",
+                "url": "https://example.com/b",
+                "final_url": "https://example.com/b",
+                "publication_date": "2026-01-02",
+                "status": "fetched",
+            },
+        }
+
+        issues = validate_record_quality(record, manifest)
+
+        self.assertIn(
+            "primary_source_id_missing_from_source_ids",
+            {issue["code"] for issue in issues},
+        )
+        self.assertIn("source_id_unknown", {issue["code"] for issue in issues})
+
 
 if __name__ == "__main__":
     unittest.main()

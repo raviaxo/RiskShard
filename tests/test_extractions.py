@@ -16,6 +16,10 @@ class ExtractionTests(unittest.TestCase):
             "sophos_fin_services_hit_rate_2024",
             {record["id"] for record in records},
         )
+        self.assertIn(
+            "fbi_ic3_2025_bec_average_loss_per_complaint_usd",
+            {record["id"] for record in records},
+        )
 
     def test_reviewed_extractions_have_no_mapping_errors(self):
         issues = validate_extractions(

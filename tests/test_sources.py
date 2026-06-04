@@ -1,11 +1,15 @@
 import unittest
 from pathlib import Path
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
 
 from engine.sources import (
     SourceRegistryError,
     build_success_record,
+    fetch_source,
     load_source_registry,
     raw_filename_for_source,
+    source_urls,
     validate_source,
 )
 
@@ -20,6 +24,10 @@ class SourceRegistryTests(unittest.TestCase):
         self.assertGreaterEqual(len(registry["sources"]), 5)
         source_ids = {source["id"] for source in registry["sources"]}
         self.assertIn("verizon_dbir_2026", source_ids)
+        self.assertIn("ibm_cost_data_breach_2025", source_ids)
+        self.assertIn("abs_counts_australian_businesses_2025", source_ids)
+        self.assertIn("fbi_ic3_2025_report", source_ids)
+        self.assertIn("accc_targeting_scams_2025", source_ids)
         self.assertIn("cyentia_iris_2025", source_ids)
         self.assertIn("asd_annual_cyber_threat_report_2024_2025", source_ids)
 
@@ -49,6 +57,52 @@ class SourceRegistryTests(unittest.TestCase):
             raw_filename_for_source(source, "text/html; charset=utf-8"),
             "example_report.html",
         )
+
+    def test_fallback_urls_are_attempted_after_primary_url(self):
+        source = {
+            "id": "example_report",
+            "title": "Example Report",
+            "publisher": "Example Publisher",
+            "source_type": "report",
+            "url": "https://example.com/landing",
+            "fallback_urls": [
+                "https://example.com/report.pdf",
+                "https://example.com/report.pdf",
+            ],
+            "publication_date": "2026-01-01",
+            "access_mode": "public_pdf",
+            "intended_use": ["testing"],
+            "usage_notes": "Unit test fixture.",
+        }
+
+        self.assertEqual(
+            source_urls(source),
+            [
+                "https://example.com/landing",
+                "https://example.com/report.pdf",
+            ],
+        )
+
+        calls = []
+
+        def fake_fetch(url, *, timeout):
+            calls.append(url)
+            if url == "https://example.com/landing":
+                raise TimeoutError("landing page timed out")
+            return {
+                "payload": b"%PDF example",
+                "final_url": url,
+                "http_status": 200,
+                "headers": {"Content-Type": "application/pdf"},
+            }
+
+        with TemporaryDirectory() as tmp, patch("engine.sources.fetch_url", side_effect=fake_fetch):
+            record = fetch_source(source, Path(tmp), gathered_at="2026-06-01T00:00:00Z", timeout=1, retries=0)
+
+        self.assertEqual(calls, ["https://example.com/landing", "https://example.com/report.pdf"])
+        self.assertEqual(record["status"], "fetched")
+        self.assertEqual(record["final_url"], "https://example.com/report.pdf")
+        self.assertEqual(record["content_type"], "application/pdf")
 
 
 class SourceManifestTests(unittest.TestCase):

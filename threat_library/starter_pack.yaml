@@ -25,7 +25,7 @@ threats:
 
   - id: data_breach
     label: Data Breach
-    status: scaffold_only
+    status: calibration_profile_started
     primary_loss_modes:
       - notification_cost
       - response_cost
@@ -39,10 +39,14 @@ threats:
     starter_sources:
       - verizon_dbir_2026
       - oaic_ndb_jul_dec_2024
+      - abs_counts_australian_businesses_2025
+      - ibm_cost_data_breach_2025
+      - cyentia_iris_2025
+      - cyentia_iris_2022
 
   - id: business_email_compromise
     label: Business Email Compromise
-    status: scaffold_only
+    status: calibration_profile_started
     primary_loss_modes:
       - fraudulent_payment
       - investigation_cost
@@ -54,6 +58,8 @@ threats:
       - control effectiveness
     starter_sources:
       - verizon_dbir_2026
+      - fbi_ic3_2025_report
+      - accc_targeting_scams_2025
 
   - id: third_party_outage
     label: Third-Party Outage

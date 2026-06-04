@@ -135,6 +135,7 @@ def build_error_record(source, *, gathered_at, error):
         "sha256": None,
         "raw_path": None,
         "error": str(error),
+        "attempted_urls": source_urls(source),
     }
 
 
@@ -161,27 +162,61 @@ def manifest_path(path):
         return str(path)
 
 
-def fetch_source(source, raw_dir, *, gathered_at=None, timeout=30):
-    gathered_at = gathered_at or utc_now_iso()
-    raw_dir = Path(raw_dir)
-    request = Request(
-        source["url"],
+def source_urls(source):
+    urls = [source["url"]]
+    for url in source.get("fallback_urls", []):
+        if url not in urls:
+            urls.append(url)
+    return urls
+
+
+def build_request(url):
+    return Request(
+        url,
         headers={
             "User-Agent": "RiskShardSourceGatherer/0.1 (+https://github.com/raviaxo/RiskShard)",
             "Accept": "application/pdf,text/html,application/json,text/plain,*/*",
+            "Connection": "close",
         },
     )
 
-    opener = build_opener(RedirectHandler)
 
-    try:
-        with opener.open(request, timeout=timeout) as response:
-            payload = response.read()
-            final_url = response.geturl()
-            http_status = response.getcode()
-            headers = dict(response.headers.items())
-    except (HTTPError, URLError, TimeoutError, OSError) as exc:
-        return build_error_record(source, gathered_at=gathered_at, error=exc)
+def fetch_url(url, *, timeout):
+    opener = build_opener(RedirectHandler)
+    with opener.open(build_request(url), timeout=timeout) as response:
+        return {
+            "payload": response.read(),
+            "final_url": response.geturl(),
+            "http_status": response.getcode(),
+            "headers": dict(response.headers.items()),
+        }
+
+
+def fetch_source(source, raw_dir, *, gathered_at=None, timeout=30, retries=1):
+    gathered_at = gathered_at or utc_now_iso()
+    raw_dir = Path(raw_dir)
+    errors = []
+
+    for url in source_urls(source):
+        for attempt in range(retries + 1):
+            try:
+                response = fetch_url(url, timeout=timeout)
+                payload = response["payload"]
+                final_url = response["final_url"]
+                http_status = response["http_status"]
+                headers = response["headers"]
+                break
+            except (HTTPError, URLError, TimeoutError, OSError) as exc:
+                errors.append(f"{url} attempt {attempt + 1}: {exc}")
+        else:
+            continue
+        break
+    else:
+        return build_error_record(
+            source,
+            gathered_at=gathered_at,
+            error="; ".join(errors),
+        )
 
     raw_dir.mkdir(parents=True, exist_ok=True)
     content_type = headers.get("Content-Type") or headers.get("content-type")
@@ -199,11 +234,11 @@ def fetch_source(source, raw_dir, *, gathered_at=None, timeout=30):
     )
 
 
-def gather_sources(registry_path, raw_dir, *, timeout=30):
+def gather_sources(registry_path, raw_dir, *, timeout=30, retries=1):
     registry = load_source_registry(registry_path)
     generated_at = utc_now_iso()
     records = [
-        fetch_source(source, raw_dir, gathered_at=generated_at, timeout=timeout)
+        fetch_source(source, raw_dir, gathered_at=generated_at, timeout=timeout, retries=retries)
         for source in registry["sources"]
     ]
 

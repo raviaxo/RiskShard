@@ -1,0 +1,294 @@
+records:
+  - id: fbi_ic3_2025_bec_average_loss_per_complaint_usd
+    title: FBI IC3 BEC average adjusted loss per complaint
+    parameter: impact.likely
+    value: 123005.43
+    unit: currency
+    currency: USD
+    source_id: fbi_ic3_2025_report
+    source_name: FBI IC3 2025 Annual Report
+    source_type: law_enforcement_report
+    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    extraction_date: "2026-06-03"
+    citation_detail: 2025 Crime Types tables list Business Email Compromise with 24,768 complaints and USD 3,046,598,558 in adjusted losses.
+    extraction_notes: Derived average adjusted BEC loss as USD 3,046,598,558 divided by 24,768 BEC complaints.
+    normalization_notes: Stored in source currency; calibration converts to AUD using the explicit RBA FX assumption and rounds to a scenario-ready likely impact.
+    limitations: US IC3 complaint population; self-reported and complaint-driven; not Australia-specific, financial-services-specific, mid-market-specific, or a full loss distribution.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [business_email_compromise]
+
+  - id: fbi_ic3_2025_bec_complaints
+    title: FBI IC3 BEC complaint count
+    parameter: context.bec_complaints
+    value: 24768
+    unit: complaints
+    source_id: fbi_ic3_2025_report
+    source_name: FBI IC3 2025 Annual Report
+    source_type: law_enforcement_report
+    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    extraction_date: "2026-06-03"
+    citation_detail: 2025 Crime Types by complaint count table lists Business Email Compromise with 24,768 complaints.
+    extraction_notes: Extracted BEC complaint count from the FBI IC3 annual crime-type table.
+    normalization_notes: Stored as context evidence; not used directly as organization-level annual frequency without a denominator.
+    limitations: US complaint count; not a complete population denominator and not an Australia financial-services annual probability.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [business_email_compromise]
+
+  - id: fbi_ic3_2025_bec_adjusted_losses_usd
+    title: FBI IC3 BEC adjusted losses
+    parameter: context.bec_adjusted_losses
+    value: 3046598558
+    unit: currency
+    currency: USD
+    source_id: fbi_ic3_2025_report
+    source_name: FBI IC3 2025 Annual Report
+    source_type: law_enforcement_report
+    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    extraction_date: "2026-06-03"
+    citation_detail: 2025 Crime Types by complaint loss table lists Business Email Compromise losses of USD 3,046,598,558.
+    extraction_notes: Extracted adjusted BEC loss total from the FBI IC3 annual crime-type loss table.
+    normalization_notes: Stored in source currency as context evidence supporting BEC loss magnitude.
+    limitations: US IC3 adjusted losses are complaint-driven and may not represent all events, Australia, or financial-services mid-market loss severity.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [business_email_compromise]
+
+  - id: accc_2025_small_business_scam_reports
+    title: ACCC small-business scam reports
+    parameter: context.au_small_business_scam_reports
+    value: 2228
+    unit: reports
+    source_id: accc_targeting_scams_2025
+    source_name: ACCC Targeting Scams Report 2025
+    source_type: scam_report
+    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
+    publication_date: "2026-03-30"
+    extraction_date: "2026-06-03"
+    citation_detail: Small-business Scamwatch section reports 2,228 small-business reports in 2025.
+    extraction_notes: Extracted small-business scam report count from the ACCC National Anti-Scam Centre report.
+    normalization_notes: Stored as Australia local context; not a direct frequency because Scamwatch is one of several reporting channels and lacks a full company denominator.
+    limitations: Small and micro business Scamwatch reports only; not mid-market-specific, financial-services-specific, or complete across all reporting channels.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [business_email_compromise]
+
+  - id: accc_2025_small_business_scam_reports_with_loss
+    title: ACCC small-business scam reports with loss
+    parameter: context.au_small_business_scam_reports_with_loss
+    value: 287
+    unit: reports_with_loss
+    source_id: accc_targeting_scams_2025
+    source_name: ACCC Targeting Scams Report 2025
+    source_type: scam_report
+    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
+    publication_date: "2026-03-30"
+    extraction_date: "2026-06-03"
+    citation_detail: Small-business Scamwatch section reports 287 small-business reports with financial loss in 2025.
+    extraction_notes: Extracted small-business reports-with-loss count from the ACCC National Anti-Scam Centre report.
+    normalization_notes: Stored as Australia local context; useful for loss-reporting context but not a complete frequency denominator.
+    limitations: Small and micro business Scamwatch reports only; not mid-market-specific, financial-services-specific, or a complete loss-event population.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [business_email_compromise]
+
+  - id: accc_2025_small_business_scam_losses_aud
+    title: ACCC small-business scam losses
+    parameter: context.au_small_business_scam_losses
+    value: 9500000
+    unit: currency
+    currency: AUD
+    source_id: accc_targeting_scams_2025
+    source_name: ACCC Targeting Scams Report 2025
+    source_type: scam_report
+    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
+    publication_date: "2026-03-30"
+    extraction_date: "2026-06-03"
+    citation_detail: Small-business Scamwatch section reports AUD 9.5 million in financial loss in 2025.
+    extraction_notes: Extracted aggregate reported small-business scam losses from the ACCC National Anti-Scam Centre report.
+    normalization_notes: Stored as Australia local context; aggregate losses are not a single-event impact range.
+    limitations: Scamwatch small-business aggregate loss only; not BEC-only, not mid-market-specific, and not a scenario impact quantile.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [business_email_compromise]
+
+  - id: accc_2025_small_business_false_billing_losses_aud
+    title: ACCC small-business false billing losses
+    parameter: context.au_small_business_false_billing_losses
+    value: 2000000
+    unit: currency
+    currency: AUD
+    source_id: accc_targeting_scams_2025
+    source_name: ACCC Targeting Scams Report 2025
+    source_type: scam_report
+    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
+    publication_date: "2026-03-30"
+    extraction_date: "2026-06-03"
+    citation_detail: Figure 10 reports AUD 2.0 million in false billing losses for small businesses, and notes false billing generally relates to payment redirections also known as BEC scams.
+    extraction_notes: Extracted the small-business false billing loss total and the report's payment-redirection/BEC interpretation.
+    normalization_notes: Stored as Australia BEC-adjacent context; aggregate small-business false-billing losses are not a direct single-event severity distribution.
+    limitations: Small and micro business aggregate Scamwatch losses; not financial-services-specific, mid-market-specific, or a direct organization-level BEC impact parameter.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [business_email_compromise]
+
+  - id: riskshard_bec_frequency_floor_2026
+    title: Estimated BEC frequency floor
+    parameter: frequency.min
+    value: 0.04
+    unit: annual_probability
+    source_name: RiskShard starter BEC pack
+    source_type: model_assumption
+    source_url_or_citation: Starter assumption pending reviewed DBIR, fraud, or insurer evidence extraction.
+    publication_date: "2026-06-03"
+    extraction_date: "2026-06-03"
+    extraction_notes: Estimated lower annual probability for an Australia financial-services BEC draft.
+    normalization_notes: Kept explicit as an assumption until source-backed BEC frequency evidence is reviewed.
+    limitations: Not source-backed; replace with reviewed payment-fraud or BEC frequency evidence before using in a calibrated scenario.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: riskshard_bec_frequency_likely_2026
+    title: Estimated BEC likely frequency
+    parameter: frequency.likely
+    value: 0.12
+    unit: annual_probability
+    source_name: RiskShard starter BEC pack
+    source_type: model_assumption
+    source_url_or_citation: Starter assumption pending reviewed DBIR, fraud, or insurer evidence extraction.
+    publication_date: "2026-06-03"
+    extraction_date: "2026-06-03"
+    extraction_notes: Estimated likely annual probability for an Australia financial-services BEC draft.
+    normalization_notes: Kept explicit as an assumption until source-backed BEC frequency evidence is reviewed.
+    limitations: Not source-backed; replace with reviewed payment-fraud or BEC frequency evidence before using in a calibrated scenario.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: riskshard_bec_frequency_stress_2026
+    title: Estimated BEC frequency stress bound
+    parameter: frequency.max
+    value: 0.25
+    unit: annual_probability
+    source_name: RiskShard starter BEC pack
+    source_type: model_assumption
+    source_url_or_citation: Starter assumption pending reviewed DBIR, fraud, or insurer evidence extraction.
+    publication_date: "2026-06-03"
+    extraction_date: "2026-06-03"
+    extraction_notes: Estimated upper annual probability for an Australia financial-services BEC draft.
+    normalization_notes: Kept explicit as an assumption until source-backed BEC frequency evidence is reviewed.
+    limitations: Not source-backed; replace with reviewed payment-fraud or BEC frequency evidence before using in a calibrated scenario.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: riskshard_bec_impact_floor_2026
+    title: Estimated BEC impact floor
+    parameter: impact.min
+    value: 25000
+    unit: currency
+    currency: AUD
+    source_name: RiskShard starter BEC pack
+    source_type: model_assumption
+    source_url_or_citation: Starter assumption pending reviewed DBIR, fraud, or insurer evidence extraction.
+    publication_date: "2026-06-03"
+    extraction_date: "2026-06-03"
+    extraction_notes: Estimated lower single-event impact for an Australia financial-services BEC draft.
+    normalization_notes: Kept explicit as an assumption until source-backed BEC loss magnitude evidence is reviewed.
+    limitations: Not source-backed; replace with reviewed fraudulent payment size, recovery rate, and response-cost evidence.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: riskshard_bec_impact_likely_2026
+    title: Estimated BEC likely impact
+    parameter: impact.likely
+    value: 180000
+    unit: currency
+    currency: AUD
+    source_name: RiskShard starter BEC pack
+    source_type: model_assumption
+    source_url_or_citation: Starter assumption pending reviewed DBIR, fraud, or insurer evidence extraction.
+    publication_date: "2026-06-03"
+    extraction_date: "2026-06-03"
+    extraction_notes: Estimated likely single-event impact for an Australia financial-services BEC draft.
+    normalization_notes: Kept explicit as an assumption until source-backed BEC loss magnitude evidence is reviewed.
+    limitations: Not source-backed; replace with reviewed fraudulent payment size, recovery rate, and response-cost evidence.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: riskshard_bec_impact_stress_2026
+    title: Estimated BEC impact stress bound
+    parameter: impact.max
+    value: 1500000
+    unit: currency
+    currency: AUD
+    source_name: RiskShard starter BEC pack
+    source_type: model_assumption
+    source_url_or_citation: Starter assumption pending reviewed DBIR, fraud, or insurer evidence extraction.
+    publication_date: "2026-06-03"
+    extraction_date: "2026-06-03"
+    extraction_notes: Estimated upper single-event impact for an Australia financial-services BEC draft.
+    normalization_notes: Kept explicit as an assumption until source-backed BEC loss magnitude evidence is reviewed.
+    limitations: Not source-backed; replace with reviewed fraudulent payment size, recovery rate, and response-cost evidence.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]

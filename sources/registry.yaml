@@ -32,6 +32,72 @@ sources:
       Use as a threat-pattern and breach-vector source. It supports likelihood
       and applicability reasoning more than direct financial impact modeling.
 
+  - id: ibm_cost_data_breach_2025
+    title: Cost of a Data Breach Report 2025
+    publisher: IBM
+    source_type: data_breach_cost_research
+    url: https://www.ibm.com/reports/data-breach
+    publication_date: "2025-07-30"
+    access_mode: public_html
+    intended_use:
+      - data breach loss magnitude
+      - global average breach cost
+      - breach cost reduction context
+    usage_notes: >
+      Use as a data-breach-specific global loss benchmark. Preserve notes
+      about geography, industry, and methodology limitations when applying it
+      to local scenario ranges.
+
+  - id: abs_counts_australian_businesses_2025
+    title: Counts of Australian Businesses, including Entries and Exits, July 2021 - June 2025
+    publisher: Australian Bureau of Statistics
+    source_type: official_statistical_data
+    url: https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025
+    publication_date: "2025-08-26"
+    access_mode: public_html
+    intended_use:
+      - Australia business population denominator
+      - industry denominator
+      - frequency normalization
+    usage_notes: >
+      Use as an official Australian business-count denominator. Preserve
+      limitations when combining it with incident, notification, or loss-event
+      counts from other sources.
+
+  - id: fbi_ic3_2025_report
+    title: 2025 IC3 Annual Report
+    publisher: Federal Bureau of Investigation Internet Crime Complaint Center
+    source_type: law_enforcement_report
+    url: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    access_mode: public_pdf
+    intended_use:
+      - BEC complaint counts
+      - BEC adjusted losses
+      - cyber-enabled fraud context
+      - transaction-type context
+    usage_notes: >
+      Use as a law-enforcement complaint and adjusted-loss source for BEC.
+      Preserve limitations about US reporting, self-selection, and complaint
+      averages when applying it to non-US scenarios.
+
+  - id: accc_targeting_scams_2025
+    title: Targeting Scams Report 2025
+    publisher: Australian Competition and Consumer Commission National Anti-Scam Centre
+    source_type: scam_report
+    url: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
+    publication_date: "2026-03-30"
+    access_mode: public_pdf
+    intended_use:
+      - Australia scam context
+      - small business false billing losses
+      - payment redirection context
+      - BEC local applicability
+    usage_notes: >
+      Use as Australia-specific scam context. Treat Scamwatch small-business
+      reports as partial reporting evidence, not complete organization-level
+      BEC frequency.
+
   - id: cyentia_iris_2025
     title: Information Risk Insights Study 2025
     publisher: Cyentia Institute
@@ -85,6 +151,8 @@ sources:
     publisher: Australian Signals Directorate
     source_type: government_report
     url: https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025
+    fallback_urls:
+      - https://www.cyber.gov.au/sites/default/files/2025-10/Annual%20Cyber%20Threat%20Report%202024-25.pdf
     publication_date: "2025-10-14"
     access_mode: public_html
     intended_use:

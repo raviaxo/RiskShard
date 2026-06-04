@@ -1,0 +1,109 @@
+extractions:
+  - id: fbi_ic3_2025_bec_complaints
+    source_id: fbi_ic3_2025_report
+    source_name: FBI IC3 2025 Annual Report
+    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    extraction_date: "2026-06-03"
+    citation_detail: 2025 Crime Types by complaint count table.
+    fact: FBI IC3 reported 24,768 Business Email Compromise complaints in 2025.
+    value: 24768
+    unit: complaints
+    normalization_notes: Stored as BEC context; not a direct annual frequency without a population denominator.
+    limitations: US complaint-based reporting; not Australia-specific or financial-services-specific.
+    evidence_record_ids:
+      - fbi_ic3_2025_bec_complaints
+
+  - id: fbi_ic3_2025_bec_adjusted_losses_usd
+    source_id: fbi_ic3_2025_report
+    source_name: FBI IC3 2025 Annual Report
+    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    extraction_date: "2026-06-03"
+    citation_detail: 2025 Crime Types by complaint loss table.
+    fact: FBI IC3 reported USD 3,046,598,558 in adjusted losses for Business Email Compromise in 2025.
+    value: 3046598558
+    unit: currency
+    currency: USD
+    normalization_notes: Stored in source currency as BEC loss magnitude context.
+    limitations: US complaint-based adjusted loss total; not a complete global or Australia-specific loss distribution.
+    evidence_record_ids:
+      - fbi_ic3_2025_bec_adjusted_losses_usd
+
+  - id: fbi_ic3_2025_bec_average_loss_per_complaint_usd
+    source_id: fbi_ic3_2025_report
+    source_name: FBI IC3 2025 Annual Report
+    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    extraction_date: "2026-06-03"
+    citation_detail: Derived from the 2025 Crime Types complaint count and complaint loss tables.
+    fact: Dividing USD 3,046,598,558 in BEC adjusted losses by 24,768 BEC complaints gives USD 123,005.43 average adjusted loss per complaint.
+    value: 123005.43
+    unit: currency
+    currency: USD
+    normalization_notes: Stored in source currency; calibration converts to AUD using the explicit FX assumption.
+    limitations: Derived complaint average; not a tail estimate, Australia-specific benchmark, or complete event-severity distribution.
+    evidence_record_ids:
+      - fbi_ic3_2025_bec_average_loss_per_complaint_usd
+
+  - id: accc_2025_small_business_scam_reports
+    source_id: accc_targeting_scams_2025
+    source_name: ACCC Targeting Scams Report 2025
+    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
+    publication_date: "2026-03-30"
+    extraction_date: "2026-06-03"
+    citation_detail: Small-business Scamwatch section.
+    fact: Small businesses lodged 2,228 Scamwatch reports in 2025.
+    value: 2228
+    unit: reports
+    normalization_notes: Stored as Australia scam-reporting context, not direct organization-level frequency.
+    limitations: Small and micro business Scamwatch reports only; not a complete reporting population.
+    evidence_record_ids:
+      - accc_2025_small_business_scam_reports
+
+  - id: accc_2025_small_business_scam_reports_with_loss
+    source_id: accc_targeting_scams_2025
+    source_name: ACCC Targeting Scams Report 2025
+    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
+    publication_date: "2026-03-30"
+    extraction_date: "2026-06-03"
+    citation_detail: Small-business Scamwatch section.
+    fact: Of the small-business Scamwatch reports in 2025, 287 reported financial loss.
+    value: 287
+    unit: reports_with_loss
+    normalization_notes: Stored as Australia loss-reporting context, not direct event frequency.
+    limitations: Small and micro business Scamwatch reports only; not a complete loss-event population.
+    evidence_record_ids:
+      - accc_2025_small_business_scam_reports_with_loss
+
+  - id: accc_2025_small_business_scam_losses_aud
+    source_id: accc_targeting_scams_2025
+    source_name: ACCC Targeting Scams Report 2025
+    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
+    publication_date: "2026-03-30"
+    extraction_date: "2026-06-03"
+    citation_detail: Small-business Scamwatch section.
+    fact: Small-business Scamwatch reports with financial loss amounted to AUD 9.5 million in 2025.
+    value: 9500000
+    unit: currency
+    currency: AUD
+    normalization_notes: Stored as aggregate loss context, not a single-event loss parameter.
+    limitations: Aggregate small-business Scamwatch losses; not BEC-only or mid-market-specific.
+    evidence_record_ids:
+      - accc_2025_small_business_scam_losses_aud
+
+  - id: accc_2025_small_business_false_billing_losses_aud
+    source_id: accc_targeting_scams_2025
+    source_name: ACCC Targeting Scams Report 2025
+    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
+    publication_date: "2026-03-30"
+    extraction_date: "2026-06-03"
+    citation_detail: Small-business section and Figure 10.
+    fact: ACCC reported AUD 2.0 million in small-business false billing losses and stated false billing reports from business generally relate to payment redirections also known as BEC scams.
+    value: 2000000
+    unit: currency
+    currency: AUD
+    normalization_notes: Stored as BEC-adjacent Australia context, not a single-event impact range.
+    limitations: Small and micro business aggregate Scamwatch losses; not financial-services-specific or mid-market-specific.
+    evidence_record_ids:
+      - accc_2025_small_business_false_billing_losses_aud

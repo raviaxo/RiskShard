@@ -1,0 +1,319 @@
+records:
+  - id: oaic_au_finance_data_breach_notifications_2024_h2
+    title: Australian finance-sector notifiable data breach notifications
+    parameter: context.finance_sector_ndb_notifications
+    value: 54
+    unit: notifications
+    source_id: oaic_ndb_jul_dec_2024
+    source_name: OAIC Notifiable Data Breaches Report July to December 2024
+    source_type: regulator_report
+    source_url_or_citation: https://www.oaic.gov.au/__data/assets/pdf_file/0021/251184/Notifiable-data-breaches-report-July-to-December-2024.pdf
+    publication_date: "2025-05-13"
+    extraction_date: "2026-06-03"
+    citation_detail: Page 15, Table 5, top sectors by notifications.
+    extraction_notes: OAIC reported 54 notifications from Finance, including superannuation, for July to December 2024.
+    normalization_notes: Stored as Australian financial-services data breach context, not as an organization-level annual probability.
+    limitations: Sector notification count reflects reportable privacy breaches under the NDB scheme, not all data breach events or organization-level likelihood.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: abs_au_financial_insurance_active_businesses_2025
+    title: Australian financial and insurance services active businesses
+    parameter: context.au_financial_insurance_active_businesses
+    value: 133743
+    unit: businesses
+    source_id: abs_counts_australian_businesses_2025
+    source_name: ABS Counts of Australian Businesses 2024-25
+    source_type: official_statistical_data
+    source_url_or_citation: https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025
+    publication_date: "2025-08-26"
+    extraction_date: "2026-06-03"
+    citation_detail: Industry section; Financial and Insurance Services increased 3.7% to 133,743 businesses in 2024-25.
+    extraction_notes: ABS reported 133,743 actively trading Financial and Insurance Services businesses in 2024-25.
+    normalization_notes: Stored as an Australian sector denominator for frequency normalization.
+    limitations: Industry-wide denominator includes all active businesses, including non-employing and very small businesses; not mid-market-specific.
+    confidence: high
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: oaic_abs_au_finance_ndb_notification_rate_floor_2025
+    title: Annualized Australian finance-sector NDB notification rate floor
+    parameter: frequency.min
+    value: 0.0008
+    unit: annual_probability
+    source_id: oaic_ndb_jul_dec_2024
+    source_ids:
+      - oaic_ndb_jul_dec_2024
+      - abs_counts_australian_businesses_2025
+    source_name: OAIC NDB Report July-Dec 2024 and ABS Counts of Australian Businesses 2024-25
+    source_type: derived_regulator_statistical_benchmark
+    source_url_or_citation: https://www.oaic.gov.au/__data/assets/pdf_file/0021/251184/Notifiable-data-breaches-report-July-to-December-2024.pdf
+    publication_date: "2025-05-13"
+    extraction_date: "2026-06-03"
+    citation_detail: OAIC Page 15, Table 5 reported 54 finance notifications for July-Dec 2024; ABS industry section reported 133,743 Financial and Insurance Services businesses in 2024-25.
+    extraction_notes: Annualized the OAIC half-year finance notification count to 108 and divided by the ABS active-business denominator of 133,743.
+    normalization_notes: Calculation is (54 * 2) / 133,743 = 0.0008075, rounded to 0.0008. Used as a reported-notification frequency floor, not a likely breach rate.
+    limitations: Covers eligible Australian NDB notifications only; all-size sector denominator is not mid-market-specific; multiple notifications by one entity and unreported/non-reportable breaches can distort organization-level probability.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: verizon_dbir_2026_vulnerability_exploitation_breach_entry_share
+    title: Vulnerability exploitation share of breaches
+    parameter: context.breach_initial_access_vulnerability_exploitation
+    value: 0.31
+    unit: share_of_breaches
+    source_id: verizon_dbir_2026
+    source_name: Verizon 2026 Data Breach Investigations Report
+    source_type: breach_report
+    source_url_or_citation: https://www.verizon.com/business/resources/T766/reports/2026-dbir-data-breach-investigations-report.pdf
+    publication_date: "2026-05-20"
+    extraction_date: "2026-06-03"
+    citation_detail: Verizon 2026 DBIR key findings; vulnerability exploitation is reported as 31% of breaches.
+    extraction_notes: Verizon reported that nearly a third of breaches start with vulnerability exploitation.
+    normalization_notes: Stored as threat-pattern context. It is not an organization-level annual breach probability.
+    limitations: Global DBIR breach corpus; not Australia-specific, not financial-services-specific, and not a frequency or impact parameter.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: verizon_dbir_2026_third_party_breach_involvement_share
+    title: Third-party involvement share of breaches
+    parameter: context.third_party_breach_involvement_share
+    value: 0.48
+    unit: share_of_breaches
+    source_id: verizon_dbir_2026
+    source_name: Verizon 2026 Data Breach Investigations Report
+    source_type: breach_report
+    source_url_or_citation: https://www.verizon.com/business/resources/T766/reports/2026-dbir-data-breach-investigations-report.pdf
+    publication_date: "2026-05-20"
+    extraction_date: "2026-06-03"
+    citation_detail: Verizon 2026 DBIR key findings; breaches involving a third party are reported as 48% of breaches.
+    extraction_notes: Verizon reported that breaches involving a third party account for 48% of breaches.
+    normalization_notes: Stored as threat-pattern context for data breach and supplier-risk review, not as direct frequency.
+    limitations: Global DBIR breach corpus; not Australia-specific, not financial-services-specific, and not a direct scenario frequency or loss magnitude.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: cyentia_iris_2022_typical_cyber_event_loss_usd
+    title: Typical reported cyber-event financial loss
+    parameter: impact.min
+    value: 266000
+    unit: currency
+    currency: USD
+    source_id: cyentia_iris_2022
+    source_name: Cyentia Information Risk Insights Study 2022
+    source_type: cyber_loss_research
+    source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
+    publication_date: "2022-01-01"
+    extraction_date: "2026-06-03"
+    citation_detail: Public source page key findings; typical financial cost reported for a cyber event is $266K.
+    extraction_notes: Cyentia reported a typical financial cost of USD 266,000 for a cyber event.
+    normalization_notes: Stored in source currency and selected as a conservative lower loss anchor for a material data-breach scenario.
+    limitations: Global cyber-event benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a true minimum loss quantile.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [all]
+
+  - id: ibm_cost_data_breach_2025_global_average_cost_usd
+    title: Global average cost of a data breach
+    parameter: impact.likely
+    value: 4400000
+    unit: currency
+    currency: USD
+    source_id: ibm_cost_data_breach_2025
+    source_name: IBM Cost of a Data Breach Report 2025
+    source_type: data_breach_cost_research
+    source_url_or_citation: https://www.ibm.com/reports/data-breach
+    publication_date: "2025-07-30"
+    extraction_date: "2026-06-03"
+    citation_detail: Public report page hero metric; global average cost of a data breach is USD 4.4M.
+    extraction_notes: IBM reported a USD 4.4 million global average cost of a data breach for the 2025 report.
+    normalization_notes: Stored in source currency and selected as the likely loss anchor because it is data-breach-specific.
+    limitations: Global average across studied breached organizations; not Australia-specific, financial-services-specific, or size-band-specific.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: cyentia_iris_2025_extreme_security_incident_loss_usd
+    title: Extreme reported security-incident loss
+    parameter: impact.max
+    value: 32000000
+    unit: currency
+    currency: USD
+    source_id: cyentia_iris_2025
+    source_name: Cyentia Information Risk Insights Study 2025
+    source_type: cyber_loss_research
+    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
+    publication_date: "2025-06-10"
+    extraction_date: "2026-06-03"
+    citation_detail: Public source page key findings; median losses rose toward $3M, with extreme events reaching $32M.
+    extraction_notes: Cyentia reported extreme security incidents reaching USD 32 million.
+    normalization_notes: Stored in source currency and selected as a stress loss anchor for a material data-breach scenario.
+    limitations: Global security-incident benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a formal percentile for this scenario.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [all]
+
+  - id: riskshard_data_breach_frequency_floor_2026
+    title: Estimated data breach frequency floor
+    parameter: frequency.min
+    value: 0.08
+    unit: annual_probability
+    source_name: RiskShard starter data breach pack
+    source_type: model_assumption
+    source_url_or_citation: Derived from OAIC finance-sector notification context and existing RiskShard data breach scenario ranges.
+    publication_date: "2026-06-03"
+    extraction_date: "2026-06-03"
+    extraction_notes: Estimated lower annual probability for an Australia financial-services data breach draft.
+    normalization_notes: Kept explicit as an assumption until source-backed organization-level frequency evidence is reviewed.
+    limitations: Not directly source-backed; replace with denominator-backed Australian financial-services breach likelihood evidence.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: riskshard_data_breach_frequency_likely_2026
+    title: Estimated data breach likely frequency
+    parameter: frequency.likely
+    value: 0.18
+    unit: annual_probability
+    source_name: RiskShard starter data breach pack
+    source_type: model_assumption
+    source_url_or_citation: Derived from OAIC finance-sector notification context and existing RiskShard data breach scenario ranges.
+    publication_date: "2026-06-03"
+    extraction_date: "2026-06-03"
+    extraction_notes: Estimated likely annual probability for an Australia financial-services data breach draft.
+    normalization_notes: Kept explicit as an assumption until source-backed organization-level frequency evidence is reviewed.
+    limitations: Not directly source-backed; replace with denominator-backed Australian financial-services breach likelihood evidence.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: riskshard_data_breach_frequency_stress_2026
+    title: Estimated data breach frequency stress bound
+    parameter: frequency.max
+    value: 0.35
+    unit: annual_probability
+    source_name: RiskShard starter data breach pack
+    source_type: model_assumption
+    source_url_or_citation: Derived from OAIC finance-sector notification context and existing RiskShard data breach scenario ranges.
+    publication_date: "2026-06-03"
+    extraction_date: "2026-06-03"
+    extraction_notes: Estimated upper annual probability for an Australia financial-services data breach draft.
+    normalization_notes: Kept explicit as an assumption until source-backed organization-level frequency evidence is reviewed.
+    limitations: Not directly source-backed; replace with denominator-backed Australian financial-services breach likelihood evidence.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: riskshard_data_breach_impact_floor_2026
+    title: Estimated data breach impact floor
+    parameter: impact.min
+    value: 75000
+    unit: currency
+    currency: AUD
+    source_name: RiskShard starter data breach pack
+    source_type: model_assumption
+    source_url_or_citation: Derived from OAIC finance-sector notification context and existing RiskShard data breach scenario ranges.
+    publication_date: "2026-06-03"
+    extraction_date: "2026-06-03"
+    extraction_notes: Estimated lower single-event impact for an Australia financial-services data breach draft.
+    normalization_notes: Kept explicit as an assumption until source-backed response-cost evidence is reviewed.
+    limitations: Not directly source-backed; replace with Australia-specific breach response cost and tail-loss evidence.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: riskshard_data_breach_impact_likely_2026
+    title: Estimated data breach likely impact
+    parameter: impact.likely
+    value: 450000
+    unit: currency
+    currency: AUD
+    source_name: RiskShard starter data breach pack
+    source_type: model_assumption
+    source_url_or_citation: Derived from OAIC finance-sector notification context and existing RiskShard data breach scenario ranges.
+    publication_date: "2026-06-03"
+    extraction_date: "2026-06-03"
+    extraction_notes: Estimated likely single-event impact for an Australia financial-services data breach draft.
+    normalization_notes: Kept explicit as an assumption until source-backed response-cost evidence is reviewed.
+    limitations: Not directly source-backed; replace with Australia-specific breach response cost and tail-loss evidence.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: riskshard_data_breach_impact_stress_2026
+    title: Estimated data breach impact stress bound
+    parameter: impact.max
+    value: 2500000
+    unit: currency
+    currency: AUD
+    source_name: RiskShard starter data breach pack
+    source_type: model_assumption
+    source_url_or_citation: Derived from OAIC finance-sector notification context and existing RiskShard data breach scenario ranges.
+    publication_date: "2026-06-03"
+    extraction_date: "2026-06-03"
+    extraction_notes: Estimated upper single-event impact for an Australia financial-services data breach draft.
+    normalization_notes: Kept explicit as an assumption until source-backed response-cost evidence is reviewed.
+    limitations: Not directly source-backed; replace with Australia-specific breach response cost and tail-loss evidence.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [data_breach]

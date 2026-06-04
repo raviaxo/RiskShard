@@ -39,12 +39,18 @@ def parse_args():
         type=int,
         help="Per-source fetch timeout in seconds.",
     )
+    parser.add_argument(
+        "--retries",
+        default=1,
+        type=int,
+        help="Retry attempts per source URL before trying the next fallback URL.",
+    )
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
-    manifest = gather_sources(args.registry, args.raw_dir, timeout=args.timeout)
+    manifest = gather_sources(args.registry, args.raw_dir, timeout=args.timeout, retries=args.retries)
     output_path = write_manifest(manifest, args.manifest)
 
     print(f"Source manifest written: {output_path}")

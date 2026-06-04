@@ -1,13 +1,15 @@
 rates:
-  - id: usd_to_aud_planning_2026_05_26
-    from: USD
-    to: AUD
-    rate: 1.5
-    as_of: "2026-05-26"
-    source_name: RiskShard planning assumption
-    source_type: model_assumption
-    evidence_type: estimated
+  - id: aud_to_usd_rba_f11_1_2026_06_01
+    from: AUD
+    to: USD
+    rate: 0.7188
+    as_of: "2026-06-01"
+    source_name: Reserve Bank of Australia Statistical Table F11.1
+    source_type: official_statistical_table
+    source_url: https://www.rba.gov.au/statistics/tables/csv/f11.1-data.csv
+    retrieved_at: "2026-06-01"
+    citation_detail: "F11.1 Exchange Rates, series FXRUSD, row 01-Jun-2026; table quotes A$1=USD 0.7188."
+    evidence_type: source_backed
     notes: >
-      Planning conversion used only for local scenario calibration. Replace with
-      an externally sourced FX rate before relying on monetary outputs for
-      decisions.
+      RBA F11.1 quotes AUD to USD. USD to AUD calibration conversions invert
+      this rate and disclose the source rate ID in the calibration report.

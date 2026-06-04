@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "riskshard"
+version = "0.1.0"
+description = "Evidence-backed quantitative cyber risk shard engine"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = [
+  "jsonschema>=4.0,<5",
+  "matplotlib>=3.7,<4",
+  "PyYAML>=6.0,<7",
+]
+
+[project.scripts]
+riskshard = "scripts.fair_calc:main"
+riskshard-calibrate = "scripts.calibrate_scenario:main"
+riskshard-console = "scripts.riskshard_console:main"
+riskshard-web-console = "scripts.riskshard_web_console:main"
+riskshard-feeds = "scripts.data_governance:main"
+riskshard-readiness = "scripts.readiness_dashboard:main"
+riskshard-data-pack = "scripts.data_pack_manifest:main"
+riskshard-preflight = "scripts.contributor_preflight:main"
+
+[tool.setuptools]
+packages = ["engine", "scripts"]
+py-modules = []
