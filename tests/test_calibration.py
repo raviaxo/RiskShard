@@ -53,7 +53,7 @@ class CalibrationTests(unittest.TestCase):
             selected_by_id["cyentia_global_ransomware_probability_2025"]["selection"][
                 "higher_scored_alternatives"
             ][0]["id"],
-            "asd_sme_cybercrime_frequency_2025",
+            "riskshard_au_sme_cybercrime_frequency_floor_2026",
         )
         self.assertEqual(
             report["assumptions"][0]["rate_id"],

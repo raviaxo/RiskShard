@@ -150,6 +150,7 @@ sources:
     title: Annual Cyber Threat Report 2024-2025
     publisher: Australian Signals Directorate
     source_type: government_report
+    active: false
     url: https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025
     fallback_urls:
       - https://www.cyber.gov.au/sites/default/files/2025-10/Annual%20Cyber%20Threat%20Report%202024-25.pdf
@@ -160,7 +161,10 @@ sources:
       - SME cybercrime cost
       - local threat environment
     usage_notes: >
-      Use for Australia-specific context and local cybercrime cost anchors.
+      Inactive candidate source. The official page and PDF are externally
+      reachable, but local automated gathering timed out in this runtime even
+      with extended timeouts. Reactivate only after the source can be gathered
+      reliably or after a stable alternate artifact is registered.
 
   - id: oaic_ndb_jul_dec_2024
     title: Notifiable Data Breaches Report July to December 2024

@@ -45,23 +45,21 @@ records:
       company_size_bands: [all]
       threats: [ransomware]
 
-  - id: asd_sme_cybercrime_frequency_2025
-    title: Australian SMEs impacted by cybercrime
+  - id: riskshard_au_sme_cybercrime_frequency_floor_2026
+    title: Estimated Australian SME cybercrime frequency floor
     parameter: frequency.min
     value: 0.22
     unit: annual_probability
-    source_id: asd_annual_cyber_threat_report_2024_2025
-    source_name: ASD Annual Cyber Threat Report 2024-2025
-    source_type: government_report
-    source_url_or_citation: https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025
-    publication_date: "2025-10-14"
-    extraction_date: "2026-05-26"
-    citation_detail: Annual Cyber Threat Report 2024-2025 SME cybercrime impact statistic; latest automated gather recorded a timeout for this source.
-    extraction_notes: ASD reported that 22% of Australian SME owners surveyed said their business was impacted by cybercrime.
+    source_name: RiskShard Australia cybercrime context assumption
+    source_type: model_assumption
+    source_url_or_citation: Prior external review of official Australian cybercrime reporting; not part of the governed source manifest.
+    publication_date: "2026-06-04"
+    extraction_date: "2026-06-04"
+    extraction_notes: Planning floor retained for Australia SME cybercrime context after the official ASD/AIC artifacts failed local automated gathering.
     normalization_notes: Used as a conservative Australia lower-frequency context point, not as a ransomware-specific frequency estimate.
-    limitations: Cybercrime-wide statistic, not ransomware-specific and not financial-services-specific; latest source gather did not retrieve the raw ASD artifact.
+    limitations: Estimated placeholder, cybercrime-wide rather than ransomware-specific, and not governed source-backed evidence. Replace with a locally gathered Australia SME or ransomware source before treating this as benchmark-grade.
     confidence: low
-    evidence_type: source_backed
+    evidence_type: estimated
     applicability:
       industries: [all]
       countries: [AU]
@@ -89,24 +87,22 @@ records:
       company_size_bands: [mid_market]
       threats: [ransomware]
 
-  - id: asd_medium_business_cybercrime_cost_2025
-    title: Average cybercrime cost for Australian medium businesses
+  - id: riskshard_au_medium_business_cybercrime_cost_floor_2026
+    title: Estimated Australian medium-business cybercrime cost floor
     parameter: impact.min
     value: 100000
     unit: currency
     currency: AUD
-    source_id: asd_annual_cyber_threat_report_2024_2025
-    source_name: ASD Annual Cyber Threat Report 2024-2025
-    source_type: government_report
-    source_url_or_citation: https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025
-    publication_date: "2025-10-14"
-    extraction_date: "2026-05-26"
-    citation_detail: Annual Cyber Threat Report 2024-2025 average self-reported cybercrime cost for medium businesses; latest automated gather recorded a timeout for this source.
-    extraction_notes: ASD reported an average self-reported cybercrime cost of AUD 97,166 for medium businesses.
+    source_name: RiskShard Australia cybercrime context assumption
+    source_type: model_assumption
+    source_url_or_citation: Prior external review of official Australian cybercrime reporting; not part of the governed source manifest.
+    publication_date: "2026-06-04"
+    extraction_date: "2026-06-04"
+    extraction_notes: Planning lower impact floor retained after the official ASD/AIC artifacts failed local automated gathering.
     normalization_notes: Rounded to AUD 100,000 for the lower impact bound.
-    limitations: Cybercrime-wide statistic, not ransomware-specific and not financial-services-specific; latest source gather did not retrieve the raw ASD artifact.
-    confidence: medium
-    evidence_type: source_backed
+    limitations: Estimated placeholder, cybercrime-wide rather than ransomware-specific, and not governed source-backed evidence. Replace with a locally gathered Australia-specific ransomware or cybercrime cost source before treating this as benchmark-grade.
+    confidence: low
+    evidence_type: estimated
     applicability:
       industries: [all]
       countries: [AU]

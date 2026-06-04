@@ -56,6 +56,9 @@ def build_data_feed_inventory(
     feeds = []
 
     for source in registry["sources"]:
+        if not source.get("active", True):
+            continue
+
         source_id = source["id"]
         manifest = manifest_by_id.get(source_id, {})
         evidence_records = evidence_by_source.get(source_id, [])

@@ -33,13 +33,13 @@ class WebConsoleTests(unittest.TestCase):
 
         actions = app.run_command("next")
         self.assertIn("Next best actions", actions["output"])
-        self.assertIn("Restore governed source feed health", actions["output"])
+        self.assertIn("Replace assumptions", actions["output"])
 
         dashboard = app.dashboard()
         self.assertIn("coverage", dashboard)
         self.assertIn("data_pack", dashboard)
         self.assertIn("next_actions", dashboard)
-        self.assertEqual(dashboard["readiness_gate"]["status"], "needs_source_review")
+        self.assertEqual(dashboard["readiness_gate"]["status"], "ready_for_local_calibrated_run")
         self.assertGreaterEqual(len(dashboard["top_risks"]), 5)
 
 

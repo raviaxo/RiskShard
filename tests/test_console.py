@@ -71,10 +71,9 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn("score=", evidence_output)
         self.assertIn("best=", evidence_output)
 
-    def test_validate_reports_warnings_without_errors(self):
+    def test_validate_reports_clean_evidence_quality(self):
         validate_output = self.command("validate")
-        self.assertIn("Validation completed with warnings only.", validate_output)
-        self.assertIn("WARNING", validate_output)
+        self.assertIn("Evidence quality gates passed with no issues.", validate_output)
 
     def test_top_risks_and_gaps_are_available_from_console(self):
         risks_output = self.command("toprisks")
