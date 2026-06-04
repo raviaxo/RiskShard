@@ -166,6 +166,22 @@ sources:
       with extended timeouts. Reactivate only after the source can be gathered
       reliably or after a stable alternate artifact is registered.
 
+  - id: business_qld_cyber_secure_guidance_2025
+    title: Keeping your business cyber secure
+    publisher: Business Queensland
+    source_type: government_business_guidance
+    url: https://www.business.qld.gov.au/running-business/digital-business/online-risk-security/cyber-security
+    publication_date: "2025-10-23"
+    access_mode: public_html
+    intended_use:
+      - Australia cybercrime cost
+      - medium business cost floor
+      - business cyber security context
+    usage_notes: >
+      Use as a locally gatherable secondary government page that summarizes
+      ASD 2024-2025 business cybercrime cost figures. Treat it as a secondary
+      bridge source until the primary ASD artifact is gatherable in this runtime.
+
   - id: oaic_ndb_jul_dec_2024
     title: Notifiable Data Breaches Report July to December 2024
     publisher: Office of the Australian Information Commissioner
