@@ -16,6 +16,11 @@
           "unit": { "type": "string" },
           "currency": { "type": "string" },
           "source_id": { "type": "string" },
+          "source_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1
+          },
           "source_name": { "type": "string" },
           "source_type": { "type": "string" },
           "source_url_or_citation": { "type": "string" },

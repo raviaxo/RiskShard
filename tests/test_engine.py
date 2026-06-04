@@ -1,6 +1,8 @@
+import json
 import random
 import tempfile
 import unittest
+from datetime import datetime
 from pathlib import Path
 
 from jsonschema.exceptions import ValidationError
@@ -91,6 +93,77 @@ class PortfolioTests(unittest.TestCase):
         self.assertEqual(aggregate, [11, 22, 33])
         self.assertIn("a", shard_stats)
         self.assertEqual(portfolio_stats["mean"], 22)
+
+    def test_run_portfolio_records_isolated_seed_metadata(self):
+        first = fair_calc.run_portfolio(
+            ROOT / "scenarios",
+            trials=10,
+            dist_type="pert",
+            seed=123,
+        )
+        second = fair_calc.run_portfolio(
+            ROOT / "scenarios",
+            trials=10,
+            dist_type="pert",
+            seed=123,
+        )
+
+        self.assertEqual(first["aggregate"], second["aggregate"])
+        self.assertEqual(first["portfolio"], second["portfolio"])
+
+        reproducibility = first["metadata"]["reproducibility"]
+        self.assertTrue(reproducibility["deterministic"])
+        self.assertEqual(reproducibility["base_seed"], 123)
+        self.assertEqual(reproducibility["seed_source"], "cli")
+        self.assertEqual(reproducibility["rng_isolation"], "per_scenario")
+        self.assertEqual(first["metadata"]["input_path"], str(ROOT / "scenarios"))
+        self.assertIn("--seed 123", reproducibility["reproduction_command"])
+        self.assertIn("--trials 10", reproducibility["reproduction_command"])
+
+        scenario_metadata = reproducibility["scenarios"]
+        seeds = [scenario["seed"] for scenario in scenario_metadata]
+        self.assertEqual(len(scenario_metadata), len(fair_calc.scenario_files(ROOT / "scenarios")))
+        self.assertEqual(len(seeds), len(set(seeds)))
+        self.assertTrue(all(0 <= seed <= 0xFFFFFFFF for seed in seeds))
+        self.assertTrue(all(scenario["fingerprint"] for scenario in scenario_metadata))
+
+    def test_scenario_seed_is_stable_when_portfolio_order_changes(self):
+        scenario = {
+            "metadata": {"name": "Stable Seed"},
+            "frequency": {"min": 1, "likely": 1, "max": 1},
+            "impact": {"min": 1, "likely": 1, "max": 1},
+        }
+
+        first = fair_calc.derive_scenario_seed(42, Path("scenarios/stable.yaml"), scenario)
+        second = fair_calc.derive_scenario_seed(42, Path("scenarios/stable.yaml"), scenario)
+        renamed = fair_calc.derive_scenario_seed(42, Path("scenarios/renamed.yaml"), scenario)
+
+        self.assertEqual(first, second)
+        self.assertNotEqual(first, renamed)
+
+    def test_export_report_includes_optional_metadata(self):
+        metadata = {
+            "trials": 25,
+            "distribution": "pert",
+            "reproducibility": {
+                "deterministic": True,
+                "base_seed": 7,
+            },
+        }
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = fair_calc.export_report(
+                {"example": {"mean": 1}},
+                {"mean": 1},
+                output_dir=tmp,
+                timestamp=datetime(2026, 1, 2, 3, 4, 5),
+                metadata=metadata,
+            )
+
+            payload = json.loads(Path(path).read_text())
+
+        self.assertEqual(payload["timestamp"], "2026-01-02T03:04:05")
+        self.assertEqual(payload["metadata"], metadata)
 
 
 if __name__ == "__main__":

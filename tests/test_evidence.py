@@ -43,6 +43,10 @@ class EvidenceMatchingTests(unittest.TestCase):
             with self.subTest(record=record["id"]):
                 self.assertIn("source_id", record)
                 self.assertIn(record["source_id"], manifest_by_id)
+                for source_id in record.get("source_ids", []):
+                    self.assertIn(source_id, manifest_by_id)
+                if "source_ids" in record:
+                    self.assertIn(record["source_id"], record["source_ids"])
                 source = manifest_by_id[record["source_id"]]
                 self.assertEqual(record["publication_date"], source["publication_date"])
                 self.assertIn(
@@ -71,6 +75,75 @@ class EvidenceMatchingTests(unittest.TestCase):
         self.assertEqual(
             records["sophos_fin_services_ransomware_recovery_cost_2024"]["currency"],
             "USD",
+        )
+
+    def test_starter_packs_cover_data_breach_and_bec_honestly(self):
+        records = load_evidence_records(ROOT / "evidence")
+        by_id = {record["id"]: record for record in records}
+
+        self.assertEqual(
+            by_id["oaic_au_finance_data_breach_notifications_2024_h2"]["evidence_type"],
+            "source_backed",
+        )
+        self.assertEqual(
+            by_id["verizon_dbir_2026_vulnerability_exploitation_breach_entry_share"]["value"],
+            0.31,
+        )
+        self.assertEqual(
+            by_id["verizon_dbir_2026_third_party_breach_involvement_share"]["evidence_type"],
+            "source_backed",
+        )
+        self.assertEqual(
+            by_id["riskshard_data_breach_frequency_likely_2026"]["evidence_type"],
+            "estimated",
+        )
+        self.assertEqual(
+            by_id["abs_au_financial_insurance_active_businesses_2025"]["value"],
+            133743,
+        )
+        self.assertEqual(
+            by_id["oaic_abs_au_finance_ndb_notification_rate_floor_2025"]["evidence_type"],
+            "source_backed",
+        )
+        self.assertEqual(
+            by_id["oaic_abs_au_finance_ndb_notification_rate_floor_2025"]["source_ids"],
+            ["oaic_ndb_jul_dec_2024", "abs_counts_australian_businesses_2025"],
+        )
+        self.assertEqual(
+            by_id["ibm_cost_data_breach_2025_global_average_cost_usd"]["evidence_type"],
+            "source_backed",
+        )
+        self.assertEqual(
+            by_id["ibm_cost_data_breach_2025_global_average_cost_usd"]["value"],
+            4400000,
+        )
+        self.assertEqual(
+            by_id["cyentia_iris_2025_extreme_security_incident_loss_usd"]["currency"],
+            "USD",
+        )
+        self.assertEqual(
+            by_id["fbi_ic3_2025_bec_average_loss_per_complaint_usd"]["evidence_type"],
+            "source_backed",
+        )
+        self.assertEqual(
+            by_id["fbi_ic3_2025_bec_average_loss_per_complaint_usd"]["value"],
+            123005.43,
+        )
+        self.assertEqual(
+            by_id["fbi_ic3_2025_bec_average_loss_per_complaint_usd"]["currency"],
+            "USD",
+        )
+        self.assertEqual(
+            by_id["accc_2025_small_business_false_billing_losses_aud"]["value"],
+            2000000,
+        )
+        self.assertEqual(
+            by_id["riskshard_bec_impact_likely_2026"]["applicability"]["threats"],
+            ["business_email_compromise"],
+        )
+        self.assertIn(
+            "Not source-backed",
+            by_id["riskshard_bec_impact_likely_2026"]["limitations"],
         )
 
     def test_match_evidence_prefers_applicable_records_and_explains_fallbacks(self):

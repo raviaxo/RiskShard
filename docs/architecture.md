@@ -15,6 +15,11 @@
 - Scenario structure includes:
   - Frequency
   - Impact
+- Organization profiles for evidence matching and calibration context
+- Calibration profiles that map reviewed evidence into scenario ranges
+- Control profiles as transformations, not embedded scenario properties
+
+RiskShard does not currently apply heuristic contextual multipliers from organization profile fields. Org-specific analysis should flow through evidence-backed calibration and produce an explicit scenario YAML before simulation.
 
 ---
 
@@ -25,10 +30,29 @@
 - Portfolio aggregation
 - Loss Exceedance Curve (LEC)
 - JSON export
+- Calibration reports with selected evidence, excluded evidence, warnings, and assumptions
 
 ---
 
-## 4. Control Simulation Layer (NEW)
+## 4. Evidence Calibration Flow
+
+```text
+Source registry + gathered manifest
+    ↓
+Reviewed extractions
+    ↓
+Normalized evidence records
+    ↓
+Calibration profile + organization profile
+    ↓
+Calibrated scenario YAML
+    ↓
+Simulation engine
+```
+
+---
+
+## 5. Control Simulation Layer
 
 Transforms RiskShard from a calculator → decision engine.
 
@@ -37,30 +61,30 @@ Controls are **transformations applied to scenarios**, not embedded properties.
 
 ### Components
 
-#### 4.1 Control Objects
+#### 5.1 Control Objects
 - Encapsulate risk reduction logic
 - Examples:
   - Frequency reduction
   - Impact reduction
 
-#### 4.2 Control Engine
+#### 5.2 Control Engine
 - Applies one or multiple controls to a scenario
 - Produces a modified scenario
 
-#### 4.3 Orchestration Layer
+#### 5.3 Orchestration Layer
 - Runs:
   1. Baseline simulation
   2. Controlled simulation
 - Ensures separation from core engine
 
-#### 4.4 Comparator
+#### 5.4 Comparator
 - Computes:
   - Delta (mean, P95, P99)
   - % reduction
 
 ---
 
-## 5. Execution Flow
+## 6. Execution Flow
 
 ```text
 Scenario YAML

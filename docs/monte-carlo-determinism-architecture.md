@@ -6,6 +6,10 @@
 **Date**: 2026-05-29  
 **Audience**: Engineers, GRC Analysts, Risk Methodology Teams
 
+## Implementation Status
+
+As of 2026-06-01, RiskShard has a first implementation slice: when `--seed` is supplied, portfolio runs derive an isolated RNG seed per scenario from the base seed, scenario path, and scenario fingerprint; exported JSON reports include basic seed metadata. Scenario-level seed configuration, environment-variable seed resolution, deterministic generated defaults, audit logs, reproduction commands, and RNG state serialization remain future work.
+
 ## Executive Summary
 
 This document specifies a tool-agnostic architecture for deterministic Monte Carlo simulations in quantitative risk analysis. The architecture ensures complete reproducibility of risk simulations for enterprise GRC reporting, audit verification, and methodological rigor while maintaining flexibility across implementation technologies.
@@ -199,7 +203,7 @@ interface RNGState {
 #### Model A: Independent Randomness (Default)
 ```
 For each scenario in portfolio:
-    seed = hash(base_seed + scenario_index + scenario_fingerprint)
+    seed = hash(base_seed + scenario_path + scenario_fingerprint)
     rng = factory.create({seed, algorithm: "mt19937", isolation: "strict"})
     results = run_simulation(scenario, rng)
     

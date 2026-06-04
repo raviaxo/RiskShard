@@ -1,0 +1,123 @@
+extractions:
+  - id: oaic_au_finance_data_breach_notifications_2024_h2
+    source_id: oaic_ndb_jul_dec_2024
+    source_name: OAIC Notifiable Data Breaches Report July to December 2024
+    source_url_or_citation: https://www.oaic.gov.au/__data/assets/pdf_file/0021/251184/Notifiable-data-breaches-report-July-to-December-2024.pdf
+    publication_date: "2025-05-13"
+    extraction_date: "2026-06-03"
+    citation_detail: Page 15, Table 5, top sectors by notifications.
+    fact: OAIC reported 54 notifications from Finance, including superannuation, for July to December 2024.
+    value: 54
+    unit: notifications
+    normalization_notes: Stored as Australian financial-services data breach context, not direct organization-level probability.
+    limitations: Sector notification count reflects reportable privacy breaches under the NDB scheme, not all data breach events or organization-level likelihood.
+    evidence_record_ids:
+      - oaic_au_finance_data_breach_notifications_2024_h2
+
+  - id: abs_au_financial_insurance_active_businesses_2025
+    source_id: abs_counts_australian_businesses_2025
+    source_name: ABS Counts of Australian Businesses 2024-25
+    source_url_or_citation: https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025
+    publication_date: "2025-08-26"
+    extraction_date: "2026-06-03"
+    citation_detail: Industry section; Financial and Insurance Services increased 3.7% to 133,743 businesses in 2024-25.
+    fact: ABS reported 133,743 actively trading Financial and Insurance Services businesses in 2024-25.
+    value: 133743
+    unit: businesses
+    normalization_notes: Stored as an Australian sector denominator for frequency normalization.
+    limitations: Industry-wide denominator includes all active businesses, including non-employing and very small businesses; not mid-market-specific.
+    evidence_record_ids:
+      - abs_au_financial_insurance_active_businesses_2025
+
+  - id: oaic_abs_au_finance_ndb_notification_rate_floor_2025
+    source_id: oaic_ndb_jul_dec_2024
+    source_ids:
+      - oaic_ndb_jul_dec_2024
+      - abs_counts_australian_businesses_2025
+    source_name: OAIC NDB Report July-Dec 2024 and ABS Counts of Australian Businesses 2024-25
+    source_url_or_citation: https://www.oaic.gov.au/__data/assets/pdf_file/0021/251184/Notifiable-data-breaches-report-July-to-December-2024.pdf
+    publication_date: "2025-05-13"
+    extraction_date: "2026-06-03"
+    citation_detail: OAIC Page 15, Table 5 reported 54 finance notifications for July-Dec 2024; ABS industry section reported 133,743 Financial and Insurance Services businesses in 2024-25.
+    fact: Annualizing 54 half-year finance NDB notifications and dividing by 133,743 active Financial and Insurance Services businesses gives a rate of 0.0008075.
+    value: 0.0008
+    unit: annual_probability
+    normalization_notes: Rounded to 0.0008 and stored as a reported-notification frequency floor, not a likely breach rate.
+    limitations: Covers eligible Australian NDB notifications only; all-size sector denominator is not mid-market-specific; multiple notifications by one entity and unreported/non-reportable breaches can distort organization-level probability.
+    evidence_record_ids:
+      - oaic_abs_au_finance_ndb_notification_rate_floor_2025
+
+  - id: verizon_dbir_2026_vulnerability_exploitation_breach_entry_share
+    source_id: verizon_dbir_2026
+    source_name: Verizon 2026 Data Breach Investigations Report
+    source_url_or_citation: https://www.verizon.com/business/resources/T766/reports/2026-dbir-data-breach-investigations-report.pdf
+    publication_date: "2026-05-20"
+    extraction_date: "2026-06-03"
+    citation_detail: Verizon 2026 DBIR key findings; vulnerability exploitation is reported as 31% of breaches.
+    fact: Verizon reported that vulnerability exploitation accounts for 31% of breaches in the 2026 DBIR.
+    value: 0.31
+    unit: share_of_breaches
+    normalization_notes: Converted percentage to decimal share and stored as context evidence only.
+    limitations: Global DBIR breach corpus; not Australia-specific, not financial-services-specific, and not an organization-level annual probability.
+    evidence_record_ids:
+      - verizon_dbir_2026_vulnerability_exploitation_breach_entry_share
+
+  - id: verizon_dbir_2026_third_party_breach_involvement_share
+    source_id: verizon_dbir_2026
+    source_name: Verizon 2026 Data Breach Investigations Report
+    source_url_or_citation: https://www.verizon.com/business/resources/T766/reports/2026-dbir-data-breach-investigations-report.pdf
+    publication_date: "2026-05-20"
+    extraction_date: "2026-06-03"
+    citation_detail: Verizon 2026 DBIR key findings; breaches involving a third party are reported as 48% of breaches.
+    fact: Verizon reported that breaches involving a third party account for 48% of breaches in the 2026 DBIR.
+    value: 0.48
+    unit: share_of_breaches
+    normalization_notes: Converted percentage to decimal share and stored as context evidence only.
+    limitations: Global DBIR breach corpus; not Australia-specific, not financial-services-specific, and not a direct scenario frequency or loss magnitude.
+    evidence_record_ids:
+      - verizon_dbir_2026_third_party_breach_involvement_share
+
+  - id: cyentia_iris_2022_typical_cyber_event_loss_usd
+    source_id: cyentia_iris_2022
+    source_name: Cyentia Information Risk Insights Study 2022
+    source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
+    publication_date: "2022-01-01"
+    extraction_date: "2026-06-03"
+    citation_detail: Public source page key findings; typical financial cost reported for a cyber event is $266K.
+    fact: Cyentia reported that the typical financial cost for a cyber event was USD 266,000.
+    value: 266000
+    unit: currency
+    normalization_notes: Stored in source currency and used as a conservative lower loss anchor, not as a true minimum loss quantile.
+    limitations: Global cyber-event benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a true minimum loss quantile.
+    evidence_record_ids:
+      - cyentia_iris_2022_typical_cyber_event_loss_usd
+
+  - id: ibm_cost_data_breach_2025_global_average_cost_usd
+    source_id: ibm_cost_data_breach_2025
+    source_name: IBM Cost of a Data Breach Report 2025
+    source_url_or_citation: https://www.ibm.com/reports/data-breach
+    publication_date: "2025-07-30"
+    extraction_date: "2026-06-03"
+    citation_detail: Public report page hero metric; global average cost of a data breach is USD 4.4M.
+    fact: IBM reported that the 2025 global average cost of a data breach was USD 4.4 million.
+    value: 4400000
+    unit: currency
+    normalization_notes: Stored in source currency and used as a data-breach-specific likely loss anchor.
+    limitations: Global average across studied breached organizations; not Australia-specific, financial-services-specific, or size-band-specific.
+    evidence_record_ids:
+      - ibm_cost_data_breach_2025_global_average_cost_usd
+
+  - id: cyentia_iris_2025_extreme_security_incident_loss_usd
+    source_id: cyentia_iris_2025
+    source_name: Cyentia Information Risk Insights Study 2025
+    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
+    publication_date: "2025-06-10"
+    extraction_date: "2026-06-03"
+    citation_detail: Public source page key findings; median losses rose toward $3M, with extreme events reaching $32M.
+    fact: Cyentia reported that extreme security incidents reached USD 32 million.
+    value: 32000000
+    unit: currency
+    normalization_notes: Stored in source currency and used as a stress loss anchor for a material data-breach scenario.
+    limitations: Global security-incident benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a formal percentile for this scenario.
+    evidence_record_ids:
+      - cyentia_iris_2025_extreme_security_incident_loss_usd

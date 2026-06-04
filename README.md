@@ -21,7 +21,9 @@ RiskShard aims to become a shared computation layer for cyber risk:
 - Mean, P50, P95, and P99 loss metrics
 - Loss Exceedance Curve chart generation
 - Optional JSON report export
-- Early benchmark-to-scenario generation helpers
+- Per-scenario RNG isolation and seed metadata for seeded JSON exports
+- Interactive practitioner console for search, calibration, simulation, reports, and validation
+- Reviewed source-to-extraction-to-evidence-to-calibration workflow
 - Vetted YAML taxonomies and evidence matching for industry, country, company size, and threat context
 
 ## In Progress
@@ -46,11 +48,10 @@ extractions/             Reviewed source fact extractions mapped to evidence
 calibrations/            Calibration profiles and FX assumptions
 threat_library/          Starter threat scaffold for future top-risk workflows
 sources/                 Curated source registry and generated gather manifest
-library/benchmarks/      Benchmark source data and shard generation helper
-library/adapters/        Adapter/helper experiments
-scenarios/               Example YAML risk shards
+library/benchmarks/      Legacy benchmark fixture data
+scenarios/               YAML risk shards and demo fixtures
 schemas/                 JSON Schema for scenario validation
-scripts/                 Thin CLI entry point
+scripts/                 Thin CLI and console entry points
 tests/                   Stdlib unittest coverage
 results/                 Ignored local reports and LEC charts
 docs/                    Vision, roadmap, architecture, and strategy notes
@@ -67,7 +68,42 @@ pip install -r requirements.txt
 python scripts/fair_calc.py scenarios --trials 10000 --dist pert --seed 42 --export
 ```
 
-The command above runs every YAML scenario in `scenarios/`, prints portfolio statistics, saves a Loss Exceedance Curve to `results/`, and writes a JSON report when `--export` is included.
+The command above runs every YAML scenario in `scenarios/`, prints portfolio statistics, saves a Loss Exceedance Curve to `results/`, and writes a JSON report when `--export` is included. The scenario folder mixes calibrated-workflow starters with older demo fixtures; see [scenarios/README.md](scenarios/README.md) before treating portfolio output as decision-ready.
+
+## Interactive Console
+
+For a guided practitioner workflow, start the console:
+
+```bash
+python scripts/riskshard_console.py
+```
+
+Or start the local browser console for a Codex side-panel style workflow:
+
+```bash
+python scripts/riskshard_web_console.py
+```
+
+Then try:
+
+```text
+riskshard> workflow
+riskshard> toprisks
+riskshard> readiness
+riskshard> next
+riskshard> feeds
+riskshard> search ransomware
+riskshard> use au_finance_ransomware_midmarket
+riskshard(au_finance_ransomware_midmarket)> show options
+riskshard(au_finance_ransomware_midmarket)> show gaps
+riskshard(au_finance_ransomware_midmarket)> calibrate
+riskshard(au_finance_ransomware_midmarket)> show evidence
+riskshard(au_finance_ransomware_midmarket)> explain
+riskshard(au_finance_ransomware_midmarket)> run
+riskshard(au_finance_ransomware_midmarket)> report json
+```
+
+The console keeps all artifacts local and reviewable in `results/`. See [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md).
 
 ## Evidence Calibration
 
@@ -80,32 +116,60 @@ python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.y
   --calibration calibrations/au_finance_ransomware.yaml \
   --threat ransomware \
   --report-output results/au_finance_ransomware_calibration.json \
+  --markdown-output results/au_finance_ransomware_calibration.md \
   --scenario-output results/au_finance_ransomware_calibrated.yaml
 ```
 
-The calibration report shows selected evidence, applicable but excluded evidence, normalization assumptions, currency conversion assumptions, warnings, and the generated `frequency.min/likely/max` and `impact.min/likely/max` ranges. Current FX rates live in `calibrations/fx_rates.yaml`; the included USD-to-AUD rate is an estimated planning assumption and must be replaced with a sourced rate before real decision use.
-
-## Evidence Calibration
-
-RiskShard can generate a draft calibrated scenario from reviewed evidence:
-
-```bash
-python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.yaml \
-  --org-profile org_profiles/au_finance_midmarket.yaml \
-  --evidence evidence \
-  --calibration calibrations/au_finance_ransomware.yaml \
-  --threat ransomware \
-  --report-output results/au_finance_ransomware_calibration.json \
-  --scenario-output results/au_finance_ransomware_calibrated.yaml
-```
-
-The calibration report shows selected evidence, applicable but excluded evidence, normalization assumptions, currency conversion assumptions, warnings, and the generated `frequency.min/likely/max` and `impact.min/likely/max` ranges. Current FX rates live in `calibrations/fx_rates.yaml`; the included USD-to-AUD rate is an estimated planning assumption and must be replaced with a sourced rate before real decision use.
+The calibration reports show a bottom line, confidence summary, what changed from the base scenario, limitations, selected evidence, applicable but excluded evidence, normalization assumptions, currency conversion assumptions, warnings, and the generated `frequency.min/likely/max` and `impact.min/likely/max` ranges. Current FX rates live in `calibrations/fx_rates.yaml`; the included AUD/USD rate is sourced from RBA Statistical Table F11.1 and inverted explicitly for USD-to-AUD calibration conversions.
 
 Validate evidence quality gates with:
 
 ```bash
 python scripts/validate_evidence.py
 ```
+
+Refresh static FX assumptions with:
+
+```bash
+python scripts/update_fx_rates.py --output calibrations/fx_rates.yaml
+```
+
+See [docs/FX_RATE_REFRESH.md](docs/FX_RATE_REFRESH.md) for the review checklist.
+
+Inspect data feed governance with:
+
+```bash
+python scripts/data_governance.py
+```
+
+The feed inventory separates source publication date, source gather time, reviewed evidence ingestion date, trust tier, evidence confidence, renewal due date, and fetch status. See [docs/GLOBAL_READINESS_ROADMAP.md](docs/GLOBAL_READINESS_ROADMAP.md).
+
+Inspect global readiness with:
+
+```bash
+python scripts/readiness_dashboard.py
+```
+
+The readiness view also exposes a gate and prioritized next actions so practitioners can see whether a shard is blocked, source-review-needed, assumption-review-needed, or ready for a local calibrated run.
+
+Generate a data-pack fingerprint for governed inputs with:
+
+```bash
+python scripts/data_pack_manifest.py
+```
+
+## Installable Commands
+
+RiskShard can still be run directly from `scripts/`, but `pyproject.toml` also declares console entry points for packaging:
+
+- `riskshard`
+- `riskshard-calibrate`
+- `riskshard-console`
+- `riskshard-web-console`
+- `riskshard-feeds`
+- `riskshard-readiness`
+- `riskshard-data-pack`
+- `riskshard-preflight`
 
 ## Tests
 
@@ -157,6 +221,8 @@ Organization profiles live in `org_profiles/` and include:
 
 Organization profiles are used for evidence matching to find the most relevant evidence records for a specific organization context.
 
+RiskShard does not currently apply heuristic contextual multipliers. To model a specific organization, generate an explicit calibrated scenario from reviewed evidence and simulate that scenario with the standard CLI. See [docs/org_specific_scenarios.md](docs/org_specific_scenarios.md).
+
 Control profiles live in `control_profiles/` and remain transformations over the scenario, not embedded scenario properties.
 
 Provenance files live in `provenance/` and label every evidence record as `source_backed`, `estimated`, or `synthetic`. The canonical Australia finance ransomware example now uses public source-backed evidence for key frequency, impact, sector applicability, and regulatory context. Its range bounds still include estimated model assumptions, so the overall confidence remains low until better Australia-specific tail-loss evidence is added.
@@ -169,7 +235,7 @@ Source-backed evidence records should include `source_id` values that map to `so
 
 Reviewed extraction records live in `extractions/` and document the fact pulled from a source before it becomes one or more structured evidence records.
 
-The starter threat library lives in `threat_library/`. It is a scaffold for future "top risks" workflows, not a complete calibrated benchmark library.
+The starter threat library lives in `threat_library/`. Ransomware, data breach, and business email compromise now have Australia financial-services calibration profiles, but all still carry explicit assumption warnings. Data breach has DBIR/OAIC context evidence, a denominator-derived reported-breach frequency floor, and source-backed global impact anchors; its likely and stress frequency parameters remain estimated until stronger organization-level likelihood evidence is reviewed. Business email compromise has FBI IC3 source-backed likely-loss evidence and ACCC Australia small-business false-billing context; its frequency and loss bounds remain estimated until denominator-aware BEC evidence is reviewed.
 
 ## Source Baseline
 
@@ -183,16 +249,15 @@ The source registry lives in `sources/registry.yaml`. The generated manifest liv
 
 Gathering a source does not automatically make it a benchmark parameter. Extracted facts should still be reviewed and stored as evidence records with applicability, confidence, limitations, and honest evidence-type labels.
 
-## Strategy Docs
+## Documentation Map
 
-For strategy brainstorming, start with:
+For the current documentation map, start with [docs/README.md](docs/README.md). The most important operational docs are:
 
 - [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md)
 - [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md)
-- [docs/CHATGPT_STRATEGY_BRIEF.md](docs/CHATGPT_STRATEGY_BRIEF.md)
-- [docs/CODEX_REPO_REVIEW.md](docs/CODEX_REPO_REVIEW.md)
-- [docs/roadmap.md](docs/roadmap.md)
-- [docs/vision.md](docs/vision.md)
+- [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)
+- [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md)
+- [docs/GLOBAL_READINESS_ROADMAP.md](docs/GLOBAL_READINESS_ROADMAP.md)
 
 ## Current Strategic Questions
 

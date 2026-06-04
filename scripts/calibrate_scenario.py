@@ -11,6 +11,7 @@ if str(ROOT) not in sys.path:
 from engine.calibration import (  # noqa: E402
     run_calibration,
     write_calibrated_scenario,
+    write_calibration_markdown_report,
     write_calibration_report,
 )
 
@@ -25,6 +26,7 @@ def parse_args():
     parser.add_argument("--manifest", default=ROOT / "sources" / "manifest.json", type=Path)
     parser.add_argument("--fx-rates", default=ROOT / "calibrations" / "fx_rates.yaml", type=Path)
     parser.add_argument("--report-output", required=True, type=Path)
+    parser.add_argument("--markdown-output", type=Path)
     parser.add_argument("--scenario-output", type=Path)
     return parser.parse_args()
 
@@ -43,6 +45,9 @@ def main(argv=None):
             fx_rates_path=args.fx_rates,
         )
         report_path = write_calibration_report(report, args.report_output)
+        markdown_path = None
+        if args.markdown_output:
+            markdown_path = write_calibration_markdown_report(report, args.markdown_output)
         scenario_path = None
         if args.scenario_output:
             scenario_path = write_calibrated_scenario(report, args.scenario_output)
@@ -51,6 +56,8 @@ def main(argv=None):
         return 1
 
     print(f"Calibration report saved: {report_path}")
+    if markdown_path:
+        print(f"Markdown report saved: {markdown_path}")
     if scenario_path:
         print(f"Calibrated scenario saved: {scenario_path}")
 

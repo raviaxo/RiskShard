@@ -15,7 +15,27 @@ def load_fx_rates(path=DEFAULT_FX_RATES_PATH):
     data = load_yaml_file(path)
     if not isinstance(data.get("rates"), list):
         raise CurrencyConversionError("FX rates file must contain a rates list")
+    for rate in data["rates"]:
+        validate_rate_metadata(rate)
     return data
+
+
+def validate_rate_metadata(rate):
+    required = {"id", "from", "to", "rate", "as_of", "source_name", "source_type", "evidence_type"}
+    missing = required - set(rate)
+    if missing:
+        raise CurrencyConversionError(
+            f"FX rate {rate.get('id', '<unknown>')} missing required fields: {', '.join(sorted(missing))}"
+        )
+
+    if rate["evidence_type"] == "source_backed":
+        source_fields = {"source_url", "retrieved_at", "citation_detail"}
+        missing_source_fields = source_fields - set(rate)
+        if missing_source_fields:
+            raise CurrencyConversionError(
+                "Source-backed FX rate "
+                f"{rate['id']} missing source metadata: {', '.join(sorted(missing_source_fields))}"
+            )
 
 
 def find_rate(fx_rates, from_currency, to_currency):
@@ -38,8 +58,24 @@ def find_rate(fx_rates, from_currency, to_currency):
     for rate in fx_rates["rates"]:
         if normalize_currency(rate["from"]) == from_currency and normalize_currency(rate["to"]) == to_currency:
             return rate
+        if normalize_currency(rate["from"]) == to_currency and normalize_currency(rate["to"]) == from_currency:
+            return invert_rate(rate, from_currency, to_currency)
 
     raise CurrencyConversionError(f"No FX rate configured for {from_currency} to {to_currency}")
+
+
+def invert_rate(rate, from_currency, to_currency):
+    inverted = dict(rate)
+    inverted["id"] = f"inverse:{rate['id']}"
+    inverted["from"] = from_currency
+    inverted["to"] = to_currency
+    inverted["rate"] = 1 / float(rate["rate"])
+    inverted["inverted_from_rate_id"] = rate["id"]
+    inverted["notes"] = (
+        f"Inverted from {rate['from']} to {rate['to']} source rate {rate['rate']}. "
+        f"{rate.get('notes', '')}"
+    ).strip()
+    return inverted
 
 
 def convert_currency(value, from_currency, to_currency, fx_rates):
@@ -55,7 +91,11 @@ def convert_currency(value, from_currency, to_currency, fx_rates):
         "as_of": rate.get("as_of"),
         "source_name": rate.get("source_name"),
         "source_type": rate.get("source_type"),
+        "source_url": rate.get("source_url"),
+        "retrieved_at": rate.get("retrieved_at"),
+        "citation_detail": rate.get("citation_detail"),
         "evidence_type": rate.get("evidence_type"),
+        "inverted_from_rate_id": rate.get("inverted_from_rate_id"),
         "notes": rate.get("notes", ""),
     }
 

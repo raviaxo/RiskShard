@@ -40,6 +40,28 @@ def validate_record_quality(record, manifest_by_id):
         issues.append(issue("error", "source_id_missing", record_id, "Source-backed evidence must include source_id."))
         return issues
 
+    source_ids = record.get("source_ids") or [source_id]
+    if source_id not in source_ids:
+        issues.append(
+            issue(
+                "error",
+                "primary_source_id_missing_from_source_ids",
+                record_id,
+                "source_ids must include the primary source_id.",
+            )
+        )
+
+    for related_source_id in source_ids:
+        if related_source_id not in manifest_by_id:
+            issues.append(
+                issue(
+                    "error",
+                    "source_id_unknown",
+                    record_id,
+                    f"Unknown source_id: {related_source_id}",
+                )
+            )
+
     source = manifest_by_id.get(source_id)
     if source is None:
         issues.append(issue("error", "source_id_unknown", record_id, f"Unknown source_id: {source_id}"))
