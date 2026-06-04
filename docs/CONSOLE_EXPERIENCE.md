@@ -38,28 +38,30 @@ riskshard> workflow
 riskshard> toprisks
 riskshard> modules
 riskshard> countries
-riskshard> modules info us_finance_bec_midmarket
-riskshard> packs us_finance_bec_midmarket
+riskshard> countries GB
+riskshard> modules info gb_finance_data_breach_midmarket
+riskshard> packs gb_finance_data_breach_midmarket
 riskshard> doctor
 riskshard> readiness
 riskshard> next
 riskshard> feeds
 riskshard> pack
-riskshard> use us_finance_bec_midmarket
-riskshard(us_finance_business_email_compromise)> show options
-riskshard(us_finance_business_email_compromise)> show gaps
-riskshard(us_finance_business_email_compromise)> propose
-riskshard(us_finance_business_email_compromise)> calibrate
-riskshard(us_finance_business_email_compromise)> show evidence
-riskshard(us_finance_business_email_compromise)> explain
-riskshard(us_finance_business_email_compromise)> run
-riskshard(us_finance_business_email_compromise)> report json
+riskshard> use gb_finance_data_breach_midmarket
+riskshard(gb_finance_data_breach_midmarket)> show options
+riskshard(gb_finance_data_breach_midmarket)> show gaps
+riskshard(gb_finance_data_breach_midmarket)> propose
+riskshard(gb_finance_data_breach_midmarket)> calibrate
+riskshard(gb_finance_data_breach_midmarket)> show evidence
+riskshard(gb_finance_data_breach_midmarket)> explain
+riskshard(gb_finance_data_breach_midmarket)> run
+riskshard(gb_finance_data_breach_midmarket)> report json
 ```
 
 For governed starter modules, `use` pre-fills the known org profile, calibration profile, and threat ID so a junior practitioner can reach a calibrated scenario quickly while still seeing every input.
 
 The `countries` command shows the first 25 contribution geographies, including
-the newly seeded US module and the existing AU reference pack.
+seeded AU, US, and UK packs. `countries GB` also shows the UK coverage summary
+and the next contributor gap.
 
 ## Module And Pack UX
 

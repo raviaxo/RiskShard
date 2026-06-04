@@ -10,6 +10,20 @@ if str(PROJECT_ROOT) not in sys.path:
 from engine.fair_calc import export_report, plot_lec, run_portfolio
 
 
+def format_money(value, currency=None):
+    if currency and currency != "unspecified":
+        return f"{currency} {value:,.2f}"
+    return f"${value:,.2f}"
+
+
+def portfolio_currency_text(metadata):
+    currencies = (metadata or {}).get("currencies", {})
+    portfolio_currency = currencies.get("portfolio_currency")
+    if portfolio_currency:
+        return portfolio_currency
+    return "unconverted mixed/unspecified currencies"
+
+
 def build_parser():
     parser = argparse.ArgumentParser(description="RiskShard CLI")
     parser.add_argument("path", help="Path to a scenario YAML file or directory")
@@ -25,19 +39,24 @@ def print_full_report(shard_stats, portfolio_stats, metadata=None):
         item["name"]: item
         for item in (metadata or {}).get("reproducibility", {}).get("scenarios", [])
     }
+    currency_warning = (metadata or {}).get("currencies", {}).get("warning")
     print("\n=== SHARD RESULTS ===")
 
     for name, stats in shard_stats.items():
-        stage = scenario_meta.get(name, {}).get("stage_label", "unknown stage")
+        meta = scenario_meta.get(name, {})
+        stage = meta.get("stage_label", "unknown stage")
+        currency = meta.get("currency")
         print(f"\n{name}")
         print(f"  STAGE: {stage}")
-        print(f"  AVG : ${stats['mean']:,.2f}")
-        print(f"  P95 : ${stats['p95']:,.2f}")
+        print(f"  AVG : {format_money(stats['mean'], currency)}")
+        print(f"  P95 : {format_money(stats['p95'], currency)}")
 
-    print("\n=== PORTFOLIO ===")
-    print(f"AVG : ${portfolio_stats['mean']:,.2f}")
-    print(f"P95 : ${portfolio_stats['p95']:,.2f}")
-    print(f"P99 : ${portfolio_stats['p99']:,.2f}")
+    print(f"\n=== PORTFOLIO ({portfolio_currency_text(metadata)}) ===")
+    if currency_warning:
+        print(f"WARNING: {currency_warning}")
+    print(f"AVG : {format_money(portfolio_stats['mean'], (metadata or {}).get('currencies', {}).get('portfolio_currency'))}")
+    print(f"P95 : {format_money(portfolio_stats['p95'], (metadata or {}).get('currencies', {}).get('portfolio_currency'))}")
+    print(f"P99 : {format_money(portfolio_stats['p99'], (metadata or {}).get('currencies', {}).get('portfolio_currency'))}")
 
 
 def main(argv=None):

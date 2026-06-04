@@ -1,0 +1,92 @@
+extractions:
+  - id: uk_dsit_2026_business_breach_prevalence_all
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-06-04"
+    citation_detail: Summary and Chapter 4 identified breaches or attacks prevalence.
+    fact: The survey reported that 43% of UK businesses identified a cyber security breach or attack in the last 12 months.
+    value: 0.43
+    unit: annual_probability
+    normalization_notes: Converted 43% to 0.43 for evidence use.
+    limitations: Identified breaches or attacks are broader than privacy-only data breaches and may undercount hidden events.
+    evidence_record_ids:
+      - uk_dsit_2026_business_breach_prevalence_all
+
+  - id: uk_dsit_2026_medium_business_breach_prevalence
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-06-04"
+    citation_detail: Summary and Chapter 4 business-size prevalence.
+    fact: The survey reported that 65% of UK medium businesses identified a cyber security breach or attack in the last 12 months.
+    value: 0.65
+    unit: annual_probability
+    normalization_notes: Converted 65% to 0.65 for evidence use.
+    limitations: Broad cyber breach/attack prevalence; not financial-services-specific.
+    evidence_record_ids:
+      - uk_dsit_2026_medium_business_breach_prevalence
+
+  - id: uk_dsit_2026_large_business_breach_prevalence
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-06-04"
+    citation_detail: Summary and Chapter 4 business-size prevalence.
+    fact: The survey reported that 69% of UK large businesses identified a cyber security breach or attack in the last 12 months.
+    value: 0.69
+    unit: annual_probability
+    normalization_notes: Converted 69% to 0.69 for evidence use.
+    limitations: Large-business prevalence may overstate mid-market organization likelihood.
+    evidence_record_ids:
+      - uk_dsit_2026_large_business_breach_prevalence
+
+  - id: uk_dsit_2026_medium_large_breach_cost_p95_gbp
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-06-04"
+    citation_detail: Summary cost of most disruptive breach or attack.
+    fact: The survey reported that the top 5% perceived cost for the most disruptive breach or attack rose to GBP 10,000 for medium/large businesses.
+    value: 10000
+    unit: currency
+    currency: GBP
+    normalization_notes: Stored directly in GBP for a material-cost floor.
+    limitations: Perceived cost metric; broader than privacy data breach cost; not a full loss distribution.
+    evidence_record_ids:
+      - uk_dsit_2026_medium_large_breach_cost_p95_gbp
+
+  - id: ibm_uk_2025_financial_services_breach_average_cost_gbp
+    source_id: ibm_cost_data_breach_uk_2025
+    source_name: IBM UK Cost of a Data Breach 2025 release
+    source_url_or_citation: https://uk.newsroom.ibm.com/2025-cost-of-data-breach-UK
+    publication_date: "2025-07-30"
+    extraction_date: "2026-06-04"
+    citation_detail: UK findings for financial-services breach cost.
+    fact: IBM reported that UK financial services remained the costliest industry for data breaches, with an average cost of GBP 5.74 million in 2025.
+    value: 5740000
+    unit: currency
+    currency: GBP
+    normalization_notes: Stored directly in GBP for UK financial-services likely impact calibration.
+    limitations: Studied breach population; not mid-market-specific or a full severity distribution.
+    evidence_record_ids:
+      - ibm_uk_2025_financial_services_breach_average_cost_gbp
+
+  - id: ibm_uk_2025_supply_chain_breach_cause_share
+    source_id: ibm_cost_data_breach_uk_2025
+    source_name: IBM UK Cost of a Data Breach 2025 release
+    source_url_or_citation: https://uk.newsroom.ibm.com/2025-cost-of-data-breach-UK
+    publication_date: "2025-07-30"
+    extraction_date: "2026-06-04"
+    citation_detail: UK findings for common breach causes.
+    fact: IBM reported that third-party vendor and supply chain compromises accounted for 18% of the most commonly reported causes of data breaches among surveyed UK organisations.
+    value: 0.18
+    unit: share_of_breaches
+    normalization_notes: Stored as contextual evidence for third-party dependency, not as direct frequency.
+    limitations: IBM studied breach population; not an annual probability or loss magnitude.
+    evidence_record_ids:
+      - ibm_uk_2025_supply_chain_breach_cause_share

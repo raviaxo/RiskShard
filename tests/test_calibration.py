@@ -201,6 +201,39 @@ class CalibrationTests(unittest.TestCase):
             {item["id"] for item in report["excluded_evidence"]},
         )
 
+    def test_gb_data_breach_calibration_uses_uk_frequency_and_likely_loss(self):
+        report = run_calibration(
+            ROOT / "scenarios" / "gb_finance_data_breach_midmarket.yaml",
+            ROOT / "org_profiles" / "gb_finance_midmarket.yaml",
+            ROOT / "evidence",
+            ROOT / "calibrations" / "gb_finance_data_breach.yaml",
+            threat="data_breach",
+        )
+
+        scenario = report["generated_scenario"]
+        selected_types = {
+            item["parameter"]: item["evidence_type"]
+            for item in report["selected_evidence"]
+        }
+
+        self.assertEqual(scenario["frequency"], {"min": 0.43, "likely": 0.65, "max": 0.69})
+        self.assertEqual(scenario["impact"], {"min": 10000, "likely": 5740000, "max": 25000000})
+        self.assertEqual(
+            selected_types,
+            {
+                "frequency.min": "source_backed",
+                "frequency.likely": "source_backed",
+                "frequency.max": "source_backed",
+                "impact.min": "source_backed",
+                "impact.likely": "source_backed",
+                "impact.max": "estimated",
+            },
+        )
+        self.assertEqual(
+            [warning["code"] for warning in report["warnings"]].count("parameter_from_non_source_backed_evidence"),
+            1,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

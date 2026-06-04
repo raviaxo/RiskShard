@@ -1,0 +1,162 @@
+records:
+  - id: uk_dsit_2026_business_breach_prevalence_all
+    title: UK all-business cyber breach or attack prevalence
+    parameter: frequency.min
+    value: 0.43
+    unit: annual_probability
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_type: official_statistics
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-06-04"
+    citation_detail: Summary and Chapter 4 report that 43% of UK businesses identified a cyber security breach or attack in the last 12 months.
+    extraction_notes: Extracted the all-business annual prevalence percentage from the official UK survey.
+    normalization_notes: Converted 43% to 0.43 and selected as a broad lower frequency anchor for a UK mid-market starter.
+    limitations: Covers identified breaches or attacks, not privacy-only data breaches; hidden or unidentified events may be absent; all-business figure is not financial-services-specific.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [GB]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: uk_dsit_2026_medium_business_breach_prevalence
+    title: UK medium-business cyber breach or attack prevalence
+    parameter: frequency.likely
+    value: 0.65
+    unit: annual_probability
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_type: official_statistics
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-06-04"
+    citation_detail: Summary and Chapter 4 report that medium businesses were more likely to have experienced a cyber breach or attack, at 65%.
+    extraction_notes: Extracted the medium-business annual prevalence percentage from the official UK survey.
+    normalization_notes: Converted 65% to 0.65 and selected as the likely frequency anchor for a mid-market UK starter.
+    limitations: Covers identified breaches or attacks, not privacy-only data breaches; not financial-services-specific and may include high-volume low-impact events.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [GB]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: uk_dsit_2026_large_business_breach_prevalence
+    title: UK large-business cyber breach or attack prevalence
+    parameter: frequency.max
+    value: 0.69
+    unit: annual_probability
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_type: official_statistics
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-06-04"
+    citation_detail: Summary and Chapter 4 report that large businesses experienced cyber breaches or attacks at 69%.
+    extraction_notes: Extracted the large-business annual prevalence percentage from the official UK survey.
+    normalization_notes: Converted 69% to 0.69 and selected as a stress frequency anchor for larger exposure.
+    limitations: Covers identified breaches or attacks, not privacy-only data breaches; larger organization prevalence may overstate mid-market frequency.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [GB]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: uk_dsit_2026_medium_large_breach_cost_p95_gbp
+    title: UK medium/large breach or attack perceived cost 95th percentile
+    parameter: impact.min
+    value: 10000
+    unit: currency
+    currency: GBP
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_type: official_statistics
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-06-04"
+    citation_detail: Summary reports that the top 5% perceived cost for the most disruptive breach or attack rose to GBP 10,000 for medium/large businesses.
+    extraction_notes: Extracted the medium/large 95th percentile perceived cost from the official UK survey summary.
+    normalization_notes: Stored directly in GBP and selected as a material-cost floor for a data-breach starter.
+    limitations: Perceived cost of the most disruptive breach or attack; broader than privacy breach cost; sample and cost definition differ from enterprise breach-cost studies.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [GB]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: ibm_uk_2025_financial_services_breach_average_cost_gbp
+    title: UK financial-services average data-breach cost
+    parameter: impact.likely
+    value: 5740000
+    unit: currency
+    currency: GBP
+    source_id: ibm_cost_data_breach_uk_2025
+    source_name: IBM UK Cost of a Data Breach 2025 release
+    source_type: data_breach_cost_research
+    source_url_or_citation: https://uk.newsroom.ibm.com/2025-cost-of-data-breach-UK
+    publication_date: "2025-07-30"
+    extraction_date: "2026-06-04"
+    citation_detail: UK release states that financial services remained the costliest UK industry for data breaches, with an average cost of GBP 5.74 million in 2025.
+    extraction_notes: Extracted the UK financial-services average breach cost from IBM's UK release.
+    normalization_notes: Stored directly in GBP and selected as the likely loss anchor for the UK financial-services starter.
+    limitations: Surveyed/studied breach population; sponsor methodology; not mid-market-specific, not a full distribution, and not a regulator-reported loss table.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [GB]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: ibm_uk_2025_supply_chain_breach_cause_share
+    title: UK data breaches caused by third-party or supply-chain compromise
+    parameter: context.uk_breach_supply_chain_cause_share
+    value: 0.18
+    unit: share_of_breaches
+    source_id: ibm_cost_data_breach_uk_2025
+    source_name: IBM UK Cost of a Data Breach 2025 release
+    source_type: data_breach_cost_research
+    source_url_or_citation: https://uk.newsroom.ibm.com/2025-cost-of-data-breach-UK
+    publication_date: "2025-07-30"
+    extraction_date: "2026-06-04"
+    citation_detail: UK release lists third-party vendor and supply chain compromises as the most common reported cause, at 18%.
+    extraction_notes: Extracted the reported UK breach cause share from IBM's UK release.
+    normalization_notes: Stored as context evidence supporting third-party dependency review, not as direct scenario frequency.
+    limitations: IBM studied breach population; not a direct annual likelihood or cost parameter.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [GB]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: riskshard_gb_data_breach_impact_stress_2026
+    title: Estimated UK data breach impact stress bound
+    parameter: impact.max
+    value: 25000000
+    unit: currency
+    currency: GBP
+    source_name: RiskShard UK data breach starter pack
+    source_type: model_assumption
+    source_url_or_citation: Starter assumption pending reviewed UK financial-services tail-loss evidence.
+    publication_date: "2026-06-04"
+    extraction_date: "2026-06-04"
+    extraction_notes: Estimated stress single-event impact for a UK financial-services data breach draft.
+    normalization_notes: Kept explicit as an assumption until UK sector tail-loss evidence is reviewed.
+    limitations: Not source-backed; replace with UK sector breach tail-loss, insurer, regulator, or claims evidence.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [GB]
+      company_size_bands: [mid_market]
+      threats: [data_breach]

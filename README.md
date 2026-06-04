@@ -76,6 +76,11 @@ python scripts/fair_calc.py scenarios --trials 10000 --dist pert --seed 42 --exp
 
 The command above runs every YAML scenario in `scenarios/`, prints portfolio statistics, saves a Loss Exceedance Curve to `results/`, and writes a JSON report when `--export` is included. The scenario folder mixes calibrated-workflow starters with older demo fixtures; see [scenarios/README.md](scenarios/README.md) before treating portfolio output as decision-ready.
 
+When a folder mixes scenario currencies or has fixtures without currency
+metadata, the CLI prints a mixed-currency warning. Portfolio totals are then an
+unconverted arithmetic sum, useful for smoke testing but not for financial
+decision-making.
+
 ## Interactive Console
 
 For a guided practitioner workflow, start the console:
@@ -96,21 +101,23 @@ Then try:
 riskshard> workflow
 riskshard> toprisks
 riskshard> modules
-riskshard> modules info au_finance_ransomware_midmarket
-riskshard> packs au_finance_ransomware_midmarket
+riskshard> countries
+riskshard> countries GB
+riskshard> modules info gb_finance_data_breach_midmarket
+riskshard> packs gb_finance_data_breach_midmarket
 riskshard> doctor
 riskshard> readiness
 riskshard> next
 riskshard> feeds
-riskshard> use au_finance_ransomware_midmarket
-riskshard(au_finance_ransomware_midmarket)> show options
-riskshard(au_finance_ransomware_midmarket)> show gaps
-riskshard(au_finance_ransomware_midmarket)> propose
-riskshard(au_finance_ransomware_midmarket)> calibrate
-riskshard(au_finance_ransomware_midmarket)> show evidence
-riskshard(au_finance_ransomware_midmarket)> explain
-riskshard(au_finance_ransomware_midmarket)> run
-riskshard(au_finance_ransomware_midmarket)> report json
+riskshard> use gb_finance_data_breach_midmarket
+riskshard(gb_finance_data_breach_midmarket)> show options
+riskshard(gb_finance_data_breach_midmarket)> show gaps
+riskshard(gb_finance_data_breach_midmarket)> propose
+riskshard(gb_finance_data_breach_midmarket)> calibrate
+riskshard(gb_finance_data_breach_midmarket)> show evidence
+riskshard(gb_finance_data_breach_midmarket)> explain
+riskshard(gb_finance_data_breach_midmarket)> run
+riskshard(gb_finance_data_breach_midmarket)> report json
 ```
 
 The console keeps all artifacts local and reviewable in `results/`. See [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md).
@@ -166,9 +173,9 @@ Inspect risk modules and evidence packs with:
 
 ```bash
 python scripts/riskshard_modules.py list
-python scripts/riskshard_modules.py info au_finance_ransomware_midmarket
-python scripts/riskshard_modules.py packs au_finance_ransomware_midmarket
-python scripts/riskshard_modules.py propose au_finance_ransomware_midmarket
+python scripts/riskshard_modules.py info gb_finance_data_breach_midmarket
+python scripts/riskshard_modules.py packs gb_finance_data_breach_midmarket
+python scripts/riskshard_modules.py propose gb_finance_data_breach_midmarket
 ```
 
 Risk modules are the current Metasploit-style front door: they bind a scenario,
@@ -180,6 +187,7 @@ Inspect the country contribution roadmap with:
 ```bash
 python scripts/riskshard_modules.py countries
 python scripts/riskshard_modules.py countries US
+python scripts/riskshard_modules.py countries GB
 ```
 
 Run the local doctor with:
@@ -286,6 +294,12 @@ The starter threat library lives in `threat_library/`. Ransomware, data breach, 
 The first second-geography module is `us_finance_bec_midmarket`. It uses FBI IC3
 source-backed likely-loss evidence and keeps US BEC frequency/floor/tail
 assumptions explicit until US denominator-aware evidence is contributed.
+
+The next seeded geography is `gb_finance_data_breach_midmarket`. It uses UK
+official cyber breach/attack prevalence for frequency and IBM UK financial
+services data-breach cost evidence for likely impact. It is still a governed
+starter, not benchmark-grade: the UK survey is broader than privacy-only data
+breach and stress impact remains estimated.
 
 ## Source Baseline
 

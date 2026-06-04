@@ -20,6 +20,8 @@ class GovernanceTests(unittest.TestCase):
         oaic = by_id["oaic_ndb_jul_dec_2024"]
         abs_feed = by_id["abs_counts_australian_businesses_2025"]
         fbi = by_id["fbi_ic3_2025_report"]
+        uk_dsit = by_id["uk_dsit_cyber_breaches_2026"]
+        ibm_uk = by_id["ibm_cost_data_breach_uk_2025"]
         accc = by_id["accc_targeting_scams_2025"]
         business_qld = by_id["business_qld_cyber_secure_guidance_2025"]
 
@@ -34,6 +36,10 @@ class GovernanceTests(unittest.TestCase):
         self.assertEqual(abs_feed["evidence_record_count"], 2)
         self.assertEqual(fbi["trust_tier"], "high")
         self.assertEqual(fbi["evidence_record_count"], 6)
+        self.assertEqual(uk_dsit["trust_tier"], "high")
+        self.assertEqual(uk_dsit["evidence_record_count"], 4)
+        self.assertEqual(ibm_uk["trust_tier"], "medium")
+        self.assertEqual(ibm_uk["evidence_record_count"], 2)
         self.assertEqual(accc["trust_tier"], "high")
         self.assertEqual(accc["evidence_record_count"], 5)
         self.assertEqual(business_qld["source_status"], "fetched")

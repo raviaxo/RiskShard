@@ -34,10 +34,11 @@ class RiskModuleTests(unittest.TestCase):
         module_ids = {module["id"] for module in modules}
         output = format_module_list(search_risk_modules("finance", ROOT))
 
-        self.assertEqual(len(modules), 4)
+        self.assertEqual(len(modules), 5)
         self.assertIn("au_finance_ransomware_midmarket", module_ids)
         self.assertIn("au_finance_data_breach_midmarket", module_ids)
         self.assertIn("au_finance_bec_midmarket", module_ids)
+        self.assertIn("gb_finance_data_breach_midmarket", module_ids)
         self.assertIn("us_finance_bec_midmarket", module_ids)
         self.assertIn("Risk modules", output)
         self.assertIn("governed_starter", output)
@@ -58,7 +59,7 @@ class RiskModuleTests(unittest.TestCase):
         ransomware = build_evidence_pack_registry(ROOT, "au_finance_ransomware_midmarket")["packs"][0]
         detail = format_evidence_pack_detail(ransomware)
 
-        self.assertEqual(registry["pack_count"], 4)
+        self.assertEqual(registry["pack_count"], 5)
         self.assertIn("Evidence packs", output)
         self.assertEqual(ransomware["freshness_status"], "current")
         self.assertEqual(ransomware["pack_confidence"], "low")
@@ -80,10 +81,13 @@ class RiskModuleTests(unittest.TestCase):
         priorities = load_country_priorities()
         output = format_country_priorities(priorities)
         us = find_country_priority("US")
+        gb = find_country_priority("GB")
 
         self.assertEqual(len(priorities["items"]), 25)
         self.assertEqual(us["recommended_first_module"], "us_finance_bec_midmarket")
         self.assertEqual(us["status"], "module_seeded")
+        self.assertEqual(gb["recommended_first_module"], "gb_finance_data_breach_midmarket")
+        self.assertEqual(gb["status"], "module_seeded")
         self.assertIn("Country expansion priorities", output)
         self.assertIn("US", output)
 

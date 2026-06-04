@@ -1,0 +1,48 @@
+metadata:
+  name: United Kingdom financial-services data breach calibration
+  scenario_name: UK Finance Data Breach Midmarket - Calibrated Draft
+  version: "0.1"
+  notes: >
+    Starter reviewed calibration profile for United Kingdom financial-services
+    data breach. It uses UK official breach/attack prevalence as broad
+    frequency evidence and IBM UK financial-services breach-cost evidence as a
+    likely impact anchor. The UK survey is broader than privacy-only data
+    breach, and stress impact remains estimated until UK tail-loss evidence is
+    reviewed.
+
+target_currency: GBP
+
+parameters:
+  frequency:
+    min:
+      evidence_id: uk_dsit_2026_business_breach_prevalence_all
+      transform: direct
+      rationale: Official UK all-business breach/attack prevalence used as a broad lower frequency anchor for a mid-market starter.
+    likely:
+      evidence_id: uk_dsit_2026_medium_business_breach_prevalence
+      transform: direct
+      rationale: Official UK medium-business breach/attack prevalence used as the mid-market likely frequency anchor.
+    max:
+      evidence_id: uk_dsit_2026_large_business_breach_prevalence
+      transform: direct
+      rationale: Official UK large-business breach/attack prevalence used as a stress frequency anchor for scale exposure.
+
+  impact:
+    min:
+      evidence_id: uk_dsit_2026_medium_large_breach_cost_p95_gbp
+      transform: direct
+      target_currency: GBP
+      round_to: 1000
+      rationale: Official UK 95th percentile perceived cost for medium/large most disruptive breaches or attacks, used as a material-cost floor.
+    likely:
+      evidence_id: ibm_uk_2025_financial_services_breach_average_cost_gbp
+      transform: direct
+      target_currency: GBP
+      round_to: 10000
+      rationale: UK financial-services average data-breach cost anchor from IBM's 2025 UK breach release.
+    max:
+      evidence_id: riskshard_gb_data_breach_impact_stress_2026
+      transform: direct
+      target_currency: GBP
+      round_to: 100000
+      rationale: Explicit estimated UK stress loss until UK sector tail-loss evidence exists.

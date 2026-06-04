@@ -15,6 +15,7 @@ These are the best first-run shards because they have matching evidence and cali
 - `data_breach.yaml`
 - `business_email_compromise.yaml`
 - `us_finance_business_email_compromise.yaml`
+- `gb_finance_data_breach_midmarket.yaml`
 
 Use them with:
 
