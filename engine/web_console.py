@@ -44,7 +44,7 @@ INDEX_HTML = """<!doctype html>
 
     .app {
       display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
+      grid-template-columns: 320px minmax(0, 1fr);
       min-height: 100vh;
     }
 
@@ -97,10 +97,34 @@ INDEX_HTML = """<!doctype html>
       background: var(--accent);
     }
 
-    .command-group {
+    .workflow-lanes {
       display: grid;
-      gap: 8px;
+      gap: 12px;
       margin-top: 16px;
+    }
+
+    .lane {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(31, 36, 39, 0.45);
+      padding: 10px;
+    }
+
+    .lane-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      text-transform: uppercase;
+    }
+
+    .lane-actions {
+      display: grid;
+      gap: 7px;
     }
 
     button {
@@ -113,6 +137,12 @@ INDEX_HTML = """<!doctype html>
       font: inherit;
       text-align: left;
       padding: 8px 10px;
+    }
+
+    button.compact {
+      min-height: 30px;
+      padding: 6px 8px;
+      font-size: 12px;
     }
 
     button:hover {
@@ -231,6 +261,66 @@ INDEX_HTML = """<!doctype html>
       gap: 10px;
     }
 
+    .context-actions {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .coverage-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .coverage-table th,
+    .coverage-table td {
+      border-top: 1px solid rgba(52, 58, 62, 0.75);
+      padding: 7px 6px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .coverage-table th {
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .param-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+      min-width: 230px;
+    }
+
+    .param-cell {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 4px;
+      text-align: center;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .param-cell.good {
+      border-color: #3b6d50;
+      color: #94d7ad;
+      background: rgba(40, 78, 55, 0.35);
+    }
+
+    .param-cell.warn {
+      border-color: #72552b;
+      color: #e5b76d;
+      background: rgba(83, 62, 31, 0.35);
+    }
+
+    .param-cell.bad {
+      border-color: #7b3e3e;
+      color: #e19898;
+      background: rgba(92, 42, 42, 0.35);
+    }
+
     .transcript {
       flex: 1;
       overflow: auto;
@@ -298,11 +388,9 @@ INDEX_HTML = """<!doctype html>
         border-right: 0;
         border-bottom: 1px solid var(--line);
       }
-      .command-group {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
       .metric-grid,
-      .dashboard-columns {
+      .dashboard-columns,
+      .context-actions {
         grid-template-columns: 1fr;
       }
     }
@@ -313,37 +401,44 @@ INDEX_HTML = """<!doctype html>
     <aside>
       <h1>RiskShard</h1>
       <h2>Local browser console</h2>
-      <div class="command-group">
-        <button class="primary" data-command="workflow">Workflow</button>
-        <button data-command="set org org_profiles/au_finance_midmarket.yaml">Load org</button>
-        <button data-command="readiness">Readiness</button>
-        <button data-command="doctor">Doctor</button>
-        <button class="primary" data-command="next">Next actions</button>
-        <button data-command="toprisks">Top risks</button>
-        <button data-command="modules">Risk modules</button>
-        <button data-command="countries">Country priorities</button>
-        <button data-command="countries GB">UK detail</button>
-        <button data-command="modules info gb_finance_data_breach_midmarket">Module info</button>
-        <button data-command="packs gb_finance_data_breach_midmarket">Evidence pack</button>
-        <button data-command="feeds">Data feeds</button>
-        <button data-command="pack">Data pack</button>
-        <button data-command="preflight">Contributor check</button>
-        <button data-command="propose">Propose calibration</button>
-        <button data-command="search ransomware">Find scenarios</button>
-        <button data-command="use gb_finance_data_breach_midmarket">Use UK data breach</button>
-        <button data-command="use us_finance_bec_midmarket">Use US BEC</button>
-        <button data-command="use au_finance_ransomware_midmarket">Use AU ransomware</button>
-        <button data-command="use business_email_compromise">Use BEC</button>
-        <button data-command="show options">Show options</button>
-        <button data-command="show gaps">Show gaps</button>
-        <button class="warning" data-command="calibrate">Calibrate</button>
-        <button data-command="show evidence">Show evidence</button>
-        <button data-command="explain">Explain latest</button>
-        <button class="warning" data-command="run">Run simulation</button>
-        <button data-command="report json">Report JSON</button>
-        <button data-command="validate">Validate evidence</button>
+      <div class="workflow-lanes">
+        <section class="lane">
+          <div class="lane-title"><span>Run a shard</span><span>1</span></div>
+          <div class="lane-actions">
+            <button class="primary" data-command="workflow">Workflow</button>
+            <button data-command="modules">Risk modules</button>
+            <button data-command="use gb_finance_data_breach_midmarket">Use UK data breach</button>
+            <button data-command="use au_finance_ransomware_midmarket">Use AU ransomware</button>
+          </div>
+        </section>
+        <section class="lane">
+          <div class="lane-title"><span>Improve evidence</span><span>2</span></div>
+          <div class="lane-actions">
+            <button data-command="packs">Evidence pack</button>
+            <button data-command="propose">Propose calibration</button>
+            <button data-command="show gaps">Show gaps</button>
+          </div>
+        </section>
+        <section class="lane">
+          <div class="lane-title"><span>Govern data</span><span>3</span></div>
+          <div class="lane-actions">
+            <button data-command="readiness">Readiness</button>
+            <button data-command="feeds">Data feeds</button>
+            <button data-command="doctor">Doctor</button>
+            <button data-command="validate">Validate evidence</button>
+          </div>
+        </section>
+        <section class="lane">
+          <div class="lane-title"><span>Contribute country</span><span>4</span></div>
+          <div class="lane-actions">
+            <button data-command="countries">Country priorities</button>
+            <button data-command="countries GB">UK detail</button>
+            <button data-command="preflight">Contributor check</button>
+            <button class="primary" data-command="next">Next actions</button>
+          </div>
+        </section>
       </div>
-      <p class="hint">Commands run against your local RiskShard checkout. Outputs stay in ignored local files.</p>
+      <p class="hint">Pick a lane, then use the contextual actions in the dashboard. Expert users can type any command below.</p>
     </aside>
     <main>
       <header>
@@ -403,6 +498,90 @@ INDEX_HTML = """<!doctype html>
       return String(status || "unknown").replaceAll("_", " ");
     }
 
+    const parameterLabels = {
+      "frequency.min": "F min",
+      "frequency.likely": "F likely",
+      "frequency.max": "F max",
+      "impact.min": "I min",
+      "impact.likely": "I likely",
+      "impact.max": "I max"
+    };
+
+    function statusClass(status) {
+      if (status === "source_backed") return "good";
+      if (status === "assumption_only") return "warn";
+      return "bad";
+    }
+
+    function commandButton(command, label, extraClass = "") {
+      return `<button class="compact ${extraClass}" data-command="${command}">${label}</button>`;
+    }
+
+    function activeModuleActions(activeModuleId) {
+      if (!activeModuleId) {
+        return `
+          <div class="item-meta">Select a module to unlock calibration, evidence, and simulation actions.</div>
+          <div class="context-actions">
+            ${commandButton("modules", "Browse modules", "primary")}
+            ${commandButton("use gb_finance_data_breach_midmarket", "Use UK data breach")}
+            ${commandButton("use au_finance_ransomware_midmarket", "Use AU ransomware")}
+            ${commandButton("countries", "Country priorities")}
+          </div>
+        `;
+      }
+      return `
+        <div class="item-meta">Selected module: ${activeModuleId}</div>
+        <div class="context-actions">
+          ${commandButton(`modules info ${activeModuleId}`, "Module info")}
+          ${commandButton(`packs ${activeModuleId}`, "Evidence pack")}
+          ${commandButton("show options", "Options")}
+          ${commandButton("show gaps", "Gaps")}
+          ${commandButton(`propose ${activeModuleId}`, "Propose")}
+          ${commandButton("calibrate", "Calibrate", "warning")}
+          ${commandButton("run", "Run", "warning")}
+          ${commandButton("report json", "Report JSON")}
+        </div>
+      `;
+    }
+
+    function parameterCell(row, parameter) {
+      const value = row.parameters[parameter] || { status: "missing" };
+      const label = parameterLabels[parameter] || parameter;
+      return `<span class="param-cell ${statusClass(value.status)}" title="${parameter}: ${displayStatus(value.status)}">${label}</span>`;
+    }
+
+    function renderCoverageMatrix(rows) {
+      if (!rows.length) {
+        return '<div class="item-meta">No module coverage rows available.</div>';
+      }
+      return `
+        <table class="coverage-table">
+          <thead>
+            <tr>
+              <th>Module</th>
+              <th>Context</th>
+              <th>Direct Evidence</th>
+              <th>Next Gap</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.map((row) => `
+              <tr>
+                <td><strong>${row.module_id}</strong><div class="item-meta">${row.threat}; confidence ${row.pack_confidence}</div></td>
+                <td>${row.country}/${row.industry}<div class="item-meta">${row.freshness_status}</div></td>
+                <td>
+                  <div class="param-grid">
+                    ${Object.keys(parameterLabels).map((parameter) => parameterCell(row, parameter)).join("")}
+                  </div>
+                </td>
+                <td>${row.next_gap}<div class="item-meta">${row.source_backed_direct}/${row.direct_total} source-backed</div></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
     function renderDashboard(data) {
       const coverage = data.coverage;
       const feeds = data.feed_governance;
@@ -416,6 +595,8 @@ INDEX_HTML = """<!doctype html>
       const actions = data.next_actions.slice(0, 4);
       const problemFeeds = feeds.problem_feeds.slice(0, 3);
       const topRisks = data.top_risks.slice(0, 5);
+      const activeModuleId = data.active_module_id;
+      const coverageMatrix = packs.coverage_matrix || [];
       dashboard.innerHTML = `
         <div class="metric-grid">
           <div class="metric"><div class="metric-label">Readiness gate</div><div class="metric-value">${displayStatus(gate.status)}</div></div>
@@ -435,6 +616,14 @@ INDEX_HTML = """<!doctype html>
               </div>
             `).join("")}
           </div>
+        </div>
+        <div class="section">
+          <div class="section-title"><span>Selected Shard</span><span class="badge ${activeModuleId ? "good" : "warn"}">${activeModuleId ? "active" : "none"}</span></div>
+          ${activeModuleActions(activeModuleId)}
+        </div>
+        <div class="section">
+          <div class="section-title"><span>Module Coverage Matrix</span><span class="badge warn">source-backed vs assumptions</span></div>
+          ${renderCoverageMatrix(coverageMatrix)}
         </div>
         <div class="dashboard-columns">
           <div class="section">
@@ -515,8 +704,10 @@ INDEX_HTML = """<!doctype html>
       await refreshDashboard();
     }
 
-    document.querySelectorAll("[data-command]").forEach((button) => {
-      button.addEventListener("click", () => runCommand(button.dataset.command));
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-command]");
+      if (!button) return;
+      runCommand(button.dataset.command);
     });
 
     form.addEventListener("submit", (event) => {
@@ -541,10 +732,20 @@ class WebConsoleApp:
         self.lock = threading.Lock()
 
     def state(self):
-        return {"prompt": self.console.prompt}
+        return {
+            "prompt": self.console.prompt,
+            "active_module_id": self.console.module_id,
+        }
 
     def dashboard(self):
-        return build_readiness_dashboard(self.root, self.console.ensure_org_profile())
+        dashboard = build_readiness_dashboard(self.root, self.console.ensure_org_profile())
+        dashboard["active_module_id"] = self.console.module_id
+        dashboard["active_scenario"] = (
+            self.console.scenario_path.name
+            if self.console.scenario_path
+            else None
+        )
+        return dashboard
 
     def run_command(self, command):
         command = command.strip()
@@ -560,6 +761,7 @@ class WebConsoleApp:
             self.console.onecmd(command)
             return {
                 "prompt": self.console.prompt,
+                "active_module_id": self.console.module_id,
                 "output": buffer.getvalue(),
             }
 

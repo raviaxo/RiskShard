@@ -25,6 +25,14 @@ class ReadinessTests(unittest.TestCase):
         self.assertEqual(dashboard["scenarios"]["stage_counts"]["demo_fixture"], 5)
         self.assertEqual(dashboard["risk_modules"]["module_count"], 5)
         self.assertEqual(dashboard["evidence_packs"]["pack_count"], 5)
+        self.assertEqual(len(dashboard["evidence_packs"]["coverage_matrix"]), 5)
+        gb = next(
+            row for row in dashboard["evidence_packs"]["coverage_matrix"]
+            if row["module_id"] == "gb_finance_data_breach_midmarket"
+        )
+        self.assertEqual(gb["source_backed_direct"], 5)
+        self.assertEqual(gb["assumption_only_direct"], 1)
+        self.assertIn("impact.max", gb["next_gap"])
         self.assertEqual(
             dashboard["readiness_gate"]["status"],
             "ready_for_local_calibrated_run",
@@ -44,6 +52,8 @@ class ReadinessTests(unittest.TestCase):
         self.assertIn("Scenarios: demo_fixture=5, governed_starter=5", output)
         self.assertIn("Risk modules: 5", output)
         self.assertIn("Evidence packs: 5", output)
+        self.assertIn("Module coverage matrix", output)
+        self.assertIn("gb_finance_data_breach_midmarket: 5/6 source-backed", output)
         self.assertIn("Installable package: True", output)
 
 

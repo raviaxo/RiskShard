@@ -122,6 +122,11 @@ riskshard(gb_finance_data_breach_midmarket)> report json
 
 The console keeps all artifacts local and reviewable in `results/`. See [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md).
 
+The browser console groups the workflow into four lanes: run a shard, improve
+evidence, govern data, and contribute country. After a module is selected, the
+dashboard shows contextual actions and a six-parameter coverage matrix so users
+can see which values are source-backed versus assumption-only.
+
 ## Evidence Calibration
 
 RiskShard can generate a draft calibrated scenario from reviewed evidence:
@@ -323,6 +328,7 @@ For the current documentation map, start with [docs/README.md](docs/README.md). 
 - [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md)
 - [docs/GLOBAL_READINESS_ROADMAP.md](docs/GLOBAL_READINESS_ROADMAP.md)
 - [docs/COUNTRY_EXPANSION.md](docs/COUNTRY_EXPANSION.md)
+- [docs/MAJOR_MILESTONES.md](docs/MAJOR_MILESTONES.md)
 
 ## Current Strategic Questions
 

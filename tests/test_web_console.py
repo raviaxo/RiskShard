@@ -18,6 +18,7 @@ class WebConsoleTests(unittest.TestCase):
         selected = app.run_command("use au_finance_ransomware_midmarket")
         self.assertIn("Using module au_finance_ransomware_midmarket", selected["output"])
         self.assertEqual(selected["prompt"], "riskshard(au_finance_ransomware_midmarket)> ")
+        self.assertEqual(selected["active_module_id"], "au_finance_ransomware_midmarket")
 
         options = app.run_command("show options")
         self.assertIn("org_profiles/au_finance_midmarket.yaml", options["output"])
@@ -57,6 +58,8 @@ class WebConsoleTests(unittest.TestCase):
         self.assertIn("coverage", dashboard)
         self.assertIn("data_pack", dashboard)
         self.assertIn("next_actions", dashboard)
+        self.assertEqual(dashboard["active_module_id"], "au_finance_ransomware_midmarket")
+        self.assertIn("coverage_matrix", dashboard["evidence_packs"])
         self.assertEqual(dashboard["risk_modules"]["module_count"], 5)
         self.assertEqual(dashboard["evidence_packs"]["pack_count"], 5)
         self.assertEqual(dashboard["readiness_gate"]["status"], "ready_for_local_calibrated_run")
