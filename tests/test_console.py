@@ -145,6 +145,11 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn("Module calibration proposal: au_finance_ransomware_midmarket", module_proposal)
         self.assertIn("selected_assumption", module_proposal)
 
+        gb_proposal = self.command("propose gb_finance_data_breach_midmarket")
+        self.assertIn("Module calibration proposal: gb_finance_data_breach_midmarket", gb_proposal)
+        self.assertIn("country=GB", gb_proposal)
+        self.assertIn("Ready without assumptions: True", gb_proposal)
+
         preflight_output = self.command("preflight")
         self.assertIn("Contributor preflight", preflight_output)
         self.assertIn("data pack fingerprint", preflight_output)

@@ -139,24 +139,26 @@ records:
       company_size_bands: [all]
       threats: [data_breach]
 
-  - id: riskshard_gb_data_breach_impact_stress_2026
-    title: Estimated UK data breach impact stress bound
+  - id: fca_equifax_2023_cyber_breach_fine_gbp
+    title: UK Equifax cyber breach regulatory penalty
     parameter: impact.max
-    value: 25000000
+    value: 11164400
     unit: currency
     currency: GBP
-    source_name: RiskShard UK data breach starter pack
-    source_type: model_assumption
-    source_url_or_citation: Starter assumption pending reviewed UK financial-services tail-loss evidence.
-    publication_date: "2026-06-04"
+    source_id: fca_equifax_cyber_breach_fine_2023
+    source_name: FCA fines Equifax Ltd over cyber security breach
+    source_type: regulator_report
+    source_url_or_citation: https://www.fca.org.uk/news/press-releases/equifax-ltd-fine-cyber-security-breach
+    publication_date: "2023-10-13"
     extraction_date: "2026-06-04"
-    extraction_notes: Estimated stress single-event impact for a UK financial-services data breach draft.
-    normalization_notes: Kept explicit as an assumption until UK sector tail-loss evidence is reviewed.
-    limitations: Not source-backed; replace with UK sector breach tail-loss, insurer, regulator, or claims evidence.
+    citation_detail: FCA press release states that Equifax Ltd was fined GBP 11,164,400 for failing to manage and monitor the security of UK consumer data outsourced to its US parent after a cyber breach.
+    extraction_notes: Extracted the FCA financial penalty amount and breach context from the official FCA press release.
+    normalization_notes: Stored directly in GBP and selected as a UK financial-services regulatory penalty stress anchor for impact.max.
+    limitations: Regulatory penalty only; not total event loss, insurance claim severity, or a full tail distribution; the incident was a large credit-reference data breach, not a mid-market-specific loss sample.
     confidence: low
-    evidence_type: estimated
+    evidence_type: source_backed
     applicability:
       industries: [financial_services]
       countries: [GB]
-      company_size_bands: [mid_market]
+      company_size_bands: [all]
       threats: [data_breach]

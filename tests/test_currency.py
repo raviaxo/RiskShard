@@ -27,6 +27,18 @@ class CurrencyTests(unittest.TestCase):
         self.assertEqual(conversion["value"], 100000)
         self.assertEqual(conversion["rate"], 1.0)
 
+    def test_gbp_to_usd_conversion_uses_sourced_ecb_cross_rate(self):
+        fx_rates = load_fx_rates()
+
+        conversion = convert_currency(1000000, "GBP", "USD", fx_rates)
+
+        self.assertEqual(conversion["rate_id"], "gbp_to_usd_ecb_cross_2026_06_04")
+        self.assertAlmostEqual(conversion["rate"], 1.345820326049254)
+        self.assertAlmostEqual(conversion["value"], 1345820.326049254)
+        self.assertEqual(conversion["evidence_type"], "source_backed")
+        self.assertEqual(conversion["retrieved_at"], "2026-06-04")
+        self.assertIn("EUR/USD 1.1640", conversion["citation_detail"])
+
     def test_estimated_conversion_remains_explicit(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "fx.yaml"

@@ -153,6 +153,18 @@ class EvidenceMatchingTests(unittest.TestCase):
             by_id["ibm_uk_2025_financial_services_breach_average_cost_gbp"]["currency"],
             "GBP",
         )
+        self.assertEqual(
+            by_id["fca_equifax_2023_cyber_breach_fine_gbp"]["evidence_type"],
+            "source_backed",
+        )
+        self.assertEqual(
+            by_id["fca_equifax_2023_cyber_breach_fine_gbp"]["value"],
+            11164400,
+        )
+        self.assertEqual(
+            by_id["fca_equifax_2023_cyber_breach_fine_gbp"]["confidence"],
+            "low",
+        )
 
     def test_match_evidence_prefers_applicable_records_and_explains_fallbacks(self):
         profile = load_org_profile(ROOT / "org_profiles" / "au_finance_midmarket.yaml")

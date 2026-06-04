@@ -94,7 +94,10 @@ impact.min / impact.likely / impact.max
 ```
 
 Each cell is labeled source-backed, assumption-only, or missing. This is the
-main UX affordance for deciding what evidence to improve next.
+main UX affordance for deciding what evidence to improve next. In the browser
+console, source-backed cells open the module evidence pack, while
+assumption-only or missing cells open the calibration proposal for that module.
+Each module row also exposes Use, Pack, and Fix gap actions.
 
 Scenario search and readiness output label each scenario as either `governed starter` or `demo fixture`. This keeps older smoke-test examples useful without making them look decision-ready.
 

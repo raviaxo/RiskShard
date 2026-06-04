@@ -125,7 +125,9 @@ The console keeps all artifacts local and reviewable in `results/`. See [docs/CO
 The browser console groups the workflow into four lanes: run a shard, improve
 evidence, govern data, and contribute country. After a module is selected, the
 dashboard shows contextual actions and a six-parameter coverage matrix so users
-can see which values are source-backed versus assumption-only.
+can see which values are source-backed versus assumption-only. Coverage cells
+and module rows are actionable: source-backed cells open the evidence pack, and
+assumption or missing cells open the calibration proposal for that module.
 
 ## Evidence Calibration
 
@@ -142,7 +144,7 @@ python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.y
   --scenario-output results/au_finance_ransomware_calibrated.yaml
 ```
 
-The calibration reports show a bottom line, confidence summary, what changed from the base scenario, limitations, selected evidence, applicable but excluded evidence, normalization assumptions, currency conversion assumptions, warnings, and the generated `frequency.min/likely/max` and `impact.min/likely/max` ranges. Current FX rates live in `calibrations/fx_rates.yaml`; the included AUD/USD rate is sourced from RBA Statistical Table F11.1 and inverted explicitly for USD-to-AUD calibration conversions.
+The calibration reports show a bottom line, confidence summary, what changed from the base scenario, limitations, selected evidence, applicable but excluded evidence, normalization assumptions, currency conversion assumptions, warnings, and the generated `frequency.min/likely/max` and `impact.min/likely/max` ranges. Current FX rates live in `calibrations/fx_rates.yaml`; the included AUD/USD rate is sourced from RBA Statistical Table F11.1 and inverted explicitly for USD-to-AUD calibration conversions, while GBP/USD coverage is recorded as an explicit ECB-derived cross-rate.
 
 Validate evidence quality gates with:
 
@@ -302,9 +304,11 @@ assumptions explicit until US denominator-aware evidence is contributed.
 
 The next seeded geography is `gb_finance_data_breach_midmarket`. It uses UK
 official cyber breach/attack prevalence for frequency and IBM UK financial
-services data-breach cost evidence for likely impact. It is still a governed
-starter, not benchmark-grade: the UK survey is broader than privacy-only data
-breach and stress impact remains estimated.
+services data-breach cost evidence for likely impact. Its stress impact uses an
+FCA Equifax cyber-breach penalty anchor, so all six direct parameters are now
+source-backed. It is still a governed starter, not benchmark-grade: the UK
+survey is broader than privacy-only data breach, and the stress anchor is a
+regulatory penalty rather than a total event-loss or claims distribution.
 
 ## Source Baseline
 

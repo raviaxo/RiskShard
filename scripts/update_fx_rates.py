@@ -80,31 +80,52 @@ def parse_aud_usd_rate(csv_text, as_of=None):
     return row_date, float(selected[aud_usd_index])
 
 
-def build_fx_rates(row_date, aud_usd_rate, retrieved_at):
+def build_aud_usd_rate(row_date, aud_usd_rate, retrieved_at):
     return {
-        "rates": [
-            {
-                "id": f"aud_to_usd_rba_f11_1_{row_date.replace('-', '_')}",
-                "from": "AUD",
-                "to": "USD",
-                "rate": aud_usd_rate,
-                "as_of": row_date,
-                "source_name": "Reserve Bank of Australia Statistical Table F11.1",
-                "source_type": "official_statistical_table",
-                "source_url": RBA_F11_1_CSV_URL,
-                "retrieved_at": retrieved_at,
-                "citation_detail": (
-                    "F11.1 Exchange Rates, series FXRUSD, "
-                    f"row {row_date}; table quotes A$1=USD {aud_usd_rate}."
-                ),
-                "evidence_type": "source_backed",
-                "notes": (
-                    "RBA F11.1 quotes AUD to USD. USD to AUD calibration conversions "
-                    "invert this rate and disclose the source rate ID in the calibration report."
-                ),
-            }
-        ]
+        "id": f"aud_to_usd_rba_f11_1_{row_date.replace('-', '_')}",
+        "from": "AUD",
+        "to": "USD",
+        "rate": aud_usd_rate,
+        "as_of": row_date,
+        "source_name": "Reserve Bank of Australia Statistical Table F11.1",
+        "source_type": "official_statistical_table",
+        "source_url": RBA_F11_1_CSV_URL,
+        "retrieved_at": retrieved_at,
+        "citation_detail": (
+            "F11.1 Exchange Rates, series FXRUSD, "
+            f"row {row_date}; table quotes A$1=USD {aud_usd_rate}."
+        ),
+        "evidence_type": "source_backed",
+        "notes": (
+            "RBA F11.1 quotes AUD to USD. USD to AUD calibration conversions "
+            "invert this rate and disclose the source rate ID in the calibration report."
+        ),
     }
+
+
+def build_fx_rates(row_date, aud_usd_rate, retrieved_at, existing_rates=None):
+    aud_rate = build_aud_usd_rate(row_date, aud_usd_rate, retrieved_at)
+    preserved_rates = [
+        rate for rate in existing_rates or []
+        if not is_rba_aud_usd_rate(rate)
+    ]
+    return {"rates": [aud_rate, *preserved_rates]}
+
+
+def is_rba_aud_usd_rate(rate):
+    return (
+        str(rate.get("id", "")).startswith("aud_to_usd_rba_f11_1_")
+        and rate.get("from") == "AUD"
+        and rate.get("to") == "USD"
+    )
+
+
+def load_existing_rates(output_path):
+    output_path = Path(output_path)
+    if not output_path.exists():
+        return []
+    payload = yaml.safe_load(output_path.read_text()) or {}
+    return payload.get("rates") or []
 
 
 def write_fx_rates(data, output_path):
@@ -118,8 +139,9 @@ def main():
     args = parse_args()
     csv_text = load_csv_text(args.input_csv)
     row_date, aud_usd_rate = parse_aud_usd_rate(csv_text, args.as_of)
+    existing_rates = load_existing_rates(args.output)
     output_path = write_fx_rates(
-        build_fx_rates(row_date, aud_usd_rate, args.retrieved_at),
+        build_fx_rates(row_date, aud_usd_rate, args.retrieved_at, existing_rates),
         args.output,
     )
     print(f"FX rates written: {output_path}")

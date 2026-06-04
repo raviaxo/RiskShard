@@ -6,9 +6,9 @@ metadata:
     Starter reviewed calibration profile for United Kingdom financial-services
     data breach. It uses UK official breach/attack prevalence as broad
     frequency evidence and IBM UK financial-services breach-cost evidence as a
-    likely impact anchor. The UK survey is broader than privacy-only data
-    breach, and stress impact remains estimated until UK tail-loss evidence is
-    reviewed.
+    likely impact anchor. Stress impact uses an FCA regulatory penalty anchor.
+    The UK survey is broader than privacy-only data breach, and the stress
+    impact anchor is a penalty rather than a total event-loss distribution.
 
 target_currency: GBP
 
@@ -41,8 +41,7 @@ parameters:
       round_to: 10000
       rationale: UK financial-services average data-breach cost anchor from IBM's 2025 UK breach release.
     max:
-      evidence_id: riskshard_gb_data_breach_impact_stress_2026
+      evidence_id: fca_equifax_2023_cyber_breach_fine_gbp
       transform: direct
       target_currency: GBP
-      round_to: 100000
-      rationale: Explicit estimated UK stress loss until UK sector tail-loss evidence exists.
+      rationale: FCA Equifax cyber-breach penalty used as a source-backed UK regulatory stress anchor; not a total event-loss estimate.

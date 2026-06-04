@@ -303,6 +303,13 @@ INDEX_HTML = """<!doctype html>
       white-space: nowrap;
     }
 
+    button.param-cell {
+      width: 100%;
+      min-height: 28px;
+      font-size: 11px;
+      text-align: center;
+    }
+
     .param-cell.good {
       border-color: #3b6d50;
       color: #94d7ad;
@@ -319,6 +326,12 @@ INDEX_HTML = """<!doctype html>
       border-color: #7b3e3e;
       color: #e19898;
       background: rgba(92, 42, 42, 0.35);
+    }
+
+    .row-actions {
+      display: grid;
+      gap: 5px;
+      min-width: 96px;
     }
 
     .transcript {
@@ -547,7 +560,9 @@ INDEX_HTML = """<!doctype html>
     function parameterCell(row, parameter) {
       const value = row.parameters[parameter] || { status: "missing" };
       const label = parameterLabels[parameter] || parameter;
-      return `<span class="param-cell ${statusClass(value.status)}" title="${parameter}: ${displayStatus(value.status)}">${label}</span>`;
+      const command = value.status === "source_backed" ? `packs ${row.module_id}` : `propose ${row.module_id}`;
+      const evidence = value.best_evidence_id ? `; best: ${value.best_evidence_id}` : "; no evidence candidate";
+      return `<button class="param-cell ${statusClass(value.status)}" data-command="${command}" title="${parameter}: ${displayStatus(value.status)}${evidence}">${label}</button>`;
     }
 
     function renderCoverageMatrix(rows) {
@@ -562,6 +577,7 @@ INDEX_HTML = """<!doctype html>
               <th>Context</th>
               <th>Direct Evidence</th>
               <th>Next Gap</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -575,6 +591,13 @@ INDEX_HTML = """<!doctype html>
                   </div>
                 </td>
                 <td>${row.next_gap}<div class="item-meta">${row.source_backed_direct}/${row.direct_total} source-backed</div></td>
+                <td>
+                  <div class="row-actions">
+                    ${commandButton(`use ${row.module_id}`, "Use")}
+                    ${commandButton(`packs ${row.module_id}`, "Pack")}
+                    ${commandButton(`propose ${row.module_id}`, "Fix gap", row.next_gap === "ready for practitioner review" ? "" : "warning")}
+                  </div>
+                </td>
               </tr>
             `).join("")}
           </tbody>

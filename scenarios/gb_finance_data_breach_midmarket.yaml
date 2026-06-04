@@ -3,13 +3,14 @@ metadata:
   version: "0.1"
   currency: GBP
   scenario_stage: governed_starter
-  benchmark_status: starter_with_source_backed_uk_breach_frequency_and_likely_loss
+  benchmark_status: starter_with_source_backed_uk_direct_parameters
   description: >
     Starter United Kingdom financial-services data-breach shard. Frequency
     uses official UK cyber breach/attack survey prevalence by business size,
     likely impact uses a UK financial-services data-breach cost anchor, and
-    stress impact remains an explicit estimate until stronger UK tail-loss
-    evidence is reviewed.
+    stress impact uses an FCA regulatory penalty anchor. It remains a governed
+    starter because the stress anchor is a penalty, not a full event-loss
+    distribution.
 
 frequency:
   min: 0.43
@@ -19,4 +20,4 @@ frequency:
 impact:
   min: 10000
   likely: 5740000
-  max: 25000000
+  max: 11164400
