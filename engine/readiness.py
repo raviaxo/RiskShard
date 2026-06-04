@@ -64,6 +64,7 @@ def build_readiness_dashboard(root=PROJECT_ROOT, org_profile_path=DEFAULT_ORG_PR
                 for pack in evidence_packs["packs"]
                 if pack["pack_confidence"] == "low"
             ],
+            "coverage_matrix": module_coverage_matrix(evidence_packs["packs"]),
         },
         "top_risks": top_risks,
         "feed_governance": {
@@ -126,6 +127,65 @@ def coverage_summary(records):
         "countries": dict(sorted(countries.items())),
         "industries": dict(sorted(industries.items())),
     }
+
+
+def module_coverage_matrix(packs):
+    rows = []
+    for pack in sorted(packs, key=lambda item: item["module_id"]):
+        parameters = {
+            item["parameter"]: {
+                "status": item["status"],
+                "best_evidence_id": item["best_evidence_id"],
+                "best_confidence": item["best_confidence"],
+            }
+            for item in pack["direct_parameters"]
+        }
+        rows.append({
+            "module_id": pack["module_id"],
+            "title": pack["title"],
+            "threat": pack["threat"],
+            "country": pack["context"]["country"],
+            "industry": pack["context"]["industry"],
+            "company_size": pack["context"]["company_size"],
+            "freshness_status": pack["freshness_status"],
+            "pack_confidence": pack["pack_confidence"],
+            "source_backed_direct": direct_status_count(pack, "source_backed"),
+            "assumption_only_direct": direct_status_count(pack, "assumption_only"),
+            "missing_direct": direct_status_count(pack, "missing"),
+            "direct_total": len(pack["direct_parameters"]),
+            "next_gap": module_next_gap(pack),
+            "parameters": parameters,
+        })
+    return rows
+
+
+def direct_status_count(pack, status):
+    return sum(
+        1 for item in pack["direct_parameters"]
+        if item["status"] == status
+    )
+
+
+def module_next_gap(pack):
+    if pack["freshness_status"] != "current":
+        return "review source freshness"
+    for status, label in [
+        ("missing", "add evidence for"),
+        ("assumption_only", "replace assumption for"),
+    ]:
+        parameter = next(
+            (
+                item["parameter"]
+                for item in pack["direct_parameters"]
+                if item["status"] == status
+            ),
+            None,
+        )
+        if parameter:
+            return f"{label} {parameter}"
+    if pack["pack_confidence"] == "low":
+        return "review low-confidence source-backed evidence"
+    return "ready for practitioner review"
 
 
 def localization_summary(records, root):
@@ -339,8 +399,19 @@ def format_readiness_dashboard(dashboard):
         f"Data pack: {pack['pack_version']} {pack['fingerprint'][:12]} files={pack['file_count']}",
         f"Installable package: {install['pyproject']}",
         "",
-        "Top risk readiness",
+        "Module coverage matrix",
     ]
+    for row in dashboard["evidence_packs"]["coverage_matrix"]:
+        lines.append(
+            f"- {row['module_id']}: "
+            f"{row['source_backed_direct']}/{row['direct_total']} source-backed; "
+            f"assumptions={row['assumption_only_direct']} missing={row['missing_direct']}; "
+            f"next={row['next_gap']}"
+        )
+    lines.extend([
+        "",
+        "Top risk readiness",
+    ])
     for risk in dashboard["top_risks"]:
         lines.append(
             f"- {risk['label']}: {risk['status']} "

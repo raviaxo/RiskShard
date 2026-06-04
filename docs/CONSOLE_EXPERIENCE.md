@@ -24,7 +24,18 @@ It is intentionally closer to a Metasploit-style console than a web app:
 - Summarize the latest calibration or run with `explain`.
 - Run source/evidence quality gates with `validate`.
 
-For Codex side-panel use, RiskShard also includes a local browser console wrapper. It uses the same console commands and local files, but presents them as buttons plus a command input:
+For Codex side-panel use, RiskShard also includes a local browser console
+wrapper. It uses the same console commands and local files, but organizes the
+first screen into four practitioner lanes:
+
+- Run a shard
+- Improve evidence
+- Govern data
+- Contribute country
+
+The dashboard then exposes contextual actions for the selected module, so users
+do not have to parse every command at once. Expert users can still type any
+console command in the input.
 
 ```text
 python scripts/riskshard_web_console.py
@@ -74,6 +85,17 @@ shows direct parameter coverage, assumption-only parameters, source-backed
 record counts, source gather timestamps, evidence ingestion dates, trust tiers,
 confidence, renewal status, and renewal due dates.
 
+The readiness dashboard and browser console now include a module coverage
+matrix. Each module is shown with the six direct parameters:
+
+```text
+frequency.min / frequency.likely / frequency.max
+impact.min / impact.likely / impact.max
+```
+
+Each cell is labeled source-backed, assumption-only, or missing. This is the
+main UX affordance for deciding what evidence to improve next.
+
 Scenario search and readiness output label each scenario as either `governed starter` or `demo fixture`. This keeps older smoke-test examples useful without making them look decision-ready.
 
 ## Design Rules
@@ -89,3 +111,4 @@ Scenario search and readiness output label each scenario as either `governed sta
 - Add clearer guidance for moving `calibrated_with_assumptions` shards to fully source-backed `calibrated` status.
 - Add one-click source/feed details from each dashboard action.
 - Add copyable run/calibration commands for selected shards.
+- Add beginner/expert display mode if the four-lane layout is still too dense.
