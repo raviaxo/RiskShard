@@ -145,6 +145,14 @@ class EvidenceMatchingTests(unittest.TestCase):
             "Not source-backed",
             by_id["riskshard_bec_impact_likely_2026"]["limitations"],
         )
+        self.assertEqual(
+            by_id["uk_dsit_2026_medium_business_breach_prevalence"]["value"],
+            0.65,
+        )
+        self.assertEqual(
+            by_id["ibm_uk_2025_financial_services_breach_average_cost_gbp"]["currency"],
+            "GBP",
+        )
 
     def test_match_evidence_prefers_applicable_records_and_explains_fallbacks(self):
         profile = load_org_profile(ROOT / "org_profiles" / "au_finance_midmarket.yaml")

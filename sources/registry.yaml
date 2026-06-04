@@ -48,6 +48,41 @@ sources:
       about geography, industry, and methodology limitations when applying it
       to local scenario ranges.
 
+  - id: uk_dsit_cyber_breaches_2026
+    title: Cyber Security Breaches Survey 2025/2026
+    publisher: UK Department for Science, Innovation and Technology and Home Office
+    source_type: official_statistics
+    url: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    access_mode: public_html
+    intended_use:
+      - United Kingdom cyber breach prevalence
+      - business-size frequency context
+      - cyber-facilitated fraud context
+      - low-cost breach impact context
+    usage_notes: >
+      Use as an official UK cyber breach/attack prevalence source. Preserve
+      the survey limitation that it covers identified breaches or attacks,
+      which is broader than privacy-only data breach and may undercount hidden
+      or unidentified events.
+
+  - id: ibm_cost_data_breach_uk_2025
+    title: IBM UK Cost of a Data Breach 2025 release
+    publisher: IBM
+    source_type: data_breach_cost_research
+    url: https://uk.newsroom.ibm.com/2025-cost-of-data-breach-UK
+    publication_date: "2025-07-30"
+    access_mode: public_html
+    intended_use:
+      - United Kingdom data breach cost
+      - financial services breach cost
+      - supply-chain breach context
+      - phishing breach context
+    usage_notes: >
+      Use as a UK-specific data-breach cost source. Preserve limitations about
+      sponsor methodology, studied breach population, and applicability to a
+      mid-market organization.
+
   - id: abs_counts_australian_businesses_2025
     title: Counts of Australian Businesses, including Entries and Exits, July 2021 - June 2025
     publisher: Australian Bureau of Statistics

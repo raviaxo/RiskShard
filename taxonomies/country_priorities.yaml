@@ -22,16 +22,20 @@ items:
     recommended_first_module: us_finance_bec_midmarket
     why: Large market, strong public cyber/law-enforcement sources, and existing FBI IC3 source coverage.
     collaboration_prompt: Add US sector denominators, breach/loss sources, and control/regulatory context.
+    coverage_summary: One BEC governed starter seeded with source-backed likely loss.
+    next_contribution: Replace US BEC frequency and tail-loss assumptions with denominator-aware evidence.
 
   - rank: 2
     country_id: GB
     label: United Kingdom
     region: Europe
     tier: launch
-    status: target
-    recommended_first_module: gb_finance_ransomware_midmarket
+    status: module_seeded
+    recommended_first_module: gb_finance_data_breach_midmarket
     why: Mature cyber/regulatory ecosystem, strong public reporting, and high practitioner overlap with FAIR/CRQ.
     collaboration_prompt: Add NCSC, ICO, FCA/PRA, and UK cyber survey evidence.
+    coverage_summary: One data-breach governed starter seeded with UK breach/attack frequency and UK financial-services likely-loss evidence.
+    next_contribution: Replace the UK stress-loss assumption and add privacy-regulator/sector denominator evidence.
 
   - rank: 3
     country_id: CA
@@ -122,6 +126,8 @@ items:
     recommended_first_module: au_finance_ransomware_midmarket
     why: Existing reference geography with ransomware, data breach, and BEC governed starters.
     collaboration_prompt: Replace remaining assumptions and use AU as the contributor example.
+    coverage_summary: Three financial-services governed starters seeded across ransomware, data breach, and BEC.
+    next_contribution: Replace remaining AU frequency and tail-loss assumptions with locally gatherable evidence.
 
   - rank: 12
     country_id: MX

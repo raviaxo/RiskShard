@@ -1,0 +1,22 @@
+metadata:
+  name: UK Finance Data Breach Midmarket
+  version: "0.1"
+  currency: GBP
+  scenario_stage: governed_starter
+  benchmark_status: starter_with_source_backed_uk_breach_frequency_and_likely_loss
+  description: >
+    Starter United Kingdom financial-services data-breach shard. Frequency
+    uses official UK cyber breach/attack survey prevalence by business size,
+    likely impact uses a UK financial-services data-breach cost anchor, and
+    stress impact remains an explicit estimate until stronger UK tail-loss
+    evidence is reviewed.
+
+frequency:
+  min: 0.43
+  likely: 0.65
+  max: 0.69
+
+impact:
+  min: 10000
+  likely: 5740000
+  max: 25000000

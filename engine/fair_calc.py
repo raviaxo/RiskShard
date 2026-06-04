@@ -156,6 +156,8 @@ def run_portfolio(path, trials=10000, dist_type="pert", seed=None, schema_path=S
     for scenario_path in scenario_files(path):
         try:
             config = load_and_validate(scenario_path, schema)
+            scenario_metadata = config.get("metadata", {})
+            currency = scenario_metadata.get("currency", "unspecified")
             scenario_seed = None
             if seed is not None:
                 scenario_seed = derive_scenario_seed(seed, scenario_path, config)
@@ -170,7 +172,8 @@ def run_portfolio(path, trials=10000, dist_type="pert", seed=None, schema_path=S
                 "path": str(scenario_path),
                 "stage": scenario_stage(config),
                 "stage_label": scenario_stage_label(config),
-                "benchmark_status": config.get("metadata", {}).get("benchmark_status", "unspecified"),
+                "benchmark_status": scenario_metadata.get("benchmark_status", "unspecified"),
+                "currency": currency,
                 "seed": scenario_seed,
                 "fingerprint": scenario_fingerprint(config),
             })
@@ -181,6 +184,31 @@ def run_portfolio(path, trials=10000, dist_type="pert", seed=None, schema_path=S
         raise ValueError("No valid simulations.")
 
     shard_stats, portfolio_stats, aggregate = compute_all_stats(portfolio)
+    scenario_currencies = {
+        item["name"]: item["currency"]
+        for item in metadata["reproducibility"]["scenarios"]
+    }
+    unique_currencies = sorted(set(scenario_currencies.values()))
+    known_unique_currencies = [
+        currency for currency in unique_currencies
+        if currency != "unspecified"
+    ]
+    metadata["currencies"] = {
+        "scenarios": scenario_currencies,
+        "unique": unique_currencies,
+        "portfolio_currency": (
+            known_unique_currencies[0]
+            if len(known_unique_currencies) == 1 and "unspecified" not in unique_currencies
+            else None
+        ),
+        "mixed_or_unspecified": len(unique_currencies) != 1 or "unspecified" in unique_currencies,
+        "warning": None,
+    }
+    if metadata["currencies"]["mixed_or_unspecified"]:
+        metadata["currencies"]["warning"] = (
+            "Portfolio statistics are an unconverted arithmetic sum across "
+            "mixed or unspecified scenario currencies."
+        )
     return {
         "shards": shard_stats,
         "portfolio": portfolio_stats,
@@ -203,7 +231,7 @@ def plot_lec(results, name, output_dir=RESULTS_DIR):
     plt.plot(sorted_results, probabilities, linewidth=2)
     plt.fill_between(sorted_results, probabilities, alpha=0.1)
     plt.title(f"Loss Exceedance Curve: {name}")
-    plt.xlabel("Loss ($)")
+    plt.xlabel("Loss")
     plt.ylabel("Exceedance Probability")
     plt.grid(True, linestyle="--", alpha=0.3)
 

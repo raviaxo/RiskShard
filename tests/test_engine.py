@@ -126,6 +126,11 @@ class PortfolioTests(unittest.TestCase):
         self.assertEqual(len(seeds), len(set(seeds)))
         self.assertTrue(all(0 <= seed <= 0xFFFFFFFF for seed in seeds))
         self.assertTrue(all(scenario["fingerprint"] for scenario in scenario_metadata))
+        self.assertIn("currency", scenario_metadata[0])
+        self.assertIn("GBP", first["metadata"]["currencies"]["unique"])
+        self.assertTrue(first["metadata"]["currencies"]["mixed_or_unspecified"])
+        self.assertIsNone(first["metadata"]["currencies"]["portfolio_currency"])
+        self.assertIn("unconverted", first["metadata"]["currencies"]["warning"])
 
     def test_scenario_seed_is_stable_when_portfolio_order_changes(self):
         scenario = {

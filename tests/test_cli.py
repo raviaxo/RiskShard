@@ -35,7 +35,8 @@ class CliSmokeTests(unittest.TestCase):
             0,
             msg=f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}",
         )
-        self.assertIn("=== PORTFOLIO ===", result.stdout)
+        self.assertIn("=== PORTFOLIO (unconverted mixed/unspecified currencies) ===", result.stdout)
+        self.assertIn("WARNING: Portfolio statistics are an unconverted arithmetic sum", result.stdout)
         self.assertIn("Ransomware Attack", result.stdout)
         self.assertIn("STAGE: demo fixture", result.stdout)
         self.assertIn("STAGE: governed starter", result.stdout)
@@ -102,7 +103,7 @@ class CliSmokeTests(unittest.TestCase):
                 msg=f"stdout:\n{simulation.stdout}\nstderr:\n{simulation.stderr}",
             )
 
-        self.assertIn("=== PORTFOLIO ===", simulation.stdout)
+        self.assertIn("=== PORTFOLIO (AUD) ===", simulation.stdout)
         self.assertIn("Australia Finance Ransomware Midmarket", simulation.stdout)
 
     def test_calibration_cli_writes_report_and_scenario(self):
@@ -241,6 +242,7 @@ class CliSmokeTests(unittest.TestCase):
         self.assertEqual(countries_result.returncode, 0, msg=countries_result.stderr)
         self.assertIn("Country expansion priorities", countries_result.stdout)
         self.assertIn("us_finance_bec_midmarket", countries_result.stdout)
+        self.assertIn("gb_finance_data_breach_midmarket", countries_result.stdout)
 
 
 if __name__ == "__main__":

@@ -56,7 +56,7 @@ def format_country_priorities(priorities):
 
 
 def format_country_priority_detail(item):
-    return "\n".join([
+    lines = [
         f"Country priority: {item['country_id']} - {item['label']}",
         f"Rank      : {item['rank']}",
         f"Region    : {item['region']}",
@@ -65,8 +65,13 @@ def format_country_priority_detail(item):
         f"First mod : {item['recommended_first_module']}",
         f"Why       : {item['why']}",
         f"Contribute: {item['collaboration_prompt']}",
-        "",
-    ])
+    ]
+    if item.get("coverage_summary"):
+        lines.append(f"Coverage  : {item['coverage_summary']}")
+    if item.get("next_contribution"):
+        lines.append(f"Next gap  : {item['next_contribution']}")
+    lines.append("")
+    return "\n".join(lines)
 
 
 def format_counts(counts):

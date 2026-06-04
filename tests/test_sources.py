@@ -29,6 +29,8 @@ class SourceRegistryTests(unittest.TestCase):
         self.assertIn("ibm_cost_data_breach_2025", source_ids)
         self.assertIn("abs_counts_australian_businesses_2025", source_ids)
         self.assertIn("fbi_ic3_2025_report", source_ids)
+        self.assertIn("uk_dsit_cyber_breaches_2026", source_ids)
+        self.assertIn("ibm_cost_data_breach_uk_2025", source_ids)
         self.assertIn("accc_targeting_scams_2025", source_ids)
         self.assertIn("cyentia_iris_2025", source_ids)
         self.assertIn("asd_annual_cyber_threat_report_2024_2025", source_ids)

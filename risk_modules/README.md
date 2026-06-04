@@ -13,10 +13,11 @@ The intended console pattern is:
 ```text
 modules
 countries
-modules info us_finance_bec_midmarket
-packs us_finance_bec_midmarket
-use us_finance_bec_midmarket
-propose us_finance_bec_midmarket
+countries GB
+modules info gb_finance_data_breach_midmarket
+packs gb_finance_data_breach_midmarket
+use gb_finance_data_breach_midmarket
+propose gb_finance_data_breach_midmarket
 calibrate
 run
 ```

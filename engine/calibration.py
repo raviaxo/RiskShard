@@ -54,15 +54,21 @@ def run_calibration(
     quality_issues = validate_evidence_quality(evidence_path, manifest_path)
     target_context = normalize_context(org_profile, threat)
     matched = match_evidence(evidence_records, org_profile, threat)
+    base_metadata = dict(scenario["metadata"])
+    profile_metadata = calibration_profile.get("metadata", {})
+    generated_metadata = {
+        **base_metadata,
+        "name": profile_metadata.get(
+            "scenario_name",
+            f"{base_metadata['name']} Calibrated",
+        ),
+        "version": profile_metadata.get("version", "0.1-calibrated"),
+    }
+    if calibration_profile.get("target_currency"):
+        generated_metadata["currency"] = calibration_profile["target_currency"]
 
     generated = {
-        "metadata": {
-            "name": calibration_profile.get("metadata", {}).get(
-                "scenario_name",
-                f"{scenario['metadata']['name']} Calibrated",
-            ),
-            "version": calibration_profile.get("metadata", {}).get("version", "0.1-calibrated"),
-        },
+        "metadata": generated_metadata,
         "frequency": {},
         "impact": {},
     }

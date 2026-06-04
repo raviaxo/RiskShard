@@ -20,6 +20,10 @@ class ExtractionTests(unittest.TestCase):
             "fbi_ic3_2025_bec_average_loss_per_complaint_usd",
             {record["id"] for record in records},
         )
+        self.assertIn(
+            "uk_dsit_2026_medium_business_breach_prevalence",
+            {record["id"] for record in records},
+        )
 
     def test_reviewed_extractions_have_no_mapping_errors(self):
         issues = validate_extractions(

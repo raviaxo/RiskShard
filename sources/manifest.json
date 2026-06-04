@@ -1,16 +1,16 @@
 {
   "error_count": 0,
-  "fetched_count": 13,
-  "generated_at": "2026-06-04T14:09:20Z",
+  "fetched_count": 15,
+  "generated_at": "2026-06-04T16:20:17Z",
   "manifest_version": "1.0",
-  "source_count": 13,
+  "source_count": 15,
   "sources": [
     {
       "access_mode": "public_pdf",
       "content_length": 11328874,
       "content_type": "application/pdf",
       "final_url": "https://www.verizon.com/business/resources/T766/reports/2026-dbir-data-breach-investigations-report.pdf",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "verizon_dbir_2026",
       "intended_use": [
@@ -34,7 +34,7 @@
       "content_length": 11102454,
       "content_type": "application/pdf",
       "final_url": "https://www.verizon.com/business/resources/Ta96/reports/2025-dbir-data-breach-investigations-report.pdf",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "verizon_dbir_2025",
       "intended_use": [
@@ -58,7 +58,7 @@
       "content_length": 181573,
       "content_type": "text/html;charset=utf-8",
       "final_url": "https://www.ibm.com/reports/data-breach",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "ibm_cost_data_breach_2025",
       "intended_use": [
@@ -69,7 +69,7 @@
       "publication_date": "2025-07-30",
       "publisher": "IBM",
       "raw_path": "sources/raw/ibm_cost_data_breach_2025.html",
-      "sha256": "07e1f604d268d45c21748ee88f923351a8da66b7ff415a23199b9085d1f030ac",
+      "sha256": "a80c8ee4ddf242d03986414b2112c3517b8dddcfd474e60f18a46bc673b21075",
       "source_type": "data_breach_cost_research",
       "status": "fetched",
       "title": "Cost of a Data Breach Report 2025",
@@ -78,10 +78,58 @@
     },
     {
       "access_mode": "public_html",
+      "content_length": 788438,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026",
+      "gathered_at": "2026-06-04T16:20:17Z",
+      "http_status": 200,
+      "id": "uk_dsit_cyber_breaches_2026",
+      "intended_use": [
+        "United Kingdom cyber breach prevalence",
+        "business-size frequency context",
+        "cyber-facilitated fraud context",
+        "low-cost breach impact context"
+      ],
+      "publication_date": "2026-04-30",
+      "publisher": "UK Department for Science, Innovation and Technology and Home Office",
+      "raw_path": "sources/raw/uk_dsit_cyber_breaches_2026.html",
+      "sha256": "dab50eaaa197033c998aeed7fddc891b5ce31efb8de7e5548dd87fffda2f61a4",
+      "source_type": "official_statistics",
+      "status": "fetched",
+      "title": "Cyber Security Breaches Survey 2025/2026",
+      "url": "https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026",
+      "usage_notes": "Use as an official UK cyber breach/attack prevalence source. Preserve the survey limitation that it covers identified breaches or attacks, which is broader than privacy-only data breach and may undercount hidden or unidentified events.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 47346,
+      "content_type": "text/html; charset=UTF-8",
+      "final_url": "https://uk.newsroom.ibm.com/2025-cost-of-data-breach-UK",
+      "gathered_at": "2026-06-04T16:20:17Z",
+      "http_status": 200,
+      "id": "ibm_cost_data_breach_uk_2025",
+      "intended_use": [
+        "United Kingdom data breach cost",
+        "financial services breach cost",
+        "supply-chain breach context",
+        "phishing breach context"
+      ],
+      "publication_date": "2025-07-30",
+      "publisher": "IBM",
+      "raw_path": "sources/raw/ibm_cost_data_breach_uk_2025.html",
+      "sha256": "800611adc5951d745788bca4c535cd21fc21a9f50ac23a7929157563e11b7bdd",
+      "source_type": "data_breach_cost_research",
+      "status": "fetched",
+      "title": "IBM UK Cost of a Data Breach 2025 release",
+      "url": "https://uk.newsroom.ibm.com/2025-cost-of-data-breach-UK",
+      "usage_notes": "Use as a UK-specific data-breach cost source. Preserve limitations about sponsor methodology, studied breach population, and applicability to a mid-market organization.\n"
+    },
+    {
+      "access_mode": "public_html",
       "content_length": 305996,
       "content_type": "text/html; charset=UTF-8",
       "final_url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "abs_counts_australian_businesses_2025",
       "intended_use": [
@@ -104,7 +152,7 @@
       "content_length": 3362954,
       "content_type": "application/pdf",
       "final_url": "https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "fbi_ic3_2025_report",
       "intended_use": [
@@ -128,7 +176,7 @@
       "content_length": 2668694,
       "content_type": "application/pdf",
       "final_url": "https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "accc_targeting_scams_2025",
       "intended_use": [
@@ -152,7 +200,7 @@
       "content_length": 169410,
       "content_type": "text/html; charset=UTF-8",
       "final_url": "https://www.cyentia.com/publication/iris2025/",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "cyentia_iris_2025",
       "intended_use": [
@@ -176,7 +224,7 @@
       "content_length": 173601,
       "content_type": "text/html; charset=UTF-8",
       "final_url": "https://www.cyentia.com/publication/iris-2022/",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "cyentia_iris_2022",
       "intended_use": [
@@ -200,7 +248,7 @@
       "content_length": 184105,
       "content_type": "text/html; charset=UTF-8",
       "final_url": "https://www.cyentia.com/publication/iris-ransomware/",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "cyentia_iris_ransomware",
       "intended_use": [
@@ -223,7 +271,7 @@
       "content_length": 209710,
       "content_type": "text/html; charset=utf-8",
       "final_url": "https://www.business.qld.gov.au/running-business/digital-business/online-risk-security/cyber-security",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "business_qld_cyber_secure_guidance_2025",
       "intended_use": [
@@ -234,7 +282,7 @@
       "publication_date": "2025-10-23",
       "publisher": "Business Queensland",
       "raw_path": "sources/raw/business_qld_cyber_secure_guidance_2025.html",
-      "sha256": "a9f1c9787b538902df61aefb3179b53b65975215c3f45ef3556200a550514c99",
+      "sha256": "4f71220d4fc2c54d7de9e1e74d9f35cdfc3007d82e38c5d2d1a133a21a91d7b9",
       "source_type": "government_business_guidance",
       "status": "fetched",
       "title": "Keeping your business cyber secure",
@@ -246,7 +294,7 @@
       "content_length": 955313,
       "content_type": "application/pdf",
       "final_url": "https://www.oaic.gov.au/__data/assets/pdf_file/0021/251184/Notifiable-data-breaches-report-July-to-December-2024.pdf",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "oaic_ndb_jul_dec_2024",
       "intended_use": [
@@ -269,7 +317,7 @@
       "content_length": 153833,
       "content_type": "text/html; charset=UTF-8",
       "final_url": "https://handbook.apra.gov.au/standard/cps-230",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "apra_cps_230",
       "intended_use": [
@@ -289,10 +337,10 @@
     },
     {
       "access_mode": "public_html",
-      "content_length": 693360,
+      "content_length": 693964,
       "content_type": "text/html; charset=utf-8",
       "final_url": "https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-financial-services-2024",
-      "gathered_at": "2026-06-04T14:09:20Z",
+      "gathered_at": "2026-06-04T16:20:17Z",
       "http_status": 200,
       "id": "sophos_state_ransomware_financial_services_2024",
       "intended_use": [
@@ -303,7 +351,7 @@
       "publication_date": "2024-06-24",
       "publisher": "Sophos",
       "raw_path": "sources/raw/sophos_state_ransomware_financial_services_2024.html",
-      "sha256": "ea24b1454bf6a6b326570bf59c103d3053672d1dab92128e30efa5f92ac6fca6",
+      "sha256": "f0a7e490c0c9e0976ce256bc7dda632fa7c11fd0d5264adf1dabd61931f254e2",
       "source_type": "industry_survey",
       "status": "fetched",
       "title": "State of Ransomware in Financial Services 2024",
