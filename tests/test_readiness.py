@@ -20,10 +20,10 @@ class ReadinessTests(unittest.TestCase):
         self.assertTrue(dashboard["install_release"]["pyproject"])
         self.assertEqual(len(dashboard["data_pack"]["fingerprint"]), 64)
         self.assertGreaterEqual(len(dashboard["top_risks"]), 5)
-        self.assertEqual(dashboard["scenarios"]["stage_counts"]["governed_starter"], 3)
+        self.assertEqual(dashboard["scenarios"]["stage_counts"]["governed_starter"], 4)
         self.assertEqual(dashboard["scenarios"]["stage_counts"]["demo_fixture"], 5)
-        self.assertEqual(dashboard["risk_modules"]["module_count"], 3)
-        self.assertEqual(dashboard["evidence_packs"]["pack_count"], 3)
+        self.assertEqual(dashboard["risk_modules"]["module_count"], 4)
+        self.assertEqual(dashboard["evidence_packs"]["pack_count"], 4)
         self.assertEqual(
             dashboard["readiness_gate"]["status"],
             "ready_for_local_calibrated_run",
@@ -40,9 +40,9 @@ class ReadinessTests(unittest.TestCase):
         self.assertIn("Gate: ready_for_local_calibrated_run", output)
         self.assertIn("Next actions", output)
         self.assertIn("Data pack:", output)
-        self.assertIn("Scenarios: demo_fixture=5, governed_starter=3", output)
-        self.assertIn("Risk modules: 3", output)
-        self.assertIn("Evidence packs: 3", output)
+        self.assertIn("Scenarios: demo_fixture=5, governed_starter=4", output)
+        self.assertIn("Risk modules: 4", output)
+        self.assertIn("Evidence packs: 4", output)
         self.assertIn("Installable package: True", output)
 
 

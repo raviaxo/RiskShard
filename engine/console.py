@@ -11,6 +11,12 @@ from engine.calibration_assistant import (
     format_module_calibration_proposal,
     propose_module_calibration,
 )
+from engine.country_priorities import (
+    find_country_priority,
+    format_country_priorities,
+    format_country_priority_detail,
+    top_country_priorities,
+)
 from engine.evidence_quality import has_errors, validate_evidence_quality
 from engine.evidence_packs import (
     build_evidence_pack_registry,
@@ -104,22 +110,23 @@ class RiskShardConsole(cmd.Cmd):
         self.write("First-run workflow\n")
         self.write("1. toprisks\n")
         self.write("2. modules\n")
-        self.write("3. modules info au_finance_ransomware_midmarket\n")
-        self.write("4. packs au_finance_ransomware_midmarket\n")
-        self.write("5. feeds\n")
-        self.write("6. doctor\n")
-        self.write("7. readiness\n")
-        self.write("8. next\n")
-        self.write("9. preflight\n")
-        self.write("10. use au_finance_ransomware_midmarket\n")
-        self.write("11. show options\n")
-        self.write("12. show gaps\n")
-        self.write("13. propose\n")
-        self.write("14. calibrate\n")
-        self.write("15. show evidence\n")
-        self.write("16. explain\n")
-        self.write("17. run\n")
-        self.write("18. report json\n")
+        self.write("3. countries\n")
+        self.write("4. modules info us_finance_bec_midmarket\n")
+        self.write("5. packs us_finance_bec_midmarket\n")
+        self.write("6. feeds\n")
+        self.write("7. doctor\n")
+        self.write("8. readiness\n")
+        self.write("9. next\n")
+        self.write("10. preflight\n")
+        self.write("11. use us_finance_bec_midmarket\n")
+        self.write("12. show options\n")
+        self.write("13. show gaps\n")
+        self.write("14. propose\n")
+        self.write("15. calibrate\n")
+        self.write("16. show evidence\n")
+        self.write("17. explain\n")
+        self.write("18. run\n")
+        self.write("19. report json\n")
         return None
 
     def help_workflow(self):
@@ -190,6 +197,19 @@ class RiskShardConsole(cmd.Cmd):
     def do_module(self, arg):
         """module - Alias for modules."""
         return self.do_modules(arg)
+
+    def do_countries(self, arg):
+        """countries [country-id] - Show prioritized country expansion targets."""
+        country_id = arg.strip()
+        if country_id:
+            item = find_country_priority(country_id)
+            if item is None:
+                self.write(f"Unknown country priority: {country_id}\n")
+                return None
+            self.write(format_country_priority_detail(item))
+            return None
+        self.write(format_country_priorities(top_country_priorities()))
+        return None
 
     def do_show(self, arg):
         """show options|evidence|warnings|assumptions|gaps - Inspect current state."""

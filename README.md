@@ -26,6 +26,7 @@ RiskShard aims to become a shared computation layer for cyber risk:
 - Local `doctor` command for environment, source, evidence, extraction, scenario, readiness, package, data-pack, and test-readiness checks
 - Risk module catalog for Metasploit-style `modules`, `info`, `use`, `packs`, `propose`, `calibrate`, and `run` workflows
 - Evidence-pack registry that shows source gather dates, evidence ingestion dates, trust tier, confidence, renewal status, and remaining assumptions per module
+- Country expansion priority map covering 25 countries so regional contributors can pick high-value evidence packs
 - Reviewed source-to-extraction-to-evidence-to-calibration workflow
 - Governed starter vs demo fixture labels in scenario metadata, CLI output, readiness, and console search
 - Vetted YAML taxonomies and evidence matching for industry, country, company size, and threat context
@@ -174,6 +175,13 @@ Risk modules are the current Metasploit-style front door: they bind a scenario,
 organization profile, calibration profile, evidence files, extraction files,
 control profiles, and governed source feeds into one searchable unit.
 
+Inspect the country contribution roadmap with:
+
+```bash
+python scripts/riskshard_modules.py countries
+python scripts/riskshard_modules.py countries US
+```
+
 Run the local doctor with:
 
 ```bash
@@ -275,6 +283,10 @@ Reviewed extraction records live in `extractions/` and document the fact pulled 
 
 The starter threat library lives in `threat_library/`. Ransomware, data breach, and business email compromise now have Australia financial-services calibration profiles, but all still carry explicit assumption warnings. Data breach has DBIR/OAIC context evidence, a denominator-derived reported-breach frequency floor, and source-backed global impact anchors; its likely and stress frequency parameters remain estimated until stronger organization-level likelihood evidence is reviewed. Business email compromise has FBI IC3 source-backed likely-loss evidence and ACCC Australia small-business loss context; frequency and stress loss bounds remain estimated until denominator-aware BEC evidence is reviewed.
 
+The first second-geography module is `us_finance_bec_midmarket`. It uses FBI IC3
+source-backed likely-loss evidence and keeps US BEC frequency/floor/tail
+assumptions explicit until US denominator-aware evidence is contributed.
+
 ## Source Baseline
 
 RiskShard can gather a curated baseline of public source materials and write an auditable manifest:
@@ -296,6 +308,7 @@ For the current documentation map, start with [docs/README.md](docs/README.md). 
 - [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)
 - [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md)
 - [docs/GLOBAL_READINESS_ROADMAP.md](docs/GLOBAL_READINESS_ROADMAP.md)
+- [docs/COUNTRY_EXPANSION.md](docs/COUNTRY_EXPANSION.md)
 
 ## Current Strategic Questions
 

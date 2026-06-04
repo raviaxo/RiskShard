@@ -34,6 +34,10 @@ class WebConsoleTests(unittest.TestCase):
         modules = app.run_command("modules")
         self.assertIn("Risk modules", modules["output"])
 
+        countries = app.run_command("countries")
+        self.assertIn("Country expansion priorities", countries["output"])
+        self.assertIn("us_finance_bec_midmarket", countries["output"])
+
         packs = app.run_command("packs")
         self.assertIn("Evidence pack: au_finance_ransomware_midmarket", packs["output"])
 
@@ -48,8 +52,8 @@ class WebConsoleTests(unittest.TestCase):
         self.assertIn("coverage", dashboard)
         self.assertIn("data_pack", dashboard)
         self.assertIn("next_actions", dashboard)
-        self.assertEqual(dashboard["risk_modules"]["module_count"], 3)
-        self.assertEqual(dashboard["evidence_packs"]["pack_count"], 3)
+        self.assertEqual(dashboard["risk_modules"]["module_count"], 4)
+        self.assertEqual(dashboard["evidence_packs"]["pack_count"], 4)
         self.assertEqual(dashboard["readiness_gate"]["status"], "ready_for_local_calibrated_run")
         self.assertGreaterEqual(len(dashboard["top_risks"]), 5)
 

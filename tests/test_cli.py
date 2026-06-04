@@ -225,6 +225,23 @@ class CliSmokeTests(unittest.TestCase):
         )
         self.assertIn("selected_assumption", proposal_result.stdout)
 
+        countries_result = subprocess.run(
+            [
+                sys.executable,
+                "scripts/riskshard_modules.py",
+                "countries",
+                "--limit",
+                "5",
+            ],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(countries_result.returncode, 0, msg=countries_result.stderr)
+        self.assertIn("Country expansion priorities", countries_result.stdout)
+        self.assertIn("us_finance_bec_midmarket", countries_result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

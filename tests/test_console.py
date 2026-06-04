@@ -24,7 +24,8 @@ class ConsoleTests(unittest.TestCase):
         workflow_output = self.command("workflow")
         self.assertIn("First-run workflow", workflow_output)
         self.assertIn("modules", workflow_output)
-        self.assertIn("use au_finance_ransomware_midmarket", workflow_output)
+        self.assertIn("countries", workflow_output)
+        self.assertIn("use us_finance_bec_midmarket", workflow_output)
 
         search_output = self.command("search ransomware")
         self.assertIn("au_finance_ransomware_midmarket", search_output)
@@ -121,6 +122,14 @@ class ConsoleTests(unittest.TestCase):
         modules_output = self.command("modules")
         self.assertIn("Risk modules", modules_output)
         self.assertIn("au_finance_ransomware_midmarket", modules_output)
+        self.assertIn("us_finance_bec_midmarket", modules_output)
+
+        countries_output = self.command("countries")
+        self.assertIn("Country expansion priorities", countries_output)
+        self.assertIn("us_finance_bec_midmarket", countries_output)
+
+        country_detail = self.command("countries US")
+        self.assertIn("Country priority: US", country_detail)
 
         module_info = self.command("modules info au_finance_ransomware_midmarket")
         self.assertIn("Risk module: au_finance_ransomware_midmarket", module_info)

@@ -37,25 +37,29 @@ python scripts/riskshard_console.py
 riskshard> workflow
 riskshard> toprisks
 riskshard> modules
-riskshard> modules info au_finance_ransomware_midmarket
-riskshard> packs au_finance_ransomware_midmarket
+riskshard> countries
+riskshard> modules info us_finance_bec_midmarket
+riskshard> packs us_finance_bec_midmarket
 riskshard> doctor
 riskshard> readiness
 riskshard> next
 riskshard> feeds
 riskshard> pack
-riskshard> use au_finance_ransomware_midmarket
-riskshard(au_finance_ransomware_midmarket)> show options
-riskshard(au_finance_ransomware_midmarket)> show gaps
-riskshard(au_finance_ransomware_midmarket)> propose
-riskshard(au_finance_ransomware_midmarket)> calibrate
-riskshard(au_finance_ransomware_midmarket)> show evidence
-riskshard(au_finance_ransomware_midmarket)> explain
-riskshard(au_finance_ransomware_midmarket)> run
-riskshard(au_finance_ransomware_midmarket)> report json
+riskshard> use us_finance_bec_midmarket
+riskshard(us_finance_business_email_compromise)> show options
+riskshard(us_finance_business_email_compromise)> show gaps
+riskshard(us_finance_business_email_compromise)> propose
+riskshard(us_finance_business_email_compromise)> calibrate
+riskshard(us_finance_business_email_compromise)> show evidence
+riskshard(us_finance_business_email_compromise)> explain
+riskshard(us_finance_business_email_compromise)> run
+riskshard(us_finance_business_email_compromise)> report json
 ```
 
 For governed starter modules, `use` pre-fills the known org profile, calibration profile, and threat ID so a junior practitioner can reach a calibrated scenario quickly while still seeing every input.
+
+The `countries` command shows the first 25 contribution geographies, including
+the newly seeded US module and the existing AU reference pack.
 
 ## Module And Pack UX
 

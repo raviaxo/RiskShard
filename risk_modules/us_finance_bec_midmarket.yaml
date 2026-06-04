@@ -1,0 +1,38 @@
+id: us_finance_bec_midmarket
+title: United States Finance Business Email Compromise Midmarket
+version: "0.1"
+status: governed_starter
+threat: business_email_compromise
+description: >
+  Starter BEC risk shard for a United States mid-market financial-services
+  organization. It uses source-backed FBI IC3 likely-loss evidence and keeps
+  frequency and loss bounds explicitly estimated.
+context:
+  industry: financial_services
+  country: US
+  company_size: mid_market
+artifacts:
+  scenario: scenarios/us_finance_business_email_compromise.yaml
+  org_profile: org_profiles/us_finance_midmarket.yaml
+  calibration: calibrations/us_finance_business_email_compromise.yaml
+  evidence:
+    - evidence/us_finance_bec.yaml
+  extractions:
+    - extractions/us_finance_bec_reviewed.yaml
+  controls: []
+required_parameters:
+  - frequency.min
+  - frequency.likely
+  - frequency.max
+  - impact.min
+  - impact.likely
+  - impact.max
+tags:
+  - us
+  - financial_services
+  - mid_market
+  - bec
+  - fraud
+practitioner_notes:
+  good_for: Proving second-geography module contribution and reviewing US BEC likely-loss evidence.
+  not_good_for: Benchmark-grade US BEC frequency, sector-specific severity, or tail-loss decisions.

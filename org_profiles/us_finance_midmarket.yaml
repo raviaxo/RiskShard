@@ -1,0 +1,13 @@
+metadata:
+  name: US Mid-Market Financial Services
+  version: "0.1"
+
+org_type: private_company
+industry: financial_services
+country: United States
+employees: 450
+annual_revenue_or_budget: 85000000
+data_sensitivity: high
+internet_exposure: moderate
+third_party_dependency: high
+regulatory_intensity: high

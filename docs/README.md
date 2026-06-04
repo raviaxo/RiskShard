@@ -7,6 +7,7 @@ Start here when you want the current truth:
 - [CONTRIBUTING.md](CONTRIBUTING.md): source, extraction, evidence, calibration, and review checklist.
 - [CONSOLE_EXPERIENCE.md](CONSOLE_EXPERIENCE.md): intended local console workflow and scope guardrails.
 - [GLOBAL_READINESS_ROADMAP.md](GLOBAL_READINESS_ROADMAP.md): what global coverage and governance still require.
+- [COUNTRY_EXPANSION.md](COUNTRY_EXPANSION.md): 25-country contribution priority map and second-geography plan.
 
 Use these for engineering detail:
 

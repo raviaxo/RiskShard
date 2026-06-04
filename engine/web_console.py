@@ -321,13 +321,15 @@ INDEX_HTML = """<!doctype html>
         <button class="primary" data-command="next">Next actions</button>
         <button data-command="toprisks">Top risks</button>
         <button data-command="modules">Risk modules</button>
-        <button data-command="modules info au_finance_ransomware_midmarket">Module info</button>
-        <button data-command="packs au_finance_ransomware_midmarket">Evidence pack</button>
+        <button data-command="countries">Country priorities</button>
+        <button data-command="modules info us_finance_bec_midmarket">Module info</button>
+        <button data-command="packs us_finance_bec_midmarket">Evidence pack</button>
         <button data-command="feeds">Data feeds</button>
         <button data-command="pack">Data pack</button>
         <button data-command="preflight">Contributor check</button>
         <button data-command="propose">Propose calibration</button>
         <button data-command="search ransomware">Find scenarios</button>
+        <button data-command="use us_finance_bec_midmarket">Use US BEC</button>
         <button data-command="use au_finance_ransomware_midmarket">Use AU ransomware</button>
         <button data-command="use business_email_compromise">Use BEC</button>
         <button data-command="show options">Show options</button>
