@@ -87,22 +87,24 @@ records:
       company_size_bands: [mid_market]
       threats: [ransomware]
 
-  - id: riskshard_au_medium_business_cybercrime_cost_floor_2026
-    title: Estimated Australian medium-business cybercrime cost floor
+  - id: business_qld_au_medium_business_cybercrime_cost_2025
+    title: Australian medium-business cybercrime cost
     parameter: impact.min
-    value: 100000
+    value: 97200
     unit: currency
     currency: AUD
-    source_name: RiskShard Australia cybercrime context assumption
-    source_type: model_assumption
-    source_url_or_citation: Prior external review of official Australian cybercrime reporting; not part of the governed source manifest.
-    publication_date: "2026-06-04"
+    source_id: business_qld_cyber_secure_guidance_2025
+    source_name: Business Queensland Keeping your business cyber secure
+    source_type: government_business_guidance
+    source_url_or_citation: https://www.business.qld.gov.au/running-business/digital-business/online-risk-security/cyber-security
+    publication_date: "2025-10-23"
     extraction_date: "2026-06-04"
-    extraction_notes: Planning lower impact floor retained after the official ASD/AIC artifacts failed local automated gathering.
-    normalization_notes: Rounded to AUD 100,000 for the lower impact bound.
-    limitations: Estimated placeholder, cybercrime-wide rather than ransomware-specific, and not governed source-backed evidence. Replace with a locally gathered Australia-specific ransomware or cybercrime cost source before treating this as benchmark-grade.
-    confidence: low
-    evidence_type: estimated
+    citation_detail: Page section "Keeping your business cyber secure"; average cost of cybercrime in Australia list.
+    extraction_notes: Business Queensland reports AUD 97,200 as the average cost of cybercrime for medium businesses.
+    normalization_notes: Used directly as an Australia medium-business cybercrime cost floor; calibration rounds to the nearest AUD 1,000.
+    limitations: Secondary government guidance page that links to ASD as the primary source; cybercrime-wide rather than ransomware-specific, not financial-services-specific, and not a loss distribution quantile.
+    confidence: medium
+    evidence_type: source_backed
     applicability:
       industries: [all]
       countries: [AU]

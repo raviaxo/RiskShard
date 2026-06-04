@@ -25,11 +25,11 @@ parameters:
 
   impact:
     min:
-      evidence_id: riskshard_au_medium_business_cybercrime_cost_floor_2026
+      evidence_id: business_qld_au_medium_business_cybercrime_cost_2025
       transform: direct
       target_currency: AUD
       round_to: 1000
-      rationale: Explicit estimated Australia medium-business cybercrime cost floor until a locally gathered source replaces it.
+      rationale: Locally gathered Australian medium-business cybercrime cost floor from Business Queensland guidance.
     likely:
       evidence_id: sophos_fin_services_ransomware_recovery_cost_2024
       transform: currency_convert

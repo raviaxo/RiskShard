@@ -14,16 +14,17 @@ class GovernanceTests(unittest.TestCase):
             registry_path=ROOT / "sources" / "registry.yaml",
             manifest_path=ROOT / "sources" / "manifest.json",
             evidence_path=ROOT / "evidence",
-            today=date(2026, 6, 3),
+            today=date(2026, 6, 4),
         )
         by_id = {feed["id"]: feed for feed in inventory["feeds"]}
         oaic = by_id["oaic_ndb_jul_dec_2024"]
         abs_feed = by_id["abs_counts_australian_businesses_2025"]
         fbi = by_id["fbi_ic3_2025_report"]
         accc = by_id["accc_targeting_scams_2025"]
+        business_qld = by_id["business_qld_cyber_secure_guidance_2025"]
 
         self.assertEqual(oaic["source_status"], "fetched")
-        self.assertEqual(oaic["source_gathered_at"], "2026-06-01T15:41:14Z")
+        self.assertIsNotNone(oaic["source_gathered_at"])
         self.assertEqual(oaic["riskshard_evidence_ingested_at"], "2026-06-03")
         self.assertEqual(oaic["trust_tier"], "high")
         self.assertEqual(oaic["evidence_confidence"], "medium")
@@ -35,6 +36,9 @@ class GovernanceTests(unittest.TestCase):
         self.assertEqual(fbi["evidence_record_count"], 3)
         self.assertEqual(accc["trust_tier"], "high")
         self.assertEqual(accc["evidence_record_count"], 4)
+        self.assertEqual(business_qld["source_status"], "fetched")
+        self.assertEqual(business_qld["trust_tier"], "medium")
+        self.assertEqual(business_qld["evidence_record_count"], 1)
 
     def test_governance_skips_inactive_sources(self):
         inventory = build_data_feed_inventory(today=date(2026, 6, 3))

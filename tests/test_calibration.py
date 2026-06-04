@@ -28,7 +28,7 @@ class CalibrationTests(unittest.TestCase):
         scenario = report["generated_scenario"]
 
         self.assertEqual(scenario["frequency"], {"min": 0.1, "likely": 0.65, "max": 0.85})
-        self.assertEqual(scenario["impact"]["min"], 100000)
+        self.assertEqual(scenario["impact"]["min"], 97000)
         self.assertEqual(scenario["impact"]["likely"], 3590000)
         self.assertEqual(scenario["impact"]["max"], 9000000)
         self.assertIn(

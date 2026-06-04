@@ -104,3 +104,19 @@ extractions:
     limitations: Sector notification count is not ransomware-specific.
     evidence_record_ids:
       - oaic_au_finance_ndb_notifications_2024_h2
+
+  - id: business_qld_medium_business_cybercrime_cost_2025
+    source_id: business_qld_cyber_secure_guidance_2025
+    source_name: Business Queensland Keeping your business cyber secure
+    source_url_or_citation: https://www.business.qld.gov.au/running-business/digital-business/online-risk-security/cyber-security
+    publication_date: "2025-10-23"
+    extraction_date: "2026-06-04"
+    citation_detail: Page section "Keeping your business cyber secure"; average cost of cybercrime in Australia list.
+    fact: Business Queensland reports AUD 97,200 as the average cost of cybercrime for medium businesses.
+    value: 97200
+    unit: currency
+    currency: AUD
+    normalization_notes: Stored directly as an Australia medium-business cybercrime cost floor.
+    limitations: Secondary government guidance page that links to ASD as the primary source; cybercrime-wide rather than ransomware-specific.
+    evidence_record_ids:
+      - business_qld_au_medium_business_cybercrime_cost_2025
