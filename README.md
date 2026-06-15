@@ -176,6 +176,13 @@ python scripts/readiness_dashboard.py
 
 The readiness view also exposes a gate and prioritized next actions so practitioners can see whether a shard is blocked, source-review-needed, assumption-review-needed, or ready for a local calibrated run.
 
+Rank starter threats by evidence and calibration readiness with:
+
+```bash
+python scripts/riskshard_toprisks.py --limit 5
+python scripts/riskshard_toprisks.py --json
+```
+
 Inspect risk modules and evidence packs with:
 
 ```bash
@@ -204,7 +211,13 @@ python scripts/riskshard_doctor.py
 python scripts/riskshard_doctor.py --run-tests
 ```
 
-The doctor combines environment, source, evidence, extraction, scenario-stage, readiness, package entry-point, data-pack, and test-readiness checks.
+The doctor combines environment, source, evidence, extraction, scenario-stage, readiness, package entry-point smoke, data-pack, and test-readiness checks.
+
+Verify declared package commands directly with:
+
+```bash
+python scripts/package_smoke.py
+```
 
 Generate a data-pack fingerprint for governed inputs with:
 
@@ -248,6 +261,8 @@ RiskShard can still be run directly from `scripts/`, but `pyproject.toml` also d
 - `riskshard-preflight`
 - `riskshard-doctor`
 - `riskshard-modules`
+- `riskshard-toprisks`
+- `riskshard-package-smoke`
 
 ## Tests
 

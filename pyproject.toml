@@ -26,6 +26,8 @@ riskshard-data-pack = "scripts.data_pack_manifest:main"
 riskshard-preflight = "scripts.contributor_preflight:main"
 riskshard-doctor = "scripts.riskshard_doctor:main"
 riskshard-modules = "scripts.riskshard_modules:main"
+riskshard-toprisks = "scripts.riskshard_toprisks:main"
+riskshard-package-smoke = "scripts.package_smoke:main"
 
 [tool.setuptools]
 packages = ["engine", "scripts"]

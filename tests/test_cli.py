@@ -1,3 +1,4 @@
+import json
 import os
 import subprocess
 import sys
@@ -272,6 +273,50 @@ class CliSmokeTests(unittest.TestCase):
         self.assertIn("Country expansion priorities", countries_result.stdout)
         self.assertIn("us_finance_bec_midmarket", countries_result.stdout)
         self.assertIn("gb_finance_data_breach_midmarket", countries_result.stdout)
+
+    def test_top_risks_cli_reports_ranked_threats(self):
+        env = os.environ.copy()
+        env["PYTHONPATH"] = str(ROOT)
+
+        result = subprocess.run(
+            [sys.executable, "scripts/riskshard_toprisks.py", "--limit", "3"],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertIn("Top risks", result.stdout)
+        self.assertIn("Data Breach", result.stdout)
+
+        json_result = subprocess.run(
+            [sys.executable, "scripts/riskshard_toprisks.py", "--limit", "2", "--json"],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(json_result.returncode, 0, msg=json_result.stderr)
+        payload = json.loads(json_result.stdout)
+        self.assertEqual(payload["risk_count"], 2)
+        self.assertEqual(payload["risks"][0]["id"], "data_breach")
+        self.assertIn("missing_parameters", payload["risks"][0])
+
+    def test_package_smoke_cli_verifies_entry_points(self):
+        env = os.environ.copy()
+        env["PYTHONPATH"] = str(ROOT)
+
+        result = subprocess.run(
+            [sys.executable, "scripts/package_smoke.py"],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertIn("RiskShard package smoke", result.stdout)
+        self.assertIn("riskshard-toprisks", result.stdout)
+        self.assertIn("riskshard-package-smoke", result.stdout)
 
 
 if __name__ == "__main__":

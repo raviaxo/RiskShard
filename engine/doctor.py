@@ -7,23 +7,18 @@ from engine.contributor import build_contributor_preflight
 from engine.evidence_quality import has_errors, validate_evidence_quality
 from engine.extractions import validate_extractions
 from engine.governance import build_data_feed_inventory
+from engine.package_smoke import (
+    DEFAULT_EXPECTED_ENTRY_POINTS,
+    build_package_smoke_report,
+    parse_project_scripts,
+)
 from engine.readiness import build_readiness_dashboard
 from engine.scenarios import summarize_scenario_stages
 from engine.sources import active_sources, load_source_registry
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-EXPECTED_ENTRY_POINTS = {
-    "riskshard",
-    "riskshard-calibrate",
-    "riskshard-console",
-    "riskshard-web-console",
-    "riskshard-feeds",
-    "riskshard-readiness",
-    "riskshard-data-pack",
-    "riskshard-preflight",
-    "riskshard-doctor",
-}
+EXPECTED_ENTRY_POINTS = DEFAULT_EXPECTED_ENTRY_POINTS
 
 
 def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
@@ -122,34 +117,14 @@ def readiness_check(root):
 
 
 def package_check(root):
-    pyproject = root / "pyproject.toml"
-    if not pyproject.exists():
-        return {"name": "package entry points", "status": "fail", "detail": "pyproject.toml missing"}
-
-    configured = parse_project_scripts(pyproject.read_text())
-    missing = sorted(EXPECTED_ENTRY_POINTS - set(configured))
-    status = "pass" if not missing else "fail"
-    detail = (
-        f"{len(configured)} configured"
-        if not missing
-        else "missing " + ", ".join(missing)
-    )
-    return {"name": "package entry points", "status": status, "detail": detail}
-
-
-def parse_project_scripts(text):
-    scripts = []
-    in_scripts = False
-    for raw_line in text.splitlines():
-        line = raw_line.strip()
-        if line == "[project.scripts]":
-            in_scripts = True
-            continue
-        if in_scripts and line.startswith("["):
-            break
-        if in_scripts and "=" in line:
-            scripts.append(line.split("=", 1)[0].strip())
-    return scripts
+    report = build_package_smoke_report(root, expected_entry_points=EXPECTED_ENTRY_POINTS)
+    passed = len([item for item in report["entry_points"] if item["status"] == "pass"])
+    failures = [item for item in report["entry_points"] if item["status"] != "pass"]
+    detail = f"{report['configured_count']} configured; {passed} importable callables"
+    if failures:
+        first = failures[0]
+        detail = f"{detail}; first failure: {first['name']} - {first['detail']}"
+    return {"name": "package entry points", "status": report["status"], "detail": detail}
 
 
 def data_pack_check(root):
