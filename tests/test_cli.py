@@ -332,8 +332,8 @@ class CliSmokeTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertIn("Benchmark-Grade 30 Shard Program", result.stdout)
         self.assertIn("Targets: 30", result.stdout)
-        self.assertIn("benchmark-ready: 0", result.stdout)
-        self.assertIn("confidence>=medium=4/6", result.stdout)
+        self.assertIn("benchmark-ready: 1", result.stdout)
+        self.assertIn("confidence>=medium=6/6", result.stdout)
 
 
 if __name__ == "__main__":

@@ -1,13 +1,14 @@
 id: gb_finance_data_breach_midmarket
 title: United Kingdom Finance Data Breach Midmarket
 version: "0.1"
-status: governed_starter
+status: benchmark_candidate
 threat: data_breach
 description: >
-  Starter data-breach shard for a United Kingdom mid-market financial-services
-  organization. It uses official UK breach/attack prevalence by business size,
-  a UK financial-services breach-cost anchor, and an explicit estimated stress
-  loss assumption.
+  Benchmark-review candidate data-breach shard for a United Kingdom mid-market
+  financial-services organization. It uses official UK breach/attack
+  prevalence by business size, a UK financial-services breach-cost anchor, and
+  a source-backed UK regulatory penalty stress anchor. It is ready for human
+  benchmark review, but the stress anchor is not a total event-loss benchmark.
 context:
   industry: financial_services
   country: GB
@@ -36,5 +37,5 @@ tags:
   - data_breach
   - cyber_breach
 practitioner_notes:
-  good_for: Proving UK country contribution flow and reviewing UK breach-frequency and financial-services likely-loss anchors.
-  not_good_for: Benchmark-grade privacy breach likelihood, UK financial-services tail loss, or org-specific regulatory reporting decisions.
+  good_for: Human benchmark review of a UK financial-services data-breach shard with all six direct parameters source-backed and extraction-mapped.
+  not_good_for: Treating the FCA penalty stress anchor as total event loss, or making org-specific regulatory reporting decisions without local review.

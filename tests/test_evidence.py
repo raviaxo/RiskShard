@@ -163,7 +163,11 @@ class EvidenceMatchingTests(unittest.TestCase):
         )
         self.assertEqual(
             by_id["fca_equifax_2023_cyber_breach_fine_gbp"]["confidence"],
-            "low",
+            "medium",
+        )
+        self.assertIn(
+            "not total event loss",
+            by_id["fca_equifax_2023_cyber_breach_fine_gbp"]["limitations"],
         )
 
     def test_match_evidence_prefers_applicable_records_and_explains_fallbacks(self):
