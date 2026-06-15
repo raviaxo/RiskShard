@@ -8,15 +8,21 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 VENV_PYTHON = ROOT / ".venv" / "bin" / "python"
-if (
-    sys.prefix == sys.base_prefix
-    and VENV_PYTHON.exists()
-    and Path(sys.executable) != VENV_PYTHON
-):
-    os.execv(
-        str(VENV_PYTHON),
-        [str(VENV_PYTHON), str(Path(__file__).resolve()), *sys.argv[1:]],
-    )
+
+def reexec_venv_if_needed():
+    if (
+        sys.prefix == sys.base_prefix
+        and VENV_PYTHON.exists()
+        and Path(sys.executable) != VENV_PYTHON
+    ):
+        os.execv(
+            str(VENV_PYTHON),
+            [str(VENV_PYTHON), str(Path(__file__).resolve()), *sys.argv[1:]],
+        )
+
+
+if __name__ == "__main__":
+    reexec_venv_if_needed()
 
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
