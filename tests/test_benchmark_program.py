@@ -1,0 +1,56 @@
+import unittest
+from pathlib import Path
+
+from engine.benchmark_program import build_benchmark_program_report, format_benchmark_program_report
+from engine.country_priorities import find_country_priority
+from engine.taxonomy import load_taxonomies
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+class BenchmarkProgramTests(unittest.TestCase):
+    def test_benchmark_program_tracks_thirty_targets_without_overclaiming(self):
+        report = build_benchmark_program_report(ROOT)
+        output = format_benchmark_program_report(report)
+        by_id = {target["id"]: target for target in report["targets"]}
+
+        self.assertEqual(report["status"], "pass")
+        self.assertEqual(report["target_count"], 30)
+        self.assertEqual(report["module_seeded_count"], 5)
+        self.assertEqual(report["benchmark_ready_count"], 0)
+        self.assertEqual(report["status_counts"]["missing_module"], 25)
+        self.assertEqual(report["status_counts"]["needs_evidence"], 5)
+        self.assertIn("Benchmark-Grade 30 Shard Program", output)
+        self.assertIn("benchmark-ready: 0", output)
+        self.assertIn("ca_finance_data_breach_midmarket", by_id)
+        self.assertIn("us_finance_data_breach_midmarket", by_id)
+
+    def test_existing_uk_breach_target_is_not_benchmark_ready_yet(self):
+        report = build_benchmark_program_report(ROOT)
+        by_id = {target["id"]: target for target in report["targets"]}
+        target = by_id["gb_finance_data_breach_midmarket"]
+        output = format_benchmark_program_report(report, target_id=target["id"])
+
+        self.assertEqual(target["status"], "needs_evidence")
+        self.assertTrue(target["criteria"]["all_selected_parameters_source_backed"])
+        self.assertFalse(target["criteria"]["selected_confidence_medium_or_high"])
+        self.assertEqual(target["metrics"]["source_backed_parameters"], 6)
+        self.assertEqual(target["metrics"]["confidence_medium_or_high_parameters"], 4)
+        self.assertIn("replace or strengthen low-confidence selectors", target["next_actions"][0])
+        self.assertIn("gb_finance_data_breach_midmarket", output)
+
+    def test_norway_country_code_stays_string_not_yaml_boolean(self):
+        countries = {item["id"] for item in load_taxonomies(ROOT / "taxonomies")["countries"]}
+        norway = find_country_priority("NO")
+        report = build_benchmark_program_report(ROOT)
+        by_id = {target["id"]: target for target in report["targets"]}
+
+        self.assertIn("NO", countries)
+        self.assertIsNot(False, norway["country_id"])
+        self.assertEqual(norway["country_id"], "NO")
+        self.assertEqual(by_id["no_energy_ransomware_midmarket"]["context"]["country"], "NO")
+
+
+if __name__ == "__main__":
+    unittest.main()

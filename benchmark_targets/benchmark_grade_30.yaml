@@ -1,0 +1,239 @@
+program:
+  id: benchmark_grade_30
+  title: Benchmark-Grade 30 Shard Program
+  version: "0.1"
+  target_count: 30
+  updated: "2026-06-15"
+  purpose: >
+    Build thirty globally useful, evidence-backed risk shards that can earn a
+    benchmark-ready status through explicit source, extraction, evidence, and
+    calibration gates. Targets are not benchmark-grade until the automated gate
+    and human review both pass.
+criteria:
+  benchmark_ready_requires:
+    - runnable_risk_module
+    - all_six_calibration_parameters_selected
+    - all_selected_parameters_source_backed
+    - selected_parameter_confidence_medium_or_high
+    - selected_sources_current
+    - selected_evidence_mapped_to_reviewed_extractions
+    - at_least_two_independent_selected_sources
+    - country_relevance_for_at_least_three_selected_parameters
+    - industry_relevance_for_at_least_two_selected_parameters
+  direct_parameters:
+    - frequency.min
+    - frequency.likely
+    - frequency.max
+    - impact.min
+    - impact.likely
+    - impact.max
+targets:
+  - priority: 1
+    id: us_finance_bec_midmarket
+    module_id: us_finance_bec_midmarket
+    wave: launch
+    context: {country: US, industry: financial_services, company_size: mid_market, threat: business_email_compromise}
+    rationale: Large market with strong law-enforcement, regulator, fraud, and financial-sector source availability.
+
+  - priority: 2
+    id: gb_finance_data_breach_midmarket
+    module_id: gb_finance_data_breach_midmarket
+    wave: launch
+    context: {country: GB, industry: financial_services, company_size: mid_market, threat: data_breach}
+    rationale: Mature cyber survey, privacy, and financial-regulator evidence base.
+
+  - priority: 3
+    id: au_finance_ransomware_midmarket
+    module_id: au_finance_ransomware_midmarket
+    wave: launch
+    context: {country: AU, industry: financial_services, company_size: mid_market, threat: ransomware}
+    rationale: Existing reference geography and ransomware starter with a known evidence-upgrade path.
+
+  - priority: 4
+    id: ca_finance_data_breach_midmarket
+    module_id: ca_finance_data_breach_midmarket
+    wave: launch
+    context: {country: CA, industry: financial_services, company_size: mid_market, threat: data_breach}
+    rationale: Strong privacy, statistics, cyber, and financial-sector source base.
+
+  - priority: 5
+    id: de_industrial_ransomware_midmarket
+    module_id: de_industrial_ransomware_midmarket
+    wave: launch
+    context: {country: DE, industry: manufacturing, company_size: mid_market, threat: ransomware}
+    rationale: Large industrial economy with mature cyber agency and regulator evidence.
+
+  - priority: 6
+    id: sg_finance_bec_midmarket
+    module_id: sg_finance_bec_midmarket
+    wave: launch
+    context: {country: SG, industry: financial_services, company_size: mid_market, threat: business_email_compromise}
+    rationale: Regional financial hub with strong cyber, regulator, and payment-fraud relevance.
+
+  - priority: 7
+    id: jp_manufacturing_ransomware_midmarket
+    module_id: jp_manufacturing_ransomware_midmarket
+    wave: scale
+    context: {country: JP, industry: manufacturing, company_size: mid_market, threat: ransomware}
+    rationale: Major manufacturing economy and important APAC localization test.
+
+  - priority: 8
+    id: in_finance_bec_midmarket
+    module_id: in_finance_bec_midmarket
+    wave: scale
+    context: {country: IN, industry: financial_services, company_size: mid_market, threat: business_email_compromise}
+    rationale: Large digital payments ecosystem with high need for locally reviewed fraud evidence.
+
+  - priority: 9
+    id: fr_finance_data_breach_midmarket
+    module_id: fr_finance_data_breach_midmarket
+    wave: scale
+    context: {country: FR, industry: financial_services, company_size: mid_market, threat: data_breach}
+    rationale: Mature EU privacy, cyber-agency, and banking-regulator source base.
+
+  - priority: 10
+    id: nl_logistics_ransomware_midmarket
+    module_id: nl_logistics_ransomware_midmarket
+    wave: scale
+    context: {country: NL, industry: logistics, company_size: mid_market, threat: ransomware}
+    rationale: Digitally mature logistics economy and useful sector portability test.
+
+  - priority: 11
+    id: br_finance_bec_midmarket
+    module_id: br_finance_bec_midmarket
+    wave: scale
+    context: {country: BR, industry: financial_services, company_size: mid_market, threat: business_email_compromise}
+    rationale: Largest Latin American economy and important non-English contribution path.
+
+  - priority: 12
+    id: au_finance_data_breach_midmarket
+    module_id: au_finance_data_breach_midmarket
+    wave: launch_depth
+    context: {country: AU, industry: financial_services, company_size: mid_market, threat: data_breach}
+    rationale: Existing AU starter where benchmark readiness depends on replacing likely and stress frequency assumptions.
+
+  - priority: 13
+    id: au_finance_bec_midmarket
+    module_id: au_finance_bec_midmarket
+    wave: launch_depth
+    context: {country: AU, industry: financial_services, company_size: mid_market, threat: business_email_compromise}
+    rationale: Existing AU starter where frequency and tail-loss assumptions are explicit and upgradeable.
+
+  - priority: 14
+    id: mx_finance_bec_midmarket
+    module_id: mx_finance_bec_midmarket
+    wave: scale
+    context: {country: MX, industry: financial_services, company_size: mid_market, threat: business_email_compromise}
+    rationale: Large regional economy and useful Latin America localization partner after Brazil.
+
+  - priority: 15
+    id: es_finance_data_breach_midmarket
+    module_id: es_finance_data_breach_midmarket
+    wave: scale
+    context: {country: ES, industry: financial_services, company_size: mid_market, threat: data_breach}
+    rationale: EU privacy/regulatory coverage and Spanish-language contribution path.
+
+  - priority: 16
+    id: it_manufacturing_ransomware_midmarket
+    module_id: it_manufacturing_ransomware_midmarket
+    wave: scale
+    context: {country: IT, industry: manufacturing, company_size: mid_market, threat: ransomware}
+    rationale: Large EU manufacturing economy with cyber-agency and regulator evidence paths.
+
+  - priority: 17
+    id: kr_technology_data_breach_midmarket
+    module_id: kr_technology_data_breach_midmarket
+    wave: scale
+    context: {country: KR, industry: technology, company_size: mid_market, threat: data_breach}
+    rationale: Major digital economy and APAC source/localization test beyond English-speaking geographies.
+
+  - priority: 18
+    id: ch_finance_data_breach_midmarket
+    module_id: ch_finance_data_breach_midmarket
+    wave: contributor_led
+    context: {country: CH, industry: financial_services, company_size: mid_market, threat: data_breach}
+    rationale: High-value financial-services market with strong regulatory context.
+
+  - priority: 19
+    id: se_technology_ransomware_midmarket
+    module_id: se_technology_ransomware_midmarket
+    wave: contributor_led
+    context: {country: SE, industry: technology, company_size: mid_market, threat: ransomware}
+    rationale: Digitally mature Nordic economy and strong public-source culture.
+
+  - priority: 20
+    id: ae_finance_bec_midmarket
+    module_id: ae_finance_bec_midmarket
+    wave: contributor_led
+    context: {country: AE, industry: financial_services, company_size: mid_market, threat: business_email_compromise}
+    rationale: Regional financial hub and useful Middle East contributor anchor.
+
+  - priority: 21
+    id: sa_energy_ransomware_midmarket
+    module_id: sa_energy_ransomware_midmarket
+    wave: contributor_led
+    context: {country: SA, industry: energy, company_size: mid_market, threat: ransomware}
+    rationale: Major economy with energy and critical-infrastructure relevance.
+
+  - priority: 22
+    id: za_finance_bec_midmarket
+    module_id: za_finance_bec_midmarket
+    wave: contributor_led
+    context: {country: ZA, industry: financial_services, company_size: mid_market, threat: business_email_compromise}
+    rationale: Strong Africa anchor with financial-services and fraud relevance.
+
+  - priority: 23
+    id: no_energy_ransomware_midmarket
+    module_id: no_energy_ransomware_midmarket
+    wave: contributor_led
+    context: {country: "NO", industry: energy, company_size: mid_market, threat: ransomware}
+    rationale: Energy and maritime relevance plus Nordic public-source maturity.
+
+  - priority: 24
+    id: dk_logistics_ransomware_midmarket
+    module_id: dk_logistics_ransomware_midmarket
+    wave: contributor_led
+    context: {country: DK, industry: logistics, company_size: mid_market, threat: ransomware}
+    rationale: Digitally mature logistics and shipping economy.
+
+  - priority: 25
+    id: nz_finance_data_breach_midmarket
+    module_id: nz_finance_data_breach_midmarket
+    wave: contributor_led
+    context: {country: NZ, industry: financial_services, company_size: mid_market, threat: data_breach}
+    rationale: Natural AU/NZ comparison geography with public incident and privacy reporting.
+
+  - priority: 26
+    id: ie_technology_data_breach_midmarket
+    module_id: ie_technology_data_breach_midmarket
+    wave: contributor_led
+    context: {country: IE, industry: technology, company_size: mid_market, threat: data_breach}
+    rationale: EU technology hub with privacy/regulatory evidence relevance.
+
+  - priority: 27
+    id: il_technology_ransomware_midmarket
+    module_id: il_technology_ransomware_midmarket
+    wave: contributor_led
+    context: {country: IL, industry: technology, company_size: mid_market, threat: ransomware}
+    rationale: Cybersecurity ecosystem relevance and technology-sector concentration.
+
+  - priority: 28
+    id: us_finance_data_breach_midmarket
+    module_id: us_finance_data_breach_midmarket
+    wave: launch_depth
+    context: {country: US, industry: financial_services, company_size: mid_market, threat: data_breach}
+    rationale: Adds a second US module using privacy, breach-cost, and financial-sector evidence paths.
+
+  - priority: 29
+    id: gb_finance_bec_midmarket
+    module_id: gb_finance_bec_midmarket
+    wave: launch_depth
+    context: {country: GB, industry: financial_services, company_size: mid_market, threat: business_email_compromise}
+    rationale: Adds a UK fraud/payment-redirection shard alongside the UK breach starter.
+
+  - priority: 30
+    id: ca_finance_ransomware_midmarket
+    module_id: ca_finance_ransomware_midmarket
+    wave: launch_depth
+    context: {country: CA, industry: financial_services, company_size: mid_market, threat: ransomware}
+    rationale: Adds a Canada ransomware shard to test North American portability beyond US fraud and Canada breach.

@@ -176,6 +176,15 @@ python scripts/readiness_dashboard.py
 
 The readiness view also exposes a gate and prioritized next actions so practitioners can see whether a shard is blocked, source-review-needed, assumption-review-needed, or ready for a local calibrated run.
 
+Inspect the benchmark-grade 30 adoption program with:
+
+```bash
+python scripts/benchmark_program.py
+python scripts/benchmark_program.py --target gb_finance_data_breach_midmarket
+```
+
+The benchmark program tracks thirty target shards and reports which ones are missing modules, which need evidence upgrades, and which are ready for human benchmark review. It currently prevents starter shards from being overclaimed as benchmark-grade.
+
 Rank starter threats by evidence and calibration readiness with:
 
 ```bash
@@ -263,6 +272,7 @@ RiskShard can still be run directly from `scripts/`, but `pyproject.toml` also d
 - `riskshard-modules`
 - `riskshard-toprisks`
 - `riskshard-package-smoke`
+- `riskshard-benchmark`
 
 ## Tests
 
