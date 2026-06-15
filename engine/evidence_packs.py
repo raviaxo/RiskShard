@@ -1,5 +1,7 @@
 from collections import Counter
 from datetime import datetime
+import hashlib
+import json
 from pathlib import Path
 
 from engine.evidence import load_evidence_records
@@ -36,6 +38,40 @@ def build_evidence_pack_registry(root=PROJECT_ROOT, module_id=None):
     }
 
 
+def build_evidence_pack_artifact(module_id, root=PROJECT_ROOT):
+    root = Path(root)
+    module = find_risk_module(module_id, root)
+    if module is None:
+        raise ValueError(f"Unknown risk module: {module_id}")
+
+    registry = build_evidence_pack_registry(root, module_id=module["id"])
+    pack = registry["packs"][0]
+    files = evidence_pack_files(module, root)
+    fingerprint = evidence_pack_fingerprint(files)
+    return {
+        "artifact_type": "riskshard_module_evidence_pack",
+        "generated_at": datetime.now().replace(microsecond=0).isoformat(),
+        "module_id": module["id"],
+        "title": module["title"],
+        "fingerprint": fingerprint,
+        "file_count": len(files),
+        "files": files,
+        "pack": pack,
+        "review_commands": [
+            f"python scripts/riskshard_modules.py packs {module['id']}",
+            f"python scripts/riskshard_modules.py propose {module['id']}",
+            f"python scripts/benchmark_program.py --target {module['id']}",
+        ],
+    }
+
+
+def write_evidence_pack_artifact(artifact, output_path):
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n")
+    return output_path
+
+
 def build_evidence_pack(module, root=PROJECT_ROOT, feeds_by_id=None):
     root = Path(root)
     feeds_by_id = feeds_by_id or {}
@@ -68,6 +104,50 @@ def build_evidence_pack(module, root=PROJECT_ROOT, feeds_by_id=None):
         "source_count": len(sources),
         "sources": sources,
     }
+
+
+def evidence_pack_files(module, root):
+    paths = sorted(set(module_artifact_paths(module)))
+    files = []
+    for rel_path in paths:
+        path = Path(root) / rel_path
+        if not path.exists():
+            files.append({
+                "path": rel_path,
+                "exists": False,
+                "sha256": None,
+                "size_bytes": None,
+            })
+            continue
+        payload = path.read_bytes()
+        files.append({
+            "path": rel_path,
+            "exists": True,
+            "sha256": hashlib.sha256(payload).hexdigest(),
+            "size_bytes": len(payload),
+        })
+    return files
+
+
+def module_artifact_paths(module):
+    artifacts = module["artifacts"]
+    paths = [
+        module.get("_source_file"),
+        artifacts.get("scenario"),
+        artifacts.get("org_profile"),
+        artifacts.get("calibration"),
+    ]
+    for field in ("evidence", "extractions", "controls"):
+        paths.extend(artifacts.get(field, []))
+    return [path for path in paths if path]
+
+
+def evidence_pack_fingerprint(files):
+    digest = hashlib.sha256()
+    for item in files:
+        digest.update(item["path"].encode("utf-8"))
+        digest.update(str(item["sha256"]).encode("utf-8"))
+    return digest.hexdigest()
 
 
 def load_module_evidence_records(module, root=PROJECT_ROOT):
@@ -225,6 +305,24 @@ def format_evidence_pack_detail(pack):
             f"evidence_ingested={source['riskshard_evidence_ingested_at'] or 'none'} "
             f"renewal_due={source['renewal_due'] or 'n/a'}"
         )
+    return "\n".join(lines) + "\n"
+
+
+def format_evidence_pack_artifact(artifact):
+    lines = [
+        "Evidence pack artifact",
+        f"Module: {artifact['module_id']}",
+        f"Fingerprint: {artifact['fingerprint']}",
+        f"Files: {artifact['file_count']}",
+        "",
+        "Files",
+    ]
+    for item in artifact["files"]:
+        status = "present" if item["exists"] else "missing"
+        digest = item["sha256"][:12] if item["sha256"] else "none"
+        lines.append(f"- {item['path']}: {status} {digest}")
+    lines.extend(["", "Review commands"])
+    lines.extend(f"- {command}" for command in artifact["review_commands"])
     return "\n".join(lines) + "\n"
 
 

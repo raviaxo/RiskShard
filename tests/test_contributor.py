@@ -32,6 +32,7 @@ class ContributorTests(unittest.TestCase):
         self.assertIn("pack evidence: pass", output)
         self.assertIn("pack calibration: pass", output)
         self.assertIn("pack risk module: pass", output)
+        self.assertIn("benchmark target mapping: pass", output)
 
     def test_contributor_preflight_reports_missing_pack_pieces(self):
         with tempfile.TemporaryDirectory() as tmp:

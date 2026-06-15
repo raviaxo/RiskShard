@@ -13,8 +13,10 @@ from engine.benchmark_program import (  # noqa: E402
     DEFAULT_TARGET_PATH,
     build_benchmark_cohort_report,
     build_benchmark_program_report,
+    build_benchmark_sprint_report,
     format_benchmark_cohort_report,
     format_benchmark_program_report,
+    format_benchmark_sprint_report,
 )
 
 
@@ -23,6 +25,8 @@ def parse_args(argv=None):
     parser.add_argument("--targets", type=Path, default=DEFAULT_TARGET_PATH)
     parser.add_argument("--target", help="Show one target by target id or module id.")
     parser.add_argument("--cohort", choices=["seeded"], help="Show a benchmark cohort summary.")
+    parser.add_argument("--sprint", choices=["seeded"], help="Show a benchmark upgrade sprint.")
+    parser.add_argument("--limit", type=int, help="Limit sprint target count.")
     parser.add_argument("--json", action="store_true")
     return parser.parse_args(argv)
 
@@ -30,6 +34,14 @@ def parse_args(argv=None):
 def main(argv=None):
     args = parse_args(argv)
     report = build_benchmark_program_report(ROOT, args.targets)
+    if args.sprint:
+        sprint_report = build_benchmark_sprint_report(report, args.sprint, limit=args.limit)
+        if args.json:
+            print(json.dumps(sprint_report, indent=2, sort_keys=True))
+        else:
+            print(format_benchmark_sprint_report(sprint_report), end="")
+        return 0 if report["status"] == "pass" else 1
+
     if args.cohort:
         cohort_report = build_benchmark_cohort_report(report, args.cohort)
         if args.json:

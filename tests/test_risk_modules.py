@@ -11,7 +11,9 @@ from engine.country_priorities import (
     load_country_priorities,
 )
 from engine.evidence_packs import (
+    build_evidence_pack_artifact,
     build_evidence_pack_registry,
+    format_evidence_pack_artifact,
     format_evidence_pack_detail,
     format_evidence_pack_registry,
 )
@@ -65,6 +67,20 @@ class RiskModuleTests(unittest.TestCase):
         self.assertEqual(ransomware["pack_confidence"], "low")
         self.assertIn("frequency.max: assumption_only", detail)
         self.assertIn("source_gathered", detail)
+
+    def test_evidence_pack_artifact_fingerprints_module_files(self):
+        artifact = build_evidence_pack_artifact("au_finance_ransomware_midmarket", ROOT)
+        output = format_evidence_pack_artifact(artifact)
+        file_paths = {item["path"] for item in artifact["files"]}
+
+        self.assertEqual(artifact["artifact_type"], "riskshard_module_evidence_pack")
+        self.assertEqual(artifact["module_id"], "au_finance_ransomware_midmarket")
+        self.assertEqual(len(artifact["fingerprint"]), 64)
+        self.assertIn("risk_modules/au_finance_ransomware_midmarket.yaml", file_paths)
+        self.assertIn("evidence/au_finance_ransomware.yaml", file_paths)
+        self.assertIn("extractions/au_finance_ransomware_reviewed.yaml", file_paths)
+        self.assertIn("Evidence pack artifact", output)
+        self.assertIn("python scripts/benchmark_program.py --target au_finance_ransomware_midmarket", output)
 
     def test_module_calibration_proposal_exposes_current_and_best_selectors(self):
         proposal = propose_module_calibration("au_finance_ransomware_midmarket", ROOT)

@@ -181,10 +181,11 @@ Inspect the benchmark-grade 30 adoption program with:
 ```bash
 python scripts/benchmark_program.py
 python scripts/benchmark_program.py --cohort seeded
+python scripts/benchmark_program.py --sprint seeded
 python scripts/benchmark_program.py --target gb_finance_data_breach_midmarket
 ```
 
-The benchmark program tracks thirty target shards and reports which ones are missing modules, which need evidence upgrades, and which are ready for human benchmark review. The seeded cohort view focuses on the five runnable modules and ranks the next evidence-upgrade queue. It prevents starter shards from being overclaimed as benchmark-grade.
+The benchmark program tracks thirty target shards and reports which ones are missing modules, which need evidence upgrades, and which are ready for human benchmark review. The seeded cohort view focuses on the five runnable modules, and the sprint view turns the next evidence-upgrade queue into target-level blockers, required artifacts, and review commands. It prevents starter shards from being overclaimed as benchmark-grade.
 
 Rank starter threats by evidence and calibration readiness with:
 
@@ -199,12 +200,15 @@ Inspect risk modules and evidence packs with:
 python scripts/riskshard_modules.py list
 python scripts/riskshard_modules.py info gb_finance_data_breach_midmarket
 python scripts/riskshard_modules.py packs gb_finance_data_breach_midmarket
+python scripts/riskshard_modules.py packs gb_finance_data_breach_midmarket --export results/gb_breach_evidence_pack.json
 python scripts/riskshard_modules.py propose gb_finance_data_breach_midmarket
 ```
 
 Risk modules are the current Metasploit-style front door: they bind a scenario,
 organization profile, calibration profile, evidence files, extraction files,
 control profiles, and governed source feeds into one searchable unit.
+The `--export` path writes a local module evidence-pack artifact with a
+fingerprint and SHA-256 hashes for the module's review files.
 
 Inspect the country contribution roadmap with:
 
@@ -255,7 +259,9 @@ python scripts/contributor_preflight.py path/to/proposed_pack
 
 For proposed packs, preflight checks source registry entries, evidence records,
 reviewed extractions, calibration selectors, risk-module artifacts, and pack
-notes before a pull request.
+notes before a pull request. It also warns when a proposed module does not map
+to the Benchmark-Grade 30 roadmap. See
+[docs/BENCHMARK_CONTRIBUTOR_WORKFLOW.md](docs/BENCHMARK_CONTRIBUTOR_WORKFLOW.md).
 
 ## Installable Commands
 
