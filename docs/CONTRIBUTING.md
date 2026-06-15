@@ -45,11 +45,13 @@ RiskShard content should grow through reviewed source, extraction, evidence, and
 ## Country Pack Checklist
 
 - Start with `python scripts/riskshard_modules.py countries`.
+- Check the benchmark target queue with `python scripts/benchmark_program.py --sprint seeded`.
 - Pick a country where you can review local sources in context.
 - Prefer the recommended first module unless you have stronger local evidence for another threat.
 - Add sources, reviewed extractions, evidence, calibration, and module metadata together.
 - Keep translations and source limitations visible when sources are not in English.
 - Before opening a pull request, run `python scripts/contributor_preflight.py path/to/proposed_pack`.
+- For Benchmark-Grade 30 contributions, preflight should show `benchmark target mapping: pass`; otherwise explain why the pack is outside the current target roadmap.
 
 ## Proposed Pack Layout
 
@@ -79,7 +81,9 @@ python scripts/validate_evidence.py
 python scripts/riskshard_modules.py list
 python scripts/riskshard_modules.py countries
 python scripts/riskshard_modules.py packs au_finance_ransomware_midmarket
+python scripts/riskshard_modules.py packs au_finance_ransomware_midmarket --export results/au_finance_ransomware_evidence_pack.json
 python scripts/riskshard_modules.py propose au_finance_ransomware_midmarket
+python scripts/benchmark_program.py --sprint seeded
 python scripts/contributor_preflight.py path/to/proposed_pack
 python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.yaml \
   --org-profile org_profiles/au_finance_midmarket.yaml \

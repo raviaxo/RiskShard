@@ -20,9 +20,12 @@ from engine.country_priorities import (  # noqa: E402
     top_country_priorities,
 )
 from engine.evidence_packs import (  # noqa: E402
+    build_evidence_pack_artifact,
     build_evidence_pack_registry,
+    format_evidence_pack_artifact,
     format_evidence_pack_detail,
     format_evidence_pack_registry,
+    write_evidence_pack_artifact,
 )
 from engine.risk_modules import (  # noqa: E402
     find_risk_module,
@@ -46,6 +49,7 @@ def parse_args(argv=None):
 
     packs_parser = subparsers.add_parser("packs", help="Inspect governed evidence packs.")
     packs_parser.add_argument("module_id", nargs="?")
+    packs_parser.add_argument("--export", type=Path, help="Write one module evidence-pack artifact JSON.")
     packs_parser.add_argument("--json", action="store_true")
 
     proposal_parser = subparsers.add_parser("propose", help="Propose evidence selectors for a module.")
@@ -85,6 +89,23 @@ def main(argv=None):
         return 0
 
     if command == "packs":
+        if args.export:
+            if not args.module_id:
+                print("--export requires a module_id", file=sys.stderr)
+                return 1
+            try:
+                artifact = build_evidence_pack_artifact(args.module_id, ROOT)
+            except ValueError as exc:
+                print(str(exc), file=sys.stderr)
+                return 1
+            path = write_evidence_pack_artifact(artifact, args.export)
+            if args.json:
+                print(json.dumps(artifact, indent=2, sort_keys=True))
+            else:
+                print(f"Evidence pack artifact saved: {path}")
+                print(format_evidence_pack_artifact(artifact), end="")
+            return 0
+
         registry = build_evidence_pack_registry(ROOT, module_id=args.module_id)
         if args.json:
             print(json.dumps(registry, indent=2, sort_keys=True))

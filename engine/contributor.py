@@ -10,6 +10,7 @@ from engine.sources import load_source_registry
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_BENCHMARK_TARGET_PATH = PROJECT_ROOT / "benchmark_targets" / "benchmark_grade_30.yaml"
 PACK_FILE_GROUPS = {
     "sources": ("sources/registry.yaml",),
     "evidence": ("evidence",),
@@ -49,6 +50,7 @@ def build_pack_preflight(root, pack_path):
         pack_extraction_check(context),
         pack_calibration_check(context),
         pack_module_check(context),
+        pack_benchmark_target_check(context),
         pack_docs_check(pack_root),
     ]
     return {
@@ -78,6 +80,11 @@ def load_pack_context(root, pack_root):
         source["id"]: source
         for source in [*root_sources, *pack_sources]
     }
+    benchmark_targets, benchmark_target_error = safe_load_benchmark_targets(
+        root / "benchmark_targets" / "benchmark_grade_30.yaml"
+    )
+    benchmark_targets_by_id = {target["id"]: target for target in benchmark_targets}
+    benchmark_targets_by_module = {target["module_id"]: target for target in benchmark_targets}
 
     return {
         "root": Path(root),
@@ -96,6 +103,9 @@ def load_pack_context(root, pack_root):
         "root_evidence_ids": root_evidence_ids,
         "pack_evidence_ids": pack_evidence_ids,
         "all_evidence_ids": root_evidence_ids | pack_evidence_ids,
+        "benchmark_target_error": benchmark_target_error,
+        "benchmark_targets_by_id": benchmark_targets_by_id,
+        "benchmark_targets_by_module": benchmark_targets_by_module,
     }
 
 
@@ -115,6 +125,13 @@ def safe_load_evidence(path):
         return [], None
     try:
         return load_evidence_records(path), None
+    except Exception as exc:
+        return [], str(exc)
+
+
+def safe_load_benchmark_targets(path=DEFAULT_BENCHMARK_TARGET_PATH):
+    try:
+        return load_yaml_file(path).get("targets", []), None
     except Exception as exc:
         return [], str(exc)
 
@@ -307,6 +324,59 @@ def pack_module_check(context):
     status = "fail" if issues else "pass"
     detail = f"{len(module_files)} module file(s)" if not issues else truncate_issues(issues)
     return check("pack risk module", status, detail)
+
+
+def pack_benchmark_target_check(context):
+    if context["benchmark_target_error"]:
+        return check("benchmark target mapping", "fail", context["benchmark_target_error"])
+
+    module_files = yaml_files(context["pack_root"] / "risk_modules")
+    if not module_files:
+        return check(
+            "benchmark target mapping",
+            "warn",
+            "no risk module to map; pack risk module check reports the missing artifact",
+        )
+
+    matched = []
+    issues = []
+    for path in module_files:
+        try:
+            module = load_yaml_file(path)
+        except Exception:
+            continue
+        module_id = module.get("id")
+        target = (
+            context["benchmark_targets_by_id"].get(module_id)
+            or context["benchmark_targets_by_module"].get(module_id)
+        )
+        if target is None:
+            issues.append(f"{path.name}: {module_id} is not in benchmark_grade_30 targets")
+            continue
+        matched.append(module_id)
+        issues.extend(module_target_mismatch_issues(path.name, module, target))
+
+    if issues:
+        return check("benchmark target mapping", "warn", truncate_issues(issues))
+    if matched:
+        return check("benchmark target mapping", "pass", "mapped target(s): " + ", ".join(sorted(matched)))
+    return check(
+        "benchmark target mapping",
+        "warn",
+        "no proposed module maps to benchmark_grade_30 targets",
+    )
+
+
+def module_target_mismatch_issues(filename, module, target):
+    issues = []
+    module_context = module.get("context", {})
+    target_context = target["context"]
+    if module.get("threat") != target_context["threat"]:
+        issues.append(f"{filename}: threat differs from benchmark target")
+    for field in ("country", "industry", "company_size"):
+        if module_context.get(field) != target_context[field]:
+            issues.append(f"{filename}: context.{field} differs from benchmark target")
+    return issues
 
 
 def module_artifact_issues(context, filename, artifacts):

@@ -21,6 +21,38 @@ MIN_SELECTED_SOURCE_COUNT = 2
 MIN_COUNTRY_SPECIFIC_PARAMETERS = 3
 MIN_INDUSTRY_SPECIFIC_PARAMETERS = 2
 SUPPORTED_COHORTS = {"seeded"}
+SPRINT_ARTIFACT_BY_BLOCKER = {
+    "missing_selected_evidence": (
+        "calibrations/*.yaml selector update",
+        "evidence/*.yaml source-backed record",
+    ),
+    "non_source_backed_selector": (
+        "sources/registry.yaml + sources/manifest.json refresh",
+        "extractions/*.yaml reviewed fact",
+        "evidence/*.yaml source-backed record",
+        "calibrations/*.yaml selector update",
+    ),
+    "low_confidence_selector": (
+        "evidence/*.yaml confidence or replacement review",
+        "extractions/*.yaml reviewed fact",
+    ),
+    "source_not_current": (
+        "sources/registry.yaml + sources/manifest.json refresh",
+    ),
+    "not_mapped_to_reviewed_extraction": (
+        "extractions/*.yaml reviewed fact",
+    ),
+    "insufficient_selected_sources": (
+        "sources/registry.yaml + sources/manifest.json independent source",
+        "evidence/*.yaml record selected by calibration",
+    ),
+    "country_relevance_gap": (
+        "country-specific source and evidence record",
+    ),
+    "industry_relevance_gap": (
+        "industry-specific source and evidence record",
+    ),
+}
 
 
 def build_benchmark_program_report(root=PROJECT_ROOT, target_path=DEFAULT_TARGET_PATH):
@@ -361,6 +393,51 @@ def build_benchmark_cohort_report(program_report, cohort="seeded"):
     }
 
 
+def build_benchmark_sprint_report(program_report, cohort="seeded", limit=None):
+    cohort_report = build_benchmark_cohort_report(program_report, cohort)
+    sprint_targets = cohort_report["upgrade_queue"]
+    if limit is not None:
+        sprint_targets = sprint_targets[:limit]
+    sprint_targets = [sprint_target_summary(target) for target in sprint_targets]
+    blocker_counts = Counter(
+        blocker["code"]
+        for target in sprint_targets
+        for blocker in target["blockers"]
+    )
+    focus_parameters = sorted({
+        parameter
+        for target in sprint_targets
+        for parameter in target["blocked_parameters"]
+    })
+
+    return {
+        "sprint": {
+            "id": f"{cohort}_evidence_upgrade_a",
+            "title": "Seeded Evidence Upgrade Sprint A",
+            "goal": (
+                "Move the four non-ready seeded modules toward benchmark review "
+                "by replacing estimated selectors with reviewed source-backed evidence."
+            ),
+        },
+        "cohort": cohort_report["cohort"],
+        "program_id": program_report["program"]["id"],
+        "status": "complete" if not sprint_targets else "needs_evidence_work",
+        "target_count": len(sprint_targets),
+        "total_blocker_count": sum(target["blocker_count"] for target in sprint_targets),
+        "focus_parameters": focus_parameters,
+        "blocker_counts": dict(sorted(blocker_counts.items())),
+        "acceptance_criteria": [
+            "each changed selector references source_backed evidence",
+            "each source_backed evidence record has source_id and citation_detail",
+            "each selected evidence record maps to a reviewed extraction",
+            "selected source feeds are current in sources/manifest.json",
+            "python scripts/benchmark_program.py --cohort seeded shows fewer blockers",
+            "python -m unittest discover -s tests passes",
+        ],
+        "targets": sprint_targets,
+    }
+
+
 def cohort_target_summary(target):
     blockers = target_blockers(target)
     return {
@@ -373,6 +450,37 @@ def cohort_target_summary(target):
         "blockers": blockers,
         "blocker_count": sum(max(1, len(blocker.get("parameters", []))) for blocker in blockers),
         "next_actions": target["next_actions"],
+    }
+
+
+def sprint_target_summary(target):
+    blocked_parameters = sorted({
+        parameter
+        for blocker in target["blockers"]
+        for parameter in blocker.get("parameters", [])
+    })
+    required_artifacts = sorted({
+        artifact
+        for blocker in target["blockers"]
+        for artifact in SPRINT_ARTIFACT_BY_BLOCKER.get(blocker["code"], ())
+    })
+    module_id = target["module_id"]
+    return {
+        "priority": target["priority"],
+        "id": target["id"],
+        "module_id": module_id,
+        "status": target["status"],
+        "context": target["context"],
+        "blocker_count": target["blocker_count"],
+        "blocked_parameters": blocked_parameters,
+        "blockers": target["blockers"],
+        "required_artifacts": required_artifacts,
+        "first_action": target["next_actions"][0],
+        "review_commands": [
+            f"python scripts/riskshard_modules.py packs {module_id}",
+            f"python scripts/riskshard_modules.py propose {module_id}",
+            f"python scripts/benchmark_program.py --target {target['id']}",
+        ],
     }
 
 
@@ -559,6 +667,43 @@ def format_benchmark_cohort_report(cohort_report):
             ),
             f"  blockers: {blockers}",
         ])
+    return "\n".join(lines) + "\n"
+
+
+def format_benchmark_sprint_report(sprint_report):
+    lines = [
+        sprint_report["sprint"]["title"],
+        f"Status: {sprint_report['status']}",
+        f"Goal: {sprint_report['sprint']['goal']}",
+        (
+            f"Targets: {sprint_report['target_count']}; "
+            f"blockers: {sprint_report['total_blocker_count']}"
+        ),
+        "Blockers: " + format_counts(sprint_report["blocker_counts"]),
+        "Focus parameters: " + (", ".join(sprint_report["focus_parameters"]) or "none"),
+        "",
+        "Acceptance criteria",
+    ]
+    lines.extend(f"- {item}" for item in sprint_report["acceptance_criteria"])
+    lines.extend(["", "Sprint targets"])
+
+    if not sprint_report["targets"]:
+        lines.append("- all seeded modules are ready for human benchmark review")
+
+    for target in sprint_report["targets"]:
+        blockers = ", ".join(blocker["code"] for blocker in target["blockers"]) or "none"
+        parameters = ", ".join(target["blocked_parameters"]) or "none"
+        lines.extend([
+            f"- {target['id']}: blockers={target['blocker_count']}",
+            f"  first: {target['first_action']}",
+            f"  parameters: {parameters}",
+            f"  blockers: {blockers}",
+            "  artifacts:",
+        ])
+        lines.extend(f"    - {artifact}" for artifact in target["required_artifacts"])
+        lines.append("  commands:")
+        lines.extend(f"    - {command}" for command in target["review_commands"])
+
     return "\n".join(lines) + "\n"
 
 

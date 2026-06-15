@@ -5,6 +5,7 @@ Start here when you want the current truth:
 - [PROJECT_STATUS.md](PROJECT_STATUS.md): current capabilities, known gaps, and definition of done.
 - [NEXT_STEPS.md](NEXT_STEPS.md): prioritized implementation backlog, including the next 8-hour stabilization plan.
 - [CONTRIBUTING.md](CONTRIBUTING.md): source, extraction, evidence, calibration, and review checklist.
+- [BENCHMARK_CONTRIBUTOR_WORKFLOW.md](BENCHMARK_CONTRIBUTOR_WORKFLOW.md): benchmark target, content-pack, preflight, and evidence-pack export workflow.
 - [CONSOLE_EXPERIENCE.md](CONSOLE_EXPERIENCE.md): intended local console workflow and scope guardrails.
 - [GLOBAL_READINESS_ROADMAP.md](GLOBAL_READINESS_ROADMAP.md): what global coverage and governance still require.
 - [COUNTRY_EXPANSION.md](COUNTRY_EXPANSION.md): 25-country contribution priority map and second-geography plan.

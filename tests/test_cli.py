@@ -256,6 +256,30 @@ class CliSmokeTests(unittest.TestCase):
         )
         self.assertIn("selected_assumption", proposal_result.stdout)
 
+        with tempfile.TemporaryDirectory() as tmp:
+            export_path = Path(tmp) / "ransomware_pack.json"
+            export_result = subprocess.run(
+                [
+                    sys.executable,
+                    "scripts/riskshard_modules.py",
+                    "packs",
+                    "au_finance_ransomware_midmarket",
+                    "--export",
+                    str(export_path),
+                ],
+                cwd=ROOT,
+                env=env,
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(export_result.returncode, 0, msg=export_result.stderr)
+            self.assertTrue(export_path.exists())
+            exported = json.loads(export_path.read_text())
+
+        self.assertEqual(exported["artifact_type"], "riskshard_module_evidence_pack")
+        self.assertIn("Evidence pack artifact saved:", export_result.stdout)
+        self.assertIn("Fingerprint:", export_result.stdout)
+
         countries_result = subprocess.run(
             [
                 sys.executable,
@@ -346,6 +370,21 @@ class CliSmokeTests(unittest.TestCase):
         self.assertIn("Benchmark Cohort 1: seeded modules", cohort_result.stdout)
         self.assertIn("Upgrade queue", cohort_result.stdout)
         self.assertIn("au_finance_ransomware_midmarket", cohort_result.stdout)
+
+        sprint_result = subprocess.run(
+            [sys.executable, "scripts/benchmark_program.py", "--sprint", "seeded"],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(sprint_result.returncode, 0, msg=sprint_result.stderr)
+        self.assertIn("Seeded Evidence Upgrade Sprint A", sprint_result.stdout)
+        self.assertIn("Acceptance criteria", sprint_result.stdout)
+        self.assertIn(
+            "python scripts/riskshard_modules.py propose au_finance_ransomware_midmarket",
+            sprint_result.stdout,
+        )
 
 
 if __name__ == "__main__":

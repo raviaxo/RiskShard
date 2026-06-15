@@ -4,8 +4,10 @@ from pathlib import Path
 from engine.benchmark_program import (
     build_benchmark_cohort_report,
     build_benchmark_program_report,
+    build_benchmark_sprint_report,
     format_benchmark_cohort_report,
     format_benchmark_program_report,
+    format_benchmark_sprint_report,
 )
 from engine.country_priorities import find_country_priority
 from engine.taxonomy import load_taxonomies
@@ -63,6 +65,24 @@ class BenchmarkProgramTests(unittest.TestCase):
         self.assertIn("Upgrade queue", output)
         self.assertIn("au_finance_ransomware_midmarket", output)
         self.assertIn("blockers=8", output)
+
+    def test_seeded_sprint_report_groups_actionable_upgrade_work(self):
+        report = build_benchmark_program_report(ROOT)
+        sprint = build_benchmark_sprint_report(report, "seeded")
+        output = format_benchmark_sprint_report(sprint)
+        by_id = {target["id"]: target for target in sprint["targets"]}
+
+        self.assertEqual(sprint["sprint"]["title"], "Seeded Evidence Upgrade Sprint A")
+        self.assertEqual(sprint["status"], "needs_evidence_work")
+        self.assertEqual(sprint["target_count"], 4)
+        self.assertEqual(sprint["total_blocker_count"], 57)
+        self.assertIn("frequency.max", sprint["focus_parameters"])
+        self.assertIn("impact.max", sprint["focus_parameters"])
+        self.assertIn("sources/registry.yaml + sources/manifest.json refresh", by_id["au_finance_ransomware_midmarket"]["required_artifacts"])
+        self.assertIn("python scripts/riskshard_modules.py propose au_finance_ransomware_midmarket", by_id["au_finance_ransomware_midmarket"]["review_commands"])
+        self.assertIn("Seeded Evidence Upgrade Sprint A", output)
+        self.assertIn("Acceptance criteria", output)
+        self.assertIn("au_finance_ransomware_midmarket: blockers=8", output)
 
     def test_norway_country_code_stays_string_not_yaml_boolean(self):
         countries = {item["id"] for item in load_taxonomies(ROOT / "taxonomies")["countries"]}
