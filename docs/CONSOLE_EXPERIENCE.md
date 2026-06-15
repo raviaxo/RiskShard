@@ -1,6 +1,6 @@
 # RiskShard Console Experience
 
-Last updated: 2026-06-04
+Last updated: 2026-06-15
 
 The RiskShard console is a lightweight interactive shell for practitioners who want a guided workflow without leaving the CLI.
 
@@ -15,6 +15,7 @@ It is intentionally closer to a Metasploit-style console than a web app:
 - Run local setup/source/evidence/scenario/package checks with `doctor`.
 - Get prioritized blockers and next commands with `next`.
 - Inspect data-pack fingerprints with `pack`.
+- Validate a proposed contribution pack with `preflight <pack-path>`.
 - Rank starter threats with `toprisks`.
 - Explain missing or weak evidence with `show gaps`.
 - Propose best available calibration selectors with `propose`.

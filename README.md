@@ -212,6 +212,28 @@ Generate a data-pack fingerprint for governed inputs with:
 python scripts/data_pack_manifest.py
 ```
 
+Cut a named local data-pack release artifact with:
+
+```bash
+python scripts/data_pack_manifest.py --release 2026.06.15
+```
+
+The release artifact is written under `data_pack_releases/` and includes the
+pack fingerprint plus the governed file manifest so scenario reviews can pin
+the exact source/evidence/calibration state.
+
+Run contributor preflight for the current checkout or for a proposed content
+pack directory:
+
+```bash
+python scripts/contributor_preflight.py
+python scripts/contributor_preflight.py path/to/proposed_pack
+```
+
+For proposed packs, preflight checks source registry entries, evidence records,
+reviewed extractions, calibration selectors, risk-module artifacts, and pack
+notes before a pull request.
+
 ## Installable Commands
 
 RiskShard can still be run directly from `scripts/`, but `pyproject.toml` also declares console entry points for packaging:

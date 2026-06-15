@@ -3,7 +3,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from engine.data_packs import build_data_pack_manifest, write_data_pack_manifest
+from engine.data_packs import (
+    build_data_pack_manifest,
+    build_data_pack_release,
+    write_data_pack_manifest,
+    write_data_pack_release,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +38,23 @@ class DataPackTests(unittest.TestCase):
             payload = json.loads(output.read_text())
 
         self.assertEqual(payload["fingerprint"], manifest["fingerprint"])
+
+    def test_data_pack_release_can_be_written_with_version(self):
+        release = build_data_pack_release(
+            ROOT,
+            version="2026.06.15-test",
+            notes="Test release",
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            output = write_data_pack_release(release, Path(tmp))
+            payload = json.loads(output.read_text())
+
+        self.assertEqual(output.name, "2026.06.15-test.json")
+        self.assertEqual(payload["release_type"], "riskshard_data_pack_release")
+        self.assertEqual(payload["release_version"], "2026.06.15-test")
+        self.assertEqual(payload["fingerprint"], release["manifest"]["fingerprint"])
+        self.assertEqual(payload["notes"], "Test release")
+        self.assertEqual(len(payload["source_manifest_sha256"]), 64)
 
 
 if __name__ == "__main__":

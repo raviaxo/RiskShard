@@ -1,4 +1,5 @@
 from collections import Counter
+from datetime import date
 from pathlib import Path
 
 from engine.data_packs import build_data_pack_manifest
@@ -225,7 +226,6 @@ def contributor_summary(root):
     return {
         "docs": docs,
         "next_needed": [
-            "guided source/extraction/evidence/calibration preflight command",
             "example pull request path for a second country or threat pack",
             "pack release checklist",
         ],
@@ -362,7 +362,7 @@ def next_actions(dashboard, limit=7):
         "area": "release discipline",
         "title": "Cut a named data-pack release",
         "detail": "Use the fingerprint as the pin for scenario reviews, demos, and contributor pull requests.",
-        "command": "python scripts/data_pack_manifest.py",
+        "command": f"python scripts/data_pack_manifest.py --release {date.today().strftime('%Y.%m.%d')}",
     })
 
     return sorted(actions, key=action_sort_key)[:limit]

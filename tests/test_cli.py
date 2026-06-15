@@ -176,6 +176,35 @@ class CliSmokeTests(unittest.TestCase):
         self.assertIn("RiskShard doctor", result.stdout)
         self.assertIn("Status: pass", result.stdout)
 
+    def test_data_pack_cli_writes_named_release(self):
+        env = os.environ.copy()
+        env["PYTHONPATH"] = str(ROOT)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    "scripts/data_pack_manifest.py",
+                    "--release",
+                    "2026.06.15-test",
+                    "--release-dir",
+                    tmp,
+                    "--notes",
+                    "CLI smoke release",
+                ],
+                cwd=ROOT,
+                env=env,
+                text=True,
+                capture_output=True,
+            )
+            release_path = Path(tmp) / "2026.06.15-test.json"
+
+            self.assertEqual(result.returncode, 0, msg=result.stderr)
+            self.assertTrue(release_path.exists())
+
+        self.assertIn("Data-pack release saved:", result.stdout)
+        self.assertIn("Data pack release", result.stdout)
+
     def test_modules_cli_reports_catalog_packs_and_proposals(self):
         env = os.environ.copy()
         env["PYTHONPATH"] = str(ROOT)
