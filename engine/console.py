@@ -488,9 +488,9 @@ class RiskShardConsole(cmd.Cmd):
         return None
 
     def do_preflight(self, arg):
-        """preflight - Run contributor source/evidence/extraction/data-pack checks."""
-        del arg
-        self.write(format_contributor_preflight(build_contributor_preflight(self.root)))
+        """preflight [pack-path] - Run contributor source/evidence/extraction/data-pack checks."""
+        pack_path = arg.strip() or None
+        self.write(format_contributor_preflight(build_contributor_preflight(self.root, pack_path=pack_path)))
         return None
 
     def do_doctor(self, arg):

@@ -49,6 +49,27 @@ RiskShard content should grow through reviewed source, extraction, evidence, and
 - Prefer the recommended first module unless you have stronger local evidence for another threat.
 - Add sources, reviewed extractions, evidence, calibration, and module metadata together.
 - Keep translations and source limitations visible when sources are not in English.
+- Before opening a pull request, run `python scripts/contributor_preflight.py path/to/proposed_pack`.
+
+## Proposed Pack Layout
+
+Contributor preflight accepts a proposed pack directory with the same relative
+paths used by the main repo:
+
+```text
+sources/registry.yaml
+evidence/*.yaml
+extractions/*.yaml
+calibrations/*.yaml
+risk_modules/*.yaml
+scenarios/*.yaml
+org_profiles/*.yaml
+README.md
+```
+
+The risk module should reference artifacts by their eventual repo-relative
+paths. Preflight will accept files that already exist in the repo or files that
+exist inside the proposed pack at those paths.
 
 ## Review Commands
 
@@ -59,6 +80,7 @@ python scripts/riskshard_modules.py list
 python scripts/riskshard_modules.py countries
 python scripts/riskshard_modules.py packs au_finance_ransomware_midmarket
 python scripts/riskshard_modules.py propose au_finance_ransomware_midmarket
+python scripts/contributor_preflight.py path/to/proposed_pack
 python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.yaml \
   --org-profile org_profiles/au_finance_midmarket.yaml \
   --evidence evidence \

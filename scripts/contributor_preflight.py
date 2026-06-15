@@ -14,13 +14,18 @@ from engine.contributor import build_contributor_preflight, format_contributor_p
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Run contributor preflight checks.")
+    parser.add_argument(
+        "pack_path",
+        nargs="?",
+        help="Optional proposed content pack directory to validate before a pull request.",
+    )
     parser.add_argument("--json", action="store_true")
     return parser.parse_args(argv)
 
 
 def main(argv=None):
     args = parse_args(argv)
-    preflight = build_contributor_preflight(ROOT)
+    preflight = build_contributor_preflight(ROOT, pack_path=args.pack_path)
     if args.json:
         print(json.dumps(preflight, indent=2, sort_keys=True))
     else:
