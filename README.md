@@ -180,10 +180,11 @@ Inspect the benchmark-grade 30 adoption program with:
 
 ```bash
 python scripts/benchmark_program.py
+python scripts/benchmark_program.py --cohort seeded
 python scripts/benchmark_program.py --target gb_finance_data_breach_midmarket
 ```
 
-The benchmark program tracks thirty target shards and reports which ones are missing modules, which need evidence upgrades, and which are ready for human benchmark review. It prevents starter shards from being overclaimed as benchmark-grade.
+The benchmark program tracks thirty target shards and reports which ones are missing modules, which need evidence upgrades, and which are ready for human benchmark review. The seeded cohort view focuses on the five runnable modules and ranks the next evidence-upgrade queue. It prevents starter shards from being overclaimed as benchmark-grade.
 
 Rank starter threats by evidence and calibration readiness with:
 

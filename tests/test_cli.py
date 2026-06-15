@@ -335,6 +335,18 @@ class CliSmokeTests(unittest.TestCase):
         self.assertIn("benchmark-ready: 1", result.stdout)
         self.assertIn("confidence>=medium=6/6", result.stdout)
 
+        cohort_result = subprocess.run(
+            [sys.executable, "scripts/benchmark_program.py", "--cohort", "seeded"],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(cohort_result.returncode, 0, msg=cohort_result.stderr)
+        self.assertIn("Benchmark Cohort 1: seeded modules", cohort_result.stdout)
+        self.assertIn("Upgrade queue", cohort_result.stdout)
+        self.assertIn("au_finance_ransomware_midmarket", cohort_result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
