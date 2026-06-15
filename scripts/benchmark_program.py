@@ -11,7 +11,9 @@ if str(ROOT) not in sys.path:
 
 from engine.benchmark_program import (  # noqa: E402
     DEFAULT_TARGET_PATH,
+    build_benchmark_cohort_report,
     build_benchmark_program_report,
+    format_benchmark_cohort_report,
     format_benchmark_program_report,
 )
 
@@ -20,6 +22,7 @@ def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Inspect the RiskShard benchmark-grade 30 program.")
     parser.add_argument("--targets", type=Path, default=DEFAULT_TARGET_PATH)
     parser.add_argument("--target", help="Show one target by target id or module id.")
+    parser.add_argument("--cohort", choices=["seeded"], help="Show a benchmark cohort summary.")
     parser.add_argument("--json", action="store_true")
     return parser.parse_args(argv)
 
@@ -27,6 +30,14 @@ def parse_args(argv=None):
 def main(argv=None):
     args = parse_args(argv)
     report = build_benchmark_program_report(ROOT, args.targets)
+    if args.cohort:
+        cohort_report = build_benchmark_cohort_report(report, args.cohort)
+        if args.json:
+            print(json.dumps(cohort_report, indent=2, sort_keys=True))
+        else:
+            print(format_benchmark_cohort_report(cohort_report), end="")
+        return 0 if report["status"] == "pass" else 1
+
     if args.json:
         if args.target:
             report = {

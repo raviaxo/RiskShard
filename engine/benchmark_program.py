@@ -20,6 +20,7 @@ MIN_BENCHMARK_CONFIDENCE = "medium"
 MIN_SELECTED_SOURCE_COUNT = 2
 MIN_COUNTRY_SPECIFIC_PARAMETERS = 3
 MIN_INDUSTRY_SPECIFIC_PARAMETERS = 2
+SUPPORTED_COHORTS = {"seeded"}
 
 
 def build_benchmark_program_report(root=PROJECT_ROOT, target_path=DEFAULT_TARGET_PATH):
@@ -323,6 +324,157 @@ def target_summary(
     }
 
 
+def build_benchmark_cohort_report(program_report, cohort="seeded"):
+    if cohort not in SUPPORTED_COHORTS:
+        raise ValueError(f"Unsupported benchmark cohort: {cohort}")
+
+    targets = [
+        target for target in program_report["targets"]
+        if target["module_present"]
+    ]
+    target_summaries = [cohort_target_summary(target) for target in targets]
+    status_counts = Counter(target["status"] for target in target_summaries)
+    blocker_counts = Counter(
+        blocker["code"]
+        for target in target_summaries
+        for blocker in target["blockers"]
+    )
+    upgrade_queue = sorted(
+        [target for target in target_summaries if target["status"] != "benchmark_ready"],
+        key=cohort_upgrade_sort_key,
+    )
+
+    return {
+        "cohort": {
+            "id": "seeded",
+            "title": "Benchmark Cohort 1: seeded modules",
+            "description": "The first five runnable modules already present in risk_modules/.",
+        },
+        "program_id": program_report["program"]["id"],
+        "status": "benchmark_ready" if not upgrade_queue else "needs_evidence",
+        "target_count": len(target_summaries),
+        "benchmark_ready_count": status_counts.get("benchmark_ready", 0),
+        "status_counts": dict(sorted(status_counts.items())),
+        "blocker_counts": dict(sorted(blocker_counts.items())),
+        "targets": target_summaries,
+        "upgrade_queue": upgrade_queue,
+    }
+
+
+def cohort_target_summary(target):
+    blockers = target_blockers(target)
+    return {
+        "priority": target["priority"],
+        "id": target["id"],
+        "module_id": target["module_id"],
+        "status": target["status"],
+        "context": target["context"],
+        "metrics": target["metrics"],
+        "blockers": blockers,
+        "blocker_count": sum(max(1, len(blocker.get("parameters", []))) for blocker in blockers),
+        "next_actions": target["next_actions"],
+    }
+
+
+def target_blockers(target):
+    selected = target["selected_parameters"]
+    blockers = []
+
+    add_parameter_blocker(
+        blockers,
+        "missing_selected_evidence",
+        "select direct evidence",
+        [item["parameter"] for item in selected if not item["record_found"]],
+    )
+    add_parameter_blocker(
+        blockers,
+        "non_source_backed_selector",
+        "replace estimated or synthetic selector",
+        [
+            item["parameter"]
+            for item in selected
+            if item["record_found"] and item["evidence_type"] != "source_backed"
+        ],
+    )
+    add_parameter_blocker(
+        blockers,
+        "low_confidence_selector",
+        "strengthen confidence to medium or high",
+        [
+            item["parameter"]
+            for item in selected
+            if CONFIDENCE_RANK.get(item["confidence"], 0) < CONFIDENCE_RANK[MIN_BENCHMARK_CONFIDENCE]
+        ],
+    )
+    add_parameter_blocker(
+        blockers,
+        "source_not_current",
+        "refresh selected source feed",
+        [
+            item["parameter"]
+            for item in selected
+            if item["record_found"] and item["source_renewal_status"] != "current"
+        ],
+    )
+    add_parameter_blocker(
+        blockers,
+        "not_mapped_to_reviewed_extraction",
+        "map selected evidence to reviewed extraction",
+        [
+            item["parameter"]
+            for item in selected
+            if item["record_found"] and not item["mapped_to_reviewed_extraction"]
+        ],
+    )
+
+    if not target["criteria"].get("module_context_matches_target", True):
+        blockers.append({
+            "code": "module_context_mismatch",
+            "message": "align module threat and context with benchmark target",
+            "parameters": [],
+        })
+    if not target["criteria"].get("at_least_two_selected_sources", True):
+        blockers.append({
+            "code": "insufficient_selected_sources",
+            "message": "add at least two independent selected sources",
+            "parameters": [],
+        })
+    if not target["criteria"].get("country_relevance_minimum_met", True):
+        blockers.append({
+            "code": "country_relevance_gap",
+            "message": f"add more {target['context']['country']}-specific selected evidence",
+            "parameters": [],
+        })
+    if not target["criteria"].get("industry_relevance_minimum_met", True):
+        blockers.append({
+            "code": "industry_relevance_gap",
+            "message": f"add more {target['context']['industry']}-specific selected evidence",
+            "parameters": [],
+        })
+    return blockers
+
+
+def add_parameter_blocker(blockers, code, message, parameters):
+    parameters = sorted(parameters)
+    if parameters:
+        blockers.append({
+            "code": code,
+            "message": message,
+            "parameters": parameters,
+        })
+
+
+def cohort_upgrade_sort_key(target):
+    metrics = target["metrics"]
+    return (
+        target["blocker_count"],
+        len(target["blockers"]),
+        -metrics.get("source_backed_parameters", 0),
+        -metrics.get("confidence_medium_or_high_parameters", 0),
+        target["priority"],
+    )
+
+
 def format_benchmark_program_report(report, *, target_id=None):
     lines = [
         f"{report['program']['title']}",
@@ -367,6 +519,46 @@ def format_benchmark_program_report(report, *, target_id=None):
     if target_id and not targets:
         lines.append(f"No benchmark target found for: {target_id}")
 
+    return "\n".join(lines) + "\n"
+
+
+def format_benchmark_cohort_report(cohort_report):
+    lines = [
+        cohort_report["cohort"]["title"],
+        f"Status: {cohort_report['status']}",
+        (
+            f"Targets: {cohort_report['target_count']}; "
+            f"benchmark-ready: {cohort_report['benchmark_ready_count']}"
+        ),
+        "Statuses: " + format_counts(cohort_report["status_counts"]),
+        "Blockers: " + format_counts(cohort_report["blocker_counts"]),
+        "",
+        "Upgrade queue",
+    ]
+
+    if cohort_report["upgrade_queue"]:
+        for target in cohort_report["upgrade_queue"]:
+            lines.extend([
+                f"- {target['id']}: blockers={target['blocker_count']}",
+                f"  next: {target['next_actions'][0]}",
+            ])
+    else:
+        lines.append("- all seeded modules are ready for human benchmark review")
+
+    lines.extend(["", "Seeded modules"])
+    for target in sorted(cohort_report["targets"], key=lambda item: item["priority"]):
+        metrics = target["metrics"]
+        blockers = ", ".join(blocker["code"] for blocker in target["blockers"]) or "none"
+        lines.extend([
+            f"- {target['id']}: {target['status']}",
+            (
+                f"  metrics: source_backed={metrics['source_backed_parameters']}/6; "
+                f"confidence>=medium={metrics['confidence_medium_or_high_parameters']}/6; "
+                f"current_sources={metrics['current_source_parameters']}/6; "
+                f"extracted={metrics['extracted_parameters']}/6"
+            ),
+            f"  blockers: {blockers}",
+        ])
     return "\n".join(lines) + "\n"
 
 

@@ -1,7 +1,12 @@
 import unittest
 from pathlib import Path
 
-from engine.benchmark_program import build_benchmark_program_report, format_benchmark_program_report
+from engine.benchmark_program import (
+    build_benchmark_cohort_report,
+    build_benchmark_program_report,
+    format_benchmark_cohort_report,
+    format_benchmark_program_report,
+)
 from engine.country_priorities import find_country_priority
 from engine.taxonomy import load_taxonomies
 
@@ -39,6 +44,25 @@ class BenchmarkProgramTests(unittest.TestCase):
         self.assertEqual(target["metrics"]["confidence_medium_or_high_parameters"], 6)
         self.assertEqual(target["next_actions"], ["ready for human benchmark review"])
         self.assertIn("gb_finance_data_breach_midmarket", output)
+
+    def test_seeded_cohort_report_ranks_large_upgrade_work(self):
+        report = build_benchmark_program_report(ROOT)
+        cohort = build_benchmark_cohort_report(report, "seeded")
+        output = format_benchmark_cohort_report(cohort)
+        by_id = {target["id"]: target for target in cohort["targets"]}
+
+        self.assertEqual(cohort["cohort"]["title"], "Benchmark Cohort 1: seeded modules")
+        self.assertEqual(cohort["status"], "needs_evidence")
+        self.assertEqual(cohort["target_count"], 5)
+        self.assertEqual(cohort["benchmark_ready_count"], 1)
+        self.assertEqual(cohort["status_counts"]["benchmark_ready"], 1)
+        self.assertEqual(cohort["status_counts"]["needs_evidence"], 4)
+        self.assertEqual(cohort["upgrade_queue"][0]["id"], "au_finance_ransomware_midmarket")
+        self.assertEqual(cohort["upgrade_queue"][0]["blocker_count"], 8)
+        self.assertEqual(by_id["gb_finance_data_breach_midmarket"]["blockers"], [])
+        self.assertIn("Upgrade queue", output)
+        self.assertIn("au_finance_ransomware_midmarket", output)
+        self.assertIn("blockers=8", output)
 
     def test_norway_country_code_stays_string_not_yaml_boolean(self):
         countries = {item["id"] for item in load_taxonomies(ROOT / "taxonomies")["countries"]}
