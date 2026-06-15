@@ -44,7 +44,7 @@ class GovernanceTests(unittest.TestCase):
         self.assertEqual(fca_equifax["source_status"], "fetched")
         self.assertEqual(fca_equifax["trust_tier"], "high")
         self.assertEqual(fca_equifax["evidence_record_count"], 1)
-        self.assertEqual(fca_equifax["evidence_confidence"], "low")
+        self.assertEqual(fca_equifax["evidence_confidence"], "medium")
         self.assertEqual(accc["trust_tier"], "high")
         self.assertEqual(accc["evidence_record_count"], 5)
         self.assertEqual(business_qld["source_status"], "fetched")

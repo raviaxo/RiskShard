@@ -18,26 +18,26 @@ class BenchmarkProgramTests(unittest.TestCase):
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["target_count"], 30)
         self.assertEqual(report["module_seeded_count"], 5)
-        self.assertEqual(report["benchmark_ready_count"], 0)
+        self.assertEqual(report["benchmark_ready_count"], 1)
         self.assertEqual(report["status_counts"]["missing_module"], 25)
-        self.assertEqual(report["status_counts"]["needs_evidence"], 5)
+        self.assertEqual(report["status_counts"]["needs_evidence"], 4)
         self.assertIn("Benchmark-Grade 30 Shard Program", output)
-        self.assertIn("benchmark-ready: 0", output)
+        self.assertIn("benchmark-ready: 1", output)
         self.assertIn("ca_finance_data_breach_midmarket", by_id)
         self.assertIn("us_finance_data_breach_midmarket", by_id)
 
-    def test_existing_uk_breach_target_is_not_benchmark_ready_yet(self):
+    def test_existing_uk_breach_target_is_automated_benchmark_ready(self):
         report = build_benchmark_program_report(ROOT)
         by_id = {target["id"]: target for target in report["targets"]}
         target = by_id["gb_finance_data_breach_midmarket"]
         output = format_benchmark_program_report(report, target_id=target["id"])
 
-        self.assertEqual(target["status"], "needs_evidence")
+        self.assertEqual(target["status"], "benchmark_ready")
         self.assertTrue(target["criteria"]["all_selected_parameters_source_backed"])
-        self.assertFalse(target["criteria"]["selected_confidence_medium_or_high"])
+        self.assertTrue(target["criteria"]["selected_confidence_medium_or_high"])
         self.assertEqual(target["metrics"]["source_backed_parameters"], 6)
-        self.assertEqual(target["metrics"]["confidence_medium_or_high_parameters"], 4)
-        self.assertIn("replace or strengthen low-confidence selectors", target["next_actions"][0])
+        self.assertEqual(target["metrics"]["confidence_medium_or_high_parameters"], 6)
+        self.assertEqual(target["next_actions"], ["ready for human benchmark review"])
         self.assertIn("gb_finance_data_breach_midmarket", output)
 
     def test_norway_country_code_stays_string_not_yaml_boolean(self):

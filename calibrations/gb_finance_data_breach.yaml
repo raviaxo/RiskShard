@@ -3,12 +3,12 @@ metadata:
   scenario_name: UK Finance Data Breach Midmarket - Calibrated Draft
   version: "0.1"
   notes: >
-    Starter reviewed calibration profile for United Kingdom financial-services
-    data breach. It uses UK official breach/attack prevalence as broad
-    frequency evidence and IBM UK financial-services breach-cost evidence as a
-    likely impact anchor. Stress impact uses an FCA regulatory penalty anchor.
-    The UK survey is broader than privacy-only data breach, and the stress
-    impact anchor is a penalty rather than a total event-loss distribution.
+    Benchmark-review candidate calibration profile for United Kingdom
+    financial-services data breach. It uses UK official breach/attack
+    prevalence as broad frequency evidence and IBM UK financial-services
+    breach-cost evidence as a likely impact anchor. Impact floor remains a
+    conservative UK material-cost floor, and stress impact remains an FCA
+    regulatory penalty anchor rather than a total event-loss distribution.
 
 target_currency: GBP
 
@@ -33,7 +33,7 @@ parameters:
       transform: direct
       target_currency: GBP
       round_to: 1000
-      rationale: Official UK 95th percentile perceived cost for medium/large most disruptive breaches or attacks, used as a material-cost floor.
+      rationale: Official UK 95th percentile perceived cost for medium/large most disruptive breaches or attacks, used as a conservative material-cost floor rather than expected breach cost.
     likely:
       evidence_id: ibm_uk_2025_financial_services_breach_average_cost_gbp
       transform: direct

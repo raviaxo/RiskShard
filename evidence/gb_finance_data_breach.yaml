@@ -82,9 +82,9 @@ records:
     extraction_date: "2026-06-04"
     citation_detail: Summary reports that the top 5% perceived cost for the most disruptive breach or attack rose to GBP 10,000 for medium/large businesses.
     extraction_notes: Extracted the medium/large 95th percentile perceived cost from the official UK survey summary.
-    normalization_notes: Stored directly in GBP and selected as a material-cost floor for a data-breach starter.
-    limitations: Perceived cost of the most disruptive breach or attack; broader than privacy breach cost; sample and cost definition differ from enterprise breach-cost studies.
-    confidence: low
+    normalization_notes: Stored directly in GBP and selected as a material-cost floor, not as expected breach cost.
+    limitations: Perceived cost of the most disruptive breach or attack; broader than privacy breach cost; sample and cost definition differ from enterprise breach-cost studies. Confidence is medium only for use as a conservative UK mid-market material-cost floor.
+    confidence: medium
     evidence_type: source_backed
     applicability:
       industries: [all]
@@ -153,9 +153,9 @@ records:
     extraction_date: "2026-06-04"
     citation_detail: FCA press release states that Equifax Ltd was fined GBP 11,164,400 for failing to manage and monitor the security of UK consumer data outsourced to its US parent after a cyber breach.
     extraction_notes: Extracted the FCA financial penalty amount and breach context from the official FCA press release.
-    normalization_notes: Stored directly in GBP and selected as a UK financial-services regulatory penalty stress anchor for impact.max.
-    limitations: Regulatory penalty only; not total event loss, insurance claim severity, or a full tail distribution; the incident was a large credit-reference data breach, not a mid-market-specific loss sample.
-    confidence: low
+    normalization_notes: Stored directly in GBP and selected as a UK financial-services regulatory penalty stress anchor for impact.max, not as total event loss.
+    limitations: Regulatory penalty only; not total event loss, insurance claim severity, or a full tail distribution; the incident was a large credit-reference data breach, not a mid-market-specific loss sample. Confidence is medium only for use as a source-backed UK regulatory stress anchor.
+    confidence: medium
     evidence_type: source_backed
     applicability:
       industries: [financial_services]

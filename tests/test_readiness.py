@@ -32,7 +32,7 @@ class ReadinessTests(unittest.TestCase):
         )
         self.assertEqual(gb["source_backed_direct"], 6)
         self.assertEqual(gb["assumption_only_direct"], 0)
-        self.assertEqual(gb["next_gap"], "review low-confidence source-backed evidence")
+        self.assertEqual(gb["next_gap"], "ready for practitioner review")
         self.assertEqual(
             dashboard["readiness_gate"]["status"],
             "ready_for_local_calibrated_run",
