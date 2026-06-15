@@ -27,3 +27,24 @@ items:
       - health
       - hospitals
       - medical
+
+  - id: manufacturing
+    label: Manufacturing
+    aliases:
+      - industrial
+      - factories
+      - producers
+
+  - id: logistics
+    label: Logistics
+    aliases:
+      - transportation
+      - shipping
+      - supply chain
+
+  - id: energy
+    label: Energy
+    aliases:
+      - utilities
+      - oil and gas
+      - power

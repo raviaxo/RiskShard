@@ -124,7 +124,7 @@ items:
     aliases:
       - south africa
 
-  - id: NO
+  - id: "NO"
     label: Norway
     aliases:
       - norway

@@ -318,6 +318,23 @@ class CliSmokeTests(unittest.TestCase):
         self.assertIn("riskshard-toprisks", result.stdout)
         self.assertIn("riskshard-package-smoke", result.stdout)
 
+    def test_benchmark_program_cli_reports_thirty_target_gate(self):
+        env = os.environ.copy()
+        env["PYTHONPATH"] = str(ROOT)
+
+        result = subprocess.run(
+            [sys.executable, "scripts/benchmark_program.py", "--target", "gb_finance_data_breach_midmarket"],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertIn("Benchmark-Grade 30 Shard Program", result.stdout)
+        self.assertIn("Targets: 30", result.stdout)
+        self.assertIn("benchmark-ready: 0", result.stdout)
+        self.assertIn("confidence>=medium=4/6", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

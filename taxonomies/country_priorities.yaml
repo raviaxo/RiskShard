@@ -220,7 +220,7 @@ items:
     collaboration_prompt: Add FSCA, Information Regulator, banking fraud, and sector sources.
 
   - rank: 21
-    country_id: NO
+    country_id: "NO"
     label: Norway
     region: Europe
     tier: contributor_led
