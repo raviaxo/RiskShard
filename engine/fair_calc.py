@@ -219,6 +219,9 @@ def run_portfolio(path, trials=10000, dist_type="pert", seed=None, schema_path=S
 
 
 def plot_lec(results, name, output_dir=RESULTS_DIR):
+    import matplotlib
+
+    matplotlib.use("Agg", force=True)
     import matplotlib.pyplot as plt
 
     output_dir = Path(output_dir)

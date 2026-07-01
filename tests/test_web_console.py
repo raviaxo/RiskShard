@@ -50,6 +50,10 @@ class WebConsoleTests(unittest.TestCase):
         proposal = app.run_command("propose")
         self.assertIn("Module calibration proposal: au_finance_ransomware_midmarket", proposal["output"])
 
+        run = app.run_command("run")
+        self.assertIn("Run complete.", run["output"])
+        self.assertIn("LEC: results/lec_Console.png", run["output"])
+
         gb_proposal = app.run_command("propose gb_finance_data_breach_midmarket")
         self.assertIn("country=GB", gb_proposal["output"])
         self.assertIn("Ready without assumptions: True", gb_proposal["output"])
@@ -74,6 +78,11 @@ class WebConsoleTests(unittest.TestCase):
         self.assertIn('commandButton(`use ${row.module_id}`, "Use")', INDEX_HTML)
         self.assertIn('commandButton(`packs ${row.module_id}`, "Pack")', INDEX_HTML)
         self.assertIn('commandButton(`propose ${row.module_id}`, "Fix gap"', INDEX_HTML)
+
+    def test_browser_console_handles_api_failures_without_stale_running_state(self):
+        self.assertIn("async function requestJson", INDEX_HTML)
+        self.assertIn("Command failed: ${error.message}", INDEX_HTML)
+        self.assertIn("Browser console could not reach the local RiskShard server", INDEX_HTML)
 
 
 if __name__ == "__main__":
