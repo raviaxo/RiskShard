@@ -489,15 +489,27 @@ INDEX_HTML = """<!doctype html>
       transcript.scrollTop = transcript.scrollHeight;
     }
 
+    async function requestJson(url, options = {}) {
+      const response = await fetch(url, options);
+      let payload = {};
+      try {
+        payload = await response.json();
+      } catch (error) {
+        payload = { error: "The server returned a response the browser could not read." };
+      }
+      if (!response.ok) {
+        throw new Error(payload.error || `Request failed with HTTP ${response.status}`);
+      }
+      return payload;
+    }
+
     async function refreshState() {
-      const response = await fetch("/api/state");
-      const state = await response.json();
+      const state = await requestJson("/api/state");
       promptLabel.textContent = state.prompt;
     }
 
     async function refreshDashboard() {
-      const response = await fetch("/api/dashboard");
-      const data = await response.json();
+      const data = await requestJson("/api/dashboard");
       renderDashboard(data);
     }
 
@@ -712,19 +724,19 @@ INDEX_HTML = """<!doctype html>
       if (!trimmed) return;
       appendEntry(trimmed, "Running...");
       input.value = "";
-      const response = await fetch("/api/command", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ command: trimmed })
-      });
-      const result = await response.json();
       const latest = transcript.lastElementChild.querySelector("pre");
-      latest.textContent = result.output || "(no output)";
-      promptLabel.textContent = result.prompt;
-      if (!response.ok) {
-        latest.textContent = result.error || latest.textContent;
+      try {
+        const result = await requestJson("/api/command", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ command: trimmed })
+        });
+        latest.textContent = result.output || "(no output)";
+        promptLabel.textContent = result.prompt;
+        await refreshDashboard();
+      } catch (error) {
+        latest.textContent = `Command failed: ${error.message}\n\nRefresh the page after restarting the local RiskShard server.`;
       }
-      await refreshDashboard();
     }
 
     document.addEventListener("click", (event) => {
@@ -738,10 +750,14 @@ INDEX_HTML = """<!doctype html>
       runCommand(input.value);
     });
 
-    Promise.all([refreshState(), refreshDashboard()]).then(() => {
-      appendEntry("", "Browser console ready. Click Workflow or type a command below.");
-      input.focus();
-    });
+    Promise.all([refreshState(), refreshDashboard()])
+      .then(() => {
+        appendEntry("", "Browser console ready. Click Workflow or type a command below.");
+        input.focus();
+      })
+      .catch((error) => {
+        appendEntry("", `Browser console could not reach the local RiskShard server: ${error.message}`);
+      });
   </script>
 </body>
 </html>
