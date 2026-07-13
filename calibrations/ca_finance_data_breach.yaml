@@ -4,28 +4,29 @@ metadata:
   version: "0.1"
   notes: >
     Starter calibration profile for a Canadian mid-market financial-services
-    data-breach shard. It is intentionally not benchmark-grade: frequency
-    parameters are explicit estimates until Canadian breach prevalence,
-    regulator notification, or denominator-backed frequency evidence is
-    reviewed. Impact parameters use governed global USD loss anchors until
-    Canada-specific cost and CAD conversion evidence are added.
+    data-breach shard. It is intentionally not benchmark-grade: frequency.min
+    and frequency.likely now use Canadian organization-level OPC/CIRA prevalence
+    anchors, but frequency.max remains an explicit estimate until Canadian
+    financial-services or tail-frequency evidence is reviewed. Impact
+    parameters use governed global USD loss anchors until Canada-specific cost
+    and CAD conversion evidence are added.
 
 target_currency: USD
 
 parameters:
   frequency:
     min:
-      evidence_id: riskshard_ca_data_breach_frequency_floor_2026
+      evidence_id: opc_cira_ca_material_data_breach_prevalence_proxy_2026
       transform: direct
-      rationale: Explicit estimated floor until Canada-specific organization-level breach likelihood evidence is available.
+      rationale: Low-confidence material-breach proxy from Canadian organization breach prevalence and OPC significant-harm share.
     likely:
-      evidence_id: riskshard_ca_data_breach_frequency_likely_2026
+      evidence_id: opc_cira_ca_org_customer_employee_data_breach_prevalence_2026
       transform: direct
-      rationale: Explicit estimated likely annual probability until Canada-specific prevalence or denominator evidence is available.
+      rationale: Canadian organization-level customer or employee data-breach prevalence anchor cited in OPC's 2025-2026 annual report.
     max:
       evidence_id: riskshard_ca_data_breach_frequency_stress_2026
       transform: direct
-      rationale: Explicit estimated stress frequency until Canadian tail-frequency evidence is available.
+      rationale: Explicit estimated stress frequency retained above the Canadian prevalence anchor until Canadian financial-services tail-frequency evidence is available.
 
   impact:
     min:

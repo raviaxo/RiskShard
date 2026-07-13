@@ -1,59 +1,63 @@
 records:
-  - id: riskshard_ca_data_breach_frequency_floor_2026
-    title: Estimated Canada finance data breach frequency floor
+  - id: opc_cira_ca_material_data_breach_prevalence_proxy_2026
+    title: Canadian organization material data-breach prevalence proxy
     parameter: frequency.min
-    value: 0.05
+    value: 0.2436
     unit: annual_probability
-    source_name: RiskShard Canada data breach starter
-    source_type: model_assumption
-    source_url_or_citation: Derived from existing RiskShard data-breach starter ranges pending Canada-specific prevalence evidence.
-    publication_date: "2026-07-13"
+    source_id: opc_annual_report_2025_2026
+    source_name: OPC 2025-2026 Annual Report to Parliament
+    source_type: derived_privacy_regulator_survey_benchmark
+    source_url_or_citation: https://www.priv.gc.ca/en/opc-actions-and-decisions/ar_index/202526/ar_202526/
+    publication_date: "2026-06-04"
     extraction_date: "2026-07-13"
-    extraction_notes: Estimated lower annual probability for a Canadian mid-market financial-services data-breach starter.
-    normalization_notes: Kept explicit as an assumption until Canadian breach prevalence, regulator notification, or denominator-backed frequency evidence is reviewed.
-    limitations: Not source-backed; replace with Canadian organization-level breach likelihood or denominator-backed reported-breach evidence before benchmark claims.
+    citation_detail: Top trends in privacy reports that 42% of Canadian organizations experienced a breach of customer or employee data in the last 12 months; Breaches section reports 58% of PIPEDA breaches were likely to create a real risk of significant harm.
+    extraction_notes: Derived a conservative material-breach proxy by multiplying the organization-level data breach prevalence by the significant-harm share of reported PIPEDA breaches.
+    normalization_notes: Calculation is 0.42 * 0.58 = 0.2436. Used as a low-confidence material-breach lower bound, not as a directly observed financial-services mid-market rate.
+    limitations: Combines a cross-sector organization survey fact with a conditional PIPEDA reported-breach harm share; not financial-services-specific, mid-market-specific, or a denominator-backed sector incident rate.
     confidence: low
-    evidence_type: estimated
+    evidence_type: source_backed
     applicability:
-      industries: [financial_services]
+      industries: [all, financial_services]
       countries: [CA]
-      company_size_bands: [mid_market]
+      company_size_bands: [all, mid_market]
       threats: [data_breach]
 
-  - id: riskshard_ca_data_breach_frequency_likely_2026
-    title: Estimated Canada finance data breach likely frequency
+  - id: opc_cira_ca_org_customer_employee_data_breach_prevalence_2026
+    title: Canadian organization customer or employee data-breach prevalence
     parameter: frequency.likely
-    value: 0.18
+    value: 0.42
     unit: annual_probability
-    source_name: RiskShard Canada data breach starter
-    source_type: model_assumption
-    source_url_or_citation: Derived from existing RiskShard data-breach starter ranges pending Canada-specific prevalence evidence.
-    publication_date: "2026-07-13"
+    source_id: opc_annual_report_2025_2026
+    source_name: OPC 2025-2026 Annual Report to Parliament
+    source_type: privacy_regulator_report
+    source_url_or_citation: https://www.priv.gc.ca/en/opc-actions-and-decisions/ar_index/202526/ar_202526/
+    publication_date: "2026-06-04"
     extraction_date: "2026-07-13"
-    extraction_notes: Estimated likely annual probability for a Canadian mid-market financial-services data-breach starter.
-    normalization_notes: Kept explicit as an assumption until Canadian breach prevalence, regulator notification, or denominator-backed frequency evidence is reviewed.
-    limitations: Not source-backed; replace with Canadian organization-level breach likelihood or denominator-backed reported-breach evidence before benchmark claims.
-    confidence: low
-    evidence_type: estimated
+    citation_detail: Top trends in privacy reports that 42% of Canadian organizations experienced a breach of customer or employee data in the last 12 months; footnote 8 cites the CIRA survey.
+    extraction_notes: Interpreted the 12-month organization-level data-breach prevalence as an annual probability anchor for Canadian organizations.
+    normalization_notes: Stored directly as 0.42 annual probability. Selected as the likely frequency anchor until financial-services or mid-market-specific Canadian prevalence evidence is reviewed.
+    limitations: Cross-sector Canadian organization survey fact cited by OPC/CIRA; not limited to financial services, mid-market companies, material events, or regulator-reportable breaches.
+    confidence: medium
+    evidence_type: source_backed
     applicability:
-      industries: [financial_services]
+      industries: [all, financial_services]
       countries: [CA]
-      company_size_bands: [mid_market]
+      company_size_bands: [all, mid_market]
       threats: [data_breach]
 
   - id: riskshard_ca_data_breach_frequency_stress_2026
     title: Estimated Canada finance data breach frequency stress bound
     parameter: frequency.max
-    value: 0.35
+    value: 0.6
     unit: annual_probability
     source_name: RiskShard Canada data breach starter
     source_type: model_assumption
-    source_url_or_citation: Derived from existing RiskShard data-breach starter ranges pending Canada-specific prevalence evidence.
+    source_url_or_citation: Stress estimate retained above the OPC/CIRA 42% broad organization prevalence anchor pending Canada-specific tail-frequency evidence.
     publication_date: "2026-07-13"
     extraction_date: "2026-07-13"
-    extraction_notes: Estimated upper annual probability for a Canadian mid-market financial-services data-breach starter.
-    normalization_notes: Kept explicit as an assumption until Canadian breach prevalence, regulator notification, or denominator-backed frequency evidence is reviewed.
-    limitations: Not source-backed; replace with Canadian organization-level breach likelihood or denominator-backed tail-frequency evidence before benchmark claims.
+    extraction_notes: Estimated upper annual probability for a Canadian mid-market financial-services data-breach starter after replacing likely frequency with a 42% Canadian organization prevalence anchor.
+    normalization_notes: Kept explicit as an assumption until Canadian financial-services, mid-market, or tail-frequency data-breach evidence is reviewed.
+    limitations: Not source-backed; replace with Canadian financial-services-specific tail-frequency or high-exposure organization prevalence evidence before benchmark claims.
     confidence: low
     evidence_type: estimated
     applicability:

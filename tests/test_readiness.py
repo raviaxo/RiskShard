@@ -38,9 +38,9 @@ class ReadinessTests(unittest.TestCase):
         self.assertEqual(gb["source_backed_direct"], 6)
         self.assertEqual(gb["assumption_only_direct"], 0)
         self.assertEqual(gb["next_gap"], "ready for practitioner review")
-        self.assertEqual(ca["source_backed_direct"], 3)
-        self.assertEqual(ca["assumption_only_direct"], 3)
-        self.assertEqual(ca["next_gap"], "replace assumption for frequency.min")
+        self.assertEqual(ca["source_backed_direct"], 5)
+        self.assertEqual(ca["assumption_only_direct"], 1)
+        self.assertEqual(ca["next_gap"], "replace assumption for frequency.max")
         self.assertEqual(
             dashboard["readiness_gate"]["status"],
             "ready_for_local_calibrated_run",
@@ -61,7 +61,7 @@ class ReadinessTests(unittest.TestCase):
         self.assertIn("Risk modules: 6", output)
         self.assertIn("Evidence packs: 6", output)
         self.assertIn("Module coverage matrix", output)
-        self.assertIn("ca_finance_data_breach_midmarket: 3/6 source-backed", output)
+        self.assertIn("ca_finance_data_breach_midmarket: 5/6 source-backed", output)
         self.assertIn("gb_finance_data_breach_midmarket: 6/6 source-backed", output)
         self.assertIn("Installable package: True", output)
 

@@ -48,6 +48,24 @@ sources:
       about geography, industry, and methodology limitations when applying it
       to local scenario ranges.
 
+  - id: opc_annual_report_2025_2026
+    title: 2025-2026 Annual Report to Parliament on the Privacy Act and PIPEDA
+    publisher: Office of the Privacy Commissioner of Canada
+    source_type: privacy_regulator_report
+    url: https://www.priv.gc.ca/en/opc-actions-and-decisions/ar_index/202526/ar_202526/
+    publication_date: "2026-06-04"
+    access_mode: public_html
+    intended_use:
+      - Canada privacy breach reporting
+      - Canada organization-level data breach prevalence context
+      - PIPEDA breach harm context
+      - Canada sector breach-report context
+    usage_notes: >
+      Use as a Canada privacy-regulator report and curated source for cited
+      Canadian business privacy/cyber survey facts. Preserve limitations when
+      a metric is survey-based, cross-sector, or conditional on reported
+      PIPEDA breaches rather than financial-services mid-market organizations.
+
   - id: uk_dsit_cyber_breaches_2026
     title: Cyber Security Breaches Survey 2025/2026
     publisher: UK Department for Science, Innovation and Technology and Home Office

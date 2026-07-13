@@ -88,8 +88,8 @@ class RiskModuleTests(unittest.TestCase):
 
         canada = build_evidence_pack_registry(ROOT, "ca_finance_data_breach_midmarket")["packs"][0]
         self.assertEqual(canada["pack_confidence"], "low")
-        self.assertEqual(canada["evidence_type_counts"]["source_backed"], 3)
-        self.assertEqual(canada["evidence_type_counts"]["estimated"], 3)
+        self.assertEqual(canada["evidence_type_counts"]["source_backed"], 5)
+        self.assertEqual(canada["evidence_type_counts"]["estimated"], 1)
 
     def test_evidence_pack_artifact_fingerprints_module_files(self):
         artifact = build_evidence_pack_artifact("au_finance_ransomware_midmarket", ROOT)
