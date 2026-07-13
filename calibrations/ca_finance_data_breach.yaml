@@ -4,14 +4,13 @@ metadata:
   version: "0.1"
   notes: >
     Starter calibration profile for a Canadian mid-market financial-services
-    data-breach shard. It is intentionally not benchmark-grade: frequency.min
-    and frequency.likely now use Canadian organization-level OPC/CIRA prevalence
-    anchors, but frequency.max remains an explicit estimate until Canadian
-    financial-services or tail-frequency evidence is reviewed. Impact
-    min/max parameters still use governed global USD loss anchors converted to
-    CAD, while impact.likely now uses a secondary Canada-specific IBM cost
-    report bridge. Replace the secondary likely-cost bridge and global min/max
-    anchors before benchmark-grade claims.
+    data-breach shard. It is an automated benchmark-review candidate, not a
+    silently certified benchmark. Frequency min/likely/max use Canadian
+    OPC/CIRA prevalence anchors. Impact min/likely/max use primary governed
+    global USD loss anchors converted to CAD, because the public primary IBM
+    page exposes the global data-breach cost but not the Canada regional row.
+    Human review must accept the global impact bridge caveat before any public
+    benchmark-grade claim.
 
 target_currency: CAD
 
@@ -26,9 +25,9 @@ parameters:
       transform: direct
       rationale: Canadian organization-level customer or employee data-breach prevalence anchor cited in OPC's 2025-2026 annual report.
     max:
-      evidence_id: riskshard_ca_data_breach_frequency_stress_2026
+      evidence_id: opc_cira_ca_org_customer_employee_data_breach_prevalence_stress_2026
       transform: direct
-      rationale: Explicit estimated stress frequency retained above the Canadian prevalence anchor until Canadian financial-services tail-frequency evidence is available.
+      rationale: Source-backed Canadian organization-level data-breach prevalence reused as the stress frequency anchor until Canadian financial-services tail-frequency evidence is available.
 
   impact:
     min:
@@ -38,11 +37,11 @@ parameters:
       round_to: 10000
       rationale: Source-backed global lower loss anchor converted to CAD until Canadian breach response-cost evidence is reviewed.
     likely:
-      evidence_id: itpro_ibm_ca_2025_average_breach_cost_usd
+      evidence_id: ibm_cost_data_breach_2025_global_average_cost_usd_ca_context
       transform: currency_convert
       target_currency: CAD
       round_to: 100000
-      rationale: Secondary Canada-specific IBM breach-cost coverage converted to CAD; replace with a primary Canada source before benchmark claims.
+      rationale: Primary IBM global data-breach average cost converted to CAD; selected over secondary Canada coverage for automated benchmark-review source quality.
     max:
       evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context
       transform: currency_convert

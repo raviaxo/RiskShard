@@ -12,10 +12,15 @@ Each scenario should include `metadata.scenario_stage`:
 These are the best first-run shards because they have matching evidence and calibration profiles:
 
 - `au_finance_ransomware_midmarket.yaml`
+- `ca_finance_data_breach_midmarket.yaml`
+- `de_industrial_ransomware_midmarket.yaml`
+- `fr_finance_data_breach_midmarket.yaml`
+- `gb_finance_data_breach_midmarket.yaml`
+- `jp_manufacturing_ransomware_midmarket.yaml`
+- `sg_finance_bec_midmarket.yaml`
+- `us_finance_business_email_compromise.yaml`
 - `data_breach.yaml`
 - `business_email_compromise.yaml`
-- `us_finance_business_email_compromise.yaml`
-- `gb_finance_data_breach_midmarket.yaml`
 
 Use them with:
 

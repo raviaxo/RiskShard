@@ -14,19 +14,23 @@ class ReadinessTests(unittest.TestCase):
             ROOT / "org_profiles" / "au_finance_midmarket.yaml",
         )
 
-        self.assertGreaterEqual(dashboard["coverage"]["evidence_records"], 20)
+        self.assertGreaterEqual(dashboard["coverage"]["evidence_records"], 80)
         self.assertIn("ransomware", dashboard["coverage"]["threats"])
         self.assertIn("AU", dashboard["localization"]["covered_countries"])
         self.assertIn("CA", dashboard["localization"]["covered_countries"])
+        self.assertIn("DE", dashboard["localization"]["covered_countries"])
+        self.assertIn("FR", dashboard["localization"]["covered_countries"])
         self.assertIn("GB", dashboard["localization"]["covered_countries"])
+        self.assertIn("JP", dashboard["localization"]["covered_countries"])
+        self.assertIn("SG", dashboard["localization"]["covered_countries"])
         self.assertTrue(dashboard["install_release"]["pyproject"])
         self.assertEqual(len(dashboard["data_pack"]["fingerprint"]), 64)
         self.assertGreaterEqual(len(dashboard["top_risks"]), 5)
-        self.assertEqual(dashboard["scenarios"]["stage_counts"]["governed_starter"], 6)
+        self.assertEqual(dashboard["scenarios"]["stage_counts"]["governed_starter"], 10)
         self.assertEqual(dashboard["scenarios"]["stage_counts"]["demo_fixture"], 5)
-        self.assertEqual(dashboard["risk_modules"]["module_count"], 6)
-        self.assertEqual(dashboard["evidence_packs"]["pack_count"], 6)
-        self.assertEqual(len(dashboard["evidence_packs"]["coverage_matrix"]), 6)
+        self.assertEqual(dashboard["risk_modules"]["module_count"], 10)
+        self.assertEqual(dashboard["evidence_packs"]["pack_count"], 10)
+        self.assertEqual(len(dashboard["evidence_packs"]["coverage_matrix"]), 10)
         gb = next(
             row for row in dashboard["evidence_packs"]["coverage_matrix"]
             if row["module_id"] == "gb_finance_data_breach_midmarket"
@@ -38,9 +42,9 @@ class ReadinessTests(unittest.TestCase):
         self.assertEqual(gb["source_backed_direct"], 6)
         self.assertEqual(gb["assumption_only_direct"], 0)
         self.assertEqual(gb["next_gap"], "ready for practitioner review")
-        self.assertEqual(ca["source_backed_direct"], 5)
-        self.assertEqual(ca["assumption_only_direct"], 1)
-        self.assertEqual(ca["next_gap"], "replace assumption for frequency.max")
+        self.assertEqual(ca["source_backed_direct"], 6)
+        self.assertEqual(ca["assumption_only_direct"], 0)
+        self.assertEqual(ca["next_gap"], "ready for practitioner review")
         self.assertEqual(
             dashboard["readiness_gate"]["status"],
             "ready_for_local_calibrated_run",
@@ -57,11 +61,13 @@ class ReadinessTests(unittest.TestCase):
         self.assertIn("Gate: ready_for_local_calibrated_run", output)
         self.assertIn("Next actions", output)
         self.assertIn("Data pack:", output)
-        self.assertIn("Scenarios: demo_fixture=5, governed_starter=6", output)
-        self.assertIn("Risk modules: 6", output)
-        self.assertIn("Evidence packs: 6", output)
+        self.assertIn("Scenarios: demo_fixture=5, governed_starter=10", output)
+        self.assertIn("Risk modules: 10", output)
+        self.assertIn("Evidence packs: 10", output)
         self.assertIn("Module coverage matrix", output)
-        self.assertIn("ca_finance_data_breach_midmarket: 5/6 source-backed", output)
+        self.assertIn("ca_finance_data_breach_midmarket: 6/6 source-backed", output)
+        self.assertIn("de_industrial_ransomware_midmarket: 4/6 source-backed", output)
+        self.assertIn("sg_finance_bec_midmarket: 1/6 source-backed", output)
         self.assertIn("gb_finance_data_breach_midmarket: 6/6 source-backed", output)
         self.assertIn("Installable package: True", output)
 

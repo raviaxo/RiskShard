@@ -47,6 +47,36 @@ extractions:
     evidence_record_ids:
       - oaic_abs_au_finance_ndb_notification_rate_floor_2025
 
+  - id: uk_dsit_2026_medium_business_breach_prevalence_au_bridge
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-07-13"
+    citation_detail: Summary and Chapter 4 business-size prevalence.
+    fact: The survey reported that 65% of UK medium businesses identified a cyber security breach or attack in the last 12 months.
+    value: 0.65
+    unit: annual_probability
+    normalization_notes: Converted 65% to 0.65 and stored as a source-backed bridge for AU likely frequency.
+    limitations: UK official survey; broad cyber breach/attack prevalence; not Australia-specific or financial-services-specific.
+    evidence_record_ids:
+      - uk_dsit_2026_medium_business_breach_prevalence_au_bridge
+
+  - id: uk_dsit_2026_large_business_breach_prevalence_au_stress_bridge
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-07-13"
+    citation_detail: Summary and Chapter 4 business-size prevalence.
+    fact: The survey reported that 69% of UK large businesses identified a cyber security breach or attack in the last 12 months.
+    value: 0.69
+    unit: annual_probability
+    normalization_notes: Converted 69% to 0.69 and stored as a source-backed bridge for AU stress frequency.
+    limitations: UK official survey; broad cyber breach/attack prevalence; large-business prevalence may overstate mid-market likelihood; not Australia-specific or financial-services-specific.
+    evidence_record_ids:
+      - uk_dsit_2026_large_business_breach_prevalence_au_stress_bridge
+
   - id: verizon_dbir_2026_vulnerability_exploitation_breach_entry_share
     source_id: verizon_dbir_2026
     source_name: Verizon 2026 Data Breach Investigations Report

@@ -1,0 +1,47 @@
+metadata:
+  name: Japan manufacturing ransomware calibration
+  scenario_name: Japan Manufacturing Ransomware Midmarket - Calibrated Draft
+  version: "0.1"
+  notes: >
+    Starter calibration profile for a Japan mid-market manufacturing
+    ransomware shard. It is intentionally not benchmark-grade: frequency.min
+    uses a global ransomware likelihood floor, frequency.likely/max are
+    explicit estimates, and impact values use global cyber-loss anchors until
+    Japan manufacturing ransomware evidence is reviewed.
+
+target_currency: USD
+
+parameters:
+  frequency:
+    min:
+      evidence_id: cyentia_global_ransomware_probability_2025_jp_context
+      transform: direct
+      rationale: Global ransomware likelihood floor from Cyentia IRIS Ransomware.
+    likely:
+      evidence_id: riskshard_jp_manufacturing_ransomware_frequency_likely_2026
+      transform: direct
+      rationale: Explicit estimated likely frequency until Japan manufacturing ransomware evidence exists.
+    max:
+      evidence_id: riskshard_jp_manufacturing_ransomware_frequency_stress_2026
+      transform: direct
+      rationale: Explicit estimated stress frequency until Japan manufacturing tail-frequency evidence exists.
+
+  impact:
+    min:
+      evidence_id: cyentia_iris_2022_typical_cyber_event_loss_usd_jp_manufacturing_context
+      transform: direct
+      target_currency: USD
+      round_to: 10000
+      rationale: Source-backed global lower loss anchor until Japan manufacturing ransomware loss-floor evidence is reviewed.
+    likely:
+      evidence_id: cyentia_iris_2025_median_security_incident_loss_usd_jp_manufacturing_context
+      transform: direct
+      target_currency: USD
+      round_to: 100000
+      rationale: Source-backed global median security-incident loss bridge until Japan ransomware-specific likely loss evidence is reviewed.
+    max:
+      evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd_jp_manufacturing_context
+      transform: direct
+      target_currency: USD
+      round_to: 100000
+      rationale: Source-backed global extreme security-incident loss bridge until Japan ransomware tail-loss evidence is reviewed.

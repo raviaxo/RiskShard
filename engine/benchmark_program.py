@@ -380,7 +380,7 @@ def build_benchmark_cohort_report(program_report, cohort="seeded"):
         "cohort": {
             "id": "seeded",
             "title": "Benchmark Cohort 1: seeded modules",
-            "description": "The first five runnable modules already present in risk_modules/.",
+            "description": "Runnable target modules already present in risk_modules/.",
         },
         "program_id": program_report["program"]["id"],
         "status": "benchmark_ready" if not upgrade_queue else "needs_evidence",

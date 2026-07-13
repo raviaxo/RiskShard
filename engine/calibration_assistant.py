@@ -34,6 +34,10 @@ def propose_module_calibration(module_id, root=PROJECT_ROOT, org_profile_path=No
         module["threat"],
         parameters=module.get("required_parameters") or REQUIRED_PARAMETERS,
     )
+    module_evidence_files = {
+        str(root / evidence_path)
+        for evidence_path in module["artifacts"].get("evidence", [])
+    }
     calibration_path = root / module["artifacts"]["calibration"]
     calibration_profile = load_yaml_file(calibration_path) if calibration_path.exists() else {}
     target_currency = calibration_profile.get("target_currency")
@@ -49,8 +53,12 @@ def propose_module_calibration(module_id, root=PROJECT_ROOT, org_profile_path=No
             candidate
             for candidate in matched["matches"]
             if candidate["record"]["parameter"] == parameter
+            and candidate["record"].get("_source_file") in module_evidence_files
         ]
-        candidates = sorted(candidates, key=candidate_sort_key)
+        candidates = sorted(
+            candidates,
+            key=lambda candidate: candidate_sort_key(candidate, module_evidence_files),
+        )
         best = candidates[0] if candidates else None
         current = current_selections.get(parameter)
         selectors.append({
@@ -92,14 +100,24 @@ def selector_status(best, current):
     return "selected_source_backed"
 
 
-def candidate_sort_key(candidate):
+def candidate_sort_key(candidate, module_evidence_files=None):
+    module_evidence_files = module_evidence_files or set()
     record = candidate["record"]
     return (
         record["evidence_type"] != "source_backed",
+        record.get("_source_file") not in module_evidence_files,
         -candidate["score"],
+        -exact_match(candidate, "country"),
+        -exact_match(candidate, "threat"),
+        -exact_match(candidate, "industry"),
+        -exact_match(candidate, "company_size"),
         -CONFIDENCE_RANK[record["confidence"]],
         record["id"],
     )
+
+
+def exact_match(candidate, dimension):
+    return 1 if candidate["applicability"][dimension]["match"] == "exact" else 0
 
 
 def summarize_candidate(candidate, feeds_by_id):

@@ -162,9 +162,10 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn("Evidence pack: au_finance_ransomware_midmarket", packs_output)
         self.assertIn("source_gathered", packs_output)
 
-        module_proposal = self.command("propose au_finance_ransomware_midmarket")
-        self.assertIn("Module calibration proposal: au_finance_ransomware_midmarket", module_proposal)
-        self.assertIn("selected_assumption", module_proposal)
+        module_proposal = self.command("propose au_finance_data_breach_midmarket")
+        self.assertIn("Module calibration proposal: au_finance_data_breach_midmarket", module_proposal)
+        self.assertIn("Ready without assumptions: True", module_proposal)
+        self.assertIn("selected_source_backed", module_proposal)
 
         gb_proposal = self.command("propose gb_finance_data_breach_midmarket")
         self.assertIn("Module calibration proposal: gb_finance_data_breach_midmarket", gb_proposal)

@@ -1,0 +1,13 @@
+metadata:
+  name: Singapore Mid-Market Financial Services
+  version: "0.1"
+
+org_type: private_company
+industry: financial_services
+country: Singapore
+employees: 300
+annual_revenue_or_budget: 90000000
+data_sensitivity: high
+internet_exposure: high
+third_party_dependency: high
+regulatory_intensity: high

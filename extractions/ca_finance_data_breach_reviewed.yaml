@@ -13,6 +13,7 @@ extractions:
     limitations: Cross-sector Canadian organization survey fact; not financial-services-specific, mid-market-specific, or limited to material/regulator-reportable breaches.
     evidence_record_ids:
       - opc_cira_ca_org_customer_employee_data_breach_prevalence_2026
+      - opc_cira_ca_org_customer_employee_data_breach_prevalence_stress_2026
       - opc_cira_ca_material_data_breach_prevalence_proxy_2026
 
   - id: opc_2026_pipeda_significant_harm_breach_share
@@ -61,6 +62,22 @@ extractions:
     limitations: Secondary article, not primary IBM Canada release; not financial-services-specific or size-band-specific.
     evidence_record_ids:
       - itpro_ibm_ca_2025_average_breach_cost_usd
+
+  - id: ibm_cost_data_breach_2025_global_average_cost_usd_ca_context
+    source_id: ibm_cost_data_breach_2025
+    source_name: IBM Cost of a Data Breach Report 2025
+    source_url_or_citation: https://www.ibm.com/reports/data-breach
+    publication_date: "2025-07-30"
+    extraction_date: "2026-07-13"
+    citation_detail: Public report page hero metric; global average cost of a data breach is USD 4.4M.
+    fact: IBM reported a USD 4.4 million global average cost of a data breach for the 2025 report.
+    value: 4400000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored in source currency and used as a primary-source global likely loss bridge for the Canada benchmark-review candidate. Calibration converts to CAD through the explicit Bank of Canada FX assumption.
+    limitations: Primary IBM source but global average across studied breached organizations; not Canada-specific, financial-services-specific, or size-band-specific.
+    evidence_record_ids:
+      - ibm_cost_data_breach_2025_global_average_cost_usd_ca_context
 
   - id: cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context
     source_id: cyentia_iris_2025

@@ -1,0 +1,63 @@
+extractions:
+  - id: cyentia_global_ransomware_probability_2025_de_context
+    source_id: cyentia_iris_ransomware
+    source_name: Cyentia IRIS Ransomware
+    source_url_or_citation: https://www.cyentia.com/publication/iris-ransomware/
+    publication_date: "2025-04-21"
+    extraction_date: "2026-07-13"
+    citation_detail: Key findings on the public IRIS Ransomware source page.
+    fact: Cyentia reported that approximately 10% of organizations are likely to experience a ransomware incident within the next year.
+    value: 0.10
+    unit: annual_probability
+    normalization_notes: Stored directly as a global ransomware frequency floor.
+    limitations: Global cross-sector estimate, not Germany industrial-specific.
+    evidence_record_ids:
+      - cyentia_global_ransomware_probability_2025_de_context
+
+  - id: cyentia_iris_2022_typical_cyber_event_loss_usd_de_industrial_context
+    source_id: cyentia_iris_2022
+    source_name: Cyentia Information Risk Insights Study 2022
+    source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
+    publication_date: "2022-01-01"
+    extraction_date: "2026-07-13"
+    citation_detail: Public source page key findings.
+    fact: Cyentia reported a typical financial cost of USD 266,000 for a cyber event.
+    value: 266000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored directly in USD as a global lower loss anchor.
+    limitations: Global cyber-event benchmark, not ransomware-only or Germany industrial-specific.
+    evidence_record_ids:
+      - cyentia_iris_2022_typical_cyber_event_loss_usd_de_industrial_context
+
+  - id: cyentia_iris_2025_median_security_incident_loss_usd_de_industrial_context
+    source_id: cyentia_iris_2025
+    source_name: Cyentia Information Risk Insights Study 2025
+    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
+    publication_date: "2025-06-10"
+    extraction_date: "2026-07-13"
+    citation_detail: Public source page key findings.
+    fact: Cyentia reported that median losses rose toward USD 3 million.
+    value: 3000000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored directly in USD as a global likely-loss bridge.
+    limitations: Global security-incident benchmark, not ransomware-only or Germany industrial-specific.
+    evidence_record_ids:
+      - cyentia_iris_2025_median_security_incident_loss_usd_de_industrial_context
+
+  - id: cyentia_iris_2025_extreme_security_incident_loss_usd_de_industrial_context
+    source_id: cyentia_iris_2025
+    source_name: Cyentia Information Risk Insights Study 2025
+    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
+    publication_date: "2025-06-10"
+    extraction_date: "2026-07-13"
+    citation_detail: Public source page key findings.
+    fact: Cyentia reported extreme security incidents reaching USD 32 million.
+    value: 32000000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored directly in USD as a global stress-loss bridge.
+    limitations: Global security-incident benchmark, not ransomware-only or Germany industrial-specific.
+    evidence_record_ids:
+      - cyentia_iris_2025_extreme_security_incident_loss_usd_de_industrial_context

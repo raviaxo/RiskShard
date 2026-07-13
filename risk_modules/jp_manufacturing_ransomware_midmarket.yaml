@@ -1,0 +1,38 @@
+id: jp_manufacturing_ransomware_midmarket
+title: Japan Manufacturing Ransomware Midmarket
+version: "0.1"
+status: governed_starter
+threat: ransomware
+description: >
+  Governed starter ransomware shard for a Japan mid-market manufacturer. It
+  gives APAC manufacturing contributors a full artifact chain while keeping
+  Japan-local frequency and loss gaps explicit.
+context:
+  industry: manufacturing
+  country: JP
+  company_size: mid_market
+artifacts:
+  scenario: scenarios/jp_manufacturing_ransomware_midmarket.yaml
+  org_profile: org_profiles/jp_manufacturing_midmarket.yaml
+  calibration: calibrations/jp_manufacturing_ransomware.yaml
+  evidence:
+    - evidence/jp_manufacturing_ransomware.yaml
+  extractions:
+    - extractions/jp_manufacturing_ransomware_reviewed.yaml
+  controls: []
+required_parameters:
+  - frequency.min
+  - frequency.likely
+  - frequency.max
+  - impact.min
+  - impact.likely
+  - impact.max
+tags:
+  - jp
+  - japan
+  - manufacturing
+  - mid_market
+  - ransomware
+practitioner_notes:
+  good_for: Testing Japan manufacturing contribution workflow and running a transparent starter ransomware scenario with global loss anchors.
+  not_good_for: Benchmark claims or Japan-local manufacturing decisions without replacing estimated frequency values and global loss bridges.

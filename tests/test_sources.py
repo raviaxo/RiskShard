@@ -34,7 +34,13 @@ class SourceRegistryTests(unittest.TestCase):
         self.assertIn("fca_equifax_cyber_breach_fine_2023", source_ids)
         self.assertIn("accc_targeting_scams_2025", source_ids)
         self.assertIn("cyentia_iris_2025", source_ids)
+        self.assertIn("first_epss_data_stats", source_ids)
         self.assertIn("asd_annual_cyber_threat_report_2024_2025", source_ids)
+        epss = next(
+            source for source in registry["sources"]
+            if source["id"] == "first_epss_data_stats"
+        )
+        self.assertFalse(epss["active"])
         asd = next(
             source for source in registry["sources"]
             if source["id"] == "asd_annual_cyber_threat_report_2024_2025"

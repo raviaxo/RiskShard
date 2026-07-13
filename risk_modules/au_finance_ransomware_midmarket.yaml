@@ -1,12 +1,13 @@
 id: au_finance_ransomware_midmarket
 title: Australia Finance Ransomware Midmarket
-version: "0.1"
-status: governed_starter
+version: "0.2"
+status: benchmark_candidate
 threat: ransomware
 description: >
-  Starter ransomware risk shard for an Australian mid-market financial-services
-  organization. It is runnable and source-governed, but still has estimated
-  frequency and tail-impact assumptions.
+  Benchmark-review candidate ransomware shard for an Australian mid-market
+  financial-services organization. All six direct calibration parameters are
+  source-backed, but stress frequency and stress impact still require human
+  caveat review because they use global/sector bridge evidence.
 context:
   industry: financial_services
   country: AU
@@ -34,5 +35,5 @@ tags:
   - mid_market
   - ransomware
 practitioner_notes:
-  good_for: Local calibrated run, evidence review, control comparison walkthrough.
-  not_good_for: Benchmark-grade Australia ransomware frequency or stress-loss decisions.
+  good_for: Human benchmark review of an Australian financial-services ransomware shard with all six direct parameters source-backed and extraction-mapped.
+  not_good_for: Treating the stress frequency as a true tail rate or the Cyentia global tail-loss bridge as an Australia ransomware claims distribution without human review.

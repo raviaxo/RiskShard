@@ -1,13 +1,15 @@
 metadata:
   name: Australia financial-services data breach calibration
   scenario_name: Australia Finance Data Breach Midmarket - Calibrated Draft
-  version: "0.1"
+  version: "0.2"
   notes: >
     Starter reviewed calibration profile for Australia financial-services data
-    breach. It can generate a scenario draft with source-backed global impact
-    anchors and a denominator-derived reported-breach frequency floor, but
-    likely and stress frequency parameters remain estimated until stronger
-    organization-level likelihood evidence is added.
+    breach. It can generate a scenario draft with source-backed impact anchors,
+    a denominator-derived Australian reported-breach frequency floor, and
+    official UK breach/attack prevalence bridges for likely and stress
+    frequency. The frequency bridges are useful for replacing assumptions, but
+    they are not a substitute for Australian financial-services prevalence
+    evidence.
 
 target_currency: AUD
 
@@ -18,13 +20,13 @@ parameters:
       transform: direct
       rationale: Source-derived reported NDB notification floor from OAIC finance notifications and ABS Financial and Insurance Services business counts.
     likely:
-      evidence_id: riskshard_data_breach_frequency_likely_2026
+      evidence_id: uk_dsit_2026_medium_business_breach_prevalence_au_bridge
       transform: direct
-      rationale: Explicit estimated likely annual probability until source-backed organization-level frequency evidence exists.
+      rationale: Source-backed UK official medium-business cyber breach/attack prevalence bridge selected until AU mid-market financial-services prevalence evidence exists.
     max:
-      evidence_id: riskshard_data_breach_frequency_stress_2026
+      evidence_id: uk_dsit_2026_large_business_breach_prevalence_au_stress_bridge
       transform: direct
-      rationale: Explicit estimated stress frequency until denominator-backed tail-frequency evidence exists.
+      rationale: Source-backed UK official large-business breach/attack prevalence bridge selected as a stress-frequency proxy until AU tail-prevalence evidence exists.
 
   impact:
     min:

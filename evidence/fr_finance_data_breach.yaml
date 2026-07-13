@@ -1,0 +1,135 @@
+records:
+  - id: riskshard_fr_finance_data_breach_frequency_floor_2026
+    title: Estimated France finance data breach frequency floor
+    parameter: frequency.min
+    value: 0.08
+    unit: annual_probability
+    source_name: RiskShard France finance data breach starter pack
+    source_type: model_assumption
+    source_url_or_citation: Starter assumption pending reviewed France privacy, cyber-agency, or sector breach-frequency evidence.
+    publication_date: "2026-07-13"
+    extraction_date: "2026-07-13"
+    extraction_notes: Estimated lower annual probability for a France mid-market financial-services data-breach draft.
+    normalization_notes: Kept explicit as an assumption until source-backed France data-breach frequency evidence is reviewed.
+    limitations: Not source-backed; replace with CNIL, ANSSI, Banque de France, insurer, or sector-denominator evidence before benchmark claims.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [FR]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: riskshard_fr_finance_data_breach_frequency_likely_2026
+    title: Estimated France finance data breach likely frequency
+    parameter: frequency.likely
+    value: 0.22
+    unit: annual_probability
+    source_name: RiskShard France finance data breach starter pack
+    source_type: model_assumption
+    source_url_or_citation: Starter assumption pending reviewed France privacy, cyber-agency, or sector breach-frequency evidence.
+    publication_date: "2026-07-13"
+    extraction_date: "2026-07-13"
+    extraction_notes: Estimated likely annual probability for a France mid-market financial-services data-breach draft.
+    normalization_notes: Kept explicit as an assumption until France organization-level or sector-specific breach frequency evidence is reviewed.
+    limitations: Not source-backed; replace before benchmark claims.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [FR]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: riskshard_fr_finance_data_breach_frequency_stress_2026
+    title: Estimated France finance data breach frequency stress bound
+    parameter: frequency.max
+    value: 0.45
+    unit: annual_probability
+    source_name: RiskShard France finance data breach starter pack
+    source_type: model_assumption
+    source_url_or_citation: Starter assumption pending reviewed France privacy, cyber-agency, or sector breach tail-frequency evidence.
+    publication_date: "2026-07-13"
+    extraction_date: "2026-07-13"
+    extraction_notes: Estimated stress annual probability for a France mid-market financial-services data-breach draft.
+    normalization_notes: Kept explicit as an assumption until denominator-aware France tail-frequency evidence is reviewed.
+    limitations: Not source-backed; replace before benchmark claims.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [FR]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: cyentia_iris_2022_typical_cyber_event_loss_usd_fr_finance_context
+    title: Typical reported cyber-event financial loss for France finance starter
+    parameter: impact.min
+    value: 266000
+    unit: currency
+    currency: USD
+    source_id: cyentia_iris_2022
+    source_name: Cyentia Information Risk Insights Study 2022
+    source_type: cyber_loss_research
+    source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
+    publication_date: "2022-01-01"
+    extraction_date: "2026-07-13"
+    citation_detail: Public source page key findings; typical financial cost reported for a cyber event is USD 266K.
+    extraction_notes: Reused the governed Cyentia typical cyber-event financial-loss anchor for the France finance starter.
+    normalization_notes: Stored in USD and selected as a conservative lower loss anchor until France breach-cost floor evidence is reviewed.
+    limitations: Global cyber-event benchmark, not France-specific, data-breach-only, financial-services-specific, or a true minimum loss quantile.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [all, data_breach]
+
+  - id: ibm_cost_data_breach_2025_global_average_cost_usd_fr_context
+    title: Global average cost of a data breach for France finance starter
+    parameter: impact.likely
+    value: 4400000
+    unit: currency
+    currency: USD
+    source_id: ibm_cost_data_breach_2025
+    source_name: IBM Cost of a Data Breach Report 2025
+    source_type: data_breach_cost_research
+    source_url_or_citation: https://www.ibm.com/reports/data-breach
+    publication_date: "2025-07-30"
+    extraction_date: "2026-07-13"
+    citation_detail: Public report page hero metric; global average cost of a data breach is USD 4.4M.
+    extraction_notes: Reused the governed IBM global average breach-cost anchor for the France finance starter.
+    normalization_notes: Stored directly in USD and selected as a global data-breach likely-loss bridge until France-specific breach-cost evidence is reviewed.
+    limitations: Global average across studied breached organizations; not France-specific, financial-services-specific, or size-band-specific.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: cyentia_iris_2025_extreme_security_incident_loss_usd_fr_finance_context
+    title: Extreme reported security-incident loss for France finance starter
+    parameter: impact.max
+    value: 32000000
+    unit: currency
+    currency: USD
+    source_id: cyentia_iris_2025
+    source_name: Cyentia Information Risk Insights Study 2025
+    source_type: cyber_loss_research
+    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
+    publication_date: "2025-06-10"
+    extraction_date: "2026-07-13"
+    citation_detail: Public source page key findings; extreme events reached USD 32M.
+    extraction_notes: Reused the governed Cyentia extreme security-incident loss anchor for the France finance starter.
+    normalization_notes: Stored directly in USD and selected as a global stress-loss bridge until France breach tail-loss evidence is reviewed.
+    limitations: Global security-incident benchmark, not France-specific, data-breach-only, financial-services-specific, or a formal percentile for this scenario.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [all, data_breach]

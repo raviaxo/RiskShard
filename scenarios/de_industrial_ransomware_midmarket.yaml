@@ -1,0 +1,21 @@
+metadata:
+  name: Germany Industrial Ransomware Midmarket
+  version: "0.1"
+  currency: USD
+  scenario_stage: governed_starter
+  benchmark_status: starter_with_global_loss_anchors_and_estimated_frequency_stress
+  description: >
+    Starter Germany industrial ransomware shard. It uses a global ransomware
+    likelihood floor and global cyber-loss anchors, with explicit estimated
+    likely and stress frequency values until Germany industrial ransomware
+    frequency evidence is reviewed.
+
+frequency:
+  min: 0.10
+  likely: 0.30
+  max: 0.55
+
+impact:
+  min: 266000
+  likely: 3000000
+  max: 32000000

@@ -1,0 +1,13 @@
+metadata:
+  name: Japan Mid-Market Manufacturer
+  version: "0.1"
+
+org_type: private_company
+industry: manufacturing
+country: Japan
+employees: 700
+annual_revenue_or_budget: 130000000
+data_sensitivity: moderate
+internet_exposure: moderate
+third_party_dependency: high
+regulatory_intensity: moderate

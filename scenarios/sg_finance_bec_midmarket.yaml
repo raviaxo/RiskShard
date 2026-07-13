@@ -1,0 +1,21 @@
+metadata:
+  name: Singapore Finance Business Email Compromise Midmarket
+  version: "0.1"
+  currency: USD
+  scenario_stage: governed_starter
+  benchmark_status: starter_with_global_bec_loss_anchor_and_estimated_frequency
+  description: >
+    Starter Singapore financial-services business email compromise shard. It
+    uses an FBI IC3 BEC complaint-average loss anchor for likely impact and
+    keeps frequency and loss bounds as explicit assumptions until Singapore
+    payment-fraud and financial-sector evidence is reviewed.
+
+frequency:
+  min: 0.04
+  likely: 0.12
+  max: 0.30
+
+impact:
+  min: 25000
+  likely: 123000
+  max: 1200000

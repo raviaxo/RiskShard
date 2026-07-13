@@ -1,0 +1,48 @@
+extractions:
+  - id: cyentia_iris_2022_typical_cyber_event_loss_usd_fr_finance_context
+    source_id: cyentia_iris_2022
+    source_name: Cyentia Information Risk Insights Study 2022
+    source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
+    publication_date: "2022-01-01"
+    extraction_date: "2026-07-13"
+    citation_detail: Public source page key findings.
+    fact: Cyentia reported a typical financial cost of USD 266,000 for a cyber event.
+    value: 266000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored directly in USD as a global lower loss anchor.
+    limitations: Global cyber-event benchmark, not France-specific or data-breach-only.
+    evidence_record_ids:
+      - cyentia_iris_2022_typical_cyber_event_loss_usd_fr_finance_context
+
+  - id: ibm_cost_data_breach_2025_global_average_cost_usd_fr_context
+    source_id: ibm_cost_data_breach_2025
+    source_name: IBM Cost of a Data Breach Report 2025
+    source_url_or_citation: https://www.ibm.com/reports/data-breach
+    publication_date: "2025-07-30"
+    extraction_date: "2026-07-13"
+    citation_detail: Public report page hero metric.
+    fact: IBM reported a USD 4.4 million global average cost of a data breach for the 2025 report.
+    value: 4400000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored directly in USD as a global data-breach likely-loss bridge.
+    limitations: Global average across studied breached organizations; not France-specific or financial-services-specific.
+    evidence_record_ids:
+      - ibm_cost_data_breach_2025_global_average_cost_usd_fr_context
+
+  - id: cyentia_iris_2025_extreme_security_incident_loss_usd_fr_finance_context
+    source_id: cyentia_iris_2025
+    source_name: Cyentia Information Risk Insights Study 2025
+    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
+    publication_date: "2025-06-10"
+    extraction_date: "2026-07-13"
+    citation_detail: Public source page key findings.
+    fact: Cyentia reported extreme security incidents reaching USD 32 million.
+    value: 32000000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored directly in USD as a global stress-loss bridge.
+    limitations: Global security-incident benchmark, not France-specific or data-breach-only.
+    evidence_record_ids:
+      - cyentia_iris_2025_extreme_security_incident_loss_usd_fr_finance_context

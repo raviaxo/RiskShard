@@ -98,12 +98,32 @@ class EvidenceMatchingTests(unittest.TestCase):
             "estimated",
         )
         self.assertEqual(
+            by_id["uk_dsit_2026_medium_business_breach_prevalence_au_bridge"]["evidence_type"],
+            "source_backed",
+        )
+        self.assertEqual(
+            by_id["uk_dsit_2026_medium_business_breach_prevalence_au_bridge"]["value"],
+            0.65,
+        )
+        self.assertEqual(
+            by_id["uk_dsit_2026_medium_business_breach_prevalence_au_bridge"]["applicability"]["countries"],
+            ["global"],
+        )
+        self.assertEqual(
+            by_id["uk_dsit_2026_large_business_breach_prevalence_au_stress_bridge"]["value"],
+            0.69,
+        )
+        self.assertEqual(
             by_id["abs_au_financial_insurance_active_businesses_2025"]["value"],
             133743,
         )
         self.assertEqual(
             by_id["oaic_abs_au_finance_ndb_notification_rate_floor_2025"]["evidence_type"],
             "source_backed",
+        )
+        self.assertEqual(
+            by_id["oaic_abs_au_finance_ndb_notification_rate_floor_2025"]["confidence"],
+            "medium",
         )
         self.assertEqual(
             by_id["oaic_abs_au_finance_ndb_notification_rate_floor_2025"]["source_ids"],

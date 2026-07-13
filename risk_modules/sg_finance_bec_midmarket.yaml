@@ -1,0 +1,40 @@
+id: sg_finance_bec_midmarket
+title: Singapore Finance Business Email Compromise Midmarket
+version: "0.1"
+status: governed_starter
+threat: business_email_compromise
+description: >
+  Governed starter business-email-compromise shard for a Singapore mid-market
+  financial-services organization. It uses a global BEC complaint-average loss
+  bridge and makes all Singapore-local frequency and tail-loss gaps visible.
+context:
+  industry: financial_services
+  country: SG
+  company_size: mid_market
+artifacts:
+  scenario: scenarios/sg_finance_bec_midmarket.yaml
+  org_profile: org_profiles/sg_finance_midmarket.yaml
+  calibration: calibrations/sg_finance_bec.yaml
+  evidence:
+    - evidence/sg_finance_bec.yaml
+  extractions:
+    - extractions/sg_finance_bec_reviewed.yaml
+  controls: []
+required_parameters:
+  - frequency.min
+  - frequency.likely
+  - frequency.max
+  - impact.min
+  - impact.likely
+  - impact.max
+tags:
+  - sg
+  - singapore
+  - financial_services
+  - mid_market
+  - business_email_compromise
+  - bec
+  - payment_fraud
+practitioner_notes:
+  good_for: Testing Singapore finance BEC contribution workflow and running a transparent starter scenario with an explicit global likely-loss bridge.
+  not_good_for: Singapore-local fraud benchmarking until payment-fraud, sector-denominator, and tail-loss evidence is reviewed.

@@ -3,21 +3,22 @@ metadata:
   version: "0.1"
   currency: CAD
   scenario_stage: governed_starter
-  benchmark_status: starter_with_estimated_stress_frequency_and_secondary_ca_impact
+  benchmark_status: benchmark_review_candidate
   description: >
-    Starter Canadian financial-services data-breach shard. Frequency min and
-    likely use Canadian OPC/CIRA prevalence anchors, while stress frequency
-    remains estimated until Canadian tail evidence is reviewed. Impact is
-    expressed in CAD: min/max use governed global USD loss anchors converted
-    with a Bank of Canada FX assumption, and likely uses secondary Canada
-    breach-cost coverage that should be replaced with primary evidence.
+    Benchmark-review candidate Canadian financial-services data-breach shard.
+    Frequency min, likely, and max use Canadian OPC/CIRA prevalence anchors,
+    while the stress frequency currently equals the likely prevalence until
+    Canadian tail evidence is reviewed. Impact is expressed in CAD: min,
+    likely, and max use primary governed global USD loss anchors converted with
+    a Bank of Canada FX assumption because primary Canada-specific impact
+    evidence has not been gathered.
 
 frequency:
   min: 0.2436
   likely: 0.42
-  max: 0.6
+  max: 0.42
 
 impact:
   min: 370000
-  likely: 6700000
+  likely: 6100000
   max: 44500000
