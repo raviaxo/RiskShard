@@ -16,7 +16,7 @@ class WebConsoleTests(unittest.TestCase):
         self.assertEqual(workflow["prompt"], "riskshard> ")
 
         selected = app.run_command("use au_finance_ransomware_midmarket")
-        self.assertIn("Using module au_finance_ransomware_midmarket", selected["output"])
+        self.assertIn("Using Risk Shard au_finance_ransomware_midmarket", selected["output"])
         self.assertEqual(selected["prompt"], "riskshard(au_finance_ransomware_midmarket)> ")
         self.assertEqual(selected["active_module_id"], "au_finance_ransomware_midmarket")
 
@@ -33,7 +33,10 @@ class WebConsoleTests(unittest.TestCase):
         self.assertIn("source_gathered:", feeds["output"])
 
         modules = app.run_command("modules")
-        self.assertIn("Risk modules", modules["output"])
+        self.assertIn("Risk Shards", modules["output"])
+
+        riskshards = app.run_command("riskshards")
+        self.assertIn("Risk Shards", riskshards["output"])
 
         countries = app.run_command("countries")
         self.assertIn("Country expansion priorities", countries["output"])
@@ -73,11 +76,18 @@ class WebConsoleTests(unittest.TestCase):
         self.assertEqual(dashboard["readiness_gate"]["status"], "ready_for_local_calibrated_run")
         self.assertGreaterEqual(len(dashboard["top_risks"]), 5)
 
-    def test_coverage_matrix_cells_and_rows_have_actions(self):
-        self.assertIn('data-command="${command}" title="${parameter}:', INDEX_HTML)
+    def test_browser_console_uses_practitioner_risk_shard_language(self):
+        self.assertIn("What is a Risk Shard?", INDEX_HTML)
+        self.assertIn("Risk Shard Catalog", INDEX_HTML)
+        self.assertIn("United Kingdom contribution detail", INDEX_HTML)
+        self.assertIn("GB is the taxonomy code for the UK.", INDEX_HTML)
+        self.assertIn("height: 100vh;", INDEX_HTML)
+        self.assertIn("overflow-y: auto;", INDEX_HTML)
+        self.assertIn("Every button runs a real console command.", INDEX_HTML)
+        self.assertIn("Risk Shards for this context", INDEX_HTML)
+        self.assertIn("Trust boundary", INDEX_HTML)
         self.assertIn('commandButton(`use ${row.module_id}`, "Use")', INDEX_HTML)
-        self.assertIn('commandButton(`packs ${row.module_id}`, "Pack")', INDEX_HTML)
-        self.assertIn('commandButton(`propose ${row.module_id}`, "Fix gap"', INDEX_HTML)
+        self.assertIn('commandButton(`packs ${row.module_id}`, "Evidence")', INDEX_HTML)
 
     def test_browser_console_handles_api_failures_without_stale_running_state(self):
         self.assertIn("async function requestJson", INDEX_HTML)

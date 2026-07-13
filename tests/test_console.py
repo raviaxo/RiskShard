@@ -34,18 +34,18 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn("Ransomware", search_output)
 
         use_output = self.command("use au_finance_ransomware_midmarket")
-        self.assertIn("Using module au_finance_ransomware_midmarket", use_output)
+        self.assertIn("Using Risk Shard au_finance_ransomware_midmarket", use_output)
         self.assertIn("show options", use_output)
 
         options_output = self.command("show options")
-        self.assertIn("Module        : au_finance_ransomware_midmarket", options_output)
+        self.assertIn("Risk Shard    : au_finance_ransomware_midmarket", options_output)
         self.assertIn("scenarios/au_finance_ransomware_midmarket.yaml", options_output)
         self.assertIn("org_profiles/au_finance_midmarket.yaml", options_output)
         self.assertIn("calibrations/au_finance_ransomware.yaml", options_output)
         self.assertIn("threat       : ransomware", options_output)
 
         bec_output = self.command("use business_email_compromise")
-        self.assertIn("Using module au_finance_bec_midmarket", bec_output)
+        self.assertIn("Using Risk Shard au_finance_bec_midmarket", bec_output)
         bec_options = self.command("show options")
         self.assertIn("calibrations/au_finance_business_email_compromise.yaml", bec_options)
         self.assertIn("threat       : business_email_compromise", bec_options)
@@ -120,7 +120,7 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn("Selectors", proposal_output)
 
         modules_output = self.command("modules")
-        self.assertIn("Risk modules", modules_output)
+        self.assertIn("Risk Shards", modules_output)
         self.assertIn("au_finance_ransomware_midmarket", modules_output)
         self.assertIn("us_finance_bec_midmarket", modules_output)
         self.assertIn("gb_finance_data_breach_midmarket", modules_output)
@@ -135,7 +135,7 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn("Next gap", country_detail)
 
         module_info = self.command("modules info au_finance_ransomware_midmarket")
-        self.assertIn("Risk module: au_finance_ransomware_midmarket", module_info)
+        self.assertIn("Risk Shard: au_finance_ransomware_midmarket", module_info)
 
         packs_output = self.command("packs au_finance_ransomware_midmarket")
         self.assertIn("Evidence pack: au_finance_ransomware_midmarket", packs_output)

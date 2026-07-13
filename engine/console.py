@@ -139,13 +139,13 @@ class RiskShardConsole(cmd.Cmd):
         if module is not None:
             self.select_module(module)
             self.refresh_prompt()
-            self.write(f"Using module {module['id']}: {module['title']}\n")
+            self.write(f"Using Risk Shard {module['id']}: {module['title']}\n")
             self.write("Run 'packs', 'show options', then 'propose', 'calibrate', or 'run'.\n")
             return None
 
         path = resolve_scenario(self.root, arg.strip())
         if path is None:
-            self.write("Module or scenario not found. Try 'modules' or 'search'.\n")
+            self.write("Risk Shard or scenario not found. Try 'modules' or 'search'.\n")
             return None
 
         self.scenario_path = path
@@ -181,7 +181,7 @@ class RiskShardConsole(cmd.Cmd):
         return None
 
     def do_modules(self, arg):
-        """modules [search terms]|info <module-id> - Search or inspect risk modules."""
+        """modules [search terms]|info <module-id> - Search or inspect Risk Shards."""
         parts = arg.split(maxsplit=1)
         if parts and parts[0] == "info":
             module = find_risk_module(parts[1] if len(parts) > 1 else self.module_id, self.root)
@@ -197,6 +197,10 @@ class RiskShardConsole(cmd.Cmd):
 
     def do_module(self, arg):
         """module - Alias for modules."""
+        return self.do_modules(arg)
+
+    def do_riskshards(self, arg):
+        """riskshards - Alias for modules."""
         return self.do_modules(arg)
 
     def do_countries(self, arg):
@@ -537,7 +541,7 @@ class RiskShardConsole(cmd.Cmd):
         return self.do_exit(arg)
 
     def show_options(self):
-        self.write(f"Module        : {self.module_id or 'unset'}\n")
+        self.write(f"Risk Shard    : {self.module_id or 'unset'}\n")
         self.write(f"Scenario      : {format_option(self.scenario_path, self.root)}\n")
         self.write(f"Run target    : {format_option(self.active_run_path, self.root)}\n")
         for key in [

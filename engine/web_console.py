@@ -45,19 +45,22 @@ INDEX_HTML = """<!doctype html>
     .app {
       display: grid;
       grid-template-columns: 320px minmax(0, 1fr);
-      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
     }
 
     aside {
       border-right: 1px solid var(--line);
       background: var(--panel);
       padding: 16px;
+      height: 100vh;
+      overflow-y: auto;
     }
 
     main {
       display: flex;
       min-width: 0;
-      min-height: 100vh;
+      height: 100vh;
       flex-direction: column;
     }
 
@@ -113,7 +116,6 @@ INDEX_HTML = """<!doctype html>
     .lane-title {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 8px;
       margin-bottom: 8px;
       color: var(--muted);
@@ -128,7 +130,7 @@ INDEX_HTML = """<!doctype html>
     }
 
     button {
-      min-height: 36px;
+      min-height: 44px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--panel-2);
@@ -137,6 +139,8 @@ INDEX_HTML = """<!doctype html>
       font: inherit;
       text-align: left;
       padding: 8px 10px;
+      display: grid;
+      gap: 2px;
     }
 
     button.compact {
@@ -159,10 +163,33 @@ INDEX_HTML = """<!doctype html>
       background: #3a2e1d;
     }
 
+    .button-title {
+      font-weight: 650;
+    }
+
+    .button-help {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
     .hint {
       color: var(--muted);
       font-size: 12px;
       margin: 12px 0 0;
+    }
+
+    .intro {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(96, 184, 132, 0.08);
+      padding: 10px;
+    }
+
+    .intro-title {
+      margin-bottom: 4px;
+      font-weight: 650;
     }
 
     .dashboard {
@@ -175,7 +202,7 @@ INDEX_HTML = """<!doctype html>
 
     .metric-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
     }
 
@@ -261,6 +288,27 @@ INDEX_HTML = """<!doctype html>
       gap: 10px;
     }
 
+    .shard-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .shard-card {
+      border-top: 1px solid rgba(52, 58, 62, 0.75);
+      padding-top: 8px;
+    }
+
+    .shard-card:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
     .context-actions {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -338,6 +386,7 @@ INDEX_HTML = """<!doctype html>
       flex: 1;
       overflow: auto;
       padding: 18px;
+      min-height: 0;
     }
 
     .entry {
@@ -413,45 +462,64 @@ INDEX_HTML = """<!doctype html>
   <div class="app">
     <aside>
       <h1>RiskShard</h1>
-      <h2>Local browser console</h2>
+      <h2>Evidence-backed risk scenario console</h2>
+      <div class="intro">
+        <div class="intro-title">What is a Risk Shard?</div>
+        <div class="item-meta">A reusable cyber risk scenario for a specific geography, industry, company size, and threat. Use it to run a quantified narrative, inspect confidence, and improve missing evidence.</div>
+      </div>
       <div class="workflow-lanes">
         <section class="lane">
-          <div class="lane-title"><span>Run a shard</span><span>1</span></div>
+          <div class="lane-title"><span>Start with your company</span></div>
           <div class="lane-actions">
-            <button class="primary" data-command="workflow">Workflow</button>
-            <button data-command="modules">Risk modules</button>
-            <button data-command="use gb_finance_data_breach_midmarket">Use UK data breach</button>
-            <button data-command="use au_finance_ransomware_midmarket">Use AU ransomware</button>
+            <button class="primary" data-command="workflow"><span class="button-title">Recommended workflow</span><span class="button-help">Shows the shortest console path from context to run.</span></button>
+            <button data-command="toprisks"><span class="button-title">Top risk readiness</span><span class="button-help">Ranks starter threats by current evidence coverage.</span></button>
           </div>
         </section>
         <section class="lane">
-          <div class="lane-title"><span>Improve evidence</span><span>2</span></div>
+          <div class="lane-title"><span>Find applicable Risk Shards</span></div>
           <div class="lane-actions">
-            <button data-command="packs">Evidence pack</button>
-            <button data-command="propose">Propose calibration</button>
-            <button data-command="show gaps">Show gaps</button>
+            <button data-command="modules"><span class="button-title">Risk Shard Catalog</span><span class="button-help">Lists available shards and their country/industry/threat context.</span></button>
+            <button data-command="use gb_finance_data_breach_midmarket"><span class="button-title">Use UK data breach</span><span class="button-help">Best current benchmark-review candidate.</span></button>
+            <button data-command="use au_finance_ransomware_midmarket"><span class="button-title">Use AU ransomware</span><span class="button-help">Runnable shard with visible assumption gaps.</span></button>
           </div>
         </section>
         <section class="lane">
-          <div class="lane-title"><span>Govern data</span><span>3</span></div>
+          <div class="lane-title"><span>Run and explain</span></div>
           <div class="lane-actions">
-            <button data-command="readiness">Readiness</button>
-            <button data-command="feeds">Data feeds</button>
-            <button data-command="doctor">Doctor</button>
-            <button data-command="validate">Validate evidence</button>
+            <button data-command="show options"><span class="button-title">Selected shard options</span><span class="button-help">Shows scenario, org profile, calibration, trials, and outputs.</span></button>
+            <button data-command="run" class="warning"><span class="button-title">Run scenario</span><span class="button-help">Runs the selected shard and returns AVG, P50, P95, P99.</span></button>
+            <button data-command="explain"><span class="button-title">Explain latest result</span><span class="button-help">Summarizes the latest calibration or simulation.</span></button>
+            <button data-command="report json"><span class="button-title">Export JSON report</span><span class="button-help">Writes a reviewable local output after a run.</span></button>
           </div>
         </section>
         <section class="lane">
-          <div class="lane-title"><span>Contribute country</span><span>4</span></div>
+          <div class="lane-title"><span>Inspect and improve evidence</span></div>
           <div class="lane-actions">
-            <button data-command="countries">Country priorities</button>
-            <button data-command="countries GB">UK detail</button>
-            <button data-command="preflight">Contributor check</button>
-            <button class="primary" data-command="next">Next actions</button>
+            <button data-command="packs"><span class="button-title">Evidence pack</span><span class="button-help">Shows source-backed vs assumption-backed parameters.</span></button>
+            <button data-command="propose"><span class="button-title">Calibration proposal</span><span class="button-help">Suggests stronger selectors without silently changing files.</span></button>
+            <button data-command="show gaps"><span class="button-title">Evidence gaps</span><span class="button-help">Shows what is missing before trust can increase.</span></button>
+          </div>
+        </section>
+        <section class="lane">
+          <div class="lane-title"><span>Govern data quality</span></div>
+          <div class="lane-actions">
+            <button data-command="readiness"><span class="button-title">Readiness dashboard</span><span class="button-help">Shows current coverage, trust, release, and next actions.</span></button>
+            <button data-command="feeds"><span class="button-title">Data feed governance</span><span class="button-help">Shows source freshness, confidence, and renewal status.</span></button>
+            <button data-command="doctor"><span class="button-title">Local health check</span><span class="button-help">Checks environment, sources, evidence, package, and tests.</span></button>
+            <button data-command="validate"><span class="button-title">Validate evidence</span><span class="button-help">Runs evidence quality gates.</span></button>
+          </div>
+        </section>
+        <section class="lane">
+          <div class="lane-title"><span>Contribute coverage</span></div>
+          <div class="lane-actions">
+            <button data-command="countries"><span class="button-title">Country roadmap</span><span class="button-help">Shows priority geographies for local contributors.</span></button>
+            <button data-command="countries GB"><span class="button-title">United Kingdom contribution detail</span><span class="button-help">GB is the taxonomy code for the UK.</span></button>
+            <button data-command="preflight"><span class="button-title">Contributor preflight</span><span class="button-help">Checks proposed source/evidence/calibration packs.</span></button>
+            <button class="primary" data-command="next"><span class="button-title">Next best actions</span><span class="button-help">Shows the most useful work to improve trust today.</span></button>
           </div>
         </section>
       </div>
-      <p class="hint">Pick a lane, then use the contextual actions in the dashboard. Expert users can type any command below.</p>
+      <p class="hint">Every button runs a real console command. Expert users can type commands directly below.</p>
     </aside>
     <main>
       <header>
@@ -545,9 +613,9 @@ INDEX_HTML = """<!doctype html>
     function activeModuleActions(activeModuleId) {
       if (!activeModuleId) {
         return `
-          <div class="item-meta">Select a module to unlock calibration, evidence, and simulation actions.</div>
+          <div class="item-meta">Select a Risk Shard to unlock evidence, run, explain, and report actions.</div>
           <div class="context-actions">
-            ${commandButton("modules", "Browse modules", "primary")}
+            ${commandButton("modules", "Browse Risk Shards", "primary")}
             ${commandButton("use gb_finance_data_breach_midmarket", "Use UK data breach")}
             ${commandButton("use au_finance_ransomware_midmarket", "Use AU ransomware")}
             ${commandButton("countries", "Country priorities")}
@@ -555,9 +623,9 @@ INDEX_HTML = """<!doctype html>
         `;
       }
       return `
-        <div class="item-meta">Selected module: ${activeModuleId}</div>
+        <div class="item-meta">Selected Risk Shard: ${activeModuleId}</div>
         <div class="context-actions">
-          ${commandButton(`modules info ${activeModuleId}`, "Module info")}
+          ${commandButton(`modules info ${activeModuleId}`, "Shard info")}
           ${commandButton(`packs ${activeModuleId}`, "Evidence pack")}
           ${commandButton("show options", "Options")}
           ${commandButton("show gaps", "Gaps")}
@@ -579,41 +647,23 @@ INDEX_HTML = """<!doctype html>
 
     function renderCoverageMatrix(rows) {
       if (!rows.length) {
-        return '<div class="item-meta">No module coverage rows available.</div>';
+        return '<div class="item-meta">No Risk Shards are available yet.</div>';
       }
       return `
-        <table class="coverage-table">
-          <thead>
-            <tr>
-              <th>Module</th>
-              <th>Context</th>
-              <th>Direct Evidence</th>
-              <th>Next Gap</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${rows.map((row) => `
-              <tr>
-                <td><strong>${row.module_id}</strong><div class="item-meta">${row.threat}; confidence ${row.pack_confidence}</div></td>
-                <td>${row.country}/${row.industry}<div class="item-meta">${row.freshness_status}</div></td>
-                <td>
-                  <div class="param-grid">
-                    ${Object.keys(parameterLabels).map((parameter) => parameterCell(row, parameter)).join("")}
-                  </div>
-                </td>
-                <td>${row.next_gap}<div class="item-meta">${row.source_backed_direct}/${row.direct_total} source-backed</div></td>
-                <td>
-                  <div class="row-actions">
-                    ${commandButton(`use ${row.module_id}`, "Use")}
-                    ${commandButton(`packs ${row.module_id}`, "Pack")}
-                    ${commandButton(`propose ${row.module_id}`, "Fix gap", row.next_gap === "ready for practitioner review" ? "" : "warning")}
-                  </div>
-                </td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
+        <div class="shard-list">
+          ${rows.slice(0, 5).map((row) => `
+            <div class="shard-card">
+              <div class="item-row"><strong>${row.module_id}</strong><span class="badge ${row.source_backed_direct === row.direct_total ? "good" : "warn"}">${row.source_backed_direct}/${row.direct_total} source-backed</span></div>
+              <div class="item-meta">${row.country}/${row.industry}/${row.company_size}; threat ${row.threat}; confidence ${row.pack_confidence}</div>
+              <div class="item-meta">Next gap: ${row.next_gap}</div>
+              <div class="context-actions">
+                ${commandButton(`use ${row.module_id}`, "Use")}
+                ${commandButton(`packs ${row.module_id}`, "Evidence")}
+                ${commandButton(`propose ${row.module_id}`, row.next_gap === "ready for practitioner review" ? "Review" : "Improve", row.next_gap === "ready for practitioner review" ? "" : "warning")}
+              </div>
+            </div>
+          `).join("")}
+        </div>
       `;
     }
 
@@ -621,91 +671,55 @@ INDEX_HTML = """<!doctype html>
       const coverage = data.coverage;
       const feeds = data.feed_governance;
       const pack = data.data_pack;
-      const install = data.install_release;
-      const localization = data.localization;
       const gate = data.readiness_gate;
-      const scenarios = data.scenarios?.stage_counts || {};
-      const modules = data.risk_modules || {};
       const packs = data.evidence_packs || {};
-      const actions = data.next_actions.slice(0, 4);
+      const actions = data.next_actions.slice(0, 3);
       const problemFeeds = feeds.problem_feeds.slice(0, 3);
       const topRisks = data.top_risks.slice(0, 5);
       const activeModuleId = data.active_module_id;
       const coverageMatrix = packs.coverage_matrix || [];
+      const org = data.org_profile;
+      const recommendedRows = [...coverageMatrix].sort((a, b) => shardFitScore(b, org) - shardFitScore(a, org));
       dashboard.innerHTML = `
         <div class="metric-grid">
-          <div class="metric"><div class="metric-label">Readiness gate</div><div class="metric-value">${displayStatus(gate.status)}</div></div>
-          <div class="metric"><div class="metric-label">Evidence records</div><div class="metric-value">${coverage.evidence_records}</div></div>
-          <div class="metric"><div class="metric-label">Source-backed</div><div class="metric-value">${coverage.source_backed_records}</div></div>
-          <div class="metric"><div class="metric-label">Risk modules</div><div class="metric-value">${modules.module_count || 0}</div></div>
+          <div class="metric"><div class="metric-label">Current company context</div><div class="metric-value">${org.country}/${org.industry}</div><div class="item-meta">${org.employees} employees; ${org.company_size || "mid-market"} profile</div></div>
+          <div class="metric"><div class="metric-label">Available Risk Shards</div><div class="metric-value">${coverageMatrix.length}</div><div class="item-meta">${Object.keys(coverage.threats).length} covered threats</div></div>
+          <div class="metric"><div class="metric-label">Trust gate</div><div class="metric-value">${displayStatus(gate.status)}</div><div class="item-meta">ready to run is not benchmark-grade</div></div>
         </div>
         <div class="section">
-          <div class="section-title"><span>Next Actions</span><span class="badge ${badgeClass(gate.status)}">${displayStatus(gate.status)}</span></div>
-          <div class="item-meta">${gate.summary}</div>
-          <div class="list">
-            ${actions.map((action) => `
-              <div class="item">
-                <div class="item-row"><strong>${action.title}</strong><span class="badge ${action.priority === "P0" ? "bad" : action.priority === "P1" ? "warn" : "good"}">${action.priority}</span></div>
-                <div class="item-meta">${action.area}; ${action.detail}</div>
-                <div class="command">${action.command}</div>
-              </div>
-            `).join("")}
+          <div class="section-title"><span>Start here</span><span class="badge ${badgeClass(gate.status)}">${displayStatus(gate.status)}</span></div>
+          <div class="item-meta">RiskShard helps you pick an evidence-backed scenario, run it for a narrative, then inspect confidence and missing evidence.</div>
+          <div class="context-actions">
+            ${commandButton("modules", "Find Risk Shards", "primary")}
+            ${commandButton("toprisks", "Top risks")}
+            ${commandButton("countries", "Coverage roadmap")}
+            ${commandButton("readiness", "Trust status")}
           </div>
         </div>
         <div class="section">
-          <div class="section-title"><span>Selected Shard</span><span class="badge ${activeModuleId ? "good" : "warn"}">${activeModuleId ? "active" : "none"}</span></div>
-          ${activeModuleActions(activeModuleId)}
+          <div class="section-title"><span>Risk Shards for this context</span><span class="badge warn">ranked by fit and evidence</span></div>
+          <div class="item-meta">These are real local shards. Exact company-specific matching is still early; use gaps and evidence packs to decide trust.</div>
+          ${renderCoverageMatrix(recommendedRows)}
         </div>
         <div class="section">
-          <div class="section-title"><span>Module Coverage Matrix</span><span class="badge warn">source-backed vs assumptions</span></div>
-          ${renderCoverageMatrix(coverageMatrix)}
+          <div class="section-title"><span>Selected Risk Shard</span><span class="badge ${activeModuleId ? "good" : "warn"}">${activeModuleId ? "active" : "none"}</span></div>
+          ${activeModuleActions(activeModuleId)}
         </div>
         <div class="dashboard-columns">
           <div class="section">
-            <div class="section-title"><span>Top Risk Readiness</span><span class="badge ${badgeClass(topRisks[0]?.status)}">${topRisks[0]?.status || "none"}</span></div>
-            <div class="list">
-              ${topRisks.map((risk) => `
-                <div class="item">
-                  <div class="item-row"><strong>${risk.label}</strong><span class="badge ${badgeClass(risk.status)}">${risk.status}</span></div>
-                  <div class="item-meta">direct ${risk.direct_coverage}/${risk.direct_total}; assumptions ${risk.assumption_parameters}; next ${risk.next_steps[0]}</div>
-                </div>
-              `).join("")}
-            </div>
-          </div>
-          <div class="section">
-            <div class="section-title"><span>Governance</span><span class="badge ${problemFeeds.length ? "bad" : "good"}">${problemFeeds.length ? "needs review" : "current"}</span></div>
+            <div class="section-title"><span>Trust boundary</span><span class="badge ${badgeClass(gate.status)}">${displayStatus(gate.status)}</span></div>
             <div class="list">
               <div class="item">
-                <div class="item-row"><strong>${data.org_profile.name}</strong><span class="badge good">${data.org_profile.country}</span></div>
-                <div class="item-meta">${data.org_profile.industry}; ${data.org_profile.employees} employees; regulatory ${data.org_profile.regulatory_intensity}</div>
-              </div>
-              <div class="item">
-                <div class="item-row"><strong>Coverage</strong><span class="badge warn">${Object.keys(coverage.threats).length} threats</span></div>
-                <div class="item-meta">${Object.keys(coverage.countries).join(", ") || "no country coverage"}; ${coverage.direct_parameter_records} direct parameter records</div>
-              </div>
-              <div class="item">
-                <div class="item-row"><strong>Scenarios</strong><span class="badge good">${scenarios.governed_starter || 0} governed</span></div>
-                <div class="item-meta">${scenarios.demo_fixture || 0} demo fixtures; labels are stored in scenario metadata</div>
-              </div>
-              <div class="item">
-                <div class="item-row"><strong>Risk modules</strong><span class="badge good">${modules.module_count || 0} modules</span></div>
-                <div class="item-meta">${Object.keys(modules.status_counts || {}).join(", ") || "no modules"}; threats ${(modules.threats || []).join(", ") || "none"}</div>
+                <div class="item-row"><strong>Evidence base</strong><span class="badge good">${coverage.source_backed_records} source-backed</span></div>
+                <div class="item-meta">${coverage.evidence_records} total records; ${coverage.direct_parameter_records} direct parameter records.</div>
               </div>
               <div class="item">
                 <div class="item-row"><strong>Evidence packs</strong><span class="badge ${packs.low_confidence_packs?.length ? "warn" : "good"}">${packs.pack_count || 0} packs</span></div>
-                <div class="item-meta">${Object.keys(packs.freshness_counts || {}).join(", ") || "no pack freshness"}; low confidence ${(packs.low_confidence_packs || []).length}</div>
-              </div>
-              <div class="item">
-                <div class="item-row"><strong>Localization</strong><span class="badge ${localization.covered_countries.length ? "warn" : "bad"}">${localization.covered_countries.length} countries</span></div>
-                <div class="item-meta">currencies ${localization.currencies_in_evidence.join(", ") || "none"}; FX rates ${localization.fx_rate_count}</div>
+                <div class="item-meta">${(packs.low_confidence_packs || []).length} low-confidence pack(s); freshness ${Object.keys(packs.freshness_counts || {}).join(", ") || "unknown"}.</div>
               </div>
               <div class="item">
                 <div class="item-row"><strong>Data pack</strong><span class="badge good">${pack.pack_version}</span></div>
-                <div class="item-meta">${pack.file_count} governed files; ${pack.fingerprint.slice(0, 16)}</div>
-              </div>
-              <div class="item">
-                <div class="item-row"><strong>Install/release</strong><span class="badge ${badgeClass(install.pyproject)}">${install.pyproject ? "installable" : "script-only"}</span></div>
-                <div class="item-meta">${install.next_needed[0] || "console commands declared in pyproject"}</div>
+                <div class="item-meta">${pack.file_count} governed files; fingerprint ${pack.fingerprint.slice(0, 12)}.</div>
               </div>
               ${problemFeeds.map((feed) => `
                 <div class="item">
@@ -715,8 +729,36 @@ INDEX_HTML = """<!doctype html>
               `).join("")}
             </div>
           </div>
+          <div class="section">
+            <div class="section-title"><span>Improve or contribute</span><span class="badge warn">next evidence work</span></div>
+            <div class="list">
+              ${actions.map((action) => `
+                <div class="item">
+                  <div class="item-row"><strong>${action.title}</strong><span class="badge ${action.priority === "P0" ? "bad" : action.priority === "P1" ? "warn" : "good"}">${action.priority}</span></div>
+                  <div class="item-meta">${action.area}; ${action.detail}</div>
+                  <div class="command">${action.command}</div>
+                </div>
+              `).join("")}
+              <div class="context-actions">
+                ${commandButton("next", "More next actions", "primary")}
+                ${commandButton("countries", "Country roadmap")}
+                ${commandButton("preflight", "Contributor preflight")}
+              </div>
+            </div>
+          </div>
         </div>
       `;
+    }
+
+    function shardFitScore(row, org) {
+      let score = 0;
+      if (row.country === org.country) score += 40;
+      if (row.industry === org.industry) score += 20;
+      if (row.company_size === org.company_size) score += 10;
+      score += row.source_backed_direct || 0;
+      if (row.pack_confidence === "high") score += 4;
+      if (row.pack_confidence === "medium") score += 2;
+      return score;
     }
 
     async function runCommand(command) {

@@ -218,7 +218,7 @@ class CliSmokeTests(unittest.TestCase):
             capture_output=True,
         )
         self.assertEqual(list_result.returncode, 0, msg=list_result.stderr)
-        self.assertIn("Risk modules", list_result.stdout)
+        self.assertIn("Risk Shards", list_result.stdout)
         self.assertIn("au_finance_ransomware_midmarket", list_result.stdout)
 
         pack_result = subprocess.run(
