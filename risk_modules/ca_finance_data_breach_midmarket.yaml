@@ -1,0 +1,39 @@
+id: ca_finance_data_breach_midmarket
+title: Canada Finance Data Breach Midmarket
+version: "0.1"
+status: governed_starter
+threat: data_breach
+description: >
+  Starter data-breach shard for a Canadian mid-market financial-services
+  organization. It is useful as a contribution target and runnable example, but
+  it is not benchmark-grade: frequency is estimated and impact still uses
+  global USD anchors rather than Canada-specific CAD evidence.
+context:
+  industry: financial_services
+  country: CA
+  company_size: mid_market
+artifacts:
+  scenario: scenarios/ca_finance_data_breach_midmarket.yaml
+  org_profile: org_profiles/ca_finance_midmarket.yaml
+  calibration: calibrations/ca_finance_data_breach.yaml
+  evidence:
+    - evidence/ca_finance_data_breach.yaml
+  extractions:
+    - extractions/ca_finance_data_breach_reviewed.yaml
+  controls: []
+required_parameters:
+  - frequency.min
+  - frequency.likely
+  - frequency.max
+  - impact.min
+  - impact.likely
+  - impact.max
+tags:
+  - ca
+  - canada
+  - financial_services
+  - mid_market
+  - data_breach
+practitioner_notes:
+  good_for: Canada launch-target workflow testing, contribution planning, and running an explicit low-confidence starter scenario.
+  not_good_for: Benchmark-grade Canada breach likelihood, CAD-localized loss modeling, or financial-services-specific Canadian cost claims.

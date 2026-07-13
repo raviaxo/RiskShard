@@ -37,10 +37,11 @@ class RiskModuleTests(unittest.TestCase):
         module_ids = {module["id"] for module in modules}
         output = format_module_list(search_risk_modules("finance", ROOT))
 
-        self.assertEqual(len(modules), 5)
+        self.assertEqual(len(modules), 6)
         self.assertIn("au_finance_ransomware_midmarket", module_ids)
         self.assertIn("au_finance_data_breach_midmarket", module_ids)
         self.assertIn("au_finance_bec_midmarket", module_ids)
+        self.assertIn("ca_finance_data_breach_midmarket", module_ids)
         self.assertIn("gb_finance_data_breach_midmarket", module_ids)
         self.assertIn("us_finance_bec_midmarket", module_ids)
         self.assertIn("Risk Shards", output)
@@ -53,7 +54,7 @@ class RiskModuleTests(unittest.TestCase):
         ransomware = by_id["au_finance_ransomware_midmarket"]
 
         self.assertEqual(registry["registry_type"], "riskshard_registry")
-        self.assertEqual(registry["module_count"], 5)
+        self.assertEqual(registry["module_count"], 6)
         self.assertIn("required_artifacts", registry["contract"])
         self.assertIn("sources/registry.yaml", registry["contract"]["expected_layout"])
         self.assertEqual(ransomware["evidence_summary"]["direct_total"], 6)
@@ -78,12 +79,17 @@ class RiskModuleTests(unittest.TestCase):
         ransomware = build_evidence_pack_registry(ROOT, "au_finance_ransomware_midmarket")["packs"][0]
         detail = format_evidence_pack_detail(ransomware)
 
-        self.assertEqual(registry["pack_count"], 5)
+        self.assertEqual(registry["pack_count"], 6)
         self.assertIn("Evidence packs", output)
         self.assertEqual(ransomware["freshness_status"], "current")
         self.assertEqual(ransomware["pack_confidence"], "low")
         self.assertIn("frequency.max: assumption_only", detail)
         self.assertIn("source_gathered", detail)
+
+        canada = build_evidence_pack_registry(ROOT, "ca_finance_data_breach_midmarket")["packs"][0]
+        self.assertEqual(canada["pack_confidence"], "low")
+        self.assertEqual(canada["evidence_type_counts"]["source_backed"], 3)
+        self.assertEqual(canada["evidence_type_counts"]["estimated"], 3)
 
     def test_evidence_pack_artifact_fingerprints_module_files(self):
         artifact = build_evidence_pack_artifact("au_finance_ransomware_midmarket", ROOT)
@@ -115,12 +121,15 @@ class RiskModuleTests(unittest.TestCase):
         output = format_country_priorities(priorities)
         us = find_country_priority("US")
         gb = find_country_priority("GB")
+        ca = find_country_priority("CA")
 
         self.assertEqual(len(priorities["items"]), 25)
         self.assertEqual(us["recommended_first_module"], "us_finance_bec_midmarket")
         self.assertEqual(us["status"], "module_seeded")
         self.assertEqual(gb["recommended_first_module"], "gb_finance_data_breach_midmarket")
         self.assertEqual(gb["status"], "module_seeded")
+        self.assertEqual(ca["recommended_first_module"], "ca_finance_data_breach_midmarket")
+        self.assertEqual(ca["status"], "module_seeded")
         self.assertIn("Country expansion priorities", output)
         self.assertIn("US", output)
 
