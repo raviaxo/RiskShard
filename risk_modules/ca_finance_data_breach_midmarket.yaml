@@ -6,8 +6,9 @@ threat: data_breach
 description: >
   Starter data-breach shard for a Canadian mid-market financial-services
   organization. It is useful as a contribution target and runnable example, but
-  it is not benchmark-grade: frequency.max remains estimated and impact still
-  uses global USD anchors rather than Canada-specific CAD evidence.
+  it is not benchmark-grade: frequency.max remains estimated, impact.min/max
+  still use global anchors converted to CAD, and impact.likely relies on a
+  secondary Canada-specific IBM-cost bridge that needs primary-source review.
 context:
   industry: financial_services
   country: CA
@@ -35,5 +36,5 @@ tags:
   - mid_market
   - data_breach
 practitioner_notes:
-  good_for: Canada launch-target workflow testing, contribution planning, and running an explicit low-confidence starter scenario with Canadian prevalence anchors.
-  not_good_for: Benchmark-grade Canada tail likelihood, CAD-localized loss modeling, or financial-services-specific Canadian cost claims.
+  good_for: Canada launch-target workflow testing, contribution planning, and running an explicit low-confidence CAD starter scenario with Canadian prevalence anchors.
+  not_good_for: Benchmark-grade Canada tail likelihood, primary-source Canada breach-cost claims, or financial-services-specific Canadian cost claims.

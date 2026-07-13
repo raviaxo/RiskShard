@@ -48,6 +48,25 @@ sources:
       about geography, industry, and methodology limitations when applying it
       to local scenario ranges.
 
+  - id: itpro_ibm_data_breach_regional_costs_2025
+    title: AI breaches are not just a scare story any more - they are happening in real life
+    publisher: ITPro
+    source_type: secondary_news_report
+    url: https://www.itpro.com/security/data-breaches/ai-breaches-arent-just-a-scare-story-any-more-theyre-happening-in-real-life
+    publication_date: "2025-08-04"
+    access_mode: public_html
+    trust_tier: low
+    refresh_interval_days: 180
+    intended_use:
+      - Canada data breach cost context
+      - regional IBM breach cost summary
+      - secondary validation target for primary-source replacement
+    usage_notes: >
+      Use only as a secondary, low-confidence regional cost bridge where the
+      primary IBM Canada regional table is not available in the gathered public
+      IBM page. Replace with primary IBM, insurer, regulator, or Canadian
+      claims evidence before benchmark-grade claims.
+
   - id: opc_annual_report_2025_2026
     title: 2025-2026 Annual Report to Parliament on the Privacy Act and PIPEDA
     publisher: Office of the Privacy Commissioner of Canada

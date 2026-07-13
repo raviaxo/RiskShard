@@ -4,6 +4,8 @@ RiskShard is an open-source engine for quantitative cyber risk analysis. It turn
 
 The current project is an early but functional Python prototype. It can run Monte Carlo simulations against YAML-defined scenarios, aggregate multiple scenarios into a portfolio view, generate summary statistics, export JSON reports, and produce Loss Exceedance Curve charts.
 
+For the current publishable-version bar, phase requirements, community operating model, and strategic change-control rules, start with [docs/PUBLISHABLE_REQUIREMENTS.md](docs/PUBLISHABLE_REQUIREMENTS.md).
+
 ## Product Thesis
 
 RiskShard aims to become a shared computation layer for cyber risk:
@@ -144,7 +146,7 @@ python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.y
   --scenario-output results/au_finance_ransomware_calibrated.yaml
 ```
 
-The calibration reports show a bottom line, confidence summary, what changed from the base scenario, limitations, selected evidence, applicable but excluded evidence, normalization assumptions, currency conversion assumptions, warnings, and the generated `frequency.min/likely/max` and `impact.min/likely/max` ranges. Current FX rates live in `calibrations/fx_rates.yaml`; the included AUD/USD rate is sourced from RBA Statistical Table F11.1 and inverted explicitly for USD-to-AUD calibration conversions, while GBP/USD coverage is recorded as an explicit ECB-derived cross-rate.
+The calibration reports show a bottom line, confidence summary, what changed from the base scenario, limitations, selected evidence, applicable but excluded evidence, normalization assumptions, currency conversion assumptions, warnings, and the generated `frequency.min/likely/max` and `impact.min/likely/max` ranges. Current FX rates live in `calibrations/fx_rates.yaml`; the included AUD/USD rate is sourced from RBA Statistical Table F11.1 and inverted explicitly for USD-to-AUD calibration conversions, GBP/USD coverage is recorded as an explicit ECB-derived cross-rate, and USD/CAD coverage is recorded as an explicit Bank of Canada FXUSDCAD rate.
 
 Validate evidence quality gates with:
 
@@ -185,7 +187,7 @@ python scripts/benchmark_program.py --sprint seeded
 python scripts/benchmark_program.py --target gb_finance_data_breach_midmarket
 ```
 
-The benchmark program tracks thirty target shards and reports which ones are missing modules, which need evidence upgrades, and which are ready for human benchmark review. The seeded cohort view focuses on the five runnable modules, and the sprint view turns the next evidence-upgrade queue into target-level blockers, required artifacts, and review commands. It prevents starter shards from being overclaimed as benchmark-grade.
+The benchmark program tracks thirty target shards and reports which ones are missing modules, which need evidence upgrades, and which are ready for human benchmark review. The seeded cohort view focuses on the six runnable modules, and the sprint view turns the next evidence-upgrade queue into target-level blockers, required artifacts, and review commands. It prevents starter shards from being overclaimed as benchmark-grade.
 
 Rank starter threats by evidence and calibration readiness with:
 
@@ -364,6 +366,13 @@ source-backed. It is still a governed starter, not benchmark-grade: the UK
 survey is broader than privacy-only data breach, and the stress anchor is a
 regulatory penalty rather than a total event-loss or claims distribution.
 
+Canada is seeded through `ca_finance_data_breach_midmarket`. It uses OPC/CIRA
+Canadian prevalence anchors for frequency min/likely and expresses impact in
+CAD. Its likely impact uses low-confidence secondary coverage of IBM's Canada
+breach-cost figure, while impact min/max remain global loss anchors converted
+with a Bank of Canada FX assumption. It is runnable and transparent, but not
+benchmark-grade.
+
 ## Source Baseline
 
 RiskShard can gather a curated baseline of public source materials and write an auditable manifest:
@@ -381,6 +390,7 @@ Gathering a source does not automatically make it a benchmark parameter. Extract
 For the current documentation map, start with [docs/README.md](docs/README.md). The most important operational docs are:
 
 - [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md)
+- [docs/PUBLISHABLE_REQUIREMENTS.md](docs/PUBLISHABLE_REQUIREMENTS.md)
 - [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md)
 - [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)
 - [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md)

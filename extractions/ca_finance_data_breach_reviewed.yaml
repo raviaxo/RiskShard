@@ -46,21 +46,21 @@ extractions:
     evidence_record_ids:
       - cyentia_iris_2022_typical_cyber_event_loss_usd_ca_context
 
-  - id: ibm_cost_data_breach_2025_global_average_cost_usd_ca_context
-    source_id: ibm_cost_data_breach_2025
-    source_name: IBM Cost of a Data Breach Report 2025
-    source_url_or_citation: https://www.ibm.com/reports/data-breach
-    publication_date: "2025-07-30"
+  - id: itpro_ibm_ca_2025_average_breach_cost_usd
+    source_id: itpro_ibm_data_breach_regional_costs_2025
+    source_name: ITPro coverage of IBM Cost of a Data Breach Report 2025
+    source_url_or_citation: https://www.itpro.com/security/data-breaches/ai-breaches-arent-just-a-scare-story-any-more-theyre-happening-in-real-life
+    publication_date: "2025-08-04"
     extraction_date: "2026-07-13"
-    citation_detail: Public report page hero metric; global average cost of a data breach is USD 4.4M.
-    fact: IBM reported that the 2025 global average cost of a data breach was USD 4.4 million.
-    value: 4400000
+    citation_detail: Data breach winners and losers section reports Canada breach costs rising from USD 4.66M to USD 4.84M, citing IBM's 2025 Cost of a Data Breach report.
+    fact: ITPro reported, citing IBM's 2025 Cost of a Data Breach report, that Canada's average breach cost rose from USD 4.66 million to USD 4.84 million.
+    value: 4840000
     unit: currency
     currency: USD
-    normalization_notes: Stored in source currency and used as a data-breach-specific likely loss anchor for the Canada starter.
-    limitations: Global average across studied breached organizations; not Canada-specific, financial-services-specific, or size-band-specific.
+    normalization_notes: Stored in source currency and used as a Canada-specific, secondary-source likely loss bridge. Calibration converts to CAD through the explicit Bank of Canada FX assumption.
+    limitations: Secondary article, not primary IBM Canada release; not financial-services-specific or size-band-specific.
     evidence_record_ids:
-      - ibm_cost_data_breach_2025_global_average_cost_usd_ca_context
+      - itpro_ibm_ca_2025_average_breach_cost_usd
 
   - id: cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context
     source_id: cyentia_iris_2025

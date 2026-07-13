@@ -46,8 +46,8 @@ items:
     recommended_first_module: ca_finance_data_breach_midmarket
     why: Strong regulatory/public-sector source base and natural comparison point for US/AU common-law workflows.
     collaboration_prompt: Add OPC, Statistics Canada, CSE, and financial-sector sources.
-    coverage_summary: One data-breach governed starter seeded with Canadian prevalence anchors and global USD impact anchors.
-    next_contribution: Replace Canada data-breach stress frequency and add Canada/CAD-localized breach-cost evidence.
+    coverage_summary: One data-breach governed starter seeded with Canadian prevalence anchors, CAD-denominated impact output, and a low-confidence secondary Canada breach-cost bridge.
+    next_contribution: Replace Canada data-breach stress frequency, secondary likely-cost evidence, and global min/max impact anchors with primary Canadian evidence.
 
   - rank: 4
     country_id: DE
