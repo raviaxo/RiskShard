@@ -35,9 +35,20 @@ class ConsoleTests(unittest.TestCase):
 
         use_output = self.command("use au_finance_ransomware_midmarket")
         self.assertIn("Using Risk Shard au_finance_ransomware_midmarket", use_output)
-        self.assertIn("show options", use_output)
+        self.assertIn("Location: [Start] > [Scenario]", use_output)
+        self.assertIn("choose 'consume' or 'enhance'", use_output)
+
+        where_output = self.command("where")
+        self.assertIn("Location      : [Start] > [Scenario]", where_output)
+        self.assertIn("Consume model : consume -> run -> explain -> report json", where_output)
+        self.assertIn("Enhance model : enhance -> packs -> show gaps -> propose -> validate", where_output)
+
+        scenario_output = self.command("scenario")
+        self.assertIn("Risk Shard    : au_finance_ransomware_midmarket", scenario_output)
+        self.assertIn("Simulation    : trials=10000, dist=pert, seed=42", scenario_output)
 
         options_output = self.command("show options")
+        self.assertIn("Location      : [Start] > [Scenario]", options_output)
         self.assertIn("Risk Shard    : au_finance_ransomware_midmarket", options_output)
         self.assertIn("scenarios/au_finance_ransomware_midmarket.yaml", options_output)
         self.assertIn("org_profiles/au_finance_midmarket.yaml", options_output)
@@ -165,10 +176,26 @@ class ConsoleTests(unittest.TestCase):
         run_output = self.command("run")
 
         self.assertIn("Run complete.", run_output)
+        self.assertIn("Run receipt", run_output)
+        self.assertIn("Location      : [Start] > [Scenario] > [Run Risk]", run_output)
+        self.assertIn("Simulation    : trials=5, dist=pert, seed=42", run_output)
+        self.assertIn("Calibration   : no calibration run in this session", run_output)
+        self.assertIn("Next consume: explain; report json", run_output)
+        self.assertIn("Next enhance: packs; show gaps; propose; enhance", run_output)
         self.assertIn("P95", run_output)
         self.assertIn("LEC:", run_output)
         self.assertIsNotNone(self.console.last_run)
         self.assertTrue(self.console.last_paths["lec"].exists())
+
+        explain_output = self.command("explain")
+        self.assertIn("Latest simulation run", explain_output)
+        self.assertIn("Risk Shard:", explain_output)
+
+        start_output = self.command("start over")
+        self.assertIn("Started over.", start_output)
+        self.assertIn("Location: [Start]", start_output)
+        self.assertIsNone(self.console.scenario_path)
+        self.assertIsNone(self.console.last_run)
 
 
 if __name__ == "__main__":
