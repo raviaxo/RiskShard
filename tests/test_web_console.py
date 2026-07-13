@@ -83,6 +83,8 @@ class WebConsoleTests(unittest.TestCase):
         self.assertIn("GB is the taxonomy code for the UK.", INDEX_HTML)
         self.assertIn("height: 100vh;", INDEX_HTML)
         self.assertIn("overflow-y: auto;", INDEX_HTML)
+        self.assertIn('id="console-scroll"', INDEX_HTML)
+        self.assertIn("flex: 0 0 auto;", INDEX_HTML)
         self.assertIn("Every button runs a real console command.", INDEX_HTML)
         self.assertIn("Risk Shards for this context", INDEX_HTML)
         self.assertIn("Trust boundary", INDEX_HTML)
