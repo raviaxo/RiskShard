@@ -1,0 +1,137 @@
+records:
+  - id: cyentia_global_ransomware_probability_2025_jp_context
+    title: Global organization ransomware likelihood for Japan manufacturing starter
+    parameter: frequency.min
+    value: 0.10
+    unit: annual_probability
+    source_id: cyentia_iris_ransomware
+    source_name: Cyentia IRIS Ransomware
+    source_type: ransomware_research
+    source_url_or_citation: https://www.cyentia.com/publication/iris-ransomware/
+    publication_date: "2025-04-21"
+    extraction_date: "2026-07-13"
+    citation_detail: Key findings on the public IRIS Ransomware source page.
+    extraction_notes: Reused the governed Cyentia global ransomware likelihood anchor for a Japan manufacturing starter.
+    normalization_notes: Stored directly as a global floor. It is not a Japan manufacturing organization-level rate.
+    limitations: Global cross-sector estimate; not Japan-specific, manufacturing-specific, or size-band-specific.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [ransomware]
+
+  - id: riskshard_jp_manufacturing_ransomware_frequency_likely_2026
+    title: Estimated Japan manufacturing ransomware likely frequency
+    parameter: frequency.likely
+    value: 0.25
+    unit: annual_probability
+    source_name: RiskShard Japan manufacturing ransomware starter pack
+    source_type: model_assumption
+    source_url_or_citation: Starter assumption pending reviewed Japan manufacturing ransomware frequency evidence.
+    publication_date: "2026-07-13"
+    extraction_date: "2026-07-13"
+    extraction_notes: Estimated likely annual probability for a Japan mid-market manufacturing ransomware draft.
+    normalization_notes: Kept explicit as an assumption until Japan manufacturing, insurer, agency, or sector evidence is reviewed.
+    limitations: Not source-backed; replace before benchmark claims.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [manufacturing]
+      countries: [JP]
+      company_size_bands: [mid_market]
+      threats: [ransomware]
+
+  - id: riskshard_jp_manufacturing_ransomware_frequency_stress_2026
+    title: Estimated Japan manufacturing ransomware frequency stress bound
+    parameter: frequency.max
+    value: 0.50
+    unit: annual_probability
+    source_name: RiskShard Japan manufacturing ransomware starter pack
+    source_type: model_assumption
+    source_url_or_citation: Starter assumption pending reviewed Japan manufacturing ransomware tail-frequency evidence.
+    publication_date: "2026-07-13"
+    extraction_date: "2026-07-13"
+    extraction_notes: Estimated stress annual probability for a Japan mid-market manufacturing ransomware draft.
+    normalization_notes: Kept explicit as an assumption until Japan manufacturing or tail-frequency evidence is reviewed.
+    limitations: Not source-backed; replace before benchmark claims.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [manufacturing]
+      countries: [JP]
+      company_size_bands: [mid_market]
+      threats: [ransomware]
+
+  - id: cyentia_iris_2022_typical_cyber_event_loss_usd_jp_manufacturing_context
+    title: Typical reported cyber-event financial loss for Japan manufacturing starter
+    parameter: impact.min
+    value: 266000
+    unit: currency
+    currency: USD
+    source_id: cyentia_iris_2022
+    source_name: Cyentia Information Risk Insights Study 2022
+    source_type: cyber_loss_research
+    source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
+    publication_date: "2022-01-01"
+    extraction_date: "2026-07-13"
+    citation_detail: Public source page key findings; typical financial cost reported for a cyber event is USD 266K.
+    extraction_notes: Reused the governed Cyentia typical cyber-event financial-loss anchor for the Japan manufacturing starter.
+    normalization_notes: Stored in USD and selected as a conservative lower loss anchor until Japan manufacturing ransomware loss-floor evidence is reviewed.
+    limitations: Global cyber-event benchmark, not Japan-specific, ransomware-specific, manufacturing-specific, or a true minimum loss quantile.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [all]
+
+  - id: cyentia_iris_2025_median_security_incident_loss_usd_jp_manufacturing_context
+    title: Median reported security-incident loss for Japan manufacturing starter
+    parameter: impact.likely
+    value: 3000000
+    unit: currency
+    currency: USD
+    source_id: cyentia_iris_2025
+    source_name: Cyentia Information Risk Insights Study 2025
+    source_type: cyber_loss_research
+    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
+    publication_date: "2025-06-10"
+    extraction_date: "2026-07-13"
+    citation_detail: Public source page key findings; median losses rose toward USD 3M.
+    extraction_notes: Reused the governed Cyentia median security-incident loss anchor for the Japan manufacturing starter.
+    normalization_notes: Stored directly in USD and selected as a global likely-loss bridge until local ransomware cost evidence is reviewed.
+    limitations: Global security-incident benchmark, not Japan-specific, ransomware-only, manufacturing-specific, or mid-market-specific.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [all]
+
+  - id: cyentia_iris_2025_extreme_security_incident_loss_usd_jp_manufacturing_context
+    title: Extreme reported security-incident loss for Japan manufacturing starter
+    parameter: impact.max
+    value: 32000000
+    unit: currency
+    currency: USD
+    source_id: cyentia_iris_2025
+    source_name: Cyentia Information Risk Insights Study 2025
+    source_type: cyber_loss_research
+    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
+    publication_date: "2025-06-10"
+    extraction_date: "2026-07-13"
+    citation_detail: Public source page key findings; extreme events reached USD 32M.
+    extraction_notes: Reused the governed Cyentia extreme security-incident loss anchor for the Japan manufacturing starter.
+    normalization_notes: Stored directly in USD and selected as a global stress-loss bridge until Japan manufacturing ransomware tail-loss evidence is reviewed.
+    limitations: Global security-incident benchmark, not Japan-specific, ransomware-only, manufacturing-specific, or a formal percentile for this scenario.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [all]

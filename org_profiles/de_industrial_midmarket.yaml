@@ -1,0 +1,13 @@
+metadata:
+  name: Germany Mid-Market Industrial Manufacturer
+  version: "0.1"
+
+org_type: private_company
+industry: manufacturing
+country: Germany
+employees: 650
+annual_revenue_or_budget: 120000000
+data_sensitivity: moderate
+internet_exposure: moderate
+third_party_dependency: high
+regulatory_intensity: high

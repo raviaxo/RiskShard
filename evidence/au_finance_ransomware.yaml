@@ -87,6 +87,29 @@ records:
       company_size_bands: [mid_market]
       threats: [ransomware]
 
+  - id: sophos_fin_services_ransomware_frequency_stress_2024
+    title: Financial-services ransomware stress frequency anchor
+    parameter: frequency.max
+    value: 0.65
+    unit: annual_probability
+    source_id: sophos_state_ransomware_financial_services_2024
+    source_name: Sophos State of Ransomware in Financial Services 2024
+    source_type: industry_survey
+    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-financial-services-2024
+    publication_date: "2024-06-24"
+    extraction_date: "2026-07-13"
+    citation_detail: Article section "Attack rates have remained steady, but recovery is more expensive."
+    extraction_notes: Sophos reported that 65% of financial-services organizations were hit by ransomware in 2024.
+    normalization_notes: Reused the source-backed financial-services attack rate as the upper frequency anchor, replacing the prior estimated 85% stress bound. Because no higher tail-frequency source is reviewed yet, the stress anchor equals the likely anchor.
+    limitations: Global financial-services survey, not Australia-specific; using the same 65% statistic for likely and max means the frequency range is intentionally conservative and awaits better tail-frequency evidence.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [global, AU]
+      company_size_bands: [all, mid_market]
+      threats: [ransomware]
+
   - id: business_qld_au_medium_business_cybercrime_cost_2025
     title: Australian medium-business cybercrime cost
     parameter: impact.min
@@ -156,6 +179,30 @@ records:
       countries: [AU, global]
       company_size_bands: [mid_market]
       threats: [ransomware]
+
+  - id: cyentia_iris_2022_top5_cyber_event_loss_usd_au_ransomware_context
+    title: Top 5% reported cyber-event loss for Australia ransomware starter
+    parameter: impact.max
+    value: 52000000
+    unit: currency
+    currency: USD
+    source_id: cyentia_iris_2022
+    source_name: Cyentia Information Risk Insights Study 2022
+    source_type: cyber_loss_research
+    source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
+    publication_date: "2022-01-01"
+    extraction_date: "2026-07-13"
+    citation_detail: Public source page key findings; the top 5% of loss events balloon to USD 52M.
+    extraction_notes: Reused the governed Cyentia top-5% cyber-event loss anchor as the Australia ransomware stress-loss bridge.
+    normalization_notes: Stored in source currency. Calibration converts to AUD with the explicit AUD/USD FX assumption.
+    limitations: Global cyber-event loss benchmark, not Australia-specific, ransomware-only, financial-services-specific, or a formal ransomware claim-severity percentile. Use as an automated benchmark-review stress bridge only with human caveat review.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all, financial_services]
+      countries: [global, AU]
+      company_size_bands: [all, mid_market]
+      threats: [all, ransomware]
 
   - id: cyentia_fin_services_ransomware_incident_share_2025
     title: Ransomware share of financial-services incidents

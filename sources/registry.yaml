@@ -235,6 +235,24 @@ sources:
       Use as a ransomware-specific source. If a direct PDF is later available,
       add it as a separate registry entry.
 
+  - id: first_epss_data_stats
+    title: EPSS Data and Statistics
+    publisher: Forum of Incident Response and Security Teams
+    source_type: vulnerability_exploitation_prior
+    active: false
+    url: https://www.first.org/epss/data_stats
+    publication_date: "2026-07-13"
+    access_mode: public_html
+    intended_use:
+      - vulnerability exploitation likelihood
+      - exploit-prior calibration
+      - vulnerability-driven shard inputs
+    usage_notes: >
+      Inactive candidate source. Use EPSS as a vulnerability exploitation
+      prior, not as direct financial-loss evidence. Reactivate when RiskShard
+      adds an exploit-likelihood or vulnerability-driven shard that can
+      preserve the EPSS definition and refresh cadence.
+
   - id: asd_annual_cyber_threat_report_2024_2025
     title: Annual Cyber Threat Report 2024-2025
     publisher: Australian Signals Directorate

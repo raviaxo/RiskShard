@@ -1,0 +1,16 @@
+extractions:
+  - id: fbi_ic3_2025_global_bec_average_loss_per_complaint_usd_sg_context
+    source_id: fbi_ic3_2025_report
+    source_name: FBI IC3 2025 Annual Report
+    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    extraction_date: "2026-07-13"
+    citation_detail: 2025 Crime Types tables list Business Email Compromise complaints and adjusted losses.
+    fact: FBI IC3 reported Business Email Compromise with 24,768 complaints and USD 3,046,598,558 in adjusted losses.
+    value: 123005.43
+    unit: currency
+    currency: USD
+    normalization_notes: Derived average adjusted BEC loss as USD 3,046,598,558 divided by 24,768 BEC complaints.
+    limitations: US complaint-driven average; not Singapore-specific, financial-services-specific, or a full loss distribution.
+    evidence_record_ids:
+      - fbi_ic3_2025_global_bec_average_loss_per_complaint_usd_sg_context

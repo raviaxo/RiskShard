@@ -13,6 +13,7 @@ extractions:
     limitations: Global financial-services survey, not Australia-specific.
     evidence_record_ids:
       - sophos_fin_services_ransomware_frequency_2024
+      - sophos_fin_services_ransomware_frequency_stress_2024
 
   - id: sophos_fin_services_recovery_cost_2024
     source_id: sophos_state_ransomware_financial_services_2024
@@ -120,3 +121,19 @@ extractions:
     limitations: Secondary government guidance page that links to ASD as the primary source; cybercrime-wide rather than ransomware-specific.
     evidence_record_ids:
       - business_qld_au_medium_business_cybercrime_cost_2025
+
+  - id: cyentia_iris_2022_top5_cyber_event_loss_usd_au_ransomware_context
+    source_id: cyentia_iris_2022
+    source_name: Cyentia Information Risk Insights Study 2022
+    source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
+    publication_date: "2022-01-01"
+    extraction_date: "2026-07-13"
+    citation_detail: Public source page key findings.
+    fact: Cyentia reported that the top 5% of cyber loss events balloon to USD 52 million.
+    value: 52000000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored in source currency and used as an Australia ransomware stress-loss bridge after conversion to AUD.
+    limitations: Global cyber-event loss benchmark, not Australia-specific, ransomware-only, financial-services-specific, or a formal ransomware claim-severity percentile.
+    evidence_record_ids:
+      - cyentia_iris_2022_top5_cyber_event_loss_usd_au_ransomware_context

@@ -1,0 +1,47 @@
+metadata:
+  name: France financial-services data breach calibration
+  scenario_name: France Finance Data Breach Midmarket - Calibrated Draft
+  version: "0.1"
+  notes: >
+    Starter calibration profile for a France mid-market financial-services
+    data-breach shard. It is intentionally not benchmark-grade: frequency
+    values are explicit estimates, while impact values use global cyber and
+    data-breach loss anchors until France privacy, cyber-agency, or
+    financial-sector evidence is reviewed.
+
+target_currency: USD
+
+parameters:
+  frequency:
+    min:
+      evidence_id: riskshard_fr_finance_data_breach_frequency_floor_2026
+      transform: direct
+      rationale: Explicit estimated floor until France data-breach event-frequency evidence exists.
+    likely:
+      evidence_id: riskshard_fr_finance_data_breach_frequency_likely_2026
+      transform: direct
+      rationale: Explicit estimated likely annual probability until France organization-level or sector-specific breach frequency evidence exists.
+    max:
+      evidence_id: riskshard_fr_finance_data_breach_frequency_stress_2026
+      transform: direct
+      rationale: Explicit estimated stress frequency until France tail-frequency evidence exists.
+
+  impact:
+    min:
+      evidence_id: cyentia_iris_2022_typical_cyber_event_loss_usd_fr_finance_context
+      transform: direct
+      target_currency: USD
+      round_to: 10000
+      rationale: Source-backed global lower loss anchor until France breach-cost floor evidence is reviewed.
+    likely:
+      evidence_id: ibm_cost_data_breach_2025_global_average_cost_usd_fr_context
+      transform: direct
+      target_currency: USD
+      round_to: 100000
+      rationale: Source-backed global data-breach average cost bridge until France-specific financial-services breach-cost evidence is reviewed.
+    max:
+      evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd_fr_finance_context
+      transform: direct
+      target_currency: USD
+      round_to: 100000
+      rationale: Source-backed global extreme security-incident loss bridge until France data-breach tail-loss evidence is reviewed.

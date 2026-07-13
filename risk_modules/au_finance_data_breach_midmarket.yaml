@@ -1,12 +1,13 @@
 id: au_finance_data_breach_midmarket
 title: Australia Finance Data Breach Midmarket
-version: "0.1"
+version: "0.2"
 status: governed_starter
 threat: data_breach
 description: >
   Starter data-breach shard for an Australian mid-market financial-services
-  organization. It includes OAIC/ABS context, global breach-cost anchors, and
-  explicit remaining frequency assumptions.
+  organization. It includes an OAIC/ABS reported-notification floor, UK
+  official breach/attack prevalence bridges for likely and stress frequency,
+  and global breach-cost anchors.
 context:
   industry: financial_services
   country: AU
@@ -33,5 +34,5 @@ tags:
   - mid_market
   - data_breach
 practitioner_notes:
-  good_for: Reviewing breach frequency gaps and cost-anchor selection.
-  not_good_for: Benchmark-grade Australia mid-market breach likelihood.
+  good_for: Running an assumption-free starter while reviewing local AU breach-prevalence gaps and cost-anchor selection.
+  not_good_for: Benchmark-grade Australia mid-market breach likelihood without accepting UK frequency bridges and global loss anchors.

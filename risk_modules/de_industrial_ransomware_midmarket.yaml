@@ -1,0 +1,39 @@
+id: de_industrial_ransomware_midmarket
+title: Germany Industrial Ransomware Midmarket
+version: "0.1"
+status: governed_starter
+threat: ransomware
+description: >
+  Governed starter ransomware shard for a Germany mid-market industrial
+  manufacturer. It gives contributors a complete artifact chain while keeping
+  local frequency and local loss gaps explicit.
+context:
+  industry: manufacturing
+  country: DE
+  company_size: mid_market
+artifacts:
+  scenario: scenarios/de_industrial_ransomware_midmarket.yaml
+  org_profile: org_profiles/de_industrial_midmarket.yaml
+  calibration: calibrations/de_industrial_ransomware.yaml
+  evidence:
+    - evidence/de_industrial_ransomware.yaml
+  extractions:
+    - extractions/de_industrial_ransomware_reviewed.yaml
+  controls: []
+required_parameters:
+  - frequency.min
+  - frequency.likely
+  - frequency.max
+  - impact.min
+  - impact.likely
+  - impact.max
+tags:
+  - de
+  - germany
+  - manufacturing
+  - industrial
+  - mid_market
+  - ransomware
+practitioner_notes:
+  good_for: Testing the Germany industrial contribution path and running a transparent starter ransomware scenario with global loss anchors.
+  not_good_for: Benchmark claims, Germany-local loss quantification, or industrial-sector decisions without replacing estimated frequency values and global loss bridges.

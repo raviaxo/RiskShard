@@ -197,7 +197,7 @@ python scripts/benchmark_program.py --sprint seeded
 python scripts/benchmark_program.py --target gb_finance_data_breach_midmarket
 ```
 
-The benchmark program tracks thirty target shards and reports which ones are missing modules, which need evidence upgrades, and which are ready for human benchmark review. The seeded cohort view focuses on the six runnable modules, and the sprint view turns the next evidence-upgrade queue into target-level blockers, required artifacts, and review commands. It prevents starter shards from being overclaimed as benchmark-grade.
+The benchmark program tracks thirty target shards and reports which ones are missing modules, which need evidence upgrades, and which are ready for human benchmark review. The seeded cohort view focuses on the ten runnable modules, and the sprint view turns the next evidence-upgrade queue into target-level blockers, required artifacts, and review commands. It prevents starter shards from being overclaimed as benchmark-grade.
 
 Rank starter threats by evidence and calibration readiness with:
 
@@ -348,7 +348,7 @@ RiskShard does not currently apply heuristic contextual multipliers. To model a 
 
 Control profiles live in `control_profiles/` and remain transformations over the scenario, not embedded scenario properties.
 
-Provenance files live in `provenance/` and label every evidence record as `source_backed`, `estimated`, or `synthetic`. The canonical Australia finance ransomware example now uses public source-backed evidence for key frequency, impact, sector applicability, and regulatory context. Its range bounds still include estimated model assumptions, so the overall confidence remains low until better Australia-specific tail-loss evidence is added.
+Provenance files live in `provenance/` and label every evidence record as `source_backed`, `estimated`, or `synthetic`. The canonical Australia finance ransomware example now uses public source-backed evidence for all six direct frequency and impact parameters, plus sector applicability and regulatory context. It is ready for human benchmark review, but still carries caveats around reused sector frequency and global tail-loss bridge evidence.
 
 Taxonomies live in `taxonomies/` and are the vetted source for dropdown-style IDs such as `financial_services`, `AU`, `mid_market`, and `ransomware`.
 
@@ -363,7 +363,7 @@ Source-backed evidence records should include `source_id` values that map to `so
 
 Reviewed extraction records live in `extractions/` and document the fact pulled from a source before it becomes one or more structured evidence records.
 
-The starter threat library lives in `threat_library/`. Ransomware, data breach, and business email compromise now have Australia financial-services calibration profiles, but all still carry explicit assumption warnings. Data breach has DBIR/OAIC context evidence, a denominator-derived reported-breach frequency floor, and source-backed global impact anchors; its likely and stress frequency parameters remain estimated until stronger organization-level likelihood evidence is reviewed. Business email compromise has FBI IC3 source-backed likely-loss evidence and ACCC Australia small-business loss context; frequency and stress loss bounds remain estimated until denominator-aware BEC evidence is reviewed.
+The starter threat library lives in `threat_library/`. Ransomware, data breach, and business email compromise now have Australia financial-services calibration profiles. Ransomware has six source-backed direct selectors and is ready for human benchmark review. Data breach has DBIR/OAIC context evidence, a denominator-derived reported-breach frequency floor, official UK breach/attack prevalence bridges for likely and stress frequency, and source-backed global impact anchors; it is assumption-free for selected direct parameters but still needs AU financial-services prevalence and stronger impact evidence before benchmark review. Business email compromise has FBI IC3 source-backed likely-loss evidence and ACCC Australia small-business loss context; frequency and stress loss bounds remain estimated until denominator-aware BEC evidence is reviewed.
 
 The first second-geography module is `us_finance_bec_midmarket`. It uses FBI IC3
 source-backed likely-loss evidence and keeps US BEC frequency/floor/tail
@@ -379,10 +379,16 @@ regulatory penalty rather than a total event-loss or claims distribution.
 
 Canada is seeded through `ca_finance_data_breach_midmarket`. It uses OPC/CIRA
 Canadian prevalence anchors for frequency min/likely and expresses impact in
-CAD. Its likely impact uses low-confidence secondary coverage of IBM's Canada
-breach-cost figure, while impact min/max remain global loss anchors converted
-with a Bank of Canada FX assumption. It is runnable and transparent, but not
-benchmark-grade.
+CAD. It now clears the automated benchmark gate: all six direct parameters are
+source-backed and extraction-mapped. It is still a benchmark-review candidate,
+not a public benchmark-grade claim, because impact min/likely/max use primary
+global loss anchors converted with a Bank of Canada FX assumption until primary
+Canada-specific impact evidence is gathered.
+
+Germany industrial ransomware, Singapore finance BEC, Japan manufacturing
+ransomware, and France finance data breach are now governed starter modules.
+They are contribution scaffolds with transparent assumptions and global anchors,
+not benchmark-grade local models.
 
 ## Source Baseline
 

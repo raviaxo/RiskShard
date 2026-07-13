@@ -27,14 +27,11 @@ class CalibrationTests(unittest.TestCase):
 
         scenario = report["generated_scenario"]
 
-        self.assertEqual(scenario["frequency"], {"min": 0.1, "likely": 0.65, "max": 0.85})
+        self.assertEqual(scenario["frequency"], {"min": 0.1, "likely": 0.65, "max": 0.65})
         self.assertEqual(scenario["impact"]["min"], 97000)
         self.assertEqual(scenario["impact"]["likely"], 3590000)
-        self.assertEqual(scenario["impact"]["max"], 9000000)
-        self.assertIn(
-            "parameter_from_non_source_backed_evidence",
-            {warning["code"] for warning in report["warnings"]},
-        )
+        self.assertEqual(scenario["impact"]["max"], 72300000)
+        self.assertEqual(report["warnings"], [])
         selected_by_id = {
             item["evidence_id"]: item
             for item in report["selected_evidence"]
@@ -62,6 +59,10 @@ class CalibrationTests(unittest.TestCase):
         self.assertEqual(report["assumptions"][0]["evidence_type"], "source_backed")
         self.assertEqual(report["assumptions"][0]["retrieved_at"], "2026-06-01")
         self.assertIn("F11.1 Exchange Rates", report["assumptions"][0]["citation_detail"])
+        self.assertEqual(
+            report["assumptions"][1]["evidence_id"],
+            "cyentia_iris_2022_top5_cyber_event_loss_usd_au_ransomware_context",
+        )
 
     def test_calibration_report_and_scenario_outputs_are_loadable(self):
         report = run_calibration(
@@ -101,7 +102,7 @@ class CalibrationTests(unittest.TestCase):
         self.assertIn("Higher-scored alternatives:", markdown)
         self.assertIn("Best available for parameter:", markdown)
 
-    def test_data_breach_calibration_is_runnable_but_assumption_backed(self):
+    def test_data_breach_calibration_is_runnable_with_frequency_bridges(self):
         report = run_calibration(
             ROOT / "scenarios" / "data_breach.yaml",
             ROOT / "org_profiles" / "au_finance_midmarket.yaml",
@@ -121,18 +122,18 @@ class CalibrationTests(unittest.TestCase):
             for item in report["assumptions"]
         }
 
-        self.assertEqual(scenario["frequency"], {"min": 0.0008, "likely": 0.18, "max": 0.35})
+        self.assertEqual(scenario["frequency"], {"min": 0.0008, "likely": 0.65, "max": 0.69})
         self.assertEqual(scenario["impact"], {"min": 370000, "likely": 6100000, "max": 44500000})
         self.assertEqual(
             warning_codes.count("parameter_from_non_source_backed_evidence"),
-            2,
+            0,
         )
         self.assertEqual(
             selected_types,
             {
                 "frequency.min": "source_backed",
-                "frequency.likely": "estimated",
-                "frequency.max": "estimated",
+                "frequency.likely": "source_backed",
+                "frequency.max": "source_backed",
                 "impact.min": "source_backed",
                 "impact.likely": "source_backed",
                 "impact.max": "source_backed",

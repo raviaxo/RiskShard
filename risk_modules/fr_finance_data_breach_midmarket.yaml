@@ -1,0 +1,39 @@
+id: fr_finance_data_breach_midmarket
+title: France Finance Data Breach Midmarket
+version: "0.1"
+status: governed_starter
+threat: data_breach
+description: >
+  Governed starter data-breach shard for a France mid-market financial-services
+  organization. It uses global impact anchors and keeps France-local frequency
+  and financial-sector loss gaps explicit for contributors.
+context:
+  industry: financial_services
+  country: FR
+  company_size: mid_market
+artifacts:
+  scenario: scenarios/fr_finance_data_breach_midmarket.yaml
+  org_profile: org_profiles/fr_finance_midmarket.yaml
+  calibration: calibrations/fr_finance_data_breach.yaml
+  evidence:
+    - evidence/fr_finance_data_breach.yaml
+  extractions:
+    - extractions/fr_finance_data_breach_reviewed.yaml
+  controls: []
+required_parameters:
+  - frequency.min
+  - frequency.likely
+  - frequency.max
+  - impact.min
+  - impact.likely
+  - impact.max
+tags:
+  - fr
+  - france
+  - financial_services
+  - mid_market
+  - data_breach
+  - privacy_breach
+practitioner_notes:
+  good_for: Testing France finance data-breach contribution workflow and running a transparent starter scenario with global impact anchors.
+  not_good_for: France-local benchmark claims until CNIL, ANSSI, Banque de France, insurer, or sector evidence replaces estimated frequencies and global loss bridges.

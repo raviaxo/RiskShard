@@ -3,20 +3,20 @@ metadata:
   version: "0.2"
   currency: AUD
   scenario_stage: governed_starter
-  benchmark_status: source_backed_with_estimated_bounds
+  benchmark_status: benchmark_review_candidate
   description: >
-    Canonical benchmark-backed shard for a small or mid-market
-    financial-services organization in Australia. The likely values are anchored
-    to public ransomware and Australian cyber reporting. The range bounds remain
-    estimated and should be recalibrated when better sector-specific loss data is
-    available.
+    Benchmark-review candidate shard for a small or mid-market financial-services
+    organization in Australia. All six direct parameters are source-backed, but
+    frequency max reuses the financial-services hit rate and impact max uses a
+    global cyber-event tail-loss bridge until Australia-specific ransomware tail
+    evidence is reviewed.
 
 frequency:
   min: 0.22
   likely: 0.65
-  max: 0.85
+  max: 0.65
 
 impact:
   min: 100000
   likely: 3900000
-  max: 9000000
+  max: 72300000

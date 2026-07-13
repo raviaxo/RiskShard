@@ -37,12 +37,16 @@ class RiskModuleTests(unittest.TestCase):
         module_ids = {module["id"] for module in modules}
         output = format_module_list(search_risk_modules("finance", ROOT))
 
-        self.assertEqual(len(modules), 6)
+        self.assertEqual(len(modules), 10)
         self.assertIn("au_finance_ransomware_midmarket", module_ids)
         self.assertIn("au_finance_data_breach_midmarket", module_ids)
         self.assertIn("au_finance_bec_midmarket", module_ids)
         self.assertIn("ca_finance_data_breach_midmarket", module_ids)
+        self.assertIn("de_industrial_ransomware_midmarket", module_ids)
+        self.assertIn("fr_finance_data_breach_midmarket", module_ids)
         self.assertIn("gb_finance_data_breach_midmarket", module_ids)
+        self.assertIn("jp_manufacturing_ransomware_midmarket", module_ids)
+        self.assertIn("sg_finance_bec_midmarket", module_ids)
         self.assertIn("us_finance_bec_midmarket", module_ids)
         self.assertIn("Risk Shards", output)
         self.assertIn("governed_starter", output)
@@ -54,7 +58,7 @@ class RiskModuleTests(unittest.TestCase):
         ransomware = by_id["au_finance_ransomware_midmarket"]
 
         self.assertEqual(registry["registry_type"], "riskshard_registry")
-        self.assertEqual(registry["module_count"], 6)
+        self.assertEqual(registry["module_count"], 10)
         self.assertIn("required_artifacts", registry["contract"])
         self.assertIn("sources/registry.yaml", registry["contract"]["expected_layout"])
         self.assertEqual(ransomware["evidence_summary"]["direct_total"], 6)
@@ -79,16 +83,16 @@ class RiskModuleTests(unittest.TestCase):
         ransomware = build_evidence_pack_registry(ROOT, "au_finance_ransomware_midmarket")["packs"][0]
         detail = format_evidence_pack_detail(ransomware)
 
-        self.assertEqual(registry["pack_count"], 6)
+        self.assertEqual(registry["pack_count"], 10)
         self.assertIn("Evidence packs", output)
         self.assertEqual(ransomware["freshness_status"], "current")
-        self.assertEqual(ransomware["pack_confidence"], "low")
-        self.assertIn("frequency.max: assumption_only", detail)
+        self.assertEqual(ransomware["pack_confidence"], "medium")
+        self.assertIn("frequency.max: source_backed", detail)
         self.assertIn("source_gathered", detail)
 
         canada = build_evidence_pack_registry(ROOT, "ca_finance_data_breach_midmarket")["packs"][0]
-        self.assertEqual(canada["pack_confidence"], "low")
-        self.assertEqual(canada["evidence_type_counts"]["source_backed"], 5)
+        self.assertEqual(canada["pack_confidence"], "medium")
+        self.assertEqual(canada["evidence_type_counts"]["source_backed"], 7)
         self.assertEqual(canada["evidence_type_counts"]["estimated"], 1)
 
     def test_evidence_pack_artifact_fingerprints_module_files(self):
@@ -110,11 +114,59 @@ class RiskModuleTests(unittest.TestCase):
         output = format_module_calibration_proposal(proposal)
         by_parameter = {item["parameter"]: item for item in proposal["selectors"]}
 
-        self.assertFalse(proposal["ready_without_assumptions"])
+        self.assertTrue(proposal["ready_without_assumptions"])
         self.assertEqual(by_parameter["frequency.likely"]["status"], "selected_source_backed")
-        self.assertEqual(by_parameter["frequency.max"]["status"], "selected_assumption")
+        self.assertEqual(by_parameter["frequency.max"]["status"], "selected_source_backed")
+        self.assertEqual(by_parameter["impact.max"]["status"], "selected_source_backed")
         self.assertIn("Module calibration proposal: au_finance_ransomware_midmarket", output)
         self.assertIn("draft: frequency.likely", output)
+
+        data_breach = propose_module_calibration("au_finance_data_breach_midmarket", ROOT)
+        data_breach_by_parameter = {
+            item["parameter"]: item for item in data_breach["selectors"]
+        }
+        self.assertTrue(data_breach["ready_without_assumptions"])
+        self.assertEqual(
+            data_breach_by_parameter["frequency.likely"]["status"],
+            "selected_source_backed",
+        )
+        self.assertEqual(
+            data_breach_by_parameter["frequency.likely"]["best"]["id"],
+            "uk_dsit_2026_medium_business_breach_prevalence_au_bridge",
+        )
+        self.assertEqual(
+            data_breach_by_parameter["frequency.max"]["status"],
+            "selected_source_backed",
+        )
+
+        canada = propose_module_calibration("ca_finance_data_breach_midmarket", ROOT)
+        canada_by_parameter = {
+            item["parameter"]: item for item in canada["selectors"]
+        }
+        self.assertTrue(canada["ready_without_assumptions"])
+        self.assertEqual(
+            canada_by_parameter["impact.max"]["status"],
+            "selected_source_backed",
+        )
+        self.assertEqual(
+            canada_by_parameter["impact.max"]["best"]["id"],
+            "cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context",
+        )
+
+        france = propose_module_calibration("fr_finance_data_breach_midmarket", ROOT)
+        france_by_parameter = {
+            item["parameter"]: item for item in france["selectors"]
+        }
+        self.assertFalse(france["ready_without_assumptions"])
+        self.assertEqual(
+            france_by_parameter["frequency.likely"]["best"]["id"],
+            "riskshard_fr_finance_data_breach_frequency_likely_2026",
+        )
+
+        germany = propose_module_calibration("de_industrial_ransomware_midmarket", ROOT)
+        japan = propose_module_calibration("jp_manufacturing_ransomware_midmarket", ROOT)
+        self.assertFalse(germany["ready_without_assumptions"])
+        self.assertFalse(japan["ready_without_assumptions"])
 
     def test_country_priorities_list_twenty_five_contribution_targets(self):
         priorities = load_country_priorities()
@@ -122,6 +174,10 @@ class RiskModuleTests(unittest.TestCase):
         us = find_country_priority("US")
         gb = find_country_priority("GB")
         ca = find_country_priority("CA")
+        de = find_country_priority("DE")
+        sg = find_country_priority("SG")
+        jp = find_country_priority("JP")
+        fr = find_country_priority("FR")
 
         self.assertEqual(len(priorities["items"]), 25)
         self.assertEqual(us["recommended_first_module"], "us_finance_bec_midmarket")
@@ -130,6 +186,10 @@ class RiskModuleTests(unittest.TestCase):
         self.assertEqual(gb["status"], "module_seeded")
         self.assertEqual(ca["recommended_first_module"], "ca_finance_data_breach_midmarket")
         self.assertEqual(ca["status"], "module_seeded")
+        self.assertEqual(de["status"], "module_seeded")
+        self.assertEqual(sg["status"], "module_seeded")
+        self.assertEqual(jp["status"], "module_seeded")
+        self.assertEqual(fr["status"], "module_seeded")
         self.assertIn("Country expansion priorities", output)
         self.assertIn("US", output)
 

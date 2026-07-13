@@ -3,8 +3,11 @@ metadata:
   scenario_name: Australia Finance Ransomware Midmarket - Calibrated Draft
   version: "0.1"
   notes: >
-    Minimal reviewed calibration profile. It uses source-backed facts where
-    available and keeps stress bounds as explicit estimated assumptions.
+    Benchmark-review candidate calibration profile. It uses source-backed facts
+    for all six direct parameters, but the frequency stress anchor equals the
+    Sophos financial-services attack rate and the impact stress anchor is a
+    global Cyentia cyber-event tail-loss bridge rather than an Australia
+    ransomware claims distribution.
 
 target_currency: AUD
 
@@ -19,9 +22,9 @@ parameters:
       transform: direct
       rationale: Financial-services ransomware survey rate from Sophos.
     max:
-      evidence_id: riskshard_ransomware_frequency_upper_bound_2026
+      evidence_id: sophos_fin_services_ransomware_frequency_stress_2024
       transform: direct
-      rationale: Explicit estimated stress bound until tail-frequency evidence is available.
+      rationale: Source-backed financial-services attack rate reused as the stress frequency anchor until stronger tail-frequency evidence is available.
 
   impact:
     min:
@@ -37,8 +40,8 @@ parameters:
       round_to: 10000
       rationale: Sophos financial-services ransomware recovery cost converted from USD to AUD.
     max:
-      evidence_id: riskshard_ransomware_impact_upper_bound_2026
-      transform: direct
+      evidence_id: cyentia_iris_2022_top5_cyber_event_loss_usd_au_ransomware_context
+      transform: currency_convert
       target_currency: AUD
-      round_to: 10000
-      rationale: Explicit estimated stress bound until Australia-specific tail-loss evidence is available.
+      round_to: 100000
+      rationale: Source-backed Cyentia top-5% cyber-event loss bridge converted to AUD until Australia-specific ransomware tail-loss evidence is available.

@@ -225,7 +225,7 @@ def next_beta_moves(failed_checks, benchmark):
         missing = BETA_TARGETS["governed_modules"] - benchmark["module_seeded_count"]
         moves.append({
             "priority": "P1",
-            "title": f"Seed {missing} more governed starter modules",
+            "title": f"Seed {missing} more governed starter {pluralize('module', missing)}",
             "why": "A beta needs enough module variety to prove the library pattern.",
             "command": "python scripts/riskshard_modules.py countries",
         })
@@ -234,7 +234,7 @@ def next_beta_moves(failed_checks, benchmark):
         missing = BETA_TARGETS["benchmark_ready_candidates"] - benchmark["benchmark_ready_count"]
         moves.append({
             "priority": "P1",
-            "title": f"Promote {missing} more modules to benchmark-ready candidates",
+            "title": f"Promote {missing} more {pluralize('module', missing)} to benchmark-ready candidates",
             "why": "The strongest public story needs multiple vetted examples, not one standout shard.",
             "command": "python scripts/benchmark_program.py --sprint seeded",
         })
@@ -258,6 +258,10 @@ def next_beta_moves(failed_checks, benchmark):
         })
 
     return moves
+
+
+def pluralize(noun, count):
+    return noun if count == 1 else f"{noun}s"
 
 
 def format_beta_readiness_report(report):

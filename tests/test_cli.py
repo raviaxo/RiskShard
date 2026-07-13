@@ -242,7 +242,7 @@ class CliSmokeTests(unittest.TestCase):
                 sys.executable,
                 "scripts/riskshard_modules.py",
                 "propose",
-                "au_finance_ransomware_midmarket",
+                "au_finance_data_breach_midmarket",
             ],
             cwd=ROOT,
             env=env,
@@ -251,10 +251,11 @@ class CliSmokeTests(unittest.TestCase):
         )
         self.assertEqual(proposal_result.returncode, 0, msg=proposal_result.stderr)
         self.assertIn(
-            "Module calibration proposal: au_finance_ransomware_midmarket",
+            "Module calibration proposal: au_finance_data_breach_midmarket",
             proposal_result.stdout,
         )
-        self.assertIn("selected_assumption", proposal_result.stdout)
+        self.assertIn("Ready without assumptions: True", proposal_result.stdout)
+        self.assertIn("selected_source_backed", proposal_result.stdout)
 
         with tempfile.TemporaryDirectory() as tmp:
             export_path = Path(tmp) / "ransomware_pack.json"
@@ -394,6 +395,7 @@ class CliSmokeTests(unittest.TestCase):
         payload = json.loads(json_result.stdout)
         self.assertEqual(payload["risk_count"], 2)
         self.assertEqual(payload["risks"][0]["id"], "data_breach")
+        self.assertEqual(payload["risks"][0]["status"], "calibrated")
         self.assertIn("missing_parameters", payload["risks"][0])
 
     def test_package_smoke_cli_verifies_entry_points(self):
@@ -426,7 +428,7 @@ class CliSmokeTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertIn("Benchmark-Grade 30 Shard Program", result.stdout)
         self.assertIn("Targets: 30", result.stdout)
-        self.assertIn("benchmark-ready: 1", result.stdout)
+        self.assertIn("benchmark-ready: 3", result.stdout)
         self.assertIn("confidence>=medium=6/6", result.stdout)
 
         cohort_result = subprocess.run(
@@ -452,7 +454,7 @@ class CliSmokeTests(unittest.TestCase):
         self.assertIn("Seeded Evidence Upgrade Sprint A", sprint_result.stdout)
         self.assertIn("Acceptance criteria", sprint_result.stdout)
         self.assertIn(
-            "python scripts/riskshard_modules.py propose au_finance_ransomware_midmarket",
+            "python scripts/riskshard_modules.py propose au_finance_data_breach_midmarket",
             sprint_result.stdout,
         )
 

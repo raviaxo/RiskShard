@@ -1,0 +1,46 @@
+metadata:
+  name: Singapore financial-services BEC calibration
+  scenario_name: Singapore Finance Business Email Compromise Midmarket - Calibrated Draft
+  version: "0.1"
+  notes: >
+    Starter calibration profile for Singapore financial-services business email
+    compromise. It uses a source-backed FBI IC3 complaint-average BEC loss
+    anchor for likely impact, and keeps frequency and loss bounds as explicit
+    estimates until Singapore payment-fraud or sector evidence is reviewed.
+
+target_currency: USD
+
+parameters:
+  frequency:
+    min:
+      evidence_id: riskshard_sg_finance_bec_frequency_floor_2026
+      transform: direct
+      rationale: Explicit estimated floor until Singapore BEC event-frequency evidence exists.
+    likely:
+      evidence_id: riskshard_sg_finance_bec_frequency_likely_2026
+      transform: direct
+      rationale: Explicit estimated likely annual probability until denominator-aware Singapore BEC frequency evidence exists.
+    max:
+      evidence_id: riskshard_sg_finance_bec_frequency_stress_2026
+      transform: direct
+      rationale: Explicit estimated stress frequency until Singapore BEC tail-frequency evidence exists.
+
+  impact:
+    min:
+      evidence_id: riskshard_sg_finance_bec_impact_floor_2026
+      transform: direct
+      target_currency: USD
+      round_to: 1000
+      rationale: Explicit estimated lower loss until source-backed Singapore fraudulent-payment floor evidence exists.
+    likely:
+      evidence_id: fbi_ic3_2025_global_bec_average_loss_per_complaint_usd_sg_context
+      transform: direct
+      target_currency: USD
+      round_to: 10000
+      rationale: Source-backed FBI IC3 BEC average adjusted loss per complaint as a first global likely loss bridge.
+    max:
+      evidence_id: riskshard_sg_finance_bec_impact_stress_2026
+      transform: direct
+      target_currency: USD
+      round_to: 10000
+      rationale: Explicit estimated stress loss bound until Singapore BEC tail-loss evidence exists.

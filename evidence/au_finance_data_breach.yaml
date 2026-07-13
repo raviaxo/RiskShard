@@ -62,12 +62,58 @@ records:
     citation_detail: OAIC Page 15, Table 5 reported 54 finance notifications for July-Dec 2024; ABS industry section reported 133,743 Financial and Insurance Services businesses in 2024-25.
     extraction_notes: Annualized the OAIC half-year finance notification count to 108 and divided by the ABS active-business denominator of 133,743.
     normalization_notes: Calculation is (54 * 2) / 133,743 = 0.0008075, rounded to 0.0008. Used as a reported-notification frequency floor, not a likely breach rate.
-    limitations: Covers eligible Australian NDB notifications only; all-size sector denominator is not mid-market-specific; multiple notifications by one entity and unreported/non-reportable breaches can distort organization-level probability.
-    confidence: low
+    limitations: Covers eligible Australian NDB notifications only; all-size sector denominator is not mid-market-specific; multiple notifications by one entity and unreported/non-reportable breaches can distort organization-level probability. Confidence is medium for a reported-notification floor, not for a likely breach rate.
+    confidence: medium
     evidence_type: source_backed
     applicability:
       industries: [financial_services]
       countries: [AU]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: uk_dsit_2026_medium_business_breach_prevalence_au_bridge
+    title: UK medium-business breach prevalence used as AU frequency bridge
+    parameter: frequency.likely
+    value: 0.65
+    unit: annual_probability
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_type: official_statistics_bridge
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-07-13"
+    citation_detail: Summary and Chapter 4 report that 65% of UK medium businesses identified a cyber security breach or attack in the last 12 months.
+    extraction_notes: Extracted the medium-business annual prevalence percentage from the official UK Cyber Security Breaches Survey.
+    normalization_notes: Converted 65% to 0.65. Selected as a source-backed bridge for likely frequency until AU mid-market financial-services breach/attack prevalence is available.
+    limitations: UK official survey; covers identified cyber breaches or attacks, not privacy-only data breaches; not Australia-specific, not financial-services-specific, and may include high-volume low-impact events.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: uk_dsit_2026_large_business_breach_prevalence_au_stress_bridge
+    title: UK large-business breach prevalence used as AU stress-frequency bridge
+    parameter: frequency.max
+    value: 0.69
+    unit: annual_probability
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_type: official_statistics_bridge
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-07-13"
+    citation_detail: Summary and Chapter 4 report that 69% of UK large businesses identified a cyber security breach or attack in the last 12 months.
+    extraction_notes: Extracted the large-business annual prevalence percentage from the official UK Cyber Security Breaches Survey.
+    normalization_notes: Converted 69% to 0.69. Selected as a source-backed stress-frequency bridge until AU mid-market financial-services tail prevalence is available.
+    limitations: UK official survey; covers identified cyber breaches or attacks, not privacy-only data breaches; large-business prevalence can overstate mid-market likelihood; not Australia-specific or financial-services-specific.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
       company_size_bands: [all]
       threats: [data_breach]
 

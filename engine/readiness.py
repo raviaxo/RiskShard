@@ -184,8 +184,20 @@ def module_next_gap(pack):
         )
         if parameter:
             return f"{label} {parameter}"
-    if pack["pack_confidence"] in {"low", "medium"}:
-        return "review low-confidence source-backed evidence"
+    low_confidence_parameter = next(
+        (
+            item["parameter"]
+            for item in pack["direct_parameters"]
+            if item["status"] == "source_backed" and item["best_confidence"] == "low"
+        ),
+        None,
+    )
+    if low_confidence_parameter:
+        return f"review low-confidence evidence for {low_confidence_parameter}"
+    if pack["status"] == "benchmark_candidate":
+        return "ready for practitioner review"
+    if pack["pack_confidence"] == "medium":
+        return "review medium-confidence source-backed evidence"
     return "ready for practitioner review"
 
 

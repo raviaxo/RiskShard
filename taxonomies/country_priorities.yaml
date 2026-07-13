@@ -54,30 +54,36 @@ items:
     label: Germany
     region: Europe
     tier: launch
-    status: target
+    status: module_seeded
     recommended_first_module: de_industrial_ransomware_midmarket
     why: Large EU economy, strong industrial base, and mature BSI/regulatory reporting.
     collaboration_prompt: Add BSI, BaFin, sector, and SME cyber-loss evidence.
+    coverage_summary: One industrial ransomware governed starter seeded with a global ransomware frequency floor and global loss anchors.
+    next_contribution: Replace estimated frequency values and global loss bridges with Germany industrial ransomware evidence.
 
   - rank: 5
     country_id: SG
     label: Singapore
     region: Asia-Pacific
     tier: launch
-    status: target
+    status: module_seeded
     recommended_first_module: sg_finance_bec_midmarket
     why: High cyber maturity, strong regional financial hub, and useful ASEAN anchor.
     collaboration_prompt: Add CSA Singapore, MAS, scam/fraud, and financial-sector evidence.
+    coverage_summary: One financial-services BEC governed starter seeded with a global BEC likely-loss bridge.
+    next_contribution: Replace Singapore BEC frequency and tail-loss assumptions with payment-fraud, scam, or sector evidence.
 
   - rank: 6
     country_id: JP
     label: Japan
     region: Asia-Pacific
     tier: scale
-    status: target
+    status: module_seeded
     recommended_first_module: jp_manufacturing_ransomware_midmarket
     why: Large economy, major manufacturing exposure, and useful APAC loss/localization test.
     collaboration_prompt: Add NISC, IPA, JPCERT, regulator, and industry sources.
+    coverage_summary: One manufacturing ransomware governed starter seeded with a global ransomware frequency floor and global loss anchors.
+    next_contribution: Replace estimated frequency values and global loss bridges with Japan manufacturing ransomware evidence.
 
   - rank: 7
     country_id: IN
@@ -94,10 +100,12 @@ items:
     label: France
     region: Europe
     tier: scale
-    status: target
+    status: module_seeded
     recommended_first_module: fr_finance_data_breach_midmarket
     why: Large EU economy with mature cyber agency and privacy-regulator context.
     collaboration_prompt: Add ANSSI, CNIL, Banque de France, and sector evidence.
+    coverage_summary: One financial-services data-breach governed starter seeded with global impact anchors.
+    next_contribution: Replace France data-breach frequency assumptions and global impact anchors with CNIL, ANSSI, Banque de France, insurer, or sector evidence.
 
   - rank: 9
     country_id: NL

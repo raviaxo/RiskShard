@@ -12,9 +12,9 @@ records:
     extraction_date: "2026-07-13"
     citation_detail: Top trends in privacy reports that 42% of Canadian organizations experienced a breach of customer or employee data in the last 12 months; Breaches section reports 58% of PIPEDA breaches were likely to create a real risk of significant harm.
     extraction_notes: Derived a conservative material-breach proxy by multiplying the organization-level data breach prevalence by the significant-harm share of reported PIPEDA breaches.
-    normalization_notes: Calculation is 0.42 * 0.58 = 0.2436. Used as a low-confidence material-breach lower bound, not as a directly observed financial-services mid-market rate.
+    normalization_notes: Calculation is 0.42 * 0.58 = 0.2436. Used as a benchmark-review material-breach lower bound, not as a directly observed financial-services mid-market rate.
     limitations: Combines a cross-sector organization survey fact with a conditional PIPEDA reported-breach harm share; not financial-services-specific, mid-market-specific, or a denominator-backed sector incident rate.
-    confidence: low
+    confidence: medium
     evidence_type: source_backed
     applicability:
       industries: [all, financial_services]
@@ -66,6 +66,29 @@ records:
       company_size_bands: [mid_market]
       threats: [data_breach]
 
+  - id: opc_cira_ca_org_customer_employee_data_breach_prevalence_stress_2026
+    title: Canadian organization customer or employee data-breach stress prevalence
+    parameter: frequency.max
+    value: 0.42
+    unit: annual_probability
+    source_id: opc_annual_report_2025_2026
+    source_name: OPC 2025-2026 Annual Report to Parliament
+    source_type: privacy_regulator_report
+    source_url_or_citation: https://www.priv.gc.ca/en/opc-actions-and-decisions/ar_index/202526/ar_202526/
+    publication_date: "2026-06-04"
+    extraction_date: "2026-07-13"
+    citation_detail: Top trends in privacy reports that 42% of Canadian organizations experienced a breach of customer or employee data in the last 12 months; footnote 8 cites the CIRA survey.
+    extraction_notes: Reused the 42% Canadian organization-level data-breach prevalence as the stress frequency anchor to replace the prior estimated 60% stress assumption.
+    normalization_notes: Stored directly as 0.42 annual probability. Because no higher Canadian financial-services tail-frequency source is reviewed yet, the stress anchor equals the likely anchor.
+    limitations: Cross-sector Canadian organization survey fact cited by OPC/CIRA; not limited to financial services, mid-market companies, material events, or regulator-reportable breaches.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all, financial_services]
+      countries: [CA]
+      company_size_bands: [all, mid_market]
+      threats: [data_breach]
+
   - id: cyentia_iris_2022_typical_cyber_event_loss_usd_ca_context
     title: Typical reported cyber-event financial loss for Canada starter
     parameter: impact.min
@@ -79,10 +102,10 @@ records:
     publication_date: "2022-01-01"
     extraction_date: "2026-07-13"
     citation_detail: Public source page key findings; typical financial cost reported for a cyber event is USD 266K.
-    extraction_notes: Reused the governed Cyentia typical cyber-event financial-loss anchor for the Canada starter.
-    normalization_notes: Stored in source currency and selected as a conservative lower loss anchor until Canada-specific response-cost evidence is reviewed.
-    limitations: Global cyber-event benchmark, not Canada-specific, data-breach-only, financial-services-specific, or a true minimum loss quantile.
-    confidence: low
+    extraction_notes: Reused the governed Cyentia typical cyber-event financial-loss anchor for the Canada benchmark-review candidate.
+    normalization_notes: Stored in source currency and selected as a conservative lower loss bridge until Canada-specific response-cost evidence is reviewed.
+    limitations: Global cyber-event benchmark, not Canada-specific, data-breach-only, financial-services-specific, or a true minimum loss quantile. Accept only as a benchmark-review bridge with this caveat.
+    confidence: medium
     evidence_type: source_backed
     applicability:
       industries: [all]
@@ -117,6 +140,30 @@ records:
       company_size_bands: [all]
       threats: [data_breach]
 
+  - id: ibm_cost_data_breach_2025_global_average_cost_usd_ca_context
+    title: Global average cost of a data breach for Canada benchmark-review bridge
+    parameter: impact.likely
+    value: 4400000
+    unit: currency
+    currency: USD
+    source_id: ibm_cost_data_breach_2025
+    source_name: IBM Cost of a Data Breach Report 2025
+    source_type: data_breach_cost_research
+    source_url_or_citation: https://www.ibm.com/reports/data-breach
+    publication_date: "2025-07-30"
+    extraction_date: "2026-07-13"
+    citation_detail: Public report page hero metric; global average cost of a data breach is USD 4.4M.
+    extraction_notes: Used IBM's primary public global data-breach cost anchor instead of secondary Canada regional coverage for the automated benchmark-review gate.
+    normalization_notes: Stored in source currency and converted to CAD through the explicit Bank of Canada FX assumption.
+    limitations: Primary IBM source but global average across studied breached organizations; not Canada-specific, financial-services-specific, or size-band-specific. The secondary Canada row remains useful context but is not selected for benchmark-review automation.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global, CA]
+      company_size_bands: [all]
+      threats: [data_breach]
+
   - id: cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context
     title: Extreme reported security-incident loss for Canada starter
     parameter: impact.max
@@ -130,10 +177,10 @@ records:
     publication_date: "2025-06-10"
     extraction_date: "2026-07-13"
     citation_detail: Public source page key findings; median losses rose toward USD 3M, with extreme events reaching USD 32M.
-    extraction_notes: Reused the governed Cyentia extreme security-incident loss anchor for the Canada starter.
-    normalization_notes: Stored in source currency and selected as a stress loss anchor until Canada-specific breach tail-loss evidence is reviewed.
-    limitations: Global security-incident benchmark, not Canada-specific, data-breach-only, financial-services-specific, or a formal percentile for this scenario.
-    confidence: low
+    extraction_notes: Reused the governed Cyentia extreme security-incident loss anchor for the Canada benchmark-review candidate.
+    normalization_notes: Stored in source currency and selected as a stress loss bridge until Canada-specific breach tail-loss evidence is reviewed.
+    limitations: Global security-incident benchmark, not Canada-specific, data-breach-only, financial-services-specific, or a formal percentile for this scenario. Accept only as a benchmark-review stress bridge with this caveat.
+    confidence: medium
     evidence_type: source_backed
     applicability:
       industries: [all]
