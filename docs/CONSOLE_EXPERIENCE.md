@@ -26,16 +26,26 @@ It is intentionally closer to a Metasploit-style console than a web app:
 - Run source/evidence quality gates with `validate`.
 
 For Codex side-panel use, RiskShard also includes a local browser console
-wrapper. It uses the same console commands and local files, but organizes the
-first screen into four practitioner lanes:
+wrapper. It uses the same console commands and local files. It should not feel
+like a separate fake application; every button runs a real console command.
 
-- Run a shard
-- Improve evidence
-- Govern data
-- Contribute country
+The browser console now starts with the practitioner question:
 
-The dashboard then exposes contextual actions for the selected module, so users
-do not have to parse every command at once. Expert users can still type any
+```text
+Given my company context, which Risk Shards can help me run and explain a cyber risk scenario?
+```
+
+The first screen is organized around:
+
+- a short explanation of what a Risk Shard is;
+- the current company context from the active/default org profile;
+- available Risk Shards ranked by context fit and evidence coverage;
+- selected Risk Shard actions for options, evidence, gaps, run, explain, and report;
+- a concise trust boundary that distinguishes ready-to-run from benchmark-grade;
+- contribution actions for country coverage and evidence improvement.
+
+The left command rail is independently scrollable so navigation stays available
+while the console transcript and dashboard move. Expert users can still type any
 console command in the input.
 
 ```text
@@ -75,9 +85,9 @@ The `countries` command shows the first 25 contribution geographies, including
 seeded AU, US, and UK packs. `countries GB` also shows the UK coverage summary
 and the next contributor gap.
 
-## Module And Pack UX
+## Risk Shard And Pack UX
 
-Risk modules live in `risk_modules/` and bind together the scenario, default
+Risk Shards live in `risk_modules/` and bind together the scenario, default
 organization profile, calibration profile, evidence files, reviewed extractions,
 and optional control profiles for a practitioner workflow.
 
@@ -86,19 +96,19 @@ shows direct parameter coverage, assumption-only parameters, source-backed
 record counts, source gather timestamps, evidence ingestion dates, trust tiers,
 confidence, renewal status, and renewal due dates.
 
-The readiness dashboard and browser console now include a module coverage
-matrix. Each module is shown with the six direct parameters:
+The readiness dashboard still exposes detailed coverage, while the browser
+console shows a simpler Risk Shard list. Each Risk Shard is summarized by:
 
 ```text
-frequency.min / frequency.likely / frequency.max
-impact.min / impact.likely / impact.max
+country / industry / company size / threat
+source-backed direct parameters
+pack confidence
+next evidence gap
 ```
 
-Each cell is labeled source-backed, assumption-only, or missing. This is the
-main UX affordance for deciding what evidence to improve next. In the browser
-console, source-backed cells open the module evidence pack, while
-assumption-only or missing cells open the calibration proposal for that module.
-Each module row also exposes Use, Pack, and Fix gap actions.
+This keeps the browser console navigable without hiding the detailed evidence:
+the `packs`, `propose`, `show gaps`, `readiness`, and `feeds` commands remain
+the source of truth for deeper review.
 
 Scenario search and readiness output label each scenario as either `governed starter` or `demo fixture`. This keeps older smoke-test examples useful without making them look decision-ready.
 
@@ -113,6 +123,6 @@ Scenario search and readiness output label each scenario as either `governed sta
 ## Next Console Improvements
 
 - Add clearer guidance for moving `calibrated_with_assumptions` shards to fully source-backed `calibrated` status.
-- Add one-click source/feed details from each dashboard action.
 - Add copyable run/calibration commands for selected shards.
-- Add beginner/expert display mode if the four-lane layout is still too dense.
+- Add explicit company-context switching once multiple org profiles are ready.
+- Add one-click source/feed details from each trust action.

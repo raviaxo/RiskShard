@@ -137,7 +137,7 @@ def search_risk_modules(query="", root=PROJECT_ROOT):
 
 def format_module_list(modules):
     lines = [
-        "Risk modules",
+        "Risk Shards",
         "ID                                      Status             Threat                     Context",
         "--                                      ------             ------                     -------",
     ]
@@ -149,7 +149,7 @@ def format_module_list(modules):
             f"{context['country']}/{context['industry']}/{context['company_size']}"
         )
     if len(lines) == 3:
-        lines.append("No matching risk modules.")
+        lines.append("No matching risk shards.")
     return "\n".join(lines) + "\n"
 
 
@@ -157,7 +157,7 @@ def format_module_detail(module):
     artifacts = module["artifacts"]
     notes = module.get("practitioner_notes", {})
     lines = [
-        f"Risk module: {module['id']}",
+        f"Risk Shard: {module['id']}",
         f"Title      : {module['title']}",
         f"Version    : {module['version']}",
         f"Status     : {module['status']}",

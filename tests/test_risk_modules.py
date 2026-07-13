@@ -42,7 +42,7 @@ class RiskModuleTests(unittest.TestCase):
         self.assertIn("au_finance_bec_midmarket", module_ids)
         self.assertIn("gb_finance_data_breach_midmarket", module_ids)
         self.assertIn("us_finance_bec_midmarket", module_ids)
-        self.assertIn("Risk modules", output)
+        self.assertIn("Risk Shards", output)
         self.assertIn("governed_starter", output)
 
     def test_module_detail_and_scenario_lookup(self):
@@ -52,7 +52,7 @@ class RiskModuleTests(unittest.TestCase):
 
         self.assertEqual(module["id"], "au_finance_bec_midmarket")
         self.assertEqual(by_scenario["id"], "au_finance_bec_midmarket")
-        self.assertIn("Risk module: au_finance_bec_midmarket", output)
+        self.assertIn("Risk Shard: au_finance_bec_midmarket", output)
         self.assertIn("Calibration:", output)
 
     def test_evidence_pack_registry_summarizes_sources_and_assumptions(self):
