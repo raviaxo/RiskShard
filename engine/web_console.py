@@ -61,6 +61,7 @@ INDEX_HTML = """<!doctype html>
       display: flex;
       min-width: 0;
       height: 100vh;
+      min-height: 0;
       flex-direction: column;
     }
 
@@ -198,6 +199,12 @@ INDEX_HTML = """<!doctype html>
       padding: 16px 18px;
       border-bottom: 1px solid var(--line);
       background: #111416;
+    }
+
+    .console-scroll {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
     }
 
     .metric-grid {
@@ -383,10 +390,9 @@ INDEX_HTML = """<!doctype html>
     }
 
     .transcript {
-      flex: 1;
-      overflow: auto;
+      overflow: visible;
       padding: 18px;
-      min-height: 0;
+      min-height: 220px;
     }
 
     .entry {
@@ -416,6 +422,7 @@ INDEX_HTML = """<!doctype html>
 
     .input-bar {
       display: grid;
+      flex: 0 0 auto;
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 10px;
       padding: 14px 18px;
@@ -449,6 +456,7 @@ INDEX_HTML = """<!doctype html>
       aside {
         border-right: 0;
         border-bottom: 1px solid var(--line);
+        max-height: 42vh;
       }
       .metric-grid,
       .dashboard-columns,
@@ -529,8 +537,10 @@ INDEX_HTML = """<!doctype html>
         </div>
         <div class="status"><span class="dot"></span><span>Local</span></div>
       </header>
-      <section id="dashboard" class="dashboard"></section>
-      <section id="transcript" class="transcript" aria-live="polite"></section>
+      <div id="console-scroll" class="console-scroll">
+        <section id="dashboard" class="dashboard"></section>
+        <section id="transcript" class="transcript" aria-live="polite"></section>
+      </div>
       <form id="command-form" class="input-bar">
         <input id="command-input" autocomplete="off" spellcheck="false" placeholder="Type a RiskShard command">
         <button class="run-button primary" type="submit">Run</button>
@@ -540,6 +550,7 @@ INDEX_HTML = """<!doctype html>
   <script>
     const transcript = document.querySelector("#transcript");
     const dashboard = document.querySelector("#dashboard");
+    const consoleScroll = document.querySelector("#console-scroll");
     const promptLabel = document.querySelector("#prompt");
     const form = document.querySelector("#command-form");
     const input = document.querySelector("#command-input");
@@ -554,7 +565,7 @@ INDEX_HTML = """<!doctype html>
       pre.textContent = output;
       entry.append(commandLine, pre);
       transcript.appendChild(entry);
-      transcript.scrollTop = transcript.scrollHeight;
+      consoleScroll.scrollTop = consoleScroll.scrollHeight;
     }
 
     async function requestJson(url, options = {}) {
