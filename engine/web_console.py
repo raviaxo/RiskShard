@@ -516,6 +516,7 @@ INDEX_HTML = """<!doctype html>
           <div class="lane-title"><span>Govern data quality</span></div>
           <div class="lane-actions">
             <button data-command="readiness"><span class="button-title">Readiness dashboard</span><span class="button-help">Shows current coverage, trust, release, and next actions.</span></button>
+            <button data-command="beta"><span class="button-title">Beta readiness</span><span class="button-help">Shows stricter product/data blockers before public operations.</span></button>
             <button data-command="feeds"><span class="button-title">Data feed governance</span><span class="button-help">Shows source freshness, confidence, and renewal status.</span></button>
             <button data-command="doctor"><span class="button-title">Local health check</span><span class="button-help">Checks environment, sources, evidence, package, and tests.</span></button>
             <button data-command="validate"><span class="button-title">Validate evidence</span><span class="button-help">Runs evidence quality gates.</span></button>
@@ -613,7 +614,7 @@ INDEX_HTML = """<!doctype html>
       if (["modules", "module", "riskshards", "search", "toprisks", "risks", "countries", "use", "scenario", "info"].includes(first)) return "Scenario";
       if (["show", "consume", "calibrate", "run", "report", "explain"].includes(first)) return first === "show" && command.includes("gaps") ? "Improve Model" : "Run Risk";
       if (["packs", "evidencepacks", "propose", "feeds", "sources", "preflight", "contribute", "validate", "enhance"].includes(first)) return "Improve Model";
-      if (["readiness", "next", "actions", "doctor", "pack", "registry"].includes(first)) return "Govern Data";
+      if (["readiness", "beta", "next", "actions", "doctor", "pack", "registry"].includes(first)) return "Govern Data";
       return "Console";
     }
 

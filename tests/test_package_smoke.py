@@ -20,6 +20,7 @@ class PackageSmokeTests(unittest.TestCase):
 
         self.assertEqual(report["status"], "pass")
         self.assertEqual(by_name["riskshard-benchmark"]["status"], "pass")
+        self.assertEqual(by_name["riskshard-beta"]["status"], "pass")
         self.assertEqual(by_name["riskshard-toprisks"]["status"], "pass")
         self.assertEqual(by_name["riskshard-package-smoke"]["status"], "pass")
         self.assertIn("RiskShard package smoke", output)

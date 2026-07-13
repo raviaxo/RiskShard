@@ -122,6 +122,11 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn("Global readiness dashboard", readiness_output)
         self.assertIn("Data pack:", readiness_output)
 
+        beta_output = self.command("beta")
+        self.assertIn("RiskShard beta readiness", beta_output)
+        self.assertIn("Gate: not_beta_ready", beta_output)
+        self.assertIn("Deferred until beta", beta_output)
+
         pack_output = self.command("pack")
         self.assertIn("Data pack manifest", pack_output)
         self.assertIn("Fingerprint:", pack_output)

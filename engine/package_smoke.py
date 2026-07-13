@@ -18,6 +18,7 @@ DEFAULT_EXPECTED_ENTRY_POINTS = {
     "riskshard-toprisks",
     "riskshard-package-smoke",
     "riskshard-benchmark",
+    "riskshard-beta",
 }
 
 

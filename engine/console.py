@@ -32,6 +32,7 @@ from engine.governance import (
     format_feed_detail,
 )
 from engine.data_packs import build_data_pack_manifest, format_data_pack_manifest
+from engine.beta_readiness import build_beta_readiness_report, format_beta_readiness_report
 from engine.contributor import build_contributor_preflight, format_contributor_preflight
 from engine.doctor import build_doctor_report, format_doctor_report
 from engine.readiness import build_readiness_dashboard, format_next_actions, format_readiness_dashboard
@@ -144,6 +145,7 @@ class RiskShardConsole(cmd.Cmd):
         self.write("  enhance               Show the contribution path for improving evidence and calibration.\n")
         self.write("  propose               Propose stronger evidence selectors for the selected shard.\n")
         self.write("  feeds                 Inspect source freshness, ingestion, confidence, and renewal.\n")
+        self.write("  beta                  Check stricter beta readiness before public operations.\n")
         self.write("  preflight             Check whether a contribution pack is structurally ready.\n")
         self.write("  registry              Confirm the shard-pack contract and current coverage.\n")
         self.write("  scaffold CLI          python scripts/contributor_preflight.py scaffold path/to/pack --module-id <id> --country <code> --industry <id> --company-size <id> --threat <id>\n")
@@ -546,6 +548,12 @@ class RiskShardConsole(cmd.Cmd):
         del arg
         dashboard = build_readiness_dashboard(self.root, self.ensure_org_profile())
         self.write(format_readiness_dashboard(dashboard))
+        return None
+
+    def do_beta(self, arg):
+        """beta - Show stricter beta readiness before scaling public operations."""
+        del arg
+        self.write(format_beta_readiness_report(build_beta_readiness_report(self.root)))
         return None
 
     def do_next(self, arg):
