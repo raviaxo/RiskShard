@@ -2,8 +2,9 @@
 
 Start here when you want the current truth:
 
+- [PUBLISHABLE_REQUIREMENTS.md](PUBLISHABLE_REQUIREMENTS.md): controlling phase requirements, public launch bar, community operating model, and strategic change-control rules.
 - [PROJECT_STATUS.md](PROJECT_STATUS.md): current capabilities, known gaps, and definition of done.
-- [NEXT_STEPS.md](NEXT_STEPS.md): prioritized implementation backlog, including the next 8-hour stabilization plan.
+- [NEXT_STEPS.md](NEXT_STEPS.md): prioritized implementation backlog that should follow the requirements file.
 - [CONTRIBUTING.md](CONTRIBUTING.md): source, extraction, evidence, calibration, and review checklist.
 - [BENCHMARK_CONTRIBUTOR_WORKFLOW.md](BENCHMARK_CONTRIBUTOR_WORKFLOW.md): benchmark target, content-pack, preflight, and evidence-pack export workflow.
 - [CONSOLE_EXPERIENCE.md](CONSOLE_EXPERIENCE.md): intended local console workflow and scope guardrails.
@@ -23,4 +24,4 @@ Use these as historical or strategy context, not as the active backlog:
 - [GROWTH_AUDIT_REVIEW.md](GROWTH_AUDIT_REVIEW.md): growth guardrail review.
 - [CODEX_REPO_REVIEW.md](CODEX_REPO_REVIEW.md): historical repo review from the first cleanup pass.
 - [CHATGPT_STRATEGY_BRIEF.md](CHATGPT_STRATEGY_BRIEF.md): strategy brainstorming prompts.
-- [roadmap.md](roadmap.md), [vision.md](vision.md), and [manifest.md](manifest.md): early product-direction notes.
+- [roadmap.md](roadmap.md), [vision.md](vision.md), and [manifest.md](manifest.md): early product-direction notes superseded by the publishable requirements file for active execution.

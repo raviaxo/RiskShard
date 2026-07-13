@@ -10,10 +10,16 @@ The current GBP-to-USD coverage uses the European Central Bank euro foreign
 exchange reference rates. ECB quotes currencies against EUR, so RiskShard stores
 the derived GBP/USD cross-rate explicitly in `calibrations/fx_rates.yaml`.
 
+The current USD-to-CAD coverage uses the Bank of Canada Valet FXUSDCAD daily
+average exchange rate. Bank of Canada quotes the value of one US dollar
+expressed in Canadian dollars, so RiskShard stores the direct USD/CAD rate
+explicitly in `calibrations/fx_rates.yaml`.
+
 Source CSV:
 
 ```text
 https://www.rba.gov.au/statistics/tables/csv/f11.1-data.csv
+https://www.bankofcanada.ca/valet/observations/FXUSDCAD/csv?start_date=2026-06-01&end_date=2026-06-04
 ```
 
 ## Refresh Command
@@ -25,7 +31,7 @@ python scripts/update_fx_rates.py \
 
 The refresh command updates the RBA AUD/USD entry and preserves other reviewed
 rates already present in the output file, such as the ECB-derived GBP/USD
-cross-rate.
+cross-rate and the Bank of Canada USD/CAD rate.
 
 For a pinned local CSV fixture:
 
@@ -41,6 +47,7 @@ python scripts/update_fx_rates.py \
 - Confirm `source_url` points to the RBA F11.1 CSV.
 - Confirm `retrieved_at` reflects the date the CSV was retrieved.
 - Confirm `citation_detail` names the selected row and `FXRUSD` series.
-- Confirm manually reviewed non-AUD rates were preserved when refreshing AUD.
+- Confirm manually reviewed non-AUD rates were preserved when refreshing AUD,
+  including GBP/USD and USD/CAD.
 - Run `python -m unittest discover -s tests`.
 - Run the canonical calibration command and confirm currency assumptions appear in JSON and Markdown reports.

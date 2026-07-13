@@ -28,3 +28,18 @@ rates:
       ECB rates are quoted against EUR. RiskShard stores the derived GBP to
       USD cross-rate explicitly so UK evidence currency coverage is visible in
       readiness and governance checks.
+  - id: usd_to_cad_boc_fxusdcad_2026_06_04
+    from: USD
+    to: CAD
+    rate: 1.3896
+    as_of: "2026-06-04"
+    source_name: Bank of Canada Valet FXUSDCAD daily exchange rate
+    source_type: official_reference_rate
+    source_url: https://www.bankofcanada.ca/valet/observations/FXUSDCAD/csv?start_date=2026-06-01&end_date=2026-06-04
+    retrieved_at: "2026-07-13"
+    citation_detail: "Bank of Canada Valet FXUSDCAD daily average exchange rate, row 2026-06-04; 1 USD = CAD 1.3896."
+    evidence_type: source_backed
+    notes: >
+      Bank of Canada quotes the daily average value of one US dollar expressed
+      in Canadian dollars. Canada data-breach calibration uses this reviewed
+      static assumption and discloses it in calibration reports.

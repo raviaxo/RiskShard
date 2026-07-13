@@ -8,10 +8,12 @@ metadata:
     and frequency.likely now use Canadian organization-level OPC/CIRA prevalence
     anchors, but frequency.max remains an explicit estimate until Canadian
     financial-services or tail-frequency evidence is reviewed. Impact
-    parameters use governed global USD loss anchors until Canada-specific cost
-    and CAD conversion evidence are added.
+    min/max parameters still use governed global USD loss anchors converted to
+    CAD, while impact.likely now uses a secondary Canada-specific IBM cost
+    report bridge. Replace the secondary likely-cost bridge and global min/max
+    anchors before benchmark-grade claims.
 
-target_currency: USD
+target_currency: CAD
 
 parameters:
   frequency:
@@ -31,16 +33,19 @@ parameters:
   impact:
     min:
       evidence_id: cyentia_iris_2022_typical_cyber_event_loss_usd_ca_context
-      transform: direct
-      target_currency: USD
-      rationale: Source-backed global lower loss anchor used until Canadian breach response-cost evidence is reviewed.
+      transform: currency_convert
+      target_currency: CAD
+      round_to: 10000
+      rationale: Source-backed global lower loss anchor converted to CAD until Canadian breach response-cost evidence is reviewed.
     likely:
-      evidence_id: ibm_cost_data_breach_2025_global_average_cost_usd_ca_context
-      transform: direct
-      target_currency: USD
-      rationale: Data-breach-specific global average cost benchmark used as the likely loss anchor until Canada-specific breach-cost evidence is reviewed.
+      evidence_id: itpro_ibm_ca_2025_average_breach_cost_usd
+      transform: currency_convert
+      target_currency: CAD
+      round_to: 100000
+      rationale: Secondary Canada-specific IBM breach-cost coverage converted to CAD; replace with a primary Canada source before benchmark claims.
     max:
       evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context
-      transform: direct
-      target_currency: USD
-      rationale: Source-backed global extreme security-incident loss benchmark used as a stress anchor until Canadian data-breach tail-loss evidence is reviewed.
+      transform: currency_convert
+      target_currency: CAD
+      round_to: 100000
+      rationale: Source-backed global extreme security-incident loss benchmark converted to CAD until Canadian data-breach tail-loss evidence is reviewed.

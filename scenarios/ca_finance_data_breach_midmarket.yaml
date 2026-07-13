@@ -1,15 +1,16 @@
 metadata:
   name: Canada Finance Data Breach Midmarket
   version: "0.1"
-  currency: USD
+  currency: CAD
   scenario_stage: governed_starter
-  benchmark_status: starter_with_estimated_stress_frequency_and_global_usd_impact
+  benchmark_status: starter_with_estimated_stress_frequency_and_secondary_ca_impact
   description: >
     Starter Canadian financial-services data-breach shard. Frequency min and
     likely use Canadian OPC/CIRA prevalence anchors, while stress frequency
-    remains estimated until Canadian tail evidence is reviewed. Impact uses
-    governed global USD breach/cyber loss anchors because CAD conversion and
-    Canada-specific breach-cost evidence are still open contribution gaps.
+    remains estimated until Canadian tail evidence is reviewed. Impact is
+    expressed in CAD: min/max use governed global USD loss anchors converted
+    with a Bank of Canada FX assumption, and likely uses secondary Canada
+    breach-cost coverage that should be replaced with primary evidence.
 
 frequency:
   min: 0.2436
@@ -17,6 +18,6 @@ frequency:
   max: 0.6
 
 impact:
-  min: 266000
-  likely: 4400000
-  max: 32000000
+  min: 370000
+  likely: 6700000
+  max: 44500000
