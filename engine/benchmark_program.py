@@ -415,7 +415,7 @@ def build_benchmark_sprint_report(program_report, cohort="seeded", limit=None):
             "id": f"{cohort}_evidence_upgrade_a",
             "title": "Seeded Evidence Upgrade Sprint A",
             "goal": (
-                "Move the four non-ready seeded modules toward benchmark review "
+                "Move the non-ready seeded modules toward benchmark review "
                 "by replacing estimated selectors with reviewed source-backed evidence."
             ),
         },

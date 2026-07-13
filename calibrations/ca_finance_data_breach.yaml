@@ -1,0 +1,45 @@
+metadata:
+  name: Canada financial-services data breach calibration
+  scenario_name: Canada Finance Data Breach Midmarket - Calibrated Draft
+  version: "0.1"
+  notes: >
+    Starter calibration profile for a Canadian mid-market financial-services
+    data-breach shard. It is intentionally not benchmark-grade: frequency
+    parameters are explicit estimates until Canadian breach prevalence,
+    regulator notification, or denominator-backed frequency evidence is
+    reviewed. Impact parameters use governed global USD loss anchors until
+    Canada-specific cost and CAD conversion evidence are added.
+
+target_currency: USD
+
+parameters:
+  frequency:
+    min:
+      evidence_id: riskshard_ca_data_breach_frequency_floor_2026
+      transform: direct
+      rationale: Explicit estimated floor until Canada-specific organization-level breach likelihood evidence is available.
+    likely:
+      evidence_id: riskshard_ca_data_breach_frequency_likely_2026
+      transform: direct
+      rationale: Explicit estimated likely annual probability until Canada-specific prevalence or denominator evidence is available.
+    max:
+      evidence_id: riskshard_ca_data_breach_frequency_stress_2026
+      transform: direct
+      rationale: Explicit estimated stress frequency until Canadian tail-frequency evidence is available.
+
+  impact:
+    min:
+      evidence_id: cyentia_iris_2022_typical_cyber_event_loss_usd_ca_context
+      transform: direct
+      target_currency: USD
+      rationale: Source-backed global lower loss anchor used until Canadian breach response-cost evidence is reviewed.
+    likely:
+      evidence_id: ibm_cost_data_breach_2025_global_average_cost_usd_ca_context
+      transform: direct
+      target_currency: USD
+      rationale: Data-breach-specific global average cost benchmark used as the likely loss anchor until Canada-specific breach-cost evidence is reviewed.
+    max:
+      evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context
+      transform: direct
+      target_currency: USD
+      rationale: Source-backed global extreme security-incident loss benchmark used as a stress anchor until Canadian data-breach tail-loss evidence is reviewed.
