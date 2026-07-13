@@ -17,8 +17,13 @@ class WebConsoleTests(unittest.TestCase):
 
         selected = app.run_command("use au_finance_ransomware_midmarket")
         self.assertIn("Using Risk Shard au_finance_ransomware_midmarket", selected["output"])
+        self.assertIn("Location: [Start] > [Scenario]", selected["output"])
         self.assertEqual(selected["prompt"], "riskshard(au_finance_ransomware_midmarket)> ")
         self.assertEqual(selected["active_module_id"], "au_finance_ransomware_midmarket")
+
+        where = app.run_command("where")
+        self.assertIn("Consume model", where["output"])
+        self.assertIn("Enhance model", where["output"])
 
         options = app.run_command("show options")
         self.assertIn("org_profiles/au_finance_midmarket.yaml", options["output"])
@@ -55,6 +60,9 @@ class WebConsoleTests(unittest.TestCase):
 
         run = app.run_command("run")
         self.assertIn("Run complete.", run["output"])
+        self.assertIn("Run receipt", run["output"])
+        self.assertIn("Risk Shard    : au_finance_ransomware_midmarket", run["output"])
+        self.assertIn("Simulation    : trials=10000, dist=pert, seed=42", run["output"])
         self.assertIn("LEC: results/lec_Console.png", run["output"])
 
         gb_proposal = app.run_command("propose gb_finance_data_breach_midmarket")
@@ -79,6 +87,12 @@ class WebConsoleTests(unittest.TestCase):
     def test_browser_console_uses_practitioner_risk_shard_language(self):
         self.assertIn("What is a Risk Shard?", INDEX_HTML)
         self.assertIn("Risk Shard Catalog", INDEX_HTML)
+        self.assertIn("Where am I?", INDEX_HTML)
+        self.assertIn("Consume model path", INDEX_HTML)
+        self.assertIn("Enhance model path", INDEX_HTML)
+        self.assertIn("Start over", INDEX_HTML)
+        self.assertIn("commandFolder(command)", INDEX_HTML)
+        self.assertIn("[Start] $ system", INDEX_HTML)
         self.assertIn("United Kingdom contribution detail", INDEX_HTML)
         self.assertIn("GB is the taxonomy code for the UK.", INDEX_HTML)
         self.assertIn("height: 100vh;", INDEX_HTML)

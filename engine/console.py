@@ -63,7 +63,11 @@ class RiskShardConsole(cmd.Cmd):
         self.last_calibration_report = None
         self.last_run = None
         self.last_paths = {}
-        self.options = {
+        self.options = self.default_options()
+        self.prompt = "riskshard> "
+
+    def default_options(self):
+        return {
             "trials": 10000,
             "dist": "pert",
             "seed": 42,
@@ -74,7 +78,6 @@ class RiskShardConsole(cmd.Cmd):
             "markdown_output": self.root / "results" / "console_calibration.md",
             "scenario_output": self.root / "results" / "console_calibrated.yaml",
         }
-        self.prompt = "riskshard> "
 
     def emptyline(self):
         return None
@@ -108,26 +111,38 @@ class RiskShardConsole(cmd.Cmd):
         """workflow - Show the shortest credible first-run path."""
         del arg
         self.write("First-run workflow\n")
-        self.write("1. toprisks\n")
-        self.write("2. modules\n")
-        self.write("3. countries\n")
-        self.write("4. countries GB\n")
-        self.write("5. modules info gb_finance_data_breach_midmarket\n")
-        self.write("6. packs gb_finance_data_breach_midmarket\n")
-        self.write("7. feeds\n")
-        self.write("8. doctor\n")
-        self.write("9. readiness\n")
-        self.write("10. next\n")
-        self.write("11. preflight\n")
-        self.write("12. use gb_finance_data_breach_midmarket\n")
-        self.write("13. show options\n")
-        self.write("14. show gaps\n")
-        self.write("15. propose\n")
-        self.write("16. calibrate\n")
-        self.write("17. show evidence\n")
-        self.write("18. explain\n")
-        self.write("19. run\n")
-        self.write("20. report json\n")
+        self.write("Goal: choose a real Risk Shard, understand its trust boundary, run it, then decide whether to consume or improve it.\n")
+        self.write("\n")
+        self.write("[Start]\n")
+        self.write("  where                 Show current location, selected shard, inputs, and next commands.\n")
+        self.write("  start over            Clear selected shard, calibration, run state, and return to the root prompt.\n")
+        self.write("\n")
+        self.write("[Find Risk Shard]\n")
+        self.write("  toprisks              Rank starter threats for the current company profile.\n")
+        self.write("  modules               Browse available Risk Shards.\n")
+        self.write("  countries             See country coverage priorities.\n")
+        self.write("  countries GB          Explain the UK priority and current gap.\n")
+        self.write("\n")
+        self.write("[Scenario]\n")
+        self.write("  use gb_finance_data_breach_midmarket\n")
+        self.write("  scenario              Show the selected scenario and input context.\n")
+        self.write("  packs                 Inspect evidence and assumptions behind the selected shard.\n")
+        self.write("  show gaps             Show what blocks stronger trust.\n")
+        self.write("\n")
+        self.write("[Run Risk]\n")
+        self.write("  show options          Confirm scenario, org profile, calibration, threat, trials, dist, and seed.\n")
+        self.write("  calibrate             Create an evidence-calibrated scenario draft when calibration inputs are set.\n")
+        self.write("  run                   Simulate the active scenario and print a run receipt before the numbers.\n")
+        self.write("\n")
+        self.write("[Finding]\n")
+        self.write("  explain               Explain the latest calibration or run.\n")
+        self.write("  report json           Export the latest simulation report.\n")
+        self.write("\n")
+        self.write("[Improve Model]\n")
+        self.write("  enhance               Show the contribution path for improving evidence and calibration.\n")
+        self.write("  propose               Propose stronger evidence selectors for the selected shard.\n")
+        self.write("  feeds                 Inspect source freshness, ingestion, confidence, and renewal.\n")
+        self.write("  preflight             Check whether a contribution pack is structurally ready.\n")
         return None
 
     def help_workflow(self):
@@ -140,7 +155,8 @@ class RiskShardConsole(cmd.Cmd):
             self.select_module(module)
             self.refresh_prompt()
             self.write(f"Using Risk Shard {module['id']}: {module['title']}\n")
-            self.write("Run 'packs', 'show options', then 'propose', 'calibrate', or 'run'.\n")
+            self.write(f"Location: {self.breadcrumb(include_run=False)}\n")
+            self.write("Next: run 'where' or 'scenario' to confirm inputs, then choose 'consume' or 'enhance'.\n")
             return None
 
         path = resolve_scenario(self.root, arg.strip())
@@ -157,8 +173,70 @@ class RiskShardConsole(cmd.Cmd):
 
         config = load_and_validate(path)
         self.write(f"Using {config['metadata']['name']} ({relative_to_root(path, self.root)})\n")
-        self.write("Run 'show options', then 'calibrate' or 'run'.\n")
+        self.write(f"Location: {self.breadcrumb(include_run=False)}\n")
+        self.write("Next: run 'where' or 'scenario' to confirm inputs, then choose 'consume' or 'enhance'.\n")
         return None
+
+    def do_where(self, arg):
+        """where - Show current console location, selected context, and next actions."""
+        del arg
+        self.write_context_summary()
+        return None
+
+    def do_scenario(self, arg):
+        """scenario [scenario-id|path] - Show scenario detail or the current scenario context."""
+        if arg.strip():
+            return self.do_info(arg)
+        self.write_context_summary()
+        return None
+
+    def do_consume(self, arg):
+        """consume - Show the path for using the selected model output."""
+        del arg
+        self.write("Consume model path\n")
+        self.write(f"Location: {self.breadcrumb()}\n")
+        self.write("Purpose : use a selected Risk Shard to produce an explainable risk narrative.\n")
+        self.write("1. where          Confirm selected shard, company context, and simulation settings.\n")
+        self.write("2. packs          Inspect confidence and assumptions before presenting numbers.\n")
+        self.write("3. run            Simulate the active scenario and receive a run receipt.\n")
+        self.write("4. explain        Explain what the latest result means and where trust is limited.\n")
+        self.write("5. report json    Export the machine-readable report for review or downstream use.\n")
+        return None
+
+    def do_enhance(self, arg):
+        """enhance - Show the path for improving evidence, calibration, and trust."""
+        del arg
+        self.write("Enhance model path\n")
+        self.write(f"Location: {self.breadcrumb()}\n")
+        self.write("Purpose : improve the shard so future runs depend less on assumptions.\n")
+        self.write("1. packs          See which parameters are source-backed vs assumption-backed.\n")
+        self.write("2. show gaps      Identify the most important missing evidence.\n")
+        self.write("3. propose        Review stronger evidence selectors for calibration.\n")
+        self.write("4. feeds          Check source freshness, ingestion date, confidence, and renewal.\n")
+        self.write("5. preflight      Check a contribution pack before merging it into RiskShard.\n")
+        self.write("6. validate       Run evidence quality gates after changes.\n")
+        return None
+
+    def do_start(self, arg):
+        """start over - Reset selected shard, calibration, run, and prompt state."""
+        if arg.strip().lower() != "over":
+            self.write("Usage: start over\n")
+            return None
+        self.reset_state()
+        self.write("Started over.\n")
+        self.write("Location: [Start]\n")
+        self.write("Next: run 'workflow', 'modules', or 'toprisks'.\n")
+        return None
+
+    def do_reset(self, arg):
+        """reset - Alias for start over."""
+        del arg
+        return self.do_start("over")
+
+    def do_clear(self, arg):
+        """clear - Alias for start over."""
+        del arg
+        return self.do_start("over")
 
     def do_info(self, arg):
         """info [scenario-id|path] - Show scenario ranges and metadata."""
@@ -323,7 +401,7 @@ class RiskShardConsole(cmd.Cmd):
         """run - Simulate the selected or calibrated scenario."""
         del arg
         if self.active_run_path is None:
-            self.write("No scenario selected. Try 'search' and 'use <id>'.\n")
+            self.write("No scenario selected. Try 'modules' and 'use <risk-shard-id>', or run 'workflow'.\n")
             return None
 
         try:
@@ -340,9 +418,13 @@ class RiskShardConsole(cmd.Cmd):
 
         self.last_run = run
         self.last_paths["lec"] = lec_path
-        self.write("Run complete.\n")
+        self.write_run_receipt(run)
+        self.write("Results\n")
         print_stats(run["portfolio"], self.write)
         self.write(f"LEC: {relative_to_root(lec_path, self.root)}\n")
+        self.write("Next consume: explain; report json\n")
+        self.write("Next enhance: packs; show gaps; propose; enhance\n")
+        self.write("Start over  : start over\n")
         return None
 
     def do_report(self, arg):
@@ -401,9 +483,12 @@ class RiskShardConsole(cmd.Cmd):
             self.write(f"Warnings: {warnings}; quality issues: {issues}\n")
             self.write("Run 'show evidence', 'show warnings', or 'show gaps' for detail.\n")
         elif self.last_run:
-            self.write("Latest simulation run:\n")
+            self.write("Latest simulation run\n")
+            self.write(f"Location: {self.breadcrumb()}\n")
+            self.write(f"Risk Shard: {self.module_id or 'unset'}\n")
+            self.write(f"Run target: {format_option(self.active_run_path, self.root)}\n")
             print_stats(self.last_run["portfolio"], self.write)
-            self.write("Run 'report json' to export the simulation report.\n")
+            self.write("Run 'report json' to export the simulation report, or 'enhance' to improve the trust boundary.\n")
         else:
             self.write("No calibration or simulation yet. Try 'workflow'.\n")
         return None
@@ -541,6 +626,7 @@ class RiskShardConsole(cmd.Cmd):
         return self.do_exit(arg)
 
     def show_options(self):
+        self.write(f"Location      : {self.breadcrumb()}\n")
         self.write(f"Risk Shard    : {self.module_id or 'unset'}\n")
         self.write(f"Scenario      : {format_option(self.scenario_path, self.root)}\n")
         self.write(f"Run target    : {format_option(self.active_run_path, self.root)}\n")
@@ -598,6 +684,65 @@ class RiskShardConsole(cmd.Cmd):
         analysis = analyze_gaps(org_profile, threat)
         self.write(format_gap_analysis(analysis))
 
+    def write_context_summary(self):
+        self.write(f"Location      : {self.breadcrumb()}\n")
+        self.write(f"Risk Shard    : {self.module_id or 'unset'}\n")
+        self.write(f"Scenario      : {format_option(self.scenario_path, self.root)}\n")
+        self.write(f"Run target    : {format_option(self.active_run_path, self.root)}\n")
+        self.write(f"Org profile   : {format_option(self.options['org_profile'], self.root)}\n")
+        self.write(f"Calibration   : {format_option(self.options['calibration'], self.root)}\n")
+        self.write(f"Threat        : {self.options['threat'] or 'unset'}\n")
+        self.write(
+            "Simulation    : "
+            f"trials={self.options['trials']}, "
+            f"dist={self.options['dist']}, "
+            f"seed={format_option(self.options['seed'], self.root)}\n"
+        )
+        self.write(f"Last run      : {'available' if self.last_run else 'none'}\n")
+        self.write(f"Last calibration: {'available' if self.last_calibration_report else 'none'}\n")
+        self.write("Consume model : consume -> run -> explain -> report json\n")
+        self.write("Enhance model : enhance -> packs -> show gaps -> propose -> validate\n")
+        self.write("Start over    : start over\n")
+
+    def write_run_receipt(self, run):
+        config = load_and_validate(self.active_run_path)
+        metadata = config.get("metadata", {})
+        scenario_items = run["metadata"]["reproducibility"]["scenarios"]
+        scenario_meta = scenario_items[0] if scenario_items else {}
+        self.write("Run complete.\n")
+        self.write("Run receipt\n")
+        self.write(f"Location      : {self.breadcrumb(include_run=True)}\n")
+        self.write(f"Risk Shard    : {self.module_id or 'unset'}\n")
+        self.write(f"Scenario      : {metadata.get('name', 'unknown')}\n")
+        self.write(f"Scenario file : {format_option(self.active_run_path, self.root)}\n")
+        self.write(f"Org profile   : {format_option(self.options['org_profile'], self.root)}\n")
+        self.write(f"Threat        : {self.options['threat'] or infer_threat(self.active_run_path) or 'unset'}\n")
+        self.write(
+            "Simulation    : "
+            f"trials={self.options['trials']}, "
+            f"dist={self.options['dist']}, "
+            f"seed={format_option(self.options['seed'], self.root)}\n"
+        )
+        self.write(f"Stage         : {scenario_meta.get('stage_label', scenario_stage_label(config))}\n")
+        self.write(f"Benchmark     : {scenario_meta.get('benchmark_status', metadata.get('benchmark_status', 'unspecified'))}\n")
+        self.write(f"Fingerprint   : {scenario_meta.get('fingerprint', 'unknown')}\n")
+        self.write(f"Currency      : {metadata.get('currency', 'unspecified')}\n")
+        if self.last_calibration_report:
+            estimated = sum(
+                1 for item in self.last_calibration_report["selected_evidence"]
+                if item["evidence_type"] != "source_backed"
+            )
+            self.write(
+                "Calibration   : latest calibration in this session; "
+                f"selected_evidence={len(self.last_calibration_report['selected_evidence'])}, "
+                f"estimated_or_synthetic={estimated}, "
+                f"warnings={len(self.last_calibration_report['warnings'])}, "
+                f"quality_issues={len(self.last_calibration_report['quality_issues'])}\n"
+            )
+        else:
+            self.write("Calibration   : no calibration run in this session; scenario values were used as-is.\n")
+        self.write("Trust note    : numbers are useful only with the evidence pack and gaps beside them.\n")
+
     def missing_calibration_options(self):
         missing = []
         if self.scenario_path is None:
@@ -640,6 +785,27 @@ class RiskShardConsole(cmd.Cmd):
             self.prompt = f"riskshard({self.scenario_path.stem})> "
         else:
             self.prompt = "riskshard> "
+
+    def breadcrumb(self, include_run=None):
+        parts = ["Start"]
+        if self.scenario_path or self.module_id:
+            parts.append("Scenario")
+        if self.last_calibration_report:
+            parts.append("Calibration")
+        should_include_run = self.last_run if include_run is None else include_run
+        if should_include_run:
+            parts.append("Run Risk")
+        return " > ".join(f"[{part}]" for part in parts)
+
+    def reset_state(self):
+        self.scenario_path = None
+        self.active_run_path = None
+        self.module_id = None
+        self.last_calibration_report = None
+        self.last_run = None
+        self.last_paths = {}
+        self.options = self.default_options()
+        self.refresh_prompt()
 
     def ensure_org_profile(self):
         if self.options["org_profile"]:

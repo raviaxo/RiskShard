@@ -480,7 +480,9 @@ INDEX_HTML = """<!doctype html>
           <div class="lane-title"><span>Start with your company</span></div>
           <div class="lane-actions">
             <button class="primary" data-command="workflow"><span class="button-title">Recommended workflow</span><span class="button-help">Shows the shortest console path from context to run.</span></button>
+            <button data-command="where"><span class="button-title">Where am I?</span><span class="button-help">Shows selected shard, inputs, last run, and next commands.</span></button>
             <button data-command="toprisks"><span class="button-title">Top risk readiness</span><span class="button-help">Ranks starter threats by current evidence coverage.</span></button>
+            <button data-command="start over"><span class="button-title">Start over</span><span class="button-help">Clears selected shard, calibration, run state, and prompt.</span></button>
           </div>
         </section>
         <section class="lane">
@@ -494,6 +496,7 @@ INDEX_HTML = """<!doctype html>
         <section class="lane">
           <div class="lane-title"><span>Run and explain</span></div>
           <div class="lane-actions">
+            <button data-command="consume"><span class="button-title">Consume model path</span><span class="button-help">Use a shard to produce an explainable result.</span></button>
             <button data-command="show options"><span class="button-title">Selected shard options</span><span class="button-help">Shows scenario, org profile, calibration, trials, and outputs.</span></button>
             <button data-command="run" class="warning"><span class="button-title">Run scenario</span><span class="button-help">Runs the selected shard and returns AVG, P50, P95, P99.</span></button>
             <button data-command="explain"><span class="button-title">Explain latest result</span><span class="button-help">Summarizes the latest calibration or simulation.</span></button>
@@ -503,6 +506,7 @@ INDEX_HTML = """<!doctype html>
         <section class="lane">
           <div class="lane-title"><span>Inspect and improve evidence</span></div>
           <div class="lane-actions">
+            <button data-command="enhance"><span class="button-title">Enhance model path</span><span class="button-help">Improve evidence, calibration, and trust before wider use.</span></button>
             <button data-command="packs"><span class="button-title">Evidence pack</span><span class="button-help">Shows source-backed vs assumption-backed parameters.</span></button>
             <button data-command="propose"><span class="button-title">Calibration proposal</span><span class="button-help">Suggests stronger selectors without silently changing files.</span></button>
             <button data-command="show gaps"><span class="button-title">Evidence gaps</span><span class="button-help">Shows what is missing before trust can increase.</span></button>
@@ -560,7 +564,7 @@ INDEX_HTML = """<!doctype html>
       entry.className = "entry";
       const commandLine = document.createElement("div");
       commandLine.className = "command";
-      commandLine.textContent = command ? "$ " + command : "$ system";
+      commandLine.textContent = command ? `[${commandFolder(command)}] $ ${command}` : "[Start] $ system";
       const pre = document.createElement("pre");
       pre.textContent = output;
       entry.append(commandLine, pre);
@@ -602,6 +606,16 @@ INDEX_HTML = """<!doctype html>
       return String(status || "unknown").replaceAll("_", " ");
     }
 
+    function commandFolder(command) {
+      const first = command.trim().split(/\s+/)[0] || "start";
+      if (["workflow", "where", "start", "reset", "clear"].includes(first)) return "Start";
+      if (["modules", "module", "riskshards", "search", "toprisks", "risks", "countries", "use", "scenario", "info"].includes(first)) return "Scenario";
+      if (["show", "consume", "calibrate", "run", "report", "explain"].includes(first)) return first === "show" && command.includes("gaps") ? "Improve Model" : "Run Risk";
+      if (["packs", "evidencepacks", "propose", "feeds", "sources", "preflight", "contribute", "validate", "enhance"].includes(first)) return "Improve Model";
+      if (["readiness", "next", "actions", "doctor", "pack"].includes(first)) return "Govern Data";
+      return "Console";
+    }
+
     const parameterLabels = {
       "frequency.min": "F min",
       "frequency.likely": "F likely",
@@ -627,15 +641,20 @@ INDEX_HTML = """<!doctype html>
           <div class="item-meta">Select a Risk Shard to unlock evidence, run, explain, and report actions.</div>
           <div class="context-actions">
             ${commandButton("modules", "Browse Risk Shards", "primary")}
+            ${commandButton("where", "Where am I?")}
             ${commandButton("use gb_finance_data_breach_midmarket", "Use UK data breach")}
             ${commandButton("use au_finance_ransomware_midmarket", "Use AU ransomware")}
-            ${commandButton("countries", "Country priorities")}
+            ${commandButton("start over", "Start over")}
           </div>
         `;
       }
       return `
         <div class="item-meta">Selected Risk Shard: ${activeModuleId}</div>
         <div class="context-actions">
+          ${commandButton("where", "Where am I?")}
+          ${commandButton("scenario", "Scenario")}
+          ${commandButton("consume", "Consume")}
+          ${commandButton("enhance", "Enhance")}
           ${commandButton(`modules info ${activeModuleId}`, "Shard info")}
           ${commandButton(`packs ${activeModuleId}`, "Evidence pack")}
           ${commandButton("show options", "Options")}
@@ -644,6 +663,7 @@ INDEX_HTML = """<!doctype html>
           ${commandButton("calibrate", "Calibrate", "warning")}
           ${commandButton("run", "Run", "warning")}
           ${commandButton("report json", "Report JSON")}
+          ${commandButton("start over", "Start over")}
         </div>
       `;
     }
@@ -698,13 +718,13 @@ INDEX_HTML = """<!doctype html>
           <div class="metric"><div class="metric-label">Trust gate</div><div class="metric-value">${displayStatus(gate.status)}</div><div class="item-meta">ready to run is not benchmark-grade</div></div>
         </div>
         <div class="section">
-          <div class="section-title"><span>Start here</span><span class="badge ${badgeClass(gate.status)}">${displayStatus(gate.status)}</span></div>
-          <div class="item-meta">RiskShard helps you pick an evidence-backed scenario, run it for a narrative, then inspect confidence and missing evidence.</div>
+          <div class="section-title"><span>Console path</span><span class="badge ${activeModuleId ? "good" : "warn"}">${activeModuleId ? "scenario selected" : "start"}</span></div>
+          <div class="item-meta">Move through [Scenario] -> [Run Risk] -> [Finding], or switch to [Improve Model] when evidence is weak.</div>
           <div class="context-actions">
-            ${commandButton("modules", "Find Risk Shards", "primary")}
-            ${commandButton("toprisks", "Top risks")}
-            ${commandButton("countries", "Coverage roadmap")}
-            ${commandButton("readiness", "Trust status")}
+            ${commandButton("where", "Where am I?", "primary")}
+            ${commandButton("consume", "Consume model")}
+            ${commandButton("enhance", "Enhance model")}
+            ${commandButton("start over", "Start over")}
           </div>
         </div>
         <div class="section">
@@ -805,7 +825,7 @@ INDEX_HTML = """<!doctype html>
 
     Promise.all([refreshState(), refreshDashboard()])
       .then(() => {
-        appendEntry("", "Browser console ready. Click Workflow or type a command below.");
+        appendEntry("", "Browser console ready. Click Workflow, Where am I?, or type a command below.");
         input.focus();
       })
       .catch((error) => {
