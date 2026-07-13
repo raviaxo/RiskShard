@@ -43,6 +43,7 @@ from engine.risk_modules import (
     search_risk_modules,
 )
 from engine.scenarios import scenario_paths, scenario_stage_label
+from engine.shard_registry import build_shard_registry, format_shard_registry
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -122,6 +123,7 @@ class RiskShardConsole(cmd.Cmd):
         self.write("  modules               Browse available Risk Shards.\n")
         self.write("  countries             See country coverage priorities.\n")
         self.write("  countries GB          Explain the UK priority and current gap.\n")
+        self.write("  registry              Show the machine-readable shard registry summary.\n")
         self.write("\n")
         self.write("[Scenario]\n")
         self.write("  use gb_finance_data_breach_midmarket\n")
@@ -143,6 +145,8 @@ class RiskShardConsole(cmd.Cmd):
         self.write("  propose               Propose stronger evidence selectors for the selected shard.\n")
         self.write("  feeds                 Inspect source freshness, ingestion, confidence, and renewal.\n")
         self.write("  preflight             Check whether a contribution pack is structurally ready.\n")
+        self.write("  registry              Confirm the shard-pack contract and current coverage.\n")
+        self.write("  scaffold CLI          python scripts/contributor_preflight.py scaffold path/to/pack --module-id <id> --country <code> --industry <id> --company-size <id> --threat <id>\n")
         return None
 
     def help_workflow(self):
@@ -215,6 +219,8 @@ class RiskShardConsole(cmd.Cmd):
         self.write("4. feeds          Check source freshness, ingestion date, confidence, and renewal.\n")
         self.write("5. preflight      Check a contribution pack before merging it into RiskShard.\n")
         self.write("6. validate       Run evidence quality gates after changes.\n")
+        self.write("7. registry       Confirm the shard registry and machine-readable contract.\n")
+        self.write("Scaffold CLI: python scripts/contributor_preflight.py scaffold path/to/pack --module-id <id> --country <code> --industry <id> --company-size <id> --threat <id>\n")
         return None
 
     def do_start(self, arg):
@@ -280,6 +286,12 @@ class RiskShardConsole(cmd.Cmd):
     def do_riskshards(self, arg):
         """riskshards - Alias for modules."""
         return self.do_modules(arg)
+
+    def do_registry(self, arg):
+        """registry - Show the shard registry summary and contribution contract."""
+        del arg
+        self.write(format_shard_registry(build_shard_registry(self.root)))
+        return None
 
     def do_countries(self, arg):
         """countries [country-id] - Show prioritized country expansion targets."""

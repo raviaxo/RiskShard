@@ -18,6 +18,7 @@ PACK_FILE_GROUPS = {
     "calibrations": ("calibrations",),
     "risk_modules": ("risk_modules",),
 }
+PLACEHOLDER_MARKERS = ("REPLACE_ME", "scaffold placeholder", "placeholder before review")
 
 
 def build_contributor_preflight(root=PROJECT_ROOT, pack_path=None):
@@ -51,6 +52,7 @@ def build_pack_preflight(root, pack_path):
         pack_calibration_check(context),
         pack_module_check(context),
         pack_benchmark_target_check(context),
+        pack_placeholder_check(pack_root),
         pack_docs_check(pack_root),
     ]
     return {
@@ -367,6 +369,27 @@ def pack_benchmark_target_check(context):
     )
 
 
+def pack_placeholder_check(pack_root):
+    if not pack_root.exists() or not pack_root.is_dir():
+        return check("placeholder review", "warn", "pack path is not available for placeholder scan")
+
+    hits = []
+    for path in sorted(pack_root.rglob("*")):
+        if not path.is_file() or path.suffix.lower() not in {".md", ".yaml", ".yml"}:
+            continue
+        text = path.read_text(errors="ignore")
+        if any(marker in text for marker in PLACEHOLDER_MARKERS):
+            hits.append(relative_to_root_or_cwd(path, pack_root))
+
+    if hits:
+        return check(
+            "placeholder review",
+            "warn",
+            "replace scaffold placeholders in " + ", ".join(hits[:5]) + (f"; {len(hits) - 5} more" if len(hits) > 5 else ""),
+        )
+    return check("placeholder review", "pass", "no scaffold placeholders found")
+
+
 def module_target_mismatch_issues(filename, module, target):
     issues = []
     module_context = module.get("context", {})
@@ -482,6 +505,276 @@ def format_contributor_preflight(preflight):
     for item in preflight["checks"]:
         lines.append(f"- {item['name']}: {item['status']} ({item['detail']})")
     return "\n".join(lines) + "\n"
+
+
+def scaffold_contributor_pack(
+    root,
+    pack_path,
+    module_id,
+    country,
+    industry,
+    company_size,
+    threat,
+    title=None,
+    currency="USD",
+    status="governed_starter",
+    force=False,
+):
+    root = Path(root)
+    pack_root = resolve_pack_path(root, pack_path)
+    if pack_root.exists() and any(pack_root.iterdir()) and not force:
+        raise FileExistsError(
+            f"pack path is not empty: {relative_to_root_or_cwd(pack_root, root)}; pass force=True to overwrite scaffold files"
+        )
+
+    title = title or title_from_module_id(module_id)
+    source_id = f"{module_id}_source_replace_me"
+    evidence_ids = {
+        parameter: f"{module_id}_{parameter.replace('.', '_')}_replace_me"
+        for parameter in REQUIRED_PARAMETERS
+    }
+    written = []
+    for folder in [
+        "sources",
+        "evidence",
+        "extractions",
+        "calibrations",
+        "risk_modules",
+        "scenarios",
+        "org_profiles",
+    ]:
+        (pack_root / folder).mkdir(parents=True, exist_ok=True)
+
+    files = {
+        "README.md": render_scaffold_readme(module_id, title),
+        "sources/registry.yaml": render_scaffold_sources(source_id, title),
+        f"evidence/{module_id}.yaml": render_scaffold_evidence(
+            module_id, evidence_ids, country, industry, company_size, threat, currency
+        ),
+        f"extractions/{module_id}_reviewed.yaml": render_scaffold_extractions(
+            module_id, source_id, evidence_ids, title
+        ),
+        f"calibrations/{module_id}.yaml": render_scaffold_calibration(module_id, title, evidence_ids, currency),
+        f"scenarios/{module_id}.yaml": render_scaffold_scenario(title, currency),
+        f"org_profiles/{module_id}.yaml": render_scaffold_org_profile(title, country, industry, company_size),
+        f"risk_modules/{module_id}.yaml": render_scaffold_module(
+            module_id,
+            title,
+            status,
+            threat,
+            country,
+            industry,
+            company_size,
+        ),
+    }
+    for rel_path, content in files.items():
+        path = pack_root / rel_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content)
+        written.append(path)
+
+    return {
+        "status": "created",
+        "pack_path": relative_to_root_or_cwd(pack_root, root),
+        "module_id": module_id,
+        "file_count": len(written),
+        "files": [relative_to_root_or_cwd(path, pack_root) for path in written],
+        "next_commands": [
+            f"python scripts/contributor_preflight.py {relative_to_root_or_cwd(pack_root, root)}",
+            f"python scripts/riskshard_modules.py registry --output results/riskshard_registry.json",
+        ],
+    }
+
+
+def format_scaffold_result(result):
+    lines = [
+        "Contributor shard pack scaffold",
+        f"Status: {result['status']}",
+        f"Pack  : {result['pack_path']}",
+        f"Module: {result['module_id']}",
+        "",
+        "Files:",
+    ]
+    lines.extend(f"- {path}" for path in result["files"])
+    lines.extend(["", "Next commands:"])
+    lines.extend(f"- {command}" for command in result["next_commands"])
+    lines.append("")
+    lines.append("Replace every REPLACE_ME placeholder with reviewed source-backed evidence before benchmark claims.")
+    return "\n".join(lines) + "\n"
+
+
+def title_from_module_id(module_id):
+    return module_id.replace("_", " ").title()
+
+
+def render_scaffold_readme(module_id, title):
+    return (
+        f"# {title}\n\n"
+        "This is a RiskShard contributor scaffold. It is structurally valid, but it is not source-backed yet.\n\n"
+        "## Replace Before Review\n\n"
+        "- REPLACE_ME source registry fields with reviewed public sources.\n"
+        "- REPLACE_ME extraction facts with source-grounded facts and citation detail.\n"
+        "- Estimated evidence records with source_backed records where possible.\n"
+        "- Scenario ranges with calibration outputs after source review.\n\n"
+        "## Review Commands\n\n"
+        "```bash\n"
+        f"python scripts/contributor_preflight.py path/to/{module_id}_pack\n"
+        f"python scripts/riskshard_modules.py propose {module_id}\n"
+        f"python scripts/benchmark_program.py --target {module_id}\n"
+        "```\n"
+    )
+
+
+def render_scaffold_sources(source_id, title):
+    return (
+        "sources:\n"
+        f"  - id: {source_id}\n"
+        f"    title: REPLACE_ME source for {title}\n"
+        "    publisher: REPLACE_ME publisher\n"
+        "    source_type: official_statistics\n"
+        "    url: https://example.com/replace-me\n"
+        "    publication_date: '2026-01-01'\n"
+        "    access_mode: public_html\n"
+        "    intended_use: [risk_parameter_calibration]\n"
+        "    usage_notes: REPLACE_ME with source scope, caveats, and extraction notes.\n"
+    )
+
+
+def render_scaffold_evidence(module_id, evidence_ids, country, industry, company_size, threat, currency):
+    rows = ["records:"]
+    for parameter in REQUIRED_PARAMETERS:
+        unit = "currency" if parameter.startswith("impact") else "annual_probability"
+        value = 100000 if unit == "currency" else 0.1
+        currency_line = f"    currency: {currency}\n" if unit == "currency" else ""
+        rows.append(
+            f"  - id: {evidence_ids[parameter]}\n"
+            f"    title: REPLACE_ME {parameter} evidence\n"
+            f"    parameter: {parameter}\n"
+            f"    value: {value}\n"
+            f"    unit: {unit}\n"
+            f"{currency_line}"
+            "    source_name: RiskShard contributor scaffold placeholder\n"
+            "    source_type: model_assumption\n"
+            "    source_url_or_citation: REPLACE_ME with reviewed source URL or citation.\n"
+            "    publication_date: '2026-01-01'\n"
+            "    extraction_date: '2026-01-01'\n"
+            "    extraction_notes: scaffold placeholder before review; replace with reviewed extraction notes.\n"
+            "    normalization_notes: scaffold placeholder before review; replace with normalization notes.\n"
+            "    limitations: Low-confidence scaffold estimate. Replace before benchmark or public claims.\n"
+            "    confidence: low\n"
+            "    evidence_type: estimated\n"
+            "    applicability:\n"
+            f"      industries: [{industry}]\n"
+            f"      countries: [{country}]\n"
+            f"      company_size_bands: [{company_size}]\n"
+            f"      threats: [{threat}]\n"
+        )
+    return "\n".join(rows)
+
+
+def render_scaffold_extractions(module_id, source_id, evidence_ids, title):
+    evidence_lines = "\n".join(f"      - {evidence_id}" for evidence_id in evidence_ids.values())
+    return (
+        "extractions:\n"
+        f"  - id: {module_id}_source_fact_replace_me\n"
+        f"    source_id: {source_id}\n"
+        f"    source_name: REPLACE_ME source for {title}\n"
+        "    source_url_or_citation: https://example.com/replace-me\n"
+        "    publication_date: '2026-01-01'\n"
+        "    extraction_date: '2026-01-01'\n"
+        "    citation_detail: REPLACE_ME with page, table, section, or exact source locator.\n"
+        "    fact: REPLACE_ME with reviewed source fact.\n"
+        "    value: 1\n"
+        "    unit: count\n"
+        "    normalization_notes: scaffold placeholder before review; explain transformations here.\n"
+        "    limitations: scaffold placeholder before review; explain caveats here.\n"
+        "    evidence_record_ids:\n"
+        f"{evidence_lines}\n"
+    )
+
+
+def render_scaffold_calibration(module_id, title, evidence_ids, currency):
+    return (
+        "metadata:\n"
+        f"  name: {title} calibration scaffold\n"
+        f"  scenario_name: {title} - Calibrated Draft\n"
+        "  version: '0.1'\n"
+        "  notes: REPLACE_ME with source selection rationale and limitations.\n"
+        f"target_currency: {currency}\n"
+        "parameters:\n"
+        "  frequency:\n"
+        f"    min: {{evidence_id: {evidence_ids['frequency.min']}, transform: direct}}\n"
+        f"    likely: {{evidence_id: {evidence_ids['frequency.likely']}, transform: direct}}\n"
+        f"    max: {{evidence_id: {evidence_ids['frequency.max']}, transform: direct}}\n"
+        "  impact:\n"
+        f"    min: {{evidence_id: {evidence_ids['impact.min']}, transform: direct, target_currency: {currency}}}\n"
+        f"    likely: {{evidence_id: {evidence_ids['impact.likely']}, transform: direct, target_currency: {currency}}}\n"
+        f"    max: {{evidence_id: {evidence_ids['impact.max']}, transform: direct, target_currency: {currency}}}\n"
+    )
+
+
+def render_scaffold_scenario(title, currency):
+    return (
+        "metadata:\n"
+        f"  name: {title}\n"
+        "  version: '0.1'\n"
+        f"  currency: {currency}\n"
+        "  scenario_stage: governed_starter\n"
+        "  benchmark_status: scaffold_placeholder\n"
+        "  description: REPLACE_ME with scenario scope, source basis, and limitations.\n"
+        "frequency: {min: 0.01, likely: 0.10, max: 0.30}\n"
+        "impact: {min: 10000, likely: 100000, max: 1000000}\n"
+    )
+
+
+def render_scaffold_org_profile(title, country, industry, company_size):
+    return (
+        "metadata:\n"
+        f"  name: {title} Default Org Profile\n"
+        "  version: '0.1'\n"
+        "org_type: private_company\n"
+        f"industry: {industry}\n"
+        f"country: {country}\n"
+        "employees: 500\n"
+        "annual_revenue_or_budget: 100000000\n"
+        f"company_size: {company_size}\n"
+        "data_sensitivity: REPLACE_ME\n"
+        "internet_exposure: REPLACE_ME\n"
+        "third_party_dependency: REPLACE_ME\n"
+        "regulatory_intensity: REPLACE_ME\n"
+    )
+
+
+def render_scaffold_module(module_id, title, status, threat, country, industry, company_size):
+    return (
+        f"id: {module_id}\n"
+        f"title: {title}\n"
+        "version: '0.1'\n"
+        f"status: {status}\n"
+        f"threat: {threat}\n"
+        "description: >\n"
+        "  REPLACE_ME with practitioner-facing scope, intended use, limitations,\n"
+        "  and what evidence is still needed.\n"
+        "context:\n"
+        f"  industry: {industry}\n"
+        f"  country: {country}\n"
+        f"  company_size: {company_size}\n"
+        "artifacts:\n"
+        f"  scenario: scenarios/{module_id}.yaml\n"
+        f"  org_profile: org_profiles/{module_id}.yaml\n"
+        f"  calibration: calibrations/{module_id}.yaml\n"
+        f"  evidence: [evidence/{module_id}.yaml]\n"
+        f"  extractions: [extractions/{module_id}_reviewed.yaml]\n"
+        "required_parameters: [frequency.min, frequency.likely, frequency.max, impact.min, impact.likely, impact.max]\n"
+        "tags:\n"
+        f"  - {country.lower()}\n"
+        f"  - {industry}\n"
+        f"  - {company_size}\n"
+        f"  - {threat}\n"
+        "practitioner_notes:\n"
+        "  good_for: REPLACE_ME with intended practitioner/researcher usage.\n"
+        "  not_good_for: Benchmark claims until placeholders are replaced and reviewed.\n"
+    )
 
 
 def check(name, status, detail):

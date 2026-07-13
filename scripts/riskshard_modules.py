@@ -33,6 +33,11 @@ from engine.risk_modules import (  # noqa: E402
     format_module_list,
     search_risk_modules,
 )
+from engine.shard_registry import (  # noqa: E402
+    build_shard_registry,
+    format_shard_registry,
+    write_shard_registry,
+)
 
 
 def parse_args(argv=None):
@@ -61,6 +66,10 @@ def parse_args(argv=None):
     countries_parser.add_argument("country_id", nargs="?")
     countries_parser.add_argument("--limit", default=25, type=int)
     countries_parser.add_argument("--json", action="store_true")
+
+    registry_parser = subparsers.add_parser("registry", help="Export the machine-readable shard registry.")
+    registry_parser.add_argument("--output", type=Path, help="Write registry JSON to this path.")
+    registry_parser.add_argument("--json", action="store_true")
 
     return parser.parse_args(argv)
 
@@ -151,6 +160,20 @@ def main(argv=None):
             print(json.dumps(priorities, indent=2, sort_keys=True))
         else:
             print(format_country_priorities(priorities), end="")
+        return 0
+
+    if command == "registry":
+        registry = build_shard_registry(ROOT)
+        if args.output:
+            path = write_shard_registry(registry, args.output)
+            if not args.json:
+                print(f"Shard registry saved: {path}")
+                print(format_shard_registry(registry), end="")
+                return 0
+        if args.json or args.output:
+            print(json.dumps(registry, indent=2, sort_keys=True))
+        else:
+            print(format_shard_registry(registry), end="")
         return 0
 
     return 0

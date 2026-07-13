@@ -8,19 +8,22 @@ It is intentionally closer to a Metasploit-style console than a web app:
 
 - Find available risk shards with `modules` or `search`.
 - Inspect module metadata with `modules info <module-id>`.
+- Inspect the machine-readable shard registry with `registry`.
 - Inspect governed evidence packs with `packs <module-id>`.
 - Select one with `use`.
-- Inspect ranges and context with `info` and `show options`.
+- Inspect current location, selected shard, inputs, and next steps with `where` or `scenario`.
 - Inspect global readiness with `readiness`.
 - Run local setup/source/evidence/scenario/package checks with `doctor`.
 - Get prioritized blockers and next commands with `next`.
 - Inspect data-pack fingerprints with `pack`.
 - Validate a proposed contribution pack with `preflight <pack-path>`.
+- Scaffold a proposed contribution pack from the CLI with `python scripts/contributor_preflight.py scaffold ...`.
 - Rank starter threats with `toprisks`.
 - Explain missing or weak evidence with `show gaps`.
 - Propose best available calibration selectors with `propose`.
 - Generate an evidence-backed calibrated draft with `calibrate`.
 - Simulate the selected or calibrated shard with `run`.
+- Reset the selected shard and run state with `start over`.
 - Inspect evidence, warnings, assumptions, gaps, and report artifacts with `show`.
 - Summarize the latest calibration or run with `explain`.
 - Run source/evidence quality gates with `validate`.
@@ -43,6 +46,7 @@ The first screen is organized around:
 - selected Risk Shard actions for options, evidence, gaps, run, explain, and report;
 - a concise trust boundary that distinguishes ready-to-run from benchmark-grade;
 - contribution actions for country coverage and evidence improvement.
+- registry actions that show the current shard-pack contract and catalog coverage.
 
 The left command rail is independently scrollable so navigation stays available
 while the console transcript and dashboard move. Expert users can still type any
@@ -59,6 +63,7 @@ python scripts/riskshard_console.py
 riskshard> workflow
 riskshard> toprisks
 riskshard> modules
+riskshard> registry
 riskshard> countries
 riskshard> countries GB
 riskshard> modules info gb_finance_data_breach_midmarket
@@ -69,6 +74,8 @@ riskshard> next
 riskshard> feeds
 riskshard> pack
 riskshard> use gb_finance_data_breach_midmarket
+riskshard(gb_finance_data_breach_midmarket)> where
+riskshard(gb_finance_data_breach_midmarket)> scenario
 riskshard(gb_finance_data_breach_midmarket)> show options
 riskshard(gb_finance_data_breach_midmarket)> show gaps
 riskshard(gb_finance_data_breach_midmarket)> propose
@@ -77,6 +84,7 @@ riskshard(gb_finance_data_breach_midmarket)> show evidence
 riskshard(gb_finance_data_breach_midmarket)> explain
 riskshard(gb_finance_data_breach_midmarket)> run
 riskshard(gb_finance_data_breach_midmarket)> report json
+riskshard(gb_finance_data_breach_midmarket)> start over
 ```
 
 For governed starter modules, `use` pre-fills the known org profile, calibration profile, and threat ID so a junior practitioner can reach a calibrated scenario quickly while still seeing every input.
@@ -90,6 +98,10 @@ and the next contributor gap.
 Risk Shards live in `risk_modules/` and bind together the scenario, default
 organization profile, calibration profile, evidence files, reviewed extractions,
 and optional control profiles for a practitioner workflow.
+
+The `registry` command summarizes those modules as a machine-readable contract:
+module maturity, context coverage, evidence-pack status, consume/enhance
+commands, and the expected contribution-pack layout.
 
 Evidence packs are derived from those module descriptors. The `packs` command
 shows direct parameter coverage, assumption-only parameters, source-backed
@@ -107,8 +119,23 @@ next evidence gap
 ```
 
 This keeps the browser console navigable without hiding the detailed evidence:
-the `packs`, `propose`, `show gaps`, `readiness`, and `feeds` commands remain
-the source of truth for deeper review.
+the `packs`, `propose`, `show gaps`, `readiness`, `feeds`, and `registry`
+commands remain the source of truth for deeper review.
+
+For contributors, the scaffold command writes a starter pack layout outside the
+console:
+
+```text
+python scripts/contributor_preflight.py scaffold proposed_packs/ca_finance_data_breach_midmarket \
+  --module-id ca_finance_data_breach_midmarket \
+  --country CA \
+  --industry financial_services \
+  --company-size mid_market \
+  --threat data_breach
+```
+
+The generated files contain explicit `REPLACE_ME` placeholders. Preflight warns
+until those placeholders are replaced with reviewed source-backed content.
 
 Scenario search and readiness output label each scenario as either `governed starter` or `demo fixture`. This keeps older smoke-test examples useful without making them look decision-ready.
 

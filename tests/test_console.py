@@ -148,6 +148,11 @@ class ConsoleTests(unittest.TestCase):
         module_info = self.command("modules info au_finance_ransomware_midmarket")
         self.assertIn("Risk Shard: au_finance_ransomware_midmarket", module_info)
 
+        registry_output = self.command("registry")
+        self.assertIn("RiskShard registry", registry_output)
+        self.assertIn("au_finance_ransomware_midmarket", registry_output)
+        self.assertIn("source-backed", registry_output)
+
         packs_output = self.command("packs au_finance_ransomware_midmarket")
         self.assertIn("Evidence pack: au_finance_ransomware_midmarket", packs_output)
         self.assertIn("source_gathered", packs_output)

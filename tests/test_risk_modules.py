@@ -25,6 +25,7 @@ from engine.risk_modules import (
     module_for_scenario,
     search_risk_modules,
 )
+from engine.shard_registry import build_shard_registry, format_shard_registry
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,6 +45,22 @@ class RiskModuleTests(unittest.TestCase):
         self.assertIn("us_finance_bec_midmarket", module_ids)
         self.assertIn("Risk Shards", output)
         self.assertIn("governed_starter", output)
+
+    def test_shard_registry_exports_machine_readable_contract(self):
+        registry = build_shard_registry(ROOT)
+        output = format_shard_registry(registry)
+        by_id = {entry["id"]: entry for entry in registry["entries"]}
+        ransomware = by_id["au_finance_ransomware_midmarket"]
+
+        self.assertEqual(registry["registry_type"], "riskshard_registry")
+        self.assertEqual(registry["module_count"], 5)
+        self.assertIn("required_artifacts", registry["contract"])
+        self.assertIn("sources/registry.yaml", registry["contract"]["expected_layout"])
+        self.assertEqual(ransomware["evidence_summary"]["direct_total"], 6)
+        self.assertIn("consume", ransomware["commands"])
+        self.assertIn("enhance", ransomware["commands"])
+        self.assertIn("RiskShard registry", output)
+        self.assertIn("au_finance_ransomware_midmarket", output)
 
     def test_module_detail_and_scenario_lookup(self):
         module = find_risk_module("business_email_compromise", ROOT)

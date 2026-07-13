@@ -298,6 +298,76 @@ class CliSmokeTests(unittest.TestCase):
         self.assertIn("us_finance_bec_midmarket", countries_result.stdout)
         self.assertIn("gb_finance_data_breach_midmarket", countries_result.stdout)
 
+        with tempfile.TemporaryDirectory() as tmp:
+            registry_path = Path(tmp) / "registry.json"
+            registry_result = subprocess.run(
+                [
+                    sys.executable,
+                    "scripts/riskshard_modules.py",
+                    "registry",
+                    "--output",
+                    str(registry_path),
+                ],
+                cwd=ROOT,
+                env=env,
+                text=True,
+                capture_output=True,
+            )
+            self.assertEqual(registry_result.returncode, 0, msg=registry_result.stderr)
+            self.assertTrue(registry_path.exists())
+            registry = json.loads(registry_path.read_text())
+
+        self.assertEqual(registry["registry_type"], "riskshard_registry")
+        self.assertIn("Shard registry saved:", registry_result.stdout)
+        self.assertIn("RiskShard registry", registry_result.stdout)
+
+    def test_contributor_scaffold_cli_creates_reviewable_pack(self):
+        env = os.environ.copy()
+        env["PYTHONPATH"] = str(ROOT)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            pack = Path(tmp) / "ca_pack"
+            scaffold_result = subprocess.run(
+                [
+                    sys.executable,
+                    "scripts/contributor_preflight.py",
+                    "scaffold",
+                    str(pack),
+                    "--module-id",
+                    "ca_finance_data_breach_midmarket",
+                    "--country",
+                    "CA",
+                    "--industry",
+                    "financial_services",
+                    "--company-size",
+                    "mid_market",
+                    "--threat",
+                    "data_breach",
+                ],
+                cwd=ROOT,
+                env=env,
+                text=True,
+                capture_output=True,
+            )
+            preflight_result = subprocess.run(
+                [
+                    sys.executable,
+                    "scripts/contributor_preflight.py",
+                    str(pack),
+                ],
+                cwd=ROOT,
+                env=env,
+                text=True,
+                capture_output=True,
+            )
+
+        self.assertEqual(scaffold_result.returncode, 0, msg=scaffold_result.stderr)
+        self.assertIn("Contributor shard pack scaffold", scaffold_result.stdout)
+        self.assertIn("Replace every REPLACE_ME placeholder", scaffold_result.stdout)
+        self.assertEqual(preflight_result.returncode, 1)
+        self.assertIn("Status: needs_review", preflight_result.stdout)
+        self.assertIn("placeholder review: warn", preflight_result.stdout)
+
     def test_top_risks_cli_reports_ranked_threats(self):
         env = os.environ.copy()
         env["PYTHONPATH"] = str(ROOT)
