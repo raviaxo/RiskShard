@@ -178,6 +178,16 @@ python scripts/readiness_dashboard.py
 
 The readiness view also exposes a gate and prioritized next actions so practitioners can see whether a shard is blocked, source-review-needed, assumption-review-needed, or ready for a local calibrated run.
 
+Inspect stricter beta readiness before expanding public operations with:
+
+```bash
+python scripts/beta_readiness.py
+```
+
+The beta gate is intentionally stricter than local run readiness. It checks
+module depth, benchmark-ready candidates, source/evidence health, package smoke,
+data-pack fingerprinting, minimum governance docs, and clean-install proof.
+
 Inspect the benchmark-grade 30 adoption program with:
 
 ```bash
@@ -282,6 +292,7 @@ RiskShard can still be run directly from `scripts/`, but `pyproject.toml` also d
 - `riskshard-toprisks`
 - `riskshard-package-smoke`
 - `riskshard-benchmark`
+- `riskshard-beta`
 
 ## Tests
 

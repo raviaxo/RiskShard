@@ -29,6 +29,7 @@ riskshard-modules = "scripts.riskshard_modules:main"
 riskshard-toprisks = "scripts.riskshard_toprisks:main"
 riskshard-package-smoke = "scripts.package_smoke:main"
 riskshard-benchmark = "scripts.benchmark_program:main"
+riskshard-beta = "scripts.beta_readiness:main"
 
 [tool.setuptools]
 packages = ["engine", "scripts"]
