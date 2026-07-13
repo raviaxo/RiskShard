@@ -41,6 +41,7 @@ RiskShard content should grow through reviewed source, extraction, evidence, and
 - Include `good_for` and `not_good_for` practitioner notes.
 - Keep module descriptors as catalog metadata; do not move evidence into the module file.
 - Run `python scripts/riskshard_modules.py packs <module-id>` and `python scripts/riskshard_modules.py propose <module-id>`.
+- Run `python scripts/riskshard_modules.py registry` to inspect the machine-readable shard-pack contract and current catalog coverage.
 
 ## Country Pack Checklist
 
@@ -73,6 +74,29 @@ The risk module should reference artifacts by their eventual repo-relative
 paths. Preflight will accept files that already exist in the repo or files that
 exist inside the proposed pack at those paths.
 
+## Scaffold A New Pack
+
+Use the scaffold command to create the correct folder and file layout before
+reviewing sources. The scaffold is intentionally low-confidence and includes
+`REPLACE_ME` placeholders; preflight will warn until those placeholders are
+replaced with reviewed source-backed content.
+
+```bash
+python scripts/contributor_preflight.py scaffold proposed_packs/ca_finance_data_breach_midmarket \
+  --module-id ca_finance_data_breach_midmarket \
+  --country CA \
+  --industry financial_services \
+  --company-size mid_market \
+  --threat data_breach
+```
+
+Then run:
+
+```bash
+python scripts/contributor_preflight.py proposed_packs/ca_finance_data_breach_midmarket
+python scripts/riskshard_modules.py registry --output results/riskshard_registry.json
+```
+
 ## Review Commands
 
 ```bash
@@ -83,6 +107,8 @@ python scripts/riskshard_modules.py countries
 python scripts/riskshard_modules.py packs au_finance_ransomware_midmarket
 python scripts/riskshard_modules.py packs au_finance_ransomware_midmarket --export results/au_finance_ransomware_evidence_pack.json
 python scripts/riskshard_modules.py propose au_finance_ransomware_midmarket
+python scripts/riskshard_modules.py registry
+python scripts/contributor_preflight.py scaffold proposed_packs/ca_finance_data_breach_midmarket --module-id ca_finance_data_breach_midmarket --country CA --industry financial_services --company-size mid_market --threat data_breach
 python scripts/benchmark_program.py --sprint seeded
 python scripts/contributor_preflight.py path/to/proposed_pack
 python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.yaml \

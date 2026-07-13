@@ -525,6 +525,7 @@ INDEX_HTML = """<!doctype html>
           <div class="lane-title"><span>Contribute coverage</span></div>
           <div class="lane-actions">
             <button data-command="countries"><span class="button-title">Country roadmap</span><span class="button-help">Shows priority geographies for local contributors.</span></button>
+            <button data-command="registry"><span class="button-title">Shard registry</span><span class="button-help">Shows the machine-readable shard-pack contract and current coverage.</span></button>
             <button data-command="countries GB"><span class="button-title">United Kingdom contribution detail</span><span class="button-help">GB is the taxonomy code for the UK.</span></button>
             <button data-command="preflight"><span class="button-title">Contributor preflight</span><span class="button-help">Checks proposed source/evidence/calibration packs.</span></button>
             <button class="primary" data-command="next"><span class="button-title">Next best actions</span><span class="button-help">Shows the most useful work to improve trust today.</span></button>
@@ -612,7 +613,7 @@ INDEX_HTML = """<!doctype html>
       if (["modules", "module", "riskshards", "search", "toprisks", "risks", "countries", "use", "scenario", "info"].includes(first)) return "Scenario";
       if (["show", "consume", "calibrate", "run", "report", "explain"].includes(first)) return first === "show" && command.includes("gaps") ? "Improve Model" : "Run Risk";
       if (["packs", "evidencepacks", "propose", "feeds", "sources", "preflight", "contribute", "validate", "enhance"].includes(first)) return "Improve Model";
-      if (["readiness", "next", "actions", "doctor", "pack"].includes(first)) return "Govern Data";
+      if (["readiness", "next", "actions", "doctor", "pack", "registry"].includes(first)) return "Govern Data";
       return "Console";
     }
 
@@ -773,6 +774,7 @@ INDEX_HTML = """<!doctype html>
               <div class="context-actions">
                 ${commandButton("next", "More next actions", "primary")}
                 ${commandButton("countries", "Country roadmap")}
+                ${commandButton("registry", "Shard registry")}
                 ${commandButton("preflight", "Contributor preflight")}
               </div>
             </div>

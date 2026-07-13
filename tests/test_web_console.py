@@ -43,6 +43,10 @@ class WebConsoleTests(unittest.TestCase):
         riskshards = app.run_command("riskshards")
         self.assertIn("Risk Shards", riskshards["output"])
 
+        registry = app.run_command("registry")
+        self.assertIn("RiskShard registry", registry["output"])
+        self.assertIn("Shard packs", registry["output"])
+
         countries = app.run_command("countries")
         self.assertIn("Country expansion priorities", countries["output"])
         self.assertIn("us_finance_bec_midmarket", countries["output"])
@@ -90,6 +94,7 @@ class WebConsoleTests(unittest.TestCase):
         self.assertIn("Where am I?", INDEX_HTML)
         self.assertIn("Consume model path", INDEX_HTML)
         self.assertIn("Enhance model path", INDEX_HTML)
+        self.assertIn("Shard registry", INDEX_HTML)
         self.assertIn("Start over", INDEX_HTML)
         self.assertIn("commandFolder(command)", INDEX_HTML)
         self.assertIn("[Start] $ system", INDEX_HTML)

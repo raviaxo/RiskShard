@@ -2,7 +2,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from engine.contributor import build_contributor_preflight, format_contributor_preflight
+from engine.contributor import (
+    build_contributor_preflight,
+    format_contributor_preflight,
+    scaffold_contributor_pack,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,6 +48,28 @@ class ContributorTests(unittest.TestCase):
 
         self.assertEqual(preflight["status"], "fail")
         self.assertIn("missing sources, evidence, extractions, calibrations, risk_modules", output)
+
+    def test_contributor_scaffold_creates_pack_and_warns_on_placeholders(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            pack = Path(tmp) / "ca_pack"
+            result = scaffold_contributor_pack(
+                ROOT,
+                pack,
+                module_id="ca_finance_data_breach_midmarket",
+                country="CA",
+                industry="financial_services",
+                company_size="mid_market",
+                threat="data_breach",
+                title="Canada Finance Data Breach Midmarket",
+            )
+            preflight = build_contributor_preflight(ROOT, pack_path=pack)
+            output = format_contributor_preflight(preflight)
+
+        self.assertEqual(result["status"], "created")
+        self.assertIn("risk_modules/ca_finance_data_breach_midmarket.yaml", result["files"])
+        self.assertEqual(preflight["status"], "needs_review")
+        self.assertIn("placeholder review: warn", output)
+        self.assertIn("benchmark target mapping: pass", output)
 
 
 def build_example_pack(pack):
