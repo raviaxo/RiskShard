@@ -73,6 +73,31 @@ cd RiskShard
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+```
+
+RiskShard requires Python 3.9 or newer.
+
+### Try this first
+
+The fastest way to see value is the guided demo. Start the console and run one
+command:
+
+```bash
+python scripts/riskshard_console.py
+riskshard> demo
+```
+
+`demo` runs the canonical first-run path end to end on a real UK
+financial-services data-breach shard: it selects the shard, shows which
+parameters are source-backed versus assumptions, simulates financial loss,
+explains the result, exports a JSON report to `results/`, and shows the next
+evidence gap. Every step it runs is a real command you can also type yourself
+(run `workflow` to see them). Point it at another shard with
+`demo <risk-shard-id>`.
+
+### Run the full portfolio
+
+```bash
 python scripts/fair_calc.py scenarios --trials 10000 --dist pert --seed 42 --export
 ```
 

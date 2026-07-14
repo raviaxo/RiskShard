@@ -52,8 +52,9 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 class RiskShardConsole(cmd.Cmd):
     intro = (
-        "RiskShard console. Type 'help' for commands, "
-        "'workflow' for the first-run path, or 'exit' to leave."
+        "RiskShard console. Type 'demo' to run the canonical first-run path "
+        "automatically, 'workflow' to see it as steps, 'help' for all commands, "
+        "or 'exit' to leave."
     )
 
     def __init__(self, root=PROJECT_ROOT, stdin=None, stdout=None):
@@ -114,6 +115,7 @@ class RiskShardConsole(cmd.Cmd):
         del arg
         self.write("First-run workflow\n")
         self.write("Goal: choose a real Risk Shard, understand its trust boundary, run it, then decide whether to consume or improve it.\n")
+        self.write("Fastest path: run 'demo' to execute this entire path automatically with narration.\n")
         self.write("\n")
         self.write("[Start]\n")
         self.write("  where                 Show current location, selected shard, inputs, and next commands.\n")
@@ -153,6 +155,58 @@ class RiskShardConsole(cmd.Cmd):
 
     def help_workflow(self):
         self.do_workflow("")
+
+    def do_demo(self, arg):
+        """demo [risk-shard-id] - Run the canonical first-run path end to end with narration."""
+        module_id = arg.strip() or "gb_finance_data_breach_midmarket"
+        if find_risk_module(module_id, self.root) is None:
+            self.write(
+                f"Unknown Risk Shard: {module_id}. "
+                "Run 'modules' to list available shards, then 'demo <risk-shard-id>'.\n"
+            )
+            return None
+
+        self.reset_state()
+        self.write("RiskShard guided demo\n")
+        self.write(
+            "This runs the canonical first-run path end to end: select a real Risk "
+            "Shard, inspect its trust boundary, simulate financial loss, explain the "
+            "result, export a report, and see the next evidence gap. Every step below "
+            "is a real command you can type yourself.\n"
+        )
+
+        def step(number, title, command_hint):
+            self.write(f"\n== Step {number} of 6 : {title} ==\n")
+            self.write(f"(command: {command_hint})\n")
+
+        step(1, "Select a Risk Shard", f"use {module_id}")
+        self.do_use(module_id)
+
+        step(2, "Inspect the trust boundary", "packs")
+        self.do_packs("")
+
+        step(3, "Simulate financial loss", "run")
+        self.do_run("")
+
+        step(4, "Explain the result", "explain")
+        self.do_explain("")
+
+        step(5, "Export a shareable report", "report json")
+        self.do_report("json")
+
+        step(6, "See the next improvement gap", "show gaps")
+        self.do_show("gaps")
+
+        self.write("\n== Demo complete ==\n")
+        self.write(
+            f"You selected {module_id}, saw which parameters are source-backed versus "
+            "assumptions, ran a Monte Carlo loss simulation, exported a JSON report to "
+            "results/, and identified the next evidence gap.\n"
+        )
+        self.write("Consume this shard : explain; report json\n")
+        self.write("Improve this shard : show gaps; propose; enhance\n")
+        self.write("Start over         : start over\n")
+        return None
 
     def do_use(self, arg):
         """use <module-id|scenario-id|path> - Select a module or scenario."""
