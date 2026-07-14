@@ -648,6 +648,7 @@ class RiskShardConsole(cmd.Cmd):
     def show_options(self):
         self.write(f"Location      : {self.breadcrumb()}\n")
         self.write(f"Risk Shard    : {self.module_id or 'unset'}\n")
+        self.write_selected_shard_context()
         self.write(f"Scenario      : {format_option(self.scenario_path, self.root)}\n")
         self.write(f"Run target    : {format_option(self.active_run_path, self.root)}\n")
         for key in [
@@ -707,6 +708,7 @@ class RiskShardConsole(cmd.Cmd):
     def write_context_summary(self):
         self.write(f"Location      : {self.breadcrumb()}\n")
         self.write(f"Risk Shard    : {self.module_id or 'unset'}\n")
+        self.write_selected_shard_context()
         self.write(f"Scenario      : {format_option(self.scenario_path, self.root)}\n")
         self.write(f"Run target    : {format_option(self.active_run_path, self.root)}\n")
         self.write(f"Org profile   : {format_option(self.options['org_profile'], self.root)}\n")
@@ -724,6 +726,43 @@ class RiskShardConsole(cmd.Cmd):
         self.write("Enhance model : enhance -> packs -> show gaps -> propose -> validate\n")
         self.write("Start over    : start over\n")
 
+    def write_selected_shard_context(self):
+        module = self.current_module()
+        if module:
+            context = module.get("context", {})
+            self.write(
+                "Context       : "
+                f"country={context.get('country', 'unknown')}; "
+                f"industry={context.get('industry', 'unknown')}; "
+                f"size={context.get('company_size', 'unknown')}; "
+                f"threat={module.get('threat', self.options['threat'] or 'unknown')}\n"
+            )
+            notes = module.get("practitioner_notes", {})
+            if notes.get("good_for"):
+                self.write(f"Use for       : {notes['good_for']}\n")
+            if notes.get("not_good_for"):
+                self.write(f"Not for       : {notes['not_good_for']}\n")
+        elif self.options["threat"] or self.scenario_path:
+            self.write(
+                "Context       : "
+                f"country=unknown; industry=unknown; size=unknown; "
+                f"threat={self.options['threat'] or infer_threat(self.scenario_path) or 'unknown'}\n"
+            )
+
+        if self.scenario_path:
+            config = load_and_validate(self.scenario_path)
+            metadata = config.get("metadata", {})
+            self.write(f"Stage         : {scenario_stage_label(config)}\n")
+            self.write(f"Benchmark     : {metadata.get('benchmark_status', 'unspecified')}\n")
+
+        captured = [
+            f"scenario={'yes' if self.scenario_path else 'no'}",
+            f"org={'yes' if self.options['org_profile'] else 'no'}",
+            f"calibration={'yes' if self.options['calibration'] else 'no'}",
+            f"threat={'yes' if self.options['threat'] else 'no'}",
+        ]
+        self.write(f"Inputs        : {'; '.join(captured)}\n")
+
     def write_run_receipt(self, run):
         config = load_and_validate(self.active_run_path)
         metadata = config.get("metadata", {})
@@ -733,6 +772,7 @@ class RiskShardConsole(cmd.Cmd):
         self.write("Run receipt\n")
         self.write(f"Location      : {self.breadcrumb(include_run=True)}\n")
         self.write(f"Risk Shard    : {self.module_id or 'unset'}\n")
+        self.write_selected_shard_context()
         self.write(f"Scenario      : {metadata.get('name', 'unknown')}\n")
         self.write(f"Scenario file : {format_option(self.active_run_path, self.root)}\n")
         self.write(f"Org profile   : {format_option(self.options['org_profile'], self.root)}\n")
@@ -799,6 +839,13 @@ class RiskShardConsole(cmd.Cmd):
         self.options["org_profile"] = self.root / artifacts["org_profile"]
         self.options["calibration"] = self.root / artifacts["calibration"]
         self.options["threat"] = module["threat"]
+
+    def current_module(self):
+        if self.module_id:
+            return find_risk_module(self.module_id, self.root)
+        if self.scenario_path:
+            return module_for_scenario(self.scenario_path, self.root)
+        return None
 
     def refresh_prompt(self):
         if self.scenario_path:

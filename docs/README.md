@@ -3,8 +3,13 @@
 Start here when you want the current truth:
 
 - [PUBLISHABLE_REQUIREMENTS.md](PUBLISHABLE_REQUIREMENTS.md): controlling phase requirements, public launch bar, community operating model, and strategic change-control rules.
+- [HANDOVER_STOPPING_POINT.md](HANDOVER_STOPPING_POINT.md): precise restart file for the next Codex or harness session, including current blocker and resume order.
 - [PROJECT_STATUS.md](PROJECT_STATUS.md): current capabilities, known gaps, and definition of done.
 - [NEXT_STEPS.md](NEXT_STEPS.md): prioritized implementation backlog that should follow the requirements file.
+- [PUBLIC_READINESS_8H_SESSION.md](PUBLIC_READINESS_8H_SESSION.md): current public-readiness execution plan for the active work session.
+- [USER_AUDIT_CHECKPOINT.md](USER_AUDIT_CHECKPOINT.md): usability, trust, contributor, practitioner, and executive-readiness checkpoint before further buildout.
+- [BENCHMARK_REVIEW_LEDGER.md](BENCHMARK_REVIEW_LEDGER.md): human review ledger for automated benchmark candidates and release caveats.
+- [SEEDED_EVIDENCE_UPGRADE_QUEUE.md](SEEDED_EVIDENCE_UPGRADE_QUEUE.md): ordered evidence-upgrade queue for seeded modules that are not yet benchmark-ready.
 - [CONTRIBUTING.md](CONTRIBUTING.md): source, extraction, evidence, calibration, and review checklist.
 - [BENCHMARK_CONTRIBUTOR_WORKFLOW.md](BENCHMARK_CONTRIBUTOR_WORKFLOW.md): benchmark target, content-pack, preflight, and evidence-pack export workflow.
 - [CONSOLE_EXPERIENCE.md](CONSOLE_EXPERIENCE.md): intended local console workflow and scope guardrails.

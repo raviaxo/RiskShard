@@ -6,8 +6,9 @@ metadata:
     Starter calibration profile for a Japan mid-market manufacturing
     ransomware shard. It is intentionally not benchmark-grade: frequency.min
     uses a global ransomware likelihood floor, frequency.likely/max are
-    explicit estimates, and impact values use global cyber-loss anchors until
-    Japan manufacturing ransomware evidence is reviewed.
+    explicit estimates, impact.min uses Japan NPA restoration-cost evidence,
+    and impact.likely/max use manufacturing-sector ransomware benchmarks until
+    Japan manufacturing full-loss evidence is reviewed.
 
 target_currency: USD
 
@@ -28,20 +29,20 @@ parameters:
 
   impact:
     min:
-      evidence_id: cyentia_iris_2022_typical_cyber_event_loss_usd_jp_manufacturing_context
-      transform: direct
+      evidence_id: npa_jp_ransomware_restoration_cost_low_band_jpy_2025
+      transform: currency_convert
       target_currency: USD
-      round_to: 10000
-      rationale: Source-backed global lower loss anchor until Japan manufacturing ransomware loss-floor evidence is reviewed.
+      round_to: 1000
+      rationale: Official Japan ransomware restoration-cost low-band anchor, converted from JPY to USD as a conservative local loss floor.
     likely:
-      evidence_id: cyentia_iris_2025_median_security_incident_loss_usd_jp_manufacturing_context
+      evidence_id: sophos_manufacturing_ransomware_recovery_cost_usd_2025_jp_context
       transform: direct
       target_currency: USD
       round_to: 100000
-      rationale: Source-backed global median security-incident loss bridge until Japan ransomware-specific likely loss evidence is reviewed.
+      rationale: Manufacturing-sector mean recovery cost excluding ransom from Sophos.
     max:
-      evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd_jp_manufacturing_context
+      evidence_id: sophos_manufacturing_ransomware_extreme_case_threshold_usd_2025_jp_context
       transform: direct
       target_currency: USD
       round_to: 100000
-      rationale: Source-backed global extreme security-incident loss bridge until Japan ransomware tail-loss evidence is reviewed.
+      rationale: Manufacturing-sector USD 5M+ extreme ransom demand and payout threshold from Sophos.

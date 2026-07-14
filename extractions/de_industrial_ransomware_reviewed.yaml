@@ -14,6 +14,52 @@ extractions:
     evidence_record_ids:
       - cyentia_global_ransomware_probability_2025_de_context
 
+  - id: bitkom_de_ransomware_damage_rate_2025
+    source_id: bitkom_wirtschaftsschutz_2025
+    source_name: Bitkom Wirtschaftsschutz 2025
+    source_url_or_citation: https://www.bitkom.org/sites/main/files/2025-12/bitkom-studienbericht-wirtschaftsschutz-2025_2.pdf
+    publication_date: "2025-12-01"
+    extraction_date: "2026-07-14"
+    citation_detail: Section 3.2, figure 11.
+    fact: Bitkom reported that 34% of surveyed German companies had ransomware-caused damage in the prior 12 months.
+    value: 0.34
+    unit: annual_probability
+    normalization_notes: Stored directly as a Germany company ransomware-damage rate.
+    limitations: Cross-industry survey, not manufacturing-specific and not limited to mid-market companies.
+    evidence_record_ids:
+      - bitkom_de_ransomware_damage_rate_2025
+
+  - id: bitkom_de_ransomware_affected_rate_2025
+    source_id: bitkom_wirtschaftsschutz_2025
+    source_name: Bitkom Wirtschaftsschutz 2025
+    source_url_or_citation: https://www.bitkom.org/sites/main/files/2025-12/bitkom-studienbericht-wirtschaftsschutz-2025_2.pdf
+    publication_date: "2025-12-01"
+    extraction_date: "2026-07-14"
+    citation_detail: Section 3.2, figure 12.
+    fact: Bitkom's ransom-payment chart uses a basis of 588 companies affected by ransomware attacks out of the 1,002-company survey base.
+    value: 0.59
+    unit: annual_probability
+    normalization_notes: Calculated as 588 / 1,002 = 0.5868 and rounded to 0.59.
+    limitations: Derived from chart basis counts, cross-industry, and broader than damage-causing ransomware.
+    evidence_record_ids:
+      - bitkom_de_ransomware_affected_rate_2025
+
+  - id: bitkom_de_ransomware_payment_floor_eur_2025
+    source_id: bitkom_wirtschaftsschutz_2025
+    source_name: Bitkom Wirtschaftsschutz 2025
+    source_url_or_citation: https://www.bitkom.org/sites/main/files/2025-12/bitkom-studienbericht-wirtschaftsschutz-2025_2.pdf
+    publication_date: "2025-12-01"
+    extraction_date: "2026-07-14"
+    citation_detail: Section 3.2, figure 12.
+    fact: Bitkom reported ransom-payment bands beginning at EUR 10,000-100,000 among companies that paid after ransomware attacks.
+    value: 10000
+    unit: currency
+    currency: EUR
+    normalization_notes: Stored as the lower edge of the smallest nonzero payment band.
+    limitations: Payment-only lower-band anchor, not total event loss or a Germany industrial claims distribution.
+    evidence_record_ids:
+      - bitkom_de_ransomware_payment_floor_eur_2025
+
   - id: cyentia_iris_2022_typical_cyber_event_loss_usd_de_industrial_context
     source_id: cyentia_iris_2022
     source_name: Cyentia Information Risk Insights Study 2022
@@ -46,6 +92,22 @@ extractions:
     evidence_record_ids:
       - cyentia_iris_2025_median_security_incident_loss_usd_de_industrial_context
 
+  - id: sophos_manufacturing_ransomware_recovery_cost_usd_2025
+    source_id: sophos_state_ransomware_manufacturing_2025
+    source_name: Sophos State of Ransomware in Manufacturing and Production 2025
+    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025
+    publication_date: "2025-12-04"
+    extraction_date: "2026-07-14"
+    citation_detail: Ransom demands, payments and attack recovery costs section.
+    fact: Sophos reported that the mean cost of recovery, excluding any ransoms paid, was USD 1.3 million for manufacturing and production organizations.
+    value: 1300000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored directly in USD as a manufacturing-sector ransomware likely-loss bridge.
+    limitations: Global survey of organizations hit by ransomware, not Germany-specific and excluding ransoms paid.
+    evidence_record_ids:
+      - sophos_manufacturing_ransomware_recovery_cost_usd_2025
+
   - id: cyentia_iris_2025_extreme_security_incident_loss_usd_de_industrial_context
     source_id: cyentia_iris_2025
     source_name: Cyentia Information Risk Insights Study 2025
@@ -61,3 +123,19 @@ extractions:
     limitations: Global security-incident benchmark, not ransomware-only or Germany industrial-specific.
     evidence_record_ids:
       - cyentia_iris_2025_extreme_security_incident_loss_usd_de_industrial_context
+
+  - id: sophos_manufacturing_ransomware_extreme_case_threshold_usd_2025
+    source_id: sophos_state_ransomware_manufacturing_2025
+    source_name: Sophos State of Ransomware in Manufacturing and Production 2025
+    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025
+    publication_date: "2025-12-04"
+    extraction_date: "2026-07-14"
+    citation_detail: Ransom demands, payments and attack recovery costs section.
+    fact: Sophos reported that extreme USD 5M+ ransom demand and payout cases saw a slight uptick in manufacturing and production.
+    value: 5000000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored as a manufacturing-sector stress threshold.
+    limitations: Threshold for extreme ransom demand and payout cases, not total event loss or a formal maximum.
+    evidence_record_ids:
+      - sophos_manufacturing_ransomware_extreme_case_threshold_usd_2025

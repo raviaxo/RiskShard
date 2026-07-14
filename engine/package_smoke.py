@@ -19,6 +19,7 @@ DEFAULT_EXPECTED_ENTRY_POINTS = {
     "riskshard-package-smoke",
     "riskshard-benchmark",
     "riskshard-beta",
+    "riskshard-clean-install",
 }
 
 

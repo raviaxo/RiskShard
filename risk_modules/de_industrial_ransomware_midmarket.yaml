@@ -1,12 +1,13 @@
 id: de_industrial_ransomware_midmarket
 title: Germany Industrial Ransomware Midmarket
 version: "0.1"
-status: governed_starter
+status: benchmark_review_candidate
 threat: ransomware
 description: >
-  Governed starter ransomware shard for a Germany mid-market industrial
-  manufacturer. It gives contributors a complete artifact chain while keeping
-  local frequency and local loss gaps explicit.
+  Benchmark-review candidate ransomware shard for a Germany mid-market
+  industrial manufacturer. It gives contributors a complete artifact chain with
+  Germany frequency anchors and manufacturing loss bridges while preserving
+  limitations for human review.
 context:
   industry: manufacturing
   country: DE
@@ -35,5 +36,5 @@ tags:
   - mid_market
   - ransomware
 practitioner_notes:
-  good_for: Testing the Germany industrial contribution path and running a transparent starter ransomware scenario with global loss anchors.
-  not_good_for: Benchmark claims, Germany-local loss quantification, or industrial-sector decisions without replacing estimated frequency values and global loss bridges.
+  good_for: Human benchmark review of a Germany industrial ransomware shard with all six direct parameters source-backed and extraction-mapped.
+  not_good_for: Treating the stress impact as a true total-loss maximum or assuming the manufacturing loss bridges are Germany-specific claims data.

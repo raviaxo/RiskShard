@@ -142,7 +142,7 @@ sources:
     publisher: Australian Bureau of Statistics
     source_type: official_statistical_data
     url: https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025
-    publication_date: "2025-08-26"
+    publication_date: "2025-12-16"
     access_mode: public_html
     intended_use:
       - Australia business population denominator
@@ -303,6 +303,25 @@ sources:
     usage_notes: >
       Use for Australian notifiable data breach patterns and sector relevance.
 
+  - id: privacy_act_1988_latest
+    title: Privacy Act 1988
+    publisher: Federal Register of Legislation
+    source_type: legislation
+    url: https://www.legislation.gov.au/C2004A03712/latest/text
+    publication_date: "2026-06-04"
+    access_mode: public_html
+    intended_use:
+      - Australia privacy penalty stress impact
+      - data breach regulatory stress anchor
+      - serious privacy interference penalty context
+    usage_notes: >
+      Use as an official Australian privacy-law stress anchor. Preserve the
+      limitation that section 13G sets a maximum pecuniary penalty for serious
+      interference with privacy by a body corporate: the greatest of AUD 50M,
+      three times benefit, or 30% adjusted turnover when benefit cannot be
+      determined. This is not a total event-loss estimate, insurance claim
+      distribution, or financial-services-specific breach-cost benchmark.
+
   - id: apra_cps_230
     title: CPS 230 Operational Risk Management
     publisher: Australian Prudential Regulation Authority
@@ -332,3 +351,55 @@ sources:
     usage_notes: >
       Use as a survey-based ransomware benchmark. Preserve survey-bias and
       geography limitations in evidence records.
+
+  - id: bitkom_wirtschaftsschutz_2025
+    title: Wirtschaftsschutz 2025
+    publisher: Bitkom e.V.
+    source_type: official_statistics
+    url: https://www.bitkom.org/sites/main/files/2025-12/bitkom-studienbericht-wirtschaftsschutz-2025_2.pdf
+    publication_date: "2025-12-01"
+    access_mode: public_pdf
+    intended_use:
+      - Germany ransomware frequency
+      - Germany cyberattack damage context
+      - Germany ransom payment bands
+      - Germany company threat context
+    usage_notes: >
+      Use as a Germany company survey source for ransomware frequency and
+      ransom-payment context. Preserve limitations that it is cross-industry,
+      survey-based, and does not provide a Germany industrial loss distribution.
+
+  - id: sophos_state_ransomware_manufacturing_2025
+    title: State of Ransomware in Manufacturing and Production 2025
+    publisher: Sophos
+    source_type: industry_survey
+    url: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025
+    publication_date: "2025-12-04"
+    access_mode: public_html
+    intended_use:
+      - manufacturing ransomware recovery cost
+      - manufacturing ransomware ransom economics
+      - manufacturing ransomware incident context
+    usage_notes: >
+      Use as a manufacturing-sector ransomware benchmark for organizations
+      with 100 to 5,000 employees. Preserve limitations that the public page is
+      global, survey-based, conditional on organizations hit by ransomware, and
+      not Germany-specific.
+
+  - id: npa_japan_cyber_threats_2025_statistics
+    title: 2025 Cyber Threat Situation Statistics Data
+    publisher: National Police Agency of Japan
+    source_type: law_enforcement_statistics
+    url: https://www.npa.go.jp/publications/statistics/cybersecurity/data/R7/R07_jousei_data.xlsx
+    publication_date: "2026-03-09"
+    access_mode: public_xlsx
+    intended_use:
+      - Japan ransomware report counts
+      - Japan manufacturing ransomware context
+      - Japan ransomware restoration cost bands
+      - ransomware family context
+    usage_notes: >
+      Use as official Japan law-enforcement statistics for reported
+      ransomware damage. Preserve limitations that report counts are not
+      organization-level annual probabilities and restoration/investigation
+      cost bands are not full total-loss distributions.

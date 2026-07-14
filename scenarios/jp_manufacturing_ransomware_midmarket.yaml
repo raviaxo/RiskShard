@@ -3,12 +3,13 @@ metadata:
   version: "0.1"
   currency: USD
   scenario_stage: governed_starter
-  benchmark_status: starter_with_global_loss_anchors_and_estimated_frequency_stress
+  benchmark_status: starter_with_local_restoration_floor_and_estimated_frequency_stress
   description: >
     Starter Japan manufacturing ransomware shard. It uses a global ransomware
-    likelihood floor and global cyber-loss anchors, with explicit estimated
-    likely and stress frequency values until Japan manufacturing ransomware
-    frequency evidence is reviewed.
+    likelihood floor, explicit estimated likely and stress frequency values,
+    an official Japan restoration-cost floor, and manufacturing-sector
+    ransomware recovery/stress anchors until Japan manufacturing frequency and
+    full-loss evidence is reviewed.
 
 frequency:
   min: 0.10
@@ -16,6 +17,6 @@ frequency:
   max: 0.50
 
 impact:
-  min: 266000
-  likely: 3000000
-  max: 32000000
+  min: 6000
+  likely: 1300000
+  max: 5000000

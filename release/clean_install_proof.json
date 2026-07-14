@@ -1,0 +1,108 @@
+{
+  "commands": [
+    {
+      "command": [
+        "$RISKSHARD_VENV/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "$RISKSHARD_ROOT"
+      ],
+      "name": "install_package",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "$RISKSHARD_VENV/bin/python",
+        "-m",
+        "pip",
+        "show",
+        "riskshard"
+      ],
+      "name": "pip_show_riskshard",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "$RISKSHARD_VENV/bin/riskshard-package-smoke"
+      ],
+      "name": "package_smoke",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "$RISKSHARD_VENV/bin/riskshard-benchmark",
+        "--target",
+        "gb_finance_data_breach_midmarket"
+      ],
+      "name": "benchmark_target",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "$RISKSHARD_VENV/bin/riskshard-modules",
+        "list"
+      ],
+      "name": "modules_list",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "$RISKSHARD_VENV/bin/riskshard-toprisks",
+        "--limit",
+        "2",
+        "--json"
+      ],
+      "name": "toprisks_json",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "$RISKSHARD_VENV/bin/riskshard",
+        "$RISKSHARD_ROOT/scenarios",
+        "--trials",
+        "25",
+        "--dist",
+        "pert",
+        "--seed",
+        "42"
+      ],
+      "name": "portfolio_smoke",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "generated_at": "2026-07-14T12:51:12+00:00",
+  "package_name": "riskshard",
+  "path": "$RISKSHARD_ROOT/release/clean_install_proof.json",
+  "proof_type": "riskshard_clean_install_proof",
+  "python": "$RISKSHARD_VENV/bin/python",
+  "required_commands": [
+    "pip_show_riskshard",
+    "package_smoke",
+    "benchmark_target",
+    "modules_list",
+    "toprisks_json",
+    "portfolio_smoke"
+  ],
+  "root": "$RISKSHARD_ROOT",
+  "status": "pass",
+  "summary": {
+    "passed": 6,
+    "total": 6
+  },
+  "venv_path": "$RISKSHARD_VENV"
+}

@@ -165,7 +165,7 @@ class RiskModuleTests(unittest.TestCase):
 
         germany = propose_module_calibration("de_industrial_ransomware_midmarket", ROOT)
         japan = propose_module_calibration("jp_manufacturing_ransomware_midmarket", ROOT)
-        self.assertFalse(germany["ready_without_assumptions"])
+        self.assertTrue(germany["ready_without_assumptions"])
         self.assertFalse(japan["ready_without_assumptions"])
 
     def test_country_priorities_list_twenty_five_contribution_targets(self):

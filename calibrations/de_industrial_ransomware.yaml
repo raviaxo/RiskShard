@@ -1,13 +1,14 @@
 metadata:
   name: Germany industrial ransomware calibration
   scenario_name: Germany Industrial Ransomware Midmarket - Calibrated Draft
-  version: "0.1"
+  version: "0.2"
   notes: >
-    Starter calibration profile for a Germany mid-market industrial ransomware
-    shard. It is intentionally not benchmark-grade: frequency.min uses a global
-    ransomware likelihood floor, frequency.likely/max are explicit estimates,
-    and impact values use global cyber-loss anchors until Germany industrial
-    ransomware evidence is reviewed.
+    Benchmark-review calibration profile for a Germany mid-market industrial
+    ransomware shard. Frequency likely/max use Germany company survey anchors;
+    impact min uses a Germany ransom-payment lower band converted from EUR to
+    USD; impact likely/max use manufacturing-sector ransomware bridges. Human
+    review must accept that the source set remains cross-industry or global
+    manufacturing, not a Germany industrial claims distribution.
 
 target_currency: USD
 
@@ -18,30 +19,30 @@ parameters:
       transform: direct
       rationale: Global ransomware likelihood floor from Cyentia IRIS Ransomware.
     likely:
-      evidence_id: riskshard_de_industrial_ransomware_frequency_likely_2026
+      evidence_id: bitkom_de_ransomware_damage_rate_2025
       transform: direct
-      rationale: Explicit estimated likely frequency until Germany industrial ransomware evidence exists.
+      rationale: Germany company ransomware damage rate from Bitkom Wirtschaftsschutz 2025.
     max:
-      evidence_id: riskshard_de_industrial_ransomware_frequency_stress_2026
+      evidence_id: bitkom_de_ransomware_affected_rate_2025
       transform: direct
-      rationale: Explicit estimated stress frequency until Germany industrial tail-frequency evidence exists.
+      rationale: Germany ransomware-affected survey-basis rate from Bitkom Wirtschaftsschutz 2025.
 
   impact:
     min:
-      evidence_id: cyentia_iris_2022_typical_cyber_event_loss_usd_de_industrial_context
-      transform: direct
+      evidence_id: bitkom_de_ransomware_payment_floor_eur_2025
+      transform: currency_convert
       target_currency: USD
-      round_to: 10000
-      rationale: Source-backed global lower loss anchor until Germany industrial ransomware loss-floor evidence is reviewed.
+      round_to: 1000
+      rationale: Germany lower ransom-payment band converted from EUR to USD as a conservative impact floor.
     likely:
-      evidence_id: cyentia_iris_2025_median_security_incident_loss_usd_de_industrial_context
+      evidence_id: sophos_manufacturing_ransomware_recovery_cost_usd_2025
       transform: direct
       target_currency: USD
       round_to: 100000
-      rationale: Source-backed global median security-incident loss bridge until Germany ransomware-specific likely loss evidence is reviewed.
+      rationale: Manufacturing-sector mean recovery cost excluding ransom from Sophos.
     max:
-      evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd_de_industrial_context
+      evidence_id: sophos_manufacturing_ransomware_extreme_case_threshold_usd_2025
       transform: direct
       target_currency: USD
       round_to: 100000
-      rationale: Source-backed global extreme security-incident loss bridge until Germany ransomware tail-loss evidence is reviewed.
+      rationale: Manufacturing-sector USD 5M+ extreme ransom demand and payout threshold from Sophos.

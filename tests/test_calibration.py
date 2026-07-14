@@ -123,7 +123,7 @@ class CalibrationTests(unittest.TestCase):
         }
 
         self.assertEqual(scenario["frequency"], {"min": 0.0008, "likely": 0.65, "max": 0.69})
-        self.assertEqual(scenario["impact"], {"min": 370000, "likely": 6100000, "max": 44500000})
+        self.assertEqual(scenario["impact"], {"min": 97000, "likely": 10700000, "max": 50000000})
         self.assertEqual(
             warning_codes.count("parameter_from_non_source_backed_evidence"),
             0,
@@ -142,14 +142,12 @@ class CalibrationTests(unittest.TestCase):
         self.assertEqual(
             set(assumptions_by_evidence),
             {
-                "cyentia_iris_2022_typical_cyber_event_loss_usd",
-                "ibm_cost_data_breach_2025_global_average_cost_usd",
-                "cyentia_iris_2025_extreme_security_incident_loss_usd",
+                "ibm_uk_2025_financial_services_breach_average_cost_gbp_au_bridge",
             },
         )
         self.assertEqual(
             {item["rate_id"] for item in assumptions_by_evidence.values()},
-            {"inverse:aud_to_usd_rba_f11_1_2026_06_01"},
+            {"gbp_to_aud_ecb_rba_cross_2026_06_04"},
         )
         self.assertIn(
             "verizon_dbir_2026_vulnerability_exploitation_breach_entry_share",
@@ -172,21 +170,24 @@ class CalibrationTests(unittest.TestCase):
             for item in report["selected_evidence"]
         }
 
-        self.assertEqual(scenario["frequency"], {"min": 0.04, "likely": 0.12, "max": 0.25})
-        self.assertEqual(scenario["impact"], {"min": 33000, "likely": 170000, "max": 1500000})
+        self.assertEqual(
+            scenario["frequency"],
+            {"min": 0.00010514176186819692, "likely": 0.12, "max": 0.25},
+        )
+        self.assertEqual(scenario["impact"], {"min": 33000, "likely": 170000, "max": 2000000})
         self.assertEqual(
             warning_codes.count("parameter_from_non_source_backed_evidence"),
-            4,
+            2,
         )
         self.assertEqual(
             selected_types,
             {
-                "frequency.min": "estimated",
+                "frequency.min": "source_backed",
                 "frequency.likely": "estimated",
                 "frequency.max": "estimated",
                 "impact.min": "source_backed",
                 "impact.likely": "source_backed",
-                "impact.max": "estimated",
+                "impact.max": "source_backed",
             },
         )
         self.assertEqual(
@@ -200,6 +201,10 @@ class CalibrationTests(unittest.TestCase):
         self.assertIn(
             "accc_2025_small_business_false_billing_losses_aud",
             {item["id"] for item in report["excluded_evidence"]},
+        )
+        self.assertEqual(
+            report["selected_evidence"][5]["evidence_id"],
+            "accc_2025_small_business_false_billing_loss_stress_aud",
         )
 
     def test_gb_data_breach_calibration_uses_source_backed_direct_parameters(self):

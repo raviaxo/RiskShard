@@ -31,7 +31,7 @@ records:
     source_name: ABS Counts of Australian Businesses 2024-25
     source_type: official_statistical_data
     source_url_or_citation: https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025
-    publication_date: "2025-08-26"
+    publication_date: "2025-12-16"
     extraction_date: "2026-06-03"
     citation_detail: Industry section; Financial and Insurance Services increased 3.7% to 133,743 businesses in 2024-25.
     extraction_notes: ABS reported 133,743 actively trading Financial and Insurance Services businesses in 2024-25.
@@ -163,6 +163,54 @@ records:
       company_size_bands: [all]
       threats: [data_breach]
 
+  - id: business_qld_au_medium_business_cybercrime_cost_data_breach_floor_2025
+    title: Australian medium-business cybercrime cost for data breach floor
+    parameter: impact.min
+    value: 97200
+    unit: currency
+    currency: AUD
+    source_id: business_qld_cyber_secure_guidance_2025
+    source_name: Business Queensland Keeping your business cyber secure
+    source_type: government_business_guidance
+    source_url_or_citation: https://www.business.qld.gov.au/running-business/digital-business/online-risk-security/cyber-security
+    publication_date: "2025-10-23"
+    extraction_date: "2026-07-14"
+    citation_detail: Page section "Keeping your business cyber secure"; average cost of cybercrime in Australia list.
+    extraction_notes: Business Queensland reports AUD 97,200 as the average cost of cybercrime for medium businesses.
+    normalization_notes: Used directly as a local Australian medium-business cybercrime cost floor for a data-breach scenario; calibration rounds to the nearest AUD 1,000.
+    limitations: Secondary government guidance page that links to ASD as the primary source; cybercrime-wide rather than data-breach-specific, not financial-services-specific, and not a loss distribution quantile.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: privacy_act_1988_au_body_corporate_serious_privacy_penalty_cap_2026
+    title: Australian serious privacy interference body-corporate penalty cap
+    parameter: impact.max
+    value: 50000000
+    unit: currency
+    currency: AUD
+    source_id: privacy_act_1988_latest
+    source_name: Privacy Act 1988
+    source_type: legislation
+    source_url_or_citation: https://www.legislation.gov.au/C2004A03712/latest/text
+    publication_date: "2026-06-04"
+    extraction_date: "2026-07-14"
+    citation_detail: Section 13G(3), Federal Register compilation C2026C00227, compilation date 4 June 2026.
+    extraction_notes: Extracted the fixed AUD 50 million body-corporate penalty limb for serious interference with privacy.
+    normalization_notes: Used directly as an Australian privacy regulatory stress anchor; the three-times-benefit and 30%-turnover limbs require organization-specific inputs and are not modeled in this starter calibration.
+    limitations: Statutory maximum penalty cap, not a total event-loss estimate, not expected loss, not financial-services-specific, and actual penalties depend on regulator and court facts.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [data_breach]
+
   - id: cyentia_iris_2022_typical_cyber_event_loss_usd
     title: Typical reported cyber-event financial loss
     parameter: impact.min
@@ -208,6 +256,30 @@ records:
     applicability:
       industries: [all]
       countries: [global]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: ibm_uk_2025_financial_services_breach_average_cost_gbp_au_bridge
+    title: UK financial-services average data-breach cost used as AU industry bridge
+    parameter: impact.likely
+    value: 5740000
+    unit: currency
+    currency: GBP
+    source_id: ibm_cost_data_breach_uk_2025
+    source_name: IBM UK Cost of a Data Breach 2025 release
+    source_type: data_breach_cost_research
+    source_url_or_citation: https://uk.newsroom.ibm.com/2025-cost-of-data-breach-UK
+    publication_date: "2025-07-30"
+    extraction_date: "2026-07-14"
+    citation_detail: UK release states that financial services remained the costliest UK industry for data breaches, with an average cost of GBP 5.74 million in 2025.
+    extraction_notes: Extracted the UK financial-services average breach cost from IBM's UK release.
+    normalization_notes: Stored in source currency and selected as a financial-services-specific likely-impact bridge until Australian financial-services breach-cost evidence is reviewed.
+    limitations: UK-specific IBM/Ponemon studied breach population; not Australia-specific, not mid-market-specific, not a full distribution, and not a regulator-reported loss table.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [GB]
       company_size_bands: [all]
       threats: [data_breach]
 

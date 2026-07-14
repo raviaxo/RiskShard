@@ -5,12 +5,17 @@ import sys
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_ROOT = Path(__file__).resolve().parents[1]
+if str(SCRIPT_ROOT) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_ROOT))
+
+from engine.project_paths import find_project_root  # noqa: E402
+
+ROOT = find_project_root(fallback=SCRIPT_ROOT)
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from engine.benchmark_program import (  # noqa: E402
-    DEFAULT_TARGET_PATH,
     build_benchmark_cohort_report,
     build_benchmark_program_report,
     build_benchmark_sprint_report,
@@ -22,7 +27,7 @@ from engine.benchmark_program import (  # noqa: E402
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Inspect the RiskShard benchmark-grade 30 program.")
-    parser.add_argument("--targets", type=Path, default=DEFAULT_TARGET_PATH)
+    parser.add_argument("--targets", type=Path, default=ROOT / "benchmark_targets" / "benchmark_grade_30.yaml")
     parser.add_argument("--target", help="Show one target by target id or module id.")
     parser.add_argument("--cohort", choices=["seeded"], help="Show a benchmark cohort summary.")
     parser.add_argument("--sprint", choices=["seeded"], help="Show a benchmark upgrade sprint.")
