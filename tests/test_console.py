@@ -124,6 +124,32 @@ class ConsoleTests(unittest.TestCase):
         self.assertNotIn("privacy_act_1988", gaps_output)
         self.assertNotIn("business_qld", gaps_output)
 
+    def test_demo_runs_canonical_first_run_path_end_to_end(self):
+        output = self.command("demo")
+
+        # Narration structure: six numbered steps with a closing summary.
+        self.assertIn("RiskShard guided demo", output)
+        self.assertIn("Step 1 of 6", output)
+        self.assertIn("Step 6 of 6", output)
+        self.assertIn("Demo complete", output)
+
+        # Each reused handler produced its real artifact.
+        self.assertIn("Using Risk Shard gb_finance_data_breach_midmarket", output)
+        self.assertIn("Evidence pack", output)
+        self.assertIn("Run receipt", output)
+        self.assertIn("Simulation JSON:", output)
+        self.assertIn("Gap analysis: data_breach", output)
+
+        # The selected shard drives the whole path; no AU leak.
+        self.assertIn("country=GB", output)
+        self.assertNotIn("oaic", output)
+        self.assertIsNotNone(self.console.last_run)
+
+    def test_demo_rejects_unknown_shard(self):
+        output = self.command("demo not_a_real_shard")
+        self.assertIn("Unknown Risk Shard", output)
+        self.assertNotIn("Traceback", output)
+
     def test_feed_governance_is_available_from_console(self):
         feeds_output = self.command("feeds")
         self.assertIn("Data feed governance", feeds_output)
