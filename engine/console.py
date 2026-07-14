@@ -702,7 +702,11 @@ class RiskShardConsole(cmd.Cmd):
         if not threat:
             threat = infer_threat(self.scenario_path) or "ransomware"
             self.options["threat"] = threat
-        analysis = analyze_gaps(org_profile, threat)
+        analysis = analyze_gaps(
+            org_profile,
+            threat,
+            calibration_path=self.options.get("calibration"),
+        )
         self.write(format_gap_analysis(analysis))
 
     def write_context_summary(self):
