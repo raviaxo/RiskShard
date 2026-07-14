@@ -28,6 +28,7 @@ def analyze_gaps(
     evidence_path=DEFAULT_EVIDENCE_DIR,
     manifest_path=DEFAULT_MANIFEST_PATH,
     calibration_dir=DEFAULT_CALIBRATION_DIR,
+    calibration_path=None,
 ):
     org_profile = load_org_profile(org_profile_path)
     evidence_records = load_evidence_records(evidence_path)
@@ -40,7 +41,10 @@ def analyze_gaps(
         parameter = match["record"]["parameter"]
         matches_by_parameter.setdefault(parameter, []).append(match)
 
-    calibration_path = default_calibration_path(calibration_dir, matched["target_context"]["threat"])
+    if calibration_path is None:
+        calibration_path = default_calibration_path(calibration_dir, matched["target_context"]["threat"])
+    else:
+        calibration_path = Path(calibration_path)
     calibration_profile_exists = calibration_path.exists()
     calibration_selections = (
         load_calibration_selections(calibration_path, evidence_by_id)

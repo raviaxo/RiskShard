@@ -107,6 +107,23 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn("Scenario parameters", gaps_output)
         self.assertIn("Next steps", gaps_output)
 
+    def test_show_gaps_uses_selected_shard_calibration_not_au_default(self):
+        # Regression (P0 trust bug): `show gaps` previously hardcoded the
+        # au_finance_* calibration via default_calibration_path, so selecting a
+        # non-AU shard leaked Australian evidence IDs into the gap analysis.
+        self.command("use gb_finance_data_breach_midmarket")
+        gaps_output = self.command("show gaps")
+
+        # Selected UK shard drives the gap analysis context and evidence.
+        self.assertIn("country=GB", gaps_output)
+        self.assertIn("uk_dsit_2026_business_breach_prevalence_all", gaps_output)
+        self.assertIn("fca_equifax_2023_cyber_breach_fine_gbp", gaps_output)
+
+        # No Australian parameter IDs should appear for a UK shard.
+        self.assertNotIn("oaic", gaps_output)
+        self.assertNotIn("privacy_act_1988", gaps_output)
+        self.assertNotIn("business_qld", gaps_output)
+
     def test_feed_governance_is_available_from_console(self):
         feeds_output = self.command("feeds")
         self.assertIn("Data feed governance", feeds_output)
