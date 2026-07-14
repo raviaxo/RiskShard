@@ -22,46 +22,74 @@ records:
       company_size_bands: [all]
       threats: [ransomware]
 
-  - id: riskshard_de_industrial_ransomware_frequency_likely_2026
-    title: Estimated Germany industrial ransomware likely frequency
+  - id: bitkom_de_ransomware_damage_rate_2025
+    title: German companies reporting ransomware-caused damage
     parameter: frequency.likely
-    value: 0.30
+    value: 0.34
     unit: annual_probability
-    source_name: RiskShard Germany industrial ransomware starter pack
-    source_type: model_assumption
-    source_url_or_citation: Starter assumption pending reviewed Germany industrial ransomware frequency evidence.
-    publication_date: "2026-07-13"
-    extraction_date: "2026-07-13"
-    extraction_notes: Estimated likely annual probability for a Germany mid-market industrial ransomware draft.
-    normalization_notes: Kept explicit as an assumption until Germany industrial, insurer, agency, or sector evidence is reviewed.
-    limitations: Not source-backed; replace before benchmark claims.
-    confidence: low
-    evidence_type: estimated
+    source_id: bitkom_wirtschaftsschutz_2025
+    source_name: Bitkom Wirtschaftsschutz 2025
+    source_type: official_statistics
+    source_url_or_citation: https://www.bitkom.org/sites/main/files/2025-12/bitkom-studienbericht-wirtschaftsschutz-2025_2.pdf
+    publication_date: "2025-12-01"
+    extraction_date: "2026-07-14"
+    citation_detail: Section 3.2, figure 11; 34% of surveyed German companies reported ransomware-caused damage in the prior 12 months.
+    extraction_notes: Bitkom reported that ransomware was the most common damage-causing cyberattack type, affecting 34% of surveyed companies in the prior 12 months.
+    normalization_notes: Stored directly as a Germany annual company ransomware-damage rate.
+    limitations: Cross-industry Germany company survey; not manufacturing-specific, not limited to mid-market organizations, and reflects damage-causing ransomware rather than all attack attempts.
+    confidence: medium
+    evidence_type: source_backed
     applicability:
-      industries: [manufacturing]
+      industries: [all]
       countries: [DE]
-      company_size_bands: [mid_market]
+      company_size_bands: [all]
       threats: [ransomware]
 
-  - id: riskshard_de_industrial_ransomware_frequency_stress_2026
-    title: Estimated Germany industrial ransomware frequency stress bound
+  - id: bitkom_de_ransomware_affected_rate_2025
+    title: German companies affected by ransomware attacks
     parameter: frequency.max
-    value: 0.55
+    value: 0.59
     unit: annual_probability
-    source_name: RiskShard Germany industrial ransomware starter pack
-    source_type: model_assumption
-    source_url_or_citation: Starter assumption pending reviewed Germany industrial ransomware tail-frequency evidence.
-    publication_date: "2026-07-13"
-    extraction_date: "2026-07-13"
-    extraction_notes: Estimated stress annual probability for a Germany mid-market industrial ransomware draft.
-    normalization_notes: Kept explicit as an assumption until Germany industrial or tail-frequency evidence is reviewed.
-    limitations: Not source-backed; replace before benchmark claims.
-    confidence: low
-    evidence_type: estimated
+    source_id: bitkom_wirtschaftsschutz_2025
+    source_name: Bitkom Wirtschaftsschutz 2025
+    source_type: official_statistics
+    source_url_or_citation: https://www.bitkom.org/sites/main/files/2025-12/bitkom-studienbericht-wirtschaftsschutz-2025_2.pdf
+    publication_date: "2025-12-01"
+    extraction_date: "2026-07-14"
+    citation_detail: Section 3.2, figure 12; ransom-payment chart basis lists n=588 companies affected by ransomware attacks out of the n=1,002 survey base.
+    extraction_notes: Derived 588 / 1,002 = 0.5868 from Bitkom's ransomware-affected payment chart basis and total survey base.
+    normalization_notes: Rounded to 0.59 as a Germany ransomware-affected stress frequency.
+    limitations: Derived from survey basis counts rather than a standalone plotted rate; cross-industry, survey-based, and broader than damage-causing ransomware.
+    confidence: medium
+    evidence_type: source_backed
     applicability:
-      industries: [manufacturing]
+      industries: [all]
       countries: [DE]
-      company_size_bands: [mid_market]
+      company_size_bands: [all]
+      threats: [ransomware]
+
+  - id: bitkom_de_ransomware_payment_floor_eur_2025
+    title: German ransomware ransom-payment lower band
+    parameter: impact.min
+    value: 10000
+    unit: currency
+    currency: EUR
+    source_id: bitkom_wirtschaftsschutz_2025
+    source_name: Bitkom Wirtschaftsschutz 2025
+    source_type: official_statistics
+    source_url_or_citation: https://www.bitkom.org/sites/main/files/2025-12/bitkom-studienbericht-wirtschaftsschutz-2025_2.pdf
+    publication_date: "2025-12-01"
+    extraction_date: "2026-07-14"
+    citation_detail: Section 3.2, figure 12; ransom-payment bands include EUR 10,000-100,000, EUR 100,000-500,000, EUR 500,000-1M, and EUR 1M+.
+    extraction_notes: Used the lower edge of Bitkom's smallest nonzero ransom-payment band as a Germany ransomware impact floor.
+    normalization_notes: Stored in EUR. Calibration converts to USD using the explicit ECB EUR/USD assumption in calibrations/fx_rates.yaml.
+    limitations: Payment-only lower-band anchor, not total event loss, recovery cost, downtime, or a Germany industrial claims distribution.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [DE]
+      company_size_bands: [all]
       threats: [ransomware]
 
   - id: cyentia_iris_2022_typical_cyber_event_loss_usd_de_industrial_context
@@ -78,8 +106,8 @@ records:
     extraction_date: "2026-07-13"
     citation_detail: Public source page key findings; typical financial cost reported for a cyber event is USD 266K.
     extraction_notes: Reused the governed Cyentia typical cyber-event financial-loss anchor for the Germany industrial starter.
-    normalization_notes: Stored in USD and selected as a conservative lower loss anchor until Germany industrial ransomware loss-floor evidence is reviewed.
-    limitations: Global cyber-event benchmark, not Germany-specific, ransomware-specific, manufacturing-specific, or a true minimum loss quantile.
+    normalization_notes: Stored in USD as an unselected comparison anchor after the Bitkom Germany payment floor was selected.
+    limitations: Global cyber-event benchmark, not Germany-specific, ransomware-specific, manufacturing-specific, selected by the current calibration, or a true minimum loss quantile.
     confidence: low
     evidence_type: source_backed
     applicability:
@@ -102,8 +130,8 @@ records:
     extraction_date: "2026-07-13"
     citation_detail: Public source page key findings; median losses rose toward USD 3M.
     extraction_notes: Reused the governed Cyentia median security-incident loss anchor for the Germany industrial starter.
-    normalization_notes: Stored directly in USD and selected as a global likely-loss bridge until local ransomware cost evidence is reviewed.
-    limitations: Global security-incident benchmark, not Germany-specific, ransomware-only, manufacturing-specific, or mid-market-specific.
+    normalization_notes: Stored directly in USD as an unselected comparison anchor after the Sophos manufacturing recovery-cost bridge was selected.
+    limitations: Global security-incident benchmark, not Germany-specific, ransomware-only, manufacturing-specific, mid-market-specific, or selected by the current calibration.
     confidence: low
     evidence_type: source_backed
     applicability:
@@ -111,6 +139,30 @@ records:
       countries: [global]
       company_size_bands: [all]
       threats: [all]
+
+  - id: sophos_manufacturing_ransomware_recovery_cost_usd_2025
+    title: Manufacturing ransomware recovery cost
+    parameter: impact.likely
+    value: 1300000
+    unit: currency
+    currency: USD
+    source_id: sophos_state_ransomware_manufacturing_2025
+    source_name: Sophos State of Ransomware in Manufacturing and Production 2025
+    source_type: industry_survey
+    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025
+    publication_date: "2025-12-04"
+    extraction_date: "2026-07-14"
+    citation_detail: Ransom demands, payments and attack recovery costs section; mean recovery cost excluding ransoms paid was USD 1.3M in 2025.
+    extraction_notes: Sophos reported that the mean cost of recovery, excluding any ransoms paid, dropped to USD 1.3 million for manufacturing and production organizations.
+    normalization_notes: Stored directly in USD as a manufacturing-sector ransomware likely-loss bridge.
+    limitations: Global manufacturing survey of organizations hit by ransomware; excludes ransoms paid, is not Germany-specific, and is not a full total-loss distribution.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [manufacturing]
+      countries: [global]
+      company_size_bands: [mid_market, enterprise]
+      threats: [ransomware]
 
   - id: cyentia_iris_2025_extreme_security_incident_loss_usd_de_industrial_context
     title: Extreme reported security-incident loss for Germany industrial starter
@@ -126,8 +178,8 @@ records:
     extraction_date: "2026-07-13"
     citation_detail: Public source page key findings; extreme events reached USD 32M.
     extraction_notes: Reused the governed Cyentia extreme security-incident loss anchor for the Germany industrial starter.
-    normalization_notes: Stored directly in USD and selected as a global stress-loss bridge until Germany industrial ransomware tail-loss evidence is reviewed.
-    limitations: Global security-incident benchmark, not Germany-specific, ransomware-only, manufacturing-specific, or a formal percentile for this scenario.
+    normalization_notes: Stored directly in USD as an unselected comparison anchor after the Sophos manufacturing stress threshold was selected.
+    limitations: Global security-incident benchmark, not Germany-specific, ransomware-only, manufacturing-specific, selected by the current calibration, or a formal percentile for this scenario.
     confidence: low
     evidence_type: source_backed
     applicability:
@@ -135,3 +187,27 @@ records:
       countries: [global]
       company_size_bands: [all]
       threats: [all]
+
+  - id: sophos_manufacturing_ransomware_extreme_case_threshold_usd_2025
+    title: Manufacturing ransomware extreme case threshold
+    parameter: impact.max
+    value: 5000000
+    unit: currency
+    currency: USD
+    source_id: sophos_state_ransomware_manufacturing_2025
+    source_name: Sophos State of Ransomware in Manufacturing and Production 2025
+    source_type: industry_survey
+    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025
+    publication_date: "2025-12-04"
+    extraction_date: "2026-07-14"
+    citation_detail: Ransom demands, payments and attack recovery costs section; extreme USD 5M+ demand and payout cases saw a slight uptick.
+    extraction_notes: Sophos noted that extreme USD 5M+ ransom demand and payout cases increased slightly in manufacturing and production.
+    normalization_notes: Stored as a manufacturing-sector stress threshold, not as a mathematically observed maximum.
+    limitations: Threshold for extreme ransom demands and payouts, not total event loss, not Germany-specific, and not a formal percentile or upper bound.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [manufacturing]
+      countries: [global]
+      company_size_bands: [mid_market, enterprise]
+      threats: [ransomware]

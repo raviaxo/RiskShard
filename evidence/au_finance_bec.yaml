@@ -188,6 +188,79 @@ records:
       company_size_bands: [all]
       threats: [business_email_compromise]
 
+  - id: abs_au_active_businesses_2025
+    title: Australian actively trading businesses
+    parameter: context.au_active_businesses
+    value: 2729648
+    unit: businesses
+    source_id: abs_counts_australian_businesses_2025
+    source_name: ABS Counts of Australian Businesses 2024-25
+    source_type: official_statistical_data
+    source_url_or_citation: https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025
+    publication_date: "2025-12-16"
+    extraction_date: "2026-07-14"
+    citation_detail: Key statistics / business count summary; 2,729,648 actively trading businesses at 30 June 2025.
+    extraction_notes: ABS reported 2,729,648 actively trading Australian businesses at 30 June 2025.
+    normalization_notes: Stored as a whole-economy denominator for conservative Australia scam-reporting floors.
+    limitations: Whole-economy denominator includes all industries and sizes; not financial-services-specific or mid-market-specific.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [business_email_compromise]
+
+  - id: accc_abs_au_small_business_scam_loss_report_rate_floor_2025
+    title: Australia small-business scam loss-report frequency floor
+    parameter: frequency.min
+    value: 0.00010514176186819692
+    unit: annual_probability
+    source_id: accc_targeting_scams_2025
+    source_ids:
+      - accc_targeting_scams_2025
+      - abs_counts_australian_businesses_2025
+    source_name: ACCC Targeting Scams Report 2025 and ABS Counts of Australian Businesses 2024-25
+    source_type: derived_scam_statistical_benchmark
+    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
+    publication_date: "2026-03-30"
+    extraction_date: "2026-07-14"
+    citation_detail: ACCC small-business section reported 287 small-business reports with financial loss; ABS reported 2,729,648 active Australian businesses at 30 June 2025.
+    extraction_notes: Dividing 287 small-business Scamwatch reports with financial loss by 2,729,648 active businesses gives a reported-loss floor of 0.0001051418.
+    normalization_notes: Calculated as 287 / 2,729,648 and stored as a conservative reported-loss frequency floor.
+    limitations: Scamwatch loss reports are not complete BEC events, not financial-services-specific, and the denominator is all Australian businesses rather than mid-market financial-services firms.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [business_email_compromise]
+
+  - id: accc_2025_small_business_false_billing_loss_stress_aud
+    title: ACCC small-business false billing stress anchor
+    parameter: impact.max
+    value: 2000000
+    unit: currency
+    currency: AUD
+    source_id: accc_targeting_scams_2025
+    source_name: ACCC Targeting Scams Report 2025
+    source_type: scam_report
+    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
+    publication_date: "2026-03-30"
+    extraction_date: "2026-07-14"
+    citation_detail: Figure 10 reports AUD 2.0 million in false billing losses for small businesses, and notes false billing generally relates to payment redirections also known as BEC scams.
+    extraction_notes: Stored as a local BEC-adjacent stress anchor for a starter shard, not as a formal single-event maximum.
+    normalization_notes: Selected as a source-backed stress envelope until BEC-specific tail-loss evidence is available.
+    limitations: Aggregate small-business Scamwatch losses; not financial-services-specific, mid-market-specific, or a direct tail quantile.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [business_email_compromise]
+
   - id: riskshard_bec_frequency_floor_2026
     title: Estimated BEC frequency floor
     parameter: frequency.min

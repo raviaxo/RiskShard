@@ -2,6 +2,7 @@ import re
 from pathlib import Path
 
 from engine.profiles import load_yaml_file
+from engine.project_paths import find_project_root
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -12,13 +13,14 @@ def normalize_key(value):
     return re.sub(r"[^a-z0-9]+", "_", str(value).strip().lower()).strip("_")
 
 
-def load_taxonomy(name, taxonomy_dir=TAXONOMY_DIR):
-    path = Path(taxonomy_dir) / f"{name}.yaml"
+def load_taxonomy(name, taxonomy_dir=None):
+    taxonomy_dir = Path(taxonomy_dir) if taxonomy_dir is not None else find_project_root() / "taxonomies"
+    path = taxonomy_dir / f"{name}.yaml"
     data = load_yaml_file(path)
     return data["items"]
 
 
-def load_taxonomies(taxonomy_dir=TAXONOMY_DIR):
+def load_taxonomies(taxonomy_dir=None):
     return {
         "industries": load_taxonomy("industries", taxonomy_dir),
         "countries": load_taxonomy("countries", taxonomy_dir),

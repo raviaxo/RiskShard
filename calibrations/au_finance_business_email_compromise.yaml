@@ -4,9 +4,10 @@ metadata:
   version: "0.1"
   notes: >
     Starter reviewed calibration profile for Australia financial-services
-    business email compromise. It uses a source-backed FBI IC3 complaint-average
-    loss anchor for likely impact, plus explicit estimated assumptions for
-    frequency and loss bounds until denominator-aware Australia or sector
+    business email compromise. It uses a source-backed ACCC/ABS reported-loss
+    frequency floor, a source-backed FBI IC3 complaint-average likely loss
+    anchor, and an ACCC false-billing stress anchor. Frequency likely/max
+    remain explicit estimates until denominator-aware Australia or sector BEC
     evidence is reviewed.
 
 target_currency: AUD
@@ -14,9 +15,9 @@ target_currency: AUD
 parameters:
   frequency:
     min:
-      evidence_id: riskshard_bec_frequency_floor_2026
+      evidence_id: accc_abs_au_small_business_scam_loss_report_rate_floor_2025
       transform: direct
-      rationale: Explicit estimated floor until source-backed BEC event frequency evidence exists.
+      rationale: Conservative Australia reported-loss floor from ACCC Scamwatch loss reports divided by ABS active-business denominator.
     likely:
       evidence_id: riskshard_bec_frequency_likely_2026
       transform: direct
@@ -40,8 +41,8 @@ parameters:
       round_to: 10000
       rationale: Source-backed FBI IC3 BEC average adjusted loss per complaint, converted to AUD as the first likely loss anchor.
     max:
-      evidence_id: riskshard_bec_impact_stress_2026
+      evidence_id: accc_2025_small_business_false_billing_loss_stress_aud
       transform: direct
       target_currency: AUD
       round_to: 10000
-      rationale: Explicit estimated stress loss bound until source-backed BEC tail-loss evidence exists.
+      rationale: Australia small-business false-billing aggregate loss used as a BEC-adjacent local stress envelope.

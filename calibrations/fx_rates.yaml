@@ -1,4 +1,19 @@
 rates:
+  - id: eur_to_usd_ecb_2026_06_04
+    from: EUR
+    to: USD
+    rate: 1.1640
+    as_of: "2026-06-04"
+    source_name: European Central Bank euro foreign exchange reference rates
+    source_type: official_reference_rate
+    source_url: https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html
+    retrieved_at: "2026-07-14"
+    citation_detail: "ECB 4 June 2026 reference rates quote EUR/USD 1.1640; RiskShard stores EUR to USD explicitly for EUR-denominated evidence normalization."
+    evidence_type: source_backed
+    notes: >
+      ECB rates are quoted against EUR. Germany ransomware calibration uses
+      this reviewed static assumption when converting EUR ransom-payment bands
+      to USD for a USD scenario.
   - id: aud_to_usd_rba_f11_1_2026_06_01
     from: AUD
     to: USD
@@ -28,6 +43,36 @@ rates:
       ECB rates are quoted against EUR. RiskShard stores the derived GBP to
       USD cross-rate explicitly so UK evidence currency coverage is visible in
       readiness and governance checks.
+  - id: gbp_to_aud_ecb_rba_cross_2026_06_04
+    from: GBP
+    to: AUD
+    rate: 1.8723154229956234
+    as_of: "2026-06-04"
+    source_name: European Central Bank and Reserve Bank of Australia reference rates
+    source_type: official_reference_rate_cross
+    source_url: https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html + https://www.rba.gov.au/statistics/tables/csv/f11.1-data.csv
+    retrieved_at: "2026-07-14"
+    citation_detail: "RiskShard derives GBP/AUD as GBP/USD 1.345820326049254 from ECB 4 June 2026 EUR cross-rates divided by RBA 1 June 2026 AUD/USD 0.7188, giving 1 GBP = AUD 1.8723154229956234."
+    evidence_type: source_backed
+    notes: >
+      Derived cross-rate used when UK GBP-denominated breach-cost evidence is
+      selected for an AUD scenario. The calibration report discloses this
+      bridge explicitly; it does not make the source Australia-specific.
+  - id: jpy_to_usd_ecb_cross_2026_06_04
+    from: JPY
+    to: USD
+    rate: 0.00625772807913553
+    as_of: "2026-06-04"
+    source_name: European Central Bank euro foreign exchange reference rates
+    source_type: official_reference_rate
+    source_url: https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html
+    retrieved_at: "2026-07-14"
+    citation_detail: "ECB 4 June 2026 reference rates quote EUR/USD 1.1640 and EUR/JPY 186.01; RiskShard derives JPY/USD as 1.1640 / 186.01 = 0.00625772807913553."
+    evidence_type: source_backed
+    notes: >
+      ECB rates are quoted against EUR. RiskShard stores the derived JPY to
+      USD cross-rate explicitly so Japan yen-denominated evidence currency
+      coverage is visible in readiness and governance checks.
   - id: usd_to_cad_boc_fxusdcad_2026_06_04
     from: USD
     to: CAD

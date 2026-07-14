@@ -61,3 +61,111 @@ extractions:
     limitations: Global security-incident benchmark, not ransomware-only or Japan manufacturing-specific.
     evidence_record_ids:
       - cyentia_iris_2025_extreme_security_incident_loss_usd_jp_manufacturing_context
+
+  - id: npa_jp_ransomware_reports_2025
+    source_id: npa_japan_cyber_threats_2025_statistics
+    source_name: National Police Agency of Japan 2025 Cyber Threat Situation Statistics Data
+    source_url_or_citation: https://www.npa.go.jp/publications/statistics/cybersecurity/data/R7/R07_jousei_data.xlsx
+    publication_date: "2026-03-09"
+    extraction_date: "2026-07-14"
+    citation_detail: "Workbook sheet 統計編P120⑴; 令和７年 ransomware damage reports total 226."
+    fact: Japan NPA reported 226 ransomware damage reports in 2025.
+    value: 226
+    unit: report_count
+    normalization_notes: Stored as official report-count context, not as an organization-level frequency.
+    limitations: Law-enforcement report count; affected by reporting behavior and missing a denominator for all exposed organizations.
+    evidence_record_ids:
+      - npa_jp_ransomware_reports_2025
+
+  - id: npa_jp_manufacturing_ransomware_reports_2025
+    source_id: npa_japan_cyber_threats_2025_statistics
+    source_name: National Police Agency of Japan 2025 Cyber Threat Situation Statistics Data
+    source_url_or_citation: https://www.npa.go.jp/publications/statistics/cybersecurity/data/R7/R07_jousei_data.xlsx
+    publication_date: "2026-03-09"
+    extraction_date: "2026-07-14"
+    citation_detail: "Workbook sheet 統計編P123 / 図表８; manufacturing accounted for 91 of 226 ransomware damage reports."
+    fact: Japan NPA reported 91 manufacturing ransomware damage reports out of 226 total ransomware damage reports in 2025.
+    value: 91
+    unit: report_count
+    normalization_notes: Stored as local manufacturing relevance context. It is not selected as a direct scenario frequency.
+    limitations: Industry report count, not an annual probability for a manufacturing company and not normalized by the Japan manufacturing-company population.
+    evidence_record_ids:
+      - npa_jp_manufacturing_ransomware_reports_2025
+
+  - id: npa_jp_manufacturing_ransomware_report_share_2025
+    source_id: npa_japan_cyber_threats_2025_statistics
+    source_name: National Police Agency of Japan 2025 Cyber Threat Situation Statistics Data
+    source_url_or_citation: https://www.npa.go.jp/publications/statistics/cybersecurity/data/R7/R07_jousei_data.xlsx
+    publication_date: "2026-03-09"
+    extraction_date: "2026-07-14"
+    citation_detail: "Workbook sheet 統計編P123 / 図表８; 91 manufacturing reports divided by 226 total ransomware reports."
+    fact: Manufacturing represented about 40.3% of Japan NPA ransomware damage reports in 2025.
+    value: 0.40265486725663717
+    unit: share_of_reported_ransomware_damage_reports
+    normalization_notes: Computed as 91 / 226 and stored for applicability/context ranking, not as scenario annual probability.
+    limitations: Share of reported incidents by sector; reporting patterns and organization population sizes are not controlled.
+    evidence_record_ids:
+      - npa_jp_manufacturing_ransomware_report_share_2025
+
+  - id: npa_jp_sme_ransomware_report_share_2025
+    source_id: npa_japan_cyber_threats_2025_statistics
+    source_name: National Police Agency of Japan 2025 Cyber Threat Situation Statistics Data
+    source_url_or_citation: https://www.npa.go.jp/publications/statistics/cybersecurity/data/R7/R07_jousei_data.xlsx
+    publication_date: "2026-03-09"
+    extraction_date: "2026-07-14"
+    citation_detail: "Workbook sheet 統計編P122 / 図表７; SMEs accounted for 143 of 226 ransomware damage reports."
+    fact: SMEs represented about 63.3% of Japan NPA ransomware damage reports in 2025.
+    value: 0.6327433628318584
+    unit: share_of_reported_ransomware_damage_reports
+    normalization_notes: Computed as 143 / 226 and stored as size-band context, not as scenario annual probability.
+    limitations: Share of reported incidents by organization size; does not control for the population of SMEs or reporting bias.
+    evidence_record_ids:
+      - npa_jp_sme_ransomware_report_share_2025
+
+  - id: npa_jp_ransomware_restoration_cost_low_band_jpy_2025
+    source_id: npa_japan_cyber_threats_2025_statistics
+    source_name: National Police Agency of Japan 2025 Cyber Threat Situation Statistics Data
+    source_url_or_citation: https://www.npa.go.jp/publications/statistics/cybersecurity/data/R7/R07_jousei_data.xlsx
+    publication_date: "2026-03-09"
+    extraction_date: "2026-07-14"
+    citation_detail: "Workbook sheet 統計編P126; 16 of 89 cases reported investigation/restoration cost below JPY 1,000,000."
+    fact: Japan NPA cost-band data shows a low investigation/restoration cost band below JPY 1,000,000.
+    value: 1000000
+    unit: currency
+    currency: JPY
+    normalization_notes: Stored as the upper edge of the lowest reported cost band and used as a conservative local impact floor.
+    limitations: Investigation/restoration cost band only; excludes broader business interruption, ransom, legal, customer, and strategic impacts.
+    evidence_record_ids:
+      - npa_jp_ransomware_restoration_cost_low_band_jpy_2025
+
+  - id: sophos_manufacturing_ransomware_recovery_cost_usd_2025_jp_context
+    source_id: sophos_state_ransomware_manufacturing_2025
+    source_name: Sophos State of Ransomware in Manufacturing and Production 2025
+    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025
+    publication_date: "2025-12-04"
+    extraction_date: "2026-07-14"
+    citation_detail: "Ransom demands, payments and attack recovery costs section; mean recovery cost excluding ransoms paid was USD 1.3M in 2025."
+    fact: Sophos reported mean ransomware recovery cost excluding ransom payments of USD 1.3 million for manufacturing and production organizations.
+    value: 1300000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored directly in USD as a manufacturing-sector likely-impact bridge for Japan until Japan manufacturing loss data is available.
+    limitations: Global survey of organizations hit by ransomware; not Japan-specific and excludes ransom payments.
+    evidence_record_ids:
+      - sophos_manufacturing_ransomware_recovery_cost_usd_2025_jp_context
+
+  - id: sophos_manufacturing_ransomware_extreme_case_threshold_usd_2025_jp_context
+    source_id: sophos_state_ransomware_manufacturing_2025
+    source_name: Sophos State of Ransomware in Manufacturing and Production 2025
+    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025
+    publication_date: "2025-12-04"
+    extraction_date: "2026-07-14"
+    citation_detail: "Ransom demands, payments and attack recovery costs section; extreme USD 5M+ demand and payout cases saw a slight uptick."
+    fact: Sophos noted extreme USD 5 million-plus ransom demand and payout cases in manufacturing and production.
+    value: 5000000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored as a manufacturing-sector stress threshold, not as a formal maximum.
+    limitations: Threshold for extreme ransom demands and payouts; not Japan-specific, not total event loss, and not a formal percentile.
+    evidence_record_ids:
+      - sophos_manufacturing_ransomware_extreme_case_threshold_usd_2025_jp_context

@@ -27,8 +27,8 @@ def evidence_files(path):
     return [path]
 
 
-def load_evidence_records(path=EVIDENCE_DIR, schema_path=EVIDENCE_SCHEMA_PATH):
-    schema = load_schema(schema_path)
+def load_evidence_records(path=EVIDENCE_DIR, schema_path=None):
+    schema = load_schema(schema_path or inferred_evidence_schema_path(path))
     records = []
 
     for evidence_path in evidence_files(path):
@@ -40,6 +40,18 @@ def load_evidence_records(path=EVIDENCE_DIR, schema_path=EVIDENCE_SCHEMA_PATH):
             records.append(record)
 
     return records
+
+
+def inferred_evidence_schema_path(path):
+    path = Path(path)
+    if path.name == "evidence":
+        root = path.parent
+    elif path.parent.name == "evidence":
+        root = path.parent.parent
+    else:
+        root = PROJECT_ROOT
+    candidate = root / "schemas" / "evidence_record_schema.json"
+    return candidate if candidate.exists() else EVIDENCE_SCHEMA_PATH
 
 
 def match_dimension(values, target, wildcard):

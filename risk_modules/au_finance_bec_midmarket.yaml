@@ -5,8 +5,10 @@ status: governed_starter
 threat: business_email_compromise
 description: >
   Starter business-email-compromise shard for an Australian mid-market
-  financial-services organization. It combines FBI IC3 BEC loss evidence with
-  ACCC Australia small-business scam context and explicit frequency assumptions.
+  financial-services organization. It combines an ACCC/ABS reported-loss
+  frequency floor, FBI IC3 BEC loss evidence, ACCC Australia small-business
+  scam and false-billing context, and explicit likely/stress frequency
+  assumptions.
 context:
   industry: financial_services
   country: AU
@@ -34,5 +36,5 @@ tags:
   - bec
   - fraud
 practitioner_notes:
-  good_for: Reviewing BEC impact evidence and frequency gaps.
-  not_good_for: Benchmark-grade BEC frequency or tail-loss decisions.
+  good_for: Reviewing BEC impact evidence, Australia reported-loss floors, and remaining frequency gaps.
+  not_good_for: Benchmark-grade BEC likely frequency or tail-loss decisions.

@@ -7,7 +7,9 @@ description: >
   Starter data-breach shard for an Australian mid-market financial-services
   organization. It includes an OAIC/ABS reported-notification floor, UK
   official breach/attack prevalence bridges for likely and stress frequency,
-  and global breach-cost anchors.
+  a local Australian medium-business cybercrime cost floor, a UK
+  financial-services breach-cost likely anchor, and an Australian privacy-law
+  penalty stress anchor.
 context:
   industry: financial_services
   country: AU
@@ -34,5 +36,5 @@ tags:
   - mid_market
   - data_breach
 practitioner_notes:
-  good_for: Running an assumption-free starter while reviewing local AU breach-prevalence gaps and cost-anchor selection.
-  not_good_for: Benchmark-grade Australia mid-market breach likelihood without accepting UK frequency bridges and global loss anchors.
+  good_for: Running an assumption-free starter while reviewing local AU breach-prevalence gaps, the UK industry cost bridge, and cost-anchor selection.
+  not_good_for: Public benchmark-grade Australia mid-market breach likelihood or total-loss claims without human review accepting UK frequency/cost bridges and a statutory penalty-cap stress anchor.

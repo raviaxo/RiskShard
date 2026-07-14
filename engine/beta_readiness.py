@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from engine.benchmark_program import build_benchmark_program_report
+from engine.clean_install import load_clean_install_proof, summarize_clean_install_proof
 from engine.evidence_quality import has_errors, validate_evidence_quality
 from engine.package_smoke import build_package_smoke_report
 from engine.readiness import build_readiness_dashboard
@@ -47,6 +48,7 @@ def build_beta_readiness_report(root=PROJECT_ROOT):
     )
     evidence_errors = [issue for issue in evidence_issues if issue["severity"] == "error"]
     package_entry_points = {item["name"]: item for item in package["entry_points"]}
+    clean_install = summarize_clean_install_proof(load_clean_install_proof(root / "release" / "clean_install_proof.json"))
 
     checks = [
         at_least_check(
@@ -119,10 +121,10 @@ def build_beta_readiness_report(root=PROJECT_ROOT):
             "BETA-ENG-03",
             "Clean install proof",
             "engineering",
-            False,
-            "not recorded",
+            clean_install["status"] == "pass",
+            clean_install["detail"],
             "Before beta, verify installation and entry points in a fresh virtual environment or CI job.",
-            "python3 -m venv /tmp/riskshard-beta-venv",
+            "python scripts/clean_install_proof.py --recreate",
         ),
         boolean_check(
             "BETA-REL-01",
@@ -244,7 +246,7 @@ def next_beta_moves(failed_checks, benchmark):
             "priority": "P2",
             "title": "Record clean-install verification",
             "why": "Beta users should be able to install and run commands outside this working checkout.",
-            "command": "python3 -m venv /tmp/riskshard-beta-venv",
+            "command": "python scripts/clean_install_proof.py --recreate",
         })
 
     for check in failed_checks:

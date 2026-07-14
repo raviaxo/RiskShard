@@ -3,18 +3,19 @@ metadata:
   version: "0.1"
   currency: AUD
   scenario_stage: governed_starter
-  benchmark_status: starter_with_source_backed_likely_loss
+  benchmark_status: starter_with_source_backed_floor_and_loss_anchors
   description: >
-    Starter Australia financial-services BEC shard. Frequency and impact bounds
-    remain estimated; calibration replaces likely impact with a source-backed
-    FBI IC3 complaint-average loss anchor converted to AUD.
+    Starter Australia financial-services BEC shard. Frequency likely and max
+    remain estimated, but calibration now uses an ACCC/ABS reported-loss
+    frequency floor, a source-backed FBI IC3 complaint-average likely loss
+    anchor converted to AUD, and an ACCC false-billing local stress envelope.
 
 frequency:
-  min: 0.04
+  min: 0.00010514176186819692
   likely: 0.12
   max: 0.25
 
 impact:
-  min: 25000
-  likely: 180000
-  max: 1500000
+  min: 33000
+  likely: 170000
+  max: 2000000

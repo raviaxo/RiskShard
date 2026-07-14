@@ -428,7 +428,7 @@ class CliSmokeTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertIn("Benchmark-Grade 30 Shard Program", result.stdout)
         self.assertIn("Targets: 30", result.stdout)
-        self.assertIn("benchmark-ready: 3", result.stdout)
+        self.assertIn("benchmark-ready: 5", result.stdout)
         self.assertIn("confidence>=medium=6/6", result.stdout)
 
         cohort_result = subprocess.run(
@@ -454,7 +454,11 @@ class CliSmokeTests(unittest.TestCase):
         self.assertIn("Seeded Evidence Upgrade Sprint A", sprint_result.stdout)
         self.assertIn("Acceptance criteria", sprint_result.stdout)
         self.assertIn(
-            "python scripts/riskshard_modules.py propose au_finance_data_breach_midmarket",
+            "python scripts/riskshard_modules.py propose jp_manufacturing_ransomware_midmarket",
+            sprint_result.stdout,
+        )
+        self.assertNotIn(
+            "python scripts/riskshard_modules.py propose de_industrial_ransomware_midmarket",
             sprint_result.stdout,
         )
 

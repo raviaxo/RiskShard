@@ -188,6 +188,12 @@ The beta gate is intentionally stricter than local run readiness. It checks
 module depth, benchmark-ready candidates, source/evidence health, package smoke,
 data-pack fingerprinting, minimum governance docs, and clean-install proof.
 
+Refresh the clean-install proof from a fresh local virtual environment with:
+
+```bash
+python scripts/clean_install_proof.py --recreate
+```
+
 Inspect the benchmark-grade 30 adoption program with:
 
 ```bash
@@ -363,7 +369,7 @@ Source-backed evidence records should include `source_id` values that map to `so
 
 Reviewed extraction records live in `extractions/` and document the fact pulled from a source before it becomes one or more structured evidence records.
 
-The starter threat library lives in `threat_library/`. Ransomware, data breach, and business email compromise now have Australia financial-services calibration profiles. Ransomware has six source-backed direct selectors and is ready for human benchmark review. Data breach has DBIR/OAIC context evidence, a denominator-derived reported-breach frequency floor, official UK breach/attack prevalence bridges for likely and stress frequency, and source-backed global impact anchors; it is assumption-free for selected direct parameters but still needs AU financial-services prevalence and stronger impact evidence before benchmark review. Business email compromise has FBI IC3 source-backed likely-loss evidence and ACCC Australia small-business loss context; frequency and stress loss bounds remain estimated until denominator-aware BEC evidence is reviewed.
+The starter threat library lives in `threat_library/`. Ransomware, data breach, and business email compromise now have Australia financial-services calibration profiles. Ransomware has six source-backed direct selectors and is ready for human benchmark review. Data breach has DBIR/OAIC context evidence, a denominator-derived reported-breach frequency floor, official UK breach/attack prevalence bridges for likely and stress frequency, an Australian medium-business cybercrime cost floor, an IBM UK financial-services likely-impact bridge, and an Australian Privacy Act penalty-cap stress anchor; it is now an automated benchmark-review candidate, but still needs human caveat review before public benchmark-grade claims. Business email compromise has FBI IC3 source-backed likely-loss evidence and ACCC Australia small-business loss context; frequency and stress loss bounds remain estimated until denominator-aware BEC evidence is reviewed.
 
 The first second-geography module is `us_finance_bec_midmarket`. It uses FBI IC3
 source-backed likely-loss evidence and keeps US BEC frequency/floor/tail
@@ -385,10 +391,15 @@ not a public benchmark-grade claim, because impact min/likely/max use primary
 global loss anchors converted with a Bank of Canada FX assumption until primary
 Canada-specific impact evidence is gathered.
 
-Germany industrial ransomware, Singapore finance BEC, Japan manufacturing
-ransomware, and France finance data breach are now governed starter modules.
-They are contribution scaffolds with transparent assumptions and global anchors,
-not benchmark-grade local models.
+Germany industrial ransomware is now an automated benchmark-review candidate.
+It uses Bitkom Germany ransomware frequency anchors, a Germany ransom-payment
+impact floor with explicit EUR/USD conversion, and Sophos manufacturing
+ransomware impact bridges. It is not a public benchmark-grade claim until human
+review accepts those caveats.
+
+Singapore finance BEC, Japan manufacturing ransomware, and France finance data
+breach remain governed starter modules. They are contribution scaffolds with
+transparent assumptions and global anchors, not benchmark-grade local models.
 
 ## Source Baseline
 

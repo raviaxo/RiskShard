@@ -25,8 +25,8 @@ def extraction_files(path):
     return [path]
 
 
-def load_extractions(path=EXTRACTIONS_DIR, schema_path=EXTRACTION_SCHEMA_PATH):
-    schema = load_schema(schema_path)
+def load_extractions(path=EXTRACTIONS_DIR, schema_path=None):
+    schema = load_schema(schema_path or inferred_extraction_schema_path(path))
     records = []
 
     for extraction_path in extraction_files(path):
@@ -38,6 +38,18 @@ def load_extractions(path=EXTRACTIONS_DIR, schema_path=EXTRACTION_SCHEMA_PATH):
             records.append(record)
 
     return records
+
+
+def inferred_extraction_schema_path(path):
+    path = Path(path)
+    if path.name == "extractions":
+        root = path.parent
+    elif path.parent.name == "extractions":
+        root = path.parent.parent
+    else:
+        root = PROJECT_ROOT
+    candidate = root / "schemas" / "extraction_schema.json"
+    return candidate if candidate.exists() else EXTRACTION_SCHEMA_PATH
 
 
 def validate_extractions(extractions_path, evidence_path, manifest_path):

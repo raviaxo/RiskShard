@@ -3,7 +3,13 @@ import sys
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_ROOT = Path(__file__).resolve().parents[1]
+if str(SCRIPT_ROOT) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_ROOT))
+
+from engine.project_paths import find_project_root  # noqa: E402
+
+PROJECT_ROOT = find_project_root(fallback=SCRIPT_ROOT)
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -69,6 +75,7 @@ def main(argv=None):
             trials=args.trials,
             dist_type=args.dist,
             seed=args.seed,
+            schema_path=PROJECT_ROOT / "schemas" / "shard_schema.json",
         )
     except Exception as exc:
         print(f"RiskShard failed: {exc}", file=sys.stderr)
@@ -77,13 +84,18 @@ def main(argv=None):
     for path, exc in run["failures"]:
         print(f"Failed: {path} -> {exc}", file=sys.stderr)
 
-    lec_path = plot_lec(run["aggregate"], "Portfolio")
+    lec_path = plot_lec(run["aggregate"], "Portfolio", output_dir=PROJECT_ROOT / "results")
     print(f"LEC saved: {lec_path}")
 
     print_full_report(run["shards"], run["portfolio"], run["metadata"])
 
     if args.export:
-        report_path = export_report(run["shards"], run["portfolio"], metadata=run["metadata"])
+        report_path = export_report(
+            run["shards"],
+            run["portfolio"],
+            output_dir=PROJECT_ROOT / "results",
+            metadata=run["metadata"],
+        )
         print(f"Exported: {report_path}")
 
     return 0

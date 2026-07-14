@@ -30,20 +30,19 @@ parameters:
 
   impact:
     min:
-      evidence_id: cyentia_iris_2022_typical_cyber_event_loss_usd
-      transform: currency_convert
+      evidence_id: business_qld_au_medium_business_cybercrime_cost_data_breach_floor_2025
+      transform: direct
       target_currency: AUD
-      round_to: 10000
-      rationale: Source-backed lower loss anchor from a global cyber-event loss benchmark; used conservatively until AU-specific breach cost floors exist.
+      round_to: 1000
+      rationale: Locally gathered Australian medium-business cybercrime cost floor used conservatively until data-breach-specific Australian cost-floor evidence exists.
     likely:
-      evidence_id: ibm_cost_data_breach_2025_global_average_cost_usd
+      evidence_id: ibm_uk_2025_financial_services_breach_average_cost_gbp_au_bridge
       transform: currency_convert
       target_currency: AUD
       round_to: 100000
-      rationale: Data-breach-specific global average cost benchmark, converted to AUD for the likely loss anchor.
+      rationale: Financial-services-specific UK average data-breach cost benchmark, converted to AUD as an industry bridge until Australian financial-services breach-cost evidence exists.
     max:
-      evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd
-      transform: currency_convert
+      evidence_id: privacy_act_1988_au_body_corporate_serious_privacy_penalty_cap_2026
+      transform: direct
       target_currency: AUD
-      round_to: 100000
-      rationale: Source-backed global extreme security-incident loss benchmark used as a stress loss anchor until data-breach-specific tail evidence exists.
+      rationale: Official Australian privacy-law penalty cap selected as a local regulatory stress anchor until data-breach-specific Australian loss-tail evidence exists.

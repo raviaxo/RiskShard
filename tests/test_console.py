@@ -124,7 +124,7 @@ class ConsoleTests(unittest.TestCase):
 
         beta_output = self.command("beta")
         self.assertIn("RiskShard beta readiness", beta_output)
-        self.assertIn("Gate: not_beta_ready", beta_output)
+        self.assertIn("Gate: beta_ready", beta_output)
         self.assertIn("Deferred until beta", beta_output)
 
         pack_output = self.command("pack")
