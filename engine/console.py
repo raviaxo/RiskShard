@@ -23,6 +23,7 @@ from engine.evidence_packs import (
     format_evidence_pack_detail,
     format_evidence_pack_registry,
 )
+from engine.executive_report import build_executive_report, format_executive_report_markdown
 from engine.experience import analyze_gaps, format_gap_analysis, format_top_risks, rank_top_risks
 from engine.experience import format_calibration_proposal, propose_calibration
 from engine.fair_calc import export_report, load_and_validate, plot_lec, run_portfolio
@@ -142,6 +143,7 @@ class RiskShardConsole(cmd.Cmd):
         self.write("[Finding]\n")
         self.write("  explain               Explain the latest calibration or run.\n")
         self.write("  report json           Export the latest simulation report.\n")
+        self.write("  report exec           Export a one-page board-ready executive summary.\n")
         self.write("\n")
         self.write("[Improve Model]\n")
         self.write("  enhance               Show the contribution path for improving evidence and calibration.\n")
@@ -203,7 +205,7 @@ class RiskShardConsole(cmd.Cmd):
             "assumptions, ran a Monte Carlo loss simulation, exported a JSON report to "
             "results/, and identified the next evidence gap.\n"
         )
-        self.write("Consume this shard : explain; report json\n")
+        self.write("Consume this shard : explain; report json; report exec (board summary)\n")
         self.write("Improve this shard : show gaps; propose; enhance\n")
         self.write("Start over         : start over\n")
         return None
@@ -496,7 +498,7 @@ class RiskShardConsole(cmd.Cmd):
         return None
 
     def do_report(self, arg):
-        """report json|markdown - Write or show latest report artifacts."""
+        """report json|markdown|exec - Write or show latest report artifacts."""
         kind = arg.strip().lower() or "json"
         if kind == "json":
             if not self.last_run:
@@ -515,8 +517,35 @@ class RiskShardConsole(cmd.Cmd):
                 self.write("No Markdown calibration report available. Run 'calibrate' first.\n")
                 return None
             self.write(f"Calibration Markdown: {relative_to_root(path, self.root)}\n")
+        elif kind == "exec":
+            self.write_executive_report()
         else:
-            self.write("Usage: report json|markdown\n")
+            self.write("Usage: report json|markdown|exec\n")
+        return None
+
+    def write_executive_report(self):
+        if not self.last_run:
+            self.write("No simulation run available. Run 'run' first.\n")
+            return None
+        module = self.current_module()
+        if module is None:
+            self.write(
+                "No Risk Shard selected. Select one with 'use <risk-shard-id>' and "
+                "'run' before 'report exec'.\n"
+            )
+            return None
+        registry = build_evidence_pack_registry(self.root, module_id=module["id"])
+        pack = registry["packs"][0] if registry["packs"] else {}
+        report = build_executive_report(self.last_run, module, pack, root=self.root)
+        markdown = format_executive_report_markdown(report)
+        output_path = self.root / "results" / f"exec_report_{module['id']}.md"
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(markdown, encoding="utf-8")
+        self.last_paths["executive_markdown"] = output_path
+        self.write(f"Executive report: {relative_to_root(output_path, self.root)}\n")
+        self.write(f"Bottom line: average {report['currency'] or ''} "
+                   f"{round(report['mean']):,}/yr, P95 {round(report['p95']):,}, "
+                   f"P99 {round(report['p99']):,}.\n")
         return None
 
     def do_toprisks(self, arg):

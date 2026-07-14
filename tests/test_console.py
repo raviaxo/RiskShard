@@ -150,6 +150,30 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn("Unknown Risk Shard", output)
         self.assertNotIn("Traceback", output)
 
+    def test_report_exec_writes_board_ready_markdown(self):
+        self.command("use gb_finance_data_breach_midmarket")
+        self.command("run")
+        output = self.command("report exec")
+
+        self.assertIn("Executive report:", output)
+        report_path = self.console.last_paths["executive_markdown"]
+        self.assertTrue(report_path.exists())
+
+        markdown = report_path.read_text(encoding="utf-8")
+        self.assertIn("# Executive Risk Summary", markdown)
+        self.assertIn("## Bottom line", markdown)
+        self.assertIn("Currency: GBP", markdown)
+        self.assertIn("P95", markdown)
+        self.assertIn("Decision the board is being asked to support", markdown)
+        # Honest trust framing must survive.
+        self.assertIn("not a human-approved benchmark", markdown)
+        # Shareable artifact: no absolute local paths leak in.
+        self.assertNotIn("/Users/", markdown)
+
+    def test_report_exec_requires_run_and_selected_shard(self):
+        no_run = self.command("report exec")
+        self.assertIn("No simulation run available", no_run)
+
     def test_feed_governance_is_available_from_console(self):
         feeds_output = self.command("feeds")
         self.assertIn("Data feed governance", feeds_output)

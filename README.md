@@ -145,7 +145,13 @@ riskshard(gb_finance_data_breach_midmarket)> show evidence
 riskshard(gb_finance_data_breach_midmarket)> explain
 riskshard(gb_finance_data_breach_midmarket)> run
 riskshard(gb_finance_data_breach_midmarket)> report json
+riskshard(gb_finance_data_breach_midmarket)> report exec
 ```
+
+`report exec` writes a one-page, board-ready Markdown summary to `results/` with
+the modeled loss range in plain language, a confidence rating, the source-backed
+trust boundary, honest caveats, and the accept/mitigate/gather-evidence/localize
+decision options. It is decision support, not assurance.
 
 The console keeps all artifacts local and reviewable in `results/`. See [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md).
 
