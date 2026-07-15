@@ -3,7 +3,7 @@
   "fetched_count": 23,
   "generated_at": "2026-07-15T01:43:20Z",
   "manifest_version": "1.0",
-  "source_count": 23,
+  "source_count": 24,
   "sources": [
     {
       "access_mode": "public_pdf",
@@ -544,6 +544,29 @@
       "title": "IBM Report: Canadians' Data Security Under Increased Threat, While Breach Costs Surge",
       "url": "https://canada.newsroom.ibm.com/2025-07-30-IBM-Report-Canadians-Data-Security-Under-Increased-Threat,-While-Breach-Costs-Surge",
       "usage_notes": "Primary IBM Canada newsroom release for the 2025 Cost of a Data Breach report. Provides the Canada national average breach cost (CA$6.98M in 2025, up from CA$6.32M in 2024) and a Canada financial-sector figure (CA$9.97M). The national average is all-sector and enterprise-weighted, so treat it as a Canada-specific likely-cost anchor with a mid-market applicability caveat, not a mid-market-specific loss table. It replaces the low-confidence ITPro secondary bridge for the Canada likely-impact anchor.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 67164,
+      "content_type": "text/html; charset=UTF-8",
+      "final_url": "https://fr.newsroom.ibm.com/Rapport-IBM-13-des-organisations-ont-signale-des-violations-de-modeles-ou-dapplications-dIA,-dont-97-ont-declare-ne-pas-disposer-de-controles-dacces-a-lIA-appropries",
+      "gathered_at": "2026-07-15T16:47:17Z",
+      "http_status": 200,
+      "id": "ibm_france_cost_data_breach_2025",
+      "intended_use": [
+        "France data breach loss magnitude",
+        "France average breach cost",
+        "France financial-sector breach cost context"
+      ],
+      "publication_date": "2025-07-30",
+      "publisher": "IBM",
+      "raw_path": "sources/raw/ibm_france_cost_data_breach_2025.html",
+      "sha256": "fd9dc9480b9c4cbeb528ff839ecc29ca51e9c9eff3d7cffeefc6dfc2e00155d8",
+      "source_type": "data_breach_cost_research",
+      "status": "fetched",
+      "title": "Rapport IBM 2025 : co\u00fbt d'une violation de donn\u00e9es en France",
+      "url": "https://fr.newsroom.ibm.com/Rapport-IBM-13-des-organisations-ont-signale-des-violations-de-modeles-ou-dapplications-dIA,-dont-97-ont-declare-ne-pas-disposer-de-controles-dacces-a-lIA-appropries",
+      "usage_notes": "Primary IBM France newsroom release for the 2025 Cost of a Data Breach report. States the France national average breach cost (EUR 3.59M in 2025, down ~7% from 2024) and a France financial-services sector figure (EUR 4.65M), based on 34 French organizations breached between March 2024 and February 2025. The national average is all-sector and enterprise-weighted, so treat it as a France-specific likely-cost anchor with a mid-market applicability caveat, not a mid-market-specific loss table. It replaces the global IBM average bridge for the France likely-impact anchor. EUR values normalize to USD via the reviewed ECB EUR/USD assumption in calibrations/fx_rates.yaml.\n"
     }
   ]
 }

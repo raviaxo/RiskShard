@@ -89,6 +89,31 @@ sources:
       applicability caveat, not a mid-market-specific loss table. It replaces the
       low-confidence ITPro secondary bridge for the Canada likely-impact anchor.
 
+  - id: ibm_france_cost_data_breach_2025
+    title: "Rapport IBM 2025 : coût d'une violation de données en France"
+    publisher: IBM
+    source_type: data_breach_cost_research
+    url: "https://fr.newsroom.ibm.com/Rapport-IBM-13-des-organisations-ont-signale-des-violations-de-modeles-ou-dapplications-dIA,-dont-97-ont-declare-ne-pas-disposer-de-controles-dacces-a-lIA-appropries"
+    publication_date: "2025-07-30"
+    access_mode: public_html
+    trust_tier: high
+    refresh_interval_days: 365
+    intended_use:
+      - France data breach loss magnitude
+      - France average breach cost
+      - France financial-sector breach cost context
+    usage_notes: >
+      Primary IBM France newsroom release for the 2025 Cost of a Data Breach
+      report. States the France national average breach cost (EUR 3.59M in
+      2025, down ~7% from 2024) and a France financial-services sector figure
+      (EUR 4.65M), based on 34 French organizations breached between March 2024
+      and February 2025. The national average is all-sector and
+      enterprise-weighted, so treat it as a France-specific likely-cost anchor
+      with a mid-market applicability caveat, not a mid-market-specific loss
+      table. It replaces the global IBM average bridge for the France
+      likely-impact anchor. EUR values normalize to USD via the reviewed ECB
+      EUR/USD assumption in calibrations/fx_rates.yaml.
+
   - id: opc_annual_report_2025_2026
     title: 2025-2026 Annual Report to Parliament on the Privacy Act and PIPEDA
     publisher: Office of the Privacy Commissioner of Canada

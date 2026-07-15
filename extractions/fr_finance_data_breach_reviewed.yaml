@@ -15,21 +15,27 @@ extractions:
     evidence_record_ids:
       - cyentia_iris_2022_typical_cyber_event_loss_usd_fr_finance_context
 
-  - id: ibm_cost_data_breach_2025_global_average_cost_usd_fr_context
-    source_id: ibm_cost_data_breach_2025
-    source_name: IBM Cost of a Data Breach Report 2025
-    source_url_or_citation: https://www.ibm.com/reports/data-breach
+  - id: ibm_france_2025_national_average_breach_cost_eur
+    source_id: ibm_france_cost_data_breach_2025
+    source_name: "Rapport IBM 2025 : coût d'une violation de données en France"
+    source_url_or_citation: "https://fr.newsroom.ibm.com/Rapport-IBM-13-des-organisations-ont-signale-des-violations-de-modeles-ou-dapplications-dIA,-dont-97-ont-declare-ne-pas-disposer-de-controles-dacces-a-lIA-appropries"
     publication_date: "2025-07-30"
-    extraction_date: "2026-07-13"
-    citation_detail: Public report page hero metric.
-    fact: IBM reported a USD 4.4 million global average cost of a data breach for the 2025 report.
-    value: 4400000
+    extraction_date: "2026-07-15"
+    citation_detail: >
+      "En 2025, le coût moyen d'une violation de données en France a atteint
+      3,59 millions d'euros." The release also reports the France
+      financial-services sector figure ("Les services financiers (coût moyen de
+      4,65 millions d'€)") and states it is "basé sur une analyse approfondie de
+      violations de données réelles subies par 34 organisations entre mars 2024
+      et février 2025."
+    fact: IBM France reported a EUR 3.59 million national average cost of a data breach for 2025, and a France financial-services sector average of EUR 4.65 million, based on 34 French organizations breached between March 2024 and February 2025.
+    value: 3590000
     unit: currency
-    currency: USD
-    normalization_notes: Stored directly in USD as a global data-breach likely-loss bridge.
-    limitations: Global average across studied breached organizations; not France-specific or financial-services-specific.
+    currency: EUR
+    normalization_notes: Stored in EUR as reported by the primary IBM France release; normalized to the USD scenario currency via the reviewed ECB EUR/USD assumption at calibration time.
+    limitations: All-sector France national average, not mid-market- or financial-services-specific; based on only 34 French organizations, so the sector sub-figure (EUR 4.65M) rests on a small sample. IBM's sample skews larger organizations, so treat the national average as an upper-leaning mid-market likely anchor.
     evidence_record_ids:
-      - ibm_cost_data_breach_2025_global_average_cost_usd_fr_context
+      - ibm_france_2025_national_average_breach_cost_eur
 
   - id: cyentia_iris_2025_extreme_security_incident_loss_usd_fr_finance_context
     source_id: cyentia_iris_2025

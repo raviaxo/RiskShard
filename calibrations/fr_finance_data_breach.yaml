@@ -3,11 +3,15 @@ metadata:
   scenario_name: France Finance Data Breach Midmarket - Calibrated Draft
   version: "0.1"
   notes: >
-    Starter calibration profile for a France mid-market financial-services
-    data-breach shard. It is intentionally not benchmark-grade: frequency
-    values are explicit estimates, while impact values use global cyber and
-    data-breach loss anchors until France privacy, cyber-agency, or
-    financial-sector evidence is reviewed.
+    Calibration profile for a France mid-market financial-services data-breach
+    shard. It is not yet benchmark-grade: frequency values remain explicit
+    estimates pending a France prevalence-percentage source (CNIL notification
+    counts and Eurostat EU-level rates are not a France financial-services
+    annual probability). Impact.likely now uses the primary IBM France 2025
+    national average breach cost (EUR 3.59M), converted to USD via the reviewed
+    ECB EUR/USD assumption; impact.min/max still use global cyber and
+    security-incident loss bridges until France breach-cost floor and tail
+    evidence is reviewed.
 
 target_currency: USD
 
@@ -34,11 +38,11 @@ parameters:
       round_to: 10000
       rationale: Source-backed global lower loss anchor until France breach-cost floor evidence is reviewed.
     likely:
-      evidence_id: ibm_cost_data_breach_2025_global_average_cost_usd_fr_context
-      transform: direct
+      evidence_id: ibm_france_2025_national_average_breach_cost_eur
+      transform: currency_convert
       target_currency: USD
       round_to: 100000
-      rationale: Source-backed global data-breach average cost bridge until France-specific financial-services breach-cost evidence is reviewed.
+      rationale: Primary IBM France 2025 national average breach cost (EUR 3.59M), converted from EUR to USD via the reviewed ECB EUR/USD assumption, replacing the global IBM average bridge. All-sector, enterprise-weighted France average used as an upper-leaning mid-market likely anchor.
     max:
       evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd_fr_finance_context
       transform: direct
