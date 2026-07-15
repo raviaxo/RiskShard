@@ -67,6 +67,28 @@ sources:
       IBM page. Replace with primary IBM, insurer, regulator, or Canadian
       claims evidence before benchmark-grade claims.
 
+  - id: ibm_canada_cost_data_breach_2025
+    title: "IBM Report: Canadians' Data Security Under Increased Threat, While Breach Costs Surge"
+    publisher: IBM
+    source_type: data_breach_cost_research
+    url: "https://canada.newsroom.ibm.com/2025-07-30-IBM-Report-Canadians-Data-Security-Under-Increased-Threat,-While-Breach-Costs-Surge"
+    publication_date: "2025-07-30"
+    access_mode: public_html
+    trust_tier: high
+    refresh_interval_days: 365
+    intended_use:
+      - Canada data breach loss magnitude
+      - Canada average breach cost
+      - Canada financial-sector breach cost context
+    usage_notes: >
+      Primary IBM Canada newsroom release for the 2025 Cost of a Data Breach
+      report. Provides the Canada national average breach cost (CA$6.98M in
+      2025, up from CA$6.32M in 2024) and a Canada financial-sector figure
+      (CA$9.97M). The national average is all-sector and enterprise-weighted, so
+      treat it as a Canada-specific likely-cost anchor with a mid-market
+      applicability caveat, not a mid-market-specific loss table. It replaces the
+      low-confidence ITPro secondary bridge for the Canada likely-impact anchor.
+
   - id: opc_annual_report_2025_2026
     title: 2025-2026 Annual Report to Parliament on the Privacy Act and PIPEDA
     publisher: Office of the Privacy Commissioner of Canada

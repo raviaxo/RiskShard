@@ -94,3 +94,19 @@ extractions:
     limitations: Global security-incident benchmark, not Canada-specific, data-breach-only, financial-services-specific, or a formal percentile for this scenario.
     evidence_record_ids:
       - cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context
+
+  - id: ibm_canada_2025_average_breach_cost_cad
+    source_id: ibm_canada_cost_data_breach_2025
+    source_name: IBM Canada newsroom release, Cost of a Data Breach Report 2025
+    source_url_or_citation: "https://canada.newsroom.ibm.com/2025-07-30-IBM-Report-Canadians-Data-Security-Under-Increased-Threat,-While-Breach-Costs-Surge"
+    publication_date: "2025-07-30"
+    extraction_date: "2026-07-14"
+    citation_detail: Release reports Canadian businesses are losing CA$6.98 million on average to data breaches, a 10.4% increase from CA$6.32 million in 2024; it separately reports the financial sector leads breach costs at CA$9.97 million in 2025, up 7.4% from CA$9.28 million in 2024.
+    fact: IBM reported that Canadian businesses lost an average of CA$6.98 million per data breach in 2025, up from CA$6.32 million in 2024, with the financial sector highest at CA$9.97 million.
+    value: 6980000
+    unit: currency
+    currency: CAD
+    normalization_notes: Stored in source currency CAD, so no FX conversion is needed. Selected as the Canada-specific primary-source likely-impact anchor, replacing the ITPro secondary and the global IBM bridge. The all-sector national average is used rather than the CA$9.97M financial-sector figure because the sector figure is enterprise-weighted and would overstate a mid-market shard; the sector figure is retained here as documented upside context.
+    limitations: Primary IBM Canada release, but the CA$6.98M value is an all-sector national average across studied breached organizations, not mid-market-specific or financial-services-specific. IBM's sample skews toward larger organizations, so this is an upper-leaning likely anchor for a mid-market shard.
+    evidence_record_ids:
+      - ibm_canada_2025_average_breach_cost_cad
