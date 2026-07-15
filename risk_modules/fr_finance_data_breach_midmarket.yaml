@@ -5,8 +5,10 @@ status: governed_starter
 threat: data_breach
 description: >
   Governed starter data-breach shard for a France mid-market financial-services
-  organization. It uses global impact anchors and keeps France-local frequency
-  and financial-sector loss gaps explicit for contributors.
+  organization. Impact.likely uses the primary IBM France 2025 national average
+  breach cost (converted from EUR to USD); impact.min/max remain global loss
+  bridges and frequency stays estimated, so those gaps are kept explicit for
+  contributors.
 context:
   industry: financial_services
   country: FR
@@ -35,5 +37,5 @@ tags:
   - data_breach
   - privacy_breach
 practitioner_notes:
-  good_for: Testing France finance data-breach contribution workflow and running a transparent starter scenario with global impact anchors.
-  not_good_for: France-local benchmark claims until CNIL, ANSSI, Banque de France, insurer, or sector evidence replaces estimated frequencies and global loss bridges.
+  good_for: Testing France finance data-breach contribution workflow and running a transparent starter scenario with a France-specific likely-loss anchor and global min/max bridges.
+  not_good_for: France-local benchmark claims until a France prevalence-percentage source replaces estimated frequencies and France-specific floor/tail evidence replaces the global min/max loss bridges.

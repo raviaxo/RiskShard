@@ -86,27 +86,27 @@ records:
       company_size_bands: [all]
       threats: [all, data_breach]
 
-  - id: ibm_cost_data_breach_2025_global_average_cost_usd_fr_context
-    title: Global average cost of a data breach for France finance starter
+  - id: ibm_france_2025_national_average_breach_cost_eur
+    title: France national average cost of a data breach (IBM 2025)
     parameter: impact.likely
-    value: 4400000
+    value: 3590000
     unit: currency
-    currency: USD
-    source_id: ibm_cost_data_breach_2025
-    source_name: IBM Cost of a Data Breach Report 2025
+    currency: EUR
+    source_id: ibm_france_cost_data_breach_2025
+    source_name: "Rapport IBM 2025 : coût d'une violation de données en France"
     source_type: data_breach_cost_research
-    source_url_or_citation: https://www.ibm.com/reports/data-breach
+    source_url_or_citation: "https://fr.newsroom.ibm.com/Rapport-IBM-13-des-organisations-ont-signale-des-violations-de-modeles-ou-dapplications-dIA,-dont-97-ont-declare-ne-pas-disposer-de-controles-dacces-a-lIA-appropries"
     publication_date: "2025-07-30"
-    extraction_date: "2026-07-13"
-    citation_detail: Public report page hero metric; global average cost of a data breach is USD 4.4M.
-    extraction_notes: Reused the governed IBM global average breach-cost anchor for the France finance starter.
-    normalization_notes: Stored directly in USD and selected as a global data-breach likely-loss bridge until France-specific breach-cost evidence is reviewed.
-    limitations: Global average across studied breached organizations; not France-specific, financial-services-specific, or size-band-specific.
+    extraction_date: "2026-07-15"
+    citation_detail: "Primary IBM France release; 2025 France national average cost of a data breach is EUR 3.59M, with a financial-services sector average of EUR 4.65M, from 34 French organizations (March 2024-February 2025)."
+    extraction_notes: Replaced the global IBM average bridge with the primary IBM France national average, reported directly in EUR, for the France finance likely-impact anchor.
+    normalization_notes: Stored in EUR as reported; converted to the USD scenario currency via the reviewed ECB EUR/USD assumption in calibrations/fx_rates.yaml.
+    limitations: All-sector France national average, not mid-market- or financial-services-specific; based on 34 French organizations and enterprise-weighted, so treat as an upper-leaning mid-market likely anchor. The France financial-services sub-figure (EUR 4.65M) rests on a small sample and is recorded as sector context, not the selected anchor.
     confidence: medium
     evidence_type: source_backed
     applicability:
       industries: [all]
-      countries: [global]
+      countries: [FR]
       company_size_bands: [all]
       threats: [data_breach]
 
