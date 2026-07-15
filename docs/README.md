@@ -11,6 +11,7 @@ Start here when you want the current truth:
 - [BENCHMARK_REVIEW_LEDGER.md](BENCHMARK_REVIEW_LEDGER.md): human review ledger for automated benchmark candidates and release caveats.
 - [SEEDED_EVIDENCE_UPGRADE_QUEUE.md](SEEDED_EVIDENCE_UPGRADE_QUEUE.md): ordered evidence-upgrade queue for seeded modules that are not yet benchmark-ready.
 - [CONTRIBUTING.md](CONTRIBUTING.md): source, extraction, evidence, calibration, and review checklist.
+- [GOLDEN_CONTRIBUTOR_EXAMPLE.md](GOLDEN_CONTRIBUTOR_EXAMPLE.md): one complete accepted contribution, source to preflight, to copy.
 - [BENCHMARK_CONTRIBUTOR_WORKFLOW.md](BENCHMARK_CONTRIBUTOR_WORKFLOW.md): benchmark target, content-pack, preflight, and evidence-pack export workflow.
 - [CONSOLE_EXPERIENCE.md](CONSOLE_EXPERIENCE.md): intended local console workflow and scope guardrails.
 - [GLOBAL_READINESS_ROADMAP.md](GLOBAL_READINESS_ROADMAP.md): what global coverage and governance still require.

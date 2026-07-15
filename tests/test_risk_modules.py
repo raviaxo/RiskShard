@@ -92,7 +92,9 @@ class RiskModuleTests(unittest.TestCase):
 
         canada = build_evidence_pack_registry(ROOT, "ca_finance_data_breach_midmarket")["packs"][0]
         self.assertEqual(canada["pack_confidence"], "medium")
-        self.assertEqual(canada["evidence_type_counts"]["source_backed"], 7)
+        # 8 source-backed after the primary IBM Canada likely-impact record was
+        # added alongside the retained global bridge and ITPro secondary.
+        self.assertEqual(canada["evidence_type_counts"]["source_backed"], 8)
         self.assertEqual(canada["evidence_type_counts"]["estimated"], 1)
 
     def test_evidence_pack_artifact_fingerprints_module_files(self):

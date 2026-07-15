@@ -164,6 +164,30 @@ records:
       company_size_bands: [all]
       threats: [data_breach]
 
+  - id: ibm_canada_2025_average_breach_cost_cad
+    title: Canada national average cost of a data breach from primary IBM release
+    parameter: impact.likely
+    value: 6980000
+    unit: currency
+    currency: CAD
+    source_id: ibm_canada_cost_data_breach_2025
+    source_name: IBM Canada newsroom release, Cost of a Data Breach Report 2025
+    source_type: data_breach_cost_research
+    source_url_or_citation: "https://canada.newsroom.ibm.com/2025-07-30-IBM-Report-Canadians-Data-Security-Under-Increased-Threat,-While-Breach-Costs-Surge"
+    publication_date: "2025-07-30"
+    extraction_date: "2026-07-14"
+    citation_detail: Release reports Canadian businesses are losing CA$6.98 million on average to data breaches, up 10.4% from CA$6.32 million in 2024; the financial sector leads at CA$9.97 million in 2025.
+    extraction_notes: Primary IBM Canada figure in CAD, replacing the low-confidence ITPro secondary and the global IBM bridge for the Canada likely-impact anchor. The all-sector national average is selected over the CA$9.97M financial-sector figure, which is enterprise-weighted and would overstate a mid-market shard.
+    normalization_notes: Stored in source currency CAD; no FX conversion is required for a CAD-target Canada scenario.
+    limitations: Primary IBM Canada release, but an all-sector national average across studied breached organizations, not mid-market-specific or financial-services-specific; IBM's sample skews toward larger organizations, so this is an upper-leaning mid-market likely anchor.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [CA]
+      company_size_bands: [all]
+      threats: [data_breach]
+
   - id: cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context
     title: Extreme reported security-incident loss for Canada starter
     parameter: impact.max

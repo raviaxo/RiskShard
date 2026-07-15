@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 22,
-  "generated_at": "2026-07-14T13:55:46Z",
+  "fetched_count": 23,
+  "generated_at": "2026-07-15T01:43:20Z",
   "manifest_version": "1.0",
-  "source_count": 22,
+  "source_count": 23,
   "sources": [
     {
       "access_mode": "public_pdf",
@@ -521,6 +521,29 @@
       "title": "2025 Cyber Threat Situation Statistics Data",
       "url": "https://www.npa.go.jp/publications/statistics/cybersecurity/data/R7/R07_jousei_data.xlsx",
       "usage_notes": "Use as official Japan law-enforcement statistics for reported ransomware damage. Preserve limitations that report counts are not organization-level annual probabilities and restoration/investigation cost bands are not full total-loss distributions.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 46901,
+      "content_type": "text/html; charset=UTF-8",
+      "final_url": "https://canada.newsroom.ibm.com/2025-07-30-IBM-Report-Canadians-Data-Security-Under-Increased-Threat,-While-Breach-Costs-Surge",
+      "gathered_at": "2026-07-15T01:43:20Z",
+      "http_status": 200,
+      "id": "ibm_canada_cost_data_breach_2025",
+      "intended_use": [
+        "Canada data breach loss magnitude",
+        "Canada average breach cost",
+        "Canada financial-sector breach cost context"
+      ],
+      "publication_date": "2025-07-30",
+      "publisher": "IBM",
+      "raw_path": "sources/raw/ibm_canada_cost_data_breach_2025.html",
+      "sha256": "4de88e86a5f9a358415a4822c229e670da13b7268821a6a6e8cc951c81085e42",
+      "source_type": "data_breach_cost_research",
+      "status": "fetched",
+      "title": "IBM Report: Canadians' Data Security Under Increased Threat, While Breach Costs Surge",
+      "url": "https://canada.newsroom.ibm.com/2025-07-30-IBM-Report-Canadians-Data-Security-Under-Increased-Threat,-While-Breach-Costs-Surge",
+      "usage_notes": "Primary IBM Canada newsroom release for the 2025 Cost of a Data Breach report. Provides the Canada national average breach cost (CA$6.98M in 2025, up from CA$6.32M in 2024) and a Canada financial-sector figure (CA$9.97M). The national average is all-sector and enterprise-weighted, so treat it as a Canada-specific likely-cost anchor with a mid-market applicability caveat, not a mid-market-specific loss table. It replaces the low-confidence ITPro secondary bridge for the Canada likely-impact anchor.\n"
     }
   ]
 }

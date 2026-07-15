@@ -6,11 +6,13 @@ metadata:
     Starter calibration profile for a Canadian mid-market financial-services
     data-breach shard. It is an automated benchmark-review candidate, not a
     silently certified benchmark. Frequency min/likely/max use Canadian
-    OPC/CIRA prevalence anchors. Impact min/likely/max use primary governed
-    global USD loss anchors converted to CAD, because the public primary IBM
-    page exposes the global data-breach cost but not the Canada regional row.
-    Human review must accept the global impact bridge caveat before any public
-    benchmark-grade claim.
+    OPC/CIRA prevalence anchors. Impact likely now uses the primary IBM Canada
+    national average breach cost (CA$6.98M, 2025), reported directly in CAD.
+    Impact min/max still use primary governed global USD loss anchors converted
+    to CAD until Canada-specific breach-response and tail-loss evidence is
+    reviewed. Human review must accept that the likely anchor is an all-sector,
+    enterprise-weighted Canada average (upper-leaning for mid-market) and that
+    min/max remain global bridges, before any public benchmark-grade claim.
 
 target_currency: CAD
 
@@ -37,11 +39,10 @@ parameters:
       round_to: 10000
       rationale: Source-backed global lower loss anchor converted to CAD until Canadian breach response-cost evidence is reviewed.
     likely:
-      evidence_id: ibm_cost_data_breach_2025_global_average_cost_usd_ca_context
-      transform: currency_convert
-      target_currency: CAD
-      round_to: 100000
-      rationale: Primary IBM global data-breach average cost converted to CAD; selected over secondary Canada coverage for automated benchmark-review source quality.
+      evidence_id: ibm_canada_2025_average_breach_cost_cad
+      transform: direct
+      round_to: 10000
+      rationale: Primary IBM Canada national average breach cost (CA$6.98M, 2025), already reported in CAD, replacing the global IBM bridge and the low-confidence ITPro secondary. All-sector and enterprise-weighted, so treated as an upper-leaning mid-market likely anchor rather than a mid-market-specific figure.
     max:
       evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context
       transform: currency_convert

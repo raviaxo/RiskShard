@@ -6,9 +6,10 @@ threat: data_breach
 description: >
   Automated benchmark-review candidate data-breach shard for a Canadian
   mid-market financial-services organization. All six direct parameters are
-  source-backed and extraction-mapped, but impact values still rely on primary
-  global loss anchors converted to CAD until Canada-specific primary impact
-  evidence is gathered.
+  source-backed and extraction-mapped. Impact likely now uses a primary IBM
+  Canada national average breach cost reported directly in CAD; impact min and
+  max still rely on primary global loss anchors converted to CAD until
+  Canada-specific primary min/tail impact evidence is gathered.
 context:
   industry: financial_services
   country: CA
