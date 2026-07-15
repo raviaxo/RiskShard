@@ -1,16 +1,51 @@
 # RiskShard
 
-RiskShard is an open-source engine for quantitative cyber risk analysis. It turns machine-readable risk scenarios into financial loss simulations so security, GRC, and risk teams can move from "high / medium / low" ratings toward defensible dollar-based decisions.
+**The open, evidence-governed computation layer for cyber risk quantification.**
 
-The current project is an early but functional Python prototype. It can run Monte Carlo simulations against YAML-defined scenarios, aggregate multiple scenarios into a portfolio view, generate summary statistics, export JSON reports, and produce Loss Exceedance Curve charts.
+RiskShard turns machine-readable "risk shards" into financial loss simulations, so
+security, GRC, and risk teams can move from "high / medium / low" ratings to
+defensible, dollar-based decisions — with every number traceable to a reviewed
+public source. Think of it as a Metasploit-style module library for risk
+quantification: pick a shard, see how much to trust it, run it, improve it.
 
-For the current publishable-version bar, phase requirements, community operating model, and strategic change-control rules, start with [docs/PUBLISHABLE_REQUIREMENTS.md](docs/PUBLISHABLE_REQUIREMENTS.md).
+## The question RiskShard answers
 
-## Product Thesis
+> Given my geography, industry, company size, and threat concern: which risk
+> scenarios apply, how much should I trust them, what loss range do they imply,
+> and how do I improve the data?
+
+You select a Risk Shard (say, a UK financial-services data breach), inspect which
+parameters are source-backed versus assumptions, run a Monte Carlo loss
+simulation, get a board-ready summary, and see the next evidence gap to close.
+
+## Try it in one command
+
+```bash
+git clone https://github.com/raviaxo/RiskShard.git && cd RiskShard
+python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt   # Python 3.9+
+python scripts/riskshard_console.py
+riskshard> demo
+```
+
+`demo` runs the whole first-run path automatically on a real shard: select ->
+inspect the trust boundary -> simulate -> explain -> export a report -> show the
+next gap. Every step is a real command you can also type yourself.
+
+## Honest status
+
+RiskShard is a working practitioner beta, not a finished product. Shards are
+labeled by maturity: `governed_starter`, automated `benchmark_candidate`, and —
+only after a recorded human review decision — benchmark-grade. "Automated
+benchmark-ready" is never the same as "human-approved benchmark-grade," and the
+distinction stays visible everywhere results appear. For the phase bar, launch
+model, and strategic change-control rules, see
+[docs/PUBLISHABLE_REQUIREMENTS.md](docs/PUBLISHABLE_REQUIREMENTS.md).
+
+## Product thesis
 
 RiskShard aims to become a shared computation layer for cyber risk:
 
-- Scenarios are stored as YAML "risk shards" that can be reviewed, versioned, reused, and generated.
+- Scenarios are YAML "risk shards" that can be reviewed, versioned, reused, and generated.
 - Frequency and impact are modeled as distributions instead of fixed scores.
 - Outputs focus on decision metrics such as expected loss, P95, and P99.
 - The long-term direction is a library of defensible, benchmarked risk parameters that can be consumed by humans, applications, and AI agents.
@@ -65,37 +100,9 @@ results/                 Ignored local reports and LEC charts
 docs/                    Vision, roadmap, architecture, and strategy notes
 ```
 
-## Quick Start
+## Run The Full Portfolio
 
-```bash
-git clone https://github.com/raviaxo/RiskShard.git
-cd RiskShard
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-RiskShard requires Python 3.9 or newer.
-
-### Try this first
-
-The fastest way to see value is the guided demo. Start the console and run one
-command:
-
-```bash
-python scripts/riskshard_console.py
-riskshard> demo
-```
-
-`demo` runs the canonical first-run path end to end on a real UK
-financial-services data-breach shard: it selects the shard, shows which
-parameters are source-backed versus assumptions, simulates financial loss,
-explains the result, exports a JSON report to `results/`, and shows the next
-evidence gap. Every step it runs is a real command you can also type yourself
-(run `workflow` to see them). Point it at another shard with
-`demo <risk-shard-id>`.
-
-### Run the full portfolio
+Beyond the guided `demo` above, you can run every scenario at once:
 
 ```bash
 python scripts/fair_calc.py scenarios --trials 10000 --dist pert --seed 42 --export
