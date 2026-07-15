@@ -41,6 +41,44 @@ distinction stays visible everywhere results appear. For the phase bar, launch
 model, and strategic change-control rules, see
 [docs/PUBLISHABLE_REQUIREMENTS.md](docs/PUBLISHABLE_REQUIREMENTS.md).
 
+## See the proof
+
+Two artifacts show what "evidence-governed" buys you in practice.
+
+**1. A board-ready executive summary from a real run.** After `run`, the console
+command `report exec` writes a one-page Markdown summary to `results/` — bottom-line
+loss range, plain-language confidence, the sources behind it, and the honest caveats,
+with no invented numbers. An excerpt from the UK finance data-breach shard:
+
+```text
+# Executive Risk Summary — United Kingdom Finance Data Breach Midmarket
+
+## Bottom line
+A data breach in this context is modeled to cost an average of GBP 3,530,067 per
+year, with a 1-in-20 (P95) year reaching GBP 5,763,789 and a 1-in-100 (P99) year
+reaching GBP 6,427,200. This is a modeled range built from public evidence, not a
+prediction of a specific event.
+
+## How much to trust it
+Confidence: HIGH. 6 of 6 model parameters are backed by public sources.
+  - Cyber Security Breaches Survey 2025/2026 (trust: high)
+  - IBM UK Cost of a Data Breach 2025 release (trust: medium)
+  - FCA fines Equifax Ltd over cyber security breach (trust: high)
+
+## Key caveats (read before deciding)
+- This is a benchmark candidate shard, not a human-approved benchmark.
+- The FCA penalty stress anchor is a regulatory cap, not total event loss.
+```
+
+Reproduce it with `use gb_finance_data_breach_midmarket` → `run` → `report exec`.
+
+**2. A worked contribution, source to preflight.** [docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md](docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md)
+walks one real, accepted change end to end: it takes a single primary source (the IBM
+Canada 2025 breach-cost release) through `sources → extractions → evidence →
+calibrations → evidence pack → preflight`, upgrading the Canada shard's `impact.likely`
+from a global bridge converted via FX to a Canada-specific **CA$6.98M** anchor — with
+the limitations made *louder*, not quieter. Copy its shape to strengthen any shard.
+
 ## Product thesis
 
 RiskShard aims to become a shared computation layer for cyber risk:
