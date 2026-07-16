@@ -1,0 +1,38 @@
+#!/bin/sh
+# RiskShard secret-leak guard (stdlib only; no dependencies).
+# Blocks a commit whose staged content contains high-signal credential patterns.
+# False positive? Re-run with:  git commit --no-verify
+#
+# Enable this hook once per clone:  git config core.hooksPath .githooks
+
+added=$(git diff --cached --no-color -U0 | grep '^+' | grep -v '^+++')
+staged_names=$(git diff --cached --name-only)
+
+hits=""
+
+# 1) Private key material
+echo "$added" | grep -qE -- '-----BEGIN ([A-Z ]+ )?PRIVATE KEY-----' && hits="$hits private-key"
+# 2) AWS access key id + secret
+echo "$added" | grep -qE 'AKIA[0-9A-Z]{16}' && hits="$hits aws-access-key"
+echo "$added" | grep -qiE 'aws_secret_access_key[[:space:]]*[:=]' && hits="$hits aws-secret"
+# 3) Provider tokens (Slack, GitHub, OpenAI/Anthropic-style)
+echo "$added" | grep -qE 'xox[baprs]-[0-9A-Za-z-]{10,}' && hits="$hits slack-token"
+echo "$added" | grep -qE '(ghp|gho|ghs)_[0-9A-Za-z]{30,}|github_pat_[0-9A-Za-z_]{30,}' && hits="$hits github-token"
+echo "$added" | grep -qE 'sk-(ant-)?[A-Za-z0-9_-]{20,}' && hits="$hits llm-api-key"
+# 4) Google API key
+echo "$added" | grep -qE 'AIza[0-9A-Za-z_-]{35}' && hits="$hits google-api-key"
+# 5) A dotenv-style secrets file being committed
+echo "$staged_names" | grep -qE '(^|/)\.env($|\.)|\.(pem|key|p12|pfx)$|(^|/)(credentials|secrets)\.(json|ya?ml)$' && hits="$hits secret-file"
+
+if [ -n "$hits" ]; then
+  echo "----------------------------------------------------------------------"
+  echo "COMMIT BLOCKED: possible secret in staged changes ->$hits"
+  echo "RiskShard is a publishable open-source repo; nothing that couldn't be"
+  echo "shown to a CISO tomorrow should be committed."
+  echo "Review the staged diff. If this is a genuine false positive, bypass with:"
+  echo "    git commit --no-verify"
+  echo "----------------------------------------------------------------------"
+  exit 1
+fi
+
+exit 0
