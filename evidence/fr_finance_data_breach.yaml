@@ -1,65 +1,71 @@
 records:
-  - id: riskshard_fr_finance_data_breach_frequency_floor_2026
-    title: Estimated France finance data breach frequency floor
+  - id: eurostat_fr_data_disclosure_small_2024
+    title: France small-enterprise confidential-data disclosure rate (Eurostat 2024)
     parameter: frequency.min
-    value: 0.08
+    value: 0.0198
     unit: annual_probability
-    source_name: RiskShard France finance data breach starter pack
-    source_type: model_assumption
-    source_url_or_citation: Starter assumption pending reviewed France privacy, cyber-agency, or sector breach-frequency evidence.
-    publication_date: "2026-07-13"
-    extraction_date: "2026-07-13"
-    extraction_notes: Estimated lower annual probability for a France mid-market financial-services data-breach draft.
-    normalization_notes: Kept explicit as an assumption until source-backed France data-breach frequency evidence is reviewed.
-    limitations: Not source-backed; replace with CNIL, ANSSI, Banque de France, insurer, or sector-denominator evidence before benchmark claims.
-    confidence: low
-    evidence_type: estimated
+    source_id: eurostat_isoc_cisce_ic_2024
+    source_name: "Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France)"
+    source_type: official_statistics
+    source_url_or_citation: "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_cisce_ic?format=JSON&lang=EN&geo=FR&indic_is=E_SEC2ICNF&unit=PC_ENT"
+    publication_date: "2025-10-08"
+    extraction_date: "2026-07-16"
+    citation_detail: "Eurostat E_SEC2ICNF, France 2024, size class 10-49 = 1.98% of enterprises had an incident leading to disclosure of confidential data (verified in gathered JSON)."
+    extraction_notes: France small-enterprise disclosure rate used as a conservative frequency floor for a mid-market shard.
+    normalization_notes: 1.98% stored as annual probability 0.0198.
+    limitations: Eurostat survey population excludes the financial sector (nace_r2 = C10-S951_X_K), so this is a non-financial-sector proxy; self-reported disclosure incidents are narrower than "any cyberattack"; small-enterprise rate used as a floor.
+    confidence: medium
+    evidence_type: source_backed
     applicability:
-      industries: [financial_services]
+      industries: [all]
       countries: [FR]
-      company_size_bands: [mid_market]
+      company_size_bands: [small]
       threats: [data_breach]
 
-  - id: riskshard_fr_finance_data_breach_frequency_likely_2026
-    title: Estimated France finance data breach likely frequency
+  - id: eurostat_fr_data_disclosure_medium_2024
+    title: France medium-enterprise confidential-data disclosure rate (Eurostat 2024)
     parameter: frequency.likely
-    value: 0.22
+    value: 0.0383
     unit: annual_probability
-    source_name: RiskShard France finance data breach starter pack
-    source_type: model_assumption
-    source_url_or_citation: Starter assumption pending reviewed France privacy, cyber-agency, or sector breach-frequency evidence.
-    publication_date: "2026-07-13"
-    extraction_date: "2026-07-13"
-    extraction_notes: Estimated likely annual probability for a France mid-market financial-services data-breach draft.
-    normalization_notes: Kept explicit as an assumption until France organization-level or sector-specific breach frequency evidence is reviewed.
-    limitations: Not source-backed; replace before benchmark claims.
-    confidence: low
-    evidence_type: estimated
+    source_id: eurostat_isoc_cisce_ic_2024
+    source_name: "Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France)"
+    source_type: official_statistics
+    source_url_or_citation: "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_cisce_ic?format=JSON&lang=EN&geo=FR&indic_is=E_SEC2ICNF&unit=PC_ENT"
+    publication_date: "2025-10-08"
+    extraction_date: "2026-07-16"
+    citation_detail: "Eurostat E_SEC2ICNF, France 2024, size class 50-249 = 3.83% of enterprises had an incident leading to disclosure of confidential data (verified in gathered JSON); 250+ was 7.3%."
+    extraction_notes: France medium-enterprise disclosure rate used as the mid-market frequency likely anchor. Replaces the prior estimated likely (0.22), which conflated any cyberattack with an actual data breach.
+    normalization_notes: 3.83% stored as annual probability 0.0383.
+    limitations: Eurostat survey population excludes the financial sector, which is typically more targeted, so this likely understates; self-reported disclosure incidents are narrower than "any cyberattack."
+    confidence: medium
+    evidence_type: source_backed
     applicability:
-      industries: [financial_services]
+      industries: [all]
       countries: [FR]
       company_size_bands: [mid_market]
       threats: [data_breach]
 
-  - id: riskshard_fr_finance_data_breach_frequency_stress_2026
-    title: Estimated France finance data breach frequency stress bound
+  - id: cesin_fr_attack_with_data_theft_2025
+    title: France attack-with-data-theft prevalence, derived (CESIN 2025)
     parameter: frequency.max
-    value: 0.45
+    value: 0.208
     unit: annual_probability
-    source_name: RiskShard France finance data breach starter pack
-    source_type: model_assumption
-    source_url_or_citation: Starter assumption pending reviewed France privacy, cyber-agency, or sector breach tail-frequency evidence.
-    publication_date: "2026-07-13"
-    extraction_date: "2026-07-13"
-    extraction_notes: Estimated stress annual probability for a France mid-market financial-services data-breach draft.
-    normalization_notes: Kept explicit as an assumption until denominator-aware France tail-frequency evidence is reviewed.
-    limitations: Not source-backed; replace before benchmark claims.
+    source_id: cesin_barometre_cybersecurite_2025
+    source_name: "CESIN 11e Barometre annuel de la cybersecurite des entreprises (2025)"
+    source_type: industry_survey
+    source_url_or_citation: "https://cesin.fr/document.php?d=67974d0b010be"
+    publication_date: "2026-01-28"
+    extraction_date: "2026-07-16"
+    citation_detail: "CESIN 2025 (OpinionWay, ~397 French RSSI/CISO): 40% of firms had a significant cyberattack (50% among large enterprises), 52% of attacked firms cited data theft. Derived stress prevalence = 0.40 x 0.52 = 0.208."
+    extraction_notes: French survey-derived attack-with-data-theft prevalence used as the frequency stress bound. Replaces the prior estimated stress (0.45).
+    normalization_notes: Derived product of two CESIN survey figures, stored as annual probability 0.208.
+    limitations: CESIN sample skews large (43% ETI, 40% large enterprises), so it overstates mid-market prevalence; measures any significant cyberattack rather than data breach specifically; the value is a derived product; the CESIN primary is a PDF, with figures byte-verified in named trade coverage. Used as an upper stress anchor only.
     confidence: low
-    evidence_type: estimated
+    evidence_type: source_backed
     applicability:
-      industries: [financial_services]
+      industries: [all]
       countries: [FR]
-      company_size_bands: [mid_market]
+      company_size_bands: [all]
       threats: [data_breach]
 
   - id: cyentia_iris_2022_typical_cyber_event_loss_usd_fr_finance_context

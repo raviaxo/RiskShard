@@ -52,3 +52,48 @@ extractions:
     limitations: Global security-incident benchmark, not France-specific or data-breach-only.
     evidence_record_ids:
       - cyentia_iris_2025_extreme_security_incident_loss_usd_fr_finance_context
+
+  - id: eurostat_fr_data_disclosure_small_2024
+    source_id: eurostat_isoc_cisce_ic_2024
+    source_name: "Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France)"
+    source_url_or_citation: "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_cisce_ic?format=JSON&lang=EN&geo=FR&indic_is=E_SEC2ICNF&unit=PC_ENT"
+    publication_date: "2025-10-08"
+    extraction_date: "2026-07-16"
+    citation_detail: "Eurostat indicator E_SEC2ICNF (enterprises with an ICT security incident leading to disclosure of confidential data), France, 2024, size class 10-49 persons employed = 1.98% (value verified in the gathered JSON)."
+    fact: In 2024, 1.98% of small French enterprises (10-49 employees, all activities except the financial sector) experienced an ICT security incident leading to disclosure of confidential data.
+    value: 0.0198
+    unit: annual_probability
+    normalization_notes: Stored as an annual probability (1.98% -> 0.0198). Used as the France frequency floor (small-enterprise rate as a lower bound for a mid-market firm).
+    limitations: Survey population excludes the financial sector; self-reported disclosure incidents, narrower than "any cyberattack"; small-enterprise rate used as a floor for a mid-market shard.
+    evidence_record_ids:
+      - eurostat_fr_data_disclosure_small_2024
+
+  - id: eurostat_fr_data_disclosure_medium_2024
+    source_id: eurostat_isoc_cisce_ic_2024
+    source_name: "Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France)"
+    source_url_or_citation: "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_cisce_ic?format=JSON&lang=EN&geo=FR&indic_is=E_SEC2ICNF&unit=PC_ENT"
+    publication_date: "2025-10-08"
+    extraction_date: "2026-07-16"
+    citation_detail: "Eurostat indicator E_SEC2ICNF, France, 2024, size class 50-249 persons employed = 3.83% (value verified in the gathered JSON). Large enterprises (250+) were 7.3% in the same series."
+    fact: In 2024, 3.83% of medium French enterprises (50-249 employees, all activities except the financial sector) experienced an ICT security incident leading to disclosure of confidential data.
+    value: 0.0383
+    unit: annual_probability
+    normalization_notes: Stored as an annual probability (3.83% -> 0.0383). Used as the France mid-market frequency likely anchor (medium size class maps to mid_market).
+    limitations: Survey population excludes the financial sector, which is typically more targeted, so this likely understates; self-reported disclosure incidents are narrower than "any cyberattack."
+    evidence_record_ids:
+      - eurostat_fr_data_disclosure_medium_2024
+
+  - id: cesin_fr_attack_with_data_theft_2025
+    source_id: cesin_barometre_cybersecurite_2025
+    source_name: "CESIN 11e Barometre annuel de la cybersecurite des entreprises (2025)"
+    source_url_or_citation: "https://cesin.fr/document.php?d=67974d0b010be"
+    publication_date: "2026-01-28"
+    extraction_date: "2026-07-16"
+    citation_detail: "CESIN 11th barometer (OpinionWay, ~397 French RSSI/CISO, Nov-Dec 2025): 40% of firms suffered at least one significant cyberattack in 2025 (50% among large enterprises), and 52% of attacked firms cited data theft as a consequence. Derived attack-with-data-theft prevalence = 0.40 x 0.52 = 0.208. Figures byte-verified in named trade coverage (Le Monde Informatique) as the CESIN primary is a PDF communique."
+    fact: Derived from CESIN 2025 figures, roughly 21% of surveyed French firms experienced a significant cyberattack with data theft as a consequence in 2025.
+    value: 0.208
+    unit: annual_probability
+    normalization_notes: Derived stress anchor (0.40 significant-attack prevalence x 0.52 data-theft-consequence share). Used only as the France frequency stress bound.
+    limitations: CESIN sample skews large (43% ETI, 40% large enterprises), so it overstates mid-market prevalence; measures any significant cyberattack, not data breach specifically; the value is a derived product of two survey figures. Used as an upper stress anchor only.
+    evidence_record_ids:
+      - cesin_fr_attack_with_data_theft_2025

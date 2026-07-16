@@ -114,6 +114,55 @@ sources:
       likely-impact anchor. EUR values normalize to USD via the reviewed ECB
       EUR/USD assumption in calibrations/fx_rates.yaml.
 
+  - id: eurostat_isoc_cisce_ic_2024
+    title: "Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France)"
+    publisher: Eurostat
+    source_type: official_statistics
+    url: "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_cisce_ic?format=JSON&lang=EN&geo=FR&indic_is=E_SEC2ICNF&unit=PC_ENT"
+    publication_date: "2025-10-08"
+    access_mode: public_html
+    trust_tier: high
+    refresh_interval_days: 365
+    intended_use:
+      - France data breach frequency by enterprise size class
+      - France confidential-data disclosure prevalence
+    usage_notes: >
+      Official EU statistics. Indicator E_SEC2ICNF is the percentage of
+      enterprises that experienced an ICT security incident leading to
+      disclosure of confidential data (any cause). France 2024 values by size:
+      10-49 = 1.98%, 50-249 = 3.83%, 250+ = 7.3%. CRITICAL CAVEAT: the survey
+      population is "all activities except the financial sector"
+      (nace_r2 = C10-S951_X_K), so this is a non-financial-sector proxy applied
+      to a financial-services shard; financial services are typically more
+      targeted, so it likely understates. It is also self-reported and narrower
+      than "any cyberattack." Used for frequency min (small) and likely
+      (medium); the JSON query returns the exact values in the gathered bytes.
+
+  - id: cesin_barometre_cybersecurite_2025
+    title: "CESIN 11e Barometre annuel de la cybersecurite des entreprises (2025)"
+    publisher: CESIN
+    source_type: industry_survey
+    url: "https://cesin.fr/document.php?d=67974d0b010be"
+    publication_date: "2026-01-28"
+    access_mode: public_pdf
+    trust_tier: medium
+    refresh_interval_days: 365
+    intended_use:
+      - France significant-cyberattack prevalence
+      - France data-theft consequence prevalence (stress frequency anchor)
+    usage_notes: >
+      CESIN 11th annual barometer, fielded by OpinionWay among ~397 French
+      RSSI/CISO members (Nov-Dec 2025). Headline figures: 40% of surveyed firms
+      suffered at least one significant cyberattack in 2025 (50% among large
+      enterprises), and data theft was the leading technical consequence, cited
+      by 52% of attacked firms. CAVEATS: the sample skews large (43% ETI, 40%
+      large enterprises), it measures any significant cyberattack rather than
+      data breach specifically, and the data-theft prevalence used as a stress
+      anchor is derived (0.40 x 0.52 ~= 0.21). The CESIN primary is a PDF
+      communique; the exact figures are byte-verifiable in named trade coverage
+      (Le Monde Informatique, itforbusiness, Global Security Mag). Used only as
+      an upper stress anchor for France frequency.max, never the central value.
+
   - id: opc_annual_report_2025_2026
     title: 2025-2026 Annual Report to Parliament on the Privacy Act and PIPEDA
     publisher: Office of the Privacy Commissioner of Canada

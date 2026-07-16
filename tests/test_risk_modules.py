@@ -162,7 +162,7 @@ class RiskModuleTests(unittest.TestCase):
         self.assertFalse(france["ready_without_assumptions"])
         self.assertEqual(
             france_by_parameter["frequency.likely"]["best"]["id"],
-            "riskshard_fr_finance_data_breach_frequency_likely_2026",
+            "eurostat_fr_data_disclosure_medium_2024",
         )
 
         germany = propose_module_calibration("de_industrial_ransomware_midmarket", ROOT)
