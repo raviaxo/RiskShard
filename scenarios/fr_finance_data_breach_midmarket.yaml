@@ -3,24 +3,25 @@ metadata:
   version: "0.1"
   currency: USD
   scenario_stage: governed_starter
-  benchmark_status: starter_with_source_backed_france_frequency_and_likely_loss
+  benchmark_status: automated_benchmark_review_candidate_france
   description: >
-    Starter France financial-services data-breach shard. Frequency is
-    source-backed: min/likely from Eurostat France small/medium-enterprise
-    confidential-data disclosure rates (2024), max from a CESIN 2025
-    survey-derived attack-with-data-theft prevalence. Impact.likely uses the
-    primary IBM France 2025 national average breach cost (EUR 3.59M) converted
-    to USD via the reviewed ECB EUR/USD assumption. Impact.min/max still use
-    global loss bridges. Caveats: the Eurostat frequency series excludes the
-    financial sector (likely understating), and the CESIN stress anchor is a
-    large-skewed derived figure.
+    France financial-services data-breach shard with all six direct parameters
+    source-backed by France/EU anchors. Frequency min/likely/max use Eurostat
+    France small/medium/large-enterprise confidential-data disclosure rates
+    (2024). Impact.min uses the Asteres France average cyberattack cost, likely
+    the primary IBM France 2025 national average breach cost (EUR 3.59M), and
+    max the GDPR Article 83(5) statutory maximum fine (EUR 20M); all EUR anchors
+    convert to USD via the reviewed ECB EUR/USD assumption. Caveats: the
+    Eurostat frequency series excludes the financial sector (likely
+    understating), the Asteres floor is an economy-wide all-cyber average, and
+    the GDPR max is a statutory cap rather than a total event-loss distribution.
 
 frequency:
   min: 0.0198
   likely: 0.0383
-  max: 0.208
+  max: 0.073
 
 impact:
-  min: 266000
+  min: 70000
   likely: 4200000
-  max: 32000000
+  max: 23300000

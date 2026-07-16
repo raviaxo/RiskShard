@@ -4,16 +4,20 @@ metadata:
   version: "0.1"
   notes: >
     Calibration profile for a France mid-market financial-services data-breach
-    shard. Frequency is now source-backed: min/likely use Eurostat France
-    small/medium-enterprise confidential-data disclosure rates (2024; 1.98% /
-    3.83%) and max uses a CESIN 2025 survey-derived attack-with-data-theft
-    prevalence (0.208). Impact.likely uses the primary IBM France 2025 national
-    average breach cost (EUR 3.59M) converted to USD via the reviewed ECB
-    EUR/USD assumption. Not yet benchmark-grade: the Eurostat frequency series
-    excludes the financial sector (a non-financial proxy that likely
-    understates), the CESIN stress anchor is a large-skewed derived figure, and
-    impact.min/max still use global cyber and security-incident loss bridges
-    until France breach-cost floor and tail evidence is reviewed.
+    shard. All six direct parameters are source-backed with France/EU anchors.
+    Frequency min/likely/max use Eurostat France small/medium/large-enterprise
+    confidential-data disclosure rates (2024; 1.98% / 3.83% / 7.3%), one
+    consistent official size-class series; the higher CESIN 2025 survey-derived
+    figure (0.208) is retained as a documented tail alternative. Impact.min uses
+    the Asteres France average cyberattack cost (EUR 58,600) as a conservative
+    floor, impact.likely the primary IBM France 2025 national average breach
+    cost (EUR 3.59M), and impact.max the GDPR Article 83(5) statutory maximum
+    fine (EUR 20M); all EUR anchors convert to USD via the reviewed ECB EUR/USD
+    assumption. Not yet benchmark-grade: the Eurostat frequency series excludes
+    the financial sector (a non-financial proxy that likely understates), the
+    Asteres floor is an economy-wide all-cyber average, and the GDPR max is a
+    statutory cap rather than a total event-loss distribution. Human review must
+    accept these bridges before any France benchmark claim.
 
 target_currency: USD
 
@@ -28,17 +32,17 @@ parameters:
       transform: direct
       rationale: Eurostat France medium-enterprise (50-249) confidential-data disclosure rate 2024 (3.83%) as the mid-market likely anchor. Non-financial-sector proxy, likely understating a more-targeted financial sector.
     max:
-      evidence_id: cesin_fr_attack_with_data_theft_2025
+      evidence_id: eurostat_fr_data_disclosure_large_2024
       transform: direct
-      rationale: CESIN 2025 French survey-derived attack-with-data-theft prevalence (0.40 x 0.52 = 0.208) as an upper stress bound. Sample skews large, so it brackets the tail from above.
+      rationale: Eurostat France large-enterprise (250+) confidential-data disclosure rate 2024 (7.3%) as the frequency stress bound, keeping the band on one official size-class series at medium confidence. The higher CESIN survey-derived figure (0.208) is retained as a documented tail alternative.
 
   impact:
     min:
-      evidence_id: cyentia_iris_2022_typical_cyber_event_loss_usd_fr_finance_context
-      transform: direct
+      evidence_id: asteres_fr_cyberattack_cost_2022
+      transform: currency_convert
       target_currency: USD
       round_to: 10000
-      rationale: Source-backed global lower loss anchor until France breach-cost floor evidence is reviewed.
+      rationale: Asteres France average cost of a successful cyberattack (EUR 58,600), converted from EUR to USD, as a conservative France-specific impact floor replacing the global Cyentia bridge. Economy-wide all-cyber average, used only as a lower bound.
     likely:
       evidence_id: ibm_france_2025_national_average_breach_cost_eur
       transform: currency_convert
@@ -46,8 +50,8 @@ parameters:
       round_to: 100000
       rationale: Primary IBM France 2025 national average breach cost (EUR 3.59M), converted from EUR to USD via the reviewed ECB EUR/USD assumption, replacing the global IBM average bridge. All-sector, enterprise-weighted France average used as an upper-leaning mid-market likely anchor.
     max:
-      evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd_fr_finance_context
-      transform: direct
+      evidence_id: gdpr_article_83_max_fine_2018
+      transform: currency_convert
       target_currency: USD
       round_to: 100000
-      rationale: Source-backed global extreme security-incident loss bridge until France data-breach tail-loss evidence is reviewed.
+      rationale: GDPR Article 83(5) maximum administrative fine (EUR 20M absolute cap), converted from EUR to USD, as a France/EU regulatory stress anchor replacing the global Cyentia bridge. Statutory cap, not total event loss (mirrors the UK FCA-penalty and AU Privacy-Act-cap pattern).

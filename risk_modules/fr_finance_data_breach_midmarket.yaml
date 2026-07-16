@@ -4,13 +4,14 @@ version: "0.1"
 status: governed_starter
 threat: data_breach
 description: >
-  Governed starter data-breach shard for a France mid-market financial-services
-  organization. Frequency is source-backed (Eurostat France small/medium
-  disclosure rates; CESIN-derived stress max) and impact.likely uses the
-  primary IBM France 2025 national average breach cost (converted from EUR to
-  USD). Impact.min/max remain global loss bridges, and the Eurostat frequency
-  series excludes the financial sector, so those gaps are kept explicit for
-  contributors.
+  Data-breach shard for a France mid-market financial-services organization
+  with all six direct parameters source-backed by France/EU anchors: Eurostat
+  France small/medium/large disclosure rates for frequency, and Asteres (floor),
+  primary IBM France 2025 (likely), and the GDPR Article 83(5) statutory cap
+  (max) for impact, all EUR anchors converted to USD. Remaining bridges kept
+  explicit for contributors: the Eurostat frequency series excludes the
+  financial sector, the Asteres floor is an economy-wide all-cyber average, and
+  the GDPR max is a statutory cap rather than a loss distribution.
 context:
   industry: financial_services
   country: FR
@@ -39,5 +40,5 @@ tags:
   - data_breach
   - privacy_breach
 practitioner_notes:
-  good_for: Testing France finance data-breach contribution workflow and running a transparent starter scenario with source-backed France frequency (Eurostat/CESIN) and a France-specific likely-loss anchor.
-  not_good_for: France financial-services benchmark claims until a financial-sector-specific frequency source replaces the Eurostat non-financial proxy and France-specific floor/tail evidence replaces the global min/max loss bridges.
+  good_for: Running a transparent France finance data-breach scenario with all six parameters source-backed by France/EU anchors, and as a contribution-workflow reference for an automated benchmark-review candidate.
+  not_good_for: France financial-services benchmark-grade claims until a financial-sector-specific frequency source replaces the Eurostat non-financial proxy and France-specific breach-cost floor/tail evidence replaces the Asteres all-cyber average and the GDPR statutory-cap stress anchor.

@@ -163,6 +163,50 @@ sources:
       (Le Monde Informatique, itforbusiness, Global Security Mag). Used only as
       an upper stress anchor for France frequency.max, never the central value.
 
+  - id: asteres_cout_cyberattaques_france_2022
+    title: "Asteres - Le cout des cyberattaques reussies en France (2022)"
+    publisher: Asteres
+    source_type: economic_impact_study
+    url: "https://asteres.fr/site/wp-content/uploads/2023/06/ASTERES-CRIP-Cout-des-cyberattaques-reussies-16062023.pdf"
+    publication_date: "2023-06-16"
+    access_mode: public_pdf
+    trust_tier: medium
+    refresh_interval_days: 365
+    intended_use:
+      - France cyberattack cost floor
+      - France economy-wide breach cost lower bound
+    usage_notes: >
+      Asteres economic study (for CRIP). Reports the average cost of a
+      successful cyberattack in France at EUR 58,600 (direct cost EUR 25,600
+      excluding ransom), and estimates the 2022 total cost at EUR 2bn. Used only
+      as a conservative France-specific impact.min floor. CAVEATS: it is an
+      economy-wide average across all organization sizes and all cyberattack
+      types (not data-breach-specific or financial-services-specific), and an
+      average rather than a true minimum quantile. EUR normalizes to USD via the
+      reviewed ECB EUR/USD assumption. Figure verified in the gathered PDF text.
+
+  - id: gdpr_article_83_administrative_fines
+    title: "GDPR Article 83(5) maximum administrative fine (via CNIL)"
+    publisher: CNIL
+    source_type: regulatory_statute
+    url: "https://www.cnil.fr/fr/cnil-direct/question/sanctions-quelles-sanctions-peuvent-etre-prononcees-par-la-cnil"
+    publication_date: "2018-05-25"
+    access_mode: public_html
+    trust_tier: high
+    refresh_interval_days: 730
+    intended_use:
+      - France data breach regulatory stress anchor
+      - GDPR maximum administrative fine
+    usage_notes: >
+      CNIL statement of the GDPR Article 83(5) maximum administrative fine for
+      the most serious breaches: EUR 20 million or 4% of worldwide annual
+      turnover, whichever is higher (page states "20 millions" and "4 %"). For a
+      mid-market firm the EUR 20M absolute cap is the binding ceiling, used as a
+      France/EU regulatory impact.max stress anchor (mirrors the UK FCA-penalty
+      and AU Privacy-Act-cap pattern). CAVEAT: a statutory maximum penalty cap,
+      not a total event-loss estimate, expected loss, or claims severity. EUR
+      normalizes to USD via the reviewed ECB EUR/USD assumption.
+
   - id: opc_annual_report_2025_2026
     title: 2025-2026 Annual Report to Parliament on the Privacy Act and PIPEDA
     publisher: Office of the Privacy Commissioner of Canada
