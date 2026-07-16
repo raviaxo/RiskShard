@@ -4,31 +4,33 @@ metadata:
   version: "0.1"
   notes: >
     Calibration profile for a France mid-market financial-services data-breach
-    shard. It is not yet benchmark-grade: frequency values remain explicit
-    estimates pending a France prevalence-percentage source (CNIL notification
-    counts and Eurostat EU-level rates are not a France financial-services
-    annual probability). Impact.likely now uses the primary IBM France 2025
-    national average breach cost (EUR 3.59M), converted to USD via the reviewed
-    ECB EUR/USD assumption; impact.min/max still use global cyber and
-    security-incident loss bridges until France breach-cost floor and tail
-    evidence is reviewed.
+    shard. Frequency is now source-backed: min/likely use Eurostat France
+    small/medium-enterprise confidential-data disclosure rates (2024; 1.98% /
+    3.83%) and max uses a CESIN 2025 survey-derived attack-with-data-theft
+    prevalence (0.208). Impact.likely uses the primary IBM France 2025 national
+    average breach cost (EUR 3.59M) converted to USD via the reviewed ECB
+    EUR/USD assumption. Not yet benchmark-grade: the Eurostat frequency series
+    excludes the financial sector (a non-financial proxy that likely
+    understates), the CESIN stress anchor is a large-skewed derived figure, and
+    impact.min/max still use global cyber and security-incident loss bridges
+    until France breach-cost floor and tail evidence is reviewed.
 
 target_currency: USD
 
 parameters:
   frequency:
     min:
-      evidence_id: riskshard_fr_finance_data_breach_frequency_floor_2026
+      evidence_id: eurostat_fr_data_disclosure_small_2024
       transform: direct
-      rationale: Explicit estimated floor until France data-breach event-frequency evidence exists.
+      rationale: Eurostat France small-enterprise (10-49) confidential-data disclosure rate 2024 (1.98%) as a conservative frequency floor. Non-financial-sector proxy.
     likely:
-      evidence_id: riskshard_fr_finance_data_breach_frequency_likely_2026
+      evidence_id: eurostat_fr_data_disclosure_medium_2024
       transform: direct
-      rationale: Explicit estimated likely annual probability until France organization-level or sector-specific breach frequency evidence exists.
+      rationale: Eurostat France medium-enterprise (50-249) confidential-data disclosure rate 2024 (3.83%) as the mid-market likely anchor. Non-financial-sector proxy, likely understating a more-targeted financial sector.
     max:
-      evidence_id: riskshard_fr_finance_data_breach_frequency_stress_2026
+      evidence_id: cesin_fr_attack_with_data_theft_2025
       transform: direct
-      rationale: Explicit estimated stress frequency until France tail-frequency evidence exists.
+      rationale: CESIN 2025 French survey-derived attack-with-data-theft prevalence (0.40 x 0.52 = 0.208) as an upper stress bound. Sample skews large, so it brackets the tail from above.
 
   impact:
     min:

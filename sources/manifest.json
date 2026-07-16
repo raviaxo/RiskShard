@@ -3,7 +3,7 @@
   "fetched_count": 23,
   "generated_at": "2026-07-15T01:43:20Z",
   "manifest_version": "1.0",
-  "source_count": 24,
+  "source_count": 26,
   "sources": [
     {
       "access_mode": "public_pdf",
@@ -567,6 +567,50 @@
       "title": "Rapport IBM 2025 : co\u00fbt d'une violation de donn\u00e9es en France",
       "url": "https://fr.newsroom.ibm.com/Rapport-IBM-13-des-organisations-ont-signale-des-violations-de-modeles-ou-dapplications-dIA,-dont-97-ont-declare-ne-pas-disposer-de-controles-dacces-a-lIA-appropries",
       "usage_notes": "Primary IBM France newsroom release for the 2025 Cost of a Data Breach report. States the France national average breach cost (EUR 3.59M in 2025, down ~7% from 2024) and a France financial-services sector figure (EUR 4.65M), based on 34 French organizations breached between March 2024 and February 2025. The national average is all-sector and enterprise-weighted, so treat it as a France-specific likely-cost anchor with a mid-market applicability caveat, not a mid-market-specific loss table. It replaces the global IBM average bridge for the France likely-impact anchor. EUR values normalize to USD via the reviewed ECB EUR/USD assumption in calibrations/fx_rates.yaml.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 3936,
+      "content_type": "application/json",
+      "final_url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_cisce_ic?format=JSON&lang=EN&geo=FR&indic_is=E_SEC2ICNF&unit=PC_ENT",
+      "gathered_at": "2026-07-16T15:31:05Z",
+      "http_status": 200,
+      "id": "eurostat_isoc_cisce_ic_2024",
+      "intended_use": [
+        "France data breach frequency by enterprise size class",
+        "France confidential-data disclosure prevalence"
+      ],
+      "publication_date": "2025-10-08",
+      "publisher": "Eurostat",
+      "raw_path": "sources/raw/eurostat_isoc_cisce_ic_2024.json",
+      "sha256": "b87bb0fbc7fa8c888d75bda3be99954072ab420e1e5db058811383eba2e8f5c5",
+      "source_type": "official_statistics",
+      "status": "fetched",
+      "title": "Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France)",
+      "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_cisce_ic?format=JSON&lang=EN&geo=FR&indic_is=E_SEC2ICNF&unit=PC_ENT",
+      "usage_notes": "Official EU statistics. Indicator E_SEC2ICNF is the percentage of enterprises that experienced an ICT security incident leading to disclosure of confidential data (any cause). France 2024 values by size: 10-49 = 1.98%, 50-249 = 3.83%, 250+ = 7.3%. CRITICAL CAVEAT: the survey population is \"all activities except the financial sector\" (nace_r2 = C10-S951_X_K), so this is a non-financial-sector proxy applied to a financial-services shard; financial services are typically more targeted, so it likely understates. It is also self-reported and narrower than \"any cyberattack.\" Used for frequency min (small) and likely (medium); the JSON query returns the exact values in the gathered bytes.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 121472,
+      "content_type": "application/pdf",
+      "final_url": "https://cesin.fr/document.php?d=67974d0b010be",
+      "gathered_at": "2026-07-16T15:31:05Z",
+      "http_status": 200,
+      "id": "cesin_barometre_cybersecurite_2025",
+      "intended_use": [
+        "France significant-cyberattack prevalence",
+        "France data-theft consequence prevalence (stress frequency anchor)"
+      ],
+      "publication_date": "2026-01-28",
+      "publisher": "CESIN",
+      "raw_path": "sources/raw/cesin_barometre_cybersecurite_2025.pdf",
+      "sha256": "c8b13e382d6e76a99768aa5977ec0ecdd080f46aed1be736614827916b2f8318",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "CESIN 11e Barometre annuel de la cybersecurite des entreprises (2025)",
+      "url": "https://cesin.fr/document.php?d=67974d0b010be",
+      "usage_notes": "CESIN 11th annual barometer, fielded by OpinionWay among ~397 French RSSI/CISO members (Nov-Dec 2025). Headline figures: 40% of surveyed firms suffered at least one significant cyberattack in 2025 (50% among large enterprises), and data theft was the leading technical consequence, cited by 52% of attacked firms. CAVEATS: the sample skews large (43% ETI, 40% large enterprises), it measures any significant cyberattack rather than data breach specifically, and the data-theft prevalence used as a stress anchor is derived (0.40 x 0.52 ~= 0.21). The CESIN primary is a PDF communique; the exact figures are byte-verifiable in named trade coverage (Le Monde Informatique, itforbusiness, Global Security Mag). Used only as an upper stress anchor for France frequency.max, never the central value.\n"
     }
   ]
 }
