@@ -59,7 +59,7 @@ records:
     citation_detail: "CESIN 2025 (OpinionWay, ~397 French RSSI/CISO): 40% of firms had a significant cyberattack (50% among large enterprises), 52% of attacked firms cited data theft. Derived stress prevalence = 0.40 x 0.52 = 0.208."
     extraction_notes: French survey-derived attack-with-data-theft prevalence used as the frequency stress bound. Replaces the prior estimated stress (0.45).
     normalization_notes: Derived product of two CESIN survey figures, stored as annual probability 0.208.
-    limitations: CESIN sample skews large (43% ETI, 40% large enterprises), so it overstates mid-market prevalence; measures any significant cyberattack rather than data breach specifically; the value is a derived product; the CESIN primary is a PDF, with figures byte-verified in named trade coverage. Used as an upper stress anchor only.
+    limitations: CESIN sample skews large (43% ETI, 40% large enterprises), so it overstates mid-market prevalence; measures any significant cyberattack rather than data breach specifically; the value is a derived product; the CESIN primary is a PDF, with figures byte-verified in named trade coverage. Retained as a documented higher-tail alternative; not the selected frequency.max (the Eurostat large-enterprise rate is selected instead for a consistent, medium-confidence official series).
     confidence: low
     evidence_type: source_backed
     applicability:
@@ -68,29 +68,52 @@ records:
       company_size_bands: [all]
       threats: [data_breach]
 
-  - id: cyentia_iris_2022_typical_cyber_event_loss_usd_fr_finance_context
-    title: Typical reported cyber-event financial loss for France finance starter
-    parameter: impact.min
-    value: 266000
-    unit: currency
-    currency: USD
-    source_id: cyentia_iris_2022
-    source_name: Cyentia Information Risk Insights Study 2022
-    source_type: cyber_loss_research
-    source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
-    publication_date: "2022-01-01"
-    extraction_date: "2026-07-13"
-    citation_detail: Public source page key findings; typical financial cost reported for a cyber event is USD 266K.
-    extraction_notes: Reused the governed Cyentia typical cyber-event financial-loss anchor for the France finance starter.
-    normalization_notes: Stored in USD and selected as a conservative lower loss anchor until France breach-cost floor evidence is reviewed.
-    limitations: Global cyber-event benchmark, not France-specific, data-breach-only, financial-services-specific, or a true minimum loss quantile.
-    confidence: low
+  - id: eurostat_fr_data_disclosure_large_2024
+    title: France large-enterprise confidential-data disclosure rate (Eurostat 2024)
+    parameter: frequency.max
+    value: 0.073
+    unit: annual_probability
+    source_id: eurostat_isoc_cisce_ic_2024
+    source_name: "Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France)"
+    source_type: official_statistics
+    source_url_or_citation: "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_cisce_ic?format=JSON&lang=EN&geo=FR&indic_is=E_SEC2ICNF&unit=PC_ENT"
+    publication_date: "2025-10-08"
+    extraction_date: "2026-07-16"
+    citation_detail: "Eurostat E_SEC2ICNF, France 2024, size class 250+ = 7.3% of enterprises had an incident leading to disclosure of confidential data (verified in gathered JSON)."
+    extraction_notes: France large-enterprise disclosure rate used as the frequency stress bound (a mid-market firm behaving like a more-targeted large org), keeping the whole frequency band on one official size-class series.
+    normalization_notes: 7.3% stored as annual probability 0.073.
+    limitations: Eurostat survey population excludes the financial sector, which is typically more targeted, so this likely understates; large-enterprise rate used as an upper bound for a mid-market shard.
+    confidence: medium
     evidence_type: source_backed
     applicability:
       industries: [all]
-      countries: [global]
+      countries: [FR]
+      company_size_bands: [large]
+      threats: [data_breach]
+
+  - id: asteres_fr_cyberattack_cost_2022
+    title: France average cost of a successful cyberattack (Asteres 2022)
+    parameter: impact.min
+    value: 58600
+    unit: currency
+    currency: EUR
+    source_id: asteres_cout_cyberattaques_france_2022
+    source_name: "Asteres - Le cout des cyberattaques reussies en France (2022)"
+    source_type: economic_impact_study
+    source_url_or_citation: "https://asteres.fr/site/wp-content/uploads/2023/06/ASTERES-CRIP-Cout-des-cyberattaques-reussies-16062023.pdf"
+    publication_date: "2023-06-16"
+    extraction_date: "2026-07-16"
+    citation_detail: "Asteres reports the average cost of a successful cyberattack in France at EUR 58,600 (direct cost EUR 25,600 excluding ransom); figure verified in gathered PDF text."
+    extraction_notes: Replaced the global Cyentia typical-loss bridge with a France-specific conservative floor.
+    normalization_notes: Stored in EUR; converted to USD via the reviewed ECB EUR/USD assumption in calibrations/fx_rates.yaml.
+    limitations: Economy-wide France average across all organization sizes and all cyberattack types, not data-breach-specific, financial-services-specific, or a true minimum quantile. Used only as a conservative lower-bound anchor.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [FR]
       company_size_bands: [all]
-      threats: [all, data_breach]
+      threats: [data_breach]
 
   - id: ibm_france_2025_national_average_breach_cost_eur
     title: France national average cost of a data breach (IBM 2025)
@@ -116,26 +139,26 @@ records:
       company_size_bands: [all]
       threats: [data_breach]
 
-  - id: cyentia_iris_2025_extreme_security_incident_loss_usd_fr_finance_context
-    title: Extreme reported security-incident loss for France finance starter
+  - id: gdpr_article_83_max_fine_2018
+    title: GDPR Article 83(5) maximum administrative fine (regulatory stress anchor)
     parameter: impact.max
-    value: 32000000
+    value: 20000000
     unit: currency
-    currency: USD
-    source_id: cyentia_iris_2025
-    source_name: Cyentia Information Risk Insights Study 2025
-    source_type: cyber_loss_research
-    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
-    publication_date: "2025-06-10"
-    extraction_date: "2026-07-13"
-    citation_detail: Public source page key findings; extreme events reached USD 32M.
-    extraction_notes: Reused the governed Cyentia extreme security-incident loss anchor for the France finance starter.
-    normalization_notes: Stored directly in USD and selected as a global stress-loss bridge until France breach tail-loss evidence is reviewed.
-    limitations: Global security-incident benchmark, not France-specific, data-breach-only, financial-services-specific, or a formal percentile for this scenario.
-    confidence: low
+    currency: EUR
+    source_id: gdpr_article_83_administrative_fines
+    source_name: "GDPR Article 83(5) maximum administrative fine (via CNIL)"
+    source_type: regulatory_statute
+    source_url_or_citation: "https://www.cnil.fr/fr/cnil-direct/question/sanctions-quelles-sanctions-peuvent-etre-prononcees-par-la-cnil"
+    publication_date: "2018-05-25"
+    extraction_date: "2026-07-16"
+    citation_detail: "CNIL states the GDPR maximum administrative fine for the most serious breaches is EUR 20 million or 4% of worldwide annual turnover, whichever is higher (page text: '20 millions', '4 %'); verified in gathered HTML."
+    extraction_notes: Replaced the global Cyentia extreme-loss bridge with the GDPR/CNIL statutory maximum fine as a France/EU regulatory stress anchor, mirroring the UK FCA-penalty and AU Privacy-Act-cap pattern.
+    normalization_notes: EUR 20M absolute cap (the binding ceiling for a mid-market firm) stored in EUR; converted to USD via the reviewed ECB EUR/USD assumption in calibrations/fx_rates.yaml.
+    limitations: Statutory maximum penalty cap, not a total event-loss estimate, expected loss, or claims severity; actual fines depend on regulator and case facts.
+    confidence: medium
     evidence_type: source_backed
     applicability:
       industries: [all]
-      countries: [global]
+      countries: [FR]
       company_size_bands: [all]
-      threats: [all, data_breach]
+      threats: [data_breach]

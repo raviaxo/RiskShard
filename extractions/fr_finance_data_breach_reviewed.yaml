@@ -1,20 +1,4 @@
 extractions:
-  - id: cyentia_iris_2022_typical_cyber_event_loss_usd_fr_finance_context
-    source_id: cyentia_iris_2022
-    source_name: Cyentia Information Risk Insights Study 2022
-    source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
-    publication_date: "2022-01-01"
-    extraction_date: "2026-07-13"
-    citation_detail: Public source page key findings.
-    fact: Cyentia reported a typical financial cost of USD 266,000 for a cyber event.
-    value: 266000
-    unit: currency
-    currency: USD
-    normalization_notes: Stored directly in USD as a global lower loss anchor.
-    limitations: Global cyber-event benchmark, not France-specific or data-breach-only.
-    evidence_record_ids:
-      - cyentia_iris_2022_typical_cyber_event_loss_usd_fr_finance_context
-
   - id: ibm_france_2025_national_average_breach_cost_eur
     source_id: ibm_france_cost_data_breach_2025
     source_name: "Rapport IBM 2025 : coût d'une violation de données en France"
@@ -36,22 +20,6 @@ extractions:
     limitations: All-sector France national average, not mid-market- or financial-services-specific; based on only 34 French organizations, so the sector sub-figure (EUR 4.65M) rests on a small sample. IBM's sample skews larger organizations, so treat the national average as an upper-leaning mid-market likely anchor.
     evidence_record_ids:
       - ibm_france_2025_national_average_breach_cost_eur
-
-  - id: cyentia_iris_2025_extreme_security_incident_loss_usd_fr_finance_context
-    source_id: cyentia_iris_2025
-    source_name: Cyentia Information Risk Insights Study 2025
-    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
-    publication_date: "2025-06-10"
-    extraction_date: "2026-07-13"
-    citation_detail: Public source page key findings.
-    fact: Cyentia reported extreme security incidents reaching USD 32 million.
-    value: 32000000
-    unit: currency
-    currency: USD
-    normalization_notes: Stored directly in USD as a global stress-loss bridge.
-    limitations: Global security-incident benchmark, not France-specific or data-breach-only.
-    evidence_record_ids:
-      - cyentia_iris_2025_extreme_security_incident_loss_usd_fr_finance_context
 
   - id: eurostat_fr_data_disclosure_small_2024
     source_id: eurostat_isoc_cisce_ic_2024
@@ -94,6 +62,53 @@ extractions:
     value: 0.208
     unit: annual_probability
     normalization_notes: Derived stress anchor (0.40 significant-attack prevalence x 0.52 data-theft-consequence share). Used only as the France frequency stress bound.
-    limitations: CESIN sample skews large (43% ETI, 40% large enterprises), so it overstates mid-market prevalence; measures any significant cyberattack, not data breach specifically; the value is a derived product of two survey figures. Used as an upper stress anchor only.
+    limitations: CESIN sample skews large (43% ETI, 40% large enterprises), so it overstates mid-market prevalence; measures any significant cyberattack, not data breach specifically; the value is a derived product of two survey figures. Retained as a documented higher-tail alternative; not the selected frequency.max because it is low-confidence and large-skewed.
     evidence_record_ids:
       - cesin_fr_attack_with_data_theft_2025
+
+  - id: eurostat_fr_data_disclosure_large_2024
+    source_id: eurostat_isoc_cisce_ic_2024
+    source_name: "Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France)"
+    source_url_or_citation: "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_cisce_ic?format=JSON&lang=EN&geo=FR&indic_is=E_SEC2ICNF&unit=PC_ENT"
+    publication_date: "2025-10-08"
+    extraction_date: "2026-07-16"
+    citation_detail: "Eurostat E_SEC2ICNF, France 2024, size class 250+ (GE250) = 7.3% of enterprises had an incident leading to disclosure of confidential data (verified in the gathered JSON)."
+    fact: In 2024, 7.3% of large French enterprises (250+ employees, all activities except the financial sector) experienced an ICT security incident leading to disclosure of confidential data.
+    value: 0.073
+    unit: annual_probability
+    normalization_notes: 7.3% stored as annual probability 0.073. Large-enterprise rate used as the frequency stress bound (a mid-market firm behaving like a more-targeted large org).
+    limitations: Eurostat survey population excludes the financial sector; large-enterprise rate used as an upper bound for a mid-market shard.
+    evidence_record_ids:
+      - eurostat_fr_data_disclosure_large_2024
+
+  - id: asteres_fr_cyberattack_cost_2022
+    source_id: asteres_cout_cyberattaques_france_2022
+    source_name: "Asteres - Le cout des cyberattaques reussies en France (2022)"
+    source_url_or_citation: "https://asteres.fr/site/wp-content/uploads/2023/06/ASTERES-CRIP-Cout-des-cyberattaques-reussies-16062023.pdf"
+    publication_date: "2023-06-16"
+    extraction_date: "2026-07-16"
+    citation_detail: "Asteres reports the average cost of a successful cyberattack in France at EUR 58,600 (direct cost EUR 25,600 excluding ransom); figure verified in the gathered PDF text."
+    fact: Asteres estimated the average cost of a successful cyberattack in France at EUR 58,600 in 2022.
+    value: 58600
+    unit: currency
+    currency: EUR
+    normalization_notes: Stored in EUR; converted to USD via the reviewed ECB EUR/USD assumption. Used as a conservative France impact.min floor.
+    limitations: Economy-wide average across all organization sizes and all cyberattack types, not data-breach-specific or financial-services-specific, and an average rather than a true minimum quantile.
+    evidence_record_ids:
+      - asteres_fr_cyberattack_cost_2022
+
+  - id: gdpr_article_83_max_fine_2018
+    source_id: gdpr_article_83_administrative_fines
+    source_name: "GDPR Article 83(5) maximum administrative fine (via CNIL)"
+    source_url_or_citation: "https://www.cnil.fr/fr/cnil-direct/question/sanctions-quelles-sanctions-peuvent-etre-prononcees-par-la-cnil"
+    publication_date: "2018-05-25"
+    extraction_date: "2026-07-16"
+    citation_detail: "CNIL states the GDPR maximum administrative fine for the most serious breaches is EUR 20 million or 4% of worldwide annual turnover, whichever is higher (page text: '20 millions', '4 %'); verified in the gathered HTML."
+    fact: Under GDPR Article 83(5), the maximum administrative fine is EUR 20 million or 4% of worldwide annual turnover, whichever is higher.
+    value: 20000000
+    unit: currency
+    currency: EUR
+    normalization_notes: EUR 20M absolute cap (binding ceiling for a mid-market firm) stored in EUR; converted to USD via the reviewed ECB EUR/USD assumption. Used as a regulatory impact.max stress anchor.
+    limitations: Statutory maximum penalty cap, not a total event-loss estimate, expected loss, or claims severity; actual fines depend on regulator and case facts.
+    evidence_record_ids:
+      - gdpr_article_83_max_fine_2018
