@@ -40,5 +40,5 @@ tags:
   - data_breach
   - privacy_breach
 practitioner_notes:
-  good_for: Running a transparent France finance data-breach scenario with all six parameters source-backed by France/EU anchors, and as a contribution-workflow reference for an automated benchmark-review candidate.
+  good_for: Running a transparent France finance data-breach scenario with all six parameters source-backed by France/EU anchors, and as a contribution-workflow reference for a fully source-backed starter shard (it does not clear the automated benchmark gate, which requires financial-sector-specific evidence France's public data does not yet provide).
   not_good_for: France financial-services benchmark-grade claims until a financial-sector-specific frequency source replaces the Eurostat non-financial proxy and France-specific breach-cost floor/tail evidence replaces the Asteres all-cyber average and the GDPR statutory-cap stress anchor.
