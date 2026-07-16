@@ -3,7 +3,7 @@ metadata:
   version: "0.1"
   currency: USD
   scenario_stage: governed_starter
-  benchmark_status: automated_benchmark_review_candidate_france
+  benchmark_status: starter_with_source_backed_france_direct_parameters
   description: >
     France financial-services data-breach shard with all six direct parameters
     source-backed by France/EU anchors. Frequency min/likely/max use Eurostat
