@@ -218,3 +218,13 @@ results/*
 !results/.gitkeep
 !results/README.md
 sources/raw/
+
+# Secret hygiene (defense in depth; a pre-commit guard in .githooks also blocks these)
+*.pem
+*.key
+*.p12
+*.pfx
+*.env
+credentials.json
+secrets.yaml
+secrets.yml
