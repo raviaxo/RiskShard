@@ -218,7 +218,7 @@ class RiskShardConsole(cmd.Cmd):
             self.refresh_prompt()
             self.write(f"Using Risk Shard {module['id']}: {module['title']}\n")
             self.write(f"Location: {self.breadcrumb(include_run=False)}\n")
-            self.write("Next: run 'where' or 'scenario' to confirm inputs, then choose 'consume' or 'enhance'.\n")
+            self.write("Next: run 'where' or 'scenario' to confirm inputs, then choose 'consume' (use this shard's numbers now: run, explain, report) or 'enhance' (improve its evidence: packs, show gaps, propose).\n")
             return None
 
         path = resolve_scenario(self.root, arg.strip())
@@ -878,8 +878,6 @@ class RiskShardConsole(cmd.Cmd):
             f"dist={self.options['dist']}, "
             f"seed={format_option(self.options['seed'], self.root)}\n"
         )
-        self.write(f"Stage         : {scenario_meta.get('stage_label', scenario_stage_label(config))}\n")
-        self.write(f"Benchmark     : {scenario_meta.get('benchmark_status', metadata.get('benchmark_status', 'unspecified'))}\n")
         self.write(f"Fingerprint   : {scenario_meta.get('fingerprint', 'unknown')}\n")
         self.write(f"Currency      : {metadata.get('currency', 'unspecified')}\n")
         if self.last_calibration_report:
