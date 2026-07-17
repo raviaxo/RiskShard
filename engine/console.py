@@ -54,8 +54,8 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 class RiskShardConsole(cmd.Cmd):
     intro = (
         "RiskShard console. Type 'demo' to run the canonical first-run path "
-        "automatically, 'workflow' to see it as steps, 'help' for all commands, "
-        "or 'exit' to leave."
+        "automatically, 'workflow' to see it as steps, 'help' for a guided "
+        "command list, or 'exit' to leave."
     )
 
     def __init__(self, root=PROJECT_ROOT, stdin=None, stdout=None):
@@ -157,6 +157,48 @@ class RiskShardConsole(cmd.Cmd):
 
     def help_workflow(self):
         self.do_workflow("")
+
+    def do_help(self, arg):
+        """help [command|all] - Guided command overview, or details for one command."""
+        topic = arg.strip()
+        if topic == "all":
+            self.write("All commands (type 'help <command>' for detail):\n")
+            return super().do_help("")
+        if topic:
+            return super().do_help(topic)
+        self.write(
+            "RiskShard commands (type 'help <command>' for detail, 'help all' for every command)\n"
+            "\n"
+            "Start here\n"
+            "  demo            Run the whole first-run path automatically, with narration.\n"
+            "  workflow        See that path as numbered steps you can type yourself.\n"
+            "  modules         List the Risk Shards (country / industry / threat).\n"
+            "  search <term>   Find a shard by keyword.\n"
+            "  use <shard>     Select a shard to work with.\n"
+            "\n"
+            "Run a shard (use its numbers)\n"
+            "  where           Confirm the selected inputs.\n"
+            "  run             Simulate financial loss (Monte Carlo).\n"
+            "  explain         Plain-language read of the last result.\n"
+            "  report exec     Write a board-ready one-page summary.\n"
+            "  report json     Export the full simulation report.\n"
+            "\n"
+            "Improve the evidence (see how much to trust it)\n"
+            "  packs           Show the trust boundary: which numbers are source-backed.\n"
+            "  show gaps       Show the next evidence gap to close.\n"
+            "  propose         Suggest better source-backed evidence.\n"
+            "\n"
+            "Inspect and govern\n"
+            "  doctor          Check the local environment and data health.\n"
+            "  validate        Check evidence quality.\n"
+            "  readiness       Show overall readiness ('beta' shows the beta gate).\n"
+            "\n"
+            "Contribute\n"
+            "  contribute      Start a country / evidence contribution pack.\n"
+            "\n"
+            "  quit / exit     Leave the console.\n"
+        )
+        return None
 
     def do_demo(self, arg):
         """demo [risk-shard-id] - Run the canonical first-run path end to end with narration."""

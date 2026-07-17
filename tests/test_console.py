@@ -74,6 +74,16 @@ class ConsoleTests(unittest.TestCase):
         self.assertNotIn("AVG : $", run_output)
         self.assertNotIn("P95 : $", run_output)
 
+    def test_help_shows_guided_grouped_overview_not_raw_command_dump(self):
+        help_output = self.command("help")
+        self.assertIn("Start here", help_output)
+        self.assertIn("Run a shard", help_output)
+        self.assertIn("help all", help_output)
+        # A beginner should get described commands, not just a bare command grid.
+        self.assertIn("Simulate financial loss", help_output)
+        all_output = self.command("help all")
+        self.assertIn("Documented commands", all_output)
+
     def test_calibrate_writes_artifacts_and_exposes_selected_evidence(self):
         self.command("use au_finance_ransomware_midmarket")
         with tempfile.TemporaryDirectory() as tmp:
