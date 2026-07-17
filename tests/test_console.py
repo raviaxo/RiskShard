@@ -65,6 +65,14 @@ class ConsoleTests(unittest.TestCase):
         self.assertIn("Stage     : governed starter", info_output)
         self.assertIn("Benchmark :", info_output)
 
+    def test_run_results_show_scenario_currency_not_hardcoded_dollar(self):
+        self.command("use gb_finance_data_breach_midmarket")
+        run_output = self.command("run")
+        # A GBP shard must render its Results in GBP, not a hardcoded $ glyph.
+        self.assertIn("AVG : GBP ", run_output)
+        self.assertNotIn("AVG : $", run_output)
+        self.assertNotIn("P95 : $", run_output)
+
     def test_calibrate_writes_artifacts_and_exposes_selected_evidence(self):
         self.command("use au_finance_ransomware_midmarket")
         with tempfile.TemporaryDirectory() as tmp:

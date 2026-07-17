@@ -490,7 +490,11 @@ class RiskShardConsole(cmd.Cmd):
         self.last_paths["lec"] = lec_path
         self.write_run_receipt(run)
         self.write("Results\n")
-        print_stats(run["portfolio"], self.write)
+        print_stats(
+            run["portfolio"],
+            self.write,
+            run["metadata"].get("currencies", {}).get("portfolio_currency"),
+        )
         self.write(f"LEC: {relative_to_root(lec_path, self.root)}\n")
         self.write("Next consume: explain; report json\n")
         self.write("Next enhance: packs; show gaps; propose; enhance\n")
@@ -584,7 +588,11 @@ class RiskShardConsole(cmd.Cmd):
             self.write(f"Location: {self.breadcrumb()}\n")
             self.write(f"Risk Shard: {self.module_id or 'unset'}\n")
             self.write(f"Run target: {format_option(self.active_run_path, self.root)}\n")
-            print_stats(self.last_run["portfolio"], self.write)
+            print_stats(
+                self.last_run["portfolio"],
+                self.write,
+                self.last_run["metadata"].get("currencies", {}).get("portfolio_currency"),
+            )
             self.write("Run 'report json' to export the simulation report, or 'enhance' to improve the trust boundary.\n")
         else:
             self.write("No calibration or simulation yet. Try 'workflow'.\n")
@@ -1024,8 +1032,14 @@ def infer_threat(path):
     return None
 
 
-def print_stats(stats, write):
-    write(f"AVG : ${stats['mean']:,.2f}\n")
-    write(f"P50 : ${stats['p50']:,.2f}\n")
-    write(f"P95 : ${stats['p95']:,.2f}\n")
-    write(f"P99 : ${stats['p99']:,.2f}\n")
+def format_money(value, currency=None):
+    if currency and currency != "unspecified":
+        return f"{currency} {value:,.2f}"
+    return f"${value:,.2f}"
+
+
+def print_stats(stats, write, currency=None):
+    write(f"AVG : {format_money(stats['mean'], currency)}\n")
+    write(f"P50 : {format_money(stats['p50'], currency)}\n")
+    write(f"P95 : {format_money(stats['p95'], currency)}\n")
+    write(f"P99 : {format_money(stats['p99'], currency)}\n")
