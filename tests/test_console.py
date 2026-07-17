@@ -36,7 +36,8 @@ class ConsoleTests(unittest.TestCase):
         use_output = self.command("use au_finance_ransomware_midmarket")
         self.assertIn("Using Risk Shard au_finance_ransomware_midmarket", use_output)
         self.assertIn("Location: [Start] > [Scenario]", use_output)
-        self.assertIn("choose 'consume' or 'enhance'", use_output)
+        self.assertIn("choose 'consume'", use_output)
+        self.assertIn("improve its evidence", use_output)
 
         where_output = self.command("where")
         self.assertIn("Location      : [Start] > [Scenario]", where_output)
