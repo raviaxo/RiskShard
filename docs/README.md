@@ -1,5 +1,11 @@
 # RiskShard Documentation Map
 
+**Session loop:** open with `/session:start`, close with `/session:end`. The live
+handoff is three files, each the single owner of its fact — **Now** (current
+priority + top blocker) → [HANDOVER_STOPPING_POINT.md](HANDOVER_STOPPING_POINT.md)
+· **State** (capabilities, gaps) → [PROJECT_STATUS.md](PROJECT_STATUS.md) ·
+**Next** (backlog) → [NEXT_STEPS.md](NEXT_STEPS.md).
+
 **New here? Read only these three, in order — everything else is reference you can reach for when you need it:**
 
 1. [../README.md](../README.md): what RiskShard is, the one-command demo, and honest status.
