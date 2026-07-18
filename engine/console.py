@@ -26,7 +26,7 @@ from engine.evidence_packs import (
 from engine.executive_report import build_executive_report, format_executive_report_markdown
 from engine.experience import analyze_gaps, format_gap_analysis, format_top_risks, rank_top_risks
 from engine.experience import format_calibration_proposal, propose_calibration
-from engine.fair_calc import export_report, load_and_validate, plot_lec, run_portfolio
+from engine.fair_calc import IMPACT_UNCERTAINTY_NOTE, export_report, load_and_validate, plot_lec, run_portfolio
 from engine.governance import (
     build_data_feed_inventory,
     format_data_feed_inventory,
@@ -1083,3 +1083,4 @@ def print_stats(stats, write, currency=None):
     write(f"P50 : {format_money(stats['p50'], currency)}\n")
     write(f"P95 : {format_money(stats['p95'], currency)}\n")
     write(f"P99 : {format_money(stats['p99'], currency)}\n")
+    write(f"Note: {IMPACT_UNCERTAINTY_NOTE}\n")

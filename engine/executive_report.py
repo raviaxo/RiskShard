@@ -6,6 +6,8 @@ structured fields (run stats, module context/notes, evidence-pack trust
 metadata); it never invents numbers or caveats.
 """
 
+from engine.fair_calc import IMPACT_UNCERTAINTY_NOTE
+
 DECISION_OPTIONS = (
     ("Accept", "the modeled range is within appetite; monitor and revisit."),
     ("Mitigate", "fund controls to reduce frequency or impact, then re-run."),
@@ -56,7 +58,9 @@ def build_executive_report(run, module, pack, root=None):
     direct_parameters = pack.get("direct_parameters", []) if pack else []
     source_backed = sum(1 for p in direct_parameters if p.get("status") == "source_backed")
 
-    caveats = []
+    # Structural methodology caveat first: it governs how the P95/P99 tail above
+    # should be read, before any data-specific caveat.
+    caveats = [IMPACT_UNCERTAINTY_NOTE]
     status = (pack.get("status") if pack else None) or (module.get("status") if module else None)
     if status and status != "benchmark_grade":
         caveats.append(

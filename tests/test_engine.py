@@ -170,6 +170,29 @@ class PortfolioTests(unittest.TestCase):
         self.assertEqual(payload["timestamp"], "2026-01-02T03:04:05")
         self.assertEqual(payload["metadata"], metadata)
 
+    def test_export_report_carries_impact_uncertainty_caveat(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = fair_calc.export_report(
+                {"example": {"mean": 1}},
+                {"mean": 1},
+                output_dir=tmp,
+                timestamp=datetime(2026, 1, 2, 3, 4, 5),
+            )
+            payload = json.loads(Path(path).read_text())
+
+        self.assertIn(fair_calc.IMPACT_UNCERTAINTY_NOTE, payload["caveats"])
+
+    def test_executive_report_includes_impact_uncertainty_caveat(self):
+        from engine.executive_report import build_executive_report
+
+        run = {
+            "portfolio": {"mean": 1, "p50": 1, "p95": 2, "p99": 3},
+            "metadata": {"trials": 10, "distribution": "pert"},
+        }
+        report = build_executive_report(run, module={}, pack={})
+
+        self.assertIn(fair_calc.IMPACT_UNCERTAINTY_NOTE, report["caveats"])
+
 
 if __name__ == "__main__":
     unittest.main()
