@@ -29,6 +29,7 @@ starting path; the sections below are for when a specific question sends you the
 - [GLOBAL_READINESS_ROADMAP.md](GLOBAL_READINESS_ROADMAP.md): what global coverage and governance still require.
 - [COUNTRY_EXPANSION.md](COUNTRY_EXPANSION.md): 25-country contribution priority map and second-geography plan.
 - [MAJOR_MILESTONES.md](MAJOR_MILESTONES.md): major product and governance milestones.
+- [BETA_KIT.md](BETA_KIT.md): ready-to-use public-share assets (LinkedIn post, DM, async intake, monthly Shard Spotlight template).
 
 ## Engineering detail
 
