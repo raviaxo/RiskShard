@@ -44,6 +44,10 @@ from engine.shard_registry import (  # noqa: E402
     format_shard_registry,
     write_shard_registry,
 )
+from engine.coverage import (  # noqa: E402
+    build_coverage_report,
+    format_coverage_report,
+)
 
 
 def parse_args(argv=None):
@@ -76,6 +80,10 @@ def parse_args(argv=None):
     registry_parser = subparsers.add_parser("registry", help="Export the machine-readable shard registry.")
     registry_parser.add_argument("--output", type=Path, help="Write registry JSON to this path.")
     registry_parser.add_argument("--json", action="store_true")
+
+    coverage_parser = subparsers.add_parser("coverage", help="Grade shard data strength and confidence.")
+    coverage_parser.add_argument("module_id", nargs="?")
+    coverage_parser.add_argument("--json", action="store_true")
 
     return parser.parse_args(argv)
 
@@ -180,6 +188,17 @@ def main(argv=None):
             print(json.dumps(registry, indent=2, sort_keys=True))
         else:
             print(format_shard_registry(registry), end="")
+        return 0
+
+    if command == "coverage":
+        report = build_coverage_report(ROOT, module_id=args.module_id)
+        if args.module_id and not report["shards"]:
+            print(f"Unknown risk module: {args.module_id}", file=sys.stderr)
+            return 1
+        if args.json:
+            print(json.dumps(report, indent=2, sort_keys=True))
+        else:
+            print(format_coverage_report(report), end="")
         return 0
 
     return 0
