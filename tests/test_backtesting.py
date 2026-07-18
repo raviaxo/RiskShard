@@ -60,6 +60,31 @@ class DispersionTests(unittest.TestCase):
         self.assertEqual(stats["verdict"], "no_data")
 
 
+class FitTests(unittest.TestCase):
+    def test_negbin_mom_none_when_not_overdispersed(self):
+        self.assertIsNone(backtesting.negbin_mom({2015: 5, 2016: 5, 2017: 5}))
+
+    def test_negbin_mom_fits_when_overdispersed(self):
+        nb = backtesting.negbin_mom({2015: 0, 2016: 1, 2017: 60})
+        self.assertIsNotNone(nb)
+        self.assertGreater(nb["r"], 0)
+        self.assertTrue(0 < nb["p"] < 1)
+
+    def test_fit_comparison_prefers_negbin_under_overdispersion(self):
+        fit = backtesting.fit_comparison({2015: 0, 2016: 1, 2017: 60})
+        self.assertTrue(fit["overdispersed"])
+        self.assertEqual(fit["better_fit"], "negbin")
+        self.assertGreater(fit["loglik_gain"], 0)
+
+    def test_fit_comparison_prefers_poisson_when_flat(self):
+        fit = backtesting.fit_comparison({2015: 5, 2016: 5, 2017: 5})
+        self.assertFalse(fit["overdispersed"])
+        self.assertEqual(fit["better_fit"], "poisson")
+
+    def test_fit_comparison_needs_two_years(self):
+        self.assertFalse(backtesting.fit_comparison({2015: 3})["comparable"])
+
+
 class BracketTests(unittest.TestCase):
     def test_rate_inside_band_is_within_band_and_om(self):
         band = {"min": 0.4, "likely": 0.6, "max": 0.7}
