@@ -159,6 +159,81 @@ def poisson_pmf(k, lam):
     return math.exp(-lam) * lam ** k / math.factorial(k)
 
 
+def _poisson_logpmf(k, lam):
+    if lam <= 0:
+        return 0.0 if k == 0 else float("-inf")
+    return -lam + k * math.log(lam) - math.lgamma(k + 1)
+
+
+def _negbin_logpmf(k, r, p):
+    # r = dispersion/size (>0), p = success prob (0<p<1); mean = r*(1-p)/p.
+    if not (0 < p < 1) or r <= 0:
+        return float("-inf")
+    return (math.lgamma(k + r) - math.lgamma(r) - math.lgamma(k + 1)
+            + r * math.log(p) + k * math.log(1 - p))
+
+
+def negbin_mom(counts):
+    """Method-of-moments negative-binomial fit for a year->count mapping.
+
+    Returns ``None`` when the data is not overdispersed (variance <= mean), where
+    a negative-binomial does not apply and Poisson is the honest model.
+    """
+    values = list(counts.values())
+    n = len(values)
+    if n < 2:
+        return None
+    mean = sum(values) / n
+    variance = sum((v - mean) ** 2 for v in values) / (n - 1)
+    if mean <= 0 or variance <= mean:
+        return None
+    p = mean / variance
+    r = mean ** 2 / (variance - mean)
+    return {"r": r, "p": p, "mean": mean, "variance": variance}
+
+
+def fit_comparison(counts):
+    """Compare Poisson vs. negative-binomial fit on annual counts (log-likelihood).
+
+    The negative-binomial has one extra parameter, so it fits at least as well
+    whenever the data is overdispersed; the informative outputs are the size
+    parameter ``r`` (smaller = more clustered) and the log-likelihood gain, not
+    the mere fact that NB wins. Reported honestly with that caveat.
+    """
+    values = list(counts.values())
+    n = len(values)
+    if n < 2:
+        return {"comparable": False, "reason": "need_at_least_2_years"}
+    mean = sum(values) / n
+    poisson_ll = sum(_poisson_logpmf(k, mean) for k in values)
+    nb = negbin_mom(counts)
+    if nb is None:
+        return {
+            "comparable": True,
+            "overdispersed": False,
+            "poisson_loglik": poisson_ll,
+            "negbin": None,
+            "better_fit": "poisson",
+            "note": "Not overdispersed (variance <= mean); Poisson is the honest model.",
+        }
+    nb_ll = sum(_negbin_logpmf(k, nb["r"], nb["p"]) for k in values)
+    return {
+        "comparable": True,
+        "overdispersed": True,
+        "poisson_loglik": poisson_ll,
+        "negbin_loglik": nb_ll,
+        "negbin": nb,
+        "loglik_gain": nb_ll - poisson_ll,
+        "better_fit": "negbin" if nb_ll > poisson_ll else "poisson",
+        "note": (
+            "Negative-binomial has one extra parameter, so it is expected to fit "
+            "better under overdispersion; size r (smaller = more clustered) and "
+            "the log-likelihood gain quantify how far the counts depart from a "
+            "smooth Poisson/PERT rate."
+        ),
+    }
+
+
 def order_of_magnitude_bracket(shard_frequency, observed_rate):
     """Directional check: does the shard's frequency band bracket an observed
     per-firm rate within an order of magnitude? Returns a verdict dict.
@@ -186,6 +261,7 @@ def analyze_cell(records, country, since_year, naics_prefix=FINANCE_NAICS_PREFIX
         "incident_count": len(cell),
         "annual_counts": counts,
         "dispersion": dispersion_stats(counts),
+        "fit": fit_comparison(counts),
     }
 
 
@@ -248,12 +324,14 @@ def format_frequency_backtest_report(report):
         f"(mean {primary['dispersion']['mean']:.2f}/yr)",
         f"  PERT-vs-Poisson: dispersion index = {_fmt(primary['dispersion']['dispersion_index'])} "
         f"-> {primary['dispersion']['verdict']}",
+        f"  {_fmt_fit(primary['fit'])}",
         "",
         f"Secondary cell (method check at depth): {secondary['country']} finance breaches since {secondary['since_year']}",
         f"  incidents: {secondary['incident_count']} over {secondary['dispersion']['n_years']} years "
         f"(mean {secondary['dispersion']['mean']:.2f}/yr)",
         f"  PERT-vs-Poisson: dispersion index = {_fmt(secondary['dispersion']['dispersion_index'])} "
         f"-> {secondary['dispersion']['verdict']}",
+        f"  {_fmt_fit(secondary['fit'])}",
         "",
         "Denominator honesty",
         f"  Implied firms VCDB would 'cover' if its count matched the shard rate: "
@@ -283,3 +361,15 @@ def _fmt(value, digits=2):
     if value is None:
         return "n/a"
     return f"{value:.{digits}f}"
+
+
+def _fmt_fit(fit):
+    if not fit.get("comparable"):
+        return f"NB fit: n/a ({fit.get('reason')})"
+    if not fit.get("overdispersed"):
+        return "NB fit: not overdispersed; Poisson is the honest model."
+    nb = fit["negbin"]
+    return (
+        f"NB fit: size r={_fmt(nb['r'])} (smaller = more clustered), "
+        f"loglik gain over Poisson = {_fmt(fit['loglik_gain'])} -> {fit['better_fit']} fits better"
+    )
