@@ -33,6 +33,7 @@ starting path; the sections below are for when a specific question sends you the
 
 ## Engineering detail
 
+- [METHODOLOGY.md](METHODOLOGY.md): the quantitative model — how a loss number is computed, why Monte Carlo over a point estimate, the frequency/severity asymmetry, limits, and the accountability stance (Roadmap Lane 1 / F1).
 - [architecture.md](architecture.md): current engine, evidence, calibration, and control architecture.
 - [org_specific_scenarios.md](org_specific_scenarios.md): how organization profiles should affect scenarios.
 - [FX_RATE_REFRESH.md](FX_RATE_REFRESH.md): sourced FX assumption refresh workflow.
