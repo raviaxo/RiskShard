@@ -30,6 +30,7 @@ starting path; the sections below are for when a specific question sends you the
 - [COUNTRY_EXPANSION.md](COUNTRY_EXPANSION.md): 25-country contribution priority map and second-geography plan.
 - [MAJOR_MILESTONES.md](MAJOR_MILESTONES.md): major product and governance milestones.
 - [BETA_KIT.md](BETA_KIT.md): ready-to-use public-share assets (LinkedIn post, DM, async intake, monthly Shard Spotlight template).
+- [S1_BACKTEST_POC_PLAN.md](S1_BACKTEST_POC_PLAN.md): approved spec for the Lane 2 backtesting proof-of-concept (VCDB frequency-only, S2 gate) that precedes the public post.
 
 ## Engineering detail
 
