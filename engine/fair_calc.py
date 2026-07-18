@@ -16,6 +16,17 @@ SCHEMA_PATH = PROJECT_ROOT / "schemas" / "shard_schema.json"
 RESULTS_DIR = PROJECT_ROOT / "results"
 VALID_DISTRIBUTIONS = {"pert", "triangular"}
 
+# Structural methodology caveat, applies to every shard regardless of data.
+# Severity is far less predictable from a shard's cell than frequency is; the
+# product must not imply the impact tail is as trustworthy as the frequency band.
+# See docs/METHODOLOGY.md (frequency/severity asymmetry). Reused across the
+# console, executive report, and JSON export so the message stays identical.
+IMPACT_UNCERTAINTY_NOTE = (
+    "Impact is only weakly predictable from a shard's cell (country, industry, "
+    "size, threat); read the P95/P99 loss tail as directional, not precise. "
+    "See docs/METHODOLOGY.md."
+)
+
 
 def load_schema(schema_path=SCHEMA_PATH):
     schema_path = Path(schema_path)
@@ -271,6 +282,7 @@ def export_report(shard_stats, portfolio_stats, output_dir=RESULTS_DIR, timestam
         "timestamp": timestamp.isoformat(),
         "shards": shard_stats,
         "portfolio": portfolio_stats,
+        "caveats": [IMPACT_UNCERTAINTY_NOTE],
     }
     if metadata is not None:
         payload["metadata"] = metadata
