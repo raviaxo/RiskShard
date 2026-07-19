@@ -50,3 +50,24 @@ python scripts/contributor_preflight.py path/to/your_proposed_pack
 
 Keep diffs scoped and coherent, standard-library-first, and never weaken claim
 discipline: "automated benchmark-ready" is not "benchmark-grade."
+
+## How your contribution is reviewed
+
+Every contribution is reviewed against the same, visible bar:
+
+1. **Source** — is it public, citable, dated, and from a credible publisher?
+2. **Honesty** — are values either source-backed or clearly labeled as estimates
+   or cross-context bridges? Nothing is dressed up as a local claim.
+3. **Gates** — does `contributor_preflight.py` pass, do the tests pass, and are
+   the evidence quality gates clean?
+4. **Methodology** — does it respect the model's limits and avoid overclaiming
+   (see [docs/METHODOLOGY.md](docs/METHODOLOGY.md))?
+5. **Craft** — is the diff scoped, and is the DCO sign-off present?
+
+**Our promise on feedback.** A decline is never silent. If a contribution isn't
+accepted, you get specific, candid, respectful reasons and — where possible — a
+concrete path to make it acceptable. If it is accepted, you are credited in
+[CONTRIBUTORS.md](CONTRIBUTORS.md) and your source becomes part of the trail every
+future user can audit. Standout contributions may be featured in a monthly Shard
+Spotlight. Recognition is not an afterthought here — it is how an open, auditable
+risk library gets built: one reviewed source at a time.
