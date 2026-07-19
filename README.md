@@ -512,4 +512,13 @@ For the current documentation map, start with [docs/README.md](docs/README.md). 
 
 ## License
 
-RiskShard is released under the MIT License.
+Copyright (C) 2026 Sergio Alonso.
+
+RiskShard is free software, licensed under the **GNU Affero General Public License
+v3.0 (AGPL-3.0)**. You may use, study, share, and modify it under those terms; if
+you run a modified version as a network service, the AGPL requires you to offer
+that service's users the corresponding source. See [LICENSE](LICENSE).
+
+Contributions are accepted under the same license via the Developer Certificate of
+Origin (DCO) — sign off your commits with `git commit -s`. See
+[CONTRIBUTING.md](CONTRIBUTING.md).
