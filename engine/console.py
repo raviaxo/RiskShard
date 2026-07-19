@@ -54,9 +54,17 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 class RiskShardConsole(cmd.Cmd):
     intro = (
-        "RiskShard console. Type 'demo' to run the canonical first-run path "
-        "automatically, 'workflow' to see it as steps, 'help' for a guided "
-        "command list, or 'exit' to leave."
+        "\n"
+        "  RiskShard\n"
+        "  ─────────\n"
+        "  Evidence-governed cyber risk shards. Every number traces to a\n"
+        "  reviewed public source, with honest confidence and visible limits.\n"
+        "\n"
+        "  Start here\n"
+        "    demo       run the whole first-run path automatically\n"
+        "    workflow   see that path as steps you can type\n"
+        "    help       guided command list\n"
+        "    exit       leave\n"
     )
 
     def __init__(self, root=PROJECT_ROOT, stdin=None, stdout=None):
