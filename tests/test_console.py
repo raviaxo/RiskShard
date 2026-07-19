@@ -84,6 +84,16 @@ class ConsoleTests(unittest.TestCase):
         all_output = self.command("help all")
         self.assertIn("Documented commands", all_output)
 
+    def test_coverage_command_grades_shards_and_is_in_help(self):
+        overview = self.command("coverage")
+        self.assertIn("coverage & confidence", overview)
+        self.assertIn("source-backed", overview)
+        self.assertIn("Where to contribute", overview)
+        # discoverable in the grouped help
+        self.assertIn("coverage", self.command("help"))
+        # unknown module is handled, not crashed
+        self.assertIn("Unknown risk module", self.command("coverage nope_not_a_shard"))
+
     def test_calibrate_writes_artifacts_and_exposes_selected_evidence(self):
         self.command("use au_finance_ransomware_midmarket")
         with tempfile.TemporaryDirectory() as tmp:
