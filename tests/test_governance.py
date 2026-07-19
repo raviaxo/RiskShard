@@ -39,7 +39,7 @@ class GovernanceTests(unittest.TestCase):
         self.assertEqual(fbi["trust_tier"], "high")
         self.assertEqual(fbi["evidence_record_count"], 7)
         self.assertEqual(uk_dsit["trust_tier"], "high")
-        self.assertEqual(uk_dsit["evidence_record_count"], 6)
+        self.assertEqual(uk_dsit["evidence_record_count"], 9)
         self.assertEqual(ibm_uk["trust_tier"], "medium")
         self.assertEqual(ibm_uk["evidence_record_count"], 3)
         self.assertEqual(fca_equifax["source_status"], "fetched")

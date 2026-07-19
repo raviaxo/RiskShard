@@ -1,0 +1,24 @@
+metadata:
+  name: US Finance Data Breach Midmarket
+  version: "0.1"
+  currency: USD
+  scenario_stage: governed_starter
+  benchmark_status: starter_with_source_backed_us_impact_and_bridged_frequency
+  description: >
+    Starter United States financial-services data-breach shard. Impact is
+    source-backed by US-centric, organization-size-relevant anchors (NetDiligence
+    SME crisis-services floor and incident average) and a financial-services
+    industry stress ceiling (IBM). Frequency uses UK official breach/attack
+    prevalence as a labeled cross-country bridge, because the US publishes breach
+    counts but no clean per-firm annual breach prevalence. It remains a governed
+    starter because frequency is bridged rather than US-specific.
+
+frequency:
+  min: 0.43
+  likely: 0.65
+  max: 0.69
+
+impact:
+  min: 152000
+  likely: 264000
+  max: 5560000

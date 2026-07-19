@@ -1,0 +1,43 @@
+id: us_finance_data_breach_midmarket
+title: United States Finance Data Breach Midmarket
+version: "0.1"
+status: governed_starter
+threat: data_breach
+description: >
+  Governed starter data-breach shard for a United States mid-market
+  financial-services organization. Its impact anchors are the best US-centric,
+  organization-size-relevant evidence available: NetDiligence SME crisis-services
+  and incident averages for the floor and likely loss, and the IBM
+  financial-services industry average as a scale stress ceiling. Frequency is a
+  labeled cross-country bridge from the UK official survey, because the US
+  publishes breach counts but no clean per-firm annual breach prevalence.
+context:
+  industry: financial_services
+  country: US
+  company_size: mid_market
+artifacts:
+  scenario: scenarios/us_finance_data_breach_midmarket.yaml
+  org_profile: org_profiles/us_finance_midmarket.yaml
+  calibration: calibrations/us_finance_data_breach.yaml
+  evidence:
+    - evidence/us_finance_data_breach.yaml
+  extractions:
+    - extractions/us_finance_data_breach_reviewed.yaml
+  controls: []
+required_parameters:
+  - frequency.min
+  - frequency.likely
+  - frequency.max
+  - impact.min
+  - impact.likely
+  - impact.max
+tags:
+  - us
+  - united_states
+  - financial_services
+  - mid_market
+  - data_breach
+  - cyber_breach
+practitioner_notes:
+  good_for: A US mid-market financial-services data-breach shard with US-centric, size-appropriate impact anchors (NetDiligence SME) and a financial-services stress ceiling (IBM), useful for practitioner review of loss magnitude.
+  not_good_for: Treating the bridged UK frequency as a US per-firm breach rate, or using the enterprise IBM financial-services average as an expected mid-market loss.

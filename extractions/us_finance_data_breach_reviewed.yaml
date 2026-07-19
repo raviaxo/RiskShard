@@ -1,0 +1,93 @@
+extractions:
+  - id: us_finance_breach_frequency_min_uk_bridge
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-07-19"
+    citation_detail: UK all-business identified breach or attack prevalence.
+    fact: The UK survey reported that 43% of all businesses identified a cyber security breach or attack in the last 12 months.
+    value: 0.43
+    unit: annual_probability
+    normalization_notes: Converted 43% to 0.43 for use as a US lower-frequency bridge.
+    limitations: UK survey used as a cross-country bridge; not US-specific or financial-services-specific.
+    evidence_record_ids:
+      - us_finance_breach_frequency_min_uk_bridge
+
+  - id: us_finance_breach_frequency_likely_uk_bridge
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-07-19"
+    citation_detail: UK medium-business identified breach or attack prevalence.
+    fact: The UK survey reported that 65% of medium businesses identified a cyber security breach or attack in the last 12 months.
+    value: 0.65
+    unit: annual_probability
+    normalization_notes: Converted 65% to 0.65 for use as a US mid-market likely-frequency bridge.
+    limitations: UK survey used as a cross-country bridge; not US-specific or financial-services-specific.
+    evidence_record_ids:
+      - us_finance_breach_frequency_likely_uk_bridge
+
+  - id: us_finance_breach_frequency_max_uk_bridge
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-07-19"
+    citation_detail: UK large-business identified breach or attack prevalence.
+    fact: The UK survey reported that 69% of large businesses identified a cyber security breach or attack in the last 12 months.
+    value: 0.69
+    unit: annual_probability
+    normalization_notes: Converted 69% to 0.69 for use as a US stress-frequency bridge.
+    limitations: UK survey used as a cross-country bridge; large-business prevalence can overstate mid-market likelihood.
+    evidence_record_ids:
+      - us_finance_breach_frequency_max_uk_bridge
+
+  - id: us_finance_breach_impact_min_netdiligence_sme_crisis_usd
+    source_id: netdiligence_cyber_claims_2025
+    source_name: NetDiligence Cyber Claims Study 2025 (Fifteenth Annual)
+    source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
+    publication_date: "2025-09-23"
+    extraction_date: "2026-07-19"
+    citation_detail: SME average crisis-services cost.
+    fact: NetDiligence reported an average crisis-services cost of USD 152,000 for SME cyber claims (organizations under USD 2B revenue).
+    value: 152000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored directly in USD as a mid-market direct-response cost floor.
+    limitations: Insured-claim crisis-services subset; not full total loss; not isolated to financial services.
+    evidence_record_ids:
+      - us_finance_breach_impact_min_netdiligence_sme_crisis_usd
+
+  - id: us_finance_breach_impact_likely_netdiligence_sme_incident_usd
+    source_id: netdiligence_cyber_claims_2025
+    source_name: NetDiligence Cyber Claims Study 2025 (Fifteenth Annual)
+    source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
+    publication_date: "2025-09-23"
+    extraction_date: "2026-07-19"
+    citation_detail: SME average incident cost.
+    fact: NetDiligence reported an average incident cost of USD 264,000 for SME cyber claims (organizations under USD 2B revenue).
+    value: 264000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored directly in USD as the mid-market likely impact anchor.
+    limitations: Insured-claim sample; SME band is broad; not isolated to financial services.
+    evidence_record_ids:
+      - us_finance_breach_impact_likely_netdiligence_sme_incident_usd
+
+  - id: us_finance_breach_impact_max_ibm_financial_services_usd
+    source_id: ibm_cost_data_breach_2025
+    source_name: Cost of a Data Breach Report 2025
+    source_url_or_citation: https://www.ibm.com/reports/data-breach
+    publication_date: "2025-07-30"
+    extraction_date: "2026-07-19"
+    citation_detail: Financial-services industry average breach cost.
+    fact: IBM's 2025 report identified financial services as the second-costliest industry for data breaches, at an average of USD 5.56 million.
+    value: 5560000
+    unit: currency
+    currency: USD
+    normalization_notes: Stored directly in USD as a financial-services stress ceiling.
+    limitations: Enterprise-weighted studied breach population; not mid-market-specific or a full tail distribution.
+    evidence_record_ids:
+      - us_finance_breach_impact_max_ibm_financial_services_usd

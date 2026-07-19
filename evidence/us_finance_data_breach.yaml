@@ -1,0 +1,141 @@
+records:
+  - id: us_finance_breach_frequency_min_uk_bridge
+    title: US mid-market data-breach frequency floor (UK survey bridge)
+    parameter: frequency.min
+    value: 0.43
+    unit: annual_probability
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_type: official_statistics
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-07-19"
+    citation_detail: The UK survey reports that 43% of all businesses identified a cyber security breach or attack in the last 12 months.
+    extraction_notes: Used the UK all-business breach/attack prevalence as a broad lower frequency anchor pending a US-specific per-firm breach prevalence source.
+    normalization_notes: Converted 43% to 0.43. Applied as a source-backed cross-country bridge because the US publishes breach counts (ITRC, DBIR) but no clean per-firm annual breach prevalence.
+    limitations: UK official survey used as a bridge; not US-specific and not financial-services-specific; covers identified breaches or attacks, broader than privacy-only data breach.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [US]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: us_finance_breach_frequency_likely_uk_bridge
+    title: US mid-market data-breach likely frequency (UK survey bridge)
+    parameter: frequency.likely
+    value: 0.65
+    unit: annual_probability
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_type: official_statistics
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-07-19"
+    citation_detail: The UK survey reports that 65% of medium businesses identified a cyber security breach or attack in the last 12 months.
+    extraction_notes: Used the UK medium-business breach/attack prevalence as the mid-market likely frequency anchor pending US-specific evidence.
+    normalization_notes: Converted 65% to 0.65. Applied as a source-backed cross-country bridge until a US mid-market financial-services breach prevalence source is available.
+    limitations: UK official survey used as a bridge; not US-specific and not financial-services-specific; may include high-volume low-impact events.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [US]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: us_finance_breach_frequency_max_uk_bridge
+    title: US mid-market data-breach stress frequency (UK survey bridge)
+    parameter: frequency.max
+    value: 0.69
+    unit: annual_probability
+    source_id: uk_dsit_cyber_breaches_2026
+    source_name: Cyber Security Breaches Survey 2025/2026
+    source_type: official_statistics
+    source_url_or_citation: https://www.gov.uk/government/statistics/cyber-security-breaches-survey-20252026/cyber-security-breaches-survey-20252026
+    publication_date: "2026-04-30"
+    extraction_date: "2026-07-19"
+    citation_detail: The UK survey reports that 69% of large businesses identified a cyber security breach or attack in the last 12 months.
+    extraction_notes: Used the UK large-business breach/attack prevalence as a stress frequency anchor pending US-specific evidence.
+    normalization_notes: Converted 69% to 0.69. Applied as a source-backed cross-country bridge for larger-exposure stress.
+    limitations: UK official survey used as a bridge; not US-specific and not financial-services-specific; large-business prevalence can overstate mid-market likelihood.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [US]
+      company_size_bands: [all]
+      threats: [data_breach]
+
+  - id: us_finance_breach_impact_min_netdiligence_sme_crisis_usd
+    title: US SME cyber crisis-services cost floor
+    parameter: impact.min
+    value: 152000
+    unit: currency
+    currency: USD
+    source_id: netdiligence_cyber_claims_2025
+    source_name: NetDiligence Cyber Claims Study 2025 (Fifteenth Annual)
+    source_type: cyber_insurance_claims_research
+    source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
+    publication_date: "2025-09-23"
+    extraction_date: "2026-07-19"
+    citation_detail: NetDiligence reports an average crisis-services cost of USD 152,000 for SME cyber claims (organizations under USD 2B revenue).
+    extraction_notes: Used the US SME crisis-services average as a conservative direct-response cost floor for a mid-market breach.
+    normalization_notes: Stored directly in USD. Selected as a material-cost floor, not expected total breach cost.
+    limitations: Insured-claim crisis-services subset; not full total loss; SME band is broad (under USD 2B revenue) and not isolated to financial services.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [US]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: us_finance_breach_impact_likely_netdiligence_sme_incident_usd
+    title: US SME cyber incident average cost
+    parameter: impact.likely
+    value: 264000
+    unit: currency
+    currency: USD
+    source_id: netdiligence_cyber_claims_2025
+    source_name: NetDiligence Cyber Claims Study 2025 (Fifteenth Annual)
+    source_type: cyber_insurance_claims_research
+    source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
+    publication_date: "2025-09-23"
+    extraction_date: "2026-07-19"
+    citation_detail: NetDiligence reports an average incident cost of USD 264,000 for SME cyber claims (organizations under USD 2B revenue).
+    extraction_notes: Used the US SME incident average as the size-appropriate likely loss anchor for a mid-market breach.
+    normalization_notes: Stored directly in USD. Selected as the mid-market central-estimate impact because it is US and organization-size specific.
+    limitations: Insured-claim sample; SME band is broad and not isolated to financial services; excludes uninsured or unreported losses.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [US]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: us_finance_breach_impact_max_ibm_financial_services_usd
+    title: US financial-services average data-breach cost (stress ceiling)
+    parameter: impact.max
+    value: 5560000
+    unit: currency
+    currency: USD
+    source_id: ibm_cost_data_breach_2025
+    source_name: Cost of a Data Breach Report 2025
+    source_type: data_breach_cost_research
+    source_url_or_citation: https://www.ibm.com/reports/data-breach
+    publication_date: "2025-07-30"
+    extraction_date: "2026-07-19"
+    citation_detail: IBM's 2025 report identifies financial services as the second-costliest industry for data breaches, at an average of USD 5.56 million.
+    extraction_notes: Used the financial-services industry average as a financial-services-specific stress ceiling for a severe, enterprise-scale breach.
+    normalization_notes: Stored directly in USD. Selected as impact.max because the financial-services average reflects large-scale breach costs well above a typical mid-market incident.
+    limitations: Enterprise-weighted studied breach population; not mid-market-specific and not a full tail distribution; used as a scale stress anchor, not an expected mid-market loss.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [all]
+      company_size_bands: [all]
+      threats: [data_breach]

@@ -37,7 +37,7 @@ class RiskModuleTests(unittest.TestCase):
         module_ids = {module["id"] for module in modules}
         output = format_module_list(search_risk_modules("finance", ROOT))
 
-        self.assertEqual(len(modules), 10)
+        self.assertEqual(len(modules), 11)
         self.assertIn("au_finance_ransomware_midmarket", module_ids)
         self.assertIn("au_finance_data_breach_midmarket", module_ids)
         self.assertIn("au_finance_bec_midmarket", module_ids)
@@ -58,7 +58,7 @@ class RiskModuleTests(unittest.TestCase):
         ransomware = by_id["au_finance_ransomware_midmarket"]
 
         self.assertEqual(registry["registry_type"], "riskshard_registry")
-        self.assertEqual(registry["module_count"], 10)
+        self.assertEqual(registry["module_count"], 11)
         self.assertIn("required_artifacts", registry["contract"])
         self.assertIn("sources/registry.yaml", registry["contract"]["expected_layout"])
         self.assertEqual(ransomware["evidence_summary"]["direct_total"], 6)
@@ -83,7 +83,7 @@ class RiskModuleTests(unittest.TestCase):
         ransomware = build_evidence_pack_registry(ROOT, "au_finance_ransomware_midmarket")["packs"][0]
         detail = format_evidence_pack_detail(ransomware)
 
-        self.assertEqual(registry["pack_count"], 10)
+        self.assertEqual(registry["pack_count"], 11)
         self.assertIn("Evidence packs", output)
         self.assertEqual(ransomware["freshness_status"], "current")
         self.assertEqual(ransomware["pack_confidence"], "medium")
