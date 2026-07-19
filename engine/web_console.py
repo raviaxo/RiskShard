@@ -16,19 +16,30 @@ INDEX_HTML = """<!doctype html>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RiskShard Console</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 L29 12 L16 30 L3 12 Z' fill='%237c8cff'/%3E%3C/svg%3E">
+
   <style>
     :root {
       color-scheme: dark;
-      --bg: #101214;
-      --panel: #171a1d;
-      --panel-2: #1f2427;
-      --line: #343a3e;
-      --text: #f4f1e8;
-      --muted: #a8b0ad;
-      --accent: #60b884;
-      --accent-2: #d49a4a;
-      --danger: #d87575;
-      --input: #0c0e10;
+      /* Cool-ink base */
+      --bg: #0b0e14;
+      --panel: #111621;
+      --panel-2: #161d2a;
+      --line: #222b3a;
+      --text: #e6edf3;
+      --muted: #8794a8;
+      /* Dual-signal: identity (indigo) for nav/labels/CTAs; data (cyan) for every numeric value. */
+      --accent: #7c8cff;
+      --identity-bg: rgba(124, 140, 255, 0.10);
+      --data: #38d3e6;
+      /* RAG — severity only */
+      --sys: #35c98b;
+      --accent-2: #f2b23e;
+      --caution: #f2b23e;
+      --danger: #f26d75;
+      --alert: #f26d75;
+      --input: #080b11;
+      --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
     }
 
     * { box-sizing: border-box; }
@@ -73,7 +84,7 @@ INDEX_HTML = """<!doctype html>
       min-height: 64px;
       padding: 14px 18px;
       border-bottom: 1px solid var(--line);
-      background: #141719;
+      background: #0d121c;
     }
 
     h1, h2 {
@@ -98,7 +109,8 @@ INDEX_HTML = """<!doctype html>
       width: 8px;
       height: 8px;
       border-radius: 999px;
-      background: var(--accent);
+      background: var(--sys);
+      box-shadow: 0 0 0 3px rgba(53, 201, 139, 0.16);
     }
 
     .workflow-lanes {
@@ -120,9 +132,11 @@ INDEX_HTML = """<!doctype html>
       gap: 8px;
       margin-bottom: 8px;
       color: var(--muted);
-      font-size: 12px;
-      font-weight: 650;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      font-weight: 600;
       text-transform: uppercase;
+      letter-spacing: 0.14em;
     }
 
     .lane-actions {
@@ -155,17 +169,23 @@ INDEX_HTML = """<!doctype html>
     }
 
     button.primary {
-      border-color: #3b6d50;
-      background: #1f3a2b;
+      border-color: var(--accent);
+      background: var(--identity-bg);
     }
 
     button.warning {
-      border-color: #72552b;
-      background: #3a2e1d;
+      border-color: rgba(242, 178, 62, 0.5);
+      background: rgba(242, 178, 62, 0.08);
+    }
+
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
     }
 
     .button-title {
-      font-weight: 650;
+      font-weight: 640;
+      letter-spacing: 0.01em;
     }
 
     .button-help {
@@ -182,9 +202,9 @@ INDEX_HTML = """<!doctype html>
 
     .intro {
       margin-top: 14px;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(124, 140, 255, 0.28);
       border-radius: 8px;
-      background: rgba(96, 184, 132, 0.08);
+      background: var(--identity-bg);
       padding: 10px;
     }
 
@@ -198,7 +218,7 @@ INDEX_HTML = """<!doctype html>
       gap: 14px;
       padding: 16px 18px;
       border-bottom: 1px solid var(--line);
-      background: #111416;
+      background: #0d121c;
     }
 
     .console-scroll {
@@ -221,16 +241,26 @@ INDEX_HTML = """<!doctype html>
       padding: 10px;
     }
 
-    .metric-label,
+    .metric-label {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+    }
+
     .item-meta {
       color: var(--muted);
       font-size: 12px;
     }
 
     .metric-value {
-      margin-top: 4px;
-      font-size: 18px;
-      font-weight: 650;
+      margin-top: 5px;
+      font-family: var(--mono);
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--data);
     }
 
     .section-title {
@@ -275,18 +305,21 @@ INDEX_HTML = """<!doctype html>
     }
 
     .badge.good {
-      border-color: #3b6d50;
-      color: #94d7ad;
+      border-color: rgba(53, 201, 139, 0.45);
+      background: rgba(53, 201, 139, 0.08);
+      color: var(--sys);
     }
 
     .badge.warn {
-      border-color: #72552b;
-      color: #e5b76d;
+      border-color: rgba(242, 178, 62, 0.45);
+      background: rgba(242, 178, 62, 0.08);
+      color: var(--caution);
     }
 
     .badge.bad {
-      border-color: #7b3e3e;
-      color: #e19898;
+      border-color: rgba(242, 109, 117, 0.45);
+      background: rgba(242, 109, 117, 0.08);
+      color: var(--alert);
     }
 
     .dashboard-columns {
@@ -612,7 +645,7 @@ INDEX_HTML = """<!doctype html>
     }
 
     function commandFolder(command) {
-      const first = command.trim().split(/\s+/)[0] || "start";
+      const first = command.trim().split(/\\s+/)[0] || "start";
       if (["workflow", "where", "start", "reset", "clear"].includes(first)) return "Start";
       if (["modules", "module", "riskshards", "search", "toprisks", "risks", "countries", "use", "scenario", "info"].includes(first)) return "Scenario";
       if (["show", "consume", "calibrate", "run", "report", "explain"].includes(first)) return first === "show" && command.includes("gaps") ? "Improve Model" : "Run Risk";
