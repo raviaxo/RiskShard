@@ -508,6 +508,7 @@ INDEX_HTML = """<!doctype html>
           <div class="lane-actions">
             <button data-command="enhance"><span class="button-title">Enhance model path</span><span class="button-help">Improve evidence, calibration, and trust before wider use.</span></button>
             <button data-command="packs"><span class="button-title">Evidence pack</span><span class="button-help">Shows source-backed vs assumption-backed parameters.</span></button>
+            <button data-command="coverage"><span class="button-title">Coverage &amp; confidence</span><span class="button-help">Grades each shard's data strength: can I use this number?</span></button>
             <button data-command="propose"><span class="button-title">Calibration proposal</span><span class="button-help">Suggests stronger selectors without silently changing files.</span></button>
             <button data-command="show gaps"><span class="button-title">Evidence gaps</span><span class="button-help">Shows what is missing before trust can increase.</span></button>
           </div>
