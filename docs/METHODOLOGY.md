@@ -1,14 +1,7 @@
 # RiskShard Methodology
 
-> **Status: Accepted (Sergio Alonso, 2026-07-18).** Methodology is a public
-> claim; this document is the canonical statement of the model and its stance,
-> grounded in the engine code (file:line references throughout). Roadmap Lane 1,
-> item **F1** (`docs/PUBLISHABLE_REQUIREMENTS.md`). Follow-on items F2 (widen
-> impact intervals in the product) and F3 (coverage/confidence rubric) are out of
-> scope here and referenced where relevant. Material changes follow Change
-> Control (last section).
-
-Last updated: 2026-07-18
+This document is the canonical statement of the RiskShard model and its stance,
+grounded in the engine code (`file:line` references throughout).
 
 ## What this document is
 
@@ -21,9 +14,9 @@ is aspirational.
 
 The controlling claim discipline: **"automated benchmark-ready" is not
 "benchmark-grade."** A number that runs is not a number that has been reviewed.
-Maturity labels live only in `docs/BENCHMARK_REVIEW_LEDGER.md`, and the North
-Star (`docs/PUBLISHABLE_REQUIREMENTS.md`) is the *accountable* trust/provenance
-layer, not model sophistication.
+A shard is only called benchmark-grade after a recorded human review decision.
+RiskShard's durable asset is an *accountable* trust/provenance layer, not model
+sophistication.
 
 ## The model in one paragraph
 
@@ -50,7 +43,7 @@ metadata:  { name: ..., currency: ..., ... }
 
 Two three-point ranges, six numbers. Organization context, controls,
 provenance, and calibration are **separate inputs**, never embedded in the
-scenario (`AGENTS.md` → Coding Constraints). This keeps the simulated object
+scenario. This keeps the simulated object
 small and auditable and keeps "what we believe" (the scenario) distinct from
 "why we believe it" (the evidence pack).
 
@@ -112,8 +105,7 @@ sampler — is the real product.
 ## The frequency / severity asymmetry (the honest core)
 
 **Frequency and severity are not equally knowable, and the current model treats
-them as if they were.** This is the most important caveat in RiskShard and the
-reason Lane 1 item **F2** exists.
+them as if they were.** This is the most important caveat in RiskShard.
 
 - **Frequency** — "how often does a firm in this cell (country × industry × size
   × threat) suffer this event per year" — is comparatively tractable. It is a
@@ -129,7 +121,7 @@ reason Lane 1 item **F2** exists.
 In today's engine both parameters use the identical three-point PERT machinery,
 which **implies impact-by-cell is as trustworthy as frequency-by-cell. It is
 not.** RiskShard should widen and more loudly caveat impact intervals relative to
-frequency intervals rather than presenting symmetric confidence. Until F2 lands,
+frequency intervals rather than presenting symmetric confidence. Until it does,
 read every shard's impact band as *more* uncertain than its width suggests, and
 treat the p95/p99 loss tail as directional, not precise. This asymmetry is a
 first-class limitation, deliberately surfaced here rather than buried.
@@ -169,21 +161,20 @@ than merely plausible:
    input silently changed.
 2. **Every parameter traces to a reviewed public source.** The spine
    `sources/manifest.json → extractions/ → evidence/ → calibrations/ →
-   scenarios/` (see `docs/PROJECT_STATUS.md`) means each of the six input numbers
-   is either backed by a cited, dated, reviewed source or **honestly labeled** as
-   an estimate, synthetic value, or cross-country/-sector "bridge." Bridges and
-   assumptions are never dressed up as local claims (`AGENTS.md` → Coding
-   Constraints).
+   scenarios/` means each of the six input numbers is either backed by a cited,
+   dated, reviewed source or **honestly labeled** as an estimate, synthetic
+   value, or cross-country/-sector "bridge." Bridges and assumptions are never
+   dressed up as local claims.
 3. **Claim discipline is enforced separately from the code.** The engine can
    only ever produce an *automated* candidate. Whether a shard may be called
-   benchmark-grade is a human decision recorded in
-   `docs/BENCHMARK_REVIEW_LEDGER.md`, with its bridge/stress-anchor caveats
-   required to stay visible in output and release notes.
+   benchmark-grade is a recorded human review decision, with its
+   bridge/stress-anchor caveats required to stay visible in output and release
+   notes.
 
 The stance in one line: **show provenance, keep score, and make it trivial for
-someone else to prove us wrong.** The Lane 2 backtesting PoC (S1) is the next
-expression of this — checking a shard's predicted loss against open incident
-data before the model is promoted to the public.
+someone else to prove us wrong.** The frequency backtest against open incident
+data (`scripts/backtest_frequency.py`) is the next expression of this — checking a
+shard's predicted frequency against reality before the model is promoted.
 
 ## Limits (explicit)
 
@@ -191,11 +182,11 @@ data before the model is promoted to the public.
   continuous frequency by one severity draw; it does not draw *N* events and sum
   *N* independent severities. For sub-annual or multi-event years this
   understates severity dispersion. Evaluating a Poisson frequency / compound
-  model is explicitly on the Lane 2 agenda.
+  model is a known future improvement.
 - **Frequency modeled as a continuous rate, not a count.** See above; PERT-vs-
-  Poisson for frequency is an open S1 question.
+  Poisson for frequency is an open question the backtest begins to probe.
 - **Impact uncertainty understated by symmetric treatment** (the
-  frequency/severity asymmetry; F2 pending).
+  frequency/severity asymmetry; a known future improvement).
 - **No inter-shard correlation** in portfolio aggregation (tail risk
   under-stated).
 - **λ = 4 is fixed**, so per-shard confidence in the mode is not tunable.
@@ -215,8 +206,6 @@ data before the model is promoted to the public.
 
 ## Change control
 
-This document states methodology, which is a public claim under
-`docs/PUBLISHABLE_REQUIREMENTS.md` → Change Control. Material changes to the
-model, the distributions, the asymmetry stance, or the accountability mechanisms
-follow that sequence and require human review; they are not amended by editing
-this file alone.
+This document states methodology, which is a public claim. Material changes to
+the model, the distributions, the asymmetry stance, or the accountability
+mechanisms require human review; they are not amended by editing this file alone.

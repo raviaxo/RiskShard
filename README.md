@@ -37,9 +37,7 @@ RiskShard is a working practitioner beta, not a finished product. Shards are
 labeled by maturity: `governed_starter`, automated `benchmark_candidate`, and —
 only after a recorded human review decision — benchmark-grade. "Automated
 benchmark-ready" is never the same as "human-approved benchmark-grade," and the
-distinction stays visible everywhere results appear. For the phase bar, launch
-model, and strategic change-control rules, see
-[docs/PUBLISHABLE_REQUIREMENTS.md](docs/PUBLISHABLE_REQUIREMENTS.md).
+distinction stays visible everywhere results appear.
 
 ## See the proof
 
@@ -241,7 +239,7 @@ Inspect data feed governance with:
 python scripts/data_governance.py
 ```
 
-The feed inventory separates source publication date, source gather time, reviewed evidence ingestion date, trust tier, evidence confidence, renewal due date, and fetch status. See [docs/GLOBAL_READINESS_ROADMAP.md](docs/GLOBAL_READINESS_ROADMAP.md).
+The feed inventory separates source publication date, source gather time, reviewed evidence ingestion date, trust tier, evidence confidence, renewal due date, and fetch status.
 
 Inspect global readiness with:
 
@@ -486,18 +484,15 @@ The source registry lives in `sources/registry.yaml`. The generated manifest liv
 
 Gathering a source does not automatically make it a benchmark parameter. Extracted facts should still be reviewed and stored as evidence records with applicability, confidence, limitations, and honest evidence-type labels.
 
-## Documentation Map
+## Documentation
 
-For the current documentation map, start with [docs/README.md](docs/README.md). The most important operational docs are:
+Start with [docs/README.md](docs/README.md). Key docs:
 
-- [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md)
-- [docs/PUBLISHABLE_REQUIREMENTS.md](docs/PUBLISHABLE_REQUIREMENTS.md)
-- [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md)
-- [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)
-- [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md)
-- [docs/GLOBAL_READINESS_ROADMAP.md](docs/GLOBAL_READINESS_ROADMAP.md)
-- [docs/COUNTRY_EXPANSION.md](docs/COUNTRY_EXPANSION.md)
-- [docs/MAJOR_MILESTONES.md](docs/MAJOR_MILESTONES.md)
+- [docs/METHODOLOGY.md](docs/METHODOLOGY.md) — the model, its limits, and the accountability stance.
+- [CONTRIBUTING.md](CONTRIBUTING.md) — how to contribute, including the DCO sign-off.
+- [docs/architecture.md](docs/architecture.md) — engine, evidence, and calibration architecture.
+- [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md) — the interactive console workflow.
+- [docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md](docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md) — a source taken end-to-end to a passing contribution.
 
 ## Current Strategic Questions
 

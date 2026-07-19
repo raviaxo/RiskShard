@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Backtest a shard's frequency model against VCDB open incident data.
 
-Roadmap Lane 2, S1 (frequency-only PoC). See docs/S1_BACKTEST_POC_PLAN.md.
+Frequency-only proof of concept. See docs/METHODOLOGY.md.
 """
 import argparse
 import json

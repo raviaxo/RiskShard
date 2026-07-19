@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Report where module maturity labels drift from the benchmark gate (read-only).
 
-Backlog item 17. See docs/NEXT_STEPS.md. Changes no labels.
+Changes no labels.
 """
 import argparse
 import json

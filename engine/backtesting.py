@@ -1,10 +1,9 @@
-"""Frequency backtesting against open incident data (Roadmap Lane 2, S1).
+"""Frequency backtesting against open incident data.
 
 Checks a shard's frequency model against the VERIS Community Database (VCDB), an
 open incident corpus. The honest scope is FREQUENCY ONLY: VCDB populates a dollar
-impact on ~5% of incidents, so severity is not recoverable here (see
-docs/S1_BACKTEST_POC_PLAN.md and the frequency/severity asymmetry in
-docs/METHODOLOGY.md).
+impact on ~5% of incidents, so severity is not recoverable here (see the
+frequency/severity asymmetry in docs/METHODOLOGY.md).
 
 Design: IO (download/unzip) is isolated in ``load_vcdb_records``; everything else
 is pure functions over a list of incident dicts, so the analysis is testable on
