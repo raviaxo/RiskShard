@@ -473,8 +473,8 @@ def extraction_mapping_check(root):
 
 def docs_check(root):
     required = [
-        root / "docs" / "CONTRIBUTING.md",
-        root / "docs" / "GLOBAL_READINESS_ROADMAP.md",
+        root / "CONTRIBUTING.md",
+        root / "docs" / "BENCHMARK_CONTRIBUTOR_WORKFLOW.md",
         root / "docs" / "CONSOLE_EXPERIENCE.md",
     ]
     missing = [path.relative_to(root).as_posix() for path in required if not path.exists()]

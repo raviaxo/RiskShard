@@ -1,4 +1,4 @@
-"""Coverage / confidence rubric (Roadmap Lane 1, F3a).
+"""Coverage / confidence rubric.
 
 Turns the per-shard signals already computed by the shard registry
 (source-backed vs. assumption vs. missing direct parameters, pack confidence,
@@ -8,9 +8,8 @@ plus a plain-language self-qualification line and a contribution funnel.
 It invents no new signals and applies no thresholds beyond counting the existing
 evidence-pack fields, so a shard's grade is a deterministic function of its
 governed evidence. The rubric deliberately tops out at ``source_backed``: whether
-a shard may be called benchmark-grade is a human decision recorded in
-``docs/BENCHMARK_REVIEW_LEDGER.md``, never a machine grade. See
-``docs/METHODOLOGY.md``.
+a shard may be called benchmark-grade is a human review decision, never a machine
+grade. See ``docs/METHODOLOGY.md``.
 """
 
 from collections import Counter

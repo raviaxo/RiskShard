@@ -232,8 +232,8 @@ def localization_summary(records, root):
 
 def contributor_summary(root):
     docs = {
-        "contributing": (root / "docs" / "CONTRIBUTING.md").exists(),
-        "global_readiness": (root / "docs" / "GLOBAL_READINESS_ROADMAP.md").exists(),
+        "contributing": (root / "CONTRIBUTING.md").exists(),
+        "contributor_workflow": (root / "docs" / "BENCHMARK_CONTRIBUTOR_WORKFLOW.md").exists(),
     }
     return {
         "docs": docs,

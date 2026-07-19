@@ -29,7 +29,10 @@ Every number in RiskShard traces to a reviewed public source or is honestly
 labeled as an assumption. Follow the governed path — `sources/ → extractions/ →
 evidence/ → calibrations/` — and keep bridges and estimates labeled as such.
 
-- Engineering rules and the definition of done: [`AGENTS.md`](AGENTS.md).
+- Engineering rules: prefer the standard library, keep `scripts/` thin with
+  reusable logic in `engine/`, make the minimal change, and keep diffs scoped and
+  coherent. Definition of done: tests pass, `validate_evidence` is clean, and a
+  real run of the affected path succeeds.
 - The end-to-end example of taking a source to a passing contribution:
   [`docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md`](docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md).
 - The benchmark target / content-pack / preflight workflow:

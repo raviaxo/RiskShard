@@ -1,4 +1,4 @@
-"""Maturity-label drift audit (backlog item 17, surfaced during F3a).
+"""Maturity-label drift audit.
 
 Each risk module carries a hand-maintained ``status`` label
 (``governed_starter`` / ``benchmark_candidate`` / ``benchmark_review_candidate``).
@@ -7,9 +7,8 @@ a module is ``benchmark_ready``. These two drift: e.g. a module can clear the ga
 yet still be labeled ``governed_starter``.
 
 This module is a **read-only diagnostic**. It changes no labels — it only reports
-where the hand-label and the machine gate disagree, so the maintainer can make the
-Yellow decision recorded in ``docs/NEXT_STEPS.md`` item 17 (correct the labels, or
-derive maturity from the gate so it cannot drift).
+where the hand-label and the machine gate disagree, so the maintainer can decide
+whether to correct the labels or derive maturity from the gate so it cannot drift.
 """
 
 from datetime import datetime
@@ -99,6 +98,6 @@ def format_maturity_audit(report):
     lines.extend([
         "",
         "This is a diagnostic. Correcting labels (or deriving maturity from the "
-        "gate) is a Yellow decision -- see docs/NEXT_STEPS.md item 17.",
+        "gate) is a maintainer decision; this tool changes nothing.",
     ])
     return "\n".join(lines) + "\n"
