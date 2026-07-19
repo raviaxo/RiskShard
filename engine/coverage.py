@@ -201,3 +201,121 @@ def _format_grade_counts(counts):
     ordered = sorted(counts.items(), key=lambda kv: GRADES[kv[0]]["rank"])
     parts = [f"{GRADES[name]['label']}={count}" for name, count in ordered if count]
     return ", ".join(parts) or "none"
+
+
+# Grade -> severity color role for the visual (RAG is severity-only; grade maps to it).
+_GRADE_COLOR = {
+    "source_backed": "var(--sys)",
+    "bridged": "var(--caution)",
+    "provisional": "var(--alert)",
+    "scaffold": "var(--muted)",
+}
+
+_COVERAGE_CSS = """
+  :root{--bg:#0b0e14;--panel:#111621;--panel2:#161d2a;--line:#222b3a;--text:#e6edf3;
+  --muted:#8794a8;--identity:#7c8cff;--identity-bg:rgba(124,140,255,.10);--data:#38d3e6;
+  --sys:#35c98b;--caution:#f2b23e;--alert:#f26d75;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;}
+  *{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--sans);font-size:14px;line-height:1.5;padding:32px;max-width:1040px;margin:0 auto;}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--identity);}
+  h1{margin:6px 0 4px;font-size:26px;letter-spacing:-.01em;}
+  .sub{color:var(--muted);margin:0 0 24px;}
+  .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px;}
+  .tile{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px;}
+  .tile .k{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);}
+  .tile .v{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--data);margin-top:6px;letter-spacing:-.02em;}
+  table{width:100%;border-collapse:collapse;margin-bottom:28px;}
+  th{text-align:left;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--muted);font-weight:600;padding:0 10px 8px;border-bottom:1px solid var(--line);}
+  td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:middle;}
+  tr:last-child td{border-bottom:0;}
+  .id{font-weight:600;} .ctx{color:var(--muted);font-size:12.5px;margin-top:2px;}
+  .pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;
+  padding:3px 9px;border-radius:999px;border:1px solid var(--line);white-space:nowrap;}
+  .dot{width:7px;height:7px;border-radius:999px;}
+  .bar{height:7px;border-radius:999px;background:var(--panel2);overflow:hidden;min-width:110px;}
+  .bar span{display:block;height:100%;border-radius:999px;}
+  .num{font-family:var(--mono);color:var(--data);font-size:12.5px;}
+  .help{border:1px solid rgba(124,140,255,.28);background:var(--identity-bg);border-radius:12px;padding:16px 18px;margin-bottom:20px;}
+  .help h2{margin:0 0 8px;font-size:15px;} .help ul{margin:8px 0 0;padding-left:18px;color:var(--muted);}
+  .help code{font-family:var(--mono);color:var(--identity);font-size:12.5px;}
+  footer{color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:14px;}
+"""
+
+
+def _esc(text):
+    return (str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+
+
+def render_coverage_html(report):
+    shards = report["shards"]
+    countries = sorted({s["context"].get("country") for s in shards if s["context"].get("country")})
+    threats = sorted({s["threat"] for s in shards if s.get("threat")})
+    source_backed = sum(1 for s in shards if s["grade"]["grade"] == "source_backed")
+    high_conf = sum(
+        1 for s in shards
+        if s["grade"]["grade"] == "source_backed" and s["grade"]["confidence"] == "high"
+    )
+    tiles = [
+        ("Shards", len(shards)),
+        ("Source-backed", source_backed),
+        ("High-confidence", high_conf),
+        ("Countries", len(countries)),
+        ("Threats", len(threats)),
+    ]
+    tile_html = "".join(
+        f'<div class="tile"><div class="k">{_esc(k)}</div><div class="v">{v}</div></div>'
+        for k, v in tiles
+    )
+
+    rows = []
+    for s in shards:
+        g = s["grade"]
+        color = _GRADE_COLOR[g["grade"]]
+        pct = int(round(100 * g["source_backed"] / g["total"])) if g["total"] else 0
+        ctx = _context_label(s["context"])
+        conf = g["confidence"] if g["grade"] == "source_backed" else "—"
+        rows.append(
+            f'<tr><td><div class="id">{_esc(s["id"])}</div>'
+            f'<div class="ctx">{_esc(ctx)} · {_esc(s["threat"])}</div></td>'
+            f'<td><span class="pill"><span class="dot" style="background:{color}"></span>'
+            f'{_esc(g["label"])}</span></td>'
+            f'<td><div style="display:flex;align-items:center;gap:10px">'
+            f'<div class="bar"><span style="width:{pct}%;background:{color}"></span></div>'
+            f'<span class="num">{g["source_backed"]}/{g["total"]}</span></div></td>'
+            f'<td class="num" style="color:var(--muted)">{_esc(conf)}</td></tr>'
+        )
+
+    funnel = [s for s in shards if s["grade"]["grade"] in ("bridged", "provisional", "scaffold")]
+    help_items = "".join(
+        f'<li><strong style="color:var(--text)">{_esc(s["id"])}</strong> — '
+        f'{s["grade"]["missing"] + s["grade"]["assumptions"]} of {s["grade"]["total"]} '
+        f'parameters need stronger evidence '
+        f'(<code>propose {_esc(s["id"])}</code>)</li>'
+        for s in funnel
+    ) or '<li>Every shard is fully source-backed — deepen confidence and freshness next.</li>'
+
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RiskShard — Coverage &amp; Confidence</title>
+<style>{_COVERAGE_CSS}</style></head><body>
+<div class="eyebrow">RiskShard · Evidence coverage</div>
+<h1>Coverage &amp; Confidence</h1>
+<p class="sub">Every number traces to a reviewed public source. This is the honest
+map of what is strong, what is bridged, and where contributions help most.
+Generated {_esc(report["generated_at"])}.</p>
+<div class="tiles">{tile_html}</div>
+<table><thead><tr><th>Shard</th><th>Data strength</th><th>Source-backed</th><th>Confidence</th></tr></thead>
+<tbody>{"".join(rows)}</tbody></table>
+<div class="help"><h2>Where you can help</h2>
+<p style="margin:0;color:var(--muted)">Pick a shard below, bring one reviewed public
+source for a weak parameter, and open a pull request. That is how the map fills in.</p>
+<ul>{help_items}</ul></div>
+<footer>Data strength is not benchmark-grade — calling a shard benchmark-grade is a
+recorded human review decision. Reproduce this map:
+<code style="font-family:var(--mono);color:var(--identity)">python scripts/coverage_map.py</code></footer>
+</body></html>
+"""

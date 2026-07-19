@@ -59,6 +59,17 @@ class CoverageReportTests(unittest.TestCase):
         self.assertIn("benchmark_program.py", text)
         self.assertIn("Where to contribute", text)
 
+    def test_render_coverage_html_is_self_contained_and_branded(self):
+        report = coverage.build_coverage_report()
+        html = coverage.render_coverage_html(report)
+        self.assertTrue(html.lstrip().startswith("<!doctype html>"))
+        self.assertIn("Coverage &amp; Confidence", html)
+        self.assertIn("Where you can help", html)
+        self.assertIn("High-confidence", html)
+        # self-contained: styles inline, no external resource loads
+        self.assertIn("<style>", html)
+        self.assertNotIn("http://", html.replace("http://www.w3.org", ""))
+
 
 if __name__ == "__main__":
     unittest.main()
