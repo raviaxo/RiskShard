@@ -6,6 +6,10 @@ New here? Read these first, in order:
 2. [METHODOLOGY.md](METHODOLOGY.md) — the quantitative model: how a loss number is computed, why Monte Carlo over a point estimate, the frequency/severity asymmetry, its limits, and the accountability stance.
 3. [../CONTRIBUTING.md](../CONTRIBUTING.md) — how to contribute, including the DCO sign-off.
 
+## Proof
+
+- [BACKTEST_VALIDATION.md](BACKTEST_VALIDATION.md) — RiskShard checking its own frequency numbers against open incident data, and reporting what held and what didn't.
+
 ## Engineering
 
 - [architecture.md](architecture.md) — current engine, evidence, calibration, and control architecture.

@@ -174,7 +174,8 @@ than merely plausible:
 The stance in one line: **show provenance, keep score, and make it trivial for
 someone else to prove us wrong.** The frequency backtest against open incident
 data (`scripts/backtest_frequency.py`) is the next expression of this — checking a
-shard's predicted frequency against reality before the model is promoted.
+shard's predicted frequency against reality before the model is promoted. The
+result, held to the same honesty, is in [BACKTEST_VALIDATION.md](BACKTEST_VALIDATION.md).
 
 ## Limits (explicit)
 
