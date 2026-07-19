@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: How to contribute (start here)
+    url: https://github.com/raviaxo/RiskShard/blob/main/CONTRIBUTING.md
+    about: The contribution path, the DCO sign-off, and how contributions are reviewed and credited.
+  - name: Where help is needed most
+    url: https://github.com/raviaxo/RiskShard/blob/main/CONTRIBUTORS.md
+    about: See which shards need stronger evidence, then bring a source.
