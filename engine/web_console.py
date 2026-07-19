@@ -479,7 +479,8 @@ INDEX_HTML = """<!doctype html>
         <section class="lane">
           <div class="lane-title"><span>Start with your company</span></div>
           <div class="lane-actions">
-            <button class="primary" data-command="workflow"><span class="button-title">Recommended workflow</span><span class="button-help">Shows the shortest console path from context to run.</span></button>
+            <button class="primary" data-command="demo"><span class="button-title">Guided demo</span><span class="button-help">Runs the whole first-run path automatically, with narration.</span></button>
+            <button data-command="workflow"><span class="button-title">Recommended workflow</span><span class="button-help">Shows the shortest console path from context to run.</span></button>
             <button data-command="where"><span class="button-title">Where am I?</span><span class="button-help">Shows selected shard, inputs, last run, and next commands.</span></button>
             <button data-command="toprisks"><span class="button-title">Top risk readiness</span><span class="button-help">Ranks starter threats by current evidence coverage.</span></button>
             <button data-command="start over"><span class="button-title">Start over</span><span class="button-help">Clears selected shard, calibration, run state, and prompt.</span></button>
@@ -501,6 +502,7 @@ INDEX_HTML = """<!doctype html>
             <button data-command="run" class="warning"><span class="button-title">Run scenario</span><span class="button-help">Runs the selected shard and returns AVG, P50, P95, P99.</span></button>
             <button data-command="explain"><span class="button-title">Explain latest result</span><span class="button-help">Summarizes the latest calibration or simulation.</span></button>
             <button data-command="report json"><span class="button-title">Export JSON report</span><span class="button-help">Writes a reviewable local output after a run.</span></button>
+            <button data-command="report exec"><span class="button-title">Board summary</span><span class="button-help">Writes a one-page board-ready executive Markdown after a run.</span></button>
           </div>
         </section>
         <section class="lane">
@@ -519,7 +521,7 @@ INDEX_HTML = """<!doctype html>
             <button data-command="readiness"><span class="button-title">Readiness dashboard</span><span class="button-help">Shows current coverage, trust, release, and next actions.</span></button>
             <button data-command="beta"><span class="button-title">Beta readiness</span><span class="button-help">Shows stricter product/data blockers before public operations.</span></button>
             <button data-command="feeds"><span class="button-title">Data feed governance</span><span class="button-help">Shows source freshness, confidence, and renewal status.</span></button>
-            <button data-command="doctor"><span class="button-title">Local health check</span><span class="button-help">Checks environment, sources, evidence, package, and tests.</span></button>
+            <button data-command="doctor"><span class="button-title">Local health check</span><span class="button-help">Checks environment, sources, evidence, and package readiness.</span></button>
             <button data-command="validate"><span class="button-title">Validate evidence</span><span class="button-help">Runs evidence quality gates.</span></button>
           </div>
         </section>
@@ -709,10 +711,11 @@ INDEX_HTML = """<!doctype html>
       const packs = data.evidence_packs || {};
       const actions = data.next_actions.slice(0, 3);
       const problemFeeds = feeds.problem_feeds.slice(0, 3);
-      const topRisks = data.top_risks.slice(0, 5);
       const activeModuleId = data.active_module_id;
       const coverageMatrix = packs.coverage_matrix || [];
       const org = data.org_profile;
+      // UI-only presentation ordering: surface the shards that best match the
+      // selected org context first. This is display sort, not an engine metric.
       const recommendedRows = [...coverageMatrix].sort((a, b) => shardFitScore(b, org) - shardFitScore(a, org));
       dashboard.innerHTML = `
         <div class="metric-grid">
@@ -868,7 +871,7 @@ class WebConsoleApp:
         if command in {"exit", "quit", "EOF"}:
             return {
                 "prompt": self.console.prompt,
-                "output": "The browser console stays open. Stop the local server from Codex when finished.",
+                "output": "The browser console stays open. Stop the local server when finished.",
             }
 
         with self.lock:

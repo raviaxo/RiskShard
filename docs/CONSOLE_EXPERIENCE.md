@@ -28,8 +28,8 @@ It is intentionally closer to a Metasploit-style console than a web app:
 - Summarize the latest calibration or run with `explain`.
 - Run source/evidence quality gates with `validate`.
 
-For Codex side-panel use, RiskShard also includes a local browser console
-wrapper. It uses the same console commands and local files. It should not feel
+RiskShard also includes a local browser console wrapper for side-panel use. It
+uses the same console commands and local files. It should not feel
 like a separate fake application; every button runs a real console command.
 
 The browser console now starts with the practitioner question:
