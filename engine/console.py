@@ -46,6 +46,7 @@ from engine.risk_modules import (
 )
 from engine.scenarios import scenario_paths, scenario_stage_label
 from engine.shard_registry import build_shard_registry, format_shard_registry
+from engine.coverage import build_coverage_report, format_coverage_report
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -185,6 +186,7 @@ class RiskShardConsole(cmd.Cmd):
             "\n"
             "Improve the evidence (see how much to trust it)\n"
             "  packs           Show the trust boundary: which numbers are source-backed.\n"
+            "  coverage        Grade each shard's data strength: can I use this number?\n"
             "  show gaps       Show the next evidence gap to close.\n"
             "  propose         Suggest better source-backed evidence.\n"
             "\n"
@@ -391,6 +393,16 @@ class RiskShardConsole(cmd.Cmd):
         """registry - Show the shard registry summary and contribution contract."""
         del arg
         self.write(format_shard_registry(build_shard_registry(self.root)))
+        return None
+
+    def do_coverage(self, arg):
+        """coverage [module-id] - Grade shard data strength and self-qualification."""
+        module_id = arg.strip() or None
+        report = build_coverage_report(self.root, module_id=module_id)
+        if module_id and not report["shards"]:
+            self.write(f"Unknown risk module: {module_id}\n")
+            return None
+        self.write(format_coverage_report(report))
         return None
 
     def do_countries(self, arg):
