@@ -83,8 +83,8 @@ class WebConsoleTests(unittest.TestCase):
         self.assertIn("next_actions", dashboard)
         self.assertEqual(dashboard["active_module_id"], "au_finance_ransomware_midmarket")
         self.assertIn("coverage_matrix", dashboard["evidence_packs"])
-        self.assertEqual(dashboard["risk_modules"]["module_count"], 10)
-        self.assertEqual(dashboard["evidence_packs"]["pack_count"], 10)
+        self.assertEqual(dashboard["risk_modules"]["module_count"], 11)
+        self.assertEqual(dashboard["evidence_packs"]["pack_count"], 11)
         self.assertEqual(dashboard["readiness_gate"]["status"], "ready_for_local_calibrated_run")
         self.assertGreaterEqual(len(dashboard["top_risks"]), 5)
 

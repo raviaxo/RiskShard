@@ -543,3 +543,20 @@ sources:
       ransomware damage. Preserve limitations that report counts are not
       organization-level annual probabilities and restoration/investigation
       cost bands are not full total-loss distributions.
+  - id: netdiligence_cyber_claims_2025
+    title: NetDiligence Cyber Claims Study 2025 (Fifteenth Annual)
+    publisher: NetDiligence
+    source_type: cyber_insurance_claims_research
+    url: https://netdiligence.com/cyber-claims-study-2025-report/
+    publication_date: "2025-09-23"
+    access_mode: public_pdf
+    intended_use:
+      - US cyber insurance claim severity
+      - small and mid-market (SME) incident cost
+      - data breach loss magnitude by organization size
+    usage_notes: >
+      Use as a US-centric cyber insurance claims severity source. SME figures
+      cover organizations under USD 2B revenue and are size-relevant for
+      mid-market shards. Preserve limitations that claims are insured-loss
+      samples, not a full population loss distribution, and are not isolated to
+      the financial-services sector.

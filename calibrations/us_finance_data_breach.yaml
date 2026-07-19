@@ -1,0 +1,50 @@
+metadata:
+  name: United States financial-services data breach calibration
+  scenario_name: US Finance Data Breach Midmarket - Calibrated Draft
+  version: "0.1"
+  notes: >
+    Calibration profile for a United States mid-market financial-services data
+    breach. Impact anchors are US-centric and organization-size relevant
+    (NetDiligence SME crisis-services floor and incident average) plus a
+    financial-services-specific stress ceiling (IBM financial-services average).
+    Frequency uses UK official breach/attack prevalence as a source-backed
+    cross-country bridge, because the US publishes breach counts but no clean
+    per-firm annual breach prevalence. All anchors are already in USD, so no FX
+    conversion is applied.
+
+target_currency: USD
+
+parameters:
+  frequency:
+    min:
+      evidence_id: us_finance_breach_frequency_min_uk_bridge
+      transform: direct
+      rationale: UK all-business breach/attack prevalence used as a broad lower frequency bridge.
+    likely:
+      evidence_id: us_finance_breach_frequency_likely_uk_bridge
+      transform: direct
+      rationale: UK medium-business breach/attack prevalence used as the mid-market likely frequency bridge.
+    max:
+      evidence_id: us_finance_breach_frequency_max_uk_bridge
+      transform: direct
+      rationale: UK large-business breach/attack prevalence used as a stress frequency bridge.
+
+  impact:
+    min:
+      evidence_id: us_finance_breach_impact_min_netdiligence_sme_crisis_usd
+      transform: direct
+      target_currency: USD
+      round_to: 1000
+      rationale: US SME crisis-services average used as a conservative direct-response cost floor.
+    likely:
+      evidence_id: us_finance_breach_impact_likely_netdiligence_sme_incident_usd
+      transform: direct
+      target_currency: USD
+      round_to: 1000
+      rationale: US SME incident average used as the size-appropriate mid-market likely impact.
+    max:
+      evidence_id: us_finance_breach_impact_max_ibm_financial_services_usd
+      transform: direct
+      target_currency: USD
+      round_to: 10000
+      rationale: US financial-services industry average used as a scale stress ceiling for a severe breach.
