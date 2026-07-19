@@ -37,6 +37,8 @@ evidence/ → calibrations/` — and keep bridges and estimates labeled as such.
   [`docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md`](docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md).
 - The benchmark target / content-pack / preflight workflow:
   [`docs/BENCHMARK_CONTRIBUTOR_WORKFLOW.md`](docs/BENCHMARK_CONTRIBUTOR_WORKFLOW.md).
+- Per-artifact checklists (source registry, extraction, evidence, calibration,
+  module, country pack): [`docs/CONTENT_CONTRIBUTION.md`](docs/CONTENT_CONTRIBUTION.md).
 
 ## Before you open a pull request
 

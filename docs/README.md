@@ -18,3 +18,4 @@ New here? Read these first, in order:
 - [CONSOLE_EXPERIENCE.md](CONSOLE_EXPERIENCE.md) — the interactive console workflow and scope guardrails.
 - [GOLDEN_CONTRIBUTOR_EXAMPLE.md](GOLDEN_CONTRIBUTOR_EXAMPLE.md) — a public source taken end-to-end (source → extraction → evidence → calibration → passing preflight).
 - [BENCHMARK_CONTRIBUTOR_WORKFLOW.md](BENCHMARK_CONTRIBUTOR_WORKFLOW.md) — the content-pack, preflight, and evidence-pack workflow for contributors.
+- [CONTENT_CONTRIBUTION.md](CONTENT_CONTRIBUTION.md) — per-artifact contributor checklists (source, extraction, evidence, calibration, module, country pack).
