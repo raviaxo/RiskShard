@@ -110,12 +110,9 @@ RiskShard aims to become a shared computation layer for cyber risk:
 
 The decision engine is partially sketched but not fully integrated. The repository includes early control objects for frequency and impact reduction, a comparator, and orchestration notes. These pieces need cleanup before they should be treated as production-ready.
 
-See [docs/CODEX_REPO_REVIEW.md](docs/CODEX_REPO_REVIEW.md) for a concise technical review and cleanup list.
-
 ## Repository Layout
 
 ```text
-AGENTS.md                Operating notes for future Codex sessions
 engine/                  Reusable simulation and control modules
 engine/analysis/         Comparison helpers for before/after simulations
 engine/controls/         Early control simulation layer
@@ -135,7 +132,7 @@ schemas/                 JSON Schema for scenario validation
 scripts/                 Thin CLI and console entry points
 tests/                   Stdlib unittest coverage
 results/                 Ignored local reports and LEC charts
-docs/                    Vision, roadmap, architecture, and strategy notes
+docs/                    Methodology, architecture, and contributor guides
 ```
 
 ## Run The Full Portfolio
@@ -161,7 +158,7 @@ For a guided practitioner workflow, start the console:
 python scripts/riskshard_console.py
 ```
 
-Or start the local browser console for a Codex side-panel style workflow:
+Or start the local browser console:
 
 ```bash
 python scripts/riskshard_web_console.py

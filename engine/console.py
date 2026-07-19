@@ -607,7 +607,7 @@ class RiskShardConsole(cmd.Cmd):
         return None
 
     def do_toprisks(self, arg):
-        """toprisks - Rank starter threats for the selected organization profile."""
+        """toprisks - Rank starter threats by current evidence and calibration readiness."""
         del arg
         org_profile = self.ensure_org_profile()
         rows = rank_top_risks(org_profile)
