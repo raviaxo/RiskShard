@@ -51,6 +51,26 @@ from engine.coverage import build_coverage_report, format_coverage_report
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
+# ANSI palette. Emitted only to a real interactive terminal; StringIO-backed
+# stdout (tests and the browser console) is not a tty, so paint() returns plain
+# text there. Matches the browser console: identity = indigo, data = cyan.
+_ANSI = {
+    "identity": "\033[38;5;105m",
+    "data": "\033[38;5;80m",
+    "muted": "\033[38;5;245m",
+    "sys": "\033[38;5;42m",
+    "caution": "\033[38;5;214m",
+    "alert": "\033[38;5;203m",
+    "bold": "\033[1m",
+}
+_ANSI_RESET = "\033[0m"
+
+
+def paint(text, *codes, enabled=True):
+    if not enabled or not codes:
+        return text
+    return "".join(_ANSI[code] for code in codes) + text + _ANSI_RESET
+
 
 class RiskShardConsole(cmd.Cmd):
     intro = (
@@ -77,7 +97,27 @@ class RiskShardConsole(cmd.Cmd):
         self.last_run = None
         self.last_paths = {}
         self.options = self.default_options()
-        self.prompt = "riskshard> "
+        self.color = bool(getattr(self.stdout, "isatty", lambda: False)())
+        self.prompt = self.c("riskshard> ", "identity") if self.color else "riskshard> "
+
+    def c(self, text, *codes):
+        return paint(text, *codes, enabled=self.color)
+
+    def preloop(self):
+        if self.color:
+            self.intro = (
+                "\n"
+                "  " + self.c("RiskShard", "identity", "bold") + "\n"
+                "  " + self.c("─────────", "identity") + "\n"
+                "  Evidence-governed cyber risk shards. Every number traces to a\n"
+                "  reviewed public source, with honest confidence and visible limits.\n"
+                "\n"
+                "  " + self.c("Start here", "muted") + "\n"
+                "    " + self.c("demo", "identity") + "       run the whole first-run path automatically\n"
+                "    " + self.c("workflow", "identity") + "   see that path as steps you can type\n"
+                "    " + self.c("help", "identity") + "       guided command list\n"
+                "    " + self.c("exit", "identity") + "       leave\n"
+            )
 
     def default_options(self):
         return {
@@ -556,6 +596,7 @@ class RiskShardConsole(cmd.Cmd):
             run["portfolio"],
             self.write,
             run["metadata"].get("currencies", {}).get("portfolio_currency"),
+            paint_fn=self.c,
         )
         self.write(f"LEC: {relative_to_root(lec_path, self.root)}\n")
         self.write("Next consume: explain; report json\n")
@@ -654,6 +695,7 @@ class RiskShardConsole(cmd.Cmd):
                 self.last_run["portfolio"],
                 self.write,
                 self.last_run["metadata"].get("currencies", {}).get("portfolio_currency"),
+                paint_fn=self.c,
             )
             self.write("Run 'report json' to export the simulation report, or 'enhance' to improve the trust boundary.\n")
         else:
@@ -1098,9 +1140,10 @@ def format_money(value, currency=None):
     return f"${value:,.2f}"
 
 
-def print_stats(stats, write, currency=None):
-    write(f"AVG : {format_money(stats['mean'], currency)}\n")
-    write(f"P50 : {format_money(stats['p50'], currency)}\n")
-    write(f"P95 : {format_money(stats['p95'], currency)}\n")
-    write(f"P99 : {format_money(stats['p99'], currency)}\n")
-    write(f"Note: {IMPACT_UNCERTAINTY_NOTE}\n")
+def print_stats(stats, write, currency=None, paint_fn=None):
+    tint = paint_fn or (lambda text, *codes: text)
+    write(f"AVG : {tint(format_money(stats['mean'], currency), 'data')}\n")
+    write(f"P50 : {tint(format_money(stats['p50'], currency), 'data')}\n")
+    write(f"P95 : {tint(format_money(stats['p95'], currency), 'data')}\n")
+    write(f"P99 : {tint(format_money(stats['p99'], currency), 'data')}\n")
+    write(f"Note: {tint(IMPACT_UNCERTAINTY_NOTE, 'muted')}\n")
