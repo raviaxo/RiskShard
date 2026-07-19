@@ -202,9 +202,9 @@ can see which values are source-backed versus assumption-only. Coverage cells
 and module rows are actionable: source-backed cells open the evidence pack, and
 assumption or missing cells open the calibration proposal for that module.
 
-## Evidence Calibration
+## Evidence and calibration
 
-RiskShard can generate a draft calibrated scenario from reviewed evidence:
+Generate a draft calibrated scenario from reviewed evidence:
 
 ```bash
 python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.yaml \
@@ -213,145 +213,28 @@ python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.y
   --calibration calibrations/au_finance_ransomware.yaml \
   --threat ransomware \
   --report-output results/au_finance_ransomware_calibration.json \
-  --markdown-output results/au_finance_ransomware_calibration.md \
   --scenario-output results/au_finance_ransomware_calibrated.yaml
 ```
 
-The calibration reports show a bottom line, confidence summary, what changed from the base scenario, limitations, selected evidence, applicable but excluded evidence, normalization assumptions, currency conversion assumptions, warnings, and the generated `frequency.min/likely/max` and `impact.min/likely/max` ranges. Current FX rates live in `calibrations/fx_rates.yaml`; the included AUD/USD rate is sourced from RBA Statistical Table F11.1 and inverted explicitly for USD-to-AUD calibration conversions, GBP/USD coverage is recorded as an explicit ECB-derived cross-rate, and USD/CAD coverage is recorded as an explicit Bank of Canada FXUSDCAD rate.
+The report shows the bottom line, confidence, what changed, selected vs. excluded
+evidence, normalization and FX assumptions, and the generated ranges. FX
+assumptions live in `calibrations/fx_rates.yaml` (each rate sourced and dated; see
+[docs/FX_RATE_REFRESH.md](docs/FX_RATE_REFRESH.md)).
 
-Validate evidence quality gates with:
-
-```bash
-python scripts/validate_evidence.py
-```
-
-Refresh static FX assumptions with:
+Other governance and inspection commands (each also reachable from the console):
 
 ```bash
-python scripts/update_fx_rates.py --output calibrations/fx_rates.yaml
+python scripts/validate_evidence.py            # evidence quality gates
+python scripts/data_governance.py              # source freshness / trust / renewal
+python scripts/readiness_dashboard.py          # coverage, gate, next actions
+python scripts/riskshard_doctor.py             # local environment + data health
+python scripts/riskshard_modules.py list       # risk modules and evidence packs
+python scripts/riskshard_modules.py coverage   # data-strength grade per shard
+python scripts/contributor_preflight.py path/to/proposed_pack  # before a PR
 ```
 
-See [docs/FX_RATE_REFRESH.md](docs/FX_RATE_REFRESH.md) for the review checklist.
-
-Inspect data feed governance with:
-
-```bash
-python scripts/data_governance.py
-```
-
-The feed inventory separates source publication date, source gather time, reviewed evidence ingestion date, trust tier, evidence confidence, renewal due date, and fetch status.
-
-Inspect global readiness with:
-
-```bash
-python scripts/readiness_dashboard.py
-```
-
-The readiness view also exposes a gate and prioritized next actions so practitioners can see whether a shard is blocked, source-review-needed, assumption-review-needed, or ready for a local calibrated run.
-
-Inspect stricter beta readiness before expanding public operations with:
-
-```bash
-python scripts/beta_readiness.py
-```
-
-The beta gate is intentionally stricter than local run readiness. It checks
-module depth, benchmark-ready candidates, source/evidence health, package smoke,
-data-pack fingerprinting, minimum governance docs, and clean-install proof.
-
-Refresh the clean-install proof from a fresh local virtual environment with:
-
-```bash
-python scripts/clean_install_proof.py --recreate
-```
-
-Inspect the benchmark-grade 30 adoption program with:
-
-```bash
-python scripts/benchmark_program.py
-python scripts/benchmark_program.py --cohort seeded
-python scripts/benchmark_program.py --sprint seeded
-python scripts/benchmark_program.py --target gb_finance_data_breach_midmarket
-```
-
-The benchmark program tracks thirty target shards and reports which ones are missing modules, which need evidence upgrades, and which are ready for human benchmark review. The seeded cohort view focuses on the ten runnable modules, and the sprint view turns the next evidence-upgrade queue into target-level blockers, required artifacts, and review commands. It prevents starter shards from being overclaimed as benchmark-grade.
-
-Rank starter threats by evidence and calibration readiness with:
-
-```bash
-python scripts/riskshard_toprisks.py --limit 5
-python scripts/riskshard_toprisks.py --json
-```
-
-Inspect risk modules and evidence packs with:
-
-```bash
-python scripts/riskshard_modules.py list
-python scripts/riskshard_modules.py info gb_finance_data_breach_midmarket
-python scripts/riskshard_modules.py packs gb_finance_data_breach_midmarket
-python scripts/riskshard_modules.py packs gb_finance_data_breach_midmarket --export results/gb_breach_evidence_pack.json
-python scripts/riskshard_modules.py propose gb_finance_data_breach_midmarket
-```
-
-Risk modules are the current Metasploit-style front door: they bind a scenario,
-organization profile, calibration profile, evidence files, extraction files,
-control profiles, and governed source feeds into one searchable unit.
-The `--export` path writes a local module evidence-pack artifact with a
-fingerprint and SHA-256 hashes for the module's review files.
-
-Inspect the country contribution roadmap with:
-
-```bash
-python scripts/riskshard_modules.py countries
-python scripts/riskshard_modules.py countries US
-python scripts/riskshard_modules.py countries GB
-```
-
-Run the local doctor with:
-
-```bash
-python scripts/riskshard_doctor.py
-python scripts/riskshard_doctor.py --run-tests
-```
-
-The doctor combines environment, source, evidence, extraction, scenario-stage, readiness, package entry-point smoke, data-pack, and test-readiness checks.
-
-Verify declared package commands directly with:
-
-```bash
-python scripts/package_smoke.py
-```
-
-Generate a data-pack fingerprint for governed inputs with:
-
-```bash
-python scripts/data_pack_manifest.py
-```
-
-Cut a named local data-pack release artifact with:
-
-```bash
-python scripts/data_pack_manifest.py --release 2026.06.15
-```
-
-The release artifact is written under `data_pack_releases/` and includes the
-pack fingerprint plus the governed file manifest so scenario reviews can pin
-the exact source/evidence/calibration state.
-
-Run contributor preflight for the current checkout or for a proposed content
-pack directory:
-
-```bash
-python scripts/contributor_preflight.py
-python scripts/contributor_preflight.py path/to/proposed_pack
-```
-
-For proposed packs, preflight checks source registry entries, evidence records,
-reviewed extractions, calibration selectors, risk-module artifacts, and pack
-notes before a pull request. It also warns when a proposed module does not map
-to the Benchmark-Grade 30 roadmap. See
-[docs/BENCHMARK_CONTRIBUTOR_WORKFLOW.md](docs/BENCHMARK_CONTRIBUTOR_WORKFLOW.md).
-
+See [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md) for the guided
+workflow and [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution path.
 ## Installable Commands
 
 RiskShard can still be run directly from `scripts/`, but `pyproject.toml` also declares console entry points for packaging:
@@ -493,14 +376,6 @@ Start with [docs/README.md](docs/README.md). Key docs:
 - [docs/architecture.md](docs/architecture.md) — engine, evidence, and calibration architecture.
 - [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md) — the interactive console workflow.
 - [docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md](docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md) — a source taken end-to-end to a passing contribution.
-
-## Current Strategic Questions
-
-- Who is the first serious user: solo security leader, GRC analyst, risk consultant, AI agent builder, or platform vendor?
-- Is the durable asset the simulation engine, the scenario library, the benchmark data model, or the AI-consumable risk API?
-- How should benchmark sources, assumptions, and confidence levels be represented so outputs are defensible?
-- What is the right path from CLI prototype to useful product: package, API service, web UI, or data repository first?
-- How open should the parameter library be, and what governance model would make contributors trust it?
 
 ## License
 
