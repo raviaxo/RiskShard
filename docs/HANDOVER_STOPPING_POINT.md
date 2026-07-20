@@ -19,13 +19,12 @@ The 2026-07-19/20 session cleared the readiness dashboard's P1/P3 queue: US BEC 
 
 **Active queue: the P2 cycle** — worked in order. Progress:
 - Objective 4 — Insider Misuse frequency evidence: ✅ done (6/6 direct).
-- Objective 5 — Third-Party Outage: add source-backed frequency evidence (3 params). ← next
-- Objective 6 — `sg_finance_bec_midmarket` 1/6 → 6/6 (5 params).
+- Objective 5 — Third-Party Outage frequency evidence: ✅ done (6/6 direct).
+- Objective 6 — `sg_finance_bec_midmarket` 1/6 → 6/6 (5 params). ← next / last in the cycle
 - Objective 7 — `au_finance_bec_midmarket` 4/6 → 6/6 (2 params): ✅ done (merged PR #23).
 
-**New follow-up surfaced** (not yet queued): readiness now asks for an *Insider Misuse
-calibration profile* — turning the 6/6 evidence into a runnable/calibrated shard. Consider
-adding it (and a Third-Party Outage profile) after the P2 cycle. No strategic decision is
-currently blocked. If one arises with no owner doc to
+**Follow-up surfaced** (not yet queued): readiness now asks for **calibration profiles for
+Insider Misuse and Third-Party Outage** — turning their 6/6 evidence into runnable/calibrated
+shards. Consider adding them after the P2 cycle. No strategic decision is currently blocked. If one arises with no owner doc to
 record it, surface it and stop — see
 [`PUBLISHABLE_REQUIREMENTS.md`](PUBLISHABLE_REQUIREMENTS.md) → Change Control.

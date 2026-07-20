@@ -365,6 +365,42 @@ sources:
       incidents" is broad and includes negligent insiders, not only deliberate
       misuse. Preserve these limitations when using it as a stress bridge.
 
+  - id: bci_supply_chain_resilience_2024
+    title: BCI Supply Chain Resilience Report 2024
+    publisher: Business Continuity Institute
+    source_type: industry_survey
+    url: https://www.thebci.org/resource/bci-supply-chain-resilience-report-2024.html
+    publication_date: "2024-11-01"
+    access_mode: public_html
+    intended_use:
+      - organization-level supply-chain disruption prevalence
+      - third-party disruption cause share
+      - frequency bridge
+    usage_notes: >
+      Use as an organization-level supply-chain disruption prevalence source
+      (~80% of organizations experienced a disruption in the past year; 43.6%
+      cite third-party failure as the top cause). Broad supply-chain disruption
+      (all causes), not third-party-only, and not sector- or size-specific.
+      Preserve these limitations when using it as a third-party-outage frequency
+      bridge.
+
+  - id: interos_global_supply_chain_2022
+    title: Interos Annual Global Supply Chain Report (Resilience 2022)
+    publisher: Interos
+    source_type: industry_survey
+    url: https://www.interos.ai/resources/global-supply-chain-report
+    publication_date: "2022-03-01"
+    access_mode: public_html
+    intended_use:
+      - supply-chain disruption event frequency
+      - stress-frequency basis
+    usage_notes: >
+      Use as supply-chain disruption event-frequency context (organizations
+      faced on average three major supply-chain events in the last 12 months,
+      costing an average of USD 182M). Vendor survey; all-cause supply-chain
+      events, not third-party-only. Supports a near-ceiling stress frequency via
+      an interpretive multi-event conversion, not a directly reported prevalence.
+
   - id: census_susb_2022
     title: Statistics of U.S. Businesses (SUSB) 2022 Annual Data
     publisher: U.S. Census Bureau
