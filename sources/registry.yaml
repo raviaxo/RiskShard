@@ -328,6 +328,43 @@ sources:
       Commercial vendor survey (lower trust than official statistics), all-cyber
       not BEC-specific. Figure accessed via CFOtech reporting of the MYOB survey.
 
+  - id: cybersecurity_insiders_insider_threat_2024
+    title: Cybersecurity Insiders 2024 Insider Threat Report
+    publisher: Cybersecurity Insiders
+    source_type: industry_survey
+    url: https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report/
+    publication_date: "2024-06-01"
+    access_mode: public_html
+    intended_use:
+      - organization-level insider attack prevalence
+      - frequency bridge
+    usage_notes: >
+      Use as an organization-level insider-attack prevalence source. Reports that
+      76% of organizations experienced insider attacks in 2024, up from 66% in
+      2019. Vendor-sponsored survey (lower trust than official statistics);
+      "insider attacks" is broad and includes negligent and careless insiders,
+      not only deliberate misuse. Preserve these limitations when using it as a
+      frequency bridge.
+
+  - id: gurucul_insider_risk_report_2026
+    title: Gurucul 2026 Insider Risk Report
+    publisher: Cybersecurity Insiders (sponsored by Gurucul)
+    source_type: industry_survey
+    url: https://www.cybersecurity-insiders.com/inside-threats-how-ai-transformed-2026s-insider-risk-landscape/
+    publication_date: "2026-03-19"
+    access_mode: public_html
+    intended_use:
+      - organization-level insider incident prevalence
+      - stress-frequency bridge
+    usage_notes: >
+      Use as an organization-level insider-incident prevalence source. Survey of
+      725 IT and security professionals conducted in late 2025; reports that only
+      10% of organizations had zero insider incidents in the past 12 months
+      (i.e. 90% experienced at least one), up from 83% (17% zero) in 2024.
+      Vendor-sponsored survey (lower trust than official statistics); "insider
+      incidents" is broad and includes negligent insiders, not only deliberate
+      misuse. Preserve these limitations when using it as a stress bridge.
+
   - id: census_susb_2022
     title: Statistics of U.S. Businesses (SUSB) 2022 Annual Data
     publisher: U.S. Census Bureau
