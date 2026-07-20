@@ -293,6 +293,41 @@ sources:
       limitations when combining it with incident, notification, or loss-event
       counts from other sources.
 
+  - id: abs_characteristics_australian_business_2025
+    title: Characteristics of Australian Business, 2024-25 financial year
+    publisher: Australian Bureau of Statistics
+    source_type: official_statistical_data
+    url: https://www.abs.gov.au/statistics/industry/technology-and-innovation/characteristics-australian-business/latest-release
+    publication_date: "2026-06-25"
+    access_mode: public_html
+    intended_use:
+      - Australian business cyber-incident prevalence
+      - frequency bridge
+    usage_notes: >
+      Use as an official Australian org-level cyber-incident prevalence source
+      (21% of businesses experienced a cyber security incident in 2024-25). It is
+      an all-industry, all-size, all-cyber measure, not BEC-specific or
+      mid-market-financial-services-specific. Preserve these limitations when
+      using it as a BEC frequency bridge.
+
+  - id: myob_business_monitor_cyber_2024
+    title: MYOB mid-sized business cyber attack survey 2024
+    publisher: MYOB (survey conducted by Dynata)
+    source_type: industry_survey
+    url: https://cfotech.com.au/story/cyber-attacks-impact-60-of-mid-sized-australian-businesses
+    publication_date: "2024-06-01"
+    access_mode: public_html
+    intended_use:
+      - Australian mid-sized business cyber-attack prevalence
+      - sector stress-frequency bridge
+    usage_notes: >
+      Use as an Australian mid-sized business (20-500 FTE, revenue over AUD 5M)
+      cyber-attack prevalence source. Survey by Dynata for MYOB, fieldwork 22
+      March - 15 April 2024, n=593. Reports 60% of mid-sized businesses and 81%
+      of finance and insurance mid-sized businesses experienced a cyber attack.
+      Commercial vendor survey (lower trust than official statistics), all-cyber
+      not BEC-specific. Figure accessed via CFOtech reporting of the MYOB survey.
+
   - id: census_susb_2022
     title: Statistics of U.S. Businesses (SUSB) 2022 Annual Data
     publisher: U.S. Census Bureau

@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 33,
+  "fetched_count": 35,
   "generated_at": "2026-07-15T01:43:20Z",
   "manifest_version": "1.0",
-  "source_count": 33,
+  "source_count": 35,
   "sources": [
     {
       "access_mode": "public_pdf",
@@ -216,6 +216,50 @@
       "title": "Counts of Australian Businesses, including Entries and Exits, July 2021 - June 2025",
       "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025",
       "usage_notes": "Use as an official Australian business-count denominator. Preserve limitations when combining it with incident, notification, or loss-event counts from other sources.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 379574,
+      "content_type": "text/html; charset=UTF-8",
+      "final_url": "https://www.abs.gov.au/statistics/industry/technology-and-innovation/characteristics-australian-business/latest-release",
+      "gathered_at": "2026-07-20T19:24:14Z",
+      "http_status": 200,
+      "id": "abs_characteristics_australian_business_2025",
+      "intended_use": [
+        "Australian business cyber-incident prevalence",
+        "frequency bridge"
+      ],
+      "publication_date": "2026-06-25",
+      "publisher": "Australian Bureau of Statistics",
+      "raw_path": "sources/raw/abs_characteristics_australian_business_2025.html",
+      "sha256": "0e223ecc11c3de40ccfa7640e76aaa96e5f1b501da8402c2c6a9c169c3c08a94",
+      "source_type": "official_statistical_data",
+      "status": "fetched",
+      "title": "Characteristics of Australian Business, 2024-25 financial year",
+      "url": "https://www.abs.gov.au/statistics/industry/technology-and-innovation/characteristics-australian-business/latest-release",
+      "usage_notes": "Use as an official Australian org-level cyber-incident prevalence source (21% of businesses experienced a cyber security incident in 2024-25). It is an all-industry, all-size, all-cyber measure, not BEC-specific or mid-market-financial-services-specific. Preserve these limitations when using it as a BEC frequency bridge.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 84633,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://cfotech.com.au/story/cyber-attacks-impact-60-of-mid-sized-australian-businesses",
+      "gathered_at": "2026-07-20T19:24:14Z",
+      "http_status": 200,
+      "id": "myob_business_monitor_cyber_2024",
+      "intended_use": [
+        "Australian mid-sized business cyber-attack prevalence",
+        "sector stress-frequency bridge"
+      ],
+      "publication_date": "2024-06-01",
+      "publisher": "MYOB (survey conducted by Dynata)",
+      "raw_path": "sources/raw/myob_business_monitor_cyber_2024.html",
+      "sha256": "2fb6e018cda468eaa130cdace297de67fa0b133f4b5f14315a540188aeb4ea0a",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "MYOB mid-sized business cyber attack survey 2024",
+      "url": "https://cfotech.com.au/story/cyber-attacks-impact-60-of-mid-sized-australian-businesses",
+      "usage_notes": "Use as an Australian mid-sized business (20-500 FTE, revenue over AUD 5M) cyber-attack prevalence source. Survey by Dynata for MYOB, fieldwork 22 March - 15 April 2024, n=593. Reports 60% of mid-sized businesses and 81% of finance and insurance mid-sized businesses experienced a cyber attack. Commercial vendor survey (lower trust than official statistics), all-cyber not BEC-specific. Figure accessed via CFOtech reporting of the MYOB survey.\n"
     },
     {
       "access_mode": "public_html",

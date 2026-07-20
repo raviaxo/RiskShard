@@ -282,6 +282,52 @@ records:
       company_size_bands: [mid_market]
       threats: [business_email_compromise]
 
+  - id: abs_2025_au_business_cyber_incident_prevalence_frequency_likely
+    title: Australian business cyber-incident prevalence used as likely frequency bridge
+    parameter: frequency.likely
+    value: 0.21
+    unit: annual_probability
+    source_id: abs_characteristics_australian_business_2025
+    source_name: Characteristics of Australian Business, 2024-25
+    source_type: official_statistics_bridge
+    source_url_or_citation: https://www.abs.gov.au/statistics/industry/technology-and-innovation/characteristics-australian-business/latest-release
+    publication_date: "2026-06-25"
+    extraction_date: "2026-07-20"
+    citation_detail: ABS reports that just over one in five (21%) of Australian businesses experienced a cyber security incident during 2024-25.
+    extraction_notes: Converted 21% all-business cyber-incident prevalence to 0.21 as a source-backed likely-frequency exposure bridge.
+    normalization_notes: Converted 21% to 0.21. Selected as an AU official org-level exposure bridge until AU mid-market financial-services BEC-specific event frequency is available.
+    limitations: All-industry, all-size, all-cyber measure, not BEC-specific and not mid-market-financial-services-specific; it counts businesses experiencing any cyber security incident, not confirmed BEC loss events, so it overstates BEC-only frequency. Revise when BEC-specific AU mid-market evidence is reviewed.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: myob_2024_au_finance_midsized_cyber_prevalence_frequency_stress
+    title: Australian mid-sized finance cyber-attack prevalence used as stress frequency bridge
+    parameter: frequency.max
+    value: 0.81
+    unit: annual_probability
+    source_id: myob_business_monitor_cyber_2024
+    source_name: MYOB mid-sized business cyber attack survey 2024
+    source_type: industry_survey_bridge
+    source_url_or_citation: https://cfotech.com.au/story/cyber-attacks-impact-60-of-mid-sized-australian-businesses
+    publication_date: "2024-06-01"
+    extraction_date: "2026-07-20"
+    citation_detail: MYOB survey (by Dynata, fieldwork 22 March - 15 April 2024, n=593 mid-sized Australian businesses) reports 81% of finance and insurance mid-sized businesses experienced a cyber attack, versus 60% of mid-sized businesses overall.
+    extraction_notes: Converted the 81% finance and insurance mid-sized cyber-attack prevalence to 0.81 as a source-backed stress-frequency bridge.
+    normalization_notes: Converted 81% to 0.81. Selected as an AU mid-sized, finance-sector cyber-attack prevalence stress bridge above the 0.21 all-business likely bridge.
+    limitations: Commercial vendor survey (MYOB/Dynata), lower trust than official statistics; measures all cyber attacks, not BEC-specific, and counts businesses experiencing an attack rather than confirmed BEC loss events; mid-sized defined as 20-500 FTE with revenue over AUD 5M. Revise when official AU finance mid-market BEC frequency is available.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
   - id: riskshard_bec_frequency_likely_2026
     title: Estimated BEC likely frequency
     parameter: frequency.likely
