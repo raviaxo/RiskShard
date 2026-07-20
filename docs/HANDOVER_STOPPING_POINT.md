@@ -13,19 +13,18 @@ marked done, one at a time, to its Definition of Done (see [`../AGENTS.md`](../A
 
 *Updated 2026-07-20.*
 
-- **Objective 1 — US BEC shard → source-backed: ✅ done**, committed on branch
-  `shard/us-bec-source-backed` (signed, not pushed). Awaiting review/PR from the
-  laptop.
-- **Objective 2 — restore the session-ritual owner docs: ✅ done** (this file is one
-  of them). All five owner docs exist; the ritual reads cleanly.
-- **Objective 3 — cut a named data-pack release: ✅ done** — release
-  `2026.07.20-us-bec-source-backed` (60 files, fp `074c78734932…`).
+The 2026-07-19/20 session cleared the readiness dashboard's P1/P3 queue: US BEC shard
+→ 6/6 source-backed, ritual owner docs restored, and data-pack release
+`2026.07.20-us-bec-source-backed` cut. All merged to `main` (PRs #18, #21, #20).
 
-All three queued objectives are complete and committed on branch
-`shard/us-bec-source-backed` (signed, not pushed). The queue is empty — the next
-session should repopulate `NEXT_STEPS.md` from `readiness_dashboard.py`
-(current P2: Insider Misuse and Third-Party Outage evidence gaps).
+**Active queue: the P2 cycle** — four evidence objectives in `NEXT_STEPS.md`, done in
+**any order** (all will be done):
+- Objective 4 — Insider Misuse: add source-backed frequency evidence (3 params).
+- Objective 5 — Third-Party Outage: add source-backed frequency evidence (3 params).
+- Objective 6 — `sg_finance_bec_midmarket` 1/6 → 6/6 (5 params).
+- Objective 7 — `au_finance_bec_midmarket` 4/6 → 6/6 (2 params).
 
-No strategic decision is currently blocked. If one arises with no owner doc to
+Nothing is committed for these yet — they are scoped only. No strategic decision is
+currently blocked. If one arises with no owner doc to
 record it, surface it and stop — see
 [`PUBLISHABLE_REQUIREMENTS.md`](PUBLISHABLE_REQUIREMENTS.md) → Change Control.
