@@ -401,6 +401,24 @@ sources:
       events, not third-party-only. Supports a near-ceiling stress frequency via
       an interpretive multi-event conversion, not a directly reported prevalence.
 
+  - id: spf_bec_interception_case_2024
+    title: SPF Business Email Compromise scam interception case 2024
+    publisher: Singapore Police Force
+    source_type: law_enforcement_report
+    url: https://www.police.gov.sg/media-hub/news/2024/20241008_international_cooperation_leading_to_the_interception
+    publication_date: "2024-10-08"
+    access_mode: public_html
+    intended_use:
+      - Singapore BEC single-event loss
+      - stress impact anchor
+    usage_notes: >
+      Use as a documented Singapore BEC single-event loss. A Singapore-based
+      investment banking firm initiated transfers of about USD 6.66M to a
+      scammer on 19-20 September 2024; SPF and US authorities intercepted over
+      USD 5M. One documented extreme case, not a loss distribution or a
+      mid-market average; the gross transferred amount is modeled, gross of
+      recovery.
+
   - id: census_susb_2022
     title: Statistics of U.S. Businesses (SUSB) 2022 Annual Data
     publisher: U.S. Census Bureau

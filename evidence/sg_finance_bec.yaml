@@ -1,4 +1,124 @@
 records:
+  - id: ic3_census_global_bec_reported_complaint_rate_floor_sg_context
+    title: Global reported-BEC-complaint rate floor used as Singapore context
+    parameter: frequency.min
+    value: 0.004
+    unit: annual_probability
+    source_id: fbi_ic3_2025_report
+    source_ids:
+      - fbi_ic3_2025_report
+      - census_susb_2022
+    source_name: FBI IC3 2025 Annual Report and U.S. Census SUSB 2022
+    source_type: derived_statistical_benchmark_bridge
+    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    extraction_date: "2026-07-20"
+    citation_detail: FBI IC3 2025 reported 24,768 US BEC complaints; US Census SUSB 2022 reports ~6.1M US employer firms; 24,768 / 6,100,000 = 0.004.
+    extraction_notes: Reused the US reported-BEC-complaint rate floor as a global-context bridge for Singapore.
+    normalization_notes: 24,768 / 6,100,000 = 0.00406, rounded to 0.004. A reported-complaint floor, not a likely rate.
+    limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. Both numerator and denominator are United States figures (IC3 complaints, US Census firms); used only as a conservative global reported-complaint floor until a Singapore denominator-derived BEC frequency (e.g. SPF business-email-impersonation cases over SingStat enterprise counts) is reviewed.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [SG, global]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: afp_2025_bec_org_prevalence_frequency_likely_sg_context
+    title: US organization-level BEC prevalence used as Singapore likely-frequency bridge
+    parameter: frequency.likely
+    value: 0.63
+    unit: annual_probability
+    source_id: afp_payments_fraud_2025
+    source_name: 2025 AFP Payments Fraud and Control Survey Report
+    source_type: industry_survey_bridge
+    source_url_or_citation: https://www.financialprofessionals.org/training-resources/resources/survey-research-economic-data/details/payments-fraud
+    publication_date: "2025-08-26"
+    extraction_date: "2026-07-20"
+    citation_detail: The 2025 AFP Payments Fraud and Control Survey reports business email compromise as the most common payments-fraud method, with 63% of organizations reporting BEC activity in 2024.
+    extraction_notes: Reused the US AFP organization-level BEC prevalence as a global-context likely-frequency bridge for Singapore.
+    normalization_notes: Converted 63% to 0.63.
+    limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. US survey; measures organizations experiencing attempted or actual BEC, not confirmed loss events; respondents skew corporate-treasury and larger organizations. Revise when a Singapore organization-level BEC prevalence is reviewed.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [SG, global]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: afp_2026_bec_org_prevalence_frequency_stress_sg_context
+    title: US organization-level BEC prevalence used as Singapore stress-frequency bridge
+    parameter: frequency.max
+    value: 0.74
+    unit: annual_probability
+    source_id: afp_payments_fraud_2026
+    source_name: 2026 AFP Payments Fraud and Control Survey Report
+    source_type: industry_survey_bridge
+    source_url_or_citation: https://www.financialprofessionals.org/about/learn-more/press-releases/Details/over-75-percent-of-us-firms-experienced-payments-fraud-in-2025-while-ai-adoption-for-fraud-mitigation-lags
+    publication_date: "2026-04-14"
+    extraction_date: "2026-07-20"
+    citation_detail: The 2026 AFP Payments Fraud and Control Survey reports that business email compromise affected 74% of organizations in 2025.
+    extraction_notes: Reused the US AFP 2026 organization-level BEC prevalence as a global-context stress-frequency bridge for Singapore.
+    normalization_notes: Converted 74% to 0.74.
+    limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. US survey, attempts/affected not confirmed loss events, large-organization skew. Revise when a Singapore stress-frequency is reviewed.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [SG, global]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: verizon_dbir_2026_bec_median_loss_impact_floor_sg_context
+    title: Median BEC loss used as Singapore impact floor
+    parameter: impact.min
+    value: 50000
+    unit: currency
+    currency: USD
+    source_id: verizon_dbir_2026
+    source_name: Verizon 2026 Data Breach Investigations Report
+    source_type: breach_report_bridge
+    source_url_or_citation: https://www.verizon.com/business/resources/T766/reports/2026-dbir-data-breach-investigations-report.pdf
+    publication_date: "2026-05-20"
+    extraction_date: "2026-07-20"
+    citation_detail: The 2026 Verizon DBIR reports the median loss for business email compromise incidents, based on FBI IC3 data, at approximately USD 50,000.
+    extraction_notes: Reused the DBIR-reported median BEC loss as a global-context lower impact bridge for Singapore, below the IC3 mean used for likely impact.
+    normalization_notes: Stored in USD as a single-event BEC loss floor, below the USD 123,005 mean used for impact.likely.
+    limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. Median of FBI IC3 complaint-reported (US) BEC losses; complaint-driven and self-reported; not a Singapore or mid-market figure. Revise when a Singapore BEC loss floor is reviewed.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [SG, global]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: spf_2024_sg_bec_documented_case_impact_stress
+    title: Documented Singapore BEC case loss used as stress impact
+    parameter: impact.max
+    value: 6660000
+    unit: currency
+    currency: USD
+    source_id: spf_bec_interception_case_2024
+    source_name: SPF Business Email Compromise scam interception case 2024
+    source_type: law_enforcement_report
+    source_url_or_citation: https://www.police.gov.sg/media-hub/news/2024/20241008_international_cooperation_leading_to_the_interception
+    publication_date: "2024-10-08"
+    extraction_date: "2026-07-20"
+    citation_detail: SPF reports that a Singapore-based investment banking firm initiated transfers of about USD 6.66 million to a scammer on 19-20 September 2024 in a business email compromise scam; SPF and US authorities intercepted over USD 5 million.
+    extraction_notes: Used the USD 6.66 million gross transferred amount as a source-backed, Singapore-specific stress impact anchor.
+    normalization_notes: Stored in USD as a single-event stress (tail) BEC loss, gross of the intercepted/recovered amount. Sits above the USD 123,005 mean used for impact.likely.
+    limitations: One documented extreme Singapore BEC case (an investment banking firm), not a mid-market average or a loss percentile; over USD 5M was intercepted, but recovery is not guaranteed so the gross figure is modeled. Revise when a Singapore BEC loss distribution with tail quantiles is reviewed.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [SG]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
   - id: riskshard_sg_finance_bec_frequency_floor_2026
     title: Estimated Singapore finance BEC frequency floor
     parameter: frequency.min

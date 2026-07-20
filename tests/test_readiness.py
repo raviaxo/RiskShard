@@ -67,7 +67,7 @@ class ReadinessTests(unittest.TestCase):
         self.assertIn("Module coverage matrix", output)
         self.assertIn("ca_finance_data_breach_midmarket: 6/6 source-backed", output)
         self.assertIn("de_industrial_ransomware_midmarket: 6/6 source-backed", output)
-        self.assertIn("sg_finance_bec_midmarket: 1/6 source-backed", output)
+        self.assertIn("sg_finance_bec_midmarket: 6/6 source-backed", output)
         self.assertIn("gb_finance_data_breach_midmarket: 6/6 source-backed", output)
         self.assertIn("Installable package: True", output)
 
