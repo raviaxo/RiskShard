@@ -70,6 +70,55 @@ records:
       company_size_bands: [all]
       threats: [business_email_compromise]
 
+  - id: census_susb_2022_us_employer_firms_total
+    title: United States total employer firms
+    parameter: context.us_employer_firms_total
+    value: 6100000
+    unit: businesses
+    source_id: census_susb_2022
+    source_name: Statistics of U.S. Businesses (SUSB) 2022 Annual Data
+    source_type: official_statistical_data
+    source_url_or_citation: https://www.census.gov/data/tables/2022/econ/susb/2022-susb-annual.html
+    publication_date: "2025-01-16"
+    extraction_date: "2026-07-20"
+    citation_detail: SUSB 2022 U.S. all-industry employer-firm total, commonly cited as ~6.1 million employer firms. Cross-program counts range from 5.52M (Census Business Dynamics Statistics 2022) to ~6.3M (SBA Office of Advocacy 2024).
+    extraction_notes: Used ~6,100,000 as the U.S. all-industry employer-firm denominator for BEC complaint-rate normalization.
+    normalization_notes: Stored as a U.S. business-population denominator for frequency normalization, not used directly as an organization-level probability.
+    limitations: All-industry, all-size denominator; not financial-services-specific or mid-market-specific. Authoritative national employer-firm counts range roughly 5.5M-6.3M by program and vintage; the derived reported-complaint floor of 0.004 is stable across that entire range.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [US]
+      company_size_bands: [all]
+      threats: [business_email_compromise]
+
+  - id: ic3_census_us_bec_reported_complaint_rate_floor_2026
+    title: Annualized US BEC reported-complaint rate floor
+    parameter: frequency.min
+    value: 0.004
+    unit: annual_probability
+    source_id: fbi_ic3_2025_report
+    source_ids:
+      - fbi_ic3_2025_report
+      - census_susb_2022
+    source_name: FBI IC3 2025 Annual Report and U.S. Census SUSB 2022
+    source_type: derived_statistical_benchmark
+    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+    publication_date: "2026-04-16"
+    extraction_date: "2026-07-20"
+    citation_detail: FBI IC3 2025 reported 24,768 US BEC complaints (all sectors); Census SUSB 2022 reports ~6,100,000 US employer firms (all industries).
+    extraction_notes: Divided the all-sector IC3 BEC complaint count by the all-industry US employer-firm denominator to derive a reported-complaint frequency floor.
+    normalization_notes: Calculation is 24,768 / 6,100,000 = 0.00406, rounded to 0.004. Used as a reported-complaint frequency floor, not a likely BEC event rate. The result rounds to 0.004 across the full 5.5M-6.3M denominator range.
+    limitations: IC3 counts only complaints reported to the FBI and substantially undercounts true BEC incidence; numerator and denominator are both all-sector/all-industry, so this is an economy-wide reported floor, not financial-services-specific or mid-market-specific; it is a lower-bound floor, not a central likelihood. Confidence is medium for a reported-complaint floor, not for a likely BEC rate.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [US]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
   - id: riskshard_us_bec_frequency_floor_2026
     title: Estimated US BEC frequency floor
     parameter: frequency.min
@@ -85,6 +134,29 @@ records:
     limitations: Not source-backed; replace with reviewed US payment-fraud, BEC, insurer, or sector-denominator evidence.
     confidence: low
     evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [US]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: afp_2025_us_bec_org_prevalence_frequency_likely
+    title: US organization-level BEC prevalence used as likely frequency bridge
+    parameter: frequency.likely
+    value: 0.63
+    unit: annual_probability
+    source_id: afp_payments_fraud_2025
+    source_name: 2025 AFP Payments Fraud and Control Survey Report
+    source_type: industry_survey_bridge
+    source_url_or_citation: https://www.financialprofessionals.org/training-resources/resources/survey-research-economic-data/details/payments-fraud
+    publication_date: "2025-08-26"
+    extraction_date: "2026-07-20"
+    citation_detail: The 2025 AFP Payments Fraud and Control Survey reports business email compromise as the most common payments-fraud method, with 63% of organizations reporting BEC activity in 2024.
+    extraction_notes: Converted 63% organization-level BEC prevalence to 0.63 as a source-backed likely-frequency exposure bridge.
+    normalization_notes: Converted 63% to 0.63. Selected as a US, BEC-specific likely-frequency exposure bridge until US mid-market financial-services BEC loss-event frequency is available.
+    limitations: Survey measures organizations experiencing attempted or actual BEC, not confirmed financial-loss events; AFP respondents skew toward corporate treasury and larger organizations (AFP reports 66% of BEC attempts target organizations with at least USD 1B revenue), so this overall prevalence likely overstates a mid-market financial-services rate; not financial-services-specific. Revise when mid-market-specific BEC event-frequency evidence is reviewed.
+    confidence: medium
+    evidence_type: source_backed
     applicability:
       industries: [financial_services]
       countries: [US]
@@ -112,6 +184,29 @@ records:
       company_size_bands: [mid_market]
       threats: [business_email_compromise]
 
+  - id: afp_2026_us_bec_org_prevalence_frequency_stress
+    title: US organization-level BEC prevalence used as stress frequency bridge
+    parameter: frequency.max
+    value: 0.74
+    unit: annual_probability
+    source_id: afp_payments_fraud_2026
+    source_name: 2026 AFP Payments Fraud and Control Survey Report
+    source_type: industry_survey_bridge
+    source_url_or_citation: https://www.financialprofessionals.org/about/learn-more/press-releases/Details/over-75-percent-of-us-firms-experienced-payments-fraud-in-2025-while-ai-adoption-for-fraud-mitigation-lags
+    publication_date: "2026-04-14"
+    extraction_date: "2026-07-20"
+    citation_detail: The 2026 AFP Payments Fraud and Control Survey (released April 14, 2026; 465 US treasury practitioners) reports that business email compromise affected 74% of organizations in 2025.
+    extraction_notes: Converted 74% organization-level BEC prevalence to 0.74 as a source-backed stress-frequency exposure bridge.
+    normalization_notes: Converted 74% to 0.74. Selected as a US, BEC-specific stress-frequency bridge above the 0.63 likely bridge, using the subsequent AFP survey edition, until US mid-market financial-services BEC event-frequency evidence is available.
+    limitations: Survey measures organizations experiencing attempted or actual BEC, not confirmed financial-loss events; AFP respondents skew toward corporate treasury and larger organizations, so this overall prevalence likely overstates a mid-market financial-services rate; it is drawn from the subsequent (2026) AFP edition rather than the same edition as the likely bridge; not financial-services-specific. Revise when mid-market-specific BEC event-frequency evidence is reviewed.
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [US]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
   - id: riskshard_us_bec_frequency_stress_2026
     title: Estimated US BEC frequency stress bound
     parameter: frequency.max
@@ -127,6 +222,30 @@ records:
     limitations: Not source-backed; replace with reviewed US payment-fraud, BEC, insurer, or sector-denominator evidence.
     confidence: low
     evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [US]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: verizon_dbir_2026_us_bec_median_loss_impact_floor
+    title: Median BEC loss used as impact floor
+    parameter: impact.min
+    value: 50000
+    unit: currency
+    currency: USD
+    source_id: verizon_dbir_2026
+    source_name: Verizon 2026 Data Breach Investigations Report
+    source_type: breach_report_bridge
+    source_url_or_citation: https://www.verizon.com/business/resources/T766/reports/2026-dbir-data-breach-investigations-report.pdf
+    publication_date: "2026-05-20"
+    extraction_date: "2026-07-20"
+    citation_detail: The 2026 Verizon DBIR reports the median loss for business email compromise incidents, based on FBI IC3 data, at approximately USD 50,000.
+    extraction_notes: Used the DBIR-reported median BEC loss as a source-backed lower impact anchor, below the IC3 mean used for likely impact.
+    normalization_notes: Stored in USD as a single-event BEC loss floor. It is the median of complaint-reported BEC losses, deliberately below the USD 123,005 mean used for impact.likely.
+    limitations: Median of FBI IC3 complaint-reported BEC losses as presented by Verizon DBIR; complaint-driven and self-reported, not financial-services-specific or mid-market-specific, and not a formal minimum quantile for this scenario.
+    confidence: medium
+    evidence_type: source_backed
     applicability:
       industries: [financial_services]
       countries: [US]
@@ -149,6 +268,30 @@ records:
     limitations: Not source-backed; replace with reviewed US fraudulent-payment or BEC loss floor evidence.
     confidence: low
     evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [US]
+      company_size_bands: [mid_market]
+      threats: [business_email_compromise]
+
+  - id: coalition_2023_us_ftf_largest_loss_impact_stress
+    title: Documented largest funds transfer fraud loss used as stress impact
+    parameter: impact.max
+    value: 6400000
+    unit: currency
+    currency: USD
+    source_id: coalition_ftf_largest_clawback_2023
+    source_name: Coalition funds transfer fraud largest clawback case
+    source_type: cyber_insurer_claims_bridge
+    source_url_or_citation: https://www.coalitioninc.com/blog/how-coalition-recovered-usd5-5m-in-stolen-money-after-funds-transfer-fraud
+    publication_date: "2023-06-08"
+    extraction_date: "2026-07-20"
+    citation_detail: Coalition reports a policyholder wired USD 6.4 million to a fraudulent account, described as Coalition's largest clawback case, of which 85% (USD 5.5 million) was later recovered.
+    extraction_notes: Used the USD 6.4 million gross single-event funds-transfer-fraud loss as a source-backed stress impact anchor.
+    normalization_notes: Stored in USD as a single-event stress (tail) BEC/FTF loss, gross of clawback recovery. Sits above the USD 123,005 mean used for impact.likely.
+    limitations: One documented extreme funds-transfer-fraud case from a cyber insurer's book, not a modeled loss percentile or a financial-services mid-market average; 85% was recovered via clawback in this instance, but recovery is not guaranteed, so the gross figure is modeled; BEC/FTF-specific but drawn from a single case. Revise when a US mid-market BEC loss distribution with tail quantiles is reviewed.
+    confidence: low
+    evidence_type: source_backed
     applicability:
       industries: [financial_services]
       countries: [US]
