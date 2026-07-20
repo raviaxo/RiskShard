@@ -24,7 +24,13 @@ objective into scope until the current one is done.
 
 ## Active queue — P2 cycle (any order)
 
-### Objective 4 — Insider Misuse: add source-backed frequency evidence
+### Objective 4 — Insider Misuse: add source-backed frequency evidence  ✅ DONE 2026-07-20
+**Result:** Insider Misuse now **6/6 direct** (was 3/6). New `evidence/insider_misuse.yaml`:
+`frequency.min` 0.66 (Cybersecurity Insiders 2019 baseline), `frequency.likely` 0.76
+(Cybersecurity Insiders 2024), `frequency.max` 0.90 (Gurucul 2026 Insider Risk Report).
+Broad insider-exposure bridges (incl. negligent insiders), caveated as overstating deliberate
+misuse. No calibration to rewire; full suite clean. **Follow-up surfaced:** readiness now asks
+for an *Insider Misuse calibration profile* (to make it a runnable shard) — a future objective.
 Top-risk `Insider Misuse` is 3/6 direct (impact side covered; **frequency.min/likely/max
 missing**, 0 assumptions). Add source-backed frequency.
 - **Candidate sources:** Verizon DBIR 2026 (already in-repo) privilege-misuse / insider

@@ -1,0 +1,69 @@
+records:
+  - id: cybersecurity_insiders_2019_insider_attack_prevalence_frequency_floor
+    title: Organization-level insider-attack prevalence (2019 baseline) used as frequency floor
+    parameter: frequency.min
+    value: 0.66
+    unit: annual_probability
+    source_id: cybersecurity_insiders_insider_threat_2024
+    source_name: Cybersecurity Insiders 2024 Insider Threat Report
+    source_type: industry_survey_bridge
+    source_url_or_citation: https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report/
+    publication_date: "2024-06-01"
+    extraction_date: "2026-07-20"
+    citation_detail: The Cybersecurity Insiders 2024 Insider Threat Report states that the share of organizations experiencing insider attacks rose from 66% in 2019 to 76% in 2024; the 66% figure is used here as a historical floor.
+    extraction_notes: Converted the 66% (2019) organization-level insider-attack prevalence to 0.66 as a source-backed frequency floor.
+    normalization_notes: Converted 66% to 0.66. Used as a historical-baseline exposure floor, below the 0.76 current-prevalence likely.
+    limitations: Vendor-sponsored survey, lower trust than official statistics; "insider attacks" is broad and includes negligent and careless insiders, not only deliberate misuse, so it overstates misuse-specific frequency; a 2019 baseline used as a conservative floor. Revise when misuse-specific or sector-specific insider frequency is reviewed.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [insider_misuse]
+
+  - id: cybersecurity_insiders_2024_insider_attack_prevalence_frequency_likely
+    title: Organization-level insider-attack prevalence (2024) used as likely frequency
+    parameter: frequency.likely
+    value: 0.76
+    unit: annual_probability
+    source_id: cybersecurity_insiders_insider_threat_2024
+    source_name: Cybersecurity Insiders 2024 Insider Threat Report
+    source_type: industry_survey_bridge
+    source_url_or_citation: https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report/
+    publication_date: "2024-06-01"
+    extraction_date: "2026-07-20"
+    citation_detail: The Cybersecurity Insiders 2024 Insider Threat Report reports that 76% of organizations experienced insider attacks in 2024 (up from 66% in 2019).
+    extraction_notes: Converted the 76% (2024) organization-level insider-attack prevalence to 0.76 as a source-backed likely-frequency exposure bridge.
+    normalization_notes: Converted 76% to 0.76. Selected as a current organization-level insider-attack exposure bridge.
+    limitations: Vendor-sponsored survey, lower trust than official statistics; "insider attacks" is broad and includes negligent and careless insiders, not only deliberate misuse, so it overstates misuse-specific frequency; not sector- or size-specific. Revise when misuse-specific insider frequency is reviewed.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [insider_misuse]
+
+  - id: gurucul_2026_insider_incident_prevalence_frequency_stress
+    title: Organization-level insider-incident prevalence (2026) used as stress frequency
+    parameter: frequency.max
+    value: 0.90
+    unit: annual_probability
+    source_id: gurucul_insider_risk_report_2026
+    source_name: Gurucul 2026 Insider Risk Report
+    source_type: industry_survey_bridge
+    source_url_or_citation: https://www.cybersecurity-insiders.com/inside-threats-how-ai-transformed-2026s-insider-risk-landscape/
+    publication_date: "2026-03-19"
+    extraction_date: "2026-07-20"
+    citation_detail: The Gurucul 2026 Insider Risk Report (survey of 725 professionals, late 2025) reports that only 10% of organizations had zero insider incidents in the past 12 months, i.e. 90% experienced at least one (up from 83% in 2024).
+    extraction_notes: Converted the 90% (2026) organization-level insider-incident prevalence to 0.90 as a source-backed stress-frequency bridge.
+    normalization_notes: Converted 90% to 0.90. Selected as the most recent, highest observed organization-level insider-incident prevalence, above the 0.76 likely.
+    limitations: Vendor-sponsored survey, lower trust than official statistics; "insider incidents" is broad and includes negligent insiders, not only deliberate misuse, so it overstates misuse-specific frequency; a different metric (incidents) than the min/likely attacks figures, and not sector- or size-specific. Revise when misuse-specific insider frequency is reviewed.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [insider_misuse]
