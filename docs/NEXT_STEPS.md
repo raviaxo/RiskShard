@@ -88,7 +88,11 @@ Docs point to each other without duplicating (respect one-canonical-owner).
 
 ---
 
-## Objective 3 — Cut a named data-pack release  (repo P3)
+## Objective 3 — Cut a named data-pack release  (repo P3)  ✅ DONE 2026-07-20
+
+**Result:** cut `data_pack_releases/2026.07.20-us-bec-source-backed.json` — 60 files,
+fingerprint `074c78734932…` (deterministic; doctor and manifest agree). Package smoke
+passes. Pins the governed snapshot after the US BEC upgrade and ritual-doc restore.
 
 **Why:** Readiness dashboard P3 = "Cut a named data-pack release (release discipline)."
 Current data pack: `2026.07.19 2b74665387b2 files=60`. Mostly mechanical; good phone closer.
@@ -107,5 +111,8 @@ passes; release is recorded where the repo records releases (`data_pack_releases
   in sync with origin/main, Python 3.14.6. Objective 1 scoped to 5 approve-points.
 - 2026-07-20 — Objective 1 completed (phone session, approve-each-anchor). US BEC shard
   1/6 → 6/6 source-backed. 4 new sources gathered, 5 evidence records added, calibration
-  profile rewired, test count updated (IC3 7→8). All gates green. Awaiting commit decision.
-  Next: Objective 2 (restore ritual owner docs).
+  profile rewired, test count updated (IC3 7→8). All gates green.
+- 2026-07-20 — Objectives 2 and 3 completed same session. Restored the 4 ritual owner docs
+  (ritual reads clean); cut data-pack release 2026.07.20-us-bec-source-backed (60 files,
+  fp 074c78734932). All three objectives done + committed on branch shard/us-bec-source-backed
+  (signed, not pushed). Queue empty — repopulate from readiness_dashboard.py next session.
