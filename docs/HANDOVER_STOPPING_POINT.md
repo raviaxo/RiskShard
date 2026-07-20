@@ -20,7 +20,7 @@ The 2026-07-19/20 session cleared the readiness dashboard's P1/P3 queue: US BEC 
 **Active queue: the P2 cycle** — worked in order. Progress:
 - Objective 4 — Insider Misuse frequency evidence: ✅ done (6/6 direct).
 - Objective 5 — Third-Party Outage frequency evidence: ✅ done (6/6 direct).
-- Objective 6 — `sg_finance_bec_midmarket` 1/6 → 6/6 (5 params). ← next / last in the cycle
+- Objective 6 — `sg_finance_bec_midmarket` 1/6 → 6/6: ✅ done (via global bridges; governed-starter grade).
 - Objective 7 — `au_finance_bec_midmarket` 4/6 → 6/6 (2 params): ✅ done (merged PR #23).
 
 **Follow-up surfaced** (not yet queued): readiness now asks for **calibration profiles for

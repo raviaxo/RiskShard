@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 39,
+  "fetched_count": 40,
   "generated_at": "2026-07-15T01:43:20Z",
   "manifest_version": "1.0",
-  "source_count": 39,
+  "source_count": 40,
   "sources": [
     {
       "access_mode": "public_pdf",
@@ -349,6 +349,28 @@
       "title": "Interos Annual Global Supply Chain Report (Resilience 2022)",
       "url": "https://www.interos.ai/resources/global-supply-chain-report",
       "usage_notes": "Use as supply-chain disruption event-frequency context (organizations faced on average three major supply-chain events in the last 12 months, costing an average of USD 182M). Vendor survey; all-cause supply-chain events, not third-party-only. Supports a near-ceiling stress frequency via an interpretive multi-event conversion, not a directly reported prevalence.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 249746,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.police.gov.sg/media-hub/news/2024/20241008_international_cooperation_leading_to_the_interception",
+      "gathered_at": "2026-07-20T21:37:53Z",
+      "http_status": 200,
+      "id": "spf_bec_interception_case_2024",
+      "intended_use": [
+        "Singapore BEC single-event loss",
+        "stress impact anchor"
+      ],
+      "publication_date": "2024-10-08",
+      "publisher": "Singapore Police Force",
+      "raw_path": "sources/raw/spf_bec_interception_case_2024.html",
+      "sha256": "ab21995df0363122e12372b8c1b91a86804ff6f2794c03662e4eb60950a7b59b",
+      "source_type": "law_enforcement_report",
+      "status": "fetched",
+      "title": "SPF Business Email Compromise scam interception case 2024",
+      "url": "https://www.police.gov.sg/media-hub/news/2024/20241008_international_cooperation_leading_to_the_interception",
+      "usage_notes": "Use as a documented Singapore BEC single-event loss. A Singapore-based investment banking firm initiated transfers of about USD 6.66M to a scammer on 19-20 September 2024; SPF and US authorities intercepted over USD 5M. One documented extreme case, not a loss distribution or a mid-market average; the gross transferred amount is modeled, gross of recovery.\n"
     },
     {
       "access_mode": "public_html",
