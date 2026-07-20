@@ -154,7 +154,7 @@ class CalibrationTests(unittest.TestCase):
             {item["id"] for item in report["excluded_evidence"]},
         )
 
-    def test_bec_calibration_is_runnable_but_assumption_backed(self):
+    def test_bec_calibration_is_runnable_and_source_backed(self):
         report = run_calibration(
             ROOT / "scenarios" / "business_email_compromise.yaml",
             ROOT / "org_profiles" / "au_finance_midmarket.yaml",
@@ -172,19 +172,19 @@ class CalibrationTests(unittest.TestCase):
 
         self.assertEqual(
             scenario["frequency"],
-            {"min": 0.00010514176186819692, "likely": 0.12, "max": 0.25},
+            {"min": 0.00010514176186819692, "likely": 0.21, "max": 0.81},
         )
         self.assertEqual(scenario["impact"], {"min": 33000, "likely": 170000, "max": 2000000})
         self.assertEqual(
             warning_codes.count("parameter_from_non_source_backed_evidence"),
-            2,
+            0,
         )
         self.assertEqual(
             selected_types,
             {
                 "frequency.min": "source_backed",
-                "frequency.likely": "estimated",
-                "frequency.max": "estimated",
+                "frequency.likely": "source_backed",
+                "frequency.max": "source_backed",
                 "impact.min": "source_backed",
                 "impact.likely": "source_backed",
                 "impact.max": "source_backed",

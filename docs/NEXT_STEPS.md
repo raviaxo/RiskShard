@@ -50,13 +50,14 @@ Reuse the US BEC pattern built 2026-07-20.
   (SingStat) for the frequency floor; SPF/CSA Singapore BEC/scam prevalence for likely/max;
   IC3/DBIR median for impact.min; a documented SG/APAC funds-transfer-fraud loss for impact.max.
 
-### Objective 7 — `au_finance_bec_midmarket` → source-backed (4/6 → 6/6)
-Only 2 assumptions left: **frequency.likely, frequency.max** (frequency.min + all impacts
-already source-backed via ACCC/IC3).
-- **2 approve-points:** frequency.likely, frequency.max.
-- **Candidate sources:** ACCC Scamwatch / ASD ACSC Australian BEC/payment-redirection
-  prevalence, or an AU org-level survey as the attempts-prevalence bridge (mirror the AFP
-  method used for US likely/max).
+### Objective 7 — `au_finance_bec_midmarket` → source-backed (4/6 → 6/6)  ✅ DONE 2026-07-20
+**Result:** 6/6 source-backed. `frequency.likely` 0.21 (ABS 2024-25 all-cyber incident
+prevalence), `frequency.max` 0.81 (MYOB/Dynata 2024 finance & insurance mid-sized cyber
+prevalence). Calibration 0 warnings; Monte Carlo AVG AUD 124k / P95 350k / P99 524k.
+**Notable consequence:** with BEC frequency now evidence-based, **BEC overtakes data breach
+as the #1 ranked top risk** — consistent with real-world loss data (IC3/AFP/Coalition all
+rank BEC/payment fraud first). Six test snapshots updated to match. Sources added:
+`abs_characteristics_australian_business_2025`, `myob_business_monitor_cyber_2024`.
 
 ---
 
