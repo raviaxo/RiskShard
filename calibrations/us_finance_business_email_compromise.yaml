@@ -1,47 +1,52 @@
 metadata:
   name: United States financial-services BEC calibration
   scenario_name: US Finance Business Email Compromise Midmarket - Calibrated Draft
-  version: "0.1"
+  version: "0.2"
   notes: >
-    Starter reviewed calibration profile for United States financial-services
-    business email compromise. It uses a source-backed FBI IC3 complaint-average
-    loss anchor for likely impact, plus explicit estimated assumptions for
-    frequency and loss bounds until denominator-aware US or sector evidence is
-    reviewed.
+    Reviewed calibration profile for United States financial-services business
+    email compromise. All six direct parameters are now source-backed: an IC3
+    over Census SUSB reported-complaint frequency floor, AFP 2025/2026 US
+    organization-level BEC prevalence for likely and stress frequency, a Verizon
+    DBIR 2026 median BEC loss floor, the FBI IC3 complaint-average loss for
+    likely impact, and a documented Coalition funds-transfer-fraud largest-loss
+    stress anchor. Frequency bridges measure BEC attempts/affected rather than
+    confirmed-loss events, and the stress impact is a single documented extreme
+    case, so this is a source-backed contribution candidate, not a
+    human-approved benchmark. See per-record limitations in evidence.
 
 target_currency: USD
 
 parameters:
   frequency:
     min:
-      evidence_id: riskshard_us_bec_frequency_floor_2026
+      evidence_id: ic3_census_us_bec_reported_complaint_rate_floor_2026
       transform: direct
-      rationale: Explicit estimated floor until source-backed US BEC event frequency evidence exists.
+      rationale: Source-backed reported-complaint floor - FBI IC3 2025 US BEC complaints over the US Census SUSB employer-firm denominator.
     likely:
-      evidence_id: riskshard_us_bec_frequency_likely_2026
+      evidence_id: afp_2025_us_bec_org_prevalence_frequency_likely
       transform: direct
-      rationale: Explicit estimated likely annual probability until denominator-aware US BEC frequency evidence exists.
+      rationale: Source-backed likely-frequency exposure bridge from AFP 2025 US organization-level BEC prevalence (attempts/affected, not confirmed-loss events).
     max:
-      evidence_id: riskshard_us_bec_frequency_stress_2026
+      evidence_id: afp_2026_us_bec_org_prevalence_frequency_stress
       transform: direct
-      rationale: Explicit estimated stress frequency until source-backed US tail-frequency evidence exists.
+      rationale: Source-backed stress-frequency bridge from AFP 2026 US organization-level BEC prevalence.
 
   impact:
     min:
-      evidence_id: riskshard_us_bec_impact_floor_2026
+      evidence_id: verizon_dbir_2026_us_bec_median_loss_impact_floor
       transform: direct
       target_currency: USD
       round_to: 1000
-      rationale: Explicit estimated lower loss until source-backed US fraudulent-payment floor evidence exists.
+      rationale: Source-backed median BEC loss floor from Verizon DBIR 2026 (IC3-derived), below the IC3 mean used for likely.
     likely:
       evidence_id: fbi_ic3_2025_us_bec_average_loss_per_complaint_usd
       transform: direct
       target_currency: USD
       round_to: 10000
-      rationale: Source-backed FBI IC3 BEC average adjusted loss per complaint as the first US likely loss anchor.
+      rationale: Source-backed FBI IC3 BEC average adjusted loss per complaint as the US likely loss anchor.
     max:
-      evidence_id: riskshard_us_bec_impact_stress_2026
+      evidence_id: coalition_2023_us_ftf_largest_loss_impact_stress
       transform: direct
       target_currency: USD
       round_to: 10000
-      rationale: Explicit estimated stress loss bound until source-backed US BEC tail-loss evidence exists.
+      rationale: Source-backed documented largest funds-transfer-fraud single-event loss (Coalition, mid-market insurer book) as the stress anchor, gross of clawback.

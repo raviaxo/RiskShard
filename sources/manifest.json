@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 23,
+  "fetched_count": 33,
   "generated_at": "2026-07-15T01:43:20Z",
   "manifest_version": "1.0",
-  "source_count": 28,
+  "source_count": 33,
   "sources": [
     {
       "access_mode": "public_pdf",
@@ -216,6 +216,95 @@
       "title": "Counts of Australian Businesses, including Entries and Exits, July 2021 - June 2025",
       "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025",
       "usage_notes": "Use as an official Australian business-count denominator. Preserve limitations when combining it with incident, notification, or loss-event counts from other sources.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 339875,
+      "content_type": "text/html; charset=UTF-8",
+      "final_url": "https://www.census.gov/data/tables/2022/econ/susb/2022-susb-annual.html",
+      "gathered_at": "2026-07-20T09:56:17Z",
+      "http_status": 200,
+      "id": "census_susb_2022",
+      "intended_use": [
+        "United States business population denominator",
+        "frequency normalization"
+      ],
+      "publication_date": "2025-01-16",
+      "publisher": "U.S. Census Bureau",
+      "raw_path": "sources/raw/census_susb_2022.html",
+      "sha256": "af5496a5b968c709b3021a5686f0c8ee38029d91c2ffc630cf02fe498eedd0c6",
+      "source_type": "official_statistical_data",
+      "status": "fetched",
+      "title": "Statistics of U.S. Businesses (SUSB) 2022 Annual Data",
+      "url": "https://www.census.gov/data/tables/2022/econ/susb/2022-susb-annual.html",
+      "usage_notes": "Use as an official U.S. employer-firm-count denominator (2022 reference year, released January 2025). Authoritative national employer-firm counts range roughly 5.5M (Census Business Dynamics Statistics 2022) to 6.3M (SBA Office of Advocacy 2024) depending on program and vintage; the commonly cited total is ~6.1M. Preserve this range as a limitation, and note that it is an all-industry, all-size denominator, not financial-services or mid-market specific, when combining it with sector complaint counts.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 70836,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.financialprofessionals.org/training-resources/resources/survey-research-economic-data/details/payments-fraud",
+      "gathered_at": "2026-07-20T10:46:41Z",
+      "http_status": 200,
+      "id": "afp_payments_fraud_2025",
+      "intended_use": [
+        "United States organization-level BEC prevalence",
+        "payments fraud exposure context",
+        "frequency bridge"
+      ],
+      "publication_date": "2025-08-26",
+      "publisher": "Association for Financial Professionals",
+      "raw_path": "sources/raw/afp_payments_fraud_2025.html",
+      "sha256": "5fcb62cfc710a44fc6cc2a7e50efc42df89f1996718e8fbd5f4d38bd5545a8e3",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "2025 AFP Payments Fraud and Control Survey Report",
+      "url": "https://www.financialprofessionals.org/training-resources/resources/survey-research-economic-data/details/payments-fraud",
+      "usage_notes": "Use as a U.S. organization-level BEC and payments-fraud prevalence source. The survey measures organizations experiencing attempted or actual BEC, not confirmed financial-loss events; respondents skew toward corporate treasury and larger organizations (AFP reports 66% of BEC attempts target organizations with at least USD 1B in revenue), so it is not mid-market-specific. Preserve these limitations when using it as a frequency bridge.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 69599,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.financialprofessionals.org/about/learn-more/press-releases/Details/over-75-percent-of-us-firms-experienced-payments-fraud-in-2025-while-ai-adoption-for-fraud-mitigation-lags",
+      "gathered_at": "2026-07-20T10:59:49Z",
+      "http_status": 200,
+      "id": "afp_payments_fraud_2026",
+      "intended_use": [
+        "United States organization-level BEC prevalence",
+        "stress-frequency bridge"
+      ],
+      "publication_date": "2026-04-14",
+      "publisher": "Association for Financial Professionals",
+      "raw_path": "sources/raw/afp_payments_fraud_2026.html",
+      "sha256": "aad8c3fe6ecf49469aef00e6c2c50272c5584b9d9c7a93894f594ef25491358d",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "2026 AFP Payments Fraud and Control Survey Report",
+      "url": "https://www.financialprofessionals.org/about/learn-more/press-releases/Details/over-75-percent-of-us-firms-experienced-payments-fraud-in-2025-while-ai-adoption-for-fraud-mitigation-lags",
+      "usage_notes": "Use as a U.S. organization-level BEC prevalence source (survey conducted January 2026 among 465 treasury practitioners; BEC affected 74% of organizations in 2025). Measures organizations experiencing attempted or actual BEC, not confirmed loss events; treasury-respondent and larger-organization skew, so it is not mid-market-specific. Preserve these limitations when using it as a stress-frequency bridge.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 466497,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.coalitioninc.com/blog/cyber-insurance/how-coalition-recovered-usd5-5m-in-stolen-money-after-funds-transfer-fraud",
+      "gathered_at": "2026-07-20T11:17:38Z",
+      "http_status": 200,
+      "id": "coalition_ftf_largest_clawback_2023",
+      "intended_use": [
+        "BEC funds transfer fraud single-event tail loss",
+        "stress impact anchor"
+      ],
+      "publication_date": "2023-06-08",
+      "publisher": "Coalition",
+      "raw_path": "sources/raw/coalition_ftf_largest_clawback_2023.html",
+      "sha256": "76fba04aa5076d9784b52ad2aad34bc51b70871f4d6b8a345ba0cf9180b587f1",
+      "source_type": "cyber_insurer_claims",
+      "status": "fetched",
+      "title": "Coalition funds transfer fraud largest clawback case",
+      "url": "https://www.coalitioninc.com/blog/how-coalition-recovered-usd5-5m-in-stolen-money-after-funds-transfer-fraud",
+      "usage_notes": "Use as a documented single-event funds-transfer-fraud loss from a cyber insurer's mid-market book (USD 6.4M wired, described as Coalition's largest clawback case). It is one documented extreme case, not a modeled loss percentile; 85% was recovered via clawback, but recovery is not guaranteed, so model gross exposure. Preserve these limitations when using it as a stress anchor.\n"
     },
     {
       "access_mode": "public_pdf",
@@ -564,7 +653,7 @@
       "sha256": "fd9dc9480b9c4cbeb528ff839ecc29ca51e9c9eff3d7cffeefc6dfc2e00155d8",
       "source_type": "data_breach_cost_research",
       "status": "fetched",
-      "title": "Rapport IBM 2025 : co\u00fbt d'une violation de donn\u00e9es en France",
+      "title": "Rapport IBM 2025 : coût d'une violation de données en France",
       "url": "https://fr.newsroom.ibm.com/Rapport-IBM-13-des-organisations-ont-signale-des-violations-de-modeles-ou-dapplications-dIA,-dont-97-ont-declare-ne-pas-disposer-de-controles-dacces-a-lIA-appropries",
       "usage_notes": "Primary IBM France newsroom release for the 2025 Cost of a Data Breach report. States the France national average breach cost (EUR 3.59M in 2025, down ~7% from 2024) and a France financial-services sector figure (EUR 4.65M), based on 34 French organizations breached between March 2024 and February 2025. The national average is all-sector and enterprise-weighted, so treat it as a France-specific likely-cost anchor with a mid-market applicability caveat, not a mid-market-specific loss table. It replaces the global IBM average bridge for the France likely-impact anchor. EUR values normalize to USD via the reviewed ECB EUR/USD assumption in calibrations/fx_rates.yaml.\n"
     },
