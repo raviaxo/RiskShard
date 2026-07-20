@@ -60,7 +60,13 @@ scenario/module, and `results/` (local, git-ignored).
 
 ---
 
-## Objective 2 — Restore the session-open ritual's owner docs
+## Objective 2 — Restore the session-open ritual's owner docs  ✅ DONE 2026-07-20
+
+**Result:** created `AGENTS.md`, `docs/PROJECT_STATUS.md`, `docs/HANDOVER_STOPPING_POINT.md`,
+`docs/PUBLISHABLE_REQUIREMENTS.md` (plus this `NEXT_STEPS.md`). All thin and cross-linked
+per one-canonical-owner — they point to README/CONTRIBUTING/readiness rather than duplicate.
+`/session:start` now reads cleanly: all five owner files exist, no broken relative links,
+preflight + doctor pass.
 
 **Why:** `/session:start` is load-bearing but its named docs do not exist:
 `AGENTS.md`, `docs/HANDOVER_STOPPING_POINT.md`, `docs/PROJECT_STATUS.md`,
