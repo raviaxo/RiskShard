@@ -394,7 +394,7 @@ class CliSmokeTests(unittest.TestCase):
         self.assertEqual(json_result.returncode, 0, msg=json_result.stderr)
         payload = json.loads(json_result.stdout)
         self.assertEqual(payload["risk_count"], 2)
-        self.assertEqual(payload["risks"][0]["id"], "data_breach")
+        self.assertEqual(payload["risks"][0]["id"], "business_email_compromise")
         self.assertEqual(payload["risks"][0]["status"], "calibrated")
         self.assertIn("missing_parameters", payload["risks"][0])
 

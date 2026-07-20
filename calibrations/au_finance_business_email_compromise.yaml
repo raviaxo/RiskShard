@@ -19,13 +19,13 @@ parameters:
       transform: direct
       rationale: Conservative Australia reported-loss floor from ACCC Scamwatch loss reports divided by ABS active-business denominator.
     likely:
-      evidence_id: riskshard_bec_frequency_likely_2026
+      evidence_id: abs_2025_au_business_cyber_incident_prevalence_frequency_likely
       transform: direct
-      rationale: Explicit estimated likely annual probability until denominator-aware BEC frequency evidence exists.
+      rationale: Source-backed AU org-level exposure bridge (ABS 2024-25, 21% of businesses experienced a cyber security incident); all-cyber, overstates BEC-only.
     max:
-      evidence_id: riskshard_bec_frequency_stress_2026
+      evidence_id: myob_2024_au_finance_midsized_cyber_prevalence_frequency_stress
       transform: direct
-      rationale: Explicit estimated stress frequency until source-backed tail-frequency evidence exists.
+      rationale: Source-backed AU mid-sized finance stress bridge (MYOB/Dynata 2024, 81% of finance and insurance mid-sized businesses attacked); vendor survey, all-cyber.
 
   impact:
     min:
