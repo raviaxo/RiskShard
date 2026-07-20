@@ -293,6 +293,81 @@ sources:
       limitations when combining it with incident, notification, or loss-event
       counts from other sources.
 
+  - id: census_susb_2022
+    title: Statistics of U.S. Businesses (SUSB) 2022 Annual Data
+    publisher: U.S. Census Bureau
+    source_type: official_statistical_data
+    url: https://www.census.gov/data/tables/2022/econ/susb/2022-susb-annual.html
+    publication_date: "2025-01-16"
+    access_mode: public_html
+    intended_use:
+      - United States business population denominator
+      - frequency normalization
+    usage_notes: >
+      Use as an official U.S. employer-firm-count denominator (2022 reference
+      year, released January 2025). Authoritative national employer-firm counts
+      range roughly 5.5M (Census Business Dynamics Statistics 2022) to 6.3M (SBA
+      Office of Advocacy 2024) depending on program and vintage; the commonly
+      cited total is ~6.1M. Preserve this range as a limitation, and note that
+      it is an all-industry, all-size denominator, not financial-services or
+      mid-market specific, when combining it with sector complaint counts.
+
+  - id: afp_payments_fraud_2025
+    title: 2025 AFP Payments Fraud and Control Survey Report
+    publisher: Association for Financial Professionals
+    source_type: industry_survey
+    url: https://www.financialprofessionals.org/training-resources/resources/survey-research-economic-data/details/payments-fraud
+    publication_date: "2025-08-26"
+    access_mode: public_html
+    intended_use:
+      - United States organization-level BEC prevalence
+      - payments fraud exposure context
+      - frequency bridge
+    usage_notes: >
+      Use as a U.S. organization-level BEC and payments-fraud prevalence source.
+      The survey measures organizations experiencing attempted or actual BEC, not
+      confirmed financial-loss events; respondents skew toward corporate treasury
+      and larger organizations (AFP reports 66% of BEC attempts target
+      organizations with at least USD 1B in revenue), so it is not
+      mid-market-specific. Preserve these limitations when using it as a
+      frequency bridge.
+
+  - id: afp_payments_fraud_2026
+    title: 2026 AFP Payments Fraud and Control Survey Report
+    publisher: Association for Financial Professionals
+    source_type: industry_survey
+    url: https://www.financialprofessionals.org/about/learn-more/press-releases/Details/over-75-percent-of-us-firms-experienced-payments-fraud-in-2025-while-ai-adoption-for-fraud-mitigation-lags
+    publication_date: "2026-04-14"
+    access_mode: public_html
+    intended_use:
+      - United States organization-level BEC prevalence
+      - stress-frequency bridge
+    usage_notes: >
+      Use as a U.S. organization-level BEC prevalence source (survey conducted
+      January 2026 among 465 treasury practitioners; BEC affected 74% of
+      organizations in 2025). Measures organizations experiencing attempted or
+      actual BEC, not confirmed loss events; treasury-respondent and larger-
+      organization skew, so it is not mid-market-specific. Preserve these
+      limitations when using it as a stress-frequency bridge.
+
+  - id: coalition_ftf_largest_clawback_2023
+    title: Coalition funds transfer fraud largest clawback case
+    publisher: Coalition
+    source_type: cyber_insurer_claims
+    url: https://www.coalitioninc.com/blog/how-coalition-recovered-usd5-5m-in-stolen-money-after-funds-transfer-fraud
+    publication_date: "2023-06-08"
+    access_mode: public_html
+    intended_use:
+      - BEC funds transfer fraud single-event tail loss
+      - stress impact anchor
+    usage_notes: >
+      Use as a documented single-event funds-transfer-fraud loss from a cyber
+      insurer's mid-market book (USD 6.4M wired, described as Coalition's largest
+      clawback case). It is one documented extreme case, not a modeled loss
+      percentile; 85% was recovered via clawback, but recovery is not
+      guaranteed, so model gross exposure. Preserve these limitations when using
+      it as a stress anchor.
+
   - id: fbi_ic3_2025_report
     title: 2025 IC3 Annual Report
     publisher: Federal Bureau of Investigation Internet Crime Complaint Center
