@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 37,
+  "fetched_count": 39,
   "generated_at": "2026-07-15T01:43:20Z",
   "manifest_version": "1.0",
-  "source_count": 37,
+  "source_count": 39,
   "sources": [
     {
       "access_mode": "public_pdf",
@@ -304,6 +304,51 @@
       "title": "Gurucul 2026 Insider Risk Report",
       "url": "https://www.cybersecurity-insiders.com/inside-threats-how-ai-transformed-2026s-insider-risk-landscape/",
       "usage_notes": "Use as an organization-level insider-incident prevalence source. Survey of 725 IT and security professionals conducted in late 2025; reports that only 10% of organizations had zero insider incidents in the past 12 months (i.e. 90% experienced at least one), up from 83% (17% zero) in 2024. Vendor-sponsored survey (lower trust than official statistics); \"insider incidents\" is broad and includes negligent insiders, not only deliberate misuse. Preserve these limitations when using it as a stress bridge.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 122840,
+      "content_type": "text/html;charset=UTF-8",
+      "final_url": "https://www.thebci.org/resource/bci-supply-chain-resilience-report-2024.html",
+      "gathered_at": "2026-07-20T21:21:27Z",
+      "http_status": 200,
+      "id": "bci_supply_chain_resilience_2024",
+      "intended_use": [
+        "organization-level supply-chain disruption prevalence",
+        "third-party disruption cause share",
+        "frequency bridge"
+      ],
+      "publication_date": "2024-11-01",
+      "publisher": "Business Continuity Institute",
+      "raw_path": "sources/raw/bci_supply_chain_resilience_2024.html",
+      "sha256": "2dc3e8727e26f683eba21271438a3a169a7c823015a4f4cf444c71fa64533a35",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "BCI Supply Chain Resilience Report 2024",
+      "url": "https://www.thebci.org/resource/bci-supply-chain-resilience-report-2024.html",
+      "usage_notes": "Use as an organization-level supply-chain disruption prevalence source (~80% of organizations experienced a disruption in the past year; 43.6% cite third-party failure as the top cause). Broad supply-chain disruption (all causes), not third-party-only, and not sector- or size-specific. Preserve these limitations when using it as a third-party-outage frequency bridge.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 77572,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.interos.ai/resources/global-supply-chain-report",
+      "gathered_at": "2026-07-20T21:21:27Z",
+      "http_status": 200,
+      "id": "interos_global_supply_chain_2022",
+      "intended_use": [
+        "supply-chain disruption event frequency",
+        "stress-frequency basis"
+      ],
+      "publication_date": "2022-03-01",
+      "publisher": "Interos",
+      "raw_path": "sources/raw/interos_global_supply_chain_2022.html",
+      "sha256": "e7060544004e3bc735896f277a1a1f057f5fe098287fb3c41f092bb4a8d9cda1",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "Interos Annual Global Supply Chain Report (Resilience 2022)",
+      "url": "https://www.interos.ai/resources/global-supply-chain-report",
+      "usage_notes": "Use as supply-chain disruption event-frequency context (organizations faced on average three major supply-chain events in the last 12 months, costing an average of USD 182M). Vendor survey; all-cause supply-chain events, not third-party-only. Supports a near-ceiling stress frequency via an interpretive multi-event conversion, not a directly reported prevalence.\n"
     },
     {
       "access_mode": "public_html",

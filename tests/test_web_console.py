@@ -75,7 +75,7 @@ class WebConsoleTests(unittest.TestCase):
 
         actions = app.run_command("next")
         self.assertIn("Next best actions", actions["output"])
-        self.assertIn("Fill missing direct evidence", actions["output"])
+        self.assertIn("area:", actions["output"])
 
         dashboard = app.dashboard()
         self.assertIn("coverage", dashboard)

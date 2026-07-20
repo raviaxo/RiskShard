@@ -40,7 +40,13 @@ missing**, 0 assumptions). Add source-backed frequency.
 - Scenario `scenarios/insider_threat.yaml` exists; no calibrated module yet — confirm the
   wiring (module/calibration) or note it as scaffold-only.
 
-### Objective 5 — Third-Party Outage: add source-backed frequency evidence
+### Objective 5 — Third-Party Outage: add source-backed frequency evidence  ✅ DONE 2026-07-20
+**Result:** Third-Party Outage now **6/6 direct** (was 3/6). New `evidence/third_party_outage.yaml`:
+`frequency.min` 0.44 (BCI 2024 third-party-failure-as-top-cause), `frequency.likely` 0.80
+(BCI 2024 broad supply-chain disruption prevalence), `frequency.max` 0.90 (interpretive
+multi-event near-ceiling from BCI + Interos — **the weakest anchor**, loudly caveated as not a
+directly reported prevalence). Broad all-cause bridges, caveated as overstating third-party-only.
+Full suite clean. Same calibration-profile follow-up as Insider Misuse.
 Top-risk `Third-Party Outage` is 3/6 direct (**frequency.min/likely/max missing**, 0 assumptions).
 - **Candidate sources:** DBIR third-party-involvement share (already in-repo as context, 0.48);
   Uptime Institute *Annual Outage Analysis* (outage frequency/severity); a supply-chain /
