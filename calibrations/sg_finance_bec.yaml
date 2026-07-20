@@ -1,37 +1,40 @@
 metadata:
   name: Singapore financial-services BEC calibration
   scenario_name: Singapore Finance Business Email Compromise Midmarket - Calibrated Draft
-  version: "0.1"
+  version: "0.2"
   notes: >
     Starter calibration profile for Singapore financial-services business email
     compromise. It uses a source-backed FBI IC3 complaint-average BEC loss
-    anchor for likely impact, and keeps frequency and loss bounds as explicit
-    estimates until Singapore payment-fraud or sector evidence is reviewed.
+    anchor for likely impact, All six direct parameters are now source-backed. Frequency and the lower
+    loss bound use global bridges (US IC3/Census floor, AFP US BEC prevalence,
+    Verizon DBIR median) as Singapore context; only the stress impact is
+    Singapore-specific (a documented SPF BEC case). Governed-starter grade: the
+    bridges are not Singapore-specific and are caveated in each evidence record.
 
 target_currency: USD
 
 parameters:
   frequency:
     min:
-      evidence_id: riskshard_sg_finance_bec_frequency_floor_2026
+      evidence_id: ic3_census_global_bec_reported_complaint_rate_floor_sg_context
       transform: direct
-      rationale: Explicit estimated floor until Singapore BEC event-frequency evidence exists.
+      rationale: Source-backed global reported-BEC-complaint floor (US IC3 over US Census) reused as Singapore context.
     likely:
-      evidence_id: riskshard_sg_finance_bec_frequency_likely_2026
+      evidence_id: afp_2025_bec_org_prevalence_frequency_likely_sg_context
       transform: direct
-      rationale: Explicit estimated likely annual probability until denominator-aware Singapore BEC frequency evidence exists.
+      rationale: Source-backed AFP 2025 US organization-level BEC prevalence reused as a Singapore-context likely bridge.
     max:
-      evidence_id: riskshard_sg_finance_bec_frequency_stress_2026
+      evidence_id: afp_2026_bec_org_prevalence_frequency_stress_sg_context
       transform: direct
-      rationale: Explicit estimated stress frequency until Singapore BEC tail-frequency evidence exists.
+      rationale: Source-backed AFP 2026 US organization-level BEC prevalence reused as a Singapore-context stress bridge.
 
   impact:
     min:
-      evidence_id: riskshard_sg_finance_bec_impact_floor_2026
+      evidence_id: verizon_dbir_2026_bec_median_loss_impact_floor_sg_context
       transform: direct
       target_currency: USD
       round_to: 1000
-      rationale: Explicit estimated lower loss until source-backed Singapore fraudulent-payment floor evidence exists.
+      rationale: Source-backed Verizon DBIR 2026 median BEC loss reused as a Singapore-context lower impact bridge.
     likely:
       evidence_id: fbi_ic3_2025_global_bec_average_loss_per_complaint_usd_sg_context
       transform: direct
@@ -39,8 +42,8 @@ parameters:
       round_to: 10000
       rationale: Source-backed FBI IC3 BEC average adjusted loss per complaint as a first global likely loss bridge.
     max:
-      evidence_id: riskshard_sg_finance_bec_impact_stress_2026
+      evidence_id: spf_2024_sg_bec_documented_case_impact_stress
       transform: direct
       target_currency: USD
       round_to: 10000
-      rationale: Explicit estimated stress loss bound until Singapore BEC tail-loss evidence exists.
+      rationale: Source-backed documented Singapore BEC case loss (SPF, ~USD 6.66M) as the stress anchor, gross of recovery.

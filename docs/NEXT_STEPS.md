@@ -54,7 +54,13 @@ Top-risk `Third-Party Outage` is 3/6 direct (**frequency.min/likely/max missing*
   denominator assumption loudly).
 - **3 approve-points:** frequency.min / likely / max.
 
-### Objective 6 — `sg_finance_bec_midmarket` → source-backed (1/6 → 6/6)
+### Objective 6 — `sg_finance_bec_midmarket` → source-backed (1/6 → 6/6)  ✅ DONE 2026-07-20
+**Result:** 6/6 source-backed via **global bridges** (governed-starter grade, not country-specific):
+`frequency.min` 0.004 (IC3÷Census global floor), `frequency.likely/max` 0.63/0.74 (AFP US),
+`impact.min` $50k (DBIR median) — all reused US anchors as Singapore context, loudly caveated.
+Only `impact.max` is **Singapore-specific**: $6.66M documented SPF BEC case (investment-banking
+firm, Sept 2024). Calibration rewired, 0 warnings; Monte Carlo AVG $653k / P95 $1.75M / P99 $2.44M.
+Full suite clean (4 benchmark/readiness snapshots updated). **The whole P2 cycle (4–7) is complete.**
 5 assumptions to replace; `impact.likely` already source-backed (IC3 global-BEC-as-SG-context).
 Reuse the US BEC pattern built 2026-07-20.
 - **5 approve-points:** frequency.min/likely/max, impact.min, impact.max.
