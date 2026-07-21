@@ -43,3 +43,11 @@ items:
       - insider threat
       - malicious insider
       - privileged misuse
+
+  - id: ai_enabled_fraud
+    label: AI-Enabled Fraud
+    aliases:
+      - deepfake fraud
+      - synthetic media fraud
+      - ai fraud
+      - deepfake ceo fraud

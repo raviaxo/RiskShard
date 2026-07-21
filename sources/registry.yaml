@@ -419,6 +419,73 @@ sources:
       mid-market average; the gross transferred amount is modeled, gross of
       recovery.
 
+  - id: regula_deepfake_survey_2024
+    title: Regula Deepfake Fraud Impact Survey 2024
+    publisher: Regula
+    source_type: industry_survey
+    url: https://regulaforensics.com/blog/impact-of-deepfakes-on-idv-regula-survey/
+    publication_date: "2024-10-01"
+    access_mode: public_html
+    intended_use:
+      - deepfake fraud organization-level prevalence
+      - stress-frequency bridge
+    usage_notes: >
+      Use as an organization-level deepfake-fraud prevalence source (Regula 2024
+      reports 92% of businesses experienced financial loss due to a deepfake, and
+      about 50% and 49% experienced video and audio deepfakes). Vendor survey
+      (identity-verification vendor), lower trust; fast-rising and volatile;
+      "experienced a deepfake" is broad. Preserve these limitations.
+
+  - id: gartner_deepfake_attack_survey_2025
+    title: Gartner deepfake attack survey (September 2025)
+    publisher: Gartner (reported via Adaptive Security)
+    source_type: analyst_survey
+    url: https://www.adaptivesecurity.com/blog/deepfake-statistics-2026-the-data-security-leaders-need-to-know
+    publication_date: "2025-09-01"
+    access_mode: public_html
+    intended_use:
+      - deepfake attack organization-level prevalence
+      - likely-frequency bridge
+    usage_notes: >
+      Use as an organization-level deepfake-attack prevalence source (Gartner
+      September 2025: 62% of organizations experienced a deepfake attack in the
+      prior 12 months). Analyst survey; measures attacks/attempts, not confirmed
+      loss events; fast-rising. Figure accessed via secondary reporting.
+
+  - id: deepfake_business_impact_2024
+    title: Deepfake business fraud impact statistics 2024
+    publisher: Security.org (compilation of 2024 deepfake survey data)
+    source_type: industry_survey
+    url: https://www.security.org/resources/deepfake-statistics/
+    publication_date: "2025-01-01"
+    access_mode: public_html
+    intended_use:
+      - deepfake fraud average loss
+      - early prevalence baseline
+    usage_notes: >
+      Use as a compiled 2024 deepfake business-fraud statistics source (average
+      loss near USD 500,000 per incident, ~USD 603,000 in financial services;
+      more than 10% of companies experienced deepfake fraud attempts in 2024).
+      Secondary compilation of vendor survey data, lower trust; volatile and
+      fast-rising. Preserve these limitations.
+
+  - id: arup_deepfake_case_2024
+    title: Arup Hong Kong deepfake CFO fraud case 2024
+    publisher: CNN (reporting Hong Kong Police)
+    source_type: news_report
+    url: https://www.cnn.com/2024/02/04/asia/deepfake-cfo-scam-hong-kong-intl-hnk
+    publication_date: "2024-02-04"
+    access_mode: public_html
+    intended_use:
+      - documented deepfake fraud single-event loss
+      - stress impact anchor
+    usage_notes: >
+      Use as a documented deepfake-fraud single-event loss. A finance employee at
+      engineering firm Arup made 15 transfers totaling about USD 25.6M after a
+      video call in which a deepfake impersonated the CFO and colleagues (Hong
+      Kong, early 2024); the funds remain unrecovered. One documented extreme
+      case, not a mid-market average or a loss percentile.
+
   - id: census_susb_2022
     title: Statistics of U.S. Businesses (SUSB) 2022 Annual Data
     publisher: U.S. Census Bureau

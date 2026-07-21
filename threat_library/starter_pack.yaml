@@ -91,3 +91,22 @@ threats:
       - response_cost
     starter_sources:
       - verizon_dbir_2026
+
+  - id: ai_enabled_fraud
+    label: AI-Enabled Fraud
+    status: emergent_scenario_started
+    primary_loss_modes:
+      - fraudulent_payment
+      - investigation_cost
+      - recovery_cost
+    required_evidence:
+      - deepfake fraud incidence
+      - average fraudulent transfer
+      - documented tail loss
+      - control effectiveness
+    starter_sources:
+      - regula_deepfake_survey_2024
+      - gartner_deepfake_attack_survey_2025
+      - deepfake_business_impact_2024
+      - arup_deepfake_case_2024
+      - verizon_dbir_2026
