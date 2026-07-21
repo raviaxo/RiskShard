@@ -99,6 +99,39 @@ def run_calibration(
 
     validate_generated_ranges(generated)
 
+    # ADR-0001: optionally compose conditional loss stages from the profile. Each
+    # stage's conditional_probability and impact bounds resolve through the same
+    # calibrate_bound path as frequency/impact (currency handling keys off the
+    # evidence unit, so a descriptive group label is safe).
+    generated_stages = []
+    for stage_spec in calibration_profile.get("loss_stages", []) or []:
+        loss_mode = stage_spec["loss_mode"]
+        stage = {"loss_mode": loss_mode, "conditional_probability": {}, "impact": {}}
+        for field in ("conditional_probability", "impact"):
+            field_spec = stage_spec.get(field, {})
+            for bound in ("min", "likely", "max"):
+                selector = field_spec.get(bound)
+                if selector is None:
+                    raise CalibrationError(
+                        f"Missing calibration selector for loss_stage {loss_mode}.{field}.{bound}"
+                    )
+                selected_record, normalized, new_warnings, new_assumptions = calibrate_bound(
+                    f"loss_stage.{loss_mode}.{field}",
+                    bound,
+                    selector,
+                    evidence_by_id,
+                    manifest_by_id,
+                    fx_rates,
+                    calibration_profile,
+                )
+                stage[field][bound] = normalized["value"]
+                selected.append(selected_record)
+                warnings.extend(new_warnings)
+                assumptions.extend(new_assumptions)
+        generated_stages.append(stage)
+    if generated_stages:
+        generated["loss_stages"] = generated_stages
+
     selected_ids = {item["evidence_id"] for item in selected}
     annotate_selected_evidence(selected, matched)
     excluded = [
