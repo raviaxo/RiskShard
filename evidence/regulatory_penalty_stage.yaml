@@ -1,0 +1,55 @@
+records:
+  # ADR-0001 loss-stage provenance. These document the sourced anchors behind the
+  # regulatory_penalty loss_stage in
+  # scenarios/gb_finance_data_breach_regulatory_chain.yaml. Loss-stage parameters
+  # use the loss_stage.<mode>.<field> naming; they are not counted in a shard's
+  # six direct frequency/impact parameters.
+  - id: ico_regulatory_penalty_given_breach_conditional_probability_2024
+    title: Conditional probability of an ICO monetary penalty given a UK data breach
+    parameter: loss_stage.regulatory_penalty.conditional_probability
+    value: 0.0015
+    unit: annual_probability
+    source_id: ico_monetary_penalties_2024
+    source_ids:
+      - ico_monetary_penalties_2024
+      - ico_self_reported_breach_cases_2024_25
+    source_name: ICO monetary penalties 2024 and ICO self-reported breach cases 2024/25
+    source_type: derived_regulator_statistical_benchmark
+    source_url_or_citation: https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
+    publication_date: "2025-01-01"
+    extraction_date: "2026-07-20"
+    citation_detail: The ICO issued about 17 monetary penalties in 2024 against about 12,412 self-reported personal data breach reports in 2024/25; 17 / 12,412 = 0.00137, with roughly 85% of breaches resolved through informal action with no fine.
+    extraction_notes: Denominator-derived conditional probability P(ICO monetary penalty | breach). Modeled as a range min 0.001, likely 0.0015, max 0.005 across low- and higher-enforcement years; this record carries the likely point.
+    normalization_notes: 17 / 12,412 = 0.00137 rounded to a likely of 0.0015. Range min 0.001, max 0.005. This is a conditional (given a breach) probability, gating a downstream loss stage, not an event frequency.
+    limitations: Not all ICO monetary penalties are data-breach specific (some are PECR/marketing), so the true breach-penalty rate is somewhat lower; enforcement volume varies year to year; a rare, tail-driving stage. Revise with a breach-specific ICO penalty count.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [GB]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: ico_regulatory_penalty_impact_distribution_gbp_2024
+    title: ICO monetary penalty impact distribution (GBP)
+    parameter: loss_stage.regulatory_penalty.impact
+    value: 750000
+    unit: currency
+    currency: GBP
+    source_id: ico_monetary_penalties_2024
+    source_name: ICO monetary penalties 2024 (enforcement analysis)
+    source_type: regulator_statistics
+    source_url_or_citation: https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
+    publication_date: "2025-01-01"
+    extraction_date: "2026-07-20"
+    citation_detail: ICO 2024 monetary penalties averaged GBP 153,722, most below GBP 250,000, with a material GBP 750,000 fine (PSNI); the 2023 TikTok penalty was GBP 12.7M; statutory maximum is GBP 17.5M or 4% of turnover.
+    extraction_notes: Penalty impact distribution for the regulatory_penalty loss stage, modeled as min 150,000, likely 750,000, max 12,700,000 GBP; this record carries the likely point.
+    normalization_notes: Stored in GBP. Range min 150,000 (typical smaller fine), likely 750,000 (material fine), max 12,700,000 (a TikTok-class large fine, below the statutory cap).
+    limitations: An enforcement-outcome distribution, not a loss quantile for a specific organization; skewed by rare large fines; not all penalties are data-breach specific. Revise with a breach-specific ICO penalty severity table.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [GB]
+      company_size_bands: [mid_market]
+      threats: [data_breach]

@@ -27,6 +27,16 @@ IMPACT_UNCERTAINTY_NOTE = (
     "See docs/METHODOLOGY.md."
 )
 
+# ADR-0001: shown whenever a scenario carries loss_stages, so a reader knows the
+# loss number composes conditional downstream stages (e.g. a regulatory penalty),
+# each rare and tail-driving, and can check each stage's provenance.
+LOSS_CHAIN_NOTE = (
+    "This scenario composes one or more conditional downstream loss stages "
+    "(ADR-0001); each stage is gated by its own source-backed conditional "
+    "probability and adds to the tail more than the mean. Read each stage's "
+    "evidence and confidence separately."
+)
+
 
 def load_schema(schema_path=SCHEMA_PATH):
     schema_path = Path(schema_path)
@@ -195,6 +205,14 @@ def run_portfolio(path, trials=10000, dist_type="pert", seed=None, schema_path=S
                 "currency": currency,
                 "seed": scenario_seed,
                 "fingerprint": scenario_fingerprint(config),
+                "loss_stages": [
+                    {
+                        "loss_mode": stage.get("loss_mode"),
+                        "conditional_probability": stage.get("conditional_probability"),
+                        "impact": stage.get("impact"),
+                    }
+                    for stage in (config.get("loss_stages") or [])
+                ],
             })
         except Exception as exc:
             failures.append((scenario_path, exc))
@@ -286,11 +304,17 @@ def export_report(shard_stats, portfolio_stats, output_dir=RESULTS_DIR, timestam
     filename = f"report_{timestamp.strftime('%Y%m%d_%H%M%S')}.json"
     path = output_dir / filename
 
+    caveats = [IMPACT_UNCERTAINTY_NOTE]
+    if metadata is not None:
+        scenarios = metadata.get("reproducibility", {}).get("scenarios", [])
+        if any(scenario.get("loss_stages") for scenario in scenarios):
+            caveats.append(LOSS_CHAIN_NOTE)
+
     payload = {
         "timestamp": timestamp.isoformat(),
         "shards": shard_stats,
         "portfolio": portfolio_stats,
-        "caveats": [IMPACT_UNCERTAINTY_NOTE],
+        "caveats": caveats,
     }
     if metadata is not None:
         payload["metadata"] = metadata
