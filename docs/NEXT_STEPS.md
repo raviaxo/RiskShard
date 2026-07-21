@@ -96,9 +96,10 @@ governance/regulatory loss).
   drives the P99 tail, not the mean). **✅ Follow-up #3 done:** formal per-stage evidence records
   (`evidence/regulatory_penalty_stage.yaml`, denominator-derived conditional probability +
   ICO penalty impact) and loss-chain provenance surfaced in report output (run metadata records
-  `loss_stages`; export adds a loss-chain caveat). **Remaining (optional):** generate `loss_stages`
-  from a calibration profile so chained shards can be produced by the calibration pipeline, not
-  just hand-authored.
+  `loss_stages`; export adds a loss-chain caveat). **✅ Calibration pipeline** now generates
+  `loss_stages` too: `calibrations/gb_finance_data_breach_regulatory_chain.yaml` resolves the
+  stage's conditional-probability and impact bounds from evidence, so chained shards flow
+  through calibration, not just hand-authoring. **ADR-0001 is fully implemented.**
 - **Next from the roadmap:** correlated single-vendor outage → EU AI Act penalty → regulatory
   enforcement (now buildable as loss-chains or standalone threats).
 - **Follow-ups:** calibration profiles for `ai_enabled_fraud`, Insider Misuse, Third-Party
