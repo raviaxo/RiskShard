@@ -1,0 +1,25 @@
+metadata:
+  name: Third-Party Outage
+  version: "0.1"
+  currency: USD
+  scenario_stage: governed_starter
+  benchmark_status: starter_estimated_stress_frequency_generic_impact_bridges
+  description: >
+    Starter Third-Party Outage shard. Frequency min/likely are source-backed BCI
+    2024 bridges (all-cause supply-chain disruption, overstates third-party-only);
+    frequency.max is an ESTIMATED interpretive stress, so the shard calibrates
+    with an assumption, not clean. Impact rests entirely on generic cross-cyber
+    Cyentia loss bridges, NONE third-party-outage-specific. Governed starter, not
+    a human-approved benchmark. Calibrate from
+    calibrations/au_finance_third_party_outage.yaml; caveats live per-record in
+    evidence/third_party_outage.yaml.
+
+frequency:
+  min: 0.44
+  likely: 0.80
+  max: 0.90
+
+impact:
+  min: 266000
+  likely: 3000000
+  max: 32000000
