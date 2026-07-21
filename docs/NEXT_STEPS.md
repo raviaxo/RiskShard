@@ -75,8 +75,10 @@ Backend is already green (`riskshard_doctor.py` pass, 147 tests) — "stable" he
    risks runnable) that **points to the live coverage tools as the authoritative source** (anti-drift,
    per one-canonical-owner). Fixed false "estimated"/"assumptions explicit" claims for US/SG/FR BEC;
    JP scope-out stated explicitly; maturity ladder kept loud.
-4. **Cut a named, tagged stable release** (data pack + version tag + CHANGELOG) so "stable
-   version" is a pinned, citable artifact.
+4. **✅ Cut a named, tagged stable release (DONE 2026-07-21)** — data-pack release
+   `data_pack_releases/2026.07.21-v0.1.0-stable.json` (69 files, fp `ff9b713dd6a7`); new
+   `CHANGELOG.md` with the v0.1.0 entry; `pyproject.toml` already at 0.1.0. Git tag `v0.1.0`
+   + GitHub Release created on the merge commit. **Road to stable v1 complete.**
 5. *(polish)* Root-level "what this is / isn't" + a one-command demo run for reproducible trust.
 
 ---
