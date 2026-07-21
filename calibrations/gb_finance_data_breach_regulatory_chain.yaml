@@ -1,0 +1,82 @@
+metadata:
+  name: United Kingdom financial-services data breach with regulatory-penalty chain
+  scenario_name: UK Finance Data Breach with Regulatory Penalty Chain - Calibrated
+  version: "0.1"
+  notes: >
+    ADR-0001 loss-chain calibration. Reuses the source-backed UK financial-services
+    data-breach frequency and impact anchors as the initiating event, then composes
+    a conditional regulatory_penalty loss_stage: a rare, high-severity ICO monetary
+    penalty gated on the breach. The conditional-probability likely and all three
+    penalty-impact bounds are source-backed to ICO enforcement data; the
+    conditional-probability min/max are labeled estimates of the enforcement range.
+
+target_currency: GBP
+
+parameters:
+  frequency:
+    min:
+      evidence_id: uk_dsit_2026_business_breach_prevalence_all
+      transform: direct
+      rationale: Official UK all-business breach/attack prevalence used as a broad lower frequency anchor for a mid-market starter.
+    likely:
+      evidence_id: uk_dsit_2026_medium_business_breach_prevalence
+      transform: direct
+      rationale: Official UK medium-business breach/attack prevalence used as the mid-market likely frequency anchor.
+    max:
+      evidence_id: uk_dsit_2026_large_business_breach_prevalence
+      transform: direct
+      rationale: Official UK large-business breach/attack prevalence used as a stress frequency anchor for scale exposure.
+
+  impact:
+    min:
+      evidence_id: uk_dsit_2026_medium_large_breach_cost_p95_gbp
+      transform: direct
+      target_currency: GBP
+      round_to: 1000
+      rationale: Official UK 95th percentile perceived cost for medium/large most disruptive breaches, used as a conservative material-cost floor.
+    likely:
+      evidence_id: ibm_uk_2025_financial_services_breach_average_cost_gbp
+      transform: direct
+      target_currency: GBP
+      round_to: 10000
+      rationale: UK financial-services average data-breach cost anchor from IBM's 2025 UK breach release.
+    max:
+      evidence_id: fca_equifax_2023_cyber_breach_fine_gbp
+      transform: direct
+      target_currency: GBP
+      rationale: FCA Equifax cyber-breach penalty used as a source-backed UK regulatory stress anchor; not a total event-loss estimate.
+
+loss_stages:
+  - loss_mode: regulatory_penalty
+    conditional_probability:
+      min:
+        evidence_id: ico_reg_penalty_conditional_probability_min
+        transform: direct
+        rationale: Modeled low-enforcement-year lower bound of P(ICO penalty | breach).
+      likely:
+        evidence_id: ico_reg_penalty_conditional_probability_likely
+        transform: direct
+        rationale: Denominator-derived P(ICO penalty | breach) - ~17 penalties over ~12,412 breach reports.
+      max:
+        evidence_id: ico_reg_penalty_conditional_probability_max
+        transform: direct
+        rationale: Modeled high-enforcement-year upper bound of P(ICO penalty | breach).
+    impact:
+      min:
+        evidence_id: ico_reg_penalty_impact_min_gbp
+        transform: direct
+        target_currency: GBP
+        round_to: 1000
+        rationale: ICO 2024 average fine (~GBP 154k) as the typical smaller-fine floor.
+      likely:
+        evidence_id: ico_reg_penalty_impact_likely_gbp
+        transform: direct
+        target_currency: GBP
+        round_to: 10000
+        rationale: A material 2024 ICO fine (GBP 750,000) as the central penalty anchor.
+      max:
+        evidence_id: ico_reg_penalty_impact_max_gbp
+        transform: direct
+        target_currency: GBP
+        round_to: 10000
+        rationale: A TikTok-class large ICO fine (GBP 12.7M), below the statutory cap, as the penalty tail.
