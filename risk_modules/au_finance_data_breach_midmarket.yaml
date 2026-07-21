@@ -1,7 +1,7 @@
 id: au_finance_data_breach_midmarket
 title: Australia Finance Data Breach Midmarket
 version: "0.2"
-status: governed_starter
+status: benchmark_review_candidate
 threat: data_breach
 description: >
   Starter data-breach shard for an Australian mid-market financial-services

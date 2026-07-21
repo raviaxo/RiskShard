@@ -1,7 +1,7 @@
 id: ca_finance_data_breach_midmarket
 title: Canada Finance Data Breach Midmarket
 version: "0.2"
-status: benchmark_candidate
+status: benchmark_review_candidate
 threat: data_breach
 description: >
   Automated benchmark-review candidate data-breach shard for a Canadian

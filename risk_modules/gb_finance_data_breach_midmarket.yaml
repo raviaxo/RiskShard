@@ -1,7 +1,7 @@
 id: gb_finance_data_breach_midmarket
 title: United Kingdom Finance Data Breach Midmarket
 version: "0.1"
-status: benchmark_candidate
+status: benchmark_review_candidate
 threat: data_breach
 description: >
   Benchmark-review candidate data-breach shard for a United Kingdom mid-market
