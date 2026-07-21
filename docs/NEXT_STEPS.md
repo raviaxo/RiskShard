@@ -79,6 +79,17 @@ rank BEC/payment fraud first). Six test snapshots updated to match. Sources adde
 
 ---
 
+## Next cycle — emergent risk scenarios
+
+The P2 cycle is complete. The next objectives come from **[`ROADMAP.md`](ROADMAP.md)** —
+emergent, differentiating scenarios (AI-as-liability, correlated/systemic loss,
+governance/regulatory loss). First build: **AI / deepfake-enabled fraud**. One strategic
+fork is open there: whether to evolve the schema toward **loss-chains** (needs an ADR before
+it drives a build). Also still open from the P2 cycle: add calibration profiles for Insider
+Misuse and Third-Party Outage; finish `jp_manufacturing_ransomware_midmarket` (4/6).
+
+---
+
 ## Completed & merged
 
 - **2026-07-20 — Objective 1:** `us_finance_bec_midmarket` 1/6 → **6/6 source-backed**.
