@@ -83,7 +83,7 @@ class CalibrationTests(unittest.TestCase):
         )
         self.assertEqual(
             stage["impact"],
-            {"min": 150000, "likely": 750000, "max": 12700000},
+            {"min": 50000, "likely": 150000, "max": 12700000},
         )
         # The conditional-probability min/max are labeled estimates and surface as warnings.
         estimated = {

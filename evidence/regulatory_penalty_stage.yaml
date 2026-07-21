@@ -75,8 +75,31 @@ records:
       threats: [data_breach]
 
   - id: ico_reg_penalty_impact_min_gbp
-    title: ICO monetary penalty impact - typical smaller fine (GBP)
+    title: ICO monetary penalty impact - modeled small-fine floor (GBP)
     parameter: loss_stage.regulatory_penalty.impact.min
+    value: 50000
+    unit: currency
+    currency: GBP
+    source_name: RiskShard regulatory-penalty stage
+    source_type: model_assumption
+    source_url_or_citation: Modeled small-fine floor below the 2024 ICO average, consistent with most penalties falling below GBP 250,000.
+    publication_date: "2026-07-20"
+    extraction_date: "2026-07-20"
+    citation_detail: ICO 2024 penalties were mostly below GBP 250,000 (2024 average GBP 153,722); a conservative small-fine floor is modeled below that average.
+    extraction_notes: Modeled a GBP 50,000 small-fine floor below the 2024 average, since an average is not a floor.
+    normalization_notes: Explicit modeled floor of the penalty distribution, below the GBP 150,000 average used for likely.
+    limitations: Not directly source-backed; a modeled floor. Replace with an ICO small-penalty quantile when available.
+    confidence: low
+    evidence_type: estimated
+    applicability:
+      industries: [financial_services]
+      countries: [GB]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: ico_reg_penalty_impact_likely_gbp
+    title: ICO monetary penalty impact - 2024 average fine (GBP)
+    parameter: loss_stage.regulatory_penalty.impact.likely
     value: 150000
     unit: currency
     currency: GBP
@@ -87,33 +110,9 @@ records:
     publication_date: "2025-01-01"
     extraction_date: "2026-07-20"
     citation_detail: The average ICO fine in 2024 was GBP 153,722, with most penalties below GBP 250,000.
-    extraction_notes: Used the 2024 average fine (~GBP 154k, rounded to 150,000) as the lower penalty impact bound.
-    normalization_notes: Stored in GBP as the typical smaller-fine floor of the penalty distribution.
-    limitations: An enforcement-outcome figure, not a loss quantile for a specific organization; not all penalties are data-breach specific.
-    confidence: low
-    evidence_type: source_backed
-    applicability:
-      industries: [financial_services]
-      countries: [GB]
-      company_size_bands: [mid_market]
-      threats: [data_breach]
-
-  - id: ico_reg_penalty_impact_likely_gbp
-    title: ICO monetary penalty impact - material fine (GBP)
-    parameter: loss_stage.regulatory_penalty.impact.likely
-    value: 750000
-    unit: currency
-    currency: GBP
-    source_id: ico_monetary_penalties_2024
-    source_name: ICO monetary penalties 2024 (enforcement analysis)
-    source_type: regulator_statistics
-    source_url_or_citation: https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
-    publication_date: "2025-01-01"
-    extraction_date: "2026-07-20"
-    citation_detail: The largest ICO fine in 2024 was GBP 750,000 (Police Service of Northern Ireland).
-    extraction_notes: Used the GBP 750,000 material 2024 fine as the likely penalty impact.
-    normalization_notes: Stored in GBP as a material-fine central anchor of the penalty distribution.
-    limitations: An enforcement-outcome figure, not a loss quantile; skewed by rare large fines; not all penalties are data-breach specific.
+    extraction_notes: Used the 2024 average ICO fine (~GBP 154k, rounded to 150,000) as the central penalty impact.
+    normalization_notes: Stored in GBP as the central anchor of the penalty distribution, set to the 2024 average fine (a material GBP 750k fine sits between this and the GBP 12.7M tail).
+    limitations: A mean enforcement outcome, not a loss quantile; the distribution is right-skewed, so the mean overstates the modal fine; not all penalties are data-breach specific.
     confidence: low
     evidence_type: source_backed
     applicability:
