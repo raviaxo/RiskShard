@@ -1,0 +1,141 @@
+records:
+  - id: deepfake_2024_fraud_attempt_prevalence_frequency_floor
+    title: Deepfake fraud attempt prevalence (2024) used as frequency floor
+    parameter: frequency.min
+    value: 0.10
+    unit: annual_probability
+    source_id: deepfake_business_impact_2024
+    source_name: Deepfake business fraud impact statistics 2024
+    source_type: industry_survey_bridge
+    source_url_or_citation: https://www.security.org/resources/deepfake-statistics/
+    publication_date: "2025-01-01"
+    extraction_date: "2026-07-20"
+    citation_detail: Compiled 2024 deepfake statistics report that more than 10% of companies had experienced deepfake fraud attempts as of 2024.
+    extraction_notes: Used the >10% (2024) deepfake-fraud-attempt prevalence as a conservative rising-baseline floor.
+    normalization_notes: Converted ">10%" to 0.10 as a conservative floor. Deepfake fraud prevalence is rising fast, so an early-2024 baseline is used as the floor.
+    limitations: Secondary compilation of vendor survey data, low trust; deepfake fraud is fast-rising and volatile so any single figure dates quickly; attempts, not confirmed loss events; not sector- or size-specific. Revise as the deepfake evidence base matures.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [ai_enabled_fraud]
+
+  - id: gartner_2025_deepfake_attack_prevalence_frequency_likely
+    title: Organization-level deepfake attack prevalence (2025) used as likely frequency
+    parameter: frequency.likely
+    value: 0.62
+    unit: annual_probability
+    source_id: gartner_deepfake_attack_survey_2025
+    source_name: Gartner deepfake attack survey (September 2025)
+    source_type: analyst_survey_bridge
+    source_url_or_citation: https://www.adaptivesecurity.com/blog/deepfake-statistics-2026-the-data-security-leaders-need-to-know
+    publication_date: "2025-09-01"
+    extraction_date: "2026-07-20"
+    citation_detail: A Gartner survey (September 2025) found that 62% of organizations experienced a deepfake attack in the prior 12 months.
+    extraction_notes: Converted the 62% organization-level deepfake-attack prevalence to 0.62 as a likely-frequency bridge.
+    normalization_notes: Converted 62% to 0.62. Selected as a current organization-level deepfake-attack exposure bridge.
+    limitations: Analyst survey accessed via secondary reporting, lower trust; measures deepfake attacks/attempts, not confirmed fraud-loss events; fast-rising and volatile; not sector- or size-specific. Revise as the evidence base matures.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [ai_enabled_fraud]
+
+  - id: regula_2024_deepfake_financial_loss_prevalence_frequency_stress
+    title: Organization-level deepfake financial-loss prevalence (2024) used as stress frequency
+    parameter: frequency.max
+    value: 0.92
+    unit: annual_probability
+    source_id: regula_deepfake_survey_2024
+    source_name: Regula Deepfake Fraud Impact Survey 2024
+    source_type: industry_survey_bridge
+    source_url_or_citation: https://regulaforensics.com/blog/impact-of-deepfakes-on-idv-regula-survey/
+    publication_date: "2024-10-01"
+    extraction_date: "2026-07-20"
+    citation_detail: Regula's 2024 survey reports that 92% of businesses experienced financial loss due to a deepfake.
+    extraction_notes: Converted the 92% deepfake financial-loss prevalence to 0.92 as a stress-frequency bridge.
+    normalization_notes: Converted 92% to 0.92. Selected as a near-ceiling deepfake stress-frequency, above the 0.62 likely.
+    limitations: Vendor (identity-verification) survey, lower trust; "experienced financial loss due to a deepfake" is broad and self-reported; fast-rising and volatile; not sector- or size-specific. Revise as the evidence base matures.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [ai_enabled_fraud]
+
+  - id: verizon_dbir_2026_median_payment_fraud_impact_floor_ai_fraud
+    title: Median payment-fraud loss used as AI-fraud impact floor
+    parameter: impact.min
+    value: 50000
+    unit: currency
+    currency: USD
+    source_id: verizon_dbir_2026
+    source_name: Verizon 2026 Data Breach Investigations Report
+    source_type: breach_report_bridge
+    source_url_or_citation: https://www.verizon.com/business/resources/T766/reports/2026-dbir-data-breach-investigations-report.pdf
+    publication_date: "2026-05-20"
+    extraction_date: "2026-07-20"
+    citation_detail: The 2026 Verizon DBIR reports the median loss for business email compromise incidents, based on FBI IC3 data, at approximately USD 50,000.
+    extraction_notes: Reused the DBIR-reported median BEC loss as a lower impact bridge for AI-enabled fraud, since deepfake fraud results in a fraudulent payment like BEC.
+    normalization_notes: Stored in USD as a single-event loss floor, below the ~USD 500,000 average deepfake incident loss used for impact.likely.
+    limitations: GLOBAL BRIDGE. Median of FBI IC3 complaint-reported BEC losses used as an AI-fraud floor; not deepfake-specific and not a mid-market figure. Revise when a deepfake-specific loss floor is reviewed.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [ai_enabled_fraud]
+
+  - id: deepfake_2024_average_incident_loss_impact_likely
+    title: Average deepfake fraud incident loss (2024) used as likely impact
+    parameter: impact.likely
+    value: 500000
+    unit: currency
+    currency: USD
+    source_id: deepfake_business_impact_2024
+    source_name: Deepfake business fraud impact statistics 2024
+    source_type: industry_survey_bridge
+    source_url_or_citation: https://www.security.org/resources/deepfake-statistics/
+    publication_date: "2025-01-01"
+    extraction_date: "2026-07-20"
+    citation_detail: Compiled 2024 deepfake statistics report an average loss of nearly USD 500,000 per deepfake-related incident, and about USD 603,000 per affected company in financial services.
+    extraction_notes: Used the ~USD 500,000 average deepfake incident loss as the likely single-event impact (financial services runs higher, ~USD 603,000).
+    normalization_notes: Stored USD 500,000 as the all-business average; financial services averages ~USD 603,000, noted for a finance-specific run.
+    limitations: Secondary compilation of vendor survey data, low trust; an average, not a distribution quantile; deepfake losses are volatile and fast-rising; the finance-sector figure (~USD 603,000) is higher. Revise as the evidence base matures.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [ai_enabled_fraud]
+
+  - id: arup_2024_deepfake_case_impact_stress
+    title: Documented Arup deepfake fraud case loss used as stress impact
+    parameter: impact.max
+    value: 25600000
+    unit: currency
+    currency: USD
+    source_id: arup_deepfake_case_2024
+    source_name: Arup Hong Kong deepfake CFO fraud case 2024
+    source_type: news_report
+    source_url_or_citation: https://www.cnn.com/2024/02/04/asia/deepfake-cfo-scam-hong-kong-intl-hnk
+    publication_date: "2024-02-04"
+    extraction_date: "2026-07-20"
+    citation_detail: A finance employee at engineering firm Arup made 15 transfers totaling about USD 25.6 million after a video call in which a deepfake impersonated the CFO and colleagues; the funds remain unrecovered.
+    extraction_notes: Used the USD 25.6 million documented Arup deepfake fraud loss as a stress impact anchor.
+    normalization_notes: Stored in USD as a single-event stress (tail) deepfake-fraud loss. Funds were unrecovered, so the gross equals the net loss.
+    limitations: One documented extreme case at a large engineering firm, not a mid-market average or a loss percentile; a single incident, not a distribution. Revise when a deepfake-fraud loss distribution with tail quantiles is reviewed.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [ai_enabled_fraud]
