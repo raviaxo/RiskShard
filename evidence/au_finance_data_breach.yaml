@@ -29,7 +29,7 @@ records:
     unit: businesses
     source_id: abs_counts_australian_businesses_2025
     source_name: ABS Counts of Australian Businesses 2024-25
-    source_type: official_statistical_data
+    source_type: official_statistics
     source_url_or_citation: https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025
     publication_date: "2025-12-16"
     extraction_date: "2026-06-03"
