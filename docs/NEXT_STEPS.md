@@ -93,8 +93,12 @@ governance/regulatory loss).
   composition shipped and tested (139 pass, backward-compatible). First worked example built:
   `scenarios/gb_finance_data_breach_regulatory_chain.yaml` — a UK breach with a rare, sourced
   ICO regulatory-penalty stage (denominator-derived conditional probability; the penalty
-  drives the P99 tail, not the mean). **Remaining ADR-0001 follow-up:** #3 — formal per-stage
-  evidence records + per-stage provenance surfaced in calibration/report.
+  drives the P99 tail, not the mean). **✅ Follow-up #3 done:** formal per-stage evidence records
+  (`evidence/regulatory_penalty_stage.yaml`, denominator-derived conditional probability +
+  ICO penalty impact) and loss-chain provenance surfaced in report output (run metadata records
+  `loss_stages`; export adds a loss-chain caveat). **Remaining (optional):** generate `loss_stages`
+  from a calibration profile so chained shards can be produced by the calibration pipeline, not
+  just hand-authored.
 - **Next from the roadmap:** correlated single-vendor outage → EU AI Act penalty → regulatory
   enforcement (now buildable as loss-chains or standalone threats).
 - **Follow-ups:** calibration profiles for `ai_enabled_fraud`, Insider Misuse, Third-Party

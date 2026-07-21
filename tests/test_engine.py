@@ -227,6 +227,41 @@ class PortfolioTests(unittest.TestCase):
 
         self.assertIn(fair_calc.IMPACT_UNCERTAINTY_NOTE, payload["caveats"])
 
+    def test_export_report_flags_loss_chain_when_present(self):
+        metadata_with_stages = {
+            "reproducibility": {
+                "scenarios": [
+                    {"name": "Chain", "loss_stages": [{"loss_mode": "regulatory_penalty"}]}
+                ]
+            }
+        }
+        metadata_without = {
+            "reproducibility": {"scenarios": [{"name": "Plain", "loss_stages": []}]}
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            with_path = fair_calc.export_report(
+                {"Chain": {"mean": 1}}, {"mean": 1}, output_dir=tmp,
+                timestamp=datetime(2026, 1, 2, 3, 4, 5), metadata=metadata_with_stages,
+            )
+            without_path = fair_calc.export_report(
+                {"Plain": {"mean": 1}}, {"mean": 1}, output_dir=tmp,
+                timestamp=datetime(2026, 1, 2, 3, 4, 6), metadata=metadata_without,
+            )
+            with_payload = json.loads(Path(with_path).read_text())
+            without_payload = json.loads(Path(without_path).read_text())
+
+        self.assertIn(fair_calc.LOSS_CHAIN_NOTE, with_payload["caveats"])
+        self.assertNotIn(fair_calc.LOSS_CHAIN_NOTE, without_payload["caveats"])
+
+    def test_run_portfolio_records_loss_stages_in_scenario_metadata(self):
+        result = fair_calc.run_portfolio(
+            "scenarios/gb_finance_data_breach_regulatory_chain.yaml",
+            trials=200, dist_type="pert", seed=42,
+        )
+        scenario = result["metadata"]["reproducibility"]["scenarios"][0]
+        self.assertTrue(scenario["loss_stages"])
+        self.assertEqual(scenario["loss_stages"][0]["loss_mode"], "regulatory_penalty")
+
     def test_executive_report_includes_impact_uncertainty_caveat(self):
         from engine.executive_report import build_executive_report
 
