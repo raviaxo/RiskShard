@@ -1,6 +1,6 @@
 # ADR-0001 — Loss-chain scenario modeling
 
-- **Status:** Proposed (awaiting owner acceptance)
+- **Status:** Accepted
 - **Date:** 2026-07-20
 - **Deciders:** repo owner
 - **Related:** [`../ROADMAP.md`](../ROADMAP.md) (Family C + the loss-chain thesis)

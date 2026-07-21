@@ -11,4 +11,4 @@ recommendation; only the repo owner moves it to `Accepted`.
 
 | ADR | Title | Status |
 |---|---|---|
-| [0001](0001-loss-chain-scenario-modeling.md) | Loss-chain scenario modeling | Proposed |
+| [0001](0001-loss-chain-scenario-modeling.md) | Loss-chain scenario modeling | Accepted |
