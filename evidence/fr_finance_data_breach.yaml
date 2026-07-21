@@ -147,7 +147,7 @@ records:
     currency: EUR
     source_id: gdpr_article_83_administrative_fines
     source_name: "GDPR Article 83(5) maximum administrative fine (via CNIL)"
-    source_type: regulatory_statute
+    source_type: legislation
     source_url_or_citation: "https://www.cnil.fr/fr/cnil-direct/question/sanctions-quelles-sanctions-peuvent-etre-prononcees-par-la-cnil"
     publication_date: "2018-05-25"
     extraction_date: "2026-07-16"
