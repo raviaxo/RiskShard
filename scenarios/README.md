@@ -1,6 +1,6 @@
 # Scenario Fixtures
 
-RiskShard scenarios remain intentionally small: `frequency.min/likely/max` and `impact.min/likely/max`.
+RiskShard scenarios remain intentionally small: `frequency.min/likely/max` and `impact.min/likely/max`. A scenario may optionally add conditional `loss_stages` ([ADR-0001](../docs/adr/0001-loss-chain-scenario-modeling.md)) — up to three downstream loss forms, each gated by its own sourced conditional probability (e.g. a rare regulatory penalty after a breach). See `gb_finance_data_breach_regulatory_chain.yaml` for a worked example.
 
 Each scenario should include `metadata.scenario_stage`:
 
