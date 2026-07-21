@@ -43,14 +43,20 @@ Backend is already green (`riskshard_doctor.py` pass, 147 tests) — "stable" he
      **Known weakness (tracked):** frequency is source-backed (3 dedicated insider records, broad);
      **impact rests entirely on generic cross-cyber Cyentia bridges ($266k/$3M/$32M), NONE
      insider-misuse-specific.** Loudly caveated per-record. → *Impact-evidence gap below.*
-   - Third-Party Outage — has 1 assumption (`frequency.max` estimate); calibrate + keep labeled.
-     Same likely impact-evidence caveat expected.
+   - **✅ Third-Party Outage (DONE 2026-07-21)** — added `calibrations/au_finance_third_party_outage.yaml`
+     + base `scenarios/third_party_outage.yaml`. Lands as **`calibrated_with_assumptions`** (honest):
+     `frequency.max` stays a labeled interpretive estimate (surfaced as a calibration warning, not
+     hidden). Same generic cross-cyber impact-bridge caveat as Insider (see gap below).
+     **→ All 6 top risks now runnable: 5 `calibrated` + 1 `calibrated_with_assumptions`. Step 1 done.**
 
-   **Tracked gap — insider-misuse-specific impact evidence.** Insider Misuse calibrates green but
-   its entire impact side is generic cross-cyber loss bridges. A future evidence objective should
-   gather insider-misuse-specific loss data (e.g., Ponemon/DTEX *Cost of Insider Threats* per-incident
-   cost, or a documented insider-fraud/IP-theft loss) to replace the bridges. Until then the shard
-   stays `governed_starter` with the weakness visible, not hidden.
+   **Tracked gap — threat-specific impact evidence (Insider Misuse & Third-Party Outage).** Both
+   calibrate runnable but their *entire impact side is generic cross-cyber Cyentia loss bridges*
+   ($266k/$3M/$32M), not threat-specific. Future evidence objectives: for Insider, gather
+   insider-misuse-specific loss data (Ponemon/DTEX *Cost of Insider Threats* per-incident cost, or a
+   documented insider-fraud/IP-theft loss); for Third-Party Outage, gather outage-specific loss data
+   (business-interruption / SLA-credit dynamics the cross-cyber bridge misses) **and** a directly
+   reported high-percentile `frequency.max` to retire its labeled estimate. Until then both stay
+   `governed_starter` with the weakness visible, not hidden.
    Then resolve `jp_manufacturing_ransomware_midmarket` (4/6) — finish honestly (survey-prevalence
    for `frequency.likely/max`, **not** the NPA÷census ratio, which is a reported-incidence floor
    ~0.0002, below the existing sourced min) **or** scope it out of v1.
