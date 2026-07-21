@@ -19,6 +19,17 @@ the environment is runnable (Python ≥ 3.9; activate `.venv`). State the **one*
 objective for the session in a single sentence, name the files it touches, and
 **wait for confirmation** before editing.
 
+This ritual is the `/session:start` command (`.claude/commands/session/start.md`).
+
+## Session-close ritual
+
+Close a session with `/session:end` (`.claude/commands/session/end.md`). It verifies
+the tree is clean and every unmerged branch / open PR is reported, proves the gates
+are green (or names the reds), and reconciles `docs/NEXT_STEPS.md` and
+`docs/HANDOVER_STOPPING_POINT.md` so the next `/session:start` boots clean. A session
+is not "closed" until the tree is clean, open work is reported, and the owner docs
+match reality.
+
 ## Definition of done
 
 The canonical engineering rules and DoD live in
