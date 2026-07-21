@@ -32,9 +32,9 @@ IMPACT_UNCERTAINTY_NOTE = (
 # each rare and tail-driving, and can check each stage's provenance.
 LOSS_CHAIN_NOTE = (
     "This scenario composes one or more conditional downstream loss stages "
-    "(ADR-0001); each stage is gated by its own source-backed conditional "
-    "probability and adds to the tail more than the mean. Read each stage's "
-    "evidence and confidence separately."
+    "(ADR-0001); each stage is gated by its own conditional probability "
+    "(source-backed, or an explicitly labeled estimate) and adds to the tail "
+    "more than the mean. Read each stage's evidence and confidence separately."
 )
 
 
