@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 44,
+  "fetched_count": 46,
   "generated_at": "2026-07-15T01:43:20Z",
   "manifest_version": "1.0",
-  "source_count": 44,
+  "source_count": 46,
   "sources": [
     {
       "access_mode": "public_pdf",
@@ -455,6 +455,48 @@
       "title": "Arup Hong Kong deepfake CFO fraud case 2024",
       "url": "https://www.cnn.com/2024/02/04/asia/deepfake-cfo-scam-hong-kong-intl-hnk",
       "usage_notes": "Documented Arup deepfake CFO fraud case (~USD 25.6M).\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 37764,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://ico.org.uk/action-weve-taken/complaints-and-concerns-data-sets/self-reported-personal-data-breach-cases/",
+      "gathered_at": "2026-07-21T01:33:01Z",
+      "http_status": 200,
+      "id": "ico_self_reported_breach_cases_2024_25",
+      "intended_use": [
+        "UK data breach report denominator"
+      ],
+      "publication_date": "2025-06-01",
+      "publisher": "Information Commissioner's Office",
+      "raw_path": "sources/raw/ico_self_reported_breach_cases_2024_25.html",
+      "sha256": "ef2d09c2b7c9a3c616fb9f4c8e194626d5d3ca0d4a0a2e832948729382659fb9",
+      "source_type": "regulator_statistics",
+      "status": "fetched",
+      "title": "ICO self-reported personal data breach cases (2024/25)",
+      "url": "https://ico.org.uk/action-weve-taken/complaints-and-concerns-data-sets/self-reported-personal-data-breach-cases/",
+      "usage_notes": "ICO self-reported breach report counts.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 208615,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024",
+      "gathered_at": "2026-07-21T01:33:01Z",
+      "http_status": 200,
+      "id": "ico_monetary_penalties_2024",
+      "intended_use": [
+        "ICO penalty count and amounts"
+      ],
+      "publication_date": "2025-01-01",
+      "publisher": "Information Commissioner's Office (analysis via URM Consulting)",
+      "raw_path": "sources/raw/ico_monetary_penalties_2024.html",
+      "sha256": "6d09e805199e923bcfef3f9e357fffda62362066efd02d3a98d010ad8454cced",
+      "source_type": "regulator_statistics",
+      "status": "fetched",
+      "title": "ICO monetary penalties 2024 (enforcement analysis)",
+      "url": "https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024",
+      "usage_notes": "ICO monetary penalty statistics 2024.\n"
     },
     {
       "access_mode": "public_html",

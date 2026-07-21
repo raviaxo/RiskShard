@@ -486,6 +486,41 @@ sources:
       Kong, early 2024); the funds remain unrecovered. One documented extreme
       case, not a mid-market average or a loss percentile.
 
+  - id: ico_self_reported_breach_cases_2024_25
+    title: ICO self-reported personal data breach cases (2024/25)
+    publisher: Information Commissioner's Office
+    source_type: regulator_statistics
+    url: https://ico.org.uk/action-weve-taken/complaints-and-concerns-data-sets/self-reported-personal-data-breach-cases/
+    publication_date: "2025-06-01"
+    access_mode: public_html
+    intended_use:
+      - UK data breach report denominator
+      - regulatory-penalty conditional-probability denominator
+    usage_notes: >
+      Use as the UK personal-data-breach report count (the ICO received about
+      12,412 self-reported personal data breach reports in 2024/25, and roughly
+      85% are resolved through informal action with no fine). Denominator for the
+      conditional probability of an ICO monetary penalty given a breach.
+
+  - id: ico_monetary_penalties_2024
+    title: ICO monetary penalties 2024 (enforcement analysis)
+    publisher: Information Commissioner's Office (analysis via URM Consulting)
+    source_type: regulator_statistics
+    url: https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
+    publication_date: "2025-01-01"
+    access_mode: public_html
+    intended_use:
+      - ICO penalty count and amounts
+      - regulatory-penalty conditional-probability numerator
+      - regulatory-penalty impact distribution
+    usage_notes: >
+      Use as ICO monetary-penalty statistics: 17 penalties issued in 2024 (22 in
+      2023), a 2024 average of GBP 153,722, most below GBP 250,000, a material
+      2024 fine of GBP 750,000, and a GBP 12.7M TikTok fine in 2023; statutory
+      maximum GBP 17.5M or 4% of turnover. Not all penalties are data-breach
+      specific (some are PECR/marketing). Numerator for P(penalty | breach) and
+      the penalty impact distribution.
+
   - id: census_susb_2022
     title: Statistics of U.S. Businesses (SUSB) 2022 Annual Data
     publisher: U.S. Census Bureau
