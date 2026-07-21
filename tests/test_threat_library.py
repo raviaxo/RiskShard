@@ -23,6 +23,7 @@ class ThreatLibraryTests(unittest.TestCase):
                 "business_email_compromise",
                 "third_party_outage",
                 "insider_misuse",
+                "ai_enabled_fraud",
             },
             library_ids,
         )

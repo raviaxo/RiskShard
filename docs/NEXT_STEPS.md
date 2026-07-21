@@ -83,10 +83,16 @@ rank BEC/payment fraud first). Six test snapshots updated to match. Sources adde
 
 The P2 cycle is complete. The next objectives come from **[`ROADMAP.md`](ROADMAP.md)** —
 emergent, differentiating scenarios (AI-as-liability, correlated/systemic loss,
-governance/regulatory loss). First build: **AI / deepfake-enabled fraud**. One strategic
-fork is open there: whether to evolve the schema toward **loss-chains** (needs an ADR before
-it drives a build). Also still open from the P2 cycle: add calibration profiles for Insider
-Misuse and Third-Party Outage; finish `jp_manufacturing_ransomware_midmarket` (4/6).
+governance/regulatory loss).
+
+- **✅ AI / deepfake-enabled fraud** — first emergent scenario, built 2026-07-20. New
+  `ai_enabled_fraud` top-risk threat, 6/6 direct evidence (Gartner/Regula deepfake prevalence,
+  ~$500k avg loss, documented **Arup $25.6M** tail). Governed-starter; vendor/analyst surveys,
+  fast-rising, loudly caveated.
+- **Next from the roadmap:** correlated single-vendor outage → EU AI Act penalty → regulatory
+  enforcement. Open strategic fork: evolve the schema toward **loss-chains** (needs an ADR first).
+- **Follow-ups:** calibration profiles for `ai_enabled_fraud`, Insider Misuse, Third-Party
+  Outage; finish `jp_manufacturing_ransomware_midmarket` (4/6).
 
 ---
 
