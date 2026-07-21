@@ -45,6 +45,30 @@ records:
       company_size_bands: [all]
       threats: [insider_misuse]
 
+  - id: cyentia_iris_2025_median_security_incident_loss_usd_insider_context
+    title: Median reported security-incident loss (cross-cyber bridge) for insider-misuse starter
+    parameter: impact.likely
+    value: 3000000
+    unit: currency
+    currency: USD
+    source_id: cyentia_iris_2025
+    source_name: Cyentia Information Risk Insights Study 2025
+    source_type: cyber_loss_research
+    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
+    publication_date: "2025-06-10"
+    extraction_date: "2026-07-21"
+    citation_detail: Public source page key findings; median losses rose toward USD 3M.
+    extraction_notes: Reused the governed Cyentia median security-incident loss anchor as a likely-impact bridge for the insider-misuse starter, correctly scoped to insider_misuse rather than borrowing a shard-tagged copy.
+    normalization_notes: Stored directly in USD as the likely single-event loss bridge until insider-misuse-specific loss evidence is reviewed.
+    limitations: GENERIC CROSS-CYBER BRIDGE. Global all-incident median, NOT insider-misuse-specific, not sector- or size-specific, and not a distribution quantile. The insider impact side rests entirely on generic cross-cyber loss bridges; revise when insider-misuse-specific loss evidence is reviewed.
+    confidence: low
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [insider_misuse]
+
   - id: gurucul_2026_insider_incident_prevalence_frequency_stress
     title: Organization-level insider-incident prevalence (2026) used as stress frequency
     parameter: frequency.max

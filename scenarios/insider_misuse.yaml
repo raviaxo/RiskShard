@@ -1,0 +1,25 @@
+metadata:
+  name: Insider Misuse
+  version: "0.1"
+  currency: USD
+  scenario_stage: governed_starter
+  benchmark_status: starter_source_backed_frequency_generic_impact_bridges
+  description: >
+    Starter Insider Misuse shard. Frequency uses three dedicated source-backed
+    insider-prevalence bridges (broad, incl. negligent insiders, so it
+    overstates deliberate misuse). Impact rests entirely on generic cross-cyber
+    Cyentia loss bridges, NONE insider-misuse-specific. Governed starter, not a
+    human-approved benchmark. Calibrate from
+    calibrations/au_finance_insider_misuse.yaml; caveats live per-record in
+    evidence/insider_misuse.yaml. (A separate demo_fixture, insider_threat.yaml,
+    remains for fixtures.)
+
+frequency:
+  min: 0.66
+  likely: 0.76
+  max: 0.90
+
+impact:
+  min: 266000
+  likely: 3000000
+  max: 32000000
