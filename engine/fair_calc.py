@@ -104,12 +104,20 @@ def run_simulation(config, trials, dist_type="pert", rng=None):
     rng = rng or random.Random()
     impact = config["impact"]
     frequency = config["frequency"]
+    # ADR-0001: optional conditional loss stages composed onto the initiating
+    # event's impact per trial. Absent loss_stages, behaviour and RNG draws are
+    # identical to the single-event model (no extra draws are consumed).
+    loss_stages = config.get("loss_stages") or []
     name = config["metadata"]["name"]
 
     results = []
     for _ in range(trials):
         sampled_frequency = sample_range(frequency, dist_type, rng)
         sampled_impact = sample_range(impact, dist_type, rng)
+        for stage in loss_stages:
+            stage_probability = sample_range(stage["conditional_probability"], dist_type, rng)
+            if rng.random() < stage_probability:
+                sampled_impact += sample_range(stage["impact"], dist_type, rng)
         results.append(sampled_frequency * sampled_impact)
 
     return name, results
