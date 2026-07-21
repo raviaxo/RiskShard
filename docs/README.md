@@ -16,6 +16,11 @@ New here? Read these first, in order:
 - [monte-carlo-determinism-architecture.md](monte-carlo-determinism-architecture.md) — reproducibility design (per-scenario seeding, fingerprints).
 - [FX_RATE_REFRESH.md](FX_RATE_REFRESH.md) — how the sourced FX assumptions are refreshed.
 - [org_specific_scenarios.md](org_specific_scenarios.md) — how organization profiles affect scenarios.
+- [adr/](adr/) — architecture decision records (ADR-0001: loss-chain scenario modeling — conditional downstream loss stages).
+
+## Direction
+
+- [ROADMAP.md](ROADMAP.md) — emergent risk scenarios (AI-as-liability, correlated/systemic loss, governance/regulatory loss) and the loss-chain schema direction.
 
 ## Using and contributing
 
