@@ -16,7 +16,7 @@ class DoctorTests(unittest.TestCase):
         self.assertEqual(report["status"], "pass")
         self.assertIn("RiskShard doctor", output)
         self.assertEqual(checks["sources"]["status"], "pass")
-        self.assertIn("governed_starter=12", checks["scenarios"]["detail"])
+        self.assertIn("governed_starter=13", checks["scenarios"]["detail"])
         self.assertIn("demo_fixture=5", checks["scenarios"]["detail"])
         self.assertEqual(checks["package entry points"]["status"], "pass")
         self.assertIn("run with --run-tests", checks["tests"]["detail"])
