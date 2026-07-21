@@ -103,10 +103,14 @@ RiskShard aims to become a shared computation layer for cyber risk:
 - Reviewed source-to-extraction-to-evidence-to-calibration workflow
 - Governed starter vs demo fixture labels in scenario metadata, CLI output, readiness, and console search
 - Vetted YAML taxonomies and evidence matching for industry, country, company size, and threat context
+- Conditional loss-chain modeling ([ADR-0001](docs/adr/0001-loss-chain-scenario-modeling.md)): a scenario can compose up to three downstream conditional loss stages, each gated by its own source-backed conditional probability, so an initiating event can carry — for example — a rare regulatory-penalty tail that a single-threat scenario cannot express
+- Evidenced top-risk threats beyond the country shards — insider misuse, third-party outage, and AI-enabled (deepfake) fraud — each with source-backed frequency and impact, honestly labeled governed-starter
 
 ## In Progress
 
 The decision engine is partially sketched but not fully integrated. The repository includes early control objects for frequency and impact reduction, a comparator, and orchestration notes. These pieces need cleanup before they should be treated as production-ready.
+
+Emergent risk scenarios (AI-as-liability, correlated/systemic loss, governance/regulatory loss) are being built out per [docs/ROADMAP.md](docs/ROADMAP.md), starting governed-starter and maturing as evidence deepens.
 
 ## Repository Layout
 
@@ -376,6 +380,8 @@ Start with [docs/README.md](docs/README.md). Key docs:
 - [docs/architecture.md](docs/architecture.md) — engine, evidence, and calibration architecture.
 - [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md) — the interactive console workflow.
 - [docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md](docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md) — a source taken end-to-end to a passing contribution.
+- [docs/ROADMAP.md](docs/ROADMAP.md) — emergent risk scenarios (AI-as-liability, systemic, regulatory) and their sequencing.
+- [docs/adr/](docs/adr/) — architecture decision records, including ADR-0001 (loss-chain scenario modeling).
 
 ## License
 
