@@ -104,7 +104,7 @@ RiskShard aims to become a shared computation layer for cyber risk:
 - Governed starter vs demo fixture labels in scenario metadata, CLI output, readiness, and console search
 - Vetted YAML taxonomies and evidence matching for industry, country, company size, and threat context
 - Conditional loss-chain modeling ([ADR-0001](docs/adr/0001-loss-chain-scenario-modeling.md)): a scenario can compose up to three downstream conditional loss stages, each gated by its own source-backed conditional probability, so an initiating event can carry — for example — a rare regulatory-penalty tail that a single-threat scenario cannot express
-- Evidenced top-risk threats beyond the country shards — insider misuse, third-party outage, and AI-enabled (deepfake) fraud — each with source-backed frequency and impact, honestly labeled governed-starter
+- Runnable top-risk threats beyond the country shards — insider misuse, third-party outage, and AI-enabled (deepfake) fraud now calibrate and simulate (five clean; third-party outage with one honestly-labeled frequency estimate), each governed-starter with source-backed frequency and loudly-caveated impact bridges
 
 ## In Progress
 
@@ -327,37 +327,35 @@ Source-backed evidence records should include `source_id` values that map to `so
 
 Reviewed extraction records live in `extractions/` and document the fact pulled from a source before it becomes one or more structured evidence records.
 
-The starter threat library lives in `threat_library/`. Ransomware, data breach, and business email compromise now have Australia financial-services calibration profiles. Ransomware has six source-backed direct selectors and is ready for human benchmark review. Data breach has DBIR/OAIC context evidence, a denominator-derived reported-breach frequency floor, official UK breach/attack prevalence bridges for likely and stress frequency, an Australian medium-business cybercrime cost floor, an IBM UK financial-services likely-impact bridge, and an Australian Privacy Act penalty-cap stress anchor; it is now an automated benchmark-review candidate, but still needs human caveat review before public benchmark-grade claims. Business email compromise has FBI IC3 source-backed likely-loss evidence and ACCC Australia small-business loss context; frequency and stress loss bounds remain estimated until denominator-aware BEC evidence is reviewed.
+The starter threat library lives in `threat_library/`. The summary below is exactly
+that — a summary. The **live, authoritative coverage** comes from the tools, which
+own this fact and never drift:
 
-The first second-geography module is `us_finance_bec_midmarket`. It uses FBI IC3
-source-backed likely-loss evidence and keeps US BEC frequency/floor/tail
-assumptions explicit until US denominator-aware evidence is contributed.
+```bash
+python scripts/riskshard_modules.py coverage   # data-strength grade per country shard
+python scripts/riskshard_toprisks.py           # top-risk calibration status
+```
 
-The next seeded geography is `gb_finance_data_breach_midmarket`. It uses UK
-official cyber breach/attack prevalence for frequency and IBM UK financial
-services data-breach cost evidence for likely impact. Its stress impact uses an
-FCA Equifax cyber-breach penalty anchor, so all six direct parameters are now
-source-backed. It is still a governed starter, not benchmark-grade: the UK
-survey is broader than privacy-only data breach, and the stress anchor is a
-regulatory penalty rather than a total event-loss or claims distribution.
+**Country shards — 11 modules across 8 countries (AU, CA, DE, FR, GB, JP, SG, US).**
+Ten are 6/6 source-backed across business email compromise, data breach, and ransomware
+— every BEC shard (US, AU, SG) is fully source-backed, and `gb_finance_data_breach_midmarket`
+carries the highest-confidence sourcing (UK official prevalence + IBM UK cost + an FCA
+Equifax penalty stress anchor). The one exception is `jp_manufacturing_ransomware_midmarket`
+(4/6, assumption-bridged): its impact floor and Japan reported-incidence context are
+source-backed, but two frequency parameters remain **labeled estimates** pending
+denominator-aware Japan evidence. It is explicitly a contribution scaffold, not part of
+any benchmark claim.
 
-Canada is seeded through `ca_finance_data_breach_midmarket`. It uses OPC/CIRA
-Canadian prevalence anchors for frequency min/likely and expresses impact in
-CAD. It now clears the automated benchmark gate: all six direct parameters are
-source-backed and extraction-mapped. It is still a benchmark-review candidate,
-not a public benchmark-grade claim, because impact min/likely/max use primary
-global loss anchors converted with a Bank of Canada FX assumption until primary
-Canada-specific impact evidence is gathered.
+**Top-risk threats — all six now runnable, not merely evidenced.** Business email
+compromise, data breach, ransomware, insider misuse, and AI-enabled (deepfake) fraud
+calibrate and simulate cleanly; third-party outage calibrates with one honestly-labeled
+frequency estimate. Insider misuse and third-party outage rest on source-backed frequency
+bridges plus **generic cross-cyber impact bridges** (loudly caveated as *not*
+insider/outage-specific) — governed-starter, not benchmark-grade.
 
-Germany industrial ransomware is now an automated benchmark-review candidate.
-It uses Bitkom Germany ransomware frequency anchors, a Germany ransom-payment
-impact floor with explicit EUR/USD conversion, and Sophos manufacturing
-ransomware impact bridges. It is not a public benchmark-grade claim until human
-review accepts those caveats.
-
-Singapore finance BEC, Japan manufacturing ransomware, and France finance data
-breach remain governed starter modules. They are contribution scaffolds with
-transparent assumptions and global anchors, not benchmark-grade local models.
+Every shard stays on the maturity ladder: **6/6 source-backed is data strength, not a
+human-approved benchmark.** A grade never implies benchmark-grade — that remains a
+recorded human decision in the ledger.
 
 ## Source Baseline
 

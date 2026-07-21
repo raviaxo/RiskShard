@@ -57,12 +57,19 @@ Backend is already green (`riskshard_doctor.py` pass, 147 tests) — "stable" he
    (business-interruption / SLA-credit dynamics the cross-cyber bridge misses) **and** a directly
    reported high-percentile `frequency.max` to retire its labeled estimate. Until then both stay
    `governed_starter` with the weakness visible, not hidden.
-   Then resolve `jp_manufacturing_ransomware_midmarket` (4/6) — finish honestly (survey-prevalence
-   for `frequency.likely/max`, **not** the NPA÷census ratio, which is a reported-incidence floor
-   ~0.0002, below the existing sourced min) **or** scope it out of v1.
+   **✅ JP shard decision (2026-07-21): SCOPED OUT of v1.** `jp_manufacturing_ransomware_midmarket`
+   stays at 4/6 (assumption-bridged), clearly labeled `governed_starter` and a contribution scaffold —
+   it does not gate the stable release. Tracked follow-up (not v1): finish honestly with
+   **survey-prevalence** for `frequency.likely/max` (Sophos/regional manufacturing ransomware rates),
+   **not** the NPA÷census ratio, which is a reported-incidence floor (~0.0002, below the existing
+   sourced min). The README now states this exception explicitly. **Step 1 complete for v1.**
 2. **Close claim-discipline loose ends.** Maintainer label call on `au_finance_data_breach`
    (under-labeled vs its `benchmark_ready` gate); keep TPO `frequency.max` honestly labeled.
-3. **Rewrite the README / front door** against the finished state (currently stale, AU-centric).
+3. **✅ Rewrite the README / front door (DONE 2026-07-21)** — replaced the stale AU-centric per-shard
+   narrative with a current, country-agnostic summary (11 shards/8 countries, 10 at 6/6; all 6 top
+   risks runnable) that **points to the live coverage tools as the authoritative source** (anti-drift,
+   per one-canonical-owner). Fixed false "estimated"/"assumptions explicit" claims for US/SG/FR BEC;
+   JP scope-out stated explicitly; maturity ladder kept loud.
 4. **Cut a named, tagged stable release** (data pack + version tag + CHANGELOG) so "stable
    version" is a pinned, citable artifact.
 5. *(polish)* Root-level "what this is / isn't" + a one-command demo run for reproducible trust.
