@@ -63,6 +63,12 @@ evolution, not a rewrite** — but it *is* a schema decision and must go through
 (an ADR) before any loss-chain scenario is built. Until then, build only schema-compatible
 scenarios (single threat → frequency × impact distributions).
 
+This is now written up as **[ADR-0001 — Loss-chain scenario modeling](adr/0001-loss-chain-scenario-modeling.md)**
+(status: Proposed). It recommends a *bounded, optional, backward-compatible* staged
+conditional loss-chain (not a full DAG or correlation engine), proven first on one link
+(breach → regulatory penalty), with the evidence rule that no stage ships without a sourced
+or labeled conditional probability. Awaiting owner acceptance before any schema work begins.
+
 ## Proposed sequencing
 
 **Schema-compatible now (no ADR needed):**
