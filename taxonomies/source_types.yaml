@@ -1,0 +1,49 @@
+taxonomy: source_types
+notes: >
+  Canonical vocabulary for the `source_type` field on source-registry entries and
+  evidence records. A source_type must be one of the `base` values below, OR follow
+  one of the honesty conventions: a `<base>_bridge` (a directly reported figure
+  reused across a different context), a `derived_...` value (a figure computed from
+  sourced inputs), or `model_assumption` (an explicit estimate). These conventions
+  carry real meaning — they tell a reader whether a number is directly reported,
+  reused across context, computed, or assumed — so the audit enforces the shape,
+  not an exhaustive list. Diagnostic via scripts/source_type_audit.py; not a hard
+  gate, matching how maturity labels are audited.
+
+# Direct-evidence source categories (a number reported directly by this kind of source).
+base:
+  - official_statistics
+  - regulator_report
+  - regulator_statistics
+  - privacy_regulator_report
+  - regulator_standard
+  - law_enforcement_report
+  - law_enforcement_statistics
+  - scam_report
+  - breach_report
+  - data_breach_cost_research
+  - cyber_loss_research
+  - ransomware_research
+  - cyber_insurance_claims_research
+  - cyber_insurer_claims
+  - economic_impact_study
+  - vulnerability_exploitation_prior
+  - industry_survey
+  - analyst_survey
+  - news_report
+  - government_report
+  - government_business_guidance
+  - legislation
+
+# Honesty conventions layered on a base category.
+conventions:
+  bridge_suffix: _bridge          # a directly reported figure reused across a different context
+  derived_prefix: derived_        # a value computed from one or more sourced inputs
+  assumption: model_assumption    # an explicit estimate, not source-backed
+
+# Near-duplicate pairs reconciled to a single canonical value (kept for provenance
+# of the change, and as a guard against reintroduction).
+reconciled:
+  official_statistical_data: official_statistics
+  secondary_news_report: news_report
+  regulatory_statute: legislation
