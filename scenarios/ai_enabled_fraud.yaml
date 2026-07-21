@@ -1,0 +1,25 @@
+metadata:
+  name: AI-Enabled Fraud
+  version: "0.1"
+  currency: USD
+  scenario_stage: governed_starter
+  benchmark_status: emergent_starter_source_backed_bridges_fast_rising_volatile
+  description: >
+    Starter emergent AI-enabled (deepfake) fraud shard. All six parameters are
+    source-backed but rest on vendor/analyst survey bridges and a single
+    documented tail case (Arup, USD 25.6M), so this is a governed starter, not a
+    human-approved benchmark. Deepfake-fraud prevalence is fast-rising and
+    volatile: frequency measures deepfake attacks/attempts (not confirmed-loss
+    events) and figures date quickly. Calibrate from
+    calibrations/au_finance_ai_enabled_fraud.yaml; caveats live per-record in
+    evidence/ai_enabled_fraud.yaml.
+
+frequency:
+  min: 0.10
+  likely: 0.62
+  max: 0.92
+
+impact:
+  min: 50000
+  likely: 500000
+  max: 25600000
