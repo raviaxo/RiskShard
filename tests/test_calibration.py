@@ -64,6 +64,36 @@ class CalibrationTests(unittest.TestCase):
             "cyentia_iris_2022_top5_cyber_event_loss_usd_au_ransomware_context",
         )
 
+    def test_calibration_generates_loss_stages_from_profile(self):
+        report = run_calibration(
+            ROOT / "scenarios" / "data_breach.yaml",
+            ROOT / "org_profiles" / "gb_finance_midmarket.yaml",
+            ROOT / "evidence",
+            ROOT / "calibrations" / "gb_finance_data_breach_regulatory_chain.yaml",
+            threat="data_breach",
+        )
+        scenario = report["generated_scenario"]
+
+        self.assertIn("loss_stages", scenario)
+        stage = scenario["loss_stages"][0]
+        self.assertEqual(stage["loss_mode"], "regulatory_penalty")
+        self.assertEqual(
+            stage["conditional_probability"],
+            {"min": 0.001, "likely": 0.0015, "max": 0.005},
+        )
+        self.assertEqual(
+            stage["impact"],
+            {"min": 150000, "likely": 750000, "max": 12700000},
+        )
+        # The conditional-probability min/max are labeled estimates and surface as warnings.
+        estimated = {
+            warning["parameter"]
+            for warning in report["warnings"]
+            if warning["code"] == "parameter_from_non_source_backed_evidence"
+        }
+        self.assertIn("loss_stage.regulatory_penalty.conditional_probability.min", estimated)
+        self.assertIn("loss_stage.regulatory_penalty.conditional_probability.max", estimated)
+
     def test_calibration_report_and_scenario_outputs_are_loadable(self):
         report = run_calibration(
             ROOT / "scenarios" / "au_finance_ransomware_midmarket.yaml",
