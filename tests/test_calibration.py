@@ -94,6 +94,46 @@ class CalibrationTests(unittest.TestCase):
         self.assertIn("loss_stage.regulatory_penalty.conditional_probability.min", estimated)
         self.assertIn("loss_stage.regulatory_penalty.conditional_probability.max", estimated)
 
+    def test_loss_stage_inverted_range_is_rejected(self):
+        from engine.calibration import validate_generated_loss_stages, CalibrationError
+
+        inverted_probability = {
+            "loss_stages": [
+                {
+                    "loss_mode": "regulatory_penalty",
+                    "conditional_probability": {"min": 0.9, "likely": 0.1, "max": 0.2},
+                    "impact": {"min": 1, "likely": 2, "max": 3},
+                }
+            ]
+        }
+        inverted_impact = {
+            "loss_stages": [
+                {
+                    "loss_mode": "regulatory_penalty",
+                    "conditional_probability": {"min": 0.1, "likely": 0.2, "max": 0.3},
+                    "impact": {"min": 5000, "likely": 2000, "max": 1000},
+                }
+            ]
+        }
+        with self.assertRaises(CalibrationError):
+            validate_generated_loss_stages(inverted_probability)
+        with self.assertRaises(CalibrationError):
+            validate_generated_loss_stages(inverted_impact)
+
+    def test_calibration_markdown_includes_loss_stage_rows(self):
+        from engine.calibration import format_calibration_markdown
+
+        report = run_calibration(
+            ROOT / "scenarios" / "data_breach.yaml",
+            ROOT / "org_profiles" / "gb_finance_midmarket.yaml",
+            ROOT / "evidence",
+            ROOT / "calibrations" / "gb_finance_data_breach_regulatory_chain.yaml",
+            threat="data_breach",
+        )
+        markdown = format_calibration_markdown(report)
+        self.assertIn("loss_stage[regulatory_penalty].conditional_probability", markdown)
+        self.assertIn("loss_stage[regulatory_penalty].impact", markdown)
+
     def test_calibration_report_and_scenario_outputs_are_loadable(self):
         report = run_calibration(
             ROOT / "scenarios" / "au_finance_ransomware_midmarket.yaml",

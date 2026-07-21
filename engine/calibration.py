@@ -131,6 +131,7 @@ def run_calibration(
         generated_stages.append(stage)
     if generated_stages:
         generated["loss_stages"] = generated_stages
+        validate_generated_loss_stages(generated)
 
     selected_ids = {item["evidence_id"] for item in selected}
     annotate_selected_evidence(selected, matched)
@@ -305,6 +306,22 @@ def validate_generated_ranges(scenario):
             raise CalibrationError(f"Generated {group} range must satisfy min <= likely <= max")
 
 
+def validate_generated_loss_stages(scenario):
+    # ADR-0001: loss stages are not covered by validate_generated_ranges (which
+    # runs before stages are composed and only iterates frequency/impact). Without
+    # this an inverted stage range would pass silently and beta_pert would collapse
+    # the stage to a constant equal to its min - the same mistake that raises for a
+    # frequency/impact bound.
+    for stage in scenario.get("loss_stages", []):
+        mode = stage.get("loss_mode", "<unnamed>")
+        for field in ("conditional_probability", "impact"):
+            values = stage[field]
+            if values["min"] > values["likely"] or values["likely"] > values["max"]:
+                raise CalibrationError(
+                    f"Generated loss_stage {mode}.{field} range must satisfy min <= likely <= max"
+                )
+
+
 def summarize_excluded(record, score):
     return {
         "id": record["id"],
@@ -344,6 +361,15 @@ def write_calibration_markdown_report(report, output_path):
 def format_calibration_markdown(report):
     generated = report["generated_scenario"]
     base = report["base_scenario"]
+    stage_rows = []
+    for stage in generated.get("loss_stages", []):
+        mode = stage["loss_mode"]
+        stage_rows.append(
+            format_range_row(f"loss_stage[{mode}].conditional_probability", stage["conditional_probability"])
+        )
+        stage_rows.append(
+            format_range_row(f"loss_stage[{mode}].impact", stage["impact"])
+        )
     lines = [
         f"# Calibration Report: {generated['metadata']['name']}",
         "",
@@ -376,6 +402,7 @@ def format_calibration_markdown(report):
         "| --- | ---: | ---: | ---: |",
         format_range_row("frequency", generated["frequency"]),
         format_range_row("impact", generated["impact"]),
+        *stage_rows,
         "",
         "## Selected Evidence",
         "",
