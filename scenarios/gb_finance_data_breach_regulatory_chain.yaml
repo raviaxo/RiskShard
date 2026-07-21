@@ -17,9 +17,10 @@ metadata:
     ICO enforcement statistics - about 17 monetary penalties in 2024 over about
     12,412 self-reported breach reports in 2024/25 (~0.0014), with ~85% of
     breaches resolved informally with no fine; range spans low-enforcement to a
-    higher-enforcement year. Penalty impact is the ICO fine distribution (2024
-    average GBP 153,722, most below GBP 250,000, a material GBP 750,000 fine, and
-    a GBP 12.7M TikTok-class fine). Sources: ico_self_reported_breach_cases_2024_25,
+    higher-enforcement year. Penalty impact is the ICO fine distribution: a
+    modeled small-fine floor (GBP 50k) below the 2024 average of GBP 153,722
+    (used as the central anchor; most penalties are below GBP 250,000), up to a
+    GBP 12.7M TikTok-class tail. Sources: ico_self_reported_breach_cases_2024_25,
     ico_monetary_penalties_2024. CAVEATS: not all ICO penalties are data-breach
     specific (some are PECR/marketing); penalties are rare relative to breaches,
     so this stage fires infrequently and drives the tail, not the mean.
@@ -41,6 +42,6 @@ loss_stages:
       likely: 0.0015
       max: 0.005
     impact:
-      min: 150000
-      likely: 750000
+      min: 50000
+      likely: 150000
       max: 12700000
