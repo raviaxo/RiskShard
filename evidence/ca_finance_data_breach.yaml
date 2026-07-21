@@ -124,7 +124,7 @@ records:
       - itpro_ibm_data_breach_regional_costs_2025
       - ibm_cost_data_breach_2025
     source_name: ITPro coverage of IBM Cost of a Data Breach Report 2025
-    source_type: secondary_news_report
+    source_type: news_report
     source_url_or_citation: https://www.itpro.com/security/data-breaches/ai-breaches-arent-just-a-scare-story-any-more-theyre-happening-in-real-life
     publication_date: "2025-08-04"
     extraction_date: "2026-07-13"

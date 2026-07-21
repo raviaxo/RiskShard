@@ -51,7 +51,7 @@ sources:
   - id: itpro_ibm_data_breach_regional_costs_2025
     title: AI breaches are not just a scare story any more - they are happening in real life
     publisher: ITPro
-    source_type: secondary_news_report
+    source_type: news_report
     url: https://www.itpro.com/security/data-breaches/ai-breaches-arent-just-a-scare-story-any-more-theyre-happening-in-real-life
     publication_date: "2025-08-04"
     access_mode: public_html
@@ -188,7 +188,7 @@ sources:
   - id: gdpr_article_83_administrative_fines
     title: "GDPR Article 83(5) maximum administrative fine (via CNIL)"
     publisher: CNIL
-    source_type: regulatory_statute
+    source_type: legislation
     url: "https://www.cnil.fr/fr/cnil-direct/question/sanctions-quelles-sanctions-peuvent-etre-prononcees-par-la-cnil"
     publication_date: "2018-05-25"
     access_mode: public_html
@@ -280,7 +280,7 @@ sources:
   - id: abs_counts_australian_businesses_2025
     title: Counts of Australian Businesses, including Entries and Exits, July 2021 - June 2025
     publisher: Australian Bureau of Statistics
-    source_type: official_statistical_data
+    source_type: official_statistics
     url: https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025
     publication_date: "2025-12-16"
     access_mode: public_html
@@ -296,7 +296,7 @@ sources:
   - id: abs_characteristics_australian_business_2025
     title: Characteristics of Australian Business, 2024-25 financial year
     publisher: Australian Bureau of Statistics
-    source_type: official_statistical_data
+    source_type: official_statistics
     url: https://www.abs.gov.au/statistics/industry/technology-and-innovation/characteristics-australian-business/latest-release
     publication_date: "2026-06-25"
     access_mode: public_html
@@ -524,7 +524,7 @@ sources:
   - id: census_susb_2022
     title: Statistics of U.S. Businesses (SUSB) 2022 Annual Data
     publisher: U.S. Census Bureau
-    source_type: official_statistical_data
+    source_type: official_statistics
     url: https://www.census.gov/data/tables/2022/econ/susb/2022-susb-annual.html
     publication_date: "2025-01-16"
     access_mode: public_html
