@@ -64,7 +64,7 @@ records:
     normalization_notes: This is an interpretive near-ceiling stress, not a directly reported prevalence percentage. It is bounded below 1.0 and above the 0.80 likely.
     limitations: WEAKEST anchor in this set. It is an interpretive conversion from multi-event findings (BCI "one to ten incidents", Interos "three major events"), NOT a directly reported organization-level prevalence; all-cause supply-chain events, not third-party-only; vendor surveys, lower trust. Replace with a directly reported high-percentile third-party-outage frequency when one is reviewed.
     confidence: low
-    evidence_type: source_backed
+    evidence_type: estimated
     applicability:
       industries: [all]
       countries: [global]
