@@ -1,0 +1,55 @@
+metadata:
+  name: Third-Party Outage calibration
+  scenario_name: Third-Party Outage Midmarket - Calibrated Draft
+  version: "0.1"
+  notes: >
+    Starter calibration profile for the Third-Party Outage top risk. It is
+    deliberately NOT fully source-backed: frequency.max is an ESTIMATED
+    interpretive stress (converted from BCI "one to ten incidents" / Interos
+    "three major events" multi-event findings, not a directly reported
+    prevalence), so this calibrates as calibrated_WITH_ASSUMPTIONS, not clean.
+    frequency.min/likely are source-backed BCI 2024 bridges but measure
+    all-cause supply-chain disruption, overstating third-party-only frequency.
+    IMPACT rests ENTIRELY on generic cross-cyber Cyentia loss bridges
+    ($266k/$3M/$32M), NONE third-party-outage-specific (they exclude the
+    business-interruption/SLA dynamics that dominate outage loss). Governed
+    starter; revise frequency.max with a directly reported high-percentile
+    third-party-outage figure and gather outage-specific impact evidence
+    (both tracked in NEXT_STEPS). Kept in USD as a global top risk.
+
+target_currency: USD
+
+parameters:
+  frequency:
+    min:
+      evidence_id: bci_2024_third_party_failure_top_cause_frequency_floor
+      transform: direct
+      rationale: Source-backed floor - BCI 2024 43.6% cite third-party failure as top disruption cause; a top-cause share, not a clean per-org probability.
+    likely:
+      evidence_id: bci_2024_supply_chain_disruption_prevalence_frequency_likely
+      transform: direct
+      rationale: Source-backed likely bridge - BCI 2024 ~80% of organizations experienced supply-chain disruption; all-cause, overstates third-party-only.
+    max:
+      evidence_id: bci_interos_supply_chain_multi_event_frequency_stress
+      transform: direct
+      rationale: ESTIMATED interpretive stress (labeled) - near-ceiling 0.90 derived from BCI/Interos multi-event findings, NOT a directly reported prevalence. Replace when a directly reported high-percentile figure is reviewed.
+
+  impact:
+    min:
+      evidence_id: cyentia_iris_2022_typical_cyber_event_loss_usd
+      transform: direct
+      target_currency: USD
+      round_to: 1000
+      rationale: Generic cross-cyber bridge - Cyentia IRIS 2022 typical cyber-event loss (~USD 266k) as a conservative floor; NOT third-party-outage-specific.
+    likely:
+      evidence_id: cyentia_iris_2025_median_security_incident_loss_usd_third_party_outage_context
+      transform: direct
+      target_currency: USD
+      round_to: 10000
+      rationale: Generic cross-cyber bridge - Cyentia IRIS 2025 median security-incident loss (~USD 3M), scoped to third_party_outage; NOT outage-specific.
+    max:
+      evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd
+      transform: direct
+      target_currency: USD
+      round_to: 100000
+      rationale: Generic cross-cyber bridge - Cyentia IRIS 2025 extreme security-incident loss (~USD 32M) as a stress anchor; NOT outage-specific and not a loss percentile.
