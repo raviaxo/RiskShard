@@ -38,8 +38,19 @@ Backend is already green (`riskshard_doctor.py` pass, 147 tests) — "stable" he
      + base `scenarios/ai_enabled_fraud.yaml`. Flipped `partially_supported → calibrated`
      (4/6 top risks now calibrated). Calibrated run 0 warnings; simulate AVG ~USD 2.69M /
      P95 7.5M / P99 10.46M. 147 tests green; validate + preflight clean.
-   - Insider Misuse — same shape (`scenarios/insider_threat.yaml` exists as demo_fixture).
+   - **✅ Insider Misuse (DONE 2026-07-21)** — added `calibrations/au_finance_insider_misuse.yaml`
+     + base `scenarios/insider_misuse.yaml`. Flipped `partially_supported → calibrated`.
+     **Known weakness (tracked):** frequency is source-backed (3 dedicated insider records, broad);
+     **impact rests entirely on generic cross-cyber Cyentia bridges ($266k/$3M/$32M), NONE
+     insider-misuse-specific.** Loudly caveated per-record. → *Impact-evidence gap below.*
    - Third-Party Outage — has 1 assumption (`frequency.max` estimate); calibrate + keep labeled.
+     Same likely impact-evidence caveat expected.
+
+   **Tracked gap — insider-misuse-specific impact evidence.** Insider Misuse calibrates green but
+   its entire impact side is generic cross-cyber loss bridges. A future evidence objective should
+   gather insider-misuse-specific loss data (e.g., Ponemon/DTEX *Cost of Insider Threats* per-incident
+   cost, or a documented insider-fraud/IP-theft loss) to replace the bridges. Until then the shard
+   stays `governed_starter` with the weakness visible, not hidden.
    Then resolve `jp_manufacturing_ransomware_midmarket` (4/6) — finish honestly (survey-prevalence
    for `frequency.likely/max`, **not** the NPA÷census ratio, which is a reported-incidence floor
    ~0.0002, below the existing sourced min) **or** scope it out of v1.

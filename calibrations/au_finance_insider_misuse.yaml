@@ -1,0 +1,53 @@
+metadata:
+  name: Insider Misuse calibration
+  scenario_name: Insider Misuse Midmarket - Calibrated Draft
+  version: "0.1"
+  notes: >
+    Starter calibration profile for the Insider Misuse top risk. All six direct
+    parameters are source-backed, but the two sides differ sharply in strength.
+    FREQUENCY has three dedicated insider records (Cybersecurity Insiders 66%
+    2019 floor / 76% 2024 likely, Gurucul 90% 2026 stress) - but "insider
+    attacks/incidents" is broad and includes negligent and careless insiders,
+    so it OVERSTATES deliberate-misuse frequency. IMPACT rests ENTIRELY on
+    generic cross-cyber Cyentia loss bridges (typical $266k floor, median $3M
+    likely, extreme $32M stress) - NONE insider-misuse-specific. This is a
+    governed starter, not a human-approved benchmark; revise when
+    insider-misuse-specific loss evidence is reviewed (tracked in NEXT_STEPS).
+    Kept in USD (the currency of the underlying evidence) as a global top risk.
+
+target_currency: USD
+
+parameters:
+  frequency:
+    min:
+      evidence_id: cybersecurity_insiders_2019_insider_attack_prevalence_frequency_floor
+      transform: direct
+      rationale: Source-backed historical floor - Cybersecurity Insiders 66% (2019) organization-level insider-attack prevalence; broad (incl. negligent insiders), overstates deliberate misuse.
+    likely:
+      evidence_id: cybersecurity_insiders_2024_insider_attack_prevalence_frequency_likely
+      transform: direct
+      rationale: Source-backed likely-frequency bridge - Cybersecurity Insiders 76% (2024) organization-level insider-attack prevalence; broad exposure, not misuse-specific.
+    max:
+      evidence_id: gurucul_2026_insider_incident_prevalence_frequency_stress
+      transform: direct
+      rationale: Source-backed stress-frequency bridge - Gurucul 90% (2026) organization-level insider-incident prevalence; a different (incidents) metric, broad, not misuse-specific.
+
+  impact:
+    min:
+      evidence_id: cyentia_iris_2022_typical_cyber_event_loss_usd
+      transform: direct
+      target_currency: USD
+      round_to: 1000
+      rationale: Generic cross-cyber bridge - Cyentia IRIS 2022 typical cyber-event loss (~USD 266k) as a conservative floor; NOT insider-misuse-specific.
+    likely:
+      evidence_id: cyentia_iris_2025_median_security_incident_loss_usd_insider_context
+      transform: direct
+      target_currency: USD
+      round_to: 10000
+      rationale: Generic cross-cyber bridge - Cyentia IRIS 2025 median security-incident loss (~USD 3M), scoped to insider_misuse; NOT insider-misuse-specific.
+    max:
+      evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd
+      transform: direct
+      target_currency: USD
+      round_to: 100000
+      rationale: Generic cross-cyber bridge - Cyentia IRIS 2025 extreme security-incident loss (~USD 32M) as a stress anchor; NOT insider-misuse-specific and not a loss percentile.
