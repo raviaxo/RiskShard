@@ -1,7 +1,7 @@
 id: au_finance_ransomware_midmarket
 title: Australia Finance Ransomware Midmarket
 version: "0.2"
-status: benchmark_candidate
+status: benchmark_review_candidate
 threat: ransomware
 description: >
   Benchmark-review candidate ransomware shard for an Australian mid-market

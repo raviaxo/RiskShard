@@ -63,8 +63,13 @@ Backend is already green (`riskshard_doctor.py` pass, 147 tests) — "stable" he
    **survey-prevalence** for `frequency.likely/max` (Sophos/regional manufacturing ransomware rates),
    **not** the NPA÷census ratio, which is a reported-incidence floor (~0.0002, below the existing
    sourced min). The README now states this exception explicitly. **Step 1 complete for v1.**
-2. **Close claim-discipline loose ends.** Maintainer label call on `au_finance_data_breach`
-   (under-labeled vs its `benchmark_ready` gate); keep TPO `frequency.max` honestly labeled.
+2. **✅ Close claim-discipline loose ends (DONE 2026-07-21).** Maintainer decision: standardize the
+   gate-clearing rung on **`benchmark_review_candidate`** and resolve the lone label/gate mismatch.
+   Relabeled `au_finance_data_breach` (governed_starter → review_candidate, resolving its
+   under-labeling) and moved the 3 `benchmark_candidate` shards (au_ransomware, ca, gb) to the same
+   term. Result: 5 `benchmark_review_candidate`, 0 `benchmark_candidate`, 6 `governed_starter`;
+   **`maturity_audit` = 0 mismatches, no vocabulary drift.** Still not benchmark-grade (human review
+   pending). TPO `frequency.max` kept honestly labeled.
 3. **✅ Rewrite the README / front door (DONE 2026-07-21)** — replaced the stale AU-centric per-shard
    narrative with a current, country-agnostic summary (11 shards/8 countries, 10 at 6/6; all 6 top
    risks runnable) that **points to the live coverage tools as the authoritative source** (anti-drift,
