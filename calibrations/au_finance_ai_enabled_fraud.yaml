@@ -1,0 +1,57 @@
+metadata:
+  name: AI-Enabled Fraud calibration
+  scenario_name: AI-Enabled Fraud Midmarket - Calibrated Draft
+  version: "0.1"
+  notes: >
+    Starter calibration profile for the emergent AI-enabled (deepfake) fraud
+    top risk. All six direct parameters are source-backed: a >10% 2024
+    deepfake-fraud-attempt prevalence floor, a Gartner 2025 62% organization
+    deepfake-attack prevalence for likely frequency, a Regula 2024 92%
+    deepfake-financial-loss prevalence for stress frequency, a Verizon DBIR 2026
+    median BEC loss floor as an AI-fraud impact floor, a ~USD 500k average
+    deepfake-incident loss for likely impact, and the documented USD 25.6M Arup
+    deepfake CFO case as the stress impact. It is intentionally NOT
+    benchmark-grade: every frequency figure is a vendor/analyst survey bridge
+    measuring deepfake attacks/attempts rather than confirmed-loss events, and
+    the stress impact is a single documented extreme case, not a loss quantile.
+    Deepfake-fraud prevalence is fast-rising and volatile, so all six values
+    date quickly and should be revised as the evidence base matures. Kept in USD
+    (the currency of the underlying evidence) because this is a global emergent
+    threat, not a country-localized shard.
+
+target_currency: USD
+
+parameters:
+  frequency:
+    min:
+      evidence_id: deepfake_2024_fraud_attempt_prevalence_frequency_floor
+      transform: direct
+      rationale: Source-backed conservative floor - >10% (2024) deepfake-fraud-attempt prevalence used as a rising-baseline floor; attempts, not confirmed-loss events.
+    likely:
+      evidence_id: gartner_2025_deepfake_attack_prevalence_frequency_likely
+      transform: direct
+      rationale: Source-backed likely-frequency bridge - Gartner (Sept 2025) 62% organization-level deepfake-attack prevalence; measures attacks/attempts, not confirmed-loss events.
+    max:
+      evidence_id: regula_2024_deepfake_financial_loss_prevalence_frequency_stress
+      transform: direct
+      rationale: Source-backed stress-frequency bridge - Regula 2024 92% of businesses experienced deepfake-related financial loss; broad, self-reported, vendor survey.
+
+  impact:
+    min:
+      evidence_id: verizon_dbir_2026_median_payment_fraud_impact_floor_ai_fraud
+      transform: direct
+      target_currency: USD
+      round_to: 1000
+      rationale: Source-backed AI-fraud impact floor - Verizon DBIR 2026 (IC3-derived) median BEC loss, a global bridge below the ~USD 500k likely.
+    likely:
+      evidence_id: deepfake_2024_average_incident_loss_impact_likely
+      transform: direct
+      target_currency: USD
+      round_to: 10000
+      rationale: Source-backed likely single-event impact - ~USD 500k average deepfake incident loss (financial services runs higher, ~USD 603k).
+    max:
+      evidence_id: arup_2024_deepfake_case_impact_stress
+      transform: direct
+      target_currency: USD
+      round_to: 100000
+      rationale: Source-backed stress impact - documented USD 25.6M Arup deepfake CFO fraud case (unrecovered; gross equals net). A single case, not a loss percentile.

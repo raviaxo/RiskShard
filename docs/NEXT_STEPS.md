@@ -22,6 +22,36 @@ objective into scope until the current one is done.
 
 ---
 
+## Road to stable v1 (public-post readiness)
+
+Goal: a **stable, coherent version worth posting publicly** — backend neat, claims honest,
+front door true. No rush. Ordered for correctness (content complete → front door → release),
+so the README and release are written **once** against final reality. This is queue ordering,
+not a change to the publishable bar (that stays as-is in `PUBLISHABLE_REQUIREMENTS.md`).
+
+Backend is already green (`riskshard_doctor.py` pass, 147 tests) — "stable" here means
+**complete and coherent**, not "fix breakage."
+
+1. **Complete top-risk coverage (make all 6 runnable).** Add calibration profiles for the
+   three evidenced-but-not-runnable top risks so they flip `partially_supported → calibrated`:
+   - **✅ AI-Enabled Fraud (DONE 2026-07-21)** — added `calibrations/au_finance_ai_enabled_fraud.yaml`
+     + base `scenarios/ai_enabled_fraud.yaml`. Flipped `partially_supported → calibrated`
+     (4/6 top risks now calibrated). Calibrated run 0 warnings; simulate AVG ~USD 2.69M /
+     P95 7.5M / P99 10.46M. 147 tests green; validate + preflight clean.
+   - Insider Misuse — same shape (`scenarios/insider_threat.yaml` exists as demo_fixture).
+   - Third-Party Outage — has 1 assumption (`frequency.max` estimate); calibrate + keep labeled.
+   Then resolve `jp_manufacturing_ransomware_midmarket` (4/6) — finish honestly (survey-prevalence
+   for `frequency.likely/max`, **not** the NPA÷census ratio, which is a reported-incidence floor
+   ~0.0002, below the existing sourced min) **or** scope it out of v1.
+2. **Close claim-discipline loose ends.** Maintainer label call on `au_finance_data_breach`
+   (under-labeled vs its `benchmark_ready` gate); keep TPO `frequency.max` honestly labeled.
+3. **Rewrite the README / front door** against the finished state (currently stale, AU-centric).
+4. **Cut a named, tagged stable release** (data pack + version tag + CHANGELOG) so "stable
+   version" is a pinned, citable artifact.
+5. *(polish)* Root-level "what this is / isn't" + a one-command demo run for reproducible trust.
+
+---
+
 ## Active queue — P2 cycle (any order)
 
 ### Objective 4 — Insider Misuse: add source-backed frequency evidence  ✅ DONE 2026-07-20
