@@ -8,6 +8,18 @@ defensible, dollar-based decisions — with every number traceable to a reviewed
 public source. Think of it as a Metasploit-style module library for risk
 quantification: pick a shard, see how much to trust it, run it, improve it.
 
+## What RiskShard is — and isn't
+
+**It is** an open way to turn a cyber risk scenario into a defensible dollar
+range — every input either traceable to a reviewed public source or honestly
+labeled as an estimate, with the limits shown right next to the number.
+
+**It isn't** a finished product, a black-box score, or a human-certified
+benchmark. It's a working practitioner beta: a shard that clears the automated
+gate is a *review candidate*, never "benchmark-grade" — that stays a recorded
+human decision. Known gaps are written down in
+[docs/NEXT_STEPS.md](docs/NEXT_STEPS.md), not buried.
+
 ## The question RiskShard answers
 
 > Given my geography, industry, company size, and threat concern: which risk
@@ -30,6 +42,14 @@ riskshard> demo
 `demo` runs the whole first-run path automatically on a real shard: select ->
 inspect the trust boundary -> simulate -> explain -> export a report -> show the
 next gap. Every step is a real command you can also type yourself.
+
+Prefer a single non-interactive command? This runs the same demo end to end and
+prints the sourced numbers, confidence, and honest caveats — nothing to type,
+so you can verify the "every number is traceable" claim in one shot:
+
+```bash
+printf 'demo\nexit\n' | python scripts/riskshard_console.py
+```
 
 ## Honest status
 

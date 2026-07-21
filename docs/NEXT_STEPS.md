@@ -79,7 +79,11 @@ Backend is already green (`riskshard_doctor.py` pass, 147 tests) — "stable" he
    `data_pack_releases/2026.07.21-v0.1.0-stable.json` (69 files, fp `ff9b713dd6a7`); new
    `CHANGELOG.md` with the v0.1.0 entry; `pyproject.toml` already at 0.1.0. Git tag `v0.1.0`
    + GitHub Release created on the merge commit. **Road to stable v1 complete.**
-5. *(polish)* Root-level "what this is / isn't" + a one-command demo run for reproducible trust.
+5. **✅ (polish) DONE 2026-07-21** — added a crisp "What RiskShard is — and isn't" block near the
+   top of the README, and a **non-interactive one-command demo** (`printf 'demo\nexit\n' | python
+   scripts/riskshard_console.py`) that runs the full sourced demo end-to-end (verified exit 0) so a
+   first-time visitor can validate the "every number is traceable" claim in one shot. **Road to
+   stable v1 fully complete.**
 
 ---
 
