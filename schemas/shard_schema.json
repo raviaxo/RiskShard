@@ -38,7 +38,7 @@
       "required": ["min", "likely", "max"]
     },
     "loss_stages": {
-      "description": "Optional conditional downstream loss stages (ADR-0001). Each stage adds a gated impact to the initiating event's impact per Monte Carlo trial. Bounded to keep it honestly sourceable.",
+      "description": "Optional conditional downstream loss stages (ADR-0001). Each stage adds a gated impact to the initiating event's impact per Monte Carlo trial. Bounded to keep it honestly sourceable. Stage impacts carry no per-stage currency: they MUST be expressed in the scenario's metadata.currency, since they are summed directly onto the initiating impact. The calibration pipeline enforces this by converting each stage bound to the profile target_currency; hand-authored stages must match the scenario currency.",
       "type": "array",
       "maxItems": 3,
       "items": {
