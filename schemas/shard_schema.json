@@ -36,6 +36,37 @@
         "max": { "type": "number" }
       },
       "required": ["min", "likely", "max"]
+    },
+    "loss_stages": {
+      "description": "Optional conditional downstream loss stages (ADR-0001). Each stage adds a gated impact to the initiating event's impact per Monte Carlo trial. Bounded to keep it honestly sourceable.",
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "properties": {
+          "loss_mode": { "type": "string" },
+          "conditional_probability": {
+            "description": "P(this stage occurs | the initiating event occurred).",
+            "type": "object",
+            "properties": {
+              "min": { "type": "number", "minimum": 0, "maximum": 1 },
+              "likely": { "type": "number", "minimum": 0, "maximum": 1 },
+              "max": { "type": "number", "minimum": 0, "maximum": 1 }
+            },
+            "required": ["min", "likely", "max"]
+          },
+          "impact": {
+            "type": "object",
+            "properties": {
+              "min": { "type": "number" },
+              "likely": { "type": "number" },
+              "max": { "type": "number" }
+            },
+            "required": ["min", "likely", "max"]
+          }
+        },
+        "required": ["loss_mode", "conditional_probability", "impact"]
+      }
     }
   },
   "required": ["metadata", "impact", "frequency"]
