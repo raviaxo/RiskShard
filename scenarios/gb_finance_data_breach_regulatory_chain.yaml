@@ -1,0 +1,46 @@
+metadata:
+  name: UK Finance Data Breach with Regulatory Penalty Chain - Worked Example
+  version: "0.1"
+  currency: GBP
+  scenario_stage: governed_starter
+  description: >
+    ADR-0001 loss-chain worked example. The initiating event is a UK
+    financial-services data breach, with frequency and impact reused from the
+    source-backed gb_finance_data_breach_midmarket shard. A single downstream
+    loss_stage adds a rare, high-severity ICO monetary penalty conditional on the
+    breach - demonstrating a governance/regulatory loss form that a single-threat
+    scenario cannot express.
+  source: >
+    Initiating event: gb_finance_data_breach_midmarket (source-backed).
+    Regulatory-penalty stage provenance (formal per-stage evidence records are
+    ADR-0001 follow-up 3): conditional_probability is denominator-derived from
+    ICO enforcement statistics - about 17 monetary penalties in 2024 over about
+    12,412 self-reported breach reports in 2024/25 (~0.0014), with ~85% of
+    breaches resolved informally with no fine; range spans low-enforcement to a
+    higher-enforcement year. Penalty impact is the ICO fine distribution (2024
+    average GBP 153,722, most below GBP 250,000, a material GBP 750,000 fine, and
+    a GBP 12.7M TikTok-class fine). Sources: ico_self_reported_breach_cases_2024_25,
+    ico_monetary_penalties_2024. CAVEATS: not all ICO penalties are data-breach
+    specific (some are PECR/marketing); penalties are rare relative to breaches,
+    so this stage fires infrequently and drives the tail, not the mean.
+
+frequency:
+  min: 0.43
+  likely: 0.65
+  max: 0.69
+
+impact:
+  min: 10000
+  likely: 5740000
+  max: 11164400
+
+loss_stages:
+  - loss_mode: regulatory_penalty
+    conditional_probability:
+      min: 0.001
+      likely: 0.0015
+      max: 0.005
+    impact:
+      min: 150000
+      likely: 750000
+      max: 12700000

@@ -89,8 +89,14 @@ governance/regulatory loss).
   `ai_enabled_fraud` top-risk threat, 6/6 direct evidence (Gartner/Regula deepfake prevalence,
   ~$500k avg loss, documented **Arup $25.6M** tail). Governed-starter; vendor/analyst surveys,
   fast-rising, loudly caveated.
+- **✅ Loss-chains (ADR-0001, Accepted).** Schema `loss_stages` + engine conditional-stage
+  composition shipped and tested (139 pass, backward-compatible). First worked example built:
+  `scenarios/gb_finance_data_breach_regulatory_chain.yaml` — a UK breach with a rare, sourced
+  ICO regulatory-penalty stage (denominator-derived conditional probability; the penalty
+  drives the P99 tail, not the mean). **Remaining ADR-0001 follow-up:** #3 — formal per-stage
+  evidence records + per-stage provenance surfaced in calibration/report.
 - **Next from the roadmap:** correlated single-vendor outage → EU AI Act penalty → regulatory
-  enforcement. Open strategic fork: evolve the schema toward **loss-chains** (needs an ADR first).
+  enforcement (now buildable as loss-chains or standalone threats).
 - **Follow-ups:** calibration profiles for `ai_enabled_fraud`, Insider Misuse, Third-Party
   Outage; finish `jp_manufacturing_ransomware_midmarket` (4/6).
 
