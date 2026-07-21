@@ -13,18 +13,24 @@ marked done, one at a time, to its Definition of Done (see [`../AGENTS.md`](../A
 
 *Updated 2026-07-20.*
 
-The 2026-07-19/20 session cleared the readiness dashboard's P1/P3 queue: US BEC shard
-→ 6/6 source-backed, ritual owner docs restored, and data-pack release
-`2026.07.20-us-bec-source-backed` cut. All merged to `main` (PRs #18, #21, #20).
+The 2026-07-19/20 session was large and is fully merged (PRs #18–#33, all CI-green). It
+cleared the readiness P1/P2/P3 queue and then went further:
+- **BEC:** US, AU, SG shards all 6/6 source-backed.
+- **Top-risk threats evidenced (6/6 direct):** Insider Misuse, Third-Party Outage.
+- **Emergent program:** `docs/ROADMAP.md` + first emergent threat `ai_enabled_fraud` (deepfake fraud).
+- **Loss-chains (ADR-0001, fully implemented):** schema `loss_stages` + engine composition +
+  worked example (UK breach → ICO regulatory penalty) + per-stage evidence/report provenance +
+  calibration-profile generation. See `docs/adr/0001-loss-chain-scenario-modeling.md`.
+- Ritual owner docs restored; data-pack release `2026.07.20-us-bec-source-backed` cut.
 
-**Active queue: the P2 cycle** — worked in order. Progress:
-- Objective 4 — Insider Misuse frequency evidence: ✅ done (6/6 direct).
-- Objective 5 — Third-Party Outage frequency evidence: ✅ done (6/6 direct).
-- Objective 6 — `sg_finance_bec_midmarket` 1/6 → 6/6: ✅ done (via global bridges; governed-starter grade).
-- Objective 7 — `au_finance_bec_midmarket` 4/6 → 6/6 (2 params): ✅ done (merged PR #23).
+**No active objective and no blocker.** Next work is forward-looking, from `NEXT_STEPS.md` /
+`ROADMAP.md` (pick any):
+- Roadmap builds: correlated single-vendor outage, EU AI Act penalty, regulatory enforcement
+  (buildable as standalone threats or loss-chains).
+- Maturation: calibration profiles for the three evidenced top-risk threats
+  (`ai_enabled_fraud`, Insider Misuse, Third-Party Outage); finish
+  `jp_manufacturing_ransomware_midmarket` (4/6).
 
-**Follow-up surfaced** (not yet queued): readiness now asks for **calibration profiles for
-Insider Misuse and Third-Party Outage** — turning their 6/6 evidence into runnable/calibrated
-shards. Consider adding them after the P2 cycle. No strategic decision is currently blocked. If one arises with no owner doc to
+No strategic decision is currently blocked. If one arises with no owner doc to
 record it, surface it and stop — see
 [`PUBLISHABLE_REQUIREMENTS.md`](PUBLISHABLE_REQUIREMENTS.md) → Change Control.
