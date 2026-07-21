@@ -57,6 +57,51 @@ class SimulationTests(unittest.TestCase):
         self.assertEqual(results, [10, 10, 10, 10, 10])
         self.assertEqual(fair_calc.compute_stats(results)["mean"], 10)
 
+    def test_loss_stage_conditionally_adds_impact(self):
+        base = {
+            "metadata": {"name": "Chain Scenario"},
+            "frequency": {"min": 2, "likely": 2, "max": 2},
+            "impact": {"min": 5, "likely": 5, "max": 5},
+        }
+        always = dict(base, loss_stages=[{
+            "loss_mode": "regulatory_penalty",
+            "conditional_probability": {"min": 1, "likely": 1, "max": 1},
+            "impact": {"min": 3, "likely": 3, "max": 3},
+        }])
+        never = dict(base, loss_stages=[{
+            "loss_mode": "regulatory_penalty",
+            "conditional_probability": {"min": 0, "likely": 0, "max": 0},
+            "impact": {"min": 3, "likely": 3, "max": 3},
+        }])
+
+        _, always_results = fair_calc.run_simulation(
+            always, trials=5, dist_type="pert", rng=random.Random(7)
+        )
+        _, never_results = fair_calc.run_simulation(
+            never, trials=5, dist_type="pert", rng=random.Random(7)
+        )
+
+        # A stage that always fires adds its impact: 2 * (5 + 3) = 16.
+        self.assertEqual(always_results, [16, 16, 16, 16, 16])
+        # A stage that never fires leaves the base loss: 2 * 5 = 10.
+        self.assertEqual(never_results, [10, 10, 10, 10, 10])
+
+    def test_absent_loss_stages_match_single_event_model(self):
+        scenario = {
+            "metadata": {"name": "No Stages"},
+            "frequency": {"min": 2, "likely": 2, "max": 2},
+            "impact": {"min": 5, "likely": 5, "max": 5},
+        }
+        _, without_key = fair_calc.run_simulation(
+            scenario, trials=5, dist_type="pert", rng=random.Random(7)
+        )
+        _, empty_list = fair_calc.run_simulation(
+            dict(scenario, loss_stages=[]), trials=5, dist_type="pert", rng=random.Random(7)
+        )
+        # No loss_stages (absent or empty) is identical to the single-event model.
+        self.assertEqual(without_key, [10, 10, 10, 10, 10])
+        self.assertEqual(empty_list, [10, 10, 10, 10, 10])
+
     def test_triangular_sampling_stays_within_loss_bounds(self):
         scenario = {
             "metadata": {"name": "Bounded Scenario"},
