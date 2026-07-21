@@ -27,14 +27,18 @@ A shard's grade is data strength, not benchmark status:
 
 ## Known gaps (snapshot — the live list is `readiness_dashboard.py`)
 
-As of 2026-07-20, the dashboard's prioritized next actions are:
+As of 2026-07-21, the old P1/P2/P3 queue (BEC coverage, Insider/Third-Party evidence,
+release discipline) is **cleared** — all BEC shards are source-backed, Insider Misuse and
+Third-Party Outage are evidenced, and a data-pack release is cut. The dashboard now surfaces:
 
-- **P1 — Business Email Compromise coverage.** The US BEC shard is now 6/6
-  source-backed (see `docs/NEXT_STEPS.md`, Objective 1); the AU and SG BEC shards
-  still carry frequency assumptions, so BEC remains the library's soft spot.
-- **P2 — Insider Misuse and Third-Party Outage** have missing direct evidence
-  (partially supported).
-- **P3 — Release discipline:** cut a named, fingerprinted data-pack release.
+- **Add calibration profiles** for the three evidenced top-risk threats (`ai_enabled_fraud`,
+  Insider Misuse, Third-Party Outage) — turning their 6/6 evidence into runnable shards.
+- **Finish `jp_manufacturing_ransomware_midmarket`** (4/6 source-backed, 2 assumptions).
+- **Emergent scenarios** from [`ROADMAP.md`](ROADMAP.md) (correlated vendor outage, EU AI Act
+  penalty, regulatory enforcement), buildable as threats or ADR-0001 loss-chains.
+- **Deferred/flagged:** `au_finance_data_breach_midmarket` under-labeled vs its gate; the
+  README threat narrative is stale; Third-Party Outage `frequency.max` is a labeled estimate
+  pending a directly reported figure.
 
-The active work queue that turns these gaps into sessions is
-[`NEXT_STEPS.md`](NEXT_STEPS.md).
+The active work queue is [`NEXT_STEPS.md`](NEXT_STEPS.md); the live gap list is
+`readiness_dashboard.py`.
