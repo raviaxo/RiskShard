@@ -128,3 +128,11 @@ governance/regulatory loss).
 - 2026-07-20 — Objectives 2 and 3 completed same session; all three PRs (#18/#21/#20)
   admin-merged to `main` after CI green (one CI catch: benchmark blocker count 62→47 from
   the calibration rewire, fixed). Queue repopulated with the P2 cycle (Objectives 4–7).
+- 2026-07-20 — P2 cycle (4–7) + emergent program (roadmap + `ai_enabled_fraud`) + ADR-0001
+  loss-chains (decided, built, proven, governed, calibratable) all shipped and merged
+  (PRs #22–#33). ~16 PRs; every BEC shard source-backed; a new modeling paradigm landed.
+- 2026-07-20/21 — Overnight + directed quality pass (PRs #34–#39): docs freshness; adversarial
+  loss-chain code review with fixes (stage range guard, honest caveat, report rows); TPO
+  `frequency.max` relabeled to `estimated` (5/6); reg-penalty distribution made consistent;
+  controlled `source_type` vocabulary + audit; `/session:start` + `/session:end` commands.
+  Closed with the `/session:end` ritual: tree clean, 0 open PRs, 147 tests green, gates pass.
