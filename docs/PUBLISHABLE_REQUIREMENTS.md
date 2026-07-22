@@ -15,8 +15,8 @@ released data packs) unless it clears every line below:
 3. **Caveats are louder, not quieter.** Limitations travel with the number wherever
    it appears.
 4. **Claim discipline.** "Automated benchmark-ready" is never "human-approved
-   benchmark-grade." The maturity ladder
-   ([`PROJECT_STATUS.md`](PROJECT_STATUS.md)) stays visible.
+   benchmark-grade." The maturity ladder (see the [README](../README.md) → "What
+   RiskShard is — and isn't") stays visible.
 5. **Methodology-honest.** Claims respect the model's stated limits
    ([`METHODOLOGY.md`](METHODOLOGY.md)) and do not overclaim precision.
 6. **Gates pass.** Tests, `validate_evidence.py`, and `contributor_preflight.py`
@@ -39,4 +39,4 @@ decision with a named owner doc.
   on this rule.
 
 Day-to-day work items are not strategic decisions — those go to
-[`NEXT_STEPS.md`](NEXT_STEPS.md).
+[`NEXT_STEPS.md`](internal/NEXT_STEPS.md).

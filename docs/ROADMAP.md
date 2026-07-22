@@ -3,7 +3,7 @@
 *Proposed 2026-07-20. This is a strategic direction doc (see
 [`PUBLISHABLE_REQUIREMENTS.md`](PUBLISHABLE_REQUIREMENTS.md) → Change Control). It records
 intent and sequencing; each item becomes a scoped objective in
-[`NEXT_STEPS.md`](NEXT_STEPS.md) when picked up.*
+[`NEXT_STEPS.md`](internal/NEXT_STEPS.md) when picked up.*
 
 ## Thesis
 
