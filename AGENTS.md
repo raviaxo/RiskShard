@@ -9,9 +9,9 @@ here safely. **Read this before writing product code.**
 Before editing anything, orient in this order:
 
 1. **`AGENTS.md`** (this file) — operating rules and definition of done.
-2. **`docs/HANDOVER_STOPPING_POINT.md`** — the precise restart point and current top blocker.
-3. **`docs/PROJECT_STATUS.md`** — current capabilities and known gaps.
-4. **`docs/NEXT_STEPS.md`** — the active work queue (one objective at a time).
+2. **`docs/internal/NEXT_STEPS.md`** — the internal working doc: restart point, current
+   top blocker, canonical-owner pointers, maturity ladder, and the active work queue
+   (one objective at a time). Capabilities live in the README; live coverage in the tools.
 
 Then confirm repo reality (do not trust memory): `git log --oneline -5`,
 `git status -s`, `git fetch origin && git log --oneline origin/main -3`, and verify
@@ -25,8 +25,8 @@ This ritual is the `/session:start` command (`.claude/commands/session/start.md`
 
 Close a session with `/session:end` (`.claude/commands/session/end.md`). It verifies
 the tree is clean and every unmerged branch / open PR is reported, proves the gates
-are green (or names the reds), and reconciles `docs/NEXT_STEPS.md` and
-`docs/HANDOVER_STOPPING_POINT.md` so the next `/session:start` boots clean. A session
+are green (or names the reds), and reconciles `docs/internal/NEXT_STEPS.md` (queue,
+restart point, top blocker) so the next `/session:start` boots clean. A session
 is not "closed" until the tree is clean, open work is reported, and the owner docs
 match reality.
 
@@ -42,7 +42,7 @@ real run of the affected path succeeds.** For a content/evidence change also run
 
 - **One canonical owner.** Every fact has exactly one home. Do not duplicate
   capability lists, queues, or status across docs — point to the owner instead.
-  (README owns "what works"; `NEXT_STEPS.md` owns the queue; `readiness_dashboard.py`
+  (README owns "what works"; `docs/internal/NEXT_STEPS.md` owns the queue; `readiness_dashboard.py`
   owns live coverage.)
 - **Caveats get louder, not quieter.** When you strengthen a parameter, make its
   limitations more visible, never less. Every number is source-backed or honestly
@@ -51,7 +51,7 @@ real run of the affected path succeeds.** For a content/evidence change also run
   benchmark-grade." Preserve the maturity ladder everywhere results appear.
 - **Nothing public that couldn't be shown to a CISO tomorrow.** See
   [`docs/PUBLISHABLE_REQUIREMENTS.md`](docs/PUBLISHABLE_REQUIREMENTS.md).
-- **One objective per session.** New important items go to `docs/NEXT_STEPS.md`,
+- **One objective per session.** New important items go to `docs/internal/NEXT_STEPS.md`,
   not into scope.
 - **Strategic decision with no owner doc?** Surface it and stop — see
   `docs/PUBLISHABLE_REQUIREMENTS.md` → Change Control.

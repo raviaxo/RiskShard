@@ -39,7 +39,7 @@ Data-pack release: `data_pack_releases/2026.07.21-v0.1.0-stable.json`
   **scoped out of v1** as a labeled contribution scaffold — two frequency parameters
   remain estimates pending denominator-aware Japan evidence.
 - The decision/controls engine is partially sketched and not production-ready.
-- Full backlog and tracked gaps: [`docs/NEXT_STEPS.md`](docs/NEXT_STEPS.md).
+- Full backlog and tracked gaps: [`docs/internal/NEXT_STEPS.md`](docs/internal/NEXT_STEPS.md).
 
 ### Gates at release
 - `python -m unittest discover -s tests` → **147 tests pass**

@@ -8,9 +8,9 @@ code before completing it.
 
 1. Read, in order:
    - `AGENTS.md` (operating rules and definition of done)
-   - `docs/HANDOVER_STOPPING_POINT.md` (precise restart point + current top blocker)
-   - `docs/PROJECT_STATUS.md` (current capabilities and known gaps)
-   - the tail of `docs/NEXT_STEPS.md` (the active queue)
+   - `docs/internal/NEXT_STEPS.md` — its header gives the restart point, current top
+     blocker, canonical-owner pointers, and maturity ladder; its tail is the active queue.
+     (Capabilities live in the README; live coverage in the readiness tools.)
 2. Confirm repo reality — do not trust memory:
    - `git log --oneline -5` and `git status -s`
    - `git fetch origin && git log --oneline origin/main -3`; flag any divergence.
@@ -21,7 +21,7 @@ code before completing it.
 
 Rules:
 - Surface divergence between assumption and repo reality before proposing work.
-- One objective only. New important items go to `docs/NEXT_STEPS.md`, not into scope.
+- One objective only. New important items go to `docs/internal/NEXT_STEPS.md`, not into scope.
 - If a strategic decision is needed and no owner doc records it, surface it and stop
   (see `docs/PUBLISHABLE_REQUIREMENTS.md` → Change Control).
 
