@@ -18,7 +18,7 @@ labeled as an estimate, with the limits shown right next to the number.
 benchmark. It's a working practitioner beta: a shard that clears the automated
 gate is a *review candidate*, never "benchmark-grade" — that stays a recorded
 human decision. Known gaps are written down in
-[docs/NEXT_STEPS.md](docs/NEXT_STEPS.md), not buried.
+[docs/internal/NEXT_STEPS.md](docs/internal/NEXT_STEPS.md), not buried.
 
 ## The question RiskShard answers
 

@@ -19,12 +19,11 @@ orients correctly and no work is silently dropped.
      `validate_evidence.py`, `contributor_preflight.py`, `riskshard_doctor.py`.
    - Report the result honestly. If anything is red, say so — do not close over a failure.
 
-3. Reconcile the owner docs so the next session boots clean:
-   - `docs/NEXT_STEPS.md` — mark completed objectives done; append ONE session-log
-     line (absolute date + what shipped); ensure the active queue reflects reality.
-   - `docs/HANDOVER_STOPPING_POINT.md` — update the restart pointer and the current
-     top blocker (or state "no active objective, no blocker").
-   - `docs/PROJECT_STATUS.md` — update only if capabilities or known gaps changed.
+3. Reconcile the internal working doc so the next session boots clean:
+   - `docs/internal/NEXT_STEPS.md` — mark completed objectives done; append ONE
+     session-log line (absolute date + what shipped); ensure the active queue reflects
+     reality; and update the header's restart point / current top blocker (or state
+     "no active objective, no blocker"). Capabilities changed? Update the README, not here.
    - If a doc edit is the only change, commit it (`-s`) so state is durable.
 
 4. Surface, don't bury:
