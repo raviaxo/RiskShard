@@ -28,3 +28,8 @@ New here? Read these first, in order:
 - [GOLDEN_CONTRIBUTOR_EXAMPLE.md](GOLDEN_CONTRIBUTOR_EXAMPLE.md) — a public source taken end-to-end (source → extraction → evidence → calibration → passing preflight).
 - [BENCHMARK_CONTRIBUTOR_WORKFLOW.md](BENCHMARK_CONTRIBUTOR_WORKFLOW.md) — the content-pack, preflight, and evidence-pack workflow for contributors.
 - [CONTENT_CONTRIBUTION.md](CONTENT_CONTRIBUTION.md) — per-artifact contributor checklists (source, extraction, evidence, calibration, module, country pack).
+
+## Community
+
+- [REQUESTED_SHARDS.md](REQUESTED_SHARDS.md) — what the community wants quantified next (the demand signal); how to request a shard.
+- **Shard Notes** — the weekly build-in-public digest. Generate the skeleton with `python scripts/weekly_digest.py` (or `riskshard-weekly`): auto-fills state, what shipped, and contributors; you add the lesson and what's next.
