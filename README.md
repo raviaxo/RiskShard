@@ -274,6 +274,7 @@ RiskShard can still be run directly from `scripts/`, but `pyproject.toml` also d
 - `riskshard-doctor`
 - `riskshard-modules`
 - `riskshard-toprisks`
+- `riskshard-weekly`
 - `riskshard-package-smoke`
 - `riskshard-benchmark`
 - `riskshard-beta`
