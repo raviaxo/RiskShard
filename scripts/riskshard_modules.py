@@ -51,7 +51,9 @@ from engine.coverage import (  # noqa: E402
 from engine.provenance import (  # noqa: E402
     build_dispute_issue,
     build_module_provenance,
+    build_portfolio_provenance,
     dispute_issue_url,
+    format_portfolio_markdown,
     format_provenance,
     repo_slug_from_remote,
 )
@@ -97,12 +99,23 @@ def parse_args(argv=None):
     prov_parser = subparsers.add_parser(
         "provenance", help="Challenge a number: show value, source, quote, and caveat per parameter."
     )
-    prov_parser.add_argument("module_id")
+    prov_parser.add_argument("module_id", nargs="?")
     prov_parser.add_argument("parameter", nargs="?", help="Limit to one parameter, e.g. frequency.max.")
     prov_parser.add_argument(
         "--dispute",
         metavar="PARAMETER",
         help="Print a pre-filled 'dispute this evidence' GitHub issue URL for the parameter.",
+    )
+    prov_parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Whole-portfolio evidence report: every number, source, and caveat.",
+    )
+    prov_parser.add_argument(
+        "--report",
+        type=Path,
+        metavar="PATH",
+        help="With --all, write the Markdown evidence report to PATH.",
     )
     prov_parser.add_argument("--json", action="store_true")
 
@@ -230,6 +243,21 @@ def main(argv=None):
         return 0
 
     if command == "provenance":
+        if args.all:
+            portfolio = build_portfolio_provenance(ROOT)
+            if args.report:
+                args.report.parent.mkdir(parents=True, exist_ok=True)
+                args.report.write_text(format_portfolio_markdown(portfolio), encoding="utf-8")
+                print(f"Evidence report written: {args.report}")
+            elif args.json:
+                print(json.dumps(portfolio, indent=2, sort_keys=True))
+            else:
+                print(format_portfolio_markdown(portfolio), end="")
+            return 0
+
+        if not args.module_id:
+            print("provenance requires a module_id (or --all)", file=sys.stderr)
+            return 1
         module = find_risk_module(args.module_id, ROOT)
         if module is None:
             print(f"Unknown risk module: {args.module_id}", file=sys.stderr)

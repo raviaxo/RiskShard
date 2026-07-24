@@ -135,8 +135,10 @@ data-strength trend stays in lockstep with what's released:
 
 ```bash
 python scripts/data_pack_manifest.py --release 2026.07.24-my-change
-python scripts/strength_ledger.py markdown --write-readme   # refresh the README table
-python scripts/strength_ledger.py show                      # confirm the delta
+python scripts/strength_ledger.py markdown --write-readme    # refresh the README table
+python scripts/riskshard_modules.py provenance --all \
+  --report docs/EVIDENCE_REPORT.md                           # refresh the evidence report
+python scripts/strength_ledger.py show                       # confirm the delta
 ```
 
 The ledger entry is a no-op if the pack fingerprint is unchanged, so re-running is
