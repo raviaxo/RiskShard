@@ -19,6 +19,19 @@ Prefer an existing Benchmark-Grade 30 target unless there is a strong reason to
 propose a new one. The target controls the expected country, industry,
 company-size, and threat context.
 
+**Starting a brand-new shard? Scaffold it in one command** instead of hand-wiring the
+six files:
+
+```bash
+python scripts/riskshard_modules.py new-shard --country BR --industry retail --threat ransomware
+```
+
+This writes the module descriptor, scenario, org profile, calibration, evidence, and
+extractions — all wired, with **placeholder estimates clearly marked `SCAFFOLD`** (never
+presented as source-backed). The shard is immediately recognized (`coverage`, `provenance`,
+`run`); your job is then the real work: replace each estimate with source-backed evidence
+following the steps below. Add `--dry-run` to preview the file list first.
+
 ## 1A. Thirty-Minute Contributor Walkthrough
 
 Use this path when a contributor wants to add one serious evidence improvement
