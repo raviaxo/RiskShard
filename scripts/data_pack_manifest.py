@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import datetime
 import json
 import sys
 from pathlib import Path
@@ -23,6 +24,8 @@ from engine.data_packs import (  # noqa: E402
     write_data_pack_manifest,
     write_data_pack_release,
 )
+from engine.readiness import build_readiness_dashboard  # noqa: E402
+from engine.strength_ledger import LEDGER_RELPATH, record_snapshot  # noqa: E402
 
 
 def parse_args(argv=None):
@@ -36,6 +39,11 @@ def parse_args(argv=None):
         help="Directory for named data-pack release artifacts.",
     )
     parser.add_argument("--notes", help="Optional release notes stored in the release artifact.")
+    parser.add_argument(
+        "--no-ledger",
+        action="store_true",
+        help="Skip appending a strength-ledger entry when cutting a release.",
+    )
     parser.add_argument("--json", action="store_true")
     return parser.parse_args(argv)
 
@@ -45,11 +53,26 @@ def main(argv=None):
     if args.release:
         release = build_data_pack_release(ROOT, version=args.release, notes=args.notes)
         path = write_data_pack_release(release, args.release_dir)
+        ledger_msg = None
+        if not args.no_ledger:
+            # Cutting a release is exactly when the strength trend should tick.
+            # record_snapshot is a no-op if this pack's fingerprint is already logged.
+            dashboard = build_readiness_dashboard(ROOT)
+            entry, appended, _ = record_snapshot(
+                ROOT / LEDGER_RELPATH, dashboard, datetime.date.today().isoformat()
+            )
+            ledger_msg = (
+                f"Strength ledger: recorded {entry['data_pack_version']}."
+                if appended
+                else "Strength ledger: fingerprint already logged (no change)."
+            )
         if args.json:
             print(json.dumps(release, indent=2, sort_keys=True))
         else:
             print(f"Data-pack release saved: {path}")
             print(format_data_pack_release(release), end="")
+            if ledger_msg:
+                print(ledger_msg)
         return 0
 
     manifest = build_data_pack_manifest(ROOT)

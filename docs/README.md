@@ -32,4 +32,5 @@ New here? Read these first, in order:
 ## Community
 
 - [REQUESTED_SHARDS.md](REQUESTED_SHARDS.md) — what the community wants quantified next (the demand signal); how to request a shard.
-- **Shard Notes** — the weekly build-in-public digest. Generate the skeleton with `python scripts/weekly_digest.py` (or `riskshard-weekly`): auto-fills state, what shipped, and contributors; you add the lesson and what's next.
+- **Shard Notes** — the weekly build-in-public digest. Generate the skeleton with `python scripts/weekly_digest.py` (or `riskshard-weekly`): auto-fills state, what shipped, and contributors; you add the lesson and what's next. The digest also shows the strength delta since the last release, read from the progress ledger below.
+- **Progress ledger** — the strength-over-time series. `python scripts/strength_ledger.py record` appends one snapshot per data-pack release (source-backed params, shards at 6/6, bridged/estimated counts, grades); it is a no-op unless the pack fingerprint changed, so the trend can't be padded. `python scripts/strength_ledger.py show` prints the latest release and its delta. The ledger (`docs/internal/strength_ledger.json`) is the canonical owner of the trend; the weekly digest reads it.

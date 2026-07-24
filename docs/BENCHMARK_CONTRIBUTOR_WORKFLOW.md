@@ -126,3 +126,19 @@ A shard is only ready for human benchmark review when:
 
 The automated gate says `benchmark_ready`; human reviewers still decide whether
 the caveats are acceptable for a release claim.
+
+## 6. Cut A Release (and record the strength trend)
+
+When the pack is ready to ship, cut a named data-pack release. This also appends
+one snapshot to the [progress ledger](../internal/strength_ledger.json), so the
+data-strength trend stays in lockstep with what's released:
+
+```bash
+python scripts/data_pack_manifest.py --release 2026.07.24-my-change
+python scripts/strength_ledger.py markdown --write-readme   # refresh the README table
+python scripts/strength_ledger.py show                      # confirm the delta
+```
+
+The ledger entry is a no-op if the pack fingerprint is unchanged, so re-running is
+safe and the trend cannot be padded with vanity ticks. `python scripts/riskshard_doctor.py`
+flags a release whose strength was never recorded.

@@ -36,6 +36,7 @@ from engine.data_packs import build_data_pack_manifest, format_data_pack_manifes
 from engine.beta_readiness import build_beta_readiness_report, format_beta_readiness_report
 from engine.contributor import build_contributor_preflight, format_contributor_preflight
 from engine.doctor import build_doctor_report, format_doctor_report
+from engine.provenance import build_module_provenance, format_provenance
 from engine.readiness import build_readiness_dashboard, format_next_actions, format_readiness_dashboard
 from engine.risk_modules import (
     find_risk_module,
@@ -103,7 +104,26 @@ class RiskShardConsole(cmd.Cmd):
     def c(self, text, *codes):
         return paint(text, *codes, enabled=self.color)
 
+    def _strength_line(self):
+        """One-line current strength, read from the progress ledger. '' if unavailable."""
+        try:
+            from engine.strength_ledger import LEDGER_RELPATH, latest_delta
+
+            latest, _ = latest_delta(self.root / LEDGER_RELPATH)
+            if latest is None:
+                return ""
+            m = latest["metrics"]
+            version = latest.get("data_pack_version", "")
+            return (
+                f"  Strength: {m['params_source_backed']}/{m['params_total']} params source-backed"
+                f" · {m['shards_fully_sourced']}/{m['shards']} shards at 6/6"
+                f"{f' ({version})' if version else ''}\n"
+            )
+        except Exception:
+            return ""
+
     def preloop(self):
+        strength = self._strength_line()
         if self.color:
             self.intro = (
                 "\n"
@@ -112,11 +132,17 @@ class RiskShardConsole(cmd.Cmd):
                 "  Evidence-governed cyber risk shards. Every number traces to a\n"
                 "  reviewed public source, with honest confidence and visible limits.\n"
                 "\n"
-                "  " + self.c("Start here", "muted") + "\n"
+                + (self.c(strength, "muted") if strength else "")
+                + ("\n" if strength else "")
+                + "  " + self.c("Start here", "muted") + "\n"
                 "    " + self.c("demo", "identity") + "       run the whole first-run path automatically\n"
                 "    " + self.c("workflow", "identity") + "   see that path as steps you can type\n"
                 "    " + self.c("help", "identity") + "       guided command list\n"
                 "    " + self.c("exit", "identity") + "       leave\n"
+            )
+        elif strength:
+            self.intro = self.intro.replace(
+                "\n\n  Start here\n", "\n\n" + strength + "\n  Start here\n"
             )
 
     def default_options(self):
@@ -182,6 +208,7 @@ class RiskShardConsole(cmd.Cmd):
         self.write("  use gb_finance_data_breach_midmarket\n")
         self.write("  scenario              Show the selected scenario and input context.\n")
         self.write("  packs                 Inspect evidence and assumptions behind the selected shard.\n")
+        self.write("  challenge frequency.max  See the value, source, quote, and caveat behind one number.\n")
         self.write("  show gaps             Show what blocks stronger trust.\n")
         self.write("\n")
         self.write("[Run Risk]\n")
@@ -729,6 +756,37 @@ class RiskShardConsole(cmd.Cmd):
             return None
         self.write(format_evidence_pack_registry(registry))
         return None
+
+    def do_challenge(self, arg):
+        """challenge [module-id] [parameter] - Show the value, source, quote, and caveat
+        behind a number so you can defend or dispute it. Defaults to the selected shard."""
+        parts = arg.split()
+        module_id = None
+        parameter = None
+        # Accept: "", "param", "module", or "module param". A dotted token is a parameter.
+        for token in parts:
+            if "." in token and parameter is None:
+                parameter = token
+            elif module_id is None:
+                module_id = token
+        module_id = module_id or self.module_id
+        if not module_id:
+            self.write("Select a shard first (use <module-id>) or pass one: challenge <module-id> [parameter]\n")
+            return None
+        if find_risk_module(module_id, self.root) is None:
+            self.write(f"Unknown Risk Shard: {module_id}\n")
+            return None
+        provenance = build_module_provenance(module_id, self.root)
+        self.write(format_provenance(provenance, parameter=parameter))
+        self.write(
+            "Disagree with a number? Open a pre-filled dispute issue:\n"
+            f"  python scripts/riskshard_modules.py provenance {module_id} --dispute <parameter>\n"
+        )
+        return None
+
+    def do_provenance(self, arg):
+        """provenance [module-id] [parameter] - Alias for 'challenge'."""
+        return self.do_challenge(arg)
 
     def do_evidencepacks(self, arg):
         """evidencepacks - Alias for packs."""

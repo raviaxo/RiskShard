@@ -9,6 +9,7 @@ import subprocess
 from pathlib import Path
 
 from engine.readiness import build_readiness_dashboard
+from engine.strength_ledger import LEDGER_RELPATH, baseline_delta, latest_delta
 
 FILL = "<fill>"
 
@@ -87,15 +88,72 @@ def _parse_contributors(root, since_days):
     return names
 
 
+def _strength(root):
+    """Read the strength ledger's latest entry + deltas (read-only). None if empty.
+
+    `delta` is the change vs the prior release; `since_baseline` is the cumulative
+    change from the first recorded entry (both None until enough history exists).
+    """
+    path = root / LEDGER_RELPATH
+    latest, delta = latest_delta(path)
+    if latest is None:
+        return None
+    base_entry, base_change = baseline_delta(path)
+    return {
+        "metrics": latest["metrics"],
+        "delta": delta,
+        "since_baseline": base_change,
+        "baseline_version": base_entry.get("data_pack_version") if base_entry else None,
+    }
+
+
 def build_weekly_digest(root, since_days=7, dashboard=None):
     root = Path(root)
     dashboard = dashboard if dashboard is not None else build_readiness_dashboard(root)
     return {
         "since_days": since_days,
         "state": _summarize_state(dashboard),
+        "strength": _strength(root),
         "shipped": _parse_shipped(root, since_days),
         "contributors": _parse_contributors(root, since_days),
     }
+
+
+def _signed(n):
+    return f"+{n}" if n > 0 else str(n)
+
+
+def _format_strength(strength):
+    """Render the strength-over-time block: current values, with the release delta
+    shown as `prev -> curr (+/-d)` when there is a prior release to compare."""
+    m = strength["metrics"]
+    delta = strength["delta"]
+    lines = ["Strength (vs last release):"]
+    rows = [
+        ("source-backed params", "params_source_backed"),
+        ("shards 6/6", "shards_fully_sourced"),
+        ("bridged / estimated", "params_bridged"),
+    ]
+    if delta is None:
+        lines[0] = "Strength (baseline):"
+        for label, key in rows:
+            lines.append(f"  {label}: {m[key]}")
+    else:
+        for label, key in rows:
+            d = delta[key]
+            prev = m[key] - d
+            tail = f" ({_signed(d)})" if d else " (no change)"
+            lines.append(f"  {label}: {prev} -> {m[key]}{tail}")
+    since = strength.get("since_baseline")
+    if since is not None:
+        base_v = strength.get("baseline_version") or "baseline"
+        sp = since["params_source_backed"]
+        sb = since["params_bridged"]
+        lines.append(
+            f"  since {base_v}: {_signed(sp)} source-backed params, "
+            f"{_signed(sb)} bridged"
+        )
+    return lines
 
 
 def format_weekly_digest(digest, week_of=None, owner_name=None):
@@ -114,6 +172,10 @@ def format_weekly_digest(digest, week_of=None, owner_name=None):
         f"{s['countries']} countries · "
         f"{s['top_risks_runnable']}/{s['top_risks_total']} top risks runnable"
     )
+
+    strength = digest.get("strength")
+    if strength:
+        lines.extend(_format_strength(strength))
 
     shipped = digest.get("shipped") or []
     if shipped:

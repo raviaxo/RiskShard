@@ -1,0 +1,161 @@
+"""Challenge-a-number provenance cards.
+
+Every model parameter in a shard should be defensible *and* disputable in one
+look: the chosen value, the named public source and the exact line it came from,
+the confidence, and the caveat that limits it. This module assembles that card
+per parameter from the shard's evidence records, and generates a pre-filled
+"dispute this evidence" GitHub issue so a skeptic becomes a contributor.
+
+It reads only real evidence-record fields; it never invents a value or a caveat.
+"""
+import urllib.parse
+from pathlib import Path
+
+from engine.evidence_packs import (
+    build_evidence_pack,
+    find_risk_module,
+    load_module_evidence_records,
+)
+
+# Repo slug for dispute links; overridden by the caller from `git remote`.
+DEFAULT_REPO_SLUG = "raviaxo/RiskShard"
+
+
+def repo_slug_from_remote(remote_url):
+    """Derive `owner/name` from a git remote URL, or '' if it can't be parsed."""
+    if not remote_url:
+        return ""
+    url = remote_url.strip()
+    url = url[:-4] if url.endswith(".git") else url
+    if url.startswith("git@"):  # git@github.com:owner/name
+        _, _, path = url.partition(":")
+        return path
+    parts = url.split("/")
+    return "/".join(parts[-2:]) if len(parts) >= 2 else ""
+
+
+def build_module_provenance(module_id, root, feeds_by_id=None):
+    """One provenance card per direct parameter of a shard, in parameter order.
+
+    Each card carries the chosen value + unit, source identity, the cited line,
+    the caveat (record `limitations`), confidence, and status. Parameters whose
+    best evidence record can't be found still yield a card marked `missing` so a
+    gap is visible, never silently dropped.
+    """
+    module = find_risk_module(module_id, root)
+    pack = build_evidence_pack(module, root, feeds_by_id=feeds_by_id)
+    records_by_id = {r["id"]: r for r in load_module_evidence_records(module, root)}
+
+    cards = []
+    for dp in pack.get("direct_parameters", []):
+        record = records_by_id.get(dp.get("best_evidence_id"))
+        card = {
+            "parameter": dp.get("parameter"),
+            "status": dp.get("status"),
+            "confidence": dp.get("best_confidence"),
+            "evidence_id": dp.get("best_evidence_id"),
+        }
+        if record is None:
+            card.update(
+                {
+                    "value": None,
+                    "unit": None,
+                    "source_name": None,
+                    "source_type": None,
+                    "source_citation": None,
+                    "publication_date": None,
+                    "cited_line": None,
+                    "caveat": None,
+                    "resolved": False,
+                }
+            )
+        else:
+            card.update(
+                {
+                    "value": record.get("value"),
+                    "unit": record.get("unit"),
+                    "title": record.get("title"),
+                    "source_name": record.get("source_name"),
+                    "source_type": record.get("source_type"),
+                    "source_citation": record.get("source_url_or_citation"),
+                    "publication_date": record.get("publication_date"),
+                    "cited_line": record.get("citation_detail"),
+                    "caveat": record.get("limitations"),
+                    "resolved": True,
+                }
+            )
+        cards.append(card)
+    return {"module_id": pack.get("module_id", module_id), "title": pack.get("title"), "cards": cards}
+
+
+def _fmt_value(card):
+    if card.get("value") is None:
+        return "(no source-backed value)"
+    unit = f" {card['unit']}" if card.get("unit") else ""
+    return f"{card['value']}{unit}"
+
+
+def format_provenance(provenance, parameter=None):
+    """Human-readable challenge cards. If `parameter` is given, only that one."""
+    cards = provenance["cards"]
+    if parameter:
+        cards = [c for c in cards if c["parameter"] == parameter]
+        if not cards:
+            return f"No such parameter '{parameter}' in {provenance['module_id']}.\n"
+
+    lines = [f"Provenance — {provenance['module_id']} ({provenance.get('title') or ''})".rstrip(), ""]
+    for c in cards:
+        badge = f"{c['status']} · confidence {c.get('confidence') or 'unrated'}"
+        lines.append(f"{c['parameter']} = {_fmt_value(c)}   [{badge}]")
+        if c.get("source_name"):
+            pub = f", {c['publication_date']}" if c.get("publication_date") else ""
+            lines.append(f"  Source : {c['source_name']} ({c.get('source_type') or 'source'}{pub})")
+        if c.get("source_citation"):
+            lines.append(f"  Cite   : {c['source_citation']}")
+        if c.get("cited_line"):
+            lines.append(f"  Quote  : {c['cited_line']}")
+        if c.get("caveat"):
+            lines.append(f"  Caveat : {c['caveat']}")
+        lines.append(f"  Challenge it: add --dispute {c['parameter']} to open a pre-filled issue.")
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def build_dispute_issue(provenance, parameter):
+    """A pre-filled GitHub issue (title + body) challenging one parameter's evidence."""
+    card = next((c for c in provenance["cards"] if c["parameter"] == parameter), None)
+    if card is None:
+        raise ValueError(f"No such parameter '{parameter}' in {provenance['module_id']}")
+
+    module_id = provenance["module_id"]
+    title = f"Dispute: {module_id} / {parameter} = {_fmt_value(card)}"
+    body = "\n".join(
+        [
+            f"**Shard:** `{module_id}`",
+            f"**Parameter:** `{parameter}`",
+            f"**Current value:** {_fmt_value(card)}",
+            f"**Status / confidence:** {card.get('status')} / {card.get('confidence') or 'unrated'}",
+            f"**Current evidence:** `{card.get('evidence_id') or '(none)'}`"
+            + (f" — {card['source_name']}" if card.get("source_name") else ""),
+            f"**Current caveat:** {card.get('caveat') or '(none recorded)'}",
+            "",
+            "### What I'm disputing",
+            "_Which of the value, the source, or the caveat is wrong — and why._",
+            "",
+            "### Evidence I'm proposing instead",
+            "_Named public source, the exact line, publication date, and how it "
+            "maps to this parameter. A stronger or more specific source beats a "
+            "broader one; label estimates as estimates._",
+            "",
+            "_Filed via `riskshard_modules.py provenance --dispute`. See "
+            "CONTRIBUTING.md for the evidence bar._",
+        ]
+    )
+    return {"title": title, "body": body}
+
+
+def dispute_issue_url(repo_slug, issue):
+    """A github.com new-issue URL with the title and body pre-filled."""
+    slug = repo_slug or DEFAULT_REPO_SLUG
+    query = urllib.parse.urlencode({"title": issue["title"], "body": issue["body"]})
+    return f"https://github.com/{slug}/issues/new?{query}"

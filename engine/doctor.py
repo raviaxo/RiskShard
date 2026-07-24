@@ -32,6 +32,7 @@ def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
         readiness_check(root),
         package_check(root),
         data_pack_check(root),
+        ledger_check(root),
         tests_check(root, run_tests=run_tests),
     ]
     return {
@@ -135,6 +136,43 @@ def data_pack_check(root):
         "status": pack["status"] if pack else "fail",
         "detail": pack["detail"] if pack else "missing data pack check",
     }
+
+
+def ledger_check(root):
+    """Flag when the current data pack's strength isn't yet in the progress ledger.
+
+    Passing means the trend is caught up to what's shipped; needs_review means a
+    release/evidence change happened without a ledger tick (run
+    `scripts/strength_ledger.py record`, or cut the release which does it for you).
+    """
+    try:
+        from engine.data_packs import build_data_pack_manifest
+        from engine.strength_ledger import LEDGER_RELPATH, latest_delta
+
+        current_fp = build_data_pack_manifest(root).get("fingerprint", "")
+        latest, _ = latest_delta(root / LEDGER_RELPATH)
+        if latest is None:
+            return {
+                "name": "strength ledger",
+                "status": "needs_review",
+                "detail": "ledger empty - run scripts/strength_ledger.py record",
+            }
+        if latest.get("fingerprint") == current_fp:
+            return {
+                "name": "strength ledger",
+                "status": "pass",
+                "detail": f"caught up at {latest.get('data_pack_version', '?')} ({current_fp[:12]})",
+            }
+        return {
+            "name": "strength ledger",
+            "status": "needs_review",
+            "detail": (
+                f"current pack {current_fp[:12]} not logged "
+                f"(latest entry {latest.get('fingerprint', '')[:12]}) - record on release"
+            ),
+        }
+    except Exception as exc:  # never let the nudge crash the doctor
+        return {"name": "strength ledger", "status": "needs_review", "detail": str(exc)}
 
 
 def tests_check(root, *, run_tests=False):
