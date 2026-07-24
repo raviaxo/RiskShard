@@ -20,6 +20,9 @@ class DoctorTests(unittest.TestCase):
         self.assertIn("demo_fixture=5", checks["scenarios"]["detail"])
         self.assertEqual(checks["package entry points"]["status"], "pass")
         self.assertIn("run with --run-tests", checks["tests"]["detail"])
+        # the strength ledger is caught up to the current data pack in-repo
+        self.assertEqual(checks["strength ledger"]["status"], "pass")
+        self.assertIn("caught up", checks["strength ledger"]["detail"])
 
     def test_parse_project_scripts_reads_entry_points(self):
         text = """
