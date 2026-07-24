@@ -4,11 +4,12 @@ metadata:
   version: "0.1"
   notes: >
     Starter calibration profile for a Japan mid-market manufacturing
-    ransomware shard. It is intentionally not benchmark-grade: frequency.min
-    uses a global ransomware likelihood floor, frequency.likely/max are
-    explicit estimates, impact.min uses Japan NPA restoration-cost evidence,
-    and impact.likely/max use manufacturing-sector ransomware benchmarks until
-    Japan manufacturing full-loss evidence is reviewed.
+    ransomware shard. Governed-starter: frequency.min uses a global ransomware
+    likelihood floor, frequency.likely/max use Sophos manufacturing survey
+    attack-prevalence (55/56/65% series; attack prevalence, which overstates
+    loss-event frequency and is not Japan-specific), impact.min uses Japan NPA
+    restoration-cost evidence, and impact.likely/max use manufacturing-sector
+    ransomware benchmarks until Japan manufacturing full-loss evidence is reviewed.
 
 target_currency: USD
 
@@ -19,13 +20,13 @@ parameters:
       transform: direct
       rationale: Global ransomware likelihood floor from Cyentia IRIS Ransomware.
     likely:
-      evidence_id: riskshard_jp_manufacturing_ransomware_frequency_likely_2026
+      evidence_id: sophos_manufacturing_ransomware_prevalence_2023_likely_jp_context
       transform: direct
-      rationale: Explicit estimated likely frequency until Japan manufacturing ransomware evidence exists.
+      rationale: Sophos manufacturing ransomware attack-prevalence (56%, 2023 as reported in the 2024 report); attack prevalence overstates loss-event frequency and is not Japan-specific.
     max:
-      evidence_id: riskshard_jp_manufacturing_ransomware_frequency_stress_2026
+      evidence_id: sophos_manufacturing_ransomware_prevalence_2024_stress_jp_context
       transform: direct
-      rationale: Explicit estimated stress frequency until Japan manufacturing tail-frequency evidence exists.
+      rationale: Sophos manufacturing ransomware attack-prevalence peak (65%, 2024); recent-peak stress anchor, attack prevalence, not Japan-specific.
 
   impact:
     min:

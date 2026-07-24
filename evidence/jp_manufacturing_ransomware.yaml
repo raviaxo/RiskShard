@@ -22,46 +22,62 @@ records:
       company_size_bands: [all]
       threats: [ransomware]
 
-  - id: riskshard_jp_manufacturing_ransomware_frequency_likely_2026
-    title: Estimated Japan manufacturing ransomware likely frequency
+  - id: sophos_manufacturing_ransomware_prevalence_2023_likely_jp_context
+    title: Manufacturing ransomware attack prevalence (prior-year) for Japan context
     parameter: frequency.likely
-    value: 0.25
+    value: 0.56
     unit: annual_probability
-    source_name: RiskShard Japan manufacturing ransomware starter pack
-    source_type: model_assumption
-    source_url_or_citation: Starter assumption pending reviewed Japan manufacturing ransomware frequency evidence.
-    publication_date: "2026-07-13"
-    extraction_date: "2026-07-13"
-    extraction_notes: Estimated likely annual probability for a Japan mid-market manufacturing ransomware draft.
-    normalization_notes: Kept explicit as an assumption until Japan manufacturing, insurer, agency, or sector evidence is reviewed.
-    limitations: Not source-backed; replace before benchmark claims.
-    confidence: low
-    evidence_type: estimated
+    source_id: sophos_state_ransomware_manufacturing_2024
+    source_name: Sophos State of Ransomware in Manufacturing and Production 2024
+    source_type: industry_survey
+    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2024
+    publication_date: "2024-05-28"
+    extraction_date: "2026-07-24"
+    citation_detail: "Attack rates and recovery costs section; 65% of manufacturing and production organizations were hit by ransomware last year, a notable increase from the previous two years (56% in 2023 and 55% in 2022)."
+    extraction_notes: Selected the reported 2023 manufacturing ransomware attack-prevalence (56%) as the representative likely annual frequency for a Japan mid-market manufacturing starter.
+    normalization_notes: Stored 56% as 0.56. Paired with the shard's Sophos manufacturing recovery-cost impact, which is likewise measured over organizations hit by ransomware, so frequency and impact share one "hit by ransomware" event basis.
+    limitations: >
+      Global survey of organizations with 100-5,000 employees (17 countries; not
+      confirmed to include Japan), not Japan-specific or size-band-specific. Reports
+      ATTACK prevalence ("hit by ransomware"), which OVERSTATES loss-event frequency:
+      in the 2025 report only ~40% of manufacturing attacks resulted in encryption.
+      Survey respondents (orgs with IT/security leaders) may overstate population
+      prevalence, and the 55/56/65% series is rising, so a point estimate hides the trend.
+      Read the frequency as attack-incidence on the same basis as the impact side.
+    confidence: medium
+    evidence_type: source_backed
     applicability:
       industries: [manufacturing]
-      countries: [JP]
-      company_size_bands: [mid_market]
+      countries: [global]
+      company_size_bands: [mid_market, enterprise]
       threats: [ransomware]
 
-  - id: riskshard_jp_manufacturing_ransomware_frequency_stress_2026
-    title: Estimated Japan manufacturing ransomware frequency stress bound
+  - id: sophos_manufacturing_ransomware_prevalence_2024_stress_jp_context
+    title: Manufacturing ransomware attack prevalence (current-year peak) for Japan context
     parameter: frequency.max
-    value: 0.50
+    value: 0.65
     unit: annual_probability
-    source_name: RiskShard Japan manufacturing ransomware starter pack
-    source_type: model_assumption
-    source_url_or_citation: Starter assumption pending reviewed Japan manufacturing ransomware tail-frequency evidence.
-    publication_date: "2026-07-13"
-    extraction_date: "2026-07-13"
-    extraction_notes: Estimated stress annual probability for a Japan mid-market manufacturing ransomware draft.
-    normalization_notes: Kept explicit as an assumption until Japan manufacturing or tail-frequency evidence is reviewed.
-    limitations: Not source-backed; replace before benchmark claims.
-    confidence: low
-    evidence_type: estimated
+    source_id: sophos_state_ransomware_manufacturing_2024
+    source_name: Sophos State of Ransomware in Manufacturing and Production 2024
+    source_type: industry_survey
+    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2024
+    publication_date: "2024-05-28"
+    extraction_date: "2026-07-24"
+    citation_detail: "Attack rates and recovery costs section; 65% of manufacturing and production organizations reported they were hit by ransomware last year, the highest of the reported 55%/56%/65% (2022/2023/2024) series."
+    extraction_notes: Selected the reported 2024 manufacturing ransomware attack-prevalence (65%), the highest observed year, as the stress/high frequency anchor.
+    normalization_notes: Stored 65% as 0.65. Same "hit by ransomware" event basis as the shard's Sophos manufacturing impact anchors.
+    limitations: >
+      Highest observed year of a rising 55/56/65% (2022/2023/2024) series, so it is a
+      recent peak rather than a formal tail percentile. Global survey of organizations
+      with 100-5,000 employees (not Japan-specific). Reports ATTACK prevalence, which
+      OVERSTATES loss-event frequency (only ~40% of 2025 manufacturing attacks encrypted).
+      Read as attack-incidence on the same basis as the impact side.
+    confidence: medium
+    evidence_type: source_backed
     applicability:
       industries: [manufacturing]
-      countries: [JP]
-      company_size_bands: [mid_market]
+      countries: [global]
+      company_size_bands: [mid_market, enterprise]
       threats: [ransomware]
 
   - id: cyentia_iris_2022_typical_cyber_event_loss_usd_jp_manufacturing_context
