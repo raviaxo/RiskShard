@@ -2,7 +2,7 @@
 
 Every model parameter in every shard, with the source it traces to and the caveat that limits it. Generated from the governed evidence — nothing here is hand-written. Dispute any row: `riskshard_modules.py provenance <shard> --dispute <param>`.
 
-**Portfolio:** 11 shards · 64 of 66 parameters source-backed · 2 bridged/estimated · 0 missing.
+**Portfolio:** 11 shards · 66 of 66 parameters source-backed · 0 bridged/estimated · 0 missing.
 
 ## au_finance_bec_midmarket
 _Australia Finance Business Email Compromise Midmarket_
@@ -94,8 +94,8 @@ _Japan Manufacturing Ransomware Midmarket_
 | Parameter | Value | Status | Source | Caveat |
 | --- | --- | --- | --- | --- |
 | `frequency.min` | 0.1 annual_probability | source_backed | Cyentia IRIS Ransomware (2025-04-21) | Global cross-sector estimate; not Japan-specific, manufacturing-specific, or size-band-specific. |
-| `frequency.likely` | 0.25 annual_probability | assumption_only | RiskShard Japan manufacturing ransomware starter pack (2026-07-13) | Not source-backed; replace before benchmark claims. |
-| `frequency.max` | 0.5 annual_probability | assumption_only | RiskShard Japan manufacturing ransomware starter pack (2026-07-13) | Not source-backed; replace before benchmark claims. |
+| `frequency.likely` | 0.56 annual_probability | source_backed | Sophos State of Ransomware in Manufacturing and Production 2024 (2024-05-28) | Global survey of organizations with 100-5,000 employees (17 countries; not confirmed to include Japan), not Japan-specific or size-band-specific. Reports ATTACK prevalence ("hit by ransomware"), which OVERSTATES loss-event frequency: in the 2025 report only ~40% of manufacturing attacks resulted in encryption. Survey respondents (orgs with IT/security leaders) may overstate population prevalence, and the 55/56/65% series is rising, so a point estimate hides the trend. Read the frequency as attack-incidence on the same basis as the impact side.  |
+| `frequency.max` | 0.65 annual_probability | source_backed | Sophos State of Ransomware in Manufacturing and Production 2024 (2024-05-28) | Highest observed year of a rising 55/56/65% (2022/2023/2024) series, so it is a recent peak rather than a formal tail percentile. Global survey of organizations with 100-5,000 employees (not Japan-specific). Reports ATTACK prevalence, which OVERSTATES loss-event frequency (only ~40% of 2025 manufacturing attacks encrypted). Read as attack-incidence on the same basis as the impact side.  |
 | `impact.min` | 1000000 currency | source_backed | National Police Agency of Japan 2025 Cyber Threat Situation Statistics Data (2026-03-09) | Investigation/restoration cost band only; excludes broader business interruption, ransom, legal, customer, and strategic impacts. |
 | `impact.likely` | 1300000 currency | source_backed | Sophos State of Ransomware in Manufacturing and Production 2025 (2025-12-04) | Global survey of organizations hit by ransomware; not Japan-specific and excludes ransom payments. |
 | `impact.max` | 5000000 currency | source_backed | Sophos State of Ransomware in Manufacturing and Production 2025 (2025-12-04) | Threshold for extreme ransom demands and payouts; not Japan-specific, not total event loss, and not a formal percentile. |

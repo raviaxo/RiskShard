@@ -89,17 +89,38 @@ class PortfolioProvenanceTests(unittest.TestCase):
         t = self.portfolio["totals"]
         self.assertEqual(t["shards"], 2)
         self.assertEqual(t["params_total"], 12)          # 6 per shard
-        # GB is 6/6 source-backed; JP has 2 bridged (frequency likely/max)
-        self.assertEqual(t["params_source_backed"], 10)
-        self.assertEqual(t["params_bridged"], 2)
+        # Both GB and JP are now 6/6 source-backed (JP closed 2026-07-24)
+        self.assertEqual(t["params_source_backed"], 12)
+        self.assertEqual(t["params_bridged"], 0)
         self.assertEqual(t["params_missing"], 0)
 
-    def test_markdown_report_shows_totals_and_flags_bridged_rows(self):
+    def test_markdown_report_shows_totals_and_a_param_row(self):
         md = format_portfolio_markdown(self.portfolio)
         self.assertIn("# RiskShard Evidence Report", md)
-        self.assertIn("10 of 12 parameters source-backed", md)
-        self.assertIn("assumption_only", md)             # bridged rows shown, not hidden
+        self.assertIn("12 of 12 parameters source-backed", md)
         self.assertIn("| `frequency.min` |", md)
+
+    def test_markdown_flags_bridged_rows_when_present(self):
+        # Synthetic portfolio: the report must SHOW bridged rows, not hide them.
+        synthetic = {
+            "totals": {"shards": 1, "params_total": 2, "params_source_backed": 1,
+                       "params_bridged": 1, "params_missing": 0},
+            "modules": [{
+                "module_id": "demo_shard",
+                "title": "Demo",
+                "cards": [
+                    {"parameter": "frequency.min", "status": "source_backed", "value": 0.1,
+                     "unit": "annual_probability", "source_name": "Some Source",
+                     "publication_date": "2025-01-01", "caveat": "a caveat", "resolved": True},
+                    {"parameter": "frequency.max", "status": "assumption_only", "value": 0.5,
+                     "unit": "annual_probability", "source_name": "Starter pack",
+                     "publication_date": None, "caveat": "not source-backed", "resolved": True},
+                ],
+            }],
+        }
+        md = format_portfolio_markdown(synthetic)
+        self.assertIn("1 of 2 parameters source-backed", md)
+        self.assertIn("assumption_only", md)             # bridged rows shown, not hidden
 
 
 if __name__ == "__main__":

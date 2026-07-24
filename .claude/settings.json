@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/bin/python -m unittest *)",
+      "Bash(.venv/bin/python scripts/riskshard_modules.py *)",
+      "Bash(.venv/bin/python scripts/strength_ledger.py *)",
+      "Bash(.venv/bin/python scripts/validate_evidence.py *)",
+      "Bash(.venv/bin/python scripts/contributor_preflight.py *)",
+      "Bash(.venv/bin/python scripts/riskshard_doctor.py *)",
+      "Bash(.venv/bin/python scripts/readiness_dashboard.py *)",
+      "Bash(.venv/bin/python scripts/benchmark_program.py *)",
+      "Bash(.venv/bin/python scripts/weekly_digest.py *)",
+      "Bash(.venv/bin/python scripts/riskshard_console.py *)",
+      "Bash(.venv/bin/python scripts/coverage_map.py *)",
+      "Bash(.venv/bin/python scripts/maturity_audit.py *)"
+    ]
+  }
+}

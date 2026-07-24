@@ -63,8 +63,13 @@ class BenchmarkProgramTests(unittest.TestCase):
         self.assertEqual(cohort["benchmark_ready_count"], 5)
         self.assertEqual(cohort["status_counts"]["benchmark_ready"], 5)
         self.assertEqual(cohort["status_counts"]["needs_evidence"], 6)
-        self.assertEqual(cohort["upgrade_queue"][0]["id"], "fr_finance_data_breach_midmarket")
+        # Queue is ascending by blocker_count; several shards now tie at 1 blocker
+        # (JP closed 2026-07-24, leaving only a country-relevance gap).
         self.assertEqual(cohort["upgrade_queue"][0]["blocker_count"], 1)
+        self.assertIn(
+            "jp_manufacturing_ransomware_midmarket",
+            {u["id"] for u in cohort["upgrade_queue"]},
+        )
         self.assertEqual(by_id["ca_finance_data_breach_midmarket"]["metrics"]["source_backed_parameters"], 6)
         self.assertEqual(by_id["ca_finance_data_breach_midmarket"]["blockers"], [])
         self.assertEqual(by_id["gb_finance_data_breach_midmarket"]["blockers"], [])
@@ -78,7 +83,7 @@ class BenchmarkProgramTests(unittest.TestCase):
         self.assertIn("au_finance_ransomware_midmarket", output)
         self.assertEqual(by_id["au_finance_data_breach_midmarket"]["metrics"]["source_backed_parameters"], 6)
         self.assertEqual(by_id["au_finance_data_breach_midmarket"]["metrics"]["confidence_medium_or_high_parameters"], 6)
-        self.assertIn("jp_manufacturing_ransomware_midmarket: blockers=8", output)
+        self.assertIn("jp_manufacturing_ransomware_midmarket: blockers=1", output)
 
     def test_seeded_sprint_report_groups_actionable_upgrade_work(self):
         report = build_benchmark_program_report(ROOT)
@@ -89,7 +94,7 @@ class BenchmarkProgramTests(unittest.TestCase):
         self.assertEqual(sprint["sprint"]["title"], "Seeded Evidence Upgrade Sprint A")
         self.assertEqual(sprint["status"], "needs_evidence_work")
         self.assertEqual(sprint["target_count"], 6)
-        self.assertEqual(sprint["total_blocker_count"], 31)
+        self.assertEqual(sprint["total_blocker_count"], 24)
         self.assertIn("frequency.max", sprint["focus_parameters"])
         self.assertIn("impact.max", sprint["focus_parameters"])
         self.assertNotIn("ca_finance_data_breach_midmarket", by_id)
@@ -99,7 +104,7 @@ class BenchmarkProgramTests(unittest.TestCase):
         self.assertNotIn("au_finance_data_breach_midmarket", by_id)
         self.assertIn("Seeded Evidence Upgrade Sprint A", output)
         self.assertIn("Acceptance criteria", output)
-        self.assertIn("jp_manufacturing_ransomware_midmarket: blockers=8", output)
+        self.assertIn("jp_manufacturing_ransomware_midmarket: blockers=1", output)
 
     def test_norway_country_code_stays_string_not_yaml_boolean(self):
         countries = {item["id"] for item in load_taxonomies(ROOT / "taxonomies")["countries"]}
