@@ -19,6 +19,19 @@ Prefer an existing Benchmark-Grade 30 target unless there is a strong reason to
 propose a new one. The target controls the expected country, industry,
 company-size, and threat context.
 
+**Starting a brand-new shard? Scaffold it in one command** instead of hand-wiring the
+six files:
+
+```bash
+python scripts/riskshard_modules.py new-shard --country BR --industry retail --threat ransomware
+```
+
+This writes the module descriptor, scenario, org profile, calibration, evidence, and
+extractions — all wired, with **placeholder estimates clearly marked `SCAFFOLD`** (never
+presented as source-backed). The shard is immediately recognized (`coverage`, `provenance`,
+`run`); your job is then the real work: replace each estimate with source-backed evidence
+following the steps below. Add `--dry-run` to preview the file list first.
+
 ## 1A. Thirty-Minute Contributor Walkthrough
 
 Use this path when a contributor wants to add one serious evidence improvement
@@ -126,3 +139,21 @@ A shard is only ready for human benchmark review when:
 
 The automated gate says `benchmark_ready`; human reviewers still decide whether
 the caveats are acceptable for a release claim.
+
+## 6. Cut A Release (and record the strength trend)
+
+When the pack is ready to ship, cut a named data-pack release. This also appends
+one snapshot to the [progress ledger](../internal/strength_ledger.json), so the
+data-strength trend stays in lockstep with what's released:
+
+```bash
+python scripts/data_pack_manifest.py --release 2026.07.24-my-change
+python scripts/strength_ledger.py markdown --write-readme    # refresh the README table
+python scripts/riskshard_modules.py provenance --all \
+  --report docs/EVIDENCE_REPORT.md                           # refresh the evidence report
+python scripts/strength_ledger.py show                       # confirm the delta
+```
+
+The ledger entry is a no-op if the pack fingerprint is unchanged, so re-running is
+safe and the trend cannot be padded with vanity ticks. `python scripts/riskshard_doctor.py`
+flags a release whose strength was never recorded.

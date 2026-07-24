@@ -165,6 +165,44 @@ rank BEC/payment fraud first). Six test snapshots updated to match. Sources adde
 
 ---
 
+## Progress ledger — strength & usability measured over time (built 2026-07-24)
+
+**Shipped (uncommitted stack, working tree):** a strength-over-time instrument so
+"the data got stronger / the tool got easier" is a measured delta, not an assertion.
+`engine/strength_ledger.py` + `scripts/strength_ledger.py` (`record` / `show` /
+`history` / `markdown [--write-readme]`) record one snapshot per data-pack release
+(source-backed params, shards at 6/6, bridged/estimated, grades); appended **only when
+the pack fingerprint changes**, so the trend can't be padded. Wired into: the weekly
+digest (delta vs last release + cumulative since baseline), the readiness dashboard,
+`riskshard_doctor` (flags a release whose strength was never recorded), the console
+start screen, the public README Progress table (self-updating between markers), and
+the release path (`data_pack_manifest.py --release` auto-records). Baseline entry:
+**64/66 params source-backed, 10/11 shards at 6/6** (v0.1.0, ff9b713dd6a7).
+
+**✅ Challenge-a-number path (DONE 2026-07-24, same uncommitted stack).** `engine/provenance.py`
++ `scripts/riskshard_modules.py provenance <shard> [param]` shows value + named source + exact
+cited line + caveat per parameter; `--dispute <param>` prints a pre-filled GitHub new-issue URL.
+Console `challenge` / `provenance` command surfaces it interactively; README "See the proof"
+leads with it. 9 new tests (`test_provenance.py`), **176 total green**; validate/preflight/doctor
+clean. Serves Goal 1 (traceable → un-rebuttable) and Goal 2 (skeptic → contributor) — see
+[[competitive-positioning]].
+
+**✅ JP shard CLOSED (2026-07-24).** `jp_manufacturing_ransomware_midmarket` 4/6 → **6/6
+source-backed**. `frequency.likely` 0.56 (Sophos 2023 mfg % hit), `frequency.max` 0.65 (Sophos
+2024 mfg % hit), min 0.10 (IRIS) kept. **Decision made:** used raw Sophos attack-prevalence (no
+invented discount) because the impact side is already Sophos recovery cost over orgs *hit by
+ransomware* — same event basis; the attack-prevalence-vs-loss-event limitation is loud in every
+record. New source `sophos_state_ransomware_manufacturing_2024` (real fetched artifact).
+Governed_starter; 1 benchmark blocker left (country-relevance, inherent to a global survey).
+**First real ledger delta: +2 source-backed params, −2 bridged, 11/11 shards at 6/6.** All 11
+shards are now source-backed. This is the Sunday post.
+
+**Next ticks on this ledger** (each is an evidence objective — needs approve-each-anchor):
+- **Threat-specific impact evidence** for **Insider Misuse** (Ponemon/DTEX per-incident
+  cost) and **Third-Party Outage** (outage business-interruption / SLA-credit loss), plus
+  a directly reported TPO `frequency.max` to retire its labeled estimate. Replaces the
+  generic cross-cyber Cyentia bridges both currently rest on (the tracked gap above).
+
 ## Next cycle — emergent risk scenarios
 
 The P2 cycle is complete. The next objectives come from **[`ROADMAP.md`](../ROADMAP.md)** —

@@ -1,4 +1,4 @@
-# RiskShard
+# 🔷 RiskShard
 
 **The open, evidence-governed computation layer for cyber risk quantification.**
 
@@ -59,9 +59,47 @@ only after a recorded human review decision — benchmark-grade. "Automated
 benchmark-ready" is never the same as "human-approved benchmark-grade," and the
 distinction stays visible everywhere results appear.
 
+## Progress over time
+
+Data strength is tracked, not asserted. Each data-pack release records a snapshot
+to the [progress ledger](docs/internal/strength_ledger.json); the table below is
+regenerated with `python scripts/strength_ledger.py markdown` and shows how many
+model parameters trace to a reviewed public source over time.
+
+<!-- strength-ledger:begin (regenerate with: python scripts/strength_ledger.py markdown) -->
+| Release | Date | Source-backed params | Shards 6/6 | Bridged/est. |
+| --- | --- | --- | --- | --- |
+| 2026.07.24 | 2026-07-24 | 66 / 66 (+2) | 11 / 11 (+1) | 0 (-2) |
+| 2026.07.24 | 2026-07-24 | 64 / 66 | 10 / 11 | 2 |
+<!-- strength-ledger:end -->
+
+A parameter moves from *bridged/estimated* to *source-backed* only through a
+recorded evidence decision — so a rising source-backed count is real strengthening,
+not relabeling.
+
 ## See the proof
 
-Two artifacts show what "evidence-governed" buys you in practice.
+Three artifacts show what "evidence-governed" buys you in practice.
+
+**0. Challenge any number.** Every parameter answers the only question that matters —
+*where did this come from?* — before you're asked. `challenge <parameter>` in the console
+(or `python scripts/riskshard_modules.py provenance <shard> <parameter>`) shows the value,
+the named source, the exact cited line, and the caveat in one look:
+
+```text
+frequency.max = 0.69 annual_probability   [source_backed · confidence medium]
+  Source : Cyber Security Breaches Survey 2025/2026 (official_statistics, 2026-04-30)
+  Quote  : ...large businesses experienced cyber breaches or attacks at 69%.
+  Caveat : ...larger-organization prevalence may overstate mid-market frequency.
+```
+
+Disagree? `provenance <shard> --dispute <parameter>` prints a pre-filled GitHub issue URL
+so a skeptic becomes a contributor in one click. A number you can trace is a number you
+can dispute — that's the point.
+
+The whole system at once: [docs/EVIDENCE_REPORT.md](docs/EVIDENCE_REPORT.md) is every
+parameter in every shard — value, source, and caveat — regenerated with
+`python scripts/riskshard_modules.py provenance --all --report docs/EVIDENCE_REPORT.md`.
 
 **1. A board-ready executive summary from a real run.** After `run`, the console
 command `report exec` writes a one-page Markdown summary to `results/` — bottom-line

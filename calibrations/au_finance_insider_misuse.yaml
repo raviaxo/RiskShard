@@ -34,20 +34,25 @@ parameters:
 
   impact:
     min:
-      evidence_id: cyentia_iris_2022_typical_cyber_event_loss_usd
+      evidence_id: ponemon_2023_insider_credential_theft_per_incident_usd
       transform: direct
       target_currency: USD
       round_to: 1000
-      rationale: Generic cross-cyber bridge - Cyentia IRIS 2022 typical cyber-event loss (~USD 266k) as a conservative floor; NOT insider-misuse-specific.
+      rationale: Insider-specific - Ponemon/DTEX 2023 credential-theft average per-incident cost (USD 679,621). Average-by-type, not a true minimum (conservative-high floor).
     likely:
-      evidence_id: cyentia_iris_2025_median_security_incident_loss_usd_insider_context
+      evidence_id: ponemon_2023_malicious_insider_per_incident_usd
       transform: direct
       target_currency: USD
       round_to: 10000
-      rationale: Generic cross-cyber bridge - Cyentia IRIS 2025 median security-incident loss (~USD 3M), scoped to insider_misuse; NOT insider-misuse-specific.
+      rationale: Insider-specific - Ponemon/DTEX 2023 malicious-insider average per-incident cost (USD 701,500). Materially lower than the prior generic cross-cyber median because insider incidents typically cost less than the all-incident median.
     max:
       evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd
       transform: direct
       target_currency: USD
       round_to: 100000
-      rationale: Generic cross-cyber bridge - Cyentia IRIS 2025 extreme security-incident loss (~USD 32M) as a stress anchor; NOT insider-misuse-specific and not a loss percentile.
+      rationale: >
+        REMAINING GENERIC ANCHOR - Cyentia IRIS 2025 extreme security-incident loss
+        (~USD 32M) as the catastrophic tail. Kept generic because a fetchable
+        insider-specific mega-loss source was not available (DOJ primaries are
+        bot-walled; secondary case figures are inconsistent). Min and likely are now
+        insider-specific; this tail is the sole remaining cross-cyber bridge.

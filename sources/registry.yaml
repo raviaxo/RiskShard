@@ -829,6 +829,40 @@ sources:
       global, survey-based, conditional on organizations hit by ransomware, and
       not Germany-specific.
 
+  - id: sophos_state_ransomware_manufacturing_2024
+    title: State of Ransomware in Manufacturing and Production 2024
+    publisher: Sophos
+    source_type: industry_survey
+    url: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2024
+    publication_date: "2024-05-28"
+    access_mode: public_html
+    intended_use:
+      - manufacturing ransomware prevalence
+      - manufacturing ransomware frequency
+      - manufacturing ransomware incident context
+    usage_notes: >
+      Use as a manufacturing-sector ransomware prevalence benchmark ("% of
+      organizations hit by ransomware last year") for organizations with 100 to
+      5,000 employees. Preserve limitations that the public page is global,
+      survey-based, reports attack prevalence rather than loss-event frequency,
+      and is not Japan-specific.
+
+  - id: ponemon_dtex_cost_insider_risks_2023
+    title: Cost of Insider Risks Global Report 2023
+    publisher: Ponemon Institute and DTEX Systems
+    source_type: industry_survey
+    url: https://ponemonsullivanreport.com/2023/10/cost-of-insider-risks-global-report-2023/
+    publication_date: "2023-10-01"
+    access_mode: public_html
+    intended_use:
+      - insider misuse impact
+      - insider incident per-incident cost
+    usage_notes: >
+      Use for insider-threat average per-incident cost by insider type (negligent,
+      malicious, credential theft). Preserve limitations that figures are average
+      remediation cost per incident — not a true minimum and not a catastrophic
+      tail — and are global and cross-industry, not country- or sector-specific.
+
   - id: npa_japan_cyber_threats_2025_statistics
     title: 2025 Cyber Threat Situation Statistics Data
     publisher: National Police Agency of Japan
