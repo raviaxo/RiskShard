@@ -59,6 +59,7 @@ from engine.provenance import (  # noqa: E402
 )
 from engine.interop import format_pyfair_code, to_pyfair  # noqa: E402
 from engine.scenarios import load_scenario  # noqa: E402
+from engine.scaffold import next_steps, scaffold_shard  # noqa: E402
 
 
 def parse_args(argv=None):
@@ -125,6 +126,17 @@ def parse_args(argv=None):
     export_parser.add_argument("module_id")
     export_parser.add_argument("--format", default="pyfair", choices=["pyfair"])
     export_parser.add_argument("--json", action="store_true")
+
+    new_parser = subparsers.add_parser(
+        "new-shard", help="Scaffold a new shard skeleton (all 6 files, placeholder estimates)."
+    )
+    new_parser.add_argument("--country", required=True, help="ISO code, e.g. NO, BR, IN.")
+    new_parser.add_argument("--industry", required=True, help="e.g. financial_services, manufacturing.")
+    new_parser.add_argument("--threat", required=True, help="e.g. ransomware, data_breach, business_email_compromise.")
+    new_parser.add_argument("--size", default="mid_market", help="Company size band (default mid_market).")
+    new_parser.add_argument("--dry-run", action="store_true", help="Show the files that would be created.")
+    new_parser.add_argument("--overwrite", action="store_true", help="Replace an existing shard of the same id.")
+    new_parser.add_argument("--json", action="store_true")
 
     return parser.parse_args(argv)
 
@@ -299,6 +311,27 @@ def main(argv=None):
         except ValueError as exc:
             print(str(exc), file=sys.stderr)
             return 1
+        return 0
+
+    if command == "new-shard":
+        try:
+            result = scaffold_shard(
+                ROOT, args.country, args.industry, args.size, args.threat,
+                dry_run=args.dry_run, overwrite=args.overwrite,
+            )
+        except ValueError as exc:
+            print(str(exc), file=sys.stderr)
+            return 1
+        if args.json:
+            print(json.dumps({**result, "next_steps": next_steps(result["shard_id"])}, indent=2, sort_keys=True))
+            return 0
+        verb = "Would create" if result["dry_run"] else "Created"
+        print(f"{verb} shard {result['shard_id']} ({len(result['written'])} files):")
+        for rel in result["written"]:
+            print(f"  {rel}")
+        print("\nNext steps:")
+        for step in next_steps(result["shard_id"]):
+            print(f"  {step}")
         return 0
 
     return 0
