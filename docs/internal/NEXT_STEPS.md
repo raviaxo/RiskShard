@@ -187,13 +187,17 @@ leads with it. 9 new tests (`test_provenance.py`), **176 total green**; validate
 clean. Serves Goal 1 (traceable → un-rebuttable) and Goal 2 (skeptic → contributor) — see
 [[competitive-positioning]].
 
+**✅ JP shard CLOSED (2026-07-24).** `jp_manufacturing_ransomware_midmarket` 4/6 → **6/6
+source-backed**. `frequency.likely` 0.56 (Sophos 2023 mfg % hit), `frequency.max` 0.65 (Sophos
+2024 mfg % hit), min 0.10 (IRIS) kept. **Decision made:** used raw Sophos attack-prevalence (no
+invented discount) because the impact side is already Sophos recovery cost over orgs *hit by
+ransomware* — same event basis; the attack-prevalence-vs-loss-event limitation is loud in every
+record. New source `sophos_state_ransomware_manufacturing_2024` (real fetched artifact).
+Governed_starter; 1 benchmark blocker left (country-relevance, inherent to a global survey).
+**First real ledger delta: +2 source-backed params, −2 bridged, 11/11 shards at 6/6.** All 11
+shards are now source-backed. This is the Sunday post.
+
 **Next ticks on this ledger** (each is an evidence objective — needs approve-each-anchor):
-- **Close the JP shard** `jp_manufacturing_ransomware_midmarket` 4/6 → 6/6. **Sources
-  pre-scouted 2026-07-24 → [`jp_frequency_prescout.md`](jp_frequency_prescout.md)** (awaiting
-  Ser's per-anchor approval). Candidates: `frequency.likely` 0.56 (Sophos 2023 mfg % hit),
-  `frequency.max` 0.65 (Sophos 2024 mfg % hit), keep min 0.10 (IRIS). **Key decision flagged:**
-  Sophos "% hit" is *attack* prevalence, not loss-event frequency (only ~40% of 2025 mfg attacks
-  encrypted) — discount or caveat? Would move the ledger to **11/11 shards at 6/6, 0 bridged**.
 - **Threat-specific impact evidence** for **Insider Misuse** (Ponemon/DTEX per-incident
   cost) and **Third-Party Outage** (outage business-interruption / SLA-credit loss), plus
   a directly reported TPO `frequency.max` to retire its labeled estimate. Replaces the
