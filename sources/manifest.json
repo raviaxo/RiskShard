@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 47,
-  "generated_at": "2026-07-24T18:47:19Z",
+  "fetched_count": 48,
+  "generated_at": "2026-07-24T20:18:01Z",
   "manifest_version": "1.0",
-  "source_count": 47,
+  "source_count": 48,
   "sources": [
     {
       "access_mode": "public_pdf",
@@ -1071,6 +1071,28 @@
         "data breach loss magnitude by organization size"
       ],
       "usage_notes": "Use as a US-centric cyber insurance claims severity source. SME figures cover organizations under USD 2B revenue.\n"
+    },
+    {
+      "id": "ponemon_dtex_cost_insider_risks_2023",
+      "title": "Cost of Insider Risks Global Report 2023",
+      "publisher": "Ponemon Institute and DTEX Systems",
+      "source_type": "industry_survey",
+      "url": "https://ponemonsullivanreport.com/2023/10/cost-of-insider-risks-global-report-2023/",
+      "publication_date": "2023-10-01",
+      "gathered_at": "2026-07-24T20:18:01Z",
+      "access_mode": "public_html",
+      "intended_use": [
+        "insider misuse impact",
+        "insider incident per-incident cost"
+      ],
+      "usage_notes": "Use for insider-threat average per-incident cost by insider type (negligent, malicious, credential theft). Preserve limitations that figures are average remediation cost per incident \u2014 not a true minimum and not a catastrophic tail \u2014 and are global and cross-industry, not country- or sector-specific.\n",
+      "status": "fetched",
+      "final_url": "https://ponemonsullivanreport.com/2023/10/cost-of-insider-risks-global-report-2023/",
+      "http_status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "content_length": 44233,
+      "sha256": "99392120d191a4c45942f8d4ffa1d04fdb903cc0c0c3c356b4c64bf1f65bcf6c",
+      "raw_path": "sources/raw/ponemon_dtex_cost_insider_risks_2023.html"
     }
   ]
 }

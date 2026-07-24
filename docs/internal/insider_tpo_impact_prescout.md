@@ -1,9 +1,28 @@
 # Insider Misuse & Third-Party Outage — threat-specific impact pre-scout
 
-*Researched 2026-07-24. **Not applied** — evidence write held for an approve-each-anchor pass
-because the triangle shape and tail selection are consequential modeling calls, not mechanical.
-Retires the tracked gap: both threats' impact sides currently rest entirely on generic
-cross-cyber Cyentia bridges ($266k / $3M / $32M), not threat-specific data.*
+*Researched 2026-07-24. **Insider Misuse: DONE 2026-07-24** (2 of 3 impact anchors retired).
+**Third-Party Outage: still pending** (needs full Uptime report + a frequency prevalence source).*
+
+## ✅ Insider Misuse — DONE 2026-07-24
+
+Registered `ponemon_dtex_cost_insider_risks_2023` (fetched artifact). Rewired the AU insider
+calibration + evidence:
+- **`impact.min` → USD 679,621** (Ponemon credential-theft per-incident) — was generic Cyentia $266k.
+  Caveated as average-by-type, not a true floor (conservative-high).
+- **`impact.likely` → USD 701,500** (Ponemon malicious-insider per-incident) — was generic Cyentia
+  $3M median. Materially lower because insider incidents typically cost less than the all-cyber median.
+- **`impact.max` = Cyentia $32M KEPT**, relabeled the sole remaining cross-cyber bridge: a fetchable
+  insider-specific mega-loss source wasn't available (DOJ primaries bot-walled; secondary case
+  figures inconsistent $7M–$300M). 2 of 3 bridges retired; the tail stays generic and loudly labeled.
+
+Calibrated run 0 warnings; 190 tests; validate/preflight/doctor clean. No ledger tick (Insider is a
+top-risk threat, not one of the 11 shards). Remaining follow-up: a documented insider tail to retire
+the last bridge.
+
+---
+
+*Original research below. Retires the tracked gap: impact sides rested on generic cross-cyber
+Cyentia bridges ($266k / $3M / $32M), not threat-specific data.*
 
 ## Insider Misuse — impact (source: Ponemon/DTEX *Cost of Insider Risks Global 2023*)
 
