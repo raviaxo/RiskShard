@@ -4,7 +4,9 @@ from pathlib import Path
 from engine.provenance import (
     build_dispute_issue,
     build_module_provenance,
+    build_portfolio_provenance,
     dispute_issue_url,
+    format_portfolio_markdown,
     format_provenance,
     repo_slug_from_remote,
 )
@@ -74,6 +76,30 @@ class DisputeIssueTests(unittest.TestCase):
         issue = build_dispute_issue(self.prov, "impact.max")
         url = dispute_issue_url("", issue)
         self.assertIn("github.com/raviaxo/RiskShard/issues/new", url)
+
+
+class PortfolioProvenanceTests(unittest.TestCase):
+    def setUp(self):
+        # Scope to two shards for speed; totals still exercise the counting logic.
+        self.portfolio = build_portfolio_provenance(
+            ROOT, module_ids=[MODULE, "jp_manufacturing_ransomware_midmarket"]
+        )
+
+    def test_totals_count_parameters_by_status(self):
+        t = self.portfolio["totals"]
+        self.assertEqual(t["shards"], 2)
+        self.assertEqual(t["params_total"], 12)          # 6 per shard
+        # GB is 6/6 source-backed; JP has 2 bridged (frequency likely/max)
+        self.assertEqual(t["params_source_backed"], 10)
+        self.assertEqual(t["params_bridged"], 2)
+        self.assertEqual(t["params_missing"], 0)
+
+    def test_markdown_report_shows_totals_and_flags_bridged_rows(self):
+        md = format_portfolio_markdown(self.portfolio)
+        self.assertIn("# RiskShard Evidence Report", md)
+        self.assertIn("10 of 12 parameters source-backed", md)
+        self.assertIn("assumption_only", md)             # bridged rows shown, not hidden
+        self.assertIn("| `frequency.min` |", md)
 
 
 if __name__ == "__main__":

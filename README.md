@@ -96,6 +96,10 @@ Disagree? `provenance <shard> --dispute <parameter>` prints a pre-filled GitHub 
 so a skeptic becomes a contributor in one click. A number you can trace is a number you
 can dispute — that's the point.
 
+The whole system at once: [docs/EVIDENCE_REPORT.md](docs/EVIDENCE_REPORT.md) is every
+parameter in every shard — value, source, and caveat — regenerated with
+`python scripts/riskshard_modules.py provenance --all --report docs/EVIDENCE_REPORT.md`.
+
 **1. A board-ready executive summary from a real run.** After `run`, the console
 command `report exec` writes a one-page Markdown summary to `results/` — bottom-line
 loss range, plain-language confidence, the sources behind it, and the honest caveats,

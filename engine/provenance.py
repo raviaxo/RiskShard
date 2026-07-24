@@ -88,6 +88,81 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
     return {"module_id": pack.get("module_id", module_id), "title": pack.get("title"), "cards": cards}
 
 
+def build_portfolio_provenance(root, module_ids=None):
+    """Provenance for every shard (or a given subset), for a whole-portfolio audit.
+
+    Returns {'modules': [<build_module_provenance result>, ...], 'totals': {...}} where
+    totals count parameters by status across the portfolio — the one-glance answer to
+    "how much of this system is source-backed?".
+    """
+    from engine.risk_modules import search_risk_modules
+
+    if module_ids is None:
+        module_ids = [m.get("id") for m in search_risk_modules("", root)]
+    modules = [build_module_provenance(mid, root) for mid in module_ids]
+
+    source_backed = bridged = missing = total = 0
+    for m in modules:
+        for c in m["cards"]:
+            total += 1
+            if c.get("status") == "source_backed":
+                source_backed += 1
+            elif c.get("resolved"):
+                bridged += 1
+            else:
+                missing += 1
+    return {
+        "modules": modules,
+        "totals": {
+            "shards": len(modules),
+            "params_total": total,
+            "params_source_backed": source_backed,
+            "params_bridged": bridged,
+            "params_missing": missing,
+        },
+    }
+
+
+def format_portfolio_markdown(portfolio):
+    """A single shareable evidence report: every number, its source, and its caveat.
+
+    This is the whole-system "answers nobody can rebut" artifact — one document where
+    every model input is traceable to a named public source or labeled honestly.
+    """
+    t = portfolio["totals"]
+    lines = [
+        "# RiskShard Evidence Report",
+        "",
+        "Every model parameter in every shard, with the source it traces to and the "
+        "caveat that limits it. Generated from the governed evidence — nothing here is "
+        "hand-written. Dispute any row: `riskshard_modules.py provenance <shard> --dispute <param>`.",
+        "",
+        f"**Portfolio:** {t['shards']} shards · {t['params_source_backed']} of "
+        f"{t['params_total']} parameters source-backed · {t['params_bridged']} bridged/estimated "
+        f"· {t['params_missing']} missing.",
+        "",
+    ]
+    for m in portfolio["modules"]:
+        lines.append(f"## {m['module_id']}")
+        title = m.get("title")
+        if title:
+            lines.append(f"_{title}_")
+        lines.append("")
+        lines.append("| Parameter | Value | Status | Source | Caveat |")
+        lines.append("| --- | --- | --- | --- | --- |")
+        for c in m["cards"]:
+            source = c.get("source_name") or "—"
+            if c.get("publication_date"):
+                source += f" ({c['publication_date']})"
+            caveat = (c.get("caveat") or "—").replace("|", "\\|").replace("\n", " ")
+            lines.append(
+                f"| `{c['parameter']}` | {_fmt_value(c)} | {c.get('status') or '—'} "
+                f"| {source.replace('|', chr(92) + '|')} | {caveat} |"
+            )
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def _fmt_value(card):
     if card.get("value") is None:
         return "(no source-backed value)"
