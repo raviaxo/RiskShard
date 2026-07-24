@@ -59,6 +59,11 @@ class WebConsoleTests(unittest.TestCase):
         packs = app.run_command("packs")
         self.assertIn("Evidence pack: au_finance_ransomware_midmarket", packs["output"])
 
+        challenge = app.run_command("challenge frequency.max")
+        self.assertIn("frequency.max =", challenge["output"])
+        self.assertIn("Source :", challenge["output"])
+        self.assertIn("Caveat :", challenge["output"])
+
         proposal = app.run_command("propose")
         self.assertIn("Module calibration proposal: au_finance_ransomware_midmarket", proposal["output"])
 
