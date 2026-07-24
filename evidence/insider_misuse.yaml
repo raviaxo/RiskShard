@@ -45,23 +45,56 @@ records:
       company_size_bands: [all]
       threats: [insider_misuse]
 
-  - id: cyentia_iris_2025_median_security_incident_loss_usd_insider_context
-    title: Median reported security-incident loss (cross-cyber bridge) for insider-misuse starter
-    parameter: impact.likely
-    value: 3000000
+  - id: ponemon_2023_insider_credential_theft_per_incident_usd
+    title: Insider credential-theft average per-incident cost (insider-specific floor)
+    parameter: impact.min
+    value: 679621
     unit: currency
     currency: USD
-    source_id: cyentia_iris_2025
-    source_name: Cyentia Information Risk Insights Study 2025
-    source_type: cyber_loss_research
-    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
-    publication_date: "2025-06-10"
-    extraction_date: "2026-07-21"
-    citation_detail: Public source page key findings; median losses rose toward USD 3M.
-    extraction_notes: Reused the governed Cyentia median security-incident loss anchor as a likely-impact bridge for the insider-misuse starter, correctly scoped to insider_misuse rather than borrowing a shard-tagged copy.
-    normalization_notes: Stored directly in USD as the likely single-event loss bridge until insider-misuse-specific loss evidence is reviewed.
-    limitations: GENERIC CROSS-CYBER BRIDGE. Global all-incident median, NOT insider-misuse-specific, not sector- or size-specific, and not a distribution quantile. The insider impact side rests entirely on generic cross-cyber loss bridges; revise when insider-misuse-specific loss evidence is reviewed.
-    confidence: low
+    source_id: ponemon_dtex_cost_insider_risks_2023
+    source_name: Ponemon and DTEX Cost of Insider Risks Global Report 2023
+    source_type: industry_survey
+    source_url_or_citation: https://ponemonsullivanreport.com/2023/10/cost-of-insider-risks-global-report-2023/
+    publication_date: "2023-10-01"
+    extraction_date: "2026-07-24"
+    citation_detail: "Average cost per credential-theft insider incident was $679,621 (vs $701,500 for malicious insiders)."
+    extraction_notes: Selected the credential-theft average per-incident cost as an insider-specific lower anchor, replacing the prior generic cross-cyber Cyentia floor.
+    normalization_notes: Stored directly in USD. This is the average cost of the lower-cost insider incident TYPE, used as the floor.
+    limitations: >
+      Average remediation cost per incident for one insider TYPE, NOT a true minimum —
+      minor or negligent insider incidents can cost far less, so this floor is
+      conservative-high. Global, cross-industry survey; not country- or sector-specific.
+      Insider-specific (an improvement over the prior generic cross-cyber bridge).
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [insider_misuse]
+
+  - id: ponemon_2023_malicious_insider_per_incident_usd
+    title: Malicious insider average per-incident cost (insider-specific likely)
+    parameter: impact.likely
+    value: 701500
+    unit: currency
+    currency: USD
+    source_id: ponemon_dtex_cost_insider_risks_2023
+    source_name: Ponemon and DTEX Cost of Insider Risks Global Report 2023
+    source_type: industry_survey
+    source_url_or_citation: https://ponemonsullivanreport.com/2023/10/cost-of-insider-risks-global-report-2023/
+    publication_date: "2023-10-01"
+    extraction_date: "2026-07-24"
+    citation_detail: "Malicious insiders accounted for an average of 6.2 incidents and an average cost per incident of $701,500."
+    extraction_notes: Selected the malicious-insider average per-incident cost as the insider-specific likely anchor for deliberate insider misuse, replacing the prior generic cross-cyber Cyentia median (~USD 3M).
+    normalization_notes: Stored directly in USD as the likely single-event insider-misuse loss. Note this is materially lower than the prior generic all-cyber median because insider incidents typically cost less than the all-incident median.
+    limitations: >
+      Average remediation cost per malicious-insider incident; NOT a distribution
+      quantile and NOT a catastrophic tail (rare insider fraud/IP-theft reaches tens
+      of millions — carried by impact.max). Global, cross-industry survey; not
+      country- or sector-specific. Insider-specific (an improvement over the prior
+      generic cross-cyber bridge).
+    confidence: medium
     evidence_type: source_backed
     applicability:
       industries: [all]
