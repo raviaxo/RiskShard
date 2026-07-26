@@ -3,188 +3,143 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Pick a cyber-risk shard, see its modeled dollar loss range, and trace or dispute every input to its named public source and caveat.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Ctext%20y=%22.9em%22%20font-size=%2290%22%3E%F0%9F%94%B7%3C/text%3E%3C/svg%3E">
-<title>RiskShard — every number, traceable</title>
+<meta name="description" content="RiskShard evidence record — pick a cyber-risk shard, see its modeled dollar loss range, and trace or dispute every input to its named public source and caveat.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Cpath%20d=%22M44%207%20L83%2039%20L56%2095%20L18%2057%20Z%22%20fill=%22%2326221b%22/%3E%3C/svg%3E">
+<title>RiskShard — evidence record</title>
 <style>
-  :root{
-    --ground:#F4F6FA; --surface:#FFFFFF; --surface-2:#EEF2F8;
-    --ink:#0D1520; --muted:#586172; --faint:#8A94A6;
-    --line:#E1E7F0; --line-strong:#CBD5E4;
-    --accent:#2D6BE4; --accent-ink:#1B4FBF; --accent-wash:#E7EEFD;
-    --data:#0E7C93;
-    --ok:#1F9D63; --ok-wash:#E3F5EC;
-    --warn:#B9791F; --warn-wash:#FaF0DD;
-    --crit:#CC3F3F;
-    --shadow:0 1px 2px rgba(13,21,32,.04), 0 8px 24px rgba(13,21,32,.06);
-    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
-    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,Helvetica,Arial,sans-serif;
-  }
-  @media (prefers-color-scheme:dark){
-    :root{
-      --ground:#080B12; --surface:#111725; --surface-2:#0D1220;
-      --ink:#E7EDF6; --muted:#93A0B4; --faint:#647087;
-      --line:#1E2839; --line-strong:#2A3A52;
-      --accent:#5C8DF0; --accent-ink:#8FB2F7; --accent-wash:#16233D;
-      --data:#3FC0D8;
-      --ok:#43C08A; --ok-wash:#12281E;
-      --warn:#D6A24A; --warn-wash:#2A2113;
-      --crit:#E0685F;
-      --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.35);
-    }
-  }
-  :root[data-theme="light"]{
-    --ground:#F4F6FA; --surface:#FFFFFF; --surface-2:#EEF2F8;
-    --ink:#0D1520; --muted:#586172; --faint:#8A94A6;
-    --line:#E1E7F0; --line-strong:#CBD5E4;
-    --accent:#2D6BE4; --accent-ink:#1B4FBF; --accent-wash:#E7EEFD;
-    --data:#0E7C93; --ok:#1F9D63; --ok-wash:#E3F5EC; --warn:#B9791F; --warn-wash:#FAF0DD; --crit:#CC3F3F;
-    --shadow:0 1px 2px rgba(13,21,32,.04), 0 8px 24px rgba(13,21,32,.06);
-  }
-  :root[data-theme="dark"]{
-    --ground:#080B12; --surface:#111725; --surface-2:#0D1220;
-    --ink:#E7EDF6; --muted:#93A0B4; --faint:#647087;
-    --line:#1E2839; --line-strong:#2A3A52;
-    --accent:#5C8DF0; --accent-ink:#8FB2F7; --accent-wash:#16233D;
-    --data:#3FC0D8; --ok:#43C08A; --ok-wash:#12281E; --warn:#D6A24A; --warn-wash:#2A2113; --crit:#E0685F;
-    --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.35);
-  }
+  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-400.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-500.woff2") format("woff2");font-weight:500;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-600.woff2") format("woff2");font-weight:600;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-700.woff2") format("woff2");font-weight:700;font-display:swap}
 
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
-    line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"kern";}
-  .wrap{max-width:1180px;margin:0 auto;padding:clamp(20px,4vw,44px) clamp(16px,4vw,32px);}
-  a{color:var(--accent-ink);text-decoration:none}
+  :root{
+    --paper:#EEE9DC; --card:#F4F0E5; --inset:#E7E1D2;
+    --ink:#26221B; --muted:#6E6656; --faint:#9A917E;
+    --rule:#26221B; --hair:#CFC6B2; --dash:#C7BEAB;
+    --stamp:#A8382C; --verified:#2F7D4F; --amber:#9A6B1E;
+    --mono:"Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--mono);font-weight:400;
+    line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"kern"}
+  .wrap{max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,40px) clamp(16px,4vw,34px) 60px}
+  a{color:var(--stamp);text-decoration:none}
   a:hover{text-decoration:underline}
   .tnum{font-variant-numeric:tabular-nums}
-  .mono{font-family:var(--mono)}
+  .shard-mark{display:inline-block;vertical-align:-2px}
 
-  /* header */
-  header .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--accent-ink);display:flex;align-items:center;gap:9px;margin-bottom:14px}
-  header .kicker .dia{width:11px;height:11px;background:var(--accent);transform:rotate(45deg);border-radius:2px}
-  h1{font-size:clamp(26px,4.4vw,42px);line-height:1.08;letter-spacing:-.02em;margin:0 0 12px;
-    text-wrap:balance;font-weight:660}
-  h1 em{font-style:normal;color:var(--accent-ink)}
-  .lede{font-size:clamp(15px,1.6vw,18px);color:var(--muted);max-width:60ch;margin:0}
-  .stats{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
-  .stat{display:flex;flex-direction:column;gap:2px}
-  .stat b{font-family:var(--mono);font-size:22px;letter-spacing:-.01em;color:var(--ink)}
-  .stat span{font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em}
-  .stat .green{color:var(--ok)}
+  /* file bar */
+  .filebar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+    font-size:12px;letter-spacing:.08em;color:var(--muted);padding-bottom:12px;border-bottom:2px solid var(--rule)}
+  .filebar .brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:600;letter-spacing:.16em}
+  .filebar .meta{letter-spacing:.06em}
+  .filebar .meta b{color:var(--verified);font-weight:600}
+
+  /* hero */
+  header{padding:34px 0 26px;border-bottom:1px solid var(--hair)}
+  h1{font-size:clamp(24px,3.6vw,38px);font-weight:500;line-height:1.14;letter-spacing:-.01em;max-width:24ch}
+  .lede{margin-top:14px;font-size:14px;color:var(--muted);max-width:70ch}
+  .lede b{color:var(--ink);font-weight:600}
 
   /* app shell */
-  .app{display:grid;grid-template-columns:288px 1fr;gap:22px;margin-top:30px;align-items:start}
-  @media(max-width:820px){.app{grid-template-columns:1fr}}
+  .app{display:grid;grid-template-columns:250px 1fr;gap:26px;margin-top:26px;align-items:start}
+  @media(max-width:800px){.app{grid-template-columns:1fr}}
 
-  .rail{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
-  .rail h2{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
-    margin:0;padding:15px 16px 9px}
-  .rail .list{display:flex;flex-direction:column}
-  .srow{display:flex;align-items:center;gap:11px;padding:11px 16px;border:0;background:none;
-    width:100%;text-align:left;cursor:pointer;border-top:1px solid var(--line);color:var(--ink);
-    font-family:var(--sans);font-size:14px;transition:background .12s}
-  .srow:hover{background:var(--surface-2)}
-  .srow[aria-current="true"]{background:var(--accent-wash)}
-  .srow[aria-current="true"] .flag{color:var(--accent-ink)}
-  .srow .flag{font-family:var(--mono);font-weight:640;font-size:12px;letter-spacing:.03em;
-    color:var(--muted);min-width:22px}
-  .srow .st{flex:1;min-width:0}
-  .srow .st b{display:block;font-weight:560;font-size:13.5px;text-transform:capitalize;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .srow .st span{font-size:11.5px;color:var(--faint)}
-  .srow .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
-  .srow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  /* index (shards on file) */
+  .index h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:0 0 8px;font-weight:600}
+  .index .list{border-top:1px solid var(--hair)}
+  .frow{display:grid;grid-template-columns:26px 1fr auto;gap:9px;align-items:center;width:100%;
+    padding:9px 4px;border:0;background:none;border-bottom:1px dashed var(--dash);cursor:pointer;
+    text-align:left;color:var(--ink);font-family:var(--mono);font-size:13px;transition:background .1s}
+  .frow:hover{background:var(--inset)}
+  .frow[aria-current="true"]{background:var(--ink);color:var(--paper)}
+  .frow[aria-current="true"] .cc,.frow[aria-current="true"] .ok{color:var(--paper)}
+  .frow .cc{font-weight:600;color:var(--muted)}
+  .frow .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:capitalize}
+  .frow .ok{color:var(--verified);font-weight:600;font-size:11px}
 
-  /* detail */
-  .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;
-    box-shadow:var(--shadow);overflow:hidden}
-  .phead{padding:20px 22px;border-bottom:1px solid var(--line);
-    background:linear-gradient(180deg,var(--surface-2),transparent)}
-  .phead .ctx{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;color:var(--muted);
-    text-transform:uppercase;margin-bottom:7px}
-  .phead h3{margin:0 0 4px;font-size:20px;letter-spacing:-.01em;font-weight:640}
-  .grade{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-family:var(--mono);
-    padding:3px 9px;border-radius:999px;background:var(--surface-2);color:var(--muted);
-    border:1px solid var(--line-strong);margin-top:6px}
-  .grade .g{width:7px;height:7px;border-radius:50%;background:var(--warn)}
+  /* record */
+  .record{position:relative;background:var(--card);border:1px solid var(--hair);padding:26px 26px 22px}
+  .rechead{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;
+    border-bottom:2px solid var(--rule);padding-bottom:12px}
+  .rechead .file{font-size:12px;letter-spacing:.05em;color:var(--muted)}
+  .rechead .file b{color:var(--ink);font-weight:600}
+  .rechead .grade{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .stamp{position:absolute;right:22px;top:64px;border:2.5px solid var(--stamp);color:var(--stamp);
+    padding:6px 13px;font-size:13px;font-weight:600;letter-spacing:.14em;transform:rotate(-8deg);
+    border-radius:3px;opacity:.92;pointer-events:none;text-transform:uppercase}
+  .stamp.review{border-color:var(--amber);color:var(--amber)}
 
-  .loss{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 30px;padding:20px 22px 6px}
-  .loss .big{display:flex;flex-direction:column;gap:3px}
-  .loss .big .lab{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}
-  .loss .big .v{font-family:var(--mono);font-size:clamp(28px,4vw,38px);font-weight:640;
-    letter-spacing:-.02em;color:var(--accent-ink);line-height:1}
-  .loss .sub{display:flex;gap:26px}
-  .loss .sub .lab{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}
-  .loss .sub .v{font-family:var(--mono);font-size:19px;font-weight:560;color:var(--ink)}
-  .lossnote{padding:6px 22px 18px;font-size:12.5px;color:var(--faint);max-width:64ch}
+  .loss{padding:20px 0 4px;max-width:62%}
+  .loss .cap{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+  .loss .big{font-size:clamp(26px,4vw,36px);font-weight:600;letter-spacing:-.01em;line-height:1}
+  .losssub{display:flex;flex-wrap:wrap;gap:6px 30px;padding:14px 0 6px;font-size:14px;color:var(--muted)}
+  .losssub b{color:var(--ink);font-weight:600}
+  @media(max-width:640px){.loss{max-width:100%}}
+  .lossnote{font-size:12px;color:var(--faint);padding-bottom:16px}
 
-  /* evidence table */
-  .ev{border-top:1px solid var(--line)}
-  .ev .cap{display:flex;justify-content:space-between;align-items:center;gap:12px;
-    padding:15px 22px 8px}
-  .ev .cap h4{margin:0;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
-  .ev .cap .hint{font-size:12px;color:var(--faint)}
-  .prow{border-top:1px solid var(--line)}
-  .prow > button{display:grid;grid-template-columns:132px 1fr auto;gap:14px;align-items:baseline;
-    width:100%;padding:13px 22px;background:none;border:0;cursor:pointer;text-align:left;
-    color:var(--ink);font-family:var(--sans);transition:background .12s}
-  .prow > button:hover{background:var(--surface-2)}
-  .prow > button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-  .prow .pname{font-family:var(--mono);font-size:13px;color:var(--muted)}
-  .prow .pval{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--data);letter-spacing:-.01em}
-  .prow .pval small{color:var(--faint);font-weight:500;font-size:11.5px;margin-left:5px}
-  .prow .pval{display:block}
-  .prow .psrc{display:block;font-size:12.5px;color:var(--muted);margin-top:3px}
-  .prow .chip{font-size:10.5px;font-family:var(--mono);letter-spacing:.03em;padding:3px 8px;border-radius:6px;
-    background:var(--ok-wash);color:var(--ok);white-space:nowrap;align-self:center}
-  .prow .chip.assumed{background:var(--warn-wash);color:var(--warn)}
-  .prow .body{max-height:0;overflow:hidden;transition:max-height .22s ease}
-  .prow.open .body{max-height:420px}
-  .prow .bodyin{padding:2px 22px 18px;display:grid;gap:11px}
-  .prow.open{background:var(--surface-2)}
-  .field .fl{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:3px}
-  .field .quote{font-size:13.5px;color:var(--ink);border-left:2px solid var(--accent);padding-left:12px;
-    font-style:italic}
-  .field .caveat{font-size:13px;color:var(--muted)}
-  .disp{justify-self:start;font-family:var(--mono);font-size:12px;display:inline-flex;align-items:center;gap:7px;
-    padding:7px 12px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);
-    color:var(--accent-ink)}
-  .disp:hover{background:var(--accent-wash);text-decoration:none;border-color:var(--accent)}
-  .caret{transition:transform .2s;color:var(--faint);font-size:13px}
-  .prow.open .caret{transform:rotate(90deg)}
+  /* ledger */
+  .ledger{border-top:1px solid var(--hair)}
+  .ledger .caphdr{display:flex;justify-content:space-between;align-items:center;padding:12px 0 6px}
+  .ledger .caphdr h3{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600}
+  .ledger .caphdr .hint{font-size:11.5px;color:var(--faint)}
+  .lrow{border-top:1px dashed var(--dash)}
+  .lrow>button{display:grid;grid-template-columns:130px 96px 1fr auto;gap:12px;align-items:baseline;
+    width:100%;padding:11px 2px;background:none;border:0;cursor:pointer;text-align:left;color:var(--ink);
+    font-family:var(--mono);font-size:13px;transition:background .1s}
+  .lrow>button:hover{background:var(--inset)}
+  .lrow .p{color:var(--muted)}
+  .lrow .v{font-weight:600;font-variant-numeric:tabular-nums}
+  .lrow .src{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lrow .tag{font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--verified);white-space:nowrap;align-self:center}
+  .lrow .tag.est{color:var(--amber)}
+  .lrow .body{max-height:0;overflow:hidden;transition:max-height .22s ease}
+  .lrow.open .body{max-height:460px}
+  .lrow.open{background:var(--inset)}
+  .lrow .bodyin{padding:2px 2px 16px;display:grid;gap:10px}
+  .field{font-size:12.5px;display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:baseline}
+  .field .fl{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  .field .quote{color:var(--ink);border-left:2px solid var(--stamp);padding-left:11px}
+  .field .caveat{color:var(--muted)}
+  .disp{font-size:12px;color:var(--stamp);border:1px solid var(--dash);border-radius:3px;padding:6px 11px;
+    justify-self:start;background:var(--card)}
+  .disp:hover{background:var(--paper);text-decoration:none;border-color:var(--stamp)}
+  .caret{color:var(--faint);align-self:center;transition:transform .2s}
+  .lrow.open .caret{transform:rotate(90deg)}
 
-  footer{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);
-    font-size:12.5px;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
-  footer .warn{max-width:66ch}
+  footer{margin-top:30px;padding-top:16px;border-top:2px solid var(--rule);color:var(--faint);
+    font-size:12px;display:flex;flex-wrap:wrap;gap:6px 22px;justify-content:space-between;line-height:1.5}
   footer b{color:var(--muted);font-weight:600}
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-
 <div class="wrap">
+  <div class="filebar">
+    <span class="brand"><svg class="shard-mark" width="17" height="17" viewBox="0 0 100 100"><path d="M44 7 L83 39 L56 95 L18 57 Z" fill="currentColor"/></svg>RISKSHARD</span>
+    <span class="meta" id="filemeta"></span>
+  </div>
+
   <header>
-    <div class="kicker"><span class="dia"></span> RiskShard · evidence-governed CRQ</div>
-    <h1>Every number here <em>traces to a public source</em> — so every number is one you can dispute.</h1>
-    <p class="lede">Pick a risk shard. See the modeled dollar loss range, then open any parameter to read
-      the exact source line it came from and the caveat that limits it. Nothing on this page is hand-written —
-      it's generated from the open repo.</p>
-    <div class="stats" id="stats"></div>
+    <h1>Every number here traces to a public source.</h1>
+    <p class="lede">This is the evidence record. Pick a shard, read its modeled dollar loss range, then
+      open any line to see the exact source it came from and the caveat that bounds it — and
+      <b>dispute it in one click</b>. Nothing here is hand-written; it's generated from the open repo.</p>
   </header>
 
   <div class="app">
-    <nav class="rail" aria-label="Risk shards">
-      <h2>Risk shards</h2>
-      <div class="list" id="rail"></div>
+    <nav class="index" aria-label="Shards on file">
+      <h2>Shards on file</h2>
+      <div class="list" id="index"></div>
     </nav>
-    <main class="panel" id="panel" aria-live="polite"></main>
+    <main class="record" id="record" aria-live="polite"></main>
   </div>
 
   <footer>
-    <span class="warn"><b>Read the maturity honestly.</b> These are governed-starter / review-candidate shards —
-      not human-approved benchmarks. Loss tails (P95/P99) are directional, not precise.</span>
-    <span>Regenerated from <a id="repo" href="#">raviaxo/RiskShard</a> · nothing hand-written.</span>
+    <span><b>Read the maturity honestly.</b> Governed-starter / review-candidate shards — not
+      human-approved benchmarks. Loss tails (P95/P99) are directional, not precise.</span>
+    <span>Generated from <a id="repo" href="#">raviaxo/RiskShard</a> · nothing hand-written.</span>
   </footer>
 </div>
 
@@ -193,90 +148,83 @@
 (function(){
   var DATA = JSON.parse(document.getElementById('rs-data').textContent);
   var REPO = DATA.repo;
+  var esc = function(s){return (s==null?'':String(s)).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+  var cap = function(s){return (s||'').replace(/_/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});};
   var fmtName = function(s){return (s||'').replace(/_/g,' ');};
-  var cap = function(s){return (s||'').replace(/\b\w/g,function(c){return c.toUpperCase();});};
+  var valText = function(p){return (p.value==null?'—':p.value)+(p.unit?(' '+p.unit):'');};
 
-  // stats
   var t = DATA.totals;
-  document.getElementById('stats').innerHTML =
-    stat(t.shards, 'shards') +
-    stat('<span class="green">'+t.params_source_backed+' / '+t.params_total+'</span>', 'params source-backed') +
-    stat(new Set(DATA.shards.map(function(s){return s.country;})).size, 'countries') +
-    stat(t.params_bridged, 'unresolved assumptions');
-  function stat(v,l){return '<div class="stat"><b class="tnum">'+v+'</b><span>'+l+'</span></div>';}
+  document.getElementById('filemeta').innerHTML =
+    '<b>'+t.params_source_backed+' / '+t.params_total+' SOURCE-BACKED</b> · '+t.shards+' SHARDS · '+
+    new Set(DATA.shards.map(function(s){return s.country;})).size+' COUNTRIES';
   document.getElementById('repo').href = REPO;
 
-  // rail
-  var rail = document.getElementById('rail');
-  DATA.shards.forEach(function(s, i){
-    var b = document.createElement('button');
-    b.className='srow'; b.type='button'; b.setAttribute('role','listitem');
+  var index = document.getElementById('index');
+  DATA.shards.forEach(function(s,i){
+    var b=document.createElement('button');
+    b.className='frow'; b.type='button';
     b.setAttribute('aria-current', i===6?'true':'false');
-    b.innerHTML = '<span class="flag">'+s.country+'</span>'+
-      '<span class="st"><b>'+cap(fmtName(s.threat))+'</b><span>'+cap(s.industry?fmtName(s.industry):'')+' · '+fmtName(s.size)+'</span></span>'+
-      '<span class="dot" title="all 6 parameters source-backed"></span>';
-    b.addEventListener('click', function(){ select(i); });
-    rail.appendChild(b);
+    b.innerHTML='<span class="cc">'+esc(s.country)+'</span>'+
+      '<span class="nm">'+esc(fmtName(s.threat))+'</span>'+
+      '<span class="ok">✓</span>';
+    b.addEventListener('click',function(){select(i);});
+    index.appendChild(b);
   });
 
-  var panel = document.getElementById('panel');
+  var record=document.getElementById('record');
   function select(i){
-    Array.prototype.forEach.call(rail.children, function(c,j){ c.setAttribute('aria-current', j===i?'true':'false'); });
+    Array.prototype.forEach.call(index.children,function(c,j){c.setAttribute('aria-current',j===i?'true':'false');});
     render(DATA.shards[i]);
   }
-
-  function statusChip(st){
-    if(st==='source_backed') return '<span class="chip">source-backed</span>';
-    return '<span class="chip assumed">'+fmtName(st)+'</span>';
-  }
-  function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
-  function disputeURL(shard, p){
-    var title = 'Dispute: '+shard.id+' / '+p.parameter+' = '+valText(p);
-    var body = '**Shard:** `'+shard.id+'`\n**Parameter:** `'+p.parameter+'`\n**Current value:** '+valText(p)+
+  function disputeURL(shard,p){
+    var title='Dispute: '+shard.id+' / '+p.parameter+' = '+valText(p);
+    var body='**Shard:** `'+shard.id+'`\n**Parameter:** `'+p.parameter+'`\n**Current value:** '+valText(p)+
       '\n**Current source:** '+(p.source_name||'(none)')+'\n**Current caveat:** '+(p.caveat||'(none)')+
       '\n\n### What I\'m disputing\n_Which of the value, the source, or the caveat is wrong — and why._\n\n### Evidence I\'m proposing instead\n_Named public source, the exact line, publication date._';
     return REPO+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
   }
-  function valText(p){ return (p.value==null?'—':p.value) + (p.unit?(' '+p.unit):''); }
 
   function render(s){
-    var rows = s.params.map(function(p, idx){
-      return '<div class="prow" data-i="'+idx+'">'+
+    var allBacked = s.params.every(function(p){return p.status==='source_backed';});
+    var rows = s.params.map(function(p){
+      var backed = p.status==='source_backed';
+      return '<div class="lrow">'+
         '<button type="button" aria-expanded="false">'+
-          '<span class="pname">'+esc(p.parameter)+'</span>'+
-          '<span><span class="pval tnum">'+esc(p.value==null?'—':p.value)+(p.unit?' <small>'+esc(p.unit)+'</small>':'')+'</span>'+
-            '<span class="psrc">'+esc(p.source_name||'—')+(p.publication_date?(' · '+esc(p.publication_date)):'')+'</span></span>'+
-          statusChip(p.status)+
+          '<span class="p">'+esc(p.parameter)+'</span>'+
+          '<span class="v tnum">'+esc(p.value==null?'—':p.value)+'</span>'+
+          '<span class="src">'+esc(p.source_name||'—')+(p.publication_date?(' · '+esc(p.publication_date)):'')+'</span>'+
+          '<span class="tag'+(backed?'':' est')+'">'+(backed?'[verified]':'[estimate]')+'</span>'+
         '</button>'+
         '<div class="body"><div class="bodyin">'+
-          (p.quote?'<div class="field"><div class="fl">Cited line</div><div class="quote">'+esc(p.quote)+'</div></div>':'')+
-          (p.caveat?'<div class="field"><div class="fl">Caveat</div><div class="caveat">'+esc(p.caveat)+'</div></div>':'')+
-          '<a class="disp" target="_blank" rel="noopener" href="'+disputeURL(s,p)+'">⚑ Dispute this number</a>'+
+          (p.quote?'<div class="field"><span class="fl">Cited</span><span class="quote">'+esc(p.quote)+'</span></div>':'')+
+          (p.caveat?'<div class="field"><span class="fl">Limit</span><span class="caveat">'+esc(p.caveat)+'</span></div>':'')+
+          '<a class="disp" target="_blank" rel="noopener" href="'+disputeURL(s,p)+'">⎘ dispute this line → open an issue</a>'+
         '</div></div>'+
       '</div>';
     }).join('');
 
-    panel.innerHTML =
-      '<div class="phead"><div class="ctx">'+esc(s.country)+' · '+esc(fmtName(s.industry))+' · '+esc(fmtName(s.size))+' · '+esc(fmtName(s.threat))+'</div>'+
-        '<h3>'+esc(s.title)+'</h3>'+
-        '<span class="grade"><span class="g"></span>'+esc(fmtName(s.status))+' — not benchmark-grade</span></div>'+
+    record.innerHTML =
+      '<div class="stamp'+(allBacked?'':' review')+'">'+(allBacked?'Source-backed ✓':'Under review')+'</div>'+
+      '<div class="rechead"><span class="file">FILE: <b>'+esc(s.id)+'</b></span>'+
+        '<span class="grade">'+esc(fmtName(s.status))+' — not benchmark-grade</span></div>'+
       '<div class="loss">'+
-        '<div class="big"><span class="lab">Modeled average annual loss</span><span class="v tnum">'+esc(s.avg||'—')+'</span></div>'+
-        '<div class="sub"><div><div class="lab">P95 · bad year</div><div class="v tnum">'+esc(s.p95||'—')+'</div></div>'+
-          '<div><div class="lab">P99 · severe</div><div class="v tnum">'+esc(s.p99||'—')+'</div></div></div>'+
+        '<div class="cap">'+esc(s.country)+' · '+esc(fmtName(s.industry))+' · '+esc(fmtName(s.threat))+' — modeled avg / yr</div>'+
+        '<div class="big tnum">'+esc(s.avg||'—')+'</div>'+
       '</div>'+
-      '<div class="lossnote">Monte Carlo, 10,000 trials. A modeled range from public evidence — not a prediction of a specific event; read the tail as directional.</div>'+
-      '<div class="ev"><div class="cap"><h4>The 6 inputs behind this range</h4><span class="hint">click a row for its source line + caveat</span></div>'+rows+'</div>';
+      '<div class="losssub"><span>P95 · bad year&nbsp; <b class="tnum">'+esc(s.p95||'—')+'</b></span>'+
+        '<span>P99 · severe&nbsp; <b class="tnum">'+esc(s.p99||'—')+'</b></span></div>'+
+      '<div class="lossnote">Monte Carlo · 10,000 trials · seed 42. A modeled range from public evidence, not a prediction of a specific event.</div>'+
+      '<div class="ledger"><div class="caphdr"><h3>The 6 inputs behind this range</h3><span class="hint">click a line for its source + caveat</span></div>'+rows+'</div>';
 
-    Array.prototype.forEach.call(panel.querySelectorAll('.prow > button'), function(btn){
-      btn.addEventListener('click', function(){
-        var row = btn.parentElement, open = row.classList.toggle('open');
-        btn.setAttribute('aria-expanded', open?'true':'false');
+    Array.prototype.forEach.call(record.querySelectorAll('.lrow>button'),function(btn){
+      btn.addEventListener('click',function(){
+        var row=btn.parentElement, open=row.classList.toggle('open');
+        btn.setAttribute('aria-expanded',open?'true':'false');
       });
     });
   }
 
-  select(6); // open on the UK data-breach shard (fullest evidence)
+  select(6);
 })();
 </script>
 </body>
