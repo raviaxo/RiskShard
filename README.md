@@ -2,6 +2,12 @@
 
 **The open, evidence-governed computation layer for cyber risk quantification.**
 
+### ▶ [Try it live in your browser](https://raviaxo.github.io/RiskShard/) — no install
+
+Pick a risk shard, see its modeled dollar loss range, then open any input to read the
+exact public source it came from and the caveat that bounds it — and dispute it in one
+click. Prefer the terminal? [Jump to the one-command demo](#try-it-in-one-command).
+
 RiskShard turns machine-readable "risk shards" into financial loss simulations, so
 security, GRC, and risk teams can move from "high / medium / low" ratings to
 defensible, dollar-based decisions — with every number traceable to a reviewed
