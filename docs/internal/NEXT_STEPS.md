@@ -217,6 +217,43 @@ shards are now source-backed. This is the Sunday post.
   a directly reported TPO `frequency.max` to retire its labeled estimate. Replaces the
   generic cross-cyber Cyentia bridges both currently rest on (the tracked gap above).
 
+---
+
+## ⚠️ Open defect — cross-machine reproducibility (found 2026-07-28, NOT fixed)
+
+**The same shard, same `seed 42`, same evidence produces different loss numbers on different
+machines.** Found by diffing the locally built explorer against the CI-built page now live:
+`au_finance_bec_midmarket` AVG is **AUD 55,021.72 locally vs AUD 54,820.66 on the published page**
+(every shard differs; the deltas are ~0.2–1.5%).
+
+**Cause** — `engine/fair_calc.py:76` `derive_scenario_seed()` mixes the scenario's **absolute
+filesystem path** into the per-scenario seed:
+```python
+payload = f"{base_seed}:{Path(scenario_path).as_posix()}:{fingerprint}"
+```
+The console passes an absolute path (`/Users/…/scenarios/business_email_compromise.yaml` locally,
+`/home/runner/work/RiskShard/RiskShard/…` in CI), so the derived seed — and therefore every draw —
+is a function of where the repo happens to sit on disk. Verified directly: the three path spellings
+of one scenario yield seeds `1374150857` / `2961355232` / `4175939838`.
+
+**Why it matters:** this contradicts the stated architectural principle in
+[`../monte-carlo-determinism-architecture.md`](../monte-carlo-determinism-architecture.md) — *"Audit
+trails must support third-party verification **without access to original execution environment**"* —
+and the `reproduction_command` printed to users cannot actually reproduce a published number on
+another machine. Runs remain deterministic *within* one checkout path, so nothing is random; the
+numbers are just not portable. Evidence, sources, caveats and provenance are unaffected — this is
+the simulator's output digits only.
+
+**Fix (own objective, needs an ADR — do NOT bundle into another session):** derive the seed from a
+path **relative to the project root** (or from the module id + scenario fingerprint alone, dropping
+the path entirely). Blast radius is large and must be planned: it changes **every published loss
+number** — the explorer, `docs/EVIDENCE_REPORT.md`, the data-pack fingerprint, the strength-ledger
+snapshot, and the several test snapshots that assert AVG/P95/P99. Decide deliberately whether the
+ledger records this as a new release.
+
+**Until fixed:** quote loss figures from the **published page**, never from a local CLI run — they
+will not match.
+
 ## Next cycle — emergent risk scenarios
 
 The P2 cycle is complete. The next objectives come from **[`ROADMAP.md`](../ROADMAP.md)** —
