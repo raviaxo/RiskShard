@@ -11,13 +11,22 @@ queue, one at a time, to its Definition of Done (`../../AGENTS.md`). Drive mode:
 each anchor** — stop at every evidence decision (source trust, chosen value, caveat) and
 wait for a short yes / no / adjust; no hand-editing of YAML required.
 
-**Current top blocker** *(updated 2026-07-27)*: none. Product is stable — all 11 shards
-source-backed (66/66); ledger, provenance/challenge-a-number, evidence report, pyfair export,
-and the `new-shard` scaffold all shipped (PR #51). Focus has shifted to **go-to-market** — see
-memory `gtm-strategy` and `design-identity`. **Open PRs awaiting merge:** #54 (README explorer
-CTA), #60 (explorer redesign → slate-&-copper identity). Tracked **product** follow-up: Third-Party
-Outage threat-specific impact + a reported `frequency.max` (Insider Misuse impact done 2026-07-24) —
-see [`insider_tpo_impact_prescout.md`](insider_tpo_impact_prescout.md).
+**Current top blocker** *(updated 2026-07-28)*: **distribution, not product.** Product is stable —
+all 11 shards source-backed (66/66); ledger, provenance/challenge-a-number, evidence report, pyfair
+export, and the `new-shard` scaffold all shipped (PR #51). **PR backlog fully cleared 2026-07-28:
+0 open PRs**; `main` carries the README explorer CTA (#54), the slate-&-copper explorer redesign
+(#60), and 4 Actions bumps (#55–#58). Explorer verified live on the new identity at
+<https://raviaxo.github.io/RiskShard/>.
+
+The real blocker is **conversion**: 14 days of traffic = 112 views / **14 unique visitors**, LinkedIn
+referred **5 uniques**, **0 external stars, 0 forks, 0 external issues, 0 Discussions**. Two own-feed
+posts have not produced a first believer. Per memory `gtm-strategy` the answer is **Tier 1 pull**
+(r/GRC, FAIR Institute community, LinkedIn comments on others' posts) — *not yet executed*. Broadcast
+cadence is retention, not acquisition.
+
+Tracked **product** follow-up (unchanged): Third-Party Outage threat-specific impact + a directly
+reported `frequency.max` (Insider Misuse impact done 2026-07-24) — see
+[`insider_tpo_impact_prescout.md`](insider_tpo_impact_prescout.md).
 
 ## Canonical owners (point to these; don't duplicate)
 
@@ -277,3 +286,10 @@ governance/regulatory loss).
   copper shard mark). GTM strategy + venue map + design identity captured in memory (`gtm-strategy`,
   `design-identity`). Drafted the 2nd LinkedIn post (evidence-thinness research, stats pulled live:
   52/66 params "not-specific", 34 sources, 0 "high" confidence). 192 tests green; gates pass.
+- 2026-07-28 — **PR backlog cleared, 0 open PRs.** #54/#60 and the 4 Actions bumps merged; #57
+  (configure-pages 5→6) had a `pages.yml` conflict because it predated its 3 siblings — resolved by
+  rebasing onto `main` and re-applying only its own line, then squash-merged (required checks green;
+  `security/snyk` hung PENDING but is **not** a required check — watch it). Pages deploy on the merge
+  commit succeeded; explorer verified live on the slate-&-copper identity (self-hosted fonts 200).
+  No product/evidence change. Reconciled this doc: top blocker restated as **distribution/conversion**
+  with the measured traffic numbers.

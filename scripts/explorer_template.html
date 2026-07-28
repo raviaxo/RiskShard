@@ -6,6 +6,20 @@
 <meta name="description" content="RiskShard — pick a cyber-risk shard, see its modeled dollar loss range, and trace or dispute every input down to its named public source and caveat.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Cpath%20d=%22M50%208%20L50%2092%20L14%2050%20Z%22%20fill=%22%237C6AA6%22/%3E%3Cpath%20d=%22M50%208%20L86%2050%20L50%2092%20Z%22%20fill=%22%23C88C46%22/%3E%3C/svg%3E">
 <title>RiskShard — evidence, in dollars</title>
+<link rel="canonical" href="__RS_SITE__">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RiskShard">
+<meta property="og:url" content="__RS_SITE__">
+<meta property="og:title" content="RiskShard — every number traces to a public source">
+<meta property="og:description" content="Pick a cyber-risk shard, see its modeled dollar loss range, then trace any input to the exact public source and the caveat that bounds it — and dispute it in one click.">
+<meta property="og:image" content="__RS_SITE__social-card.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="RiskShard — every number traces to a public source. 11 risk shards, 66/66 source-backed, 8 countries.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RiskShard — every number traces to a public source">
+<meta name="twitter:description" content="Modeled dollar loss ranges for cyber risk, where every input is traceable to a named public source — and disputable in one click.">
+<meta name="twitter:image" content="__RS_SITE__social-card.png">
 <style>
   @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-400.woff2") format("woff2");font-weight:400;font-display:swap}
   @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-500.woff2") format("woff2");font-weight:500;font-display:swap}
@@ -110,9 +124,13 @@
   .field .fl{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
   .field .quote{color:var(--ink);border-left:2px solid var(--copper);padding-left:11px}
   .field .caveat{color:var(--muted)}
+  .acts{display:flex;flex-wrap:wrap;gap:8px}
   .disp{font-size:12px;color:var(--copper);border:1px solid var(--edge);border-radius:2px;padding:6px 11px;
-    justify-self:start;background:var(--panel)}
+    justify-self:start;background:var(--panel);font-family:var(--mono);cursor:pointer}
   .disp:hover{background:var(--face);text-decoration:none;border-color:var(--copper)}
+  .disp.ghost{color:var(--muted)}
+  .disp.ghost:hover{color:var(--ink)}
+  .disp.ghost.done{color:var(--malachite);border-color:var(--malachite)}
 
   footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--edge);color:var(--faint);
     font-size:12px;display:flex;flex-wrap:wrap;gap:6px 22px;justify-content:space-between;line-height:1.5}
@@ -166,6 +184,9 @@
     t.shards+' SPECIMENS · '+new Set(DATA.shards.map(function(s){return s.country;})).size+' COUNTRIES';
   document.getElementById('repo').href=REPO;
 
+  var byId={};DATA.shards.forEach(function(s,i){byId[s.id]=i;});
+  var current=null;
+
   var index=document.getElementById('index');
   DATA.shards.forEach(function(s,i){
     var b=document.createElement('button');b.className='frow';b.type='button';
@@ -176,9 +197,31 @@
   });
 
   var record=document.getElementById('record');
-  function select(i){
+
+  /* Deep links: #<shard-id> addresses a specimen, #<shard-id>/<parameter> a single
+     layer — so a number under discussion can be linked to directly. */
+  function pageURL(shardId,param){
+    return location.origin+location.pathname+'#'+shardId+(param?('/'+param):'');
+  }
+  function setHash(shardId,param){
+    var h='#'+shardId+(param?('/'+param):'');
+    if(location.hash===h) return;
+    if(history.replaceState) history.replaceState(null,'',h); else location.hash=h;
+  }
+  function select(i,openParam,fromHash){
+    current=i;
     Array.prototype.forEach.call(index.children,function(c,j){c.setAttribute('aria-current',j===i?'true':'false');});
-    render(DATA.shards[i]);
+    render(DATA.shards[i],openParam);
+    if(!fromHash) setHash(DATA.shards[i].id,openParam);
+  }
+  function applyHash(){
+    var raw=(location.hash||'').replace(/^#/,'');
+    if(!raw) return false;
+    var parts=decodeURIComponent(raw).split('/');
+    var i=byId[parts[0]];
+    if(i==null) return false;
+    select(i,parts[1]||null,true);
+    return true;
   }
   function disputeURL(shard,p){
     var title='Dispute: '+shard.id+' / '+p.parameter+' = '+valText(p);
@@ -187,10 +230,10 @@
       '\n\n### What I\'m disputing\n_Which of the value, the source, or the caveat is wrong — and why._\n\n### Evidence I\'m proposing instead\n_Named public source, the exact line, publication date._';
     return REPO+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
   }
-  function render(s){
+  function render(s,openParam){
     var rows=s.params.map(function(p){
       var backed=p.status==='source_backed';
-      return '<div class="lrow"><button type="button" aria-expanded="false">'+
+      return '<div class="lrow" data-param="'+esc(p.parameter)+'"><button type="button" aria-expanded="false">'+
         '<span class="p">'+esc(p.parameter)+'</span>'+
         '<span class="v tnum">'+esc(p.value==null?'—':p.value)+'</span>'+
         '<span class="src">'+esc(p.source_name||'—')+(p.publication_date?(' · '+esc(p.publication_date)):'')+'</span>'+
@@ -198,7 +241,10 @@
         '</button><div class="body"><div class="bodyin">'+
           (p.quote?'<div class="field"><span class="fl">Cited</span><span class="quote">'+esc(p.quote)+'</span></div>':'')+
           (p.caveat?'<div class="field"><span class="fl">Limit</span><span class="caveat">'+esc(p.caveat)+'</span></div>':'')+
-          '<a class="disp" target="_blank" rel="noopener" href="'+disputeURL(s,p)+'">⎘ dispute this layer → open an issue</a>'+
+          '<div class="acts">'+
+            '<a class="disp" target="_blank" rel="noopener" href="'+disputeURL(s,p)+'">⎘ dispute this layer → open an issue</a>'+
+            '<button type="button" class="disp ghost copy" data-link="'+esc(pageURL(s.id,p.parameter))+'">⧉ copy link to this layer</button>'+
+          '</div>'+
         '</div></div></div>';
     }).join('');
     record.innerHTML=
@@ -211,10 +257,35 @@
       '<div class="lossnote">Monte Carlo · 10,000 trials · seed 42 — a modeled range from public evidence, not a prediction.</div>'+
       '<div class="strata"><div class="caphdr"><h3>The 6 layers behind this range</h3><span class="hint">click a layer for its source + caveat</span></div>'+rows+'</div>';
     Array.prototype.forEach.call(record.querySelectorAll('.lrow>button'),function(btn){
-      btn.addEventListener('click',function(){var r=btn.parentElement,o=r.classList.toggle('open');btn.setAttribute('aria-expanded',o?'true':'false');});
+      btn.addEventListener('click',function(){
+        var r=btn.parentElement,o=r.classList.toggle('open');
+        btn.setAttribute('aria-expanded',o?'true':'false');
+        setHash(s.id,o?r.getAttribute('data-param'):null);
+      });
     });
+    Array.prototype.forEach.call(record.querySelectorAll('.copy'),function(btn){
+      btn.addEventListener('click',function(){
+        var link=btn.getAttribute('data-link');
+        var done=function(){btn.classList.add('done');btn.textContent='✓ link copied';
+          setTimeout(function(){btn.classList.remove('done');btn.textContent='⧉ copy link to this layer';},1600);};
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+          navigator.clipboard.writeText(link).then(done,function(){window.prompt('Copy this link',link);});
+        }else{window.prompt('Copy this link',link);}
+      });
+    });
+    if(openParam){
+      var target=record.querySelector('.lrow[data-param="'+openParam.replace(/"/g,'')+'"]');
+      if(target){
+        var b=target.querySelector('button');
+        target.classList.add('open');
+        if(b) b.setAttribute('aria-expanded','true');
+        if(target.scrollIntoView) target.scrollIntoView({block:'center'});
+      }
+    }
   }
-  select(6);
+
+  if(!applyHash()) select(6);
+  window.addEventListener('hashchange',function(){applyHash();});
 })();
 </script>
 </body>
