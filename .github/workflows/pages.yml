@@ -17,6 +17,7 @@ on:
       - "sources/**"
       - "scripts/build_explorer.py"
       - "scripts/explorer_template.html"
+      - "docs/social-card.png"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
