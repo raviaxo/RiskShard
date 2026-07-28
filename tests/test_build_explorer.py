@@ -38,6 +38,26 @@ class RenderTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             render(bad)
 
+    def test_link_previews_carry_absolute_urls(self):
+        """Shared links must render a card, so og:/twitter: URLs cannot be relative."""
+        html = render(SAMPLE, site_url="https://example.test/RiskShard/")
+        self.assertNotIn("__RS_SITE__", html)
+        for tag in (
+            '<meta property="og:url" content="https://example.test/RiskShard/">',
+            '<meta property="og:image" content="https://example.test/RiskShard/social-card.png">',
+            '<meta name="twitter:card" content="summary_large_image">',
+            '<link rel="canonical" href="https://example.test/RiskShard/">',
+        ):
+            self.assertIn(tag, html)
+
+    def test_layers_are_deep_linkable(self):
+        """A number under discussion has to be addressable on its own."""
+        html = render(SAMPLE)
+        self.assertIn("applyHash", html)
+        self.assertIn("hashchange", html)
+        self.assertIn('data-param="', html)
+        self.assertIn("copy link to this layer", html)
+
 
 if __name__ == "__main__":
     unittest.main()

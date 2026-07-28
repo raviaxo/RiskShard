@@ -31,6 +31,9 @@ from engine.web_console import WebConsoleApp  # noqa: E402
 
 TEMPLATE = Path(__file__).resolve().parent / "explorer_template.html"
 REPO_URL = "https://github.com/raviaxo/RiskShard"
+# Where the built page is served. Absolute URLs are required by Open Graph /
+# Twitter cards, so link previews resolve when the page is shared.
+SITE_URL = "https://raviaxo.github.io/RiskShard/"
 
 
 def _loss_range(app_root, module_id):
@@ -74,12 +77,16 @@ def build_data(root):
     return {"totals": portfolio["totals"], "shards": shards, "repo": REPO_URL}
 
 
-def render(data):
+def render(data, site_url=SITE_URL):
     template = TEMPLATE.read_text(encoding="utf-8")
     payload = json.dumps(data, separators=(",", ":"))
     if "</script" in payload.lower():
         raise ValueError("data contains a closing script tag; refusing to inline")
-    return template.replace("__RS_DATA__", payload)
+    html = template.replace("__RS_SITE__", site_url).replace("__RS_DATA__", payload)
+    for token in ("__RS_SITE__", "__RS_DATA__"):
+        if token in html:
+            raise ValueError(f"template placeholder {token} was left unfilled")
+    return html
 
 
 def main(argv=None):
