@@ -79,7 +79,7 @@
   .frow:hover{background:var(--face)}
   .frow[aria-current="true"]{background:var(--face)}
   .frow[aria-current="true"] .nm{color:var(--copper)}
-  .frow .cc{color:var(--muted);font-weight:500}
+  .frow .cc{color:var(--muted);font-weight:500;font-size:15px;line-height:1;text-align:center}
   .frow .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:capitalize}
   .frow .ok{color:var(--malachite)}
 
@@ -187,11 +187,21 @@
   var byId={};DATA.shards.forEach(function(s,i){byId[s.id]=i;});
   var current=null;
 
+  /* Flag from the ISO country code via regional indicator symbols. Shown INSTEAD
+     of the code: platforms without a flag font (Windows) render the two letters,
+     which is the code itself — so it degrades to the old display, never to noise. */
+  var flag=function(cc){
+    var code=String(cc||'').trim().toUpperCase();
+    if(!/^[A-Z]{2}$/.test(code)) return esc(cc);
+    return String.fromCodePoint(code.charCodeAt(0)+127397, code.charCodeAt(1)+127397);
+  };
+
   var index=document.getElementById('index');
   DATA.shards.forEach(function(s,i){
     var b=document.createElement('button');b.className='frow';b.type='button';
     b.setAttribute('aria-current',i===6?'true':'false');
-    b.innerHTML='<span class="cc">'+esc(s.country)+'</span><span class="nm">'+esc(fmt(s.threat))+'</span><span class="ok">✓</span>';
+    b.innerHTML='<span class="cc" title="'+esc(s.country)+'">'+flag(s.country)+'</span>'+
+      '<span class="nm">'+esc(fmt(s.threat))+'</span><span class="ok">✓</span>';
     b.addEventListener('click',function(){select(i);});
     index.appendChild(b);
   });
@@ -250,7 +260,7 @@
     record.innerHTML=
       '<div class="rechead"><span class="spec">Specimen · <b>'+esc(s.id)+'</b></span>'+
         '<span class="grade">'+esc(fmt(s.status))+' — not benchmark-grade</span></div>'+
-      '<div class="loss"><div class="cap">'+esc(s.country)+' · '+esc(fmt(s.industry))+' · '+esc(fmt(s.threat))+' — modeled avg / yr</div>'+
+      '<div class="loss"><div class="cap">'+flag(s.country)+' '+esc(s.country)+' · '+esc(fmt(s.industry))+' · '+esc(fmt(s.threat))+' — modeled avg / yr</div>'+
         '<div class="big tnum">'+esc(s.avg||'—')+'</div></div>'+
       '<div class="losssub"><span>P95 · bad year&nbsp; <b class="tnum">'+esc(s.p95||'—')+'</b></span>'+
         '<span>P99 · severe&nbsp; <b class="tnum">'+esc(s.p99||'—')+'</b></span></div>'+

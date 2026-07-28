@@ -228,3 +228,6 @@ sources/raw/
 credentials.json
 secrets.yaml
 secrets.yml
+
+# Browser-automation scratch (screenshots, page snapshots)
+.playwright-mcp/
