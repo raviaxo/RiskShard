@@ -11,8 +11,13 @@ queue, one at a time, to its Definition of Done (`../../AGENTS.md`). Drive mode:
 each anchor** — stop at every evidence decision (source trust, chosen value, caveat) and
 wait for a short yes / no / adjust; no hand-editing of YAML required.
 
-**Current top blocker** *(updated 2026-07-22)*: none — the Road to stable v1 is complete
-(v0.1.0 tagged and released). Next work is any tracked follow-up in the queue below.
+**Current top blocker** *(updated 2026-07-27)*: none. Product is stable — all 11 shards
+source-backed (66/66); ledger, provenance/challenge-a-number, evidence report, pyfair export,
+and the `new-shard` scaffold all shipped (PR #51). Focus has shifted to **go-to-market** — see
+memory `gtm-strategy` and `design-identity`. **Open PRs awaiting merge:** #54 (README explorer
+CTA), #60 (explorer redesign → slate-&-copper identity). Tracked **product** follow-up: Third-Party
+Outage threat-specific impact + a reported `frequency.max` (Insider Misuse impact done 2026-07-24) —
+see [`insider_tpo_impact_prescout.md`](insider_tpo_impact_prescout.md).
 
 ## Canonical owners (point to these; don't duplicate)
 
@@ -260,3 +265,15 @@ governance/regulatory loss).
   `frequency.max` relabeled to `estimated` (5/6); reg-penalty distribution made consistent;
   controlled `source_type` vocabulary + audit; `/session:start` + `/session:end` commands.
   Closed with the `/session:end` ritual: tree clean, 0 open PRs, 147 tests green, gates pass.
+- 2026-07-24 — Large product session (PR #51, merged): strength **ledger**, **challenge-a-number**
+  + provenance, portfolio **EVIDENCE_REPORT**, **pyfair export** spike, **JP shard closed 4/6→6/6**
+  (first ledger delta — all 11 shards source-backed), **`new-shard` scaffold**, and **Insider Misuse
+  impact** retired 2/3 generic Cyentia bridges (Ponemon 2023). Also rewrote all of `main`'s history
+  to `raviaxo` authorship and stripped every `Co-Authored-By: Claude` trailer (per Ser; memory
+  `feedback-commit-identity`). Tests 147→190, gates green.
+- 2026-07-25/27 — **Go-to-market**, no product/evidence changes: public **explorer** built and hosted
+  on GitHub Pages (`raviaxo.github.io/RiskShard`, PRs #52/#53), README CTA (#54), then **redesigned to
+  the slate-&-copper mineral identity** (PR #60 — dark+light, self-hosted Fraunces+Plex Mono, amethyst/
+  copper shard mark). GTM strategy + venue map + design identity captured in memory (`gtm-strategy`,
+  `design-identity`). Drafted the 2nd LinkedIn post (evidence-thinness research, stats pulled live:
+  52/66 params "not-specific", 34 sources, 0 "high" confidence). 192 tests green; gates pass.
