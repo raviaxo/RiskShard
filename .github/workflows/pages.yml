@@ -43,7 +43,7 @@ jobs:
           pip install -r requirements.txt
       - name: Regenerate the explorer from repo data
         run: python scripts/build_explorer.py
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
           path: docs
