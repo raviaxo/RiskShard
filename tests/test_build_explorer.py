@@ -50,6 +50,21 @@ class RenderTests(unittest.TestCase):
         ):
             self.assertIn(tag, html)
 
+    def test_revisions_explain_why_a_published_number_moved(self):
+        """A returning reader must be able to see a figure changed, and why."""
+        from scripts.build_explorer import load_revisions
+
+        revisions = load_revisions()
+        self.assertTrue(revisions, "revisions.yaml should carry the ADR-0002 entry")
+        first = revisions[0]
+        for field in ("date", "title", "effect", "reason"):
+            self.assertTrue(first[field], f"revision entry missing {field}")
+
+        sample = dict(SAMPLE, revisions=revisions)
+        html = render(sample)
+        self.assertIn("Why these figures changed", html)
+        self.assertIn(first["title"], html)
+
     def test_layers_are_deep_linkable(self):
         """A number under discussion has to be addressable on its own."""
         html = render(SAMPLE)

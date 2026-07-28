@@ -98,6 +98,59 @@ six parameters' worth of frequency reasoning directly**:
   answered** — an availability shard with a bridged impact side would repeat the
   Insider/TPO generic-bridge weakness the queue is already trying to retire.
 
+## Round 2 — Spanish national, regional and EU sources (2026-07-28)
+
+Scouted INCIBE, CCN, the autonomous-community agencies and EU bodies specifically for
+**impact**. Headline finding: **Spanish public bodies publish counts and typologies,
+almost never euros.**
+
+**National**
+- **INCIBE Balance 2025** (Feb 2026) — 122,223 incidents managed (+26%); malware 55,411;
+  phishing/online fraud 25,133; **ransomware 392**; 60% hit SMEs and self-employed;
+  sector shares banking 34%, transport 14%, energy 8%. *Counts only.* Reported/managed
+  floor, same shape as the IC3÷Census anchor — usable for a frequency floor, **not** for
+  impact.
+- **AEPD Memoria 2025** — €48,108,765 total sanctions over 326 procedures (avg ≈
+  **€148,000**); breach-linked procedures 30 → 77 (+157%) carrying ≈ €20M (≈ **€260k**
+  average). *Regulatory penalty only* → loss-stage material, not `impact.likely`.
+
+**Regional** (checked because coverage is genuinely devolved in Spain)
+- **Agència de Ciberseguretat de Catalunya**, Memòria 2025 — 6,544 incidents handled
+  (+94% vs 3,372 in 2024); credential leaks 3,427, unauthorised access 2,573, malware
+  367; 26 crisis-committee activations; >9.1bn attack attempts detected. **But the
+  population is overwhelmingly public sector** (university 2,931, health 2,162,
+  Generalitat departments 1,962) — *not* mid-market enterprise, so it does not fit the
+  shard cell. No euro figures.
+- **Basque Cybersecurity Centre (BCSC)** — quarterly incident counts (e.g. 235 in one
+  2022 quarter: fraud 142, abusive content 34, intrusion 25) and a survey datapoint that
+  **64% of attacked Basque firms paid a ransom, and almost half were attacked again**.
+  Interesting behavioural evidence; no loss magnitudes found.
+
+**EU-level — the only credible euro anchors found**
+- **ENISA NIS Investments** — verified at source: *"The banking and healthcare sectors
+  are the sectors suffering the highest direct costs of major security incidents when
+  they happen, usually ranging from 213 000 to 300 000 EUR when the usual direct cost is
+  about 100 000 EUR."* Population: **947 Operators of Essential Services and Digital
+  Service Providers across all 27 Member States** (2021 edition; later editions report a
+  higher median, to be pinned before use). **Critical caveat: OES/DSP are large,
+  in-scope-of-NIS entities — applying this to mid-market almost certainly overstates.**
+
+**Rejected — do not register**
+- The Spanish SME cost figures circulating in trade press are mutually inconsistent and
+  mostly untraceable to a method: €2,500–60,000, €35,000–80,000, €75,000, €15,000–50,000
+  all appear as "the average cost of an attack on an SME" in 2025-26 articles. Without a
+  published methodology these fail the source bar.
+- The widely repeated **"60% of SMEs close within six months of a serious incident"** is
+  a well-known zombie statistic with no traceable primary source. It must not enter the
+  evidence base, and is noted here so a future contributor does not re-import it.
+
+**Net position on impact:** still unresolved for Spanish mid-market. The best available
+is an EU-level ENISA figure derived from large essential-service operators, which would
+be a *bridge with a loud size-mismatch caveat* — the same category of weakness the
+Insider/TPO objectives are trying to retire. Worth scouting next: Uptime Institute
+outage-cost bands, DORA major-incident reporting (EU financial entities, from 2025),
+and Spanish cyber-insurance claims data (UNESPA or broker loss studies).
+
 ## Recommendation
 
 1. Verify the 2019 datapoint and pull the exact Eurostat citation strings (dataset,

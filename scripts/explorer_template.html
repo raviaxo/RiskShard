@@ -102,6 +102,15 @@
   .losssub b{color:var(--ink);font-weight:500}
   .lossnote{font-size:11.5px;color:var(--faint);padding:8px 0 14px}
 
+  /* revision note — why a published number moved */
+  .revs{border-top:1px solid var(--edge);padding:12px 0 2px}
+  .revs h3{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+    font-weight:600;margin-bottom:8px}
+  .rev{font-size:12px;color:var(--muted);line-height:1.55;padding:7px 0;border-top:1px solid var(--hair)}
+  .rev:first-of-type{border-top:0}
+  .rev .when{color:var(--ink);font-weight:600}
+  .rev .why{color:var(--faint);display:block;margin-top:3px}
+
   .strata{border-top:1px solid var(--edge)}
   .strata .caphdr{display:flex;justify-content:space-between;align-items:center;padding:12px 0 4px}
   .strata .caphdr h3{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600}
@@ -240,6 +249,18 @@
       '\n\n### What I\'m disputing\n_Which of the value, the source, or the caveat is wrong — and why._\n\n### Evidence I\'m proposing instead\n_Named public source, the exact line, publication date._';
     return REPO+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
   }
+  /* If a published figure moved for a method reason, say so on the page rather than
+     letting a returning reader think the number was quietly changed. */
+  function revisionsHTML(){
+    var revs=DATA.revisions||[];
+    if(!revs.length) return '';
+    return '<div class="revs"><h3>Why these figures changed</h3>'+revs.map(function(r){
+      var link=r.decision?(' · <a target="_blank" rel="noopener" href="'+REPO+'/blob/main/'+esc(r.decision)+'">decision record</a>'):'';
+      return '<div class="rev"><span class="when">'+esc(r.date)+'</span> — '+esc(r.title)+link+
+        '<span class="why">'+esc(r.effect)+' '+esc(r.reason)+'</span></div>';
+    }).join('')+'</div>';
+  }
+
   function render(s,openParam){
     var rows=s.params.map(function(p){
       var backed=p.status==='source_backed';
@@ -265,6 +286,7 @@
       '<div class="losssub"><span>P95 · bad year&nbsp; <b class="tnum">'+esc(s.p95||'—')+'</b></span>'+
         '<span>P99 · severe&nbsp; <b class="tnum">'+esc(s.p99||'—')+'</b></span></div>'+
       '<div class="lossnote">Monte Carlo · 10,000 trials · seed 42 — a modeled range from public evidence, not a prediction.</div>'+
+      revisionsHTML()+
       '<div class="strata"><div class="caphdr"><h3>The 6 layers behind this range</h3><span class="hint">click a layer for its source + caveat</span></div>'+rows+'</div>';
     Array.prototype.forEach.call(record.querySelectorAll('.lrow>button'),function(btn){
       btn.addEventListener('click',function(){

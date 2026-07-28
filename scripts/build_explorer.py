@@ -15,6 +15,8 @@ import re
 import sys
 from pathlib import Path
 
+import yaml
+
 SCRIPT_ROOT = Path(__file__).resolve().parents[1]
 if str(SCRIPT_ROOT) not in sys.path:
     sys.path.insert(0, str(SCRIPT_ROOT))
@@ -31,6 +33,7 @@ from engine.web_console import WebConsoleApp  # noqa: E402
 
 TEMPLATE = Path(__file__).resolve().parent / "explorer_template.html"
 REPO_URL = "https://github.com/raviaxo/RiskShard"
+REVISIONS_PATH = ROOT / "revisions.yaml"
 # Where the built page is served. Absolute URLs are required by Open Graph /
 # Twitter cards, so link previews resolve when the page is shared.
 SITE_URL = "https://raviaxo.github.io/RiskShard/"
@@ -47,6 +50,25 @@ def _loss_range(app_root, module_id):
         return m.group(1).strip() if m else None
 
     return {"currency": grab("Currency"), "avg": grab("AVG"), "p95": grab("P95"), "p99": grab("P99")}
+
+
+def load_revisions(path=None):
+    """Method changes that moved published numbers (not evidence changes).
+
+    Shown on the page beside the figures they moved, so a reader who remembers an
+    older number can see what changed and why rather than assuming it was fudged.
+    """
+    path = Path(path or REVISIONS_PATH)
+    if not path.exists():
+        return []
+    entries = yaml.safe_load(path.read_text(encoding="utf-8")) or []
+    return [{
+        "date": str(entry.get("date", "")),
+        "title": entry.get("title", ""),
+        "effect": (entry.get("effect") or "").strip(),
+        "reason": (entry.get("reason") or "").strip(),
+        "decision": entry.get("decision"),
+    } for entry in entries]
 
 
 def build_data(root):
@@ -74,7 +96,8 @@ def build_data(root):
                 "caveat": c.get("caveat"),
             } for c in module["cards"]],
         })
-    return {"totals": portfolio["totals"], "shards": shards, "repo": REPO_URL}
+    return {"totals": portfolio["totals"], "shards": shards, "repo": REPO_URL,
+            "revisions": load_revisions()}
 
 
 def render(data, site_url=SITE_URL):
