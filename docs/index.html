@@ -3,280 +3,218 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Pick a cyber-risk shard, see its modeled dollar loss range, and trace or dispute every input to its named public source and caveat.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Ctext%20y=%22.9em%22%20font-size=%2290%22%3E%F0%9F%94%B7%3C/text%3E%3C/svg%3E">
-<title>RiskShard — every number, traceable</title>
+<meta name="description" content="RiskShard — pick a cyber-risk shard, see its modeled dollar loss range, and trace or dispute every input down to its named public source and caveat.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Cpath%20d=%22M50%208%20L50%2092%20L14%2050%20Z%22%20fill=%22%237C6AA6%22/%3E%3Cpath%20d=%22M50%208%20L86%2050%20L50%2092%20Z%22%20fill=%22%23C88C46%22/%3E%3C/svg%3E">
+<title>RiskShard — evidence, in dollars</title>
 <style>
+  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-400.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-500.woff2") format("woff2");font-weight:500;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-600.woff2") format("woff2");font-weight:600;font-display:swap}
+  @font-face{font-family:"Fraunces";src:url("fonts/fraunces-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+  @font-face{font-family:"Fraunces";src:url("fonts/fraunces-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+  @font-face{font-family:"Fraunces";src:url("fonts/fraunces-500-italic.woff2") format("woff2");font-weight:500;font-style:italic;font-display:swap}
+
+  /* dark (slate) — default, dark-first */
   :root{
-    --ground:#F4F6FA; --surface:#FFFFFF; --surface-2:#EEF2F8;
-    --ink:#0D1520; --muted:#586172; --faint:#8A94A6;
-    --line:#E1E7F0; --line-strong:#CBD5E4;
-    --accent:#2D6BE4; --accent-ink:#1B4FBF; --accent-wash:#E7EEFD;
-    --data:#0E7C93;
-    --ok:#1F9D63; --ok-wash:#E3F5EC;
-    --warn:#B9791F; --warn-wash:#FaF0DD;
-    --crit:#CC3F3F;
-    --shadow:0 1px 2px rgba(13,21,32,.04), 0 8px 24px rgba(13,21,32,.06);
-    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
-    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,Helvetica,Arial,sans-serif;
+    --ground:#0E1216; --panel:#161B20; --face:#1C232A; --edge:#28313A; --hair:#1E252C;
+    --ink:#EAE4D6; --muted:#9BA0A0; --faint:#69706F;
+    --copper:#C79459; --amethyst:#9A7BB8; --malachite:#46B27A; --amber:#CBA255;
+    --grain:.055;
+    --mono:"Plex Mono",ui-monospace,Menlo,monospace; --serif:"Fraunces",Georgia,serif;
   }
-  @media (prefers-color-scheme:dark){
+  @media (prefers-color-scheme:light){
     :root{
-      --ground:#080B12; --surface:#111725; --surface-2:#0D1220;
-      --ink:#E7EDF6; --muted:#93A0B4; --faint:#647087;
-      --line:#1E2839; --line-strong:#2A3A52;
-      --accent:#5C8DF0; --accent-ink:#8FB2F7; --accent-wash:#16233D;
-      --data:#3FC0D8;
-      --ok:#43C08A; --ok-wash:#12281E;
-      --warn:#D6A24A; --warn-wash:#2A2113;
-      --crit:#E0685F;
-      --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.35);
+      --ground:#EAE3D2; --panel:#F1EBDC; --face:#E7E0CD; --edge:#D6CDB6; --hair:#DED5C0;
+      --ink:#241F17; --muted:#6E6656; --faint:#9A917E;
+      --copper:#9C5E23; --amethyst:#6B5391; --malachite:#2C7A4E; --amber:#9A6B1E;
+      --grain:.04;
     }
   }
-  :root[data-theme="light"]{
-    --ground:#F4F6FA; --surface:#FFFFFF; --surface-2:#EEF2F8;
-    --ink:#0D1520; --muted:#586172; --faint:#8A94A6;
-    --line:#E1E7F0; --line-strong:#CBD5E4;
-    --accent:#2D6BE4; --accent-ink:#1B4FBF; --accent-wash:#E7EEFD;
-    --data:#0E7C93; --ok:#1F9D63; --ok-wash:#E3F5EC; --warn:#B9791F; --warn-wash:#FAF0DD; --crit:#CC3F3F;
-    --shadow:0 1px 2px rgba(13,21,32,.04), 0 8px 24px rgba(13,21,32,.06);
-  }
-  :root[data-theme="dark"]{
-    --ground:#080B12; --surface:#111725; --surface-2:#0D1220;
-    --ink:#E7EDF6; --muted:#93A0B4; --faint:#647087;
-    --line:#1E2839; --line-strong:#2A3A52;
-    --accent:#5C8DF0; --accent-ink:#8FB2F7; --accent-wash:#16233D;
-    --data:#3FC0D8; --ok:#43C08A; --ok-wash:#12281E; --warn:#D6A24A; --warn-wash:#2A2113; --crit:#E0685F;
-    --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 32px rgba(0,0,0,.35);
-  }
-
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
-    line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"kern";}
-  .wrap{max-width:1180px;margin:0 auto;padding:clamp(20px,4vw,44px) clamp(16px,4vw,32px);}
-  a{color:var(--accent-ink);text-decoration:none}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--ground);color:var(--ink);font-family:var(--mono);line-height:1.5;
+    position:relative;-webkit-font-smoothing:antialiased;font-feature-settings:"kern"}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9;opacity:var(--grain);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,44px) clamp(16px,4vw,36px) 60px}
+  a{color:var(--copper);text-decoration:none}
   a:hover{text-decoration:underline}
   .tnum{font-variant-numeric:tabular-nums}
-  .mono{font-family:var(--mono)}
 
-  /* header */
-  header .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--accent-ink);display:flex;align-items:center;gap:9px;margin-bottom:14px}
-  header .kicker .dia{width:11px;height:11px;background:var(--accent);transform:rotate(45deg);border-radius:2px}
-  h1{font-size:clamp(26px,4.4vw,42px);line-height:1.08;letter-spacing:-.02em;margin:0 0 12px;
-    text-wrap:balance;font-weight:660}
-  h1 em{font-style:normal;color:var(--accent-ink)}
-  .lede{font-size:clamp(15px,1.6vw,18px);color:var(--muted);max-width:60ch;margin:0}
-  .stats{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
-  .stat{display:flex;flex-direction:column;gap:2px}
-  .stat b{font-family:var(--mono);font-size:22px;letter-spacing:-.01em;color:var(--ink)}
-  .stat span{font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em}
-  .stat .green{color:var(--ok)}
+  .filebar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+    font-size:12px;letter-spacing:.09em;color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--edge)}
+  .filebar .brand{display:flex;align-items:center;gap:12px;color:var(--ink);font-weight:500;letter-spacing:.22em}
+  .filebar .meta b{color:var(--malachite);font-weight:600}
 
-  /* app shell */
-  .app{display:grid;grid-template-columns:288px 1fr;gap:22px;margin-top:30px;align-items:start}
-  @media(max-width:820px){.app{grid-template-columns:1fr}}
+  header{padding:42px 0 30px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(30px,5vw,56px);line-height:1.05;
+    letter-spacing:-.015em;max-width:18ch}
+  h1 em{font-style:italic;color:var(--copper)}
+  .lede{margin-top:18px;font-size:14px;color:var(--muted);max-width:66ch;line-height:1.6}
+  .lede b{color:var(--ink)}
 
-  .rail{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
-  .rail h2{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
-    margin:0;padding:15px 16px 9px}
-  .rail .list{display:flex;flex-direction:column}
-  .srow{display:flex;align-items:center;gap:11px;padding:11px 16px;border:0;background:none;
-    width:100%;text-align:left;cursor:pointer;border-top:1px solid var(--line);color:var(--ink);
-    font-family:var(--sans);font-size:14px;transition:background .12s}
-  .srow:hover{background:var(--surface-2)}
-  .srow[aria-current="true"]{background:var(--accent-wash)}
-  .srow[aria-current="true"] .flag{color:var(--accent-ink)}
-  .srow .flag{font-family:var(--mono);font-weight:640;font-size:12px;letter-spacing:.03em;
-    color:var(--muted);min-width:22px}
-  .srow .st{flex:1;min-width:0}
-  .srow .st b{display:block;font-weight:560;font-size:13.5px;text-transform:capitalize;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .srow .st span{font-size:11.5px;color:var(--faint)}
-  .srow .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
-  .srow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  .app{display:grid;grid-template-columns:236px 1fr;gap:28px;margin-top:20px;align-items:start}
+  @media(max-width:800px){.app{grid-template-columns:1fr}}
 
-  /* detail */
-  .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;
-    box-shadow:var(--shadow);overflow:hidden}
-  .phead{padding:20px 22px;border-bottom:1px solid var(--line);
-    background:linear-gradient(180deg,var(--surface-2),transparent)}
-  .phead .ctx{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;color:var(--muted);
-    text-transform:uppercase;margin-bottom:7px}
-  .phead h3{margin:0 0 4px;font-size:20px;letter-spacing:-.01em;font-weight:640}
-  .grade{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-family:var(--mono);
-    padding:3px 9px;border-radius:999px;background:var(--surface-2);color:var(--muted);
-    border:1px solid var(--line-strong);margin-top:6px}
-  .grade .g{width:7px;height:7px;border-radius:50%;background:var(--warn)}
+  /* index */
+  .index h2{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:0 0 8px;font-weight:600}
+  .index .list{border-top:1px solid var(--edge)}
+  .frow{display:grid;grid-template-columns:24px 1fr auto;gap:9px;align-items:center;width:100%;
+    padding:9px 4px;border:0;background:none;border-bottom:1px solid var(--hair);cursor:pointer;
+    text-align:left;color:var(--ink);font-family:var(--mono);font-size:13px;transition:background .1s}
+  .frow:hover{background:var(--face)}
+  .frow[aria-current="true"]{background:var(--face)}
+  .frow[aria-current="true"] .nm{color:var(--copper)}
+  .frow .cc{color:var(--muted);font-weight:500}
+  .frow .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:capitalize}
+  .frow .ok{color:var(--malachite)}
 
-  .loss{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 30px;padding:20px 22px 6px}
-  .loss .big{display:flex;flex-direction:column;gap:3px}
-  .loss .big .lab{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}
-  .loss .big .v{font-family:var(--mono);font-size:clamp(28px,4vw,38px);font-weight:640;
-    letter-spacing:-.02em;color:var(--accent-ink);line-height:1}
-  .loss .sub{display:flex;gap:26px}
-  .loss .sub .lab{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}
-  .loss .sub .v{font-family:var(--mono);font-size:19px;font-weight:560;color:var(--ink)}
-  .lossnote{padding:6px 22px 18px;font-size:12.5px;color:var(--faint);max-width:64ch}
+  /* record with stratigraphic edge */
+  .record{position:relative;background:var(--panel);border:1px solid var(--edge);border-radius:2px;
+    padding:24px 26px 20px 30px;overflow:hidden}
+  .record::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+    background:linear-gradient(180deg,var(--copper) 0 20%,var(--amethyst) 20% 40%,var(--malachite) 40% 88%,var(--faint) 88% 100%)}
+  .rechead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;
+    border-bottom:1px solid var(--edge);padding-bottom:12px}
+  .rechead .spec{font-size:11.5px;letter-spacing:.06em;color:var(--faint)}
+  .rechead .spec b{color:var(--ink);font-weight:500;font-size:13px;letter-spacing:.02em}
+  .rechead .grade{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint)}
 
-  /* evidence table */
-  .ev{border-top:1px solid var(--line)}
-  .ev .cap{display:flex;justify-content:space-between;align-items:center;gap:12px;
-    padding:15px 22px 8px}
-  .ev .cap h4{margin:0;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
-  .ev .cap .hint{font-size:12px;color:var(--faint)}
-  .prow{border-top:1px solid var(--line)}
-  .prow > button{display:grid;grid-template-columns:132px 1fr auto;gap:14px;align-items:baseline;
-    width:100%;padding:13px 22px;background:none;border:0;cursor:pointer;text-align:left;
-    color:var(--ink);font-family:var(--sans);transition:background .12s}
-  .prow > button:hover{background:var(--surface-2)}
-  .prow > button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-  .prow .pname{font-family:var(--mono);font-size:13px;color:var(--muted)}
-  .prow .pval{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--data);letter-spacing:-.01em}
-  .prow .pval small{color:var(--faint);font-weight:500;font-size:11.5px;margin-left:5px}
-  .prow .pval{display:block}
-  .prow .psrc{display:block;font-size:12.5px;color:var(--muted);margin-top:3px}
-  .prow .chip{font-size:10.5px;font-family:var(--mono);letter-spacing:.03em;padding:3px 8px;border-radius:6px;
-    background:var(--ok-wash);color:var(--ok);white-space:nowrap;align-self:center}
-  .prow .chip.assumed{background:var(--warn-wash);color:var(--warn)}
-  .prow .body{max-height:0;overflow:hidden;transition:max-height .22s ease}
-  .prow.open .body{max-height:420px}
-  .prow .bodyin{padding:2px 22px 18px;display:grid;gap:11px}
-  .prow.open{background:var(--surface-2)}
-  .field .fl{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:3px}
-  .field .quote{font-size:13.5px;color:var(--ink);border-left:2px solid var(--accent);padding-left:12px;
-    font-style:italic}
-  .field .caveat{font-size:13px;color:var(--muted)}
-  .disp{justify-self:start;font-family:var(--mono);font-size:12px;display:inline-flex;align-items:center;gap:7px;
-    padding:7px 12px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);
-    color:var(--accent-ink)}
-  .disp:hover{background:var(--accent-wash);text-decoration:none;border-color:var(--accent)}
-  .caret{transition:transform .2s;color:var(--faint);font-size:13px}
-  .prow.open .caret{transform:rotate(90deg)}
+  .loss{padding:20px 0 2px;max-width:62%}
+  .loss .cap{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .loss .big{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4.6vw,42px);letter-spacing:-.01em;line-height:1}
+  @media(max-width:640px){.loss{max-width:100%}}
+  .losssub{display:flex;flex-wrap:wrap;gap:6px 28px;padding:14px 0 4px;font-size:13.5px;color:var(--muted)}
+  .losssub b{color:var(--ink);font-weight:500}
+  .lossnote{font-size:11.5px;color:var(--faint);padding:8px 0 14px}
 
-  footer{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);
-    font-size:12.5px;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
-  footer .warn{max-width:66ch}
+  .strata{border-top:1px solid var(--edge)}
+  .strata .caphdr{display:flex;justify-content:space-between;align-items:center;padding:12px 0 4px}
+  .strata .caphdr h3{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600}
+  .strata .caphdr .hint{font-size:11.5px;color:var(--faint)}
+  .lrow{border-top:1px solid var(--hair)}
+  .lrow>button{display:grid;grid-template-columns:128px 92px 1fr auto;gap:12px;align-items:baseline;
+    width:100%;padding:11px 2px;background:none;border:0;cursor:pointer;text-align:left;color:var(--ink);
+    font-family:var(--mono);font-size:12.5px;transition:background .1s}
+  .lrow>button:hover{background:var(--face)}
+  .lrow .p{color:var(--muted)}
+  .lrow .v{font-weight:600;font-variant-numeric:tabular-nums}
+  .lrow .src{color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lrow .tag{font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--malachite);white-space:nowrap;align-self:center}
+  .lrow .tag.est{color:var(--amber)}
+  .lrow .body{max-height:0;overflow:hidden;transition:max-height .22s ease}
+  .lrow.open .body{max-height:460px}
+  .lrow.open{background:var(--face)}
+  .lrow .bodyin{padding:2px 2px 16px;display:grid;gap:10px}
+  .field{font-size:12.5px;display:grid;grid-template-columns:58px 1fr;gap:12px;align-items:baseline}
+  .field .fl{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+  .field .quote{color:var(--ink);border-left:2px solid var(--copper);padding-left:11px}
+  .field .caveat{color:var(--muted)}
+  .disp{font-size:12px;color:var(--copper);border:1px solid var(--edge);border-radius:2px;padding:6px 11px;
+    justify-self:start;background:var(--panel)}
+  .disp:hover{background:var(--face);text-decoration:none;border-color:var(--copper)}
+
+  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--edge);color:var(--faint);
+    font-size:12px;display:flex;flex-wrap:wrap;gap:6px 22px;justify-content:space-between;line-height:1.5}
   footer b{color:var(--muted);font-weight:600}
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-
 <div class="wrap">
+  <div class="filebar">
+    <span class="brand">
+      <svg width="17" height="17" viewBox="0 0 100 100"><path d="M50 8 L50 92 L14 50 Z" fill="var(--amethyst)"/><path d="M50 8 L86 50 L50 92 Z" fill="var(--copper)"/></svg>RISKSHARD
+    </span>
+    <span class="meta" id="filemeta"></span>
+  </div>
+
   <header>
-    <div class="kicker"><span class="dia"></span> RiskShard · evidence-governed CRQ</div>
-    <h1>Every number here <em>traces to a public source</em> — so every number is one you can dispute.</h1>
-    <p class="lede">Pick a risk shard. See the modeled dollar loss range, then open any parameter to read
-      the exact source line it came from and the caveat that limits it. Nothing on this page is hand-written —
-      it's generated from the open repo.</p>
-    <div class="stats" id="stats"></div>
+    <h1>Every number traces to a <em>public source.</em></h1>
+    <p class="lede">Each risk shard is a specimen — cut it open and read every layer. Pick one, see its
+      modeled dollar loss range, then trace any input down to the exact public source and the caveat
+      that bounds it — and <b>dispute it in one click</b>. Nothing here is hand-written; it's cut from
+      the open repo.</p>
   </header>
 
   <div class="app">
-    <nav class="rail" aria-label="Risk shards">
-      <h2>Risk shards</h2>
-      <div class="list" id="rail"></div>
+    <nav class="index" aria-label="Specimens on file">
+      <h2>Specimens on file</h2>
+      <div class="list" id="index"></div>
     </nav>
-    <main class="panel" id="panel" aria-live="polite"></main>
+    <main class="record" id="record" aria-live="polite"></main>
   </div>
 
   <footer>
-    <span class="warn"><b>Read the maturity honestly.</b> These are governed-starter / review-candidate shards —
-      not human-approved benchmarks. Loss tails (P95/P99) are directional, not precise.</span>
-    <span>Regenerated from <a id="repo" href="#">raviaxo/RiskShard</a> · nothing hand-written.</span>
+    <span><b>Read the maturity honestly.</b> Governed-starter / review-candidate shards — not
+      human-approved benchmarks. Loss tails (P95/P99) are directional, not precise.</span>
+    <span>Cut from <a id="repo" href="#">raviaxo/RiskShard</a> · nothing hand-written.</span>
   </footer>
 </div>
 
 <script type="application/json" id="rs-data">{"totals":{"shards":11,"params_total":66,"params_source_backed":66,"params_bridged":0,"params_missing":0},"shards":[{"id":"au_finance_bec_midmarket","title":"Australia Finance Business Email Compromise Midmarket","country":"AU","industry":"financial_services","size":"mid_market","threat":"business_email_compromise","status":"governed_starter","avg":"AUD 55,021.72","p95":"AUD 145,032.44","p99":"AUD 199,681.65","params":[{"parameter":"frequency.min","value":0.00010514176186819692,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"ACCC Targeting Scams Report 2025 and ABS Counts of Australian Businesses 2024-25","source_type":"derived_scam_statistical_benchmark","publication_date":"2026-03-30","quote":"ACCC small-business section reported 287 small-business reports with financial loss; ABS reported 2,729,648 active Australian businesses at 30 June 2025.","caveat":"Scamwatch loss reports are not complete BEC events, not financial-services-specific, and the denominator is all Australian businesses rather than mid-market financial-services firms."},{"parameter":"frequency.likely","value":0.21,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Characteristics of Australian Business, 2024-25","source_type":"official_statistics_bridge","publication_date":"2026-06-25","quote":"ABS reports that just over one in five (21%) of Australian businesses experienced a cyber security incident during 2024-25.","caveat":"All-industry, all-size, all-cyber measure, not BEC-specific and not mid-market-financial-services-specific; it counts businesses experiencing any cyber security incident, not confirmed BEC loss events, so it overstates BEC-only frequency. Revise when BEC-specific AU mid-market evidence is reviewed."},{"parameter":"frequency.max","value":0.81,"unit":"annual_probability","status":"source_backed","confidence":"low","source_name":"MYOB mid-sized business cyber attack survey 2024","source_type":"industry_survey_bridge","publication_date":"2024-06-01","quote":"MYOB survey (by Dynata, fieldwork 22 March - 15 April 2024, n=593 mid-sized Australian businesses) reports 81% of finance and insurance mid-sized businesses experienced a cyber attack, versus 60% of mid-sized businesses overall.","caveat":"Commercial vendor survey (MYOB/Dynata), lower trust than official statistics; measures all cyber attacks, not BEC-specific, and counts businesses experiencing an attack rather than confirmed BEC loss events; mid-sized defined as 20-500 FTE with revenue over AUD 5M. Revise when official AU finance mid-market BEC frequency is available."},{"parameter":"impact.min","value":33101.05,"unit":"currency","status":"source_backed","confidence":"low","source_name":"ACCC Targeting Scams Report 2025","source_type":"scam_report","publication_date":"2026-03-30","quote":"Small-business Scamwatch section reports AUD 9.5 million losses and 287 small-business reports with financial loss in 2025.","caveat":"Scam-wide small-business average from Scamwatch reports, not BEC-only, financial-services-specific, mid-market-specific, or a full severity distribution."},{"parameter":"impact.likely","value":123005.43,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"FBI IC3 2025 Annual Report","source_type":"law_enforcement_report","publication_date":"2026-04-16","quote":"2025 Crime Types tables list Business Email Compromise with 24,768 complaints and USD 3,046,598,558 in adjusted losses.","caveat":"US IC3 complaint population; self-reported and complaint-driven; not Australia-specific, financial-services-specific, mid-market-specific, or a full loss distribution."},{"parameter":"impact.max","value":2000000,"unit":"currency","status":"source_backed","confidence":"low","source_name":"ACCC Targeting Scams Report 2025","source_type":"scam_report","publication_date":"2026-03-30","quote":"Figure 10 reports AUD 2.0 million in false billing losses for small businesses, and notes false billing generally relates to payment redirections also known as BEC scams.","caveat":"Aggregate small-business Scamwatch losses; not financial-services-specific, mid-market-specific, or a direct tail quantile."}]},{"id":"au_finance_data_breach_midmarket","title":"Australia Finance Data Breach Midmarket","country":"AU","industry":"financial_services","size":"mid_market","threat":"data_breach","status":"benchmark_review_candidate","avg":"AUD 139,807.67","p95":"AUD 330,976.44","p99":"AUD 440,830.64","params":[{"parameter":"frequency.min","value":0.0008,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"OAIC NDB Report July-Dec 2024 and ABS Counts of Australian Businesses 2024-25","source_type":"derived_regulator_statistical_benchmark","publication_date":"2025-05-13","quote":"OAIC Page 15, Table 5 reported 54 finance notifications for July-Dec 2024; ABS industry section reported 133,743 Financial and Insurance Services businesses in 2024-25.","caveat":"Covers eligible Australian NDB notifications only; all-size sector denominator is not mid-market-specific; multiple notifications by one entity and unreported/non-reportable breaches can distort organization-level probability. Confidence is medium for a reported-notification floor, not for a likely breach rate."},{"parameter":"frequency.likely","value":0.65,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Cyber Security Breaches Survey 2025/2026","source_type":"official_statistics_bridge","publication_date":"2026-04-30","quote":"Summary and Chapter 4 report that 65% of UK medium businesses identified a cyber security breach or attack in the last 12 months.","caveat":"UK official survey; covers identified cyber breaches or attacks, not privacy-only data breaches; not Australia-specific, not financial-services-specific, and may include high-volume low-impact events."},{"parameter":"frequency.max","value":0.69,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Cyber Security Breaches Survey 2025/2026","source_type":"official_statistics_bridge","publication_date":"2026-04-30","quote":"Summary and Chapter 4 report that 69% of UK large businesses identified a cyber security breach or attack in the last 12 months.","caveat":"UK official survey; covers identified cyber breaches or attacks, not privacy-only data breaches; large-business prevalence can overstate mid-market likelihood; not Australia-specific or financial-services-specific."},{"parameter":"impact.min","value":97200,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Business Queensland Keeping your business cyber secure","source_type":"government_business_guidance","publication_date":"2025-10-23","quote":"Page section \"Keeping your business cyber secure\"; average cost of cybercrime in Australia list.","caveat":"Secondary government guidance page that links to ASD as the primary source; cybercrime-wide rather than data-breach-specific, not financial-services-specific, and not a loss distribution quantile."},{"parameter":"impact.likely","value":4400000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"IBM Cost of a Data Breach Report 2025","source_type":"data_breach_cost_research","publication_date":"2025-07-30","quote":"Public report page hero metric; global average cost of a data breach is USD 4.4M.","caveat":"Global average across studied breached organizations; not Australia-specific, financial-services-specific, or size-band-specific."},{"parameter":"impact.max","value":50000000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Privacy Act 1988","source_type":"legislation","publication_date":"2026-06-04","quote":"Section 13G(3), Federal Register compilation C2026C00227, compilation date 4 June 2026.","caveat":"Statutory maximum penalty cap, not a total event-loss estimate, not expected loss, not financial-services-specific, and actual penalties depend on regulator and court facts."}]},{"id":"au_finance_ransomware_midmarket","title":"Australia Finance Ransomware Midmarket","country":"AU","industry":"financial_services","size":"mid_market","threat":"ransomware","status":"benchmark_review_candidate","avg":"AUD 8,497,672.35","p95":"AUD 21,305,999.50","p99":"AUD 27,668,759.75","params":[{"parameter":"frequency.min","value":0.1,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Cyentia IRIS Ransomware","source_type":"ransomware_research","publication_date":"2025-04-21","quote":"Key findings on the public IRIS Ransomware source page.","caveat":"Global cross-sector estimate; not Australia-specific and not financial-services-specific."},{"parameter":"frequency.likely","value":0.65,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Sophos State of Ransomware in Financial Services 2024","source_type":"industry_survey","publication_date":"2024-06-24","quote":"Article section \"Attack rates have remained steady, but recovery is more expensive.\"","caveat":"Global financial-services survey, not Australia-specific; survey population may not equal the target organization's peer group."},{"parameter":"frequency.max","value":0.65,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Sophos State of Ransomware in Financial Services 2024","source_type":"industry_survey","publication_date":"2024-06-24","quote":"Article section \"Attack rates have remained steady, but recovery is more expensive.\"","caveat":"Global financial-services survey, not Australia-specific; using the same 65% statistic for likely and max means the frequency range is intentionally conservative and awaits better tail-frequency evidence."},{"parameter":"impact.min","value":97200,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Business Queensland Keeping your business cyber secure","source_type":"government_business_guidance","publication_date":"2025-10-23","quote":"Page section \"Keeping your business cyber secure\"; average cost of cybercrime in Australia list.","caveat":"Secondary government guidance page that links to ASD as the primary source; cybercrime-wide rather than ransomware-specific, not financial-services-specific, and not a loss distribution quantile."},{"parameter":"impact.likely","value":2580000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Sophos State of Ransomware in Financial Services 2024","source_type":"industry_survey","publication_date":"2024-06-24","quote":"Article section \"Attack rates have remained steady, but recovery is more expensive.\"","caveat":"Global financial-services value, not Australia-specific; the public article does not provide size-band segmentation."},{"parameter":"impact.max","value":52000000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Cyentia Information Risk Insights Study 2022","source_type":"cyber_loss_research","publication_date":"2022-01-01","quote":"Public source page key findings; the top 5% of loss events balloon to USD 52M.","caveat":"Global cyber-event loss benchmark, not Australia-specific, ransomware-only, financial-services-specific, or a formal ransomware claim-severity percentile. Use as an automated benchmark-review stress bridge only with human caveat review."}]},{"id":"ca_finance_data_breach_midmarket","title":"Canada Finance Data Breach Midmarket","country":"CA","industry":"financial_services","size":"mid_market","threat":"data_breach","status":"benchmark_review_candidate","avg":"CAD 4,457,331.38","p95":"CAD 9,895,653.84","p99":"CAD 12,273,333.05","params":[{"parameter":"frequency.min","value":0.2436,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"OPC 2025-2026 Annual Report to Parliament","source_type":"derived_privacy_regulator_survey_benchmark","publication_date":"2026-06-04","quote":"Top trends in privacy reports that 42% of Canadian organizations experienced a breach of customer or employee data in the last 12 months; Breaches section reports 58% of PIPEDA breaches were likely to create a real risk of significant harm.","caveat":"Combines a cross-sector organization survey fact with a conditional PIPEDA reported-breach harm share; not financial-services-specific, mid-market-specific, or a denominator-backed sector incident rate."},{"parameter":"frequency.likely","value":0.42,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"OPC 2025-2026 Annual Report to Parliament","source_type":"privacy_regulator_report","publication_date":"2026-06-04","quote":"Top trends in privacy reports that 42% of Canadian organizations experienced a breach of customer or employee data in the last 12 months; footnote 8 cites the CIRA survey.","caveat":"Cross-sector Canadian organization survey fact cited by OPC/CIRA; not limited to financial services, mid-market companies, material events, or regulator-reportable breaches."},{"parameter":"frequency.max","value":0.42,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"OPC 2025-2026 Annual Report to Parliament","source_type":"privacy_regulator_report","publication_date":"2026-06-04","quote":"Top trends in privacy reports that 42% of Canadian organizations experienced a breach of customer or employee data in the last 12 months; footnote 8 cites the CIRA survey.","caveat":"Cross-sector Canadian organization survey fact cited by OPC/CIRA; not limited to financial services, mid-market companies, material events, or regulator-reportable breaches."},{"parameter":"impact.min","value":266000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Cyentia Information Risk Insights Study 2022","source_type":"cyber_loss_research","publication_date":"2022-01-01","quote":"Public source page key findings; typical financial cost reported for a cyber event is USD 266K.","caveat":"Global cyber-event benchmark, not Canada-specific, data-breach-only, financial-services-specific, or a true minimum loss quantile. Accept only as a benchmark-review bridge with this caveat."},{"parameter":"impact.likely","value":6980000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"IBM Canada newsroom release, Cost of a Data Breach Report 2025","source_type":"data_breach_cost_research","publication_date":"2025-07-30","quote":"Release reports Canadian businesses are losing CA$6.98 million on average to data breaches, up 10.4% from CA$6.32 million in 2024; the financial sector leads at CA$9.97 million in 2025.","caveat":"Primary IBM Canada release, but an all-sector national average across studied breached organizations, not mid-market-specific or financial-services-specific; IBM's sample skews toward larger organizations, so this is an upper-leaning mid-market likely anchor."},{"parameter":"impact.max","value":32000000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Cyentia Information Risk Insights Study 2025","source_type":"cyber_loss_research","publication_date":"2025-06-10","quote":"Public source page key findings; median losses rose toward USD 3M, with extreme events reaching USD 32M.","caveat":"Global security-incident benchmark, not Canada-specific, data-breach-only, financial-services-specific, or a formal percentile for this scenario. Accept only as a benchmark-review stress bridge with this caveat."}]},{"id":"de_industrial_ransomware_midmarket","title":"Germany Industrial Ransomware Midmarket","country":"DE","industry":"manufacturing","size":"mid_market","threat":"ransomware","status":"benchmark_review_candidate","avg":"USD 588,586.21","p95":"USD 1,282,225.81","p99":"USD 1,653,885.63","params":[{"parameter":"frequency.min","value":0.1,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Cyentia IRIS Ransomware","source_type":"ransomware_research","publication_date":"2025-04-21","quote":"Key findings on the public IRIS Ransomware source page.","caveat":"Global cross-sector estimate; not Germany-specific, manufacturing-specific, or size-band-specific."},{"parameter":"frequency.likely","value":0.34,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Bitkom Wirtschaftsschutz 2025","source_type":"official_statistics","publication_date":"2025-12-01","quote":"Section 3.2, figure 11; 34% of surveyed German companies reported ransomware-caused damage in the prior 12 months.","caveat":"Cross-industry Germany company survey; not manufacturing-specific, not limited to mid-market organizations, and reflects damage-causing ransomware rather than all attack attempts."},{"parameter":"frequency.max","value":0.59,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Bitkom Wirtschaftsschutz 2025","source_type":"official_statistics","publication_date":"2025-12-01","quote":"Section 3.2, figure 12; ransom-payment chart basis lists n=588 companies affected by ransomware attacks out of the n=1,002 survey base.","caveat":"Derived from survey basis counts rather than a standalone plotted rate; cross-industry, survey-based, and broader than damage-causing ransomware."},{"parameter":"impact.min","value":10000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Bitkom Wirtschaftsschutz 2025","source_type":"official_statistics","publication_date":"2025-12-01","quote":"Section 3.2, figure 12; ransom-payment bands include EUR 10,000-100,000, EUR 100,000-500,000, EUR 500,000-1M, and EUR 1M+.","caveat":"Payment-only lower-band anchor, not total event loss, recovery cost, downtime, or a Germany industrial claims distribution."},{"parameter":"impact.likely","value":1300000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Sophos State of Ransomware in Manufacturing and Production 2025","source_type":"industry_survey","publication_date":"2025-12-04","quote":"Ransom demands, payments and attack recovery costs section; mean recovery cost excluding ransoms paid was USD 1.3M in 2025.","caveat":"Global manufacturing survey of organizations hit by ransomware; excludes ransoms paid, is not Germany-specific, and is not a full total-loss distribution."},{"parameter":"impact.max","value":5000000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Sophos State of Ransomware in Manufacturing and Production 2025","source_type":"industry_survey","publication_date":"2025-12-04","quote":"Ransom demands, payments and attack recovery costs section; extreme USD 5M+ demand and payout cases saw a slight uptick.","caveat":"Threshold for extreme ransom demands and payouts, not total event loss, not Germany-specific, and not a formal percentile or upper bound."}]},{"id":"fr_finance_data_breach_midmarket","title":"France Finance Data Breach Midmarket","country":"FR","industry":"financial_services","size":"mid_market","threat":"data_breach","status":"governed_starter","avg":"USD 276,939.85","p95":"USD 624,170.24","p99":"USD 817,578.71","params":[{"parameter":"frequency.min","value":0.0198,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France)","source_type":"official_statistics","publication_date":"2025-10-08","quote":"Eurostat E_SEC2ICNF, France 2024, size class 10-49 = 1.98% of enterprises had an incident leading to disclosure of confidential data (verified in gathered JSON).","caveat":"Eurostat survey population excludes the financial sector (nace_r2 = C10-S951_X_K), so this is a non-financial-sector proxy; self-reported disclosure incidents are narrower than \"any cyberattack\"; small-enterprise rate used as a floor."},{"parameter":"frequency.likely","value":0.0383,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France)","source_type":"official_statistics","publication_date":"2025-10-08","quote":"Eurostat E_SEC2ICNF, France 2024, size class 50-249 = 3.83% of enterprises had an incident leading to disclosure of confidential data (verified in gathered JSON); 250+ was 7.3%.","caveat":"Eurostat survey population excludes the financial sector, which is typically more targeted, so this likely understates; self-reported disclosure incidents are narrower than \"any cyberattack.\""},{"parameter":"frequency.max","value":0.073,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France)","source_type":"official_statistics","publication_date":"2025-10-08","quote":"Eurostat E_SEC2ICNF, France 2024, size class 250+ = 7.3% of enterprises had an incident leading to disclosure of confidential data (verified in gathered JSON).","caveat":"Eurostat survey population excludes the financial sector, which is typically more targeted, so this likely understates; large-enterprise rate used as an upper bound for a mid-market shard."},{"parameter":"impact.min","value":58600,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Asteres - Le cout des cyberattaques reussies en France (2022)","source_type":"economic_impact_study","publication_date":"2023-06-16","quote":"Asteres reports the average cost of a successful cyberattack in France at EUR 58,600 (direct cost EUR 25,600 excluding ransom); figure verified in gathered PDF text.","caveat":"Economy-wide France average across all organization sizes and all cyberattack types, not data-breach-specific, financial-services-specific, or a true minimum quantile. Used only as a conservative lower-bound anchor."},{"parameter":"impact.likely","value":3590000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Rapport IBM 2025 : co\u00fbt d'une violation de donn\u00e9es en France","source_type":"data_breach_cost_research","publication_date":"2025-07-30","quote":"Primary IBM France release; 2025 France national average cost of a data breach is EUR 3.59M, with a financial-services sector average of EUR 4.65M, from 34 French organizations (March 2024-February 2025).","caveat":"All-sector France national average, not mid-market- or financial-services-specific; based on 34 French organizations and enterprise-weighted, so treat as an upper-leaning mid-market likely anchor. The France financial-services sub-figure (EUR 4.65M) rests on a small sample and is recorded as sector context, not the selected anchor."},{"parameter":"impact.max","value":20000000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"GDPR Article 83(5) maximum administrative fine (via CNIL)","source_type":"legislation","publication_date":"2018-05-25","quote":"CNIL states the GDPR maximum administrative fine for the most serious breaches is EUR 20 million or 4% of worldwide annual turnover, whichever is higher (page text: '20 millions', '4 %'); verified in gathered HTML.","caveat":"Statutory maximum penalty cap, not a total event-loss estimate, expected loss, or claims severity; actual fines depend on regulator and case facts."}]},{"id":"gb_finance_data_breach_midmarket","title":"United Kingdom Finance Data Breach Midmarket","country":"GB","industry":"financial_services","size":"mid_market","threat":"data_breach","status":"benchmark_review_candidate","avg":"GBP 3,530,066.68","p95":"GBP 5,763,789.45","p99":"GBP 6,427,200.23","params":[{"parameter":"frequency.min","value":0.43,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Cyber Security Breaches Survey 2025/2026","source_type":"official_statistics","publication_date":"2026-04-30","quote":"Summary and Chapter 4 report that 43% of UK businesses identified a cyber security breach or attack in the last 12 months.","caveat":"Covers identified breaches or attacks, not privacy-only data breaches; hidden or unidentified events may be absent; all-business figure is not financial-services-specific."},{"parameter":"frequency.likely","value":0.65,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Cyber Security Breaches Survey 2025/2026","source_type":"official_statistics","publication_date":"2026-04-30","quote":"Summary and Chapter 4 report that medium businesses were more likely to have experienced a cyber breach or attack, at 65%.","caveat":"Covers identified breaches or attacks, not privacy-only data breaches; not financial-services-specific and may include high-volume low-impact events."},{"parameter":"frequency.max","value":0.69,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Cyber Security Breaches Survey 2025/2026","source_type":"official_statistics","publication_date":"2026-04-30","quote":"Summary and Chapter 4 report that large businesses experienced cyber breaches or attacks at 69%.","caveat":"Covers identified breaches or attacks, not privacy-only data breaches; larger organization prevalence may overstate mid-market frequency."},{"parameter":"impact.min","value":10000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Cyber Security Breaches Survey 2025/2026","source_type":"official_statistics","publication_date":"2026-04-30","quote":"Summary reports that the top 5% perceived cost for the most disruptive breach or attack rose to GBP 10,000 for medium/large businesses.","caveat":"Perceived cost of the most disruptive breach or attack; broader than privacy breach cost; sample and cost definition differ from enterprise breach-cost studies. Confidence is medium only for use as a conservative UK mid-market material-cost floor."},{"parameter":"impact.likely","value":5740000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"IBM UK Cost of a Data Breach 2025 release","source_type":"data_breach_cost_research","publication_date":"2025-07-30","quote":"UK release states that financial services remained the costliest UK industry for data breaches, with an average cost of GBP 5.74 million in 2025.","caveat":"Surveyed/studied breach population; sponsor methodology; not mid-market-specific, not a full distribution, and not a regulator-reported loss table."},{"parameter":"impact.max","value":11164400,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"FCA fines Equifax Ltd over cyber security breach","source_type":"regulator_report","publication_date":"2023-10-13","quote":"FCA press release states that Equifax Ltd was fined GBP 11,164,400 for failing to manage and monitor the security of UK consumer data outsourced to its US parent after a cyber breach.","caveat":"Regulatory penalty only; not total event loss, insurance claim severity, or a full tail distribution; the incident was a large credit-reference data breach, not a mid-market-specific loss sample. Confidence is medium only for use as a source-backed UK regulatory stress anchor."}]},{"id":"jp_manufacturing_ransomware_midmarket","title":"Japan Manufacturing Ransomware Midmarket","country":"JP","industry":"manufacturing","size":"mid_market","threat":"ransomware","status":"governed_starter","avg":"USD 842,035.97","p95":"USD 1,720,694.17","p99":"USD 2,106,735.90","params":[{"parameter":"frequency.min","value":0.1,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Cyentia IRIS Ransomware","source_type":"ransomware_research","publication_date":"2025-04-21","quote":"Key findings on the public IRIS Ransomware source page.","caveat":"Global cross-sector estimate; not Japan-specific, manufacturing-specific, or size-band-specific."},{"parameter":"frequency.likely","value":0.56,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Sophos State of Ransomware in Manufacturing and Production 2024","source_type":"industry_survey","publication_date":"2024-05-28","quote":"Attack rates and recovery costs section; 65% of manufacturing and production organizations were hit by ransomware last year, a notable increase from the previous two years (56% in 2023 and 55% in 2022).","caveat":"Global survey of organizations with 100-5,000 employees (17 countries; not confirmed to include Japan), not Japan-specific or size-band-specific. Reports ATTACK prevalence (\"hit by ransomware\"), which OVERSTATES loss-event frequency: in the 2025 report only ~40% of manufacturing attacks resulted in encryption. Survey respondents (orgs with IT/security leaders) may overstate population prevalence, and the 55/56/65% series is rising, so a point estimate hides the trend. Read the frequency as attack-incidence on the same basis as the impact side.\n"},{"parameter":"frequency.max","value":0.65,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Sophos State of Ransomware in Manufacturing and Production 2024","source_type":"industry_survey","publication_date":"2024-05-28","quote":"Attack rates and recovery costs section; 65% of manufacturing and production organizations reported they were hit by ransomware last year, the highest of the reported 55%/56%/65% (2022/2023/2024) series.","caveat":"Highest observed year of a rising 55/56/65% (2022/2023/2024) series, so it is a recent peak rather than a formal tail percentile. Global survey of organizations with 100-5,000 employees (not Japan-specific). Reports ATTACK prevalence, which OVERSTATES loss-event frequency (only ~40% of 2025 manufacturing attacks encrypted). Read as attack-incidence on the same basis as the impact side.\n"},{"parameter":"impact.min","value":1000000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"National Police Agency of Japan 2025 Cyber Threat Situation Statistics Data","source_type":"law_enforcement_statistics","publication_date":"2026-03-09","quote":"Workbook sheet \u7d71\u8a08\u7de8P126; 16 of 89 cases reported investigation/restoration cost below JPY 1,000,000.","caveat":"Investigation/restoration cost band only; excludes broader business interruption, ransom, legal, customer, and strategic impacts."},{"parameter":"impact.likely","value":1300000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Sophos State of Ransomware in Manufacturing and Production 2025","source_type":"industry_survey","publication_date":"2025-12-04","quote":"Ransom demands, payments and attack recovery costs section; mean recovery cost excluding ransoms paid was USD 1.3M in 2025.","caveat":"Global survey of organizations hit by ransomware; not Japan-specific and excludes ransom payments."},{"parameter":"impact.max","value":5000000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Sophos State of Ransomware in Manufacturing and Production 2025","source_type":"industry_survey","publication_date":"2025-12-04","quote":"Ransom demands, payments and attack recovery costs section; extreme USD 5M+ demand and payout cases saw a slight uptick.","caveat":"Threshold for extreme ransom demands and payouts; not Japan-specific, not total event loss, and not a formal percentile."}]},{"id":"sg_finance_bec_midmarket","title":"Singapore Finance Business Email Compromise Midmarket","country":"SG","industry":"financial_services","size":"mid_market","threat":"business_email_compromise","status":"governed_starter","avg":"USD 39,007.72","p95":"USD 98,414.66","p99":"USD 139,481.85","params":[{"parameter":"frequency.min","value":0.004,"unit":"annual_probability","status":"source_backed","confidence":"low","source_name":"FBI IC3 2025 Annual Report and U.S. Census SUSB 2022","source_type":"derived_statistical_benchmark_bridge","publication_date":"2026-04-16","quote":"FBI IC3 2025 reported 24,768 US BEC complaints; US Census SUSB 2022 reports ~6.1M US employer firms; 24,768 / 6,100,000 = 0.004.","caveat":"GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. Both numerator and denominator are United States figures (IC3 complaints, US Census firms); used only as a conservative global reported-complaint floor until a Singapore denominator-derived BEC frequency (e.g. SPF business-email-impersonation cases over SingStat enterprise counts) is reviewed."},{"parameter":"frequency.likely","value":0.63,"unit":"annual_probability","status":"source_backed","confidence":"low","source_name":"2025 AFP Payments Fraud and Control Survey Report","source_type":"industry_survey_bridge","publication_date":"2025-08-26","quote":"The 2025 AFP Payments Fraud and Control Survey reports business email compromise as the most common payments-fraud method, with 63% of organizations reporting BEC activity in 2024.","caveat":"GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. US survey; measures organizations experiencing attempted or actual BEC, not confirmed loss events; respondents skew corporate-treasury and larger organizations. Revise when a Singapore organization-level BEC prevalence is reviewed."},{"parameter":"frequency.max","value":0.74,"unit":"annual_probability","status":"source_backed","confidence":"low","source_name":"2026 AFP Payments Fraud and Control Survey Report","source_type":"industry_survey_bridge","publication_date":"2026-04-14","quote":"The 2026 AFP Payments Fraud and Control Survey reports that business email compromise affected 74% of organizations in 2025.","caveat":"GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. US survey, attempts/affected not confirmed loss events, large-organization skew. Revise when a Singapore stress-frequency is reviewed."},{"parameter":"impact.min","value":50000,"unit":"currency","status":"source_backed","confidence":"low","source_name":"Verizon 2026 Data Breach Investigations Report","source_type":"breach_report_bridge","publication_date":"2026-05-20","quote":"The 2026 Verizon DBIR reports the median loss for business email compromise incidents, based on FBI IC3 data, at approximately USD 50,000.","caveat":"GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. Median of FBI IC3 complaint-reported (US) BEC losses; complaint-driven and self-reported; not a Singapore or mid-market figure. Revise when a Singapore BEC loss floor is reviewed."},{"parameter":"impact.likely","value":123005.43,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"FBI IC3 2025 Annual Report","source_type":"law_enforcement_report","publication_date":"2026-04-16","quote":"2025 Crime Types tables list Business Email Compromise with 24,768 complaints and USD 3,046,598,558 in adjusted losses.","caveat":"US IC3 complaint population; not Singapore-specific, financial-services-specific, mid-market-specific, or a full loss distribution."},{"parameter":"impact.max","value":6660000,"unit":"currency","status":"source_backed","confidence":"low","source_name":"SPF Business Email Compromise scam interception case 2024","source_type":"law_enforcement_report","publication_date":"2024-10-08","quote":"SPF reports that a Singapore-based investment banking firm initiated transfers of about USD 6.66 million to a scammer on 19-20 September 2024 in a business email compromise scam; SPF and US authorities intercepted over USD 5 million.","caveat":"One documented extreme Singapore BEC case (an investment banking firm), not a mid-market average or a loss percentile; over USD 5M was intercepted, but recovery is not guaranteed so the gross figure is modeled. Revise when a Singapore BEC loss distribution with tail quantiles is reviewed."}]},{"id":"us_finance_bec_midmarket","title":"United States Finance Business Email Compromise Midmarket","country":"US","industry":"financial_services","size":"mid_market","threat":"business_email_compromise","status":"governed_starter","avg":"USD 36,943.33","p95":"USD 90,584.86","p99":"USD 126,070.35","params":[{"parameter":"frequency.min","value":0.004,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"FBI IC3 2025 Annual Report and U.S. Census SUSB 2022","source_type":"derived_statistical_benchmark","publication_date":"2026-04-16","quote":"FBI IC3 2025 reported 24,768 US BEC complaints (all sectors); Census SUSB 2022 reports ~6,100,000 US employer firms (all industries).","caveat":"IC3 counts only complaints reported to the FBI and substantially undercounts true BEC incidence; numerator and denominator are both all-sector/all-industry, so this is an economy-wide reported floor, not financial-services-specific or mid-market-specific; it is a lower-bound floor, not a central likelihood. Confidence is medium for a reported-complaint floor, not for a likely BEC rate."},{"parameter":"frequency.likely","value":0.63,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"2025 AFP Payments Fraud and Control Survey Report","source_type":"industry_survey_bridge","publication_date":"2025-08-26","quote":"The 2025 AFP Payments Fraud and Control Survey reports business email compromise as the most common payments-fraud method, with 63% of organizations reporting BEC activity in 2024.","caveat":"Survey measures organizations experiencing attempted or actual BEC, not confirmed financial-loss events; AFP respondents skew toward corporate treasury and larger organizations (AFP reports 66% of BEC attempts target organizations with at least USD 1B revenue), so this overall prevalence likely overstates a mid-market financial-services rate; not financial-services-specific. Revise when mid-market-specific BEC event-frequency evidence is reviewed."},{"parameter":"frequency.max","value":0.74,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"2026 AFP Payments Fraud and Control Survey Report","source_type":"industry_survey_bridge","publication_date":"2026-04-14","quote":"The 2026 AFP Payments Fraud and Control Survey (released April 14, 2026; 465 US treasury practitioners) reports that business email compromise affected 74% of organizations in 2025.","caveat":"Survey measures organizations experiencing attempted or actual BEC, not confirmed financial-loss events; AFP respondents skew toward corporate treasury and larger organizations, so this overall prevalence likely overstates a mid-market financial-services rate; it is drawn from the subsequent (2026) AFP edition rather than the same edition as the likely bridge; not financial-services-specific. Revise when mid-market-specific BEC event-frequency evidence is reviewed."},{"parameter":"impact.min","value":50000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Verizon 2026 Data Breach Investigations Report","source_type":"breach_report_bridge","publication_date":"2026-05-20","quote":"The 2026 Verizon DBIR reports the median loss for business email compromise incidents, based on FBI IC3 data, at approximately USD 50,000.","caveat":"Median of FBI IC3 complaint-reported BEC losses as presented by Verizon DBIR; complaint-driven and self-reported, not financial-services-specific or mid-market-specific, and not a formal minimum quantile for this scenario."},{"parameter":"impact.likely","value":123005.43,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"FBI IC3 2025 Annual Report","source_type":"law_enforcement_report","publication_date":"2026-04-16","quote":"2025 Crime Types tables list Business Email Compromise with 24,768 complaints and USD 3,046,598,558 in adjusted losses.","caveat":"US IC3 complaint population; self-reported and complaint-driven; not financial-services-specific, mid-market-specific, or a full loss distribution."},{"parameter":"impact.max","value":6400000,"unit":"currency","status":"source_backed","confidence":"low","source_name":"Coalition funds transfer fraud largest clawback case","source_type":"cyber_insurer_claims_bridge","publication_date":"2023-06-08","quote":"Coalition reports a policyholder wired USD 6.4 million to a fraudulent account, described as Coalition's largest clawback case, of which 85% (USD 5.5 million) was later recovered.","caveat":"One documented extreme funds-transfer-fraud case from a cyber insurer's book, not a modeled loss percentile or a financial-services mid-market average; 85% was recovered via clawback in this instance, but recovery is not guaranteed, so the gross figure is modeled; BEC/FTF-specific but drawn from a single case. Revise when a US mid-market BEC loss distribution with tail quantiles is reviewed."}]},{"id":"us_finance_data_breach_midmarket","title":"United States Finance Data Breach Midmarket","country":"US","industry":"financial_services","size":"mid_market","threat":"data_breach","status":"governed_starter","avg":"USD 696,485.42","p95":"USD 1,685,585.44","p99":"USD 2,164,690.36","params":[{"parameter":"frequency.min","value":0.43,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Cyber Security Breaches Survey 2025/2026","source_type":"official_statistics","publication_date":"2026-04-30","quote":"The UK survey reports that 43% of all businesses identified a cyber security breach or attack in the last 12 months.","caveat":"UK official survey used as a bridge; not US-specific and not financial-services-specific; covers identified breaches or attacks, broader than privacy-only data breach."},{"parameter":"frequency.likely","value":0.65,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Cyber Security Breaches Survey 2025/2026","source_type":"official_statistics","publication_date":"2026-04-30","quote":"The UK survey reports that 65% of medium businesses identified a cyber security breach or attack in the last 12 months.","caveat":"UK official survey used as a bridge; not US-specific and not financial-services-specific; may include high-volume low-impact events."},{"parameter":"frequency.max","value":0.69,"unit":"annual_probability","status":"source_backed","confidence":"medium","source_name":"Cyber Security Breaches Survey 2025/2026","source_type":"official_statistics","publication_date":"2026-04-30","quote":"The UK survey reports that 69% of large businesses identified a cyber security breach or attack in the last 12 months.","caveat":"UK official survey used as a bridge; not US-specific and not financial-services-specific; large-business prevalence can overstate mid-market likelihood."},{"parameter":"impact.min","value":152000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"NetDiligence Cyber Claims Study 2025 (Fifteenth Annual)","source_type":"cyber_insurance_claims_research","publication_date":"2025-09-23","quote":"NetDiligence reports an average crisis-services cost of USD 152,000 for SME cyber claims (organizations under USD 2B revenue).","caveat":"Insured-claim crisis-services subset; not full total loss; SME band is broad (under USD 2B revenue) and not isolated to financial services."},{"parameter":"impact.likely","value":264000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"NetDiligence Cyber Claims Study 2025 (Fifteenth Annual)","source_type":"cyber_insurance_claims_research","publication_date":"2025-09-23","quote":"NetDiligence reports an average incident cost of USD 264,000 for SME cyber claims (organizations under USD 2B revenue).","caveat":"Insured-claim sample; SME band is broad and not isolated to financial services; excludes uninsured or unreported losses."},{"parameter":"impact.max","value":5560000,"unit":"currency","status":"source_backed","confidence":"medium","source_name":"Cost of a Data Breach Report 2025","source_type":"data_breach_cost_research","publication_date":"2025-07-30","quote":"IBM's 2025 report identifies financial services as the second-costliest industry for data breaches, at an average of USD 5.56 million.","caveat":"Enterprise-weighted studied breach population; not mid-market-specific and not a full tail distribution; used as a scale stress anchor, not an expected mid-market loss."}]}],"repo":"https://github.com/raviaxo/RiskShard"}</script>
 <script>
 (function(){
-  var DATA = JSON.parse(document.getElementById('rs-data').textContent);
-  var REPO = DATA.repo;
-  var fmtName = function(s){return (s||'').replace(/_/g,' ');};
-  var cap = function(s){return (s||'').replace(/\b\w/g,function(c){return c.toUpperCase();});};
+  var DATA=JSON.parse(document.getElementById('rs-data').textContent);
+  var REPO=DATA.repo;
+  var esc=function(s){return (s==null?'':String(s)).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+  var fmt=function(s){return (s||'').replace(/_/g,' ');};
+  var valText=function(p){return (p.value==null?'—':p.value)+(p.unit?(' '+p.unit):'');};
 
-  // stats
-  var t = DATA.totals;
-  document.getElementById('stats').innerHTML =
-    stat(t.shards, 'shards') +
-    stat('<span class="green">'+t.params_source_backed+' / '+t.params_total+'</span>', 'params source-backed') +
-    stat(new Set(DATA.shards.map(function(s){return s.country;})).size, 'countries') +
-    stat(t.params_bridged, 'unresolved assumptions');
-  function stat(v,l){return '<div class="stat"><b class="tnum">'+v+'</b><span>'+l+'</span></div>';}
-  document.getElementById('repo').href = REPO;
+  var t=DATA.totals;
+  document.getElementById('filemeta').innerHTML='<b>'+t.params_source_backed+' / '+t.params_total+' SOURCE-BACKED</b> · '+
+    t.shards+' SPECIMENS · '+new Set(DATA.shards.map(function(s){return s.country;})).size+' COUNTRIES';
+  document.getElementById('repo').href=REPO;
 
-  // rail
-  var rail = document.getElementById('rail');
-  DATA.shards.forEach(function(s, i){
-    var b = document.createElement('button');
-    b.className='srow'; b.type='button'; b.setAttribute('role','listitem');
-    b.setAttribute('aria-current', i===6?'true':'false');
-    b.innerHTML = '<span class="flag">'+s.country+'</span>'+
-      '<span class="st"><b>'+cap(fmtName(s.threat))+'</b><span>'+cap(s.industry?fmtName(s.industry):'')+' · '+fmtName(s.size)+'</span></span>'+
-      '<span class="dot" title="all 6 parameters source-backed"></span>';
-    b.addEventListener('click', function(){ select(i); });
-    rail.appendChild(b);
+  var index=document.getElementById('index');
+  DATA.shards.forEach(function(s,i){
+    var b=document.createElement('button');b.className='frow';b.type='button';
+    b.setAttribute('aria-current',i===6?'true':'false');
+    b.innerHTML='<span class="cc">'+esc(s.country)+'</span><span class="nm">'+esc(fmt(s.threat))+'</span><span class="ok">✓</span>';
+    b.addEventListener('click',function(){select(i);});
+    index.appendChild(b);
   });
 
-  var panel = document.getElementById('panel');
+  var record=document.getElementById('record');
   function select(i){
-    Array.prototype.forEach.call(rail.children, function(c,j){ c.setAttribute('aria-current', j===i?'true':'false'); });
+    Array.prototype.forEach.call(index.children,function(c,j){c.setAttribute('aria-current',j===i?'true':'false');});
     render(DATA.shards[i]);
   }
-
-  function statusChip(st){
-    if(st==='source_backed') return '<span class="chip">source-backed</span>';
-    return '<span class="chip assumed">'+fmtName(st)+'</span>';
-  }
-  function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
-  function disputeURL(shard, p){
-    var title = 'Dispute: '+shard.id+' / '+p.parameter+' = '+valText(p);
-    var body = '**Shard:** `'+shard.id+'`\n**Parameter:** `'+p.parameter+'`\n**Current value:** '+valText(p)+
+  function disputeURL(shard,p){
+    var title='Dispute: '+shard.id+' / '+p.parameter+' = '+valText(p);
+    var body='**Shard:** `'+shard.id+'`\n**Parameter:** `'+p.parameter+'`\n**Current value:** '+valText(p)+
       '\n**Current source:** '+(p.source_name||'(none)')+'\n**Current caveat:** '+(p.caveat||'(none)')+
       '\n\n### What I\'m disputing\n_Which of the value, the source, or the caveat is wrong — and why._\n\n### Evidence I\'m proposing instead\n_Named public source, the exact line, publication date._';
     return REPO+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
   }
-  function valText(p){ return (p.value==null?'—':p.value) + (p.unit?(' '+p.unit):''); }
-
   function render(s){
-    var rows = s.params.map(function(p, idx){
-      return '<div class="prow" data-i="'+idx+'">'+
-        '<button type="button" aria-expanded="false">'+
-          '<span class="pname">'+esc(p.parameter)+'</span>'+
-          '<span><span class="pval tnum">'+esc(p.value==null?'—':p.value)+(p.unit?' <small>'+esc(p.unit)+'</small>':'')+'</span>'+
-            '<span class="psrc">'+esc(p.source_name||'—')+(p.publication_date?(' · '+esc(p.publication_date)):'')+'</span></span>'+
-          statusChip(p.status)+
-        '</button>'+
-        '<div class="body"><div class="bodyin">'+
-          (p.quote?'<div class="field"><div class="fl">Cited line</div><div class="quote">'+esc(p.quote)+'</div></div>':'')+
-          (p.caveat?'<div class="field"><div class="fl">Caveat</div><div class="caveat">'+esc(p.caveat)+'</div></div>':'')+
-          '<a class="disp" target="_blank" rel="noopener" href="'+disputeURL(s,p)+'">⚑ Dispute this number</a>'+
-        '</div></div>'+
-      '</div>';
+    var rows=s.params.map(function(p){
+      var backed=p.status==='source_backed';
+      return '<div class="lrow"><button type="button" aria-expanded="false">'+
+        '<span class="p">'+esc(p.parameter)+'</span>'+
+        '<span class="v tnum">'+esc(p.value==null?'—':p.value)+'</span>'+
+        '<span class="src">'+esc(p.source_name||'—')+(p.publication_date?(' · '+esc(p.publication_date)):'')+'</span>'+
+        '<span class="tag'+(backed?'':' est')+'">'+(backed?'verified':'estimate')+'</span>'+
+        '</button><div class="body"><div class="bodyin">'+
+          (p.quote?'<div class="field"><span class="fl">Cited</span><span class="quote">'+esc(p.quote)+'</span></div>':'')+
+          (p.caveat?'<div class="field"><span class="fl">Limit</span><span class="caveat">'+esc(p.caveat)+'</span></div>':'')+
+          '<a class="disp" target="_blank" rel="noopener" href="'+disputeURL(s,p)+'">⎘ dispute this layer → open an issue</a>'+
+        '</div></div></div>';
     }).join('');
-
-    panel.innerHTML =
-      '<div class="phead"><div class="ctx">'+esc(s.country)+' · '+esc(fmtName(s.industry))+' · '+esc(fmtName(s.size))+' · '+esc(fmtName(s.threat))+'</div>'+
-        '<h3>'+esc(s.title)+'</h3>'+
-        '<span class="grade"><span class="g"></span>'+esc(fmtName(s.status))+' — not benchmark-grade</span></div>'+
-      '<div class="loss">'+
-        '<div class="big"><span class="lab">Modeled average annual loss</span><span class="v tnum">'+esc(s.avg||'—')+'</span></div>'+
-        '<div class="sub"><div><div class="lab">P95 · bad year</div><div class="v tnum">'+esc(s.p95||'—')+'</div></div>'+
-          '<div><div class="lab">P99 · severe</div><div class="v tnum">'+esc(s.p99||'—')+'</div></div></div>'+
-      '</div>'+
-      '<div class="lossnote">Monte Carlo, 10,000 trials. A modeled range from public evidence — not a prediction of a specific event; read the tail as directional.</div>'+
-      '<div class="ev"><div class="cap"><h4>The 6 inputs behind this range</h4><span class="hint">click a row for its source line + caveat</span></div>'+rows+'</div>';
-
-    Array.prototype.forEach.call(panel.querySelectorAll('.prow > button'), function(btn){
-      btn.addEventListener('click', function(){
-        var row = btn.parentElement, open = row.classList.toggle('open');
-        btn.setAttribute('aria-expanded', open?'true':'false');
-      });
+    record.innerHTML=
+      '<div class="rechead"><span class="spec">Specimen · <b>'+esc(s.id)+'</b></span>'+
+        '<span class="grade">'+esc(fmt(s.status))+' — not benchmark-grade</span></div>'+
+      '<div class="loss"><div class="cap">'+esc(s.country)+' · '+esc(fmt(s.industry))+' · '+esc(fmt(s.threat))+' — modeled avg / yr</div>'+
+        '<div class="big tnum">'+esc(s.avg||'—')+'</div></div>'+
+      '<div class="losssub"><span>P95 · bad year&nbsp; <b class="tnum">'+esc(s.p95||'—')+'</b></span>'+
+        '<span>P99 · severe&nbsp; <b class="tnum">'+esc(s.p99||'—')+'</b></span></div>'+
+      '<div class="lossnote">Monte Carlo · 10,000 trials · seed 42 — a modeled range from public evidence, not a prediction.</div>'+
+      '<div class="strata"><div class="caphdr"><h3>The 6 layers behind this range</h3><span class="hint">click a layer for its source + caveat</span></div>'+rows+'</div>';
+    Array.prototype.forEach.call(record.querySelectorAll('.lrow>button'),function(btn){
+      btn.addEventListener('click',function(){var r=btn.parentElement,o=r.classList.toggle('open');btn.setAttribute('aria-expanded',o?'true':'false');});
     });
   }
-
-  select(6); // open on the UK data-breach shard (fullest evidence)
+  select(6);
 })();
 </script>
 </body>
