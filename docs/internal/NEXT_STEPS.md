@@ -24,6 +24,15 @@ awaits an owner decision — along with the breadth-vs-depth question in
 Research notes from this pass: [`coverage_harvest.md`](coverage_harvest.md),
 [`dora_prescout.md`](dora_prescout.md), [`es_availability_prescout.md`](es_availability_prescout.md).
 
+**Strategy (2026-07-28):** [`canonical_reference_thesis.md`](canonical_reference_thesis.md) —
+the win condition is becoming *the thing people cite*, not the thing they use. RiskShard will
+never hold the best loss data (insurers do, and do not publish it); it can hold the only
+**auditable** data, because a vendor structurally cannot publish its caveats. Falsifiable test:
+does a RiskShard parameter identifier appear in a document someone else wrote? This tilts
+breadth-vs-depth toward **depth, with identifier infrastructure sequenced ahead of shard count**
+([`../adr/0004-citable-parameter-identifiers.md`](../adr/0004-citable-parameter-identifiers.md),
+Proposed).
+
 **Assessed and rejected 2026-07-28:** the DORA figure (0.052 TPP-origin major incidents per
 financial entity per year) **does not** retire TPO's `frequency.max` estimate. It is a different
 construct (incident rate vs organisation prevalence), a different severity threshold (supervisory
