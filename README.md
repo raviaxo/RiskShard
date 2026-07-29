@@ -103,6 +103,20 @@ Disagree? `provenance <shard> --dispute <parameter>` prints a pre-filled GitHub 
 so a skeptic becomes a contributor in one click. A number you can trace is a number you
 can dispute — that's the point.
 
+**Citable.** Every parameter has a stable identifier, and the pinned form names an
+immutable, fingerprinted release:
+
+```text
+RS:us_finance_bec_midmarket/impact.likely@2026.07.21-v0.1.0-stable
+```
+
+"Cite this number" on the [explorer](https://raviaxo.github.io/RiskShard/) copies a
+citation with the value, the source, **the caveat**, and a permanent link — so a figure
+quoted in a board deck or an audit workpaper carries its limitation with it, and still
+resolves to what it said when it was written. Identifiers are never reused or deleted; a
+renamed shard keeps resolving through `aliases.yaml`. See
+[ADR-0004](docs/adr/0004-citable-parameter-identifiers.md).
+
 The whole system at once: [docs/EVIDENCE_REPORT.md](docs/EVIDENCE_REPORT.md) is every
 parameter in every shard — value, source, and caveat — regenerated with
 `python scripts/riskshard_modules.py provenance --all --report docs/EVIDENCE_REPORT.md`.

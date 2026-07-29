@@ -34,6 +34,8 @@ from engine.web_console import WebConsoleApp  # noqa: E402
 TEMPLATE = Path(__file__).resolve().parent / "explorer_template.html"
 REPO_URL = "https://github.com/raviaxo/RiskShard"
 REVISIONS_PATH = ROOT / "revisions.yaml"
+ALIASES_PATH = ROOT / "aliases.yaml"
+RELEASES_DIR = ROOT / "data_pack_releases"
 # Where the built page is served. Absolute URLs are required by Open Graph /
 # Twitter cards, so link previews resolve when the page is shared.
 SITE_URL = "https://raviaxo.github.io/RiskShard/"
@@ -71,6 +73,34 @@ def load_revisions(path=None):
     } for entry in entries]
 
 
+def latest_release(releases_dir=None):
+    """The newest data-pack release id, used to pin citations (ADR-0004).
+
+    Releases are immutable and fingerprinted, so pinning a citation to one lets a
+    reader confirm years later that the value they cited is the value that was there.
+    """
+    directory = Path(releases_dir or RELEASES_DIR)
+    if not directory.exists():
+        return None
+    artifacts = sorted(p for p in directory.glob("*.json"))
+    if not artifacts:
+        return None
+    payload = json.loads(artifacts[-1].read_text(encoding="utf-8"))
+    return payload.get("release_version") or artifacts[-1].stem
+
+
+def load_aliases(path=None):
+    """Old shard id -> current shard id (ADR-0004 permanence guarantee).
+
+    A rename must not break a citation someone already wrote down, so retired ids
+    keep resolving through this table rather than 404-ing.
+    """
+    path = Path(path or ALIASES_PATH)
+    if not path.exists():
+        return {}
+    return {str(k): str(v) for k, v in (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).items()}
+
+
 def build_data(root):
     portfolio = build_portfolio_provenance(root)
     shards = []
@@ -97,16 +127,25 @@ def build_data(root):
             } for c in module["cards"]],
         })
     return {"totals": portfolio["totals"], "shards": shards, "repo": REPO_URL,
-            "revisions": load_revisions()}
+            "revisions": load_revisions(), "release": latest_release(),
+            "aliases": load_aliases(), "site": SITE_URL}
 
 
-def render(data, site_url=SITE_URL):
+def render(data, site_url=SITE_URL, asset_prefix=""):
+    """Render the page.
+
+    `asset_prefix` lets an archived per-release copy under docs/r/<release>/ reach the
+    shared fonts at the site root instead of shipping its own duplicates.
+    """
     template = TEMPLATE.read_text(encoding="utf-8")
     payload = json.dumps(data, separators=(",", ":"))
     if "</script" in payload.lower():
         raise ValueError("data contains a closing script tag; refusing to inline")
-    html = template.replace("__RS_SITE__", site_url).replace("__RS_DATA__", payload)
-    for token in ("__RS_SITE__", "__RS_DATA__"):
+    html = (template
+            .replace("__RS_ASSETS__", asset_prefix)
+            .replace("__RS_SITE__", site_url)
+            .replace("__RS_DATA__", payload))
+    for token in ("__RS_SITE__", "__RS_DATA__", "__RS_ASSETS__"):
         if token in html:
             raise ValueError(f"template placeholder {token} was left unfilled")
     return html
@@ -115,6 +154,10 @@ def render(data, site_url=SITE_URL):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Build the public risk-shard explorer page.")
     parser.add_argument("--output", type=Path, default=ROOT / "docs" / "index.html")
+    parser.add_argument(
+        "--archive", action="store_true",
+        help="Also write an immutable per-release copy under docs/r/<release>/ (ADR-0004). "
+             "Existing archives are never regenerated.")
     args = parser.parse_args(argv)
 
     data = build_data(ROOT)
@@ -124,6 +167,23 @@ def main(argv=None):
     t = data["totals"]
     print(f"Explorer written: {args.output}")
     print(f"  {t['shards']} shards · {t['params_source_backed']}/{t['params_total']} params source-backed")
+    if data.get("release"):
+        print(f"  citations pin to release {data['release']}")
+
+    if args.archive:
+        release = data.get("release")
+        if not release:
+            print("No data-pack release found — nothing to archive.")
+            return 0
+        archive = ROOT / "docs" / "r" / release / "index.html"
+        if archive.exists():
+            # A pinned citation must keep resolving to what it resolved to. Corrections
+            # are a new release plus a revisions.yaml entry, never an edit in place.
+            print(f"Archive already exists, left untouched: {archive}")
+            return 0
+        archive.parent.mkdir(parents=True, exist_ok=True)
+        archive.write_text(render(data, asset_prefix="../../"), encoding="utf-8")
+        print(f"Archived immutable copy: {archive}")
     return 0
 
 

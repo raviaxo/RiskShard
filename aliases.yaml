@@ -1,0 +1,10 @@
+# Retired shard identifier -> current identifier (ADR-0004).
+#
+# Identifiers are never reused or deleted. If a shard is renamed, its old id is added
+# here so that citations and links already written down keep resolving. Renaming a shard
+# without adding an alias is a breaking change and is not permitted.
+#
+#   old_shard_id: current_shard_id
+#
+# Empty because no shard has been renamed yet.
+{}

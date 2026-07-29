@@ -1,6 +1,6 @@
 # ADR-0004 — Citable parameter identifiers
 
-- **Status:** Proposed
+- **Status:** Accepted (implemented 2026-07-29)
 - **Date:** 2026-07-28
 - **Deciders:** repo owner (records intent and a recommendation only)
 - **Related:** [`../internal/canonical_reference_thesis.md`](../internal/canonical_reference_thesis.md),
@@ -105,6 +105,24 @@ look at and a reference people cite. Sequence it before broad shard expansion: a
 portfolio without stable identifiers is harder to retrofit, and coverage is only valuable
 if what it covers can be pointed at permanently.
 
-**Open questions for the owner:** whether the archive publishes every release or only
-tagged ones; whether canonical (unpinned) citations should be discouraged in documents;
-and whether the alias table lives in the repo root or under `docs/`.
+## Implementation (2026-07-29)
+
+- `build_explorer.py` resolves the newest `data_pack_releases/*.json` and pins every
+  citation to it; `--archive` writes `docs/r/<release>/index.html` and **refuses to
+  overwrite an existing archive**, enforcing guarantee 3 in code rather than in prose.
+- The archived copy reaches the shared fonts via an `--asset-prefix` of `../../`, so an
+  archive costs one HTML file (~66 KB) and ships no duplicate assets.
+- `aliases.yaml` (repo root) is consulted when a hash does not match a known shard, so a
+  renamed shard keeps resolving. Empty today — nothing has been renamed.
+- Each parameter shows its identifier and offers **cite this number**, which copies the
+  value, source, publication date, caveat and the canonical pinned URL. Money is rendered
+  with its currency code rather than the raw unit, and the URL is always the canonical
+  site — never the host the reader happens to be viewing (a local copy or a fork).
+- Wired into the release checklist in `BENCHMARK_CONTRIBUTOR_WORKFLOW.md`.
+
+**Open questions resolved by implementation:** the archive publishes for every release
+that has an artifact (not only tagged ones), and the alias table lives in the repo root.
+
+**Still open:** whether canonical (unpinned) citations should be actively discouraged in
+documents, and whether parameter-level retirement needs its own superseded-by table — no
+parameter has been retired yet, so guarantee 1 is currently policy rather than mechanism.

@@ -151,8 +151,15 @@ python scripts/data_pack_manifest.py --release 2026.07.24-my-change
 python scripts/strength_ledger.py markdown --write-readme    # refresh the README table
 python scripts/riskshard_modules.py provenance --all \
   --report docs/EVIDENCE_REPORT.md                           # refresh the evidence report
+python scripts/build_explorer.py --archive                   # pin citations to the release
 python scripts/strength_ledger.py show                       # confirm the delta
 ```
+
+`--archive` writes an immutable copy of the explorer to `docs/r/<release>/` so that a
+citation pinned to this release keeps resolving to the values it was written against
+(ADR-0004). An existing archive is never regenerated: if a released figure turns out to be
+wrong, the correction is a **new** release plus a `revisions.yaml` entry, never an edit in
+place.
 
 The ledger entry is a no-op if the pack fingerprint is unchanged, so re-running is
 safe and the trend cannot be padded with vanity ticks. `python scripts/riskshard_doctor.py`
