@@ -73,9 +73,24 @@ def scenario_fingerprint(config):
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
-def derive_scenario_seed(base_seed, scenario_path, config):
+def portable_scenario_key(scenario_path, root=PROJECT_ROOT):
+    """Machine-independent identity for a scenario file (ADR-0002).
+
+    Seeds must not depend on where the repository sits on disk, or the same shard
+    yields different numbers on different machines and a published figure cannot be
+    reproduced by a third party. A scenario stored outside the project root falls
+    back to its filename: its directory is user-specific by definition.
+    """
+    candidate = Path(scenario_path)
+    try:
+        return candidate.resolve().relative_to(Path(root).resolve()).as_posix()
+    except (ValueError, OSError):
+        return candidate.name
+
+
+def derive_scenario_seed(base_seed, scenario_path, config, root=PROJECT_ROOT):
     fingerprint = scenario_fingerprint(config)
-    payload = f"{base_seed}:{Path(scenario_path).as_posix()}:{fingerprint}"
+    payload = f"{base_seed}:{portable_scenario_key(scenario_path, root)}:{fingerprint}"
     return int(hashlib.sha256(payload.encode("utf-8")).hexdigest()[:8], 16)
 
 

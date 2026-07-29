@@ -191,6 +191,56 @@ class PortfolioTests(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertNotEqual(first, renamed)
 
+    def test_scenario_seed_does_not_depend_on_where_the_repo_lives(self):
+        """ADR-0002: a published number must be reproducible on another machine.
+
+        The seed used to mix in the scenario's absolute path, so the same shard gave
+        different numbers under /Users/... than under /home/runner/... . The earlier
+        test only ever passed relative paths, which is why it never caught this.
+        """
+        scenario = {
+            "metadata": {"name": "Portable Seed"},
+            "frequency": {"min": 1, "likely": 1, "max": 1},
+            "impact": {"min": 1, "likely": 1, "max": 1},
+        }
+
+        here = fair_calc.derive_scenario_seed(
+            42, Path("/Users/someone/RiskShard/scenarios/x.yaml"), scenario,
+            root=Path("/Users/someone/RiskShard"))
+        on_ci = fair_calc.derive_scenario_seed(
+            42, Path("/home/runner/work/RiskShard/RiskShard/scenarios/x.yaml"), scenario,
+            root=Path("/home/runner/work/RiskShard/RiskShard"))
+
+        self.assertEqual(here, on_ci)
+
+    def test_out_of_tree_scenario_seed_ignores_its_directory(self):
+        """A scenario outside the project root keys on its filename, not its path."""
+        self.assertEqual(
+            fair_calc.portable_scenario_key("/tmp/alice/custom.yaml"),
+            fair_calc.portable_scenario_key("/var/bob/deeper/custom.yaml"),
+        )
+
+    def test_simulation_output_is_pinned(self):
+        """Golden value: the numbers themselves must not drift silently.
+
+        Nothing in the suite asserted simulated output, so the seed defect above
+        passed CI unnoticed. Verified identical on Python 3.8 and 3.14, so this pins
+        across interpreter versions as well as machines.
+        """
+        config = {
+            "metadata": {"name": "Golden"},
+            "frequency": {"min": 0.1, "likely": 0.3, "max": 0.6},
+            "impact": {"min": 1000, "likely": 5000, "max": 20000},
+        }
+        seed = fair_calc.derive_scenario_seed(42, "scenarios/golden.yaml", config)
+        self.assertEqual(seed, 4159219580)
+
+        _, losses = fair_calc.run_simulation(config, 2000, "pert", random.Random(seed))
+        self.assertEqual(len(losses), 2000)
+        self.assertAlmostEqual(sum(losses) / len(losses), 2132.6034904873, places=6)
+        self.assertAlmostEqual(
+            fair_calc.percentile(sorted(losses), 0.95), 4508.3801874242, places=6)
+
     def test_export_report_includes_optional_metadata(self):
         metadata = {
             "trials": 25,

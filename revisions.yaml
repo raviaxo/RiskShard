@@ -1,0 +1,25 @@
+# Published-number revisions.
+#
+# When a modeled figure on the public explorer changes for a reason other than new
+# evidence — a method or engine change — it is recorded here and shown on the page
+# next to the number it moved. A reader who noticed the old figure can see what
+# changed, why, and where the decision is written down.
+#
+# Evidence changes are not recorded here: those are already visible per-parameter
+# (source, cited line, caveat) and in the strength ledger. This file is for changes
+# to *how* the number is produced.
+#
+# Newest first. `effect` must state the direction and size of the move honestly.
+
+- date: "2026-07-28"
+  title: "Simulation seeds made machine-independent"
+  decision: "docs/adr/0002-portable-scenario-seed.md"
+  effect: >-
+    Every shard's AVG/P95/P99 moved by under 2% (US BEC average USD 36,698 →
+    36,442; P95 91,951 → 90,288). No evidence, source or caveat changed.
+  reason: >-
+    The per-scenario random seed was derived partly from the scenario file's
+    absolute path on disk, so the same shard produced slightly different numbers
+    depending on where the repository was checked out. Published figures could not
+    be reproduced on another machine. Seeds now derive from a repository-relative
+    path, so a third party running the same shard gets the same number.

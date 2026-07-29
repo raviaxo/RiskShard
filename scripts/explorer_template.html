@@ -79,7 +79,7 @@
   .frow:hover{background:var(--face)}
   .frow[aria-current="true"]{background:var(--face)}
   .frow[aria-current="true"] .nm{color:var(--copper)}
-  .frow .cc{color:var(--muted);font-weight:500}
+  .frow .cc{color:var(--muted);font-weight:500;font-size:15px;line-height:1;text-align:center}
   .frow .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:capitalize}
   .frow .ok{color:var(--malachite)}
 
@@ -101,6 +101,15 @@
   .losssub{display:flex;flex-wrap:wrap;gap:6px 28px;padding:14px 0 4px;font-size:13.5px;color:var(--muted)}
   .losssub b{color:var(--ink);font-weight:500}
   .lossnote{font-size:11.5px;color:var(--faint);padding:8px 0 14px}
+
+  /* revision note — why a published number moved */
+  .revs{border-top:1px solid var(--edge);padding:12px 0 2px}
+  .revs h3{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+    font-weight:600;margin-bottom:8px}
+  .rev{font-size:12px;color:var(--muted);line-height:1.55;padding:7px 0;border-top:1px solid var(--hair)}
+  .rev:first-of-type{border-top:0}
+  .rev .when{color:var(--ink);font-weight:600}
+  .rev .why{color:var(--faint);display:block;margin-top:3px}
 
   .strata{border-top:1px solid var(--edge)}
   .strata .caphdr{display:flex;justify-content:space-between;align-items:center;padding:12px 0 4px}
@@ -187,11 +196,21 @@
   var byId={};DATA.shards.forEach(function(s,i){byId[s.id]=i;});
   var current=null;
 
+  /* Flag from the ISO country code via regional indicator symbols. Shown INSTEAD
+     of the code: platforms without a flag font (Windows) render the two letters,
+     which is the code itself — so it degrades to the old display, never to noise. */
+  var flag=function(cc){
+    var code=String(cc||'').trim().toUpperCase();
+    if(!/^[A-Z]{2}$/.test(code)) return esc(cc);
+    return String.fromCodePoint(code.charCodeAt(0)+127397, code.charCodeAt(1)+127397);
+  };
+
   var index=document.getElementById('index');
   DATA.shards.forEach(function(s,i){
     var b=document.createElement('button');b.className='frow';b.type='button';
     b.setAttribute('aria-current',i===6?'true':'false');
-    b.innerHTML='<span class="cc">'+esc(s.country)+'</span><span class="nm">'+esc(fmt(s.threat))+'</span><span class="ok">✓</span>';
+    b.innerHTML='<span class="cc" title="'+esc(s.country)+'">'+flag(s.country)+'</span>'+
+      '<span class="nm">'+esc(fmt(s.threat))+'</span><span class="ok">✓</span>';
     b.addEventListener('click',function(){select(i);});
     index.appendChild(b);
   });
@@ -230,6 +249,18 @@
       '\n\n### What I\'m disputing\n_Which of the value, the source, or the caveat is wrong — and why._\n\n### Evidence I\'m proposing instead\n_Named public source, the exact line, publication date._';
     return REPO+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
   }
+  /* If a published figure moved for a method reason, say so on the page rather than
+     letting a returning reader think the number was quietly changed. */
+  function revisionsHTML(){
+    var revs=DATA.revisions||[];
+    if(!revs.length) return '';
+    return '<div class="revs"><h3>Why these figures changed</h3>'+revs.map(function(r){
+      var link=r.decision?(' · <a target="_blank" rel="noopener" href="'+REPO+'/blob/main/'+esc(r.decision)+'">decision record</a>'):'';
+      return '<div class="rev"><span class="when">'+esc(r.date)+'</span> — '+esc(r.title)+link+
+        '<span class="why">'+esc(r.effect)+' '+esc(r.reason)+'</span></div>';
+    }).join('')+'</div>';
+  }
+
   function render(s,openParam){
     var rows=s.params.map(function(p){
       var backed=p.status==='source_backed';
@@ -250,11 +281,12 @@
     record.innerHTML=
       '<div class="rechead"><span class="spec">Specimen · <b>'+esc(s.id)+'</b></span>'+
         '<span class="grade">'+esc(fmt(s.status))+' — not benchmark-grade</span></div>'+
-      '<div class="loss"><div class="cap">'+esc(s.country)+' · '+esc(fmt(s.industry))+' · '+esc(fmt(s.threat))+' — modeled avg / yr</div>'+
+      '<div class="loss"><div class="cap">'+flag(s.country)+' '+esc(s.country)+' · '+esc(fmt(s.industry))+' · '+esc(fmt(s.threat))+' — modeled avg / yr</div>'+
         '<div class="big tnum">'+esc(s.avg||'—')+'</div></div>'+
       '<div class="losssub"><span>P95 · bad year&nbsp; <b class="tnum">'+esc(s.p95||'—')+'</b></span>'+
         '<span>P99 · severe&nbsp; <b class="tnum">'+esc(s.p99||'—')+'</b></span></div>'+
       '<div class="lossnote">Monte Carlo · 10,000 trials · seed 42 — a modeled range from public evidence, not a prediction.</div>'+
+      revisionsHTML()+
       '<div class="strata"><div class="caphdr"><h3>The 6 layers behind this range</h3><span class="hint">click a layer for its source + caveat</span></div>'+rows+'</div>';
     Array.prototype.forEach.call(record.querySelectorAll('.lrow>button'),function(btn){
       btn.addEventListener('click',function(){
