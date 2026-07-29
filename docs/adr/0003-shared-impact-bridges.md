@@ -28,53 +28,97 @@ not exist in public sources**, and there is no reason to expect it to appear. Th
 already says as much in `IMPACT_UNCERTAINTY_NOTE`: severity is far less predictable from a
 shard's cell than frequency is.
 
-Meanwhile the repo reports **66/66 parameters source-backed**. That is true in the sense
-the label defines — every parameter traces to a named public source with a cited line and
-a caveat. But several impact sides are the *same* generic cross-cyber loss research
-(Cyentia IRIS medians, for instance) re-cited per shard, each with its own record and its
-own caveat. A reader counting "66/66" reasonably infers more cell-specific evidence than
-exists. The caveats are present and honest per record; the **aggregate impression** is not
-as honest as the parts.
+### What the impact sides actually look like (measured 2026-07-29)
+
+An earlier draft of this ADR asserted that "several impact sides are the same generic
+cross-cyber research re-cited per shard." **That was overstated, and the measurement is
+recorded here rather than quietly dropped.**
+
+Across the 33 impact parameters in the 11 shards, most are country- or sector-matched:
+Bitkom for Germany, Asteres and the IBM France release for France, DSIT and the FCA for
+the UK, the NPA for Japan, ACCC and Business Queensland for Australia, SPF for Singapore,
+NetDiligence and Coalition for the US. Only **three** use Cyentia.
+
+The genuine cross-cell reuse is a **minority, and it is concentrated**:
+
+| shard | parameter | source population | mismatch |
+|---|---|---|---|
+| `sg_finance_bec` | impact.likely | FBI IC3 (US complaints) | country |
+| `sg_finance_bec` | impact.min | Verizon DBIR (global/US) | country |
+| `au_finance_bec` | impact.likely | FBI IC3 (US complaints) | country |
+| `ca_finance_data_breach` | impact.min, impact.max | Cyentia IRIS (cross-cyber, global) | country + threat |
+| `au_finance_ransomware` | impact.max | Cyentia IRIS (cross-cyber, global) | threat |
+| `de_industrial` / `jp_manufacturing` | impact.likely, impact.max | Sophos manufacturing (global survey) | country only — sector matches |
+
+So roughly six clear cross-country bridges plus one global sector survey serving two
+countries — call it a fifth to a third of the impact side, concentrated in **Singapore and
+Canada**, not a portfolio-wide condition.
 
 ## Problem
 
-Per-shard impact records imply a specificity the underlying evidence does not have, and
-repeating a near-identical caveat across many records is a form of caveat dilution — the
-eleventh restatement of "this is a generic cross-cyber bridge, not threat-specific" gets
-skimmed. As shard count grows (and the frequency supply now permits rapid growth), this
-gets worse, not better.
+**Bridging is currently undetectable programmatically.** An attempt to classify these
+records automatically by scanning caveat text flagged 26 of 33 — because a well-written
+caveat *always* qualifies its population ("not mid-market-specific", "not
+financial-services-specific"). Honest caveats and borrowed sources are textually
+indistinguishable, so nothing in the coverage tooling can tell the difference between a
+parameter backed by its own country's statistics and one borrowed from another country.
+
+That is the real defect, and it is smaller and sharper than the earlier framing: the repo
+reports **66/66 source-backed** with no way to say how many of those 66 are backed by
+evidence drawn from the shard's own cell. A reader counting 66/66 reasonably infers more
+cell-specific evidence than exists, and the tooling cannot correct them because it does not
+know either.
+
+Caveat dilution is a secondary concern: repeating a near-identical limitation across
+several records means the fourth restatement gets skimmed. It matters more as shard count
+grows, which the new frequency supply now permits.
 
 ## Proposal
 
-Introduce a first-class **impact bridge**: one named, sourced, versioned object that
-several shards may explicitly reference, instead of each shard carrying its own copy.
+Scoped down from the earlier draft, in line with what the measurement shows.
 
-- A bridge is declared once, with its source, cited line, derivation, and **one loud,
-  carefully written limitations statement**.
-- A shard's impact parameter either cites **cell-specific evidence** (as today) or
-  **references a named bridge** — and which of the two it is becomes visible everywhere
-  the parameter appears: explorer, provenance output, evidence report.
-- Coverage reporting distinguishes the two. `params_source_backed` should no longer
-  count a shared bridge as if it were cell-specific evidence.
+**1. Mark the mismatch explicitly.** Every evidence record gains a declared relationship
+between the source's population and the shard's cell — matched, or bridged on country /
+sector / threat / size, naming which. This is the load-bearing change: it makes bridging
+*detectable*, which caveat prose cannot.
+
+**2. Coverage reports both numbers.** Not one headline, but "N cell-matched, M bridged" —
+so `params_source_backed` stops implying specificity it cannot verify, and the strength
+ledger can show bridged counts falling as evidence improves.
+
+**3. Where the same source legitimately serves several shards, declare it once.** Sophos
+manufacturing serving both DE and JP is a *correct* reuse — same sector, same threat, a
+global survey by design. Declaring it as one named bridge with one carefully written
+limitation, referenced twice, is more honest than two near-identical records and makes the
+shared dependency visible.
+
+**4. Transfer rules where a bridge crosses country or size.** Loss magnitude scales with
+revenue, and sources such as NetDiligence publish severity by revenue band. A documented,
+sourced scaling function is a defensible way to move one strong source across cells;
+silent reuse is not.
 
 ### Consequences, including the uncomfortable one
 
-**The headline number will fall.** Shards whose impact side rests on a shared bridge stop
-counting as fully cell-specific, so "66/66 source-backed" becomes something like "N
-cell-specific + M bridged". That is the point: the strength ledger currently cannot
-distinguish *more evidence* from *more re-use of the same evidence*, and a metric that
-cannot fall is not a measurement.
+**The headline number will fall — by a known, modest amount.** "66/66 source-backed"
+becomes roughly "**59–60 cell-matched + 6–7 bridged**" on the measurement above. That is
+the point: a metric that cannot fall is not a measurement, and the ledger currently cannot
+distinguish more evidence from evidence borrowed across a border.
 
-**It makes the weakness legible rather than distributed.** One bridge with one prominent
-caveat is harder to skim past than eleven restatements, and a reader can see at a glance
-how much of the portfolio leans on the same underlying study.
+**It makes the weakness locatable.** Today a reader cannot tell which shards are weak on
+impact. Afterwards it is obvious that **Singapore and Canada** carry the borrowed evidence
+— which is also a work queue, since those are exactly the two shards to fix first.
 
-**It makes the correlation visible.** If eight shards share one impact bridge, their loss
-figures are not independent. Nothing in the repo currently surfaces that, and it matters
-for anyone aggregating across shards.
+**It makes correlation visible.** Where several shards lean on the same study, their loss
+figures are not independent. Nothing surfaces that today, and it matters to anyone
+aggregating across shards.
 
-**It lowers the cost of a real improvement.** Replacing one bridge with better evidence
-upgrades every shard referencing it, instead of requiring eleven separate edits.
+**It lowers the cost of a real improvement.** Replacing one declared bridge upgrades every
+shard referencing it, rather than requiring separate edits per shard.
+
+**It is a schema change**, so it needs a migration for existing records and touches the
+coverage tooling, `provenance`, the evidence report and the explorer. That is real work for
+a change that adds no new evidence — the honest counter-argument to adopting it now rather
+than after the CA/AU impact upgrades, which may retire two of the six bridges anyway.
 
 ## Alternatives considered
 
@@ -89,12 +133,20 @@ upgrades every shard referencing it, instead of requiring eleven separate edits.
 
 ## Recommendation
 
-Adopt, and take the headline drop deliberately and publicly — with a `revisions.yaml`
-entry explaining it, the mechanism built on 2026-07-28 for exactly this kind of change.
-A metric that goes down for a stated reason is more credible than one that only ever
-goes up.
+**Adopt part 1 and 2 (mark the mismatch, report both numbers) — but sequence it after the
+Canada and Australia impact upgrades.** StatCan and ASD both publish incident costs by
+business size and are not yet in the manifest; those upgrades would retire the Cyentia
+bridges in `ca_finance_data_breach` and `au_finance_ransomware`, which are three of the six.
+Doing the schema work first means migrating records that are about to be replaced.
 
-**Open questions for the owner:** whether bridges live in `evidence/` or a sibling
-directory; whether an existing shard's impact records are migrated retroactively or only
-new ones use bridges; and what the coverage tools should report as the headline number
-once the two categories are distinguished.
+Parts 3 and 4 (declared shared bridges, documented transfer rules) are worth doing only if
+bridges survive that pass — which they will for Singapore, whose whole impact side is
+borrowed US data and for which no local source has been found.
+
+When it lands, take the headline drop deliberately and publicly, with a `revisions.yaml`
+entry explaining it — the mechanism built for exactly this kind of change. A metric that
+goes down for a stated reason is more credible than one that only ever goes up.
+
+**Open questions for the owner:** whether the relationship is a field on the existing
+record or a separate declared object; whether the migration is retroactive or new-records-
+only; and what the coverage tools report as the headline once the two categories split.
