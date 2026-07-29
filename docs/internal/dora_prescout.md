@@ -29,8 +29,41 @@ Root causes (§19): system failure/malfunction ~50%, external events 32%, proces
 19%, human error 12%.
 
 **Candidate anchor for Third-Party Outage:** 0.18 × 0.29 ≈ **0.052 TPP-origin major
-incidents per financial entity per year**. TPO's `frequency.max` is currently the last
-labeled interpretive estimate in the queue; this is a real candidate to retire it.
+incidents per financial entity per year**.
+
+### ❌ It does NOT retire TPO's `frequency.max` — assessed 2026-07-28, rejected
+
+Checked against the actual records in `evidence/third_party_outage.yaml` before use. It
+fails on **basis**, not on quality:
+
+| | current TPO frequency set | DORA figure |
+|---|---|---|
+| `frequency.min` 0.44 | share of BCI respondents naming third-party failure their **top cause** of disruption | — |
+| `frequency.likely` 0.80 | share of organisations experiencing **any** supply-chain disruption in the year | — |
+| `frequency.max` 0.90 *(estimated)* | interpretive conversion from multi-event findings | — |
+| | organisation-level **annual prevalence of experiencing a disruption**, broad and all-cause | **rate of supervisory-classified *major* incidents per entity**, EU financial entities only |
+
+Three incompatibilities, any one of which is disqualifying:
+
+1. **Different construct.** The existing set measures *did an organisation experience a
+   disruption* (a prevalence, capped at 1.0). DORA measures *how many major incidents per
+   entity* (a rate). They are not the same quantity.
+2. **Different severity threshold.** DORA "major" is triggered by materiality thresholds
+   in Delegated Regulation (EU) 2024/1772, and two thirds of those incidents caused no or
+   minor disruption. BCI counts any disruption at all.
+3. **It is ~17× *below* the existing minimum** (0.052 vs 0.44). A value that low cannot be
+   a `max` under any reading; and slotting it in as a `min` would mix two bases inside one
+   parameter triple, which is worse than the labeled estimate it would replace.
+
+Using it would have looked like an upgrade — official supervisory source, directly
+reported rate, retires an estimate — while quietly committing exactly the category error
+this project exists to prevent. **`frequency.max` stays a labeled estimate.**
+
+**What the figure legitimately supports instead:** a *separate, differently-defined*
+scenario — "major ICT incident originating from a third-party provider, EU financial
+entity" — where 0.052 is the correct and well-defined frequency. That scenario is
+buildable the moment an impact side exists for it, which today it does not (see below).
+Parked, not discarded.
 
 **Correction to the secondary coverage.** Press reporting conflated two different
 figures. The Executive Summary says "almost one third of major incidents originated from

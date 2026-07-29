@@ -11,7 +11,27 @@ queue, one at a time, to its Definition of Done (`../../AGENTS.md`). Drive mode:
 each anchor** — stop at every evidence decision (source trust, chosen value, caveat) and
 wait for a short yes / no / adjust; no hand-editing of YAML required.
 
-**Current top blocker** *(updated 2026-07-28)*: **distribution, not product.** Product is stable —
+**Current top blocker** *(updated 2026-07-28, evening)*: **impact evidence.** Frequency stopped
+being the constraint today — Eurostat `isoc_cisce_ic` supplies country- and size-specific rates for
+**35 countries**, and DORA supplies a supervisory per-entity rate for EU financial entities. Impact
+dead-ended twice in one day: Spanish public bodies publish counts rather than euros, and DORA's
+mandated cost fields are mostly unreported or under EUR 1,000 (the ESAs flag likely mis-reporting).
+Per-cell loss magnitude largely **does not exist publicly**, which is why
+[`../adr/0003-shared-impact-bridges.md`](../adr/0003-shared-impact-bridges.md) is Proposed and
+awaits an owner decision — along with the breadth-vs-depth question in
+[`coverage_harvest.md`](coverage_harvest.md).
+
+Research notes from this pass: [`coverage_harvest.md`](coverage_harvest.md),
+[`dora_prescout.md`](dora_prescout.md), [`es_availability_prescout.md`](es_availability_prescout.md).
+
+**Assessed and rejected 2026-07-28:** the DORA figure (0.052 TPP-origin major incidents per
+financial entity per year) **does not** retire TPO's `frequency.max` estimate. It is a different
+construct (incident rate vs organisation prevalence), a different severity threshold (supervisory
+"major", two thirds of which caused no or minor disruption), and ~17× below the existing
+`frequency.min`. It stays a labeled estimate. The figure is parked for a separate, well-defined
+"major third-party ICT incident, EU financial entity" scenario, buildable once impact exists.
+
+*(Previous blocker, still true and unresolved: distribution/conversion.)* Product is stable —
 all 11 shards source-backed (66/66); ledger, provenance/challenge-a-number, evidence report, pyfair
 export, and the `new-shard` scaffold all shipped (PR #51). **PR backlog fully cleared 2026-07-28:
 0 open PRs**; `main` carries the README explorer CTA (#54), the slate-&-copper explorer redesign
@@ -330,3 +350,15 @@ governance/regulatory loss).
   commit succeeded; explorer verified live on the slate-&-copper identity (self-hosted fonts 200).
   No product/evidence change. Reconciled this doc: top blocker restated as **distribution/conversion**
   with the measured traffic numbers.
+- 2026-07-28 (evening) — **Reproducibility fixed and the impact wall found.** ADR-0002: scenario seeds
+  were derived from the *absolute* path on disk, so published figures could not be reproduced on
+  another machine; now root-relative. Every loss number moved once (<2%), and `revisions.yaml` +
+  a "Why these figures changed" block on the explorer make such moves explainable rather than silent.
+  The suite passed unchanged after the fix — nothing asserted simulated output — so a golden-value
+  test was added (verified identical on Python 3.8 and 3.14). Also: explorer country flags, a
+  generated social card (PR #64), per-layer deep links and link previews (PR #62).
+  **Research:** Eurostat gives mid-market frequency for 35 countries; DORA gives 0.18 major incidents
+  per financial entity (29% third-party origin), verified against the primary PDF. **Impact is the
+  wall** — dead-ended in Spanish sources and in DORA's own cost fields. ADR-0003 (shared impact
+  bridges) proposed in response. TPO `frequency.max` assessed and left as an estimate: the DORA
+  figure is the wrong construct. 202 tests; validate and preflight clean.
