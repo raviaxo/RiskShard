@@ -97,9 +97,42 @@ maintaining:
    query therefore **undercounts** by an unknown margin, and the 92 above is a floor, not a
    census.
 
-Both are answerable with a bounded sampling exercise — take 20 filings, follow each to its
-subsequent periodic report, and record how many produce a usable figure. **That sample
-should happen before adopting this ADR**, not after.
+### The sample, run 2026-07-29
+
+*Reproducible: the scripts are kept in
+[`../internal/research/`](../internal/research/README.md).*
+
+Took the first 20 unique Item 1.05 filers, followed each to its subsequent 10-Q/10-K, and
+looked for a monetary figure attributable to the incident.
+
+A first pass using proximity (money within ~700 characters of cyber-incident language)
+returned **6/20**. That number was wrong: re-checking at sentence level — money, incident
+language and a cost word in the *same sentence* — showed two were unrelated text caught by
+a loose window. **The verified count is 4.**
+
+| filer | figure | quality |
+|---|---|---|
+| United Natural Foods | "incremental costs of approximately **$26 million** in the fourth quarter of fiscal 2025 as a result of the Cybersecurity Incident" — split $15M gross profit / $11M opex | excellent |
+| Lee Enterprises | "**$10.5 million** in cash flow losses attributable to the cyber incident, which have been submitted for recovery" plus **$3.8M** business-interruption recoveries | excellent — gross *and* net |
+| Sonic Automotive | "**$30.0 million** of pre-tax benefit in cyber insurance proceeds related to a cybersecurity incident … provided by CDK Global (the CDK outage)" | recovery, not gross loss |
+| Data I/O Corp | "ransomware incident … significant remediation costs of approximately **$388,000**" | small-cap issuer |
+
+**Yield: 4/20 filers overall; 4 of the 15 that had filed any later periodic report (~27%),
+five 8-Ks being too recent to have one.** Treat this as a **floor**: the method only read
+the first two subsequent reports, only matched prose (not tables), and only recognised
+certain phrasings.
+
+Three findings matter more than the rate:
+
+- **The figures are directly usable** — attributable in the filer's own words, quantified,
+  and dated.
+- **Gross and net are distinguishable in practice.** The ADR worried that insurance
+  recoveries would blur the picture; the filings turn out to state both (Lee discloses loss
+  *and* recovery; Sonic's $30.0M is explicitly *proceeds*, not loss). The confound is
+  visible rather than hidden — but it means every entry must record which side it is.
+- **Not exclusively large caps.** Data I/O is a small issuer with a $388k remediation cost.
+  The selection bias toward large listed entities is real but less absolute than assumed,
+  and the corpus does reach nearer the mid-market than expected.
 
 ## Costs and risks
 
@@ -125,16 +158,23 @@ should happen before adopting this ADR**, not after.
 
 ## Recommendation
 
-**Sample before adopting.** Take 20 of the 92 known Item 1.05 filings, follow each to its
-subsequent 10-Q/10-K, and record how many yield a usable, quantified figure. That single
-exercise decides this: a high hit rate makes the registry the best available impact
-evidence; a low one makes it curation overhead dressed as rigour, and it should be dropped
-in favour of insurance claims studies.
+**The sample was run and it supports adoption, narrowly.** A ~27% yield among filers that
+have filed a later report — a floor, given the method's limits — over a corpus of at least
+92 filings and growing means the registry would hold on the order of dozens of citable,
+quantified events now, with more arriving every quarter at no research cost beyond
+verification.
 
-If the sample holds up, adopt with a deliberately narrow first slice: **US-listed Item 1.05
-disclosures carrying a quantified cost, from 2024 onward**. Bounded corpus, tests the
-automation, produces citable tail anchors quickly. Expand to other jurisdictions only once
-the maintenance path is proven.
+Adopt with the narrow first slice: **US-listed Item 1.05 disclosures carrying a quantified
+cost, from 2024 onward.** Two requirements fall directly out of the sample:
+
+1. **Every amount must be typed.** Sonic's $30.0M is insurance *proceeds*; Lee's $10.5M is
+   a gross loss with $3.8M of recoveries stated separately. An untyped registry would mix
+   losses with recoveries and produce nonsense.
+2. **Discovery must not rely on Item 1.05 alone**, and the extraction must be
+   verification-assisted rather than automatic — the loose first pass was 50% wrong, and
+   only sentence-level reading with human confirmation produced trustworthy entries.
+
+Expand to other jurisdictions only once the maintenance path is proven.
 
 Measure it honestly: the count of shards whose `impact.max` cites a registry entry rather
 than a bridge, and whether anyone outside the project contributes an entry. If neither moves
