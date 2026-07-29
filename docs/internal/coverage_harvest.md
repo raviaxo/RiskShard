@@ -66,8 +66,22 @@ Two consequences:
 2. **0.18 × 0.29 ≈ 0.052 major third-party-origin incidents per entity per year** is a
    candidate *reported* frequency for **Third-Party Outage**, whose `frequency.max` is
    currently a labeled interpretive estimate and is the last such estimate in the tracked
-   queue. This may be the source that retires it. Needs verification against the primary
-   PDF before any use — the figures above come from secondary coverage.
+   queue. This may be the source that retires it.
+
+**✅ Verified against the primary PDF 2026-07-28** — see [`dora_prescout.md`](dora_prescout.md).
+The frequency figures hold. Two corrections came out of reading the source:
+
+- The press conflated "29% from **ICT third-party providers**" (Figure 8) with a broader
+  "third parties including other financial entities and infrastructure providers" in the
+  Executive Summary. Use the 29% and cite Figure 8.
+- **DORA does not supply impact**, despite Article 22(2) mandating cost reporting: half of
+  major incidents reported no direct or indirect cost or under EUR 1,000, and a further
+  15% left the field blank — which the ESAs themselves flag as likely mis-reporting. The
+  hope that DORA would solve the impact half is dead for this edition; re-scout the 2026
+  edition (due ~June 2027), which will have automated validation.
+- A **"major incident" is a supervisory classification, not a loss event** — two thirds
+  caused no or minor disruption. Using 0.18 as a loss-event frequency would overstate
+  badly.
 
 ## The reframing
 
