@@ -37,14 +37,14 @@ parameters:
       round_to: 1000
       rationale: US SME crisis-services average used as a conservative direct-response cost floor.
     likely:
-      evidence_id: us_finance_breach_impact_likely_netdiligence_sme_incident_usd
+      evidence_id: us_finance_breach_impact_likely_netdiligence_fs_sme_5yr_usd
       transform: direct
       target_currency: USD
       round_to: 1000
-      rationale: US SME incident average used as the size-appropriate mid-market likely impact.
+      rationale: US financial-services SME five-year average incident cost - matched on country, industry and size.
     max:
-      evidence_id: us_finance_breach_impact_max_ibm_financial_services_usd
+      evidence_id: us_finance_breach_impact_max_netdiligence_fs_sme_observed_usd
       transform: direct
       target_currency: USD
       round_to: 10000
-      rationale: US financial-services industry average used as a scale stress ceiling for a severe breach.
+      rationale: Largest incident cost observed among US financial-services SME claims; replaces an industry average that was standing in for a tail.

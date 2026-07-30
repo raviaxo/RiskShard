@@ -60,34 +60,34 @@ extractions:
     evidence_record_ids:
       - us_finance_breach_impact_min_netdiligence_sme_crisis_usd
 
-  - id: us_finance_breach_impact_likely_netdiligence_sme_incident_usd
+  - id: us_finance_breach_impact_likely_netdiligence_fs_sme_5yr_usd
     source_id: netdiligence_cyber_claims_2025
     source_name: NetDiligence Cyber Claims Study 2025 (Fifteenth Annual)
     source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
     publication_date: "2025-09-23"
-    extraction_date: "2026-07-19"
-    citation_detail: SME average incident cost.
-    fact: NetDiligence reported an average incident cost of USD 264,000 for SME cyber claims (organizations under USD 2B revenue).
-    value: 264000
+    extraction_date: "2026-07-30"
+    citation_detail: Figure 45, Average Incident Cost - Financial Services, SMEs (N=579).
+    fact: NetDiligence reported a five-year average incident cost of USD 329K for financial-services SMEs, with yearly averages of 201K (2020), 284K (2021), 310K (2022), 517K (2023) and 434K (2024); the sector sample's average annual revenue was USD 113M.
+    value: 329000
     unit: currency
     currency: USD
-    normalization_notes: Stored directly in USD as the mid-market likely impact anchor.
-    limitations: Insured-claim sample; SME band is broad; not isolated to financial services.
+    normalization_notes: Stored directly in USD as the mid-market likely impact anchor, now industry-matched as well as country- and size-matched.
+    limitations: Insured-claim sample of claims at or above USD 1K; SME band spans revenue to USD 2B; pooled 2020-2024 nominal dollars; revenue-based segmentation mapped onto a headcount-based size band.
     evidence_record_ids:
-      - us_finance_breach_impact_likely_netdiligence_sme_incident_usd
+      - us_finance_breach_impact_likely_netdiligence_fs_sme_5yr_usd
 
-  - id: us_finance_breach_impact_max_ibm_financial_services_usd
-    source_id: ibm_cost_data_breach_2025
-    source_name: Cost of a Data Breach Report 2025
-    source_url_or_citation: https://www.ibm.com/reports/data-breach
-    publication_date: "2025-07-30"
-    extraction_date: "2026-07-19"
-    citation_detail: Financial-services industry average breach cost.
-    fact: IBM's 2025 report identified financial services as the second-costliest industry for data breaches, at an average of USD 5.56 million.
-    value: 5560000
+  - id: us_finance_breach_impact_max_netdiligence_fs_sme_observed_usd
+    source_id: netdiligence_cyber_claims_2025
+    source_name: NetDiligence Cyber Claims Study 2025 (Fifteenth Annual)
+    source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
+    publication_date: "2025-09-23"
+    extraction_date: "2026-07-30"
+    citation_detail: Financial Services section, observed incident-cost range for SME claims.
+    fact: NetDiligence reported that financial-services SME claims accounted for 6% of all claims and 8% of total incident cost, with total incident cost ranging from USD 1K to USD 11.5M (N=579, 2020-2024).
+    value: 11500000
     unit: currency
     currency: USD
-    normalization_notes: Stored directly in USD as a financial-services stress ceiling.
-    limitations: Enterprise-weighted studied breach population; not mid-market-specific or a full tail distribution.
+    normalization_notes: Stored directly in USD as the observed upper bound of the cost range for this country, industry and size segment.
+    limitations: A single observed claim rather than a modelled percentile; insured-claim basis censored by policy limits; a larger sample would likely show a larger maximum.
     evidence_record_ids:
-      - us_finance_breach_impact_max_ibm_financial_services_usd
+      - us_finance_breach_impact_max_netdiligence_fs_sme_observed_usd
