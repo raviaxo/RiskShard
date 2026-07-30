@@ -128,11 +128,17 @@ def calibration_drift_check(root):
     from engine.web_console import WebConsoleApp
 
     def _close(a, b):
+        """Effectively exact: a scenario value is written from calibration output.
+
+        An earlier version used max(1.0, 2%) as the tolerance, which silently exempted
+        every frequency value -- probabilities are all below 1, so the absolute floor of
+        1.0 swallowed any drift. Only impact was ever checked.
+        """
         try:
             a, b = float(a), float(b)
         except (TypeError, ValueError):
             return False
-        return abs(a - b) <= max(1.0, 0.02 * abs(b))
+        return abs(a - b) <= max(1e-9, 1e-6 * abs(b))
 
     drifted = []
     checked = 0
