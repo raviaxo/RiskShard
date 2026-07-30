@@ -1,16 +1,16 @@
 extractions:
-  - id: fbi_ic3_2025_global_bec_average_loss_per_complaint_usd_sg_context
-    source_id: fbi_ic3_2025_report
-    source_name: FBI IC3 2025 Annual Report
-    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
-    publication_date: "2026-04-16"
-    extraction_date: "2026-07-13"
-    citation_detail: 2025 Crime Types tables list Business Email Compromise complaints and adjusted losses.
-    fact: FBI IC3 reported Business Email Compromise with 24,768 complaints and USD 3,046,598,558 in adjusted losses.
-    value: 123005.43
+  - id: spf_2025_sg_bec_average_loss_per_reported_case_usd
+    source_id: spf_annual_scam_cybercrime_brief_2025
+    source_name: SPF Annual Scam and Cybercrime Brief 2025
+    source_url_or_citation: https://www.police.gov.sg/-/media/SPF/Media-Room/Statistics/Annual-Scams-and-Cybercrime-Brief-2025/Annual-Scam-and-Cybercrime-Brief-2025.pdf
+    publication_date: "2026-02-26"
+    extraction_date: "2026-07-30"
+    citation_detail: Business Email Compromise Scams section, reported case counts and amounts lost for 2024 and 2025.
+    fact: SPF reported 377 business email compromise scam cases in 2025 with SGD 35.3 million lost, against 368 cases and SGD 88.5 million lost in 2024.
+    value: 129564.68
     unit: currency
     currency: USD
-    normalization_notes: Derived average adjusted BEC loss as USD 3,046,598,558 divided by 24,768 BEC complaints.
-    limitations: US complaint-driven average; not Singapore-specific, financial-services-specific, or a full loss distribution.
+    normalization_notes: Pooled both reported years (SGD 123,800,000 over 745 cases = SGD 166,174.50) and converted at fx rate sgd_to_usd_ecb_cross_2026_06_04 (0.7796905351999465) to USD 129,564.68.
+    limitations: Reported cases only, so an incidence-and-loss floor; all sectors rather than financial services; two-year pooling smooths a 60 percent single-year swing in total losses.
     evidence_record_ids:
-      - fbi_ic3_2025_global_bec_average_loss_per_complaint_usd_sg_context
+      - spf_2025_sg_bec_average_loss_per_reported_case_usd

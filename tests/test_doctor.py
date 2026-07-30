@@ -14,6 +14,10 @@ class DoctorTests(unittest.TestCase):
         checks = {item["name"]: item for item in report["checks"]}
 
         self.assertEqual(report["status"], "pass")
+        # Calibration drift is reported loudly but does not gate yet: four shards still
+        # simulate values their calibrations no longer produce (found 2026-07-30).
+        # Correcting one moves a published number, so it is an owner decision.
+        self.assertIn("DRIFT", checks["calibration drift"]["detail"])
         self.assertIn("RiskShard doctor", output)
         self.assertEqual(checks["sources"]["status"], "pass")
         self.assertIn("governed_starter=15", checks["scenarios"]["detail"])

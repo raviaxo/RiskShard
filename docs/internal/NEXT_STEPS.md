@@ -11,6 +11,17 @@ queue, one at a time, to its Definition of Done (`../../AGENTS.md`). Drive mode:
 each anchor** — stop at every evidence decision (source trust, chosen value, caveat) and
 wait for a short yes / no / adjust; no hand-editing of YAML required.
 
+**⚠️ Open defect — calibration drift** *(found 2026-07-30)*: **four shards simulate values their
+own calibrations no longer produce**, so the explorer shows source-backed evidence beside a loss
+range that evidence did not generate: `au_finance_data_breach_midmarket` (scenario likely 400k vs
+calibrated **10.7M**, max 2M vs **50M**), `au_finance_ransomware_midmarket`, `ca_finance_data_breach_midmarket`,
+and `us_finance_bec_midmarket` (scenario 25k/123k/1.2M vs calibrated 50k/120k/6.4M). Singapore had the
+same defect and was corrected 2026-07-30. `riskshard_doctor` now prints the drift on every run but
+**does not gate on it**: correcting a drifted scenario moves a published number, which is an owner
+decision, and doctor's exit code gates automation. Promoting it to a blocking check is your call.
+**Note `us_finance_bec_midmarket` is the shard quoted in the live LinkedIn post** — correcting it
+will move those figures.
+
 **Open decisions blocking nothing but ageing** *(as of 2026-07-30)* — five, all yours:
 **ADR-0003** (mark bridged vs cell-matched evidence, Proposed), **ADR-0005** (documented
 loss-event registry, Proposed — the sampling was run and supports it), **breadth vs depth**

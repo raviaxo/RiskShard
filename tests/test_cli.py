@@ -176,6 +176,7 @@ class CliSmokeTests(unittest.TestCase):
         )
         self.assertIn("RiskShard doctor", result.stdout)
         self.assertIn("Status: pass", result.stdout)
+        self.assertIn("calibration drift", result.stdout)
 
     def test_data_pack_cli_writes_named_release(self):
         env = os.environ.copy()

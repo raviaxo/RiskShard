@@ -37,7 +37,7 @@ class GovernanceTests(unittest.TestCase):
         self.assertEqual(abs_feed["trust_tier"], "high")
         self.assertEqual(abs_feed["evidence_record_count"], 4)
         self.assertEqual(fbi["trust_tier"], "high")
-        self.assertEqual(fbi["evidence_record_count"], 9)
+        self.assertEqual(fbi["evidence_record_count"], 8)  # SG BEC moved to SPF local data
         self.assertEqual(uk_dsit["trust_tier"], "high")
         self.assertEqual(uk_dsit["evidence_record_count"], 9)
         self.assertEqual(ibm_uk["trust_tier"], "medium")

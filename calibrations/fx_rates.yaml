@@ -88,3 +88,21 @@ rates:
       Bank of Canada quotes the daily average value of one US dollar expressed
       in Canadian dollars. Canada data-breach calibration uses this reviewed
       static assumption and discloses it in calibration reports.
+  - id: sgd_to_usd_ecb_cross_2026_06_04
+    from: SGD
+    to: USD
+    rate: 0.7796905351999465
+    as_of: "2026-06-04"
+    source_name: European Central Bank euro foreign exchange reference rates
+    source_type: official_reference_rate
+    source_url: https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html
+    retrieved_at: "2026-07-30"
+    citation_detail: "ECB 4 June 2026 reference rates quote EUR/USD 1.1640 and EUR/SGD 1.4929; RiskShard derives SGD/USD as 1.1640 / 1.4929 = 0.7796905351999465."
+    evidence_type: source_backed
+    notes: >
+      ECB rates are quoted against EUR. RiskShard stores the derived SGD to
+      USD cross-rate explicitly so Singapore dollar-denominated evidence
+      currency coverage is visible in readiness and governance checks. The
+      EUR/SGD observation was retrieved from the ECB data API series
+      EXR.D.SGD.EUR.SP00.A for 2026-06-04, matching the as-of date already
+      used for the EUR, GBP and JPY rates in this file.
