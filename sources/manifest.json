@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 49,
+  "fetched_count": 50,
   "generated_at": "2026-07-24T20:18:01Z",
   "manifest_version": "1.0",
-  "source_count": 49,
+  "source_count": 50,
   "sources": [
     {
       "access_mode": "public_pdf",
@@ -1115,6 +1115,28 @@
       "title": "SPF Annual Scam and Cybercrime Brief 2025",
       "url": "https://www.police.gov.sg/-/media/SPF/Media-Room/Statistics/Annual-Scams-and-Cybercrime-Brief-2025/Annual-Scam-and-Cybercrime-Brief-2025.pdf",
       "usage_notes": "Singapore's national police statistics for reported scams. Reports 377 business email compromise cases and SGD 35.3M lost in 2025, against 368 cases and SGD 88.5M in 2024. Use to derive a Singapore-specific average loss per reported BEC case, replacing US complaint data used as Singapore context. Reported cases only, so it is an incidence floor; covers all sectors, not financial services specifically; losses swung 60% year on year, so a single year is not a stable central estimate.\n"
+    },
+    {
+      "id": "esas_dora_major_ict_incidents_2025",
+      "title": "ESAs 2025 Report on major ICT-related incidents (JC 2026 16)",
+      "publisher": "Joint Committee of the European Supervisory Authorities (EBA, EIOPA, ESMA)",
+      "source_type": "regulator_report",
+      "url": "https://www.eba.europa.eu/sites/default/files/2026-06/29b60c21-4ff3-4e1e-9308-7c8225d5cc01/ESAs%202025%20report%20on%20major%20ICT-related%20incidents.pdf",
+      "publication_date": "2026-06-03",
+      "gathered_at": "2026-07-30T23:03:56Z",
+      "access_mode": "public_pdf",
+      "intended_use": [
+        "EU financial-sector major ICT incident rate per entity",
+        "share of major incidents originating from ICT third-party providers"
+      ],
+      "usage_notes": "First annual report under Article 22(2) of DORA, covering 2025. Reports 3,383 major ICT-related incidents, an average of 0.18 per financial entity subject to DORA, with 29% originating from an ICT third-party provider (Figure 8). Supervisory reporting by regulated entities, so it is a reported rate rather than a survey estimate.\nTwo limits must travel with any use. A 'major' incident is a supervisory classification triggered by materiality thresholds in Delegated Regulation (EU) 2024/1772, NOT a loss event: two thirds caused no or minor disruption to clients and transactions. And the report supplies no usable impact data despite Article 22(2) mandating cost reporting - half of incidents reported no direct or indirect cost or under EUR 1,000, with a further 15% leaving the field blank, which the ESAs' own footnote flags as likely incorrect reporting practice.\nDo not mix with organisation-level disruption prevalence (BCI, Interos): that is a different construct measuring whether an organisation experienced any disruption.\n",
+      "status": "fetched",
+      "final_url": "https://www.eba.europa.eu/sites/default/files/2026-06/29b60c21-4ff3-4e1e-9308-7c8225d5cc01/ESAs%202025%20report%20on%20major%20ICT-related%20incidents.pdf",
+      "http_status": 200,
+      "content_type": "application/pdf",
+      "content_length": 867430,
+      "sha256": "aecab17720869aab72fea92937011dba452735861da46dfd0aaa4945861b94bf",
+      "raw_path": "sources/raw/esas_dora_major_ict_incidents_2025.pdf"
     }
   ]
 }
