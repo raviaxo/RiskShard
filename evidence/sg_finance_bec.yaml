@@ -204,29 +204,33 @@ records:
       company_size_bands: [mid_market]
       threats: [business_email_compromise]
 
-  - id: fbi_ic3_2025_global_bec_average_loss_per_complaint_usd_sg_context
-    title: FBI IC3 BEC average adjusted loss per complaint for Singapore starter
+  - id: spf_2025_sg_bec_average_loss_per_reported_case_usd
+    title: Singapore BEC average loss per reported case (SPF, two-year pooled)
     parameter: impact.likely
-    value: 123005.43
+    value: 129564.68
     unit: currency
     currency: USD
-    source_id: fbi_ic3_2025_report
-    source_name: FBI IC3 2025 Annual Report
-    source_type: law_enforcement_report
-    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
-    publication_date: "2026-04-16"
-    extraction_date: "2026-07-13"
-    citation_detail: 2025 Crime Types tables list Business Email Compromise with 24,768 complaints and USD 3,046,598,558 in adjusted losses.
-    extraction_notes: Derived average adjusted BEC loss as USD 3,046,598,558 divided by 24,768 BEC complaints.
-    normalization_notes: Stored directly in USD and selected as a global complaint-average likely-loss bridge until Singapore BEC loss evidence is reviewed.
-    limitations: US IC3 complaint population; not Singapore-specific, financial-services-specific, mid-market-specific, or a full loss distribution.
+    source_id: spf_annual_scam_cybercrime_brief_2025
+    source_name: SPF Annual Scam and Cybercrime Brief 2025
+    source_type: law_enforcement_statistics
+    source_url_or_citation: https://www.police.gov.sg/-/media/SPF/Media-Room/Statistics/Annual-Scams-and-Cybercrime-Brief-2025/Annual-Scam-and-Cybercrime-Brief-2025.pdf
+    publication_date: '2026-02-26'
+    extraction_date: '2026-07-30'
+    citation_detail: "SPF reports 377 business email compromise scam cases in 2025 with SGD 35.3 million lost, against 368 cases and SGD 88.5 million lost in 2024."
+    extraction_notes: "Pooled both reported years rather than using 2025 alone: case volume was flat (368 to 377) while losses fell 60.1 percent, so a single year is not a stable central estimate. Pooled average loss per reported case is SGD 123,800,000 over 745 cases = SGD 166,174.50. 2025 alone would give SGD 93,633.95 (USD 73,005.51) and 2024 alone SGD 240,489.13; the pooled figure sits between them."
+    normalization_notes: "Converted SGD 166,174.50 to USD at 0.7796905351999465 (fx rate sgd_to_usd_ecb_cross_2026_06_04, ECB 4 June 2026 EUR/USD 1.1640 divided by EUR/SGD 1.4929), giving USD 129,564.68. Replaces the FBI IC3 US complaint average previously used as Singapore context: the value is close (USD 123,005), but it is now measured in Singapore rather than borrowed."
+    limitations: "Reported cases only, so this is an incidence-and-loss floor: BEC losses that were never reported to police are invisible. Covers all sectors, not financial services specifically, and is not mid-market-specific. Two-year pooling hides a 60 percent single-year swing in total losses, so the central estimate is stable but the underlying series is volatile. Currency converted at a single reference-rate date rather than at each incident's own rate."
     confidence: medium
     evidence_type: source_backed
     applicability:
-      industries: [all]
-      countries: [US, global]
-      company_size_bands: [all]
-      threats: [business_email_compromise]
+      industries:
+      - all
+      countries:
+      - SG
+      company_size_bands:
+      - all
+      threats:
+      - business_email_compromise
 
   - id: riskshard_sg_finance_bec_impact_stress_2026
     title: Estimated Singapore finance BEC impact stress bound

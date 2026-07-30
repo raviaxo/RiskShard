@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 48,
+  "fetched_count": 49,
   "generated_at": "2026-07-24T20:18:01Z",
   "manifest_version": "1.0",
-  "source_count": 48,
+  "source_count": 49,
   "sources": [
     {
       "access_mode": "public_pdf",
@@ -1093,6 +1093,28 @@
       "content_length": 44233,
       "sha256": "99392120d191a4c45942f8d4ffa1d04fdb903cc0c0c3c356b4c64bf1f65bcf6c",
       "raw_path": "sources/raw/ponemon_dtex_cost_insider_risks_2023.html"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 697367,
+      "content_type": "application/pdf",
+      "final_url": "https://www.police.gov.sg/-/media/SPF/Media-Room/Statistics/Annual-Scams-and-Cybercrime-Brief-2025/Annual-Scam-and-Cybercrime-Brief-2025.pdf",
+      "gathered_at": "2026-07-30T01:24:39Z",
+      "http_status": 200,
+      "id": "spf_annual_scam_cybercrime_brief_2025",
+      "intended_use": [
+        "Singapore business email compromise case counts and losses",
+        "Singapore-specific BEC average loss per reported case"
+      ],
+      "publication_date": "2026-02-26",
+      "publisher": "Singapore Police Force",
+      "raw_path": "sources/raw/spf_annual_scam_cybercrime_brief_2025.pdf",
+      "sha256": "5422fa57299d72ed6a2e802ad713c396ce8cd13d23e7e6e727fa1735b1c96b97",
+      "source_type": "law_enforcement_statistics",
+      "status": "fetched",
+      "title": "SPF Annual Scam and Cybercrime Brief 2025",
+      "url": "https://www.police.gov.sg/-/media/SPF/Media-Room/Statistics/Annual-Scams-and-Cybercrime-Brief-2025/Annual-Scam-and-Cybercrime-Brief-2025.pdf",
+      "usage_notes": "Singapore's national police statistics for reported scams. Reports 377 business email compromise cases and SGD 35.3M lost in 2025, against 368 cases and SGD 88.5M in 2024. Use to derive a Singapore-specific average loss per reported BEC case, replacing US complaint data used as Singapore context. Reported cases only, so it is an incidence floor; covers all sectors, not financial services specifically; losses swung 60% year on year, so a single year is not a stable central estimate.\n"
     }
   ]
 }

@@ -1,3 +1,23 @@
+- date: "2026-07-30"
+  title: "Singapore BEC: local evidence, and a stale scenario corrected"
+  decision: "docs/internal/NEXT_STEPS.md"
+  effect: >-
+    The Singapore BEC shard's modelled loss rose from AVG USD 39,164 to AVG USD 660,538.69
+    (P95 1,774,130.85; P99 2,554,930.65). Two separate causes: its scenario file was still
+    simulating starter assumptions (frequency 0.04/0.12/0.30, impact 25k/123k/1.2M)
+    rather than the source-backed values its own calibration produces, and impact.likely
+    moved from borrowed US data to Singapore data.
+  reason: >-
+    The published figures were computed from placeholder values while the page displayed
+    source-backed evidence beside them, so the loss range was not produced by the
+    evidence shown. The scenario now matches its calibration. Separately, impact.likely
+    was the FBI IC3 US complaint average used as Singapore context; it is now the average
+    loss per reported Singapore BEC case from the Singapore Police Force Annual Scam and
+    Cybercrime Brief 2025 (377 cases / SGD 35.3M in 2025 and 368 / SGD 88.5M in 2024,
+    pooled, converted at an ECB-derived SGD/USD reference rate). The value barely changed
+    (USD 123,005 to 129,565) -- the borrowed figure was close -- but it is now measured in
+    Singapore rather than assumed from the US.
+
 # Published-number revisions.
 #
 # When a modeled figure on the public explorer changes for a reason other than new
