@@ -12,8 +12,8 @@ metadata:
 
 frequency:
   min: 0.00010514176186819692
-  likely: 0.12
-  max: 0.25
+  likely: 0.21
+  max: 0.81
 
 impact:
   min: 33000

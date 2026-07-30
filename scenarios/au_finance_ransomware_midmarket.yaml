@@ -12,11 +12,11 @@ metadata:
     evidence is reviewed.
 
 frequency:
-  min: 0.22
+  min: 0.1
   likely: 0.65
   max: 0.65
 
 impact:
-  min: 100000
-  likely: 3900000
+  min: 97000
+  likely: 3590000
   max: 72300000
