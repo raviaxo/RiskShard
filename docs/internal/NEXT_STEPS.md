@@ -11,6 +11,14 @@ queue, one at a time, to its Definition of Done (`../../AGENTS.md`). Drive mode:
 each anchor** — stop at every evidence decision (source trust, chosen value, caveat) and
 wait for a short yes / no / adjust; no hand-editing of YAML required.
 
+**Open decisions blocking nothing but ageing** *(as of 2026-07-30)* — five, all yours:
+**ADR-0003** (mark bridged vs cell-matched evidence, Proposed), **ADR-0005** (documented
+loss-event registry, Proposed — the sampling was run and supports it), **breadth vs depth**
+([`coverage_harvest.md`](coverage_harvest.md)), the **vintage/aging + regulatory-modifier plan**
+(shape approved verbally, never written up — outstanding), and whether **ADR-0004** should have
+been flipped to Accepted by an agent rather than by you. Two PRs are open and unmerged: **#66**
+and **#67** (stacked on #66).
+
 **Current top blocker** *(updated 2026-07-28, evening)*: **impact evidence.** Frequency stopped
 being the constraint today — Eurostat `isoc_cisce_ic` supplies country- and size-specific rates for
 **35 countries**, and DORA supplies a supervisory per-entity rate for EU financial entities. Impact
@@ -381,3 +389,18 @@ governance/regulatory loss).
   wall** — dead-ended in Spanish sources and in DORA's own cost fields. ADR-0003 (shared impact
   bridges) proposed in response. TPO `frequency.max` assessed and left as an estimate: the DORA
   figure is the wrong construct. 202 tests; validate and preflight clean.
+- 2026-07-30 — **Citability shipped; three scouts returned negative; two self-corrections.**
+  ADR-0004 **implemented**: `RS:<shard>/<parameter>@<release>` identifiers pinned to immutable
+  fingerprinted releases, an archived per-release explorer under `docs/r/` that refuses to
+  overwrite itself, `aliases.yaml` so a rename cannot break a written-down citation, and a
+  "cite this number" affordance that carries the **caveat inside the citation**. ADR-0005
+  proposed after **running** its own sampling test: 20 SEC Item 1.05 filers, 4 verified
+  quantified costs (a loose proximity pass said 6 — two were extraction noise), yielding
+  usable figures such as UNFI $26M and Data I/O $388k, with gross-vs-recovery distinguishable.
+  **Self-corrections:** ADR-0003's premise was overstated (most impact params *are*
+  cell-matched; only ~6 are cross-cell bridges, concentrated in SG and CA) and its sequencing
+  argument was wrong (the CA/AU scout retires no bridge). **CA/AU scout closed with no change:**
+  Australia already handled correctly and now verified at the ASD primary source; Canada left on
+  Cyentia and labelled known-weak rather than substituted with StatCan recovery spending, which
+  is a narrower measure. 205 tests; validate, preflight and doctor all pass. **No evidence or
+  model change shipped this session** — the impact wall is unmoved.
