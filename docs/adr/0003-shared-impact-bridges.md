@@ -133,15 +133,25 @@ than after the CA/AU impact upgrades, which may retire two of the six bridges an
 
 ## Recommendation
 
-**Adopt part 1 and 2 (mark the mismatch, report both numbers) — but sequence it after the
-Canada and Australia impact upgrades.** StatCan and ASD both publish incident costs by
-business size and are not yet in the manifest; those upgrades would retire the Cyentia
-bridges in `ca_finance_data_breach` and `au_finance_ransomware`, which are three of the six.
-Doing the schema work first means migrating records that are about to be replaced.
+**Adopt parts 1 and 2 (mark the mismatch, report both numbers).** An earlier draft argued
+for sequencing this *after* Canada and Australia impact upgrades, on the grounds that those
+would retire three of the six bridges. **That was wrong on both counts** — see
+[`../internal/impact_sources_scout.md`](../internal/impact_sources_scout.md):
 
-Parts 3 and 4 (declared shared bridges, documented transfer rules) are worth doing only if
-bridges survive that pass — which they will for Singapore, whose whole impact side is
-borrowed US data and for which no local source has been found.
+- Canada is **not** being upgraded. StatCan publishes recovery spending with no per-business
+  average, and "recovery spending" is narrower than loss (it excludes business interruption,
+  lost revenue, ransom and legal). The decision was to leave Cyentia in place and label
+  Canada known-weak rather than substitute a narrower measure that looks like an upgrade.
+- Australia's ASD figure is `impact.min`; the Cyentia bridge in `au_finance_ransomware` is
+  `impact.max`. It was never going to be touched.
+
+No bridge is retired by that scout, so **there is no sequencing reason to delay**. If
+anything the scout strengthens the case: Canada is now a deliberately-retained bridge, and
+deliberate retention is only defensible if it is visible.
+
+Parts 3 and 4 (declared shared bridges, documented transfer rules) matter most for
+**Singapore**, whose entire impact side is borrowed US data and for which no local source
+has been found.
 
 When it lands, take the headline drop deliberately and publicly, with a `revisions.yaml`
 entry explaining it — the mechanism built for exactly this kind of change. A metric that

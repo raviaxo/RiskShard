@@ -22,7 +22,17 @@ awaits an owner decision — along with the breadth-vs-depth question in
 [`coverage_harvest.md`](coverage_harvest.md).
 
 Research notes from this pass: [`coverage_harvest.md`](coverage_harvest.md),
-[`dora_prescout.md`](dora_prescout.md), [`es_availability_prescout.md`](es_availability_prescout.md).
+[`dora_prescout.md`](dora_prescout.md), [`es_availability_prescout.md`](es_availability_prescout.md),
+[`impact_sources_scout.md`](impact_sources_scout.md).
+
+**Decisions 2026-07-30 (CA/AU impact scout):** Australia is **already correct** — the ASD
+figures were verified at the primary source, and the Business Queensland citation is a
+deliberate, documented stand-in because `cyber.gov.au` is not gatherable from this runtime.
+Canada **stays on Cyentia and is labelled known-weak**: StatCan publishes recovery spending
+with no per-business average, and recovery spending is narrower than loss. Consequently no
+bridge is retired, and ADR-0003 no longer has a sequencing reason to wait. Next impact
+targets: **NetDiligence by revenue band** (registered, used only for the US) and
+**Singapore**, the most bridged shard in the portfolio.
 
 **Strategy (2026-07-28):** [`canonical_reference_thesis.md`](canonical_reference_thesis.md) —
 the win condition is becoming *the thing people cite*, not the thing they use. RiskShard will
