@@ -4,6 +4,7 @@ from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
 from engine.sources import (
+    content_matches_access_mode,
     SourceRegistryError,
     active_sources,
     build_success_record,
@@ -119,6 +120,88 @@ class SourceRegistryTests(unittest.TestCase):
         self.assertEqual(record["status"], "fetched")
         self.assertEqual(record["final_url"], "https://example.com/report.pdf")
         self.assertEqual(record["content_type"], "application/pdf")
+
+    def test_landing_page_does_not_overwrite_a_declared_pdf_artifact(self):
+        """A URL that serves HTML where a PDF was declared must not be accepted.
+
+        The NetDiligence registry entry pointed at a landing page while the manifest held
+        a hand-captured 9.1MB PDF. Re-gathering returned HTTP 200 with HTML, which looked
+        like success: the manifest recorded a new sha256 and raw_path, silently replacing
+        the artifact the evidence cites (found 2026-07-30).
+        """
+        source = {
+            "id": "landing_page_only",
+            "title": "Study behind a landing page",
+            "publisher": "Example Publisher",
+            "source_type": "report",
+            "url": "https://example.com/study-landing",
+            "publication_date": "2026-01-01",
+            "access_mode": "public_pdf",
+            "intended_use": ["testing"],
+            "usage_notes": "Unit test fixture.",
+        }
+
+        def fake_fetch(url, *, timeout):
+            return {
+                "payload": b"<html>marketing page</html>",
+                "final_url": url,
+                "http_status": 200,
+                "headers": {"Content-Type": "text/html; charset=UTF-8"},
+            }
+
+        with TemporaryDirectory() as tmp, patch("engine.sources.fetch_url", side_effect=fake_fetch):
+            record = fetch_source(source, Path(tmp), gathered_at="2026-06-01T00:00:00Z", timeout=1, retries=0)
+            written = list(Path(tmp).iterdir())
+
+        self.assertEqual(record["status"], "error")
+        self.assertIn("landing page", record["error"])
+        self.assertIsNone(record["raw_path"])
+        # nothing written, so a previously gathered artifact on disk survives
+        self.assertEqual(written, [])
+
+    def test_content_mismatch_falls_through_to_a_fallback_url(self):
+        """The declared-content guard cooperates with fallback_urls rather than giving up."""
+        source = {
+            "id": "landing_then_pdf",
+            "title": "Study with a working fallback",
+            "publisher": "Example Publisher",
+            "source_type": "report",
+            "url": "https://example.com/landing",
+            "fallback_urls": ["https://mirror.example.com/study.pdf"],
+            "publication_date": "2026-01-01",
+            "access_mode": "public_pdf",
+            "intended_use": ["testing"],
+            "usage_notes": "Unit test fixture.",
+        }
+
+        def fake_fetch(url, *, timeout):
+            if url.endswith("/landing"):
+                return {
+                    "payload": b"<html>marketing page</html>",
+                    "final_url": url,
+                    "http_status": 200,
+                    "headers": {"Content-Type": "text/html"},
+                }
+            return {
+                "payload": b"%PDF-1.7 real study",
+                "final_url": url,
+                "http_status": 200,
+                "headers": {"Content-Type": "application/pdf"},
+            }
+
+        with TemporaryDirectory() as tmp, patch("engine.sources.fetch_url", side_effect=fake_fetch):
+            record = fetch_source(source, Path(tmp), gathered_at="2026-06-01T00:00:00Z", timeout=1, retries=0)
+
+        self.assertEqual(record["status"], "fetched")
+        self.assertEqual(record["final_url"], "https://mirror.example.com/study.pdf")
+
+    def test_mislabelled_pdf_is_accepted_on_its_magic_bytes(self):
+        """Some servers send a real PDF with a wrong Content-Type; trust the bytes."""
+        self.assertTrue(content_matches_access_mode("public_pdf", "text/html", b"%PDF-1.4 x"))
+        self.assertFalse(content_matches_access_mode("public_pdf", "text/html", b"<html>"))
+        self.assertTrue(content_matches_access_mode("public_html", "text/html; charset=utf-8"))
+        # an unrecognised mode is not policed
+        self.assertTrue(content_matches_access_mode("public_api", "application/octet-stream"))
 
     def test_gather_sources_skips_inactive_registry_entries(self):
         registry_text = """

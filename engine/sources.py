@@ -120,6 +120,35 @@ def extension_for_content(url, content_type=None):
     return ".bin"
 
 
+# What each declared access mode should actually come back as. A registry URL that
+# points at a landing page instead of the artifact returns HTML with HTTP 200, which
+# looks like success: the manifest records a new sha256 and raw_path, and the real
+# evidence artifact is silently replaced. That happened to the NetDiligence claims
+# study on 2026-07-30 -- a 9.1MB PDF became an 83KB HTML page -- and would have
+# invalidated the evidence citing it.
+ACCESS_MODE_CONTENT = {
+    "public_pdf": ("application/pdf",),
+    "public_html": ("text/html", "application/xhtml"),
+    "public_json": ("application/json", "text/json"),
+    "public_csv": ("text/csv", "application/csv", "text/plain"),
+}
+
+
+def content_matches_access_mode(access_mode, content_type, payload=b""):
+    """Does the fetched body match what the registry said this source is?"""
+    expected = ACCESS_MODE_CONTENT.get(access_mode)
+    if not expected:
+        return True
+    media_type = (content_type or "").split(";", 1)[0].strip().lower()
+    if any(media_type.startswith(prefix) for prefix in expected):
+        return True
+    # Some servers mislabel a genuine PDF; trust the magic bytes over the header.
+    if access_mode == "public_pdf" and payload[:5] == b"%PDF-":
+        return True
+    return False
+
+
+
 def build_success_record(source, *, gathered_at, final_url, http_status, headers, payload, raw_path):
     content_type = headers.get("Content-Type") or headers.get("content-type")
     return {
@@ -207,29 +236,46 @@ def fetch_source(source, raw_dir, *, gathered_at=None, timeout=30, retries=1):
     raw_dir = Path(raw_dir)
     errors = []
 
+    fetched = None
     for url in source_urls(source):
         for attempt in range(retries + 1):
             try:
                 response = fetch_url(url, timeout=timeout)
-                payload = response["payload"]
-                final_url = response["final_url"]
-                http_status = response["http_status"]
-                headers = response["headers"]
                 break
             except (HTTPError, URLError, TimeoutError, OSError) as exc:
                 errors.append(f"{url} attempt {attempt + 1}: {exc}")
         else:
             continue
+
+        content_type = response["headers"].get("Content-Type") or response["headers"].get("content-type")
+        if not content_matches_access_mode(source["access_mode"], content_type, response["payload"]):
+            # Not the artifact. Record why and try the next URL rather than writing a
+            # landing page over a previously gathered document.
+            errors.append(
+                f"{url}: declared access_mode {source['access_mode']} but the server "
+                f"returned {(content_type or 'no content-type')!r} "
+                f"({len(response['payload'])} bytes); this URL looks like a landing page "
+                "rather than the artifact"
+            )
+            continue
+
+        fetched = response
         break
-    else:
+
+    if fetched is None:
         return build_error_record(
             source,
             gathered_at=gathered_at,
             error="; ".join(errors),
         )
 
-    raw_dir.mkdir(parents=True, exist_ok=True)
+    payload = fetched["payload"]
+    final_url = fetched["final_url"]
+    http_status = fetched["http_status"]
+    headers = fetched["headers"]
     content_type = headers.get("Content-Type") or headers.get("content-type")
+
+    raw_dir.mkdir(parents=True, exist_ok=True)
     raw_path = raw_dir / raw_filename_for_source(source, content_type)
     raw_path.write_bytes(payload)
 

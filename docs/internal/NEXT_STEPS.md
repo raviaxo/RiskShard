@@ -11,6 +11,23 @@ queue, one at a time, to its Definition of Done (`../../AGENTS.md`). Drive mode:
 each anchor** — stop at every evidence decision (source trust, chosen value, caveat) and
 wait for a short yes / no / adjust; no hand-editing of YAML required.
 
+**Source-gathering integrity** *(P1, closed 2026-07-30)*: `gather_sources.py` now refuses an
+artifact that does not match its registry `access_mode` — a URL serving HTML where a PDF was
+declared no longer overwrites the gathered document; it records an error and falls through to
+`fallback_urls`. Found because re-gathering silently replaced the NetDiligence claims study
+(9.1MB PDF) with its 83KB landing page, which would have invalidated the US data-breach impact
+evidence citing it. NetDiligence now carries the PDF as a fallback and self-heals to the exact
+sha256 already cited.
+
+Audit of all 51 registered sources (run into temp paths, committed manifest untouched) found
+one further mislabel — `eurostat_isoc_cisce_ic_2024` declared `public_html` for a JSON API —
+now corrected. **Worth knowing:** ~37 of the registered sources are HTML pages whose bytes
+change on every fetch, so their manifest `sha256` proves *what was fetched at that moment*, not
+that the document is unchanged. One shrank materially (`ibm_cost_data_breach_2025`, 180,111 →
+138,855 bytes), which may mean the page has been edited since the evidence was extracted.
+Unresolved: two registry entries are registered but have never been gathered
+(`asd_annual_cyber_threat_report_2024_2025`, blocked in this runtime, and `first_epss_data_stats`).
+
 **⚠️ Open defect — calibration drift** *(found 2026-07-30)*: **four shards simulate values their
 own calibrations no longer produce**, so the explorer shows source-backed evidence beside a loss
 range that evidence did not generate: `au_finance_data_breach_midmarket` (scenario likely 400k vs

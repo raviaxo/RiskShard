@@ -112,7 +112,7 @@ sources:
   source_type: official_statistics
   url: https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_cisce_ic?format=JSON&lang=EN&geo=FR&indic_is=E_SEC2ICNF&unit=PC_ENT
   publication_date: '2025-10-08'
-  access_mode: public_html
+  access_mode: public_json
   trust_tier: high
   refresh_interval_days: 365
   intended_use:
@@ -836,11 +836,15 @@ sources:
   - small and mid-market (SME) incident cost
   - data breach loss magnitude by organization size
   usage_notes: 'Use as a US-centric cyber insurance claims severity source. SME figures cover organizations
-    under USD 2B revenue and are size-relevant for mid-market shards. Preserve limitations that claims
-    are insured-loss samples, not a full population loss distribution, and are not isolated to the financial-services
-    sector.
+    under USD 2B revenue.
+
+    The canonical `url` is NetDiligence''s landing page, which serves HTML, not the study. The fallback
+    is the PDF actually gathered and cited (an RSM-hosted mirror of the same report). Keep both: the landing
+    page is the citation a reader should follow, the fallback is the artifact provenance depends on.
 
     '
+  fallback_urls:
+  - https://rsmus.com/content/dam/rsm/insights/services/risk-fraud-cybersecurity/1pdf/net-diligence-cyber-claims-study-2025-report.inline.pdf
 - id: spf_annual_scam_cybercrime_brief_2025
   title: SPF Annual Scam and Cybercrime Brief 2025
   publisher: Singapore Police Force
