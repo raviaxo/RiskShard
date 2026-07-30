@@ -65,6 +65,36 @@ class RenderTests(unittest.TestCase):
         self.assertIn("Why these figures changed", html)
         self.assertIn(first["title"], html)
 
+    def test_citations_pin_to_an_immutable_release(self):
+        """ADR-0004: a cited figure must still resolve to the value that was cited."""
+        from scripts.build_explorer import latest_release
+
+        release = latest_release()
+        self.assertTrue(release, "a data-pack release is needed to pin citations")
+
+        html = render(dict(SAMPLE, release=release, site="https://example.test/RiskShard/"))
+        self.assertIn("cite this number", html)
+        self.assertIn("paramID", html)
+        # the pinned form, not just the canonical one
+        self.assertIn("'@'+RELEASE", html)
+
+    def test_renamed_shards_keep_resolving(self):
+        """A rename must not break a citation someone already wrote down."""
+        from scripts.build_explorer import load_aliases
+
+        self.assertIsInstance(load_aliases(), dict)
+        html = render(SAMPLE)
+        self.assertIn("DATA.aliases", html)
+
+    def test_archived_copy_reaches_shared_assets(self):
+        """An archive under docs/r/<release>/ must not ship duplicate fonts."""
+        archived = render(SAMPLE, asset_prefix="../../")
+        self.assertIn('url("../../fonts/plex-mono-400.woff2")', archived)
+        self.assertNotIn('url("fonts/', archived)
+
+        current = render(SAMPLE)
+        self.assertIn('url("fonts/plex-mono-400.woff2")', current)
+
     def test_layers_are_deep_linkable(self):
         """A number under discussion has to be addressable on its own."""
         html = render(SAMPLE)

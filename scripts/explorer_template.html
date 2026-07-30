@@ -21,12 +21,12 @@
 <meta name="twitter:description" content="Modeled dollar loss ranges for cyber risk, where every input is traceable to a named public source — and disputable in one click.">
 <meta name="twitter:image" content="__RS_SITE__social-card.png">
 <style>
-  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-400.woff2") format("woff2");font-weight:400;font-display:swap}
-  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-500.woff2") format("woff2");font-weight:500;font-display:swap}
-  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-600.woff2") format("woff2");font-weight:600;font-display:swap}
-  @font-face{font-family:"Fraunces";src:url("fonts/fraunces-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
-  @font-face{font-family:"Fraunces";src:url("fonts/fraunces-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
-  @font-face{font-family:"Fraunces";src:url("fonts/fraunces-500-italic.woff2") format("woff2");font-weight:500;font-style:italic;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("__RS_ASSETS__fonts/plex-mono-400.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("__RS_ASSETS__fonts/plex-mono-500.woff2") format("woff2");font-weight:500;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("__RS_ASSETS__fonts/plex-mono-600.woff2") format("woff2");font-weight:600;font-display:swap}
+  @font-face{font-family:"Fraunces";src:url("__RS_ASSETS__fonts/fraunces-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+  @font-face{font-family:"Fraunces";src:url("__RS_ASSETS__fonts/fraunces-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+  @font-face{font-family:"Fraunces";src:url("__RS_ASSETS__fonts/fraunces-500-italic.woff2") format("woff2");font-weight:500;font-style:italic;font-display:swap}
 
   /* dark (slate) — default, dark-first */
   :root{
@@ -133,6 +133,8 @@
   .field .fl{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
   .field .quote{color:var(--ink);border-left:2px solid var(--copper);padding-left:11px}
   .field .caveat{color:var(--muted)}
+  .rsid{font-size:11.5px;color:var(--faint);word-break:break-all}
+  .rsid b{color:var(--muted);font-weight:600}
   .acts{display:flex;flex-wrap:wrap;gap:8px}
   .disp{font-size:12px;color:var(--copper);border:1px solid var(--edge);border-radius:2px;padding:6px 11px;
     justify-self:start;background:var(--panel);font-family:var(--mono);cursor:pointer}
@@ -237,11 +239,47 @@
     var raw=(location.hash||'').replace(/^#/,'');
     if(!raw) return false;
     var parts=decodeURIComponent(raw).split('/');
-    var i=byId[parts[0]];
+    var name=parts[0];
+    /* A rename must not break a citation someone already wrote down (ADR-0004). */
+    var aliases=DATA.aliases||{};
+    if(byId[name]==null && aliases[name]) name=aliases[name];
+    var i=byId[name];
     if(i==null) return false;
     select(i,parts[1]||null,true);
     return true;
   }
+  /* ADR-0004 — citable identifiers. The pinned form names an immutable, fingerprinted
+     release, so a figure quoted in a document still resolves to the value that was
+     cited. The caveat travels inside the citation deliberately: a number pasted into a
+     board deck should carry its limitation with it. */
+  var RELEASE=DATA.release;
+  function paramID(shardId,parameter){
+    return 'RS:'+shardId+'/'+parameter+(RELEASE?('@'+RELEASE):'');
+  }
+  /* A citation must point at the canonical pinned location, not at whatever host the
+     reader happens to be viewing (a local copy, a fork, an archived page). */
+  function citeURL(shardId,parameter){
+    var base=DATA.site||'';
+    if(RELEASE) base+='r/'+RELEASE+'/';
+    return base+'#'+shardId+'/'+parameter;
+  }
+  function citeValue(s,p){
+    if(p.value==null) return '—';
+    if(p.unit!=='currency') return p.value+(p.unit?(' '+p.unit):'');
+    /* Render money as money: take the currency code from the shard's own run output. */
+    var code=(s.avg||'').split(/\s/)[0];
+    var amount=Number(p.value);
+    var shown=isNaN(amount)?p.value:amount.toLocaleString('en-US',{maximumFractionDigits:2});
+    return (code?code+' ':'')+shown;
+  }
+  function citation(s,p){
+    var src=p.source_name||'source not recorded';
+    if(p.publication_date) src+=', '+p.publication_date;
+    var caveat=p.caveat?(' Caveat: '+p.caveat):'';
+    return 'RiskShard '+paramID(s.id,p.parameter)+' — '+p.parameter+' = '+citeValue(s,p)+
+      ' ('+src+').'+caveat+' '+citeURL(s.id,p.parameter);
+  }
+
   function disputeURL(shard,p){
     var title='Dispute: '+shard.id+' / '+p.parameter+' = '+valText(p);
     var body='**Shard:** `'+shard.id+'`\n**Parameter:** `'+p.parameter+'`\n**Current value:** '+valText(p)+
@@ -272,9 +310,11 @@
         '</button><div class="body"><div class="bodyin">'+
           (p.quote?'<div class="field"><span class="fl">Cited</span><span class="quote">'+esc(p.quote)+'</span></div>':'')+
           (p.caveat?'<div class="field"><span class="fl">Limit</span><span class="caveat">'+esc(p.caveat)+'</span></div>':'')+
+          '<div class="rsid"><b>'+esc(paramID(s.id,p.parameter))+'</b></div>'+
           '<div class="acts">'+
             '<a class="disp" target="_blank" rel="noopener" href="'+disputeURL(s,p)+'">⎘ dispute this layer → open an issue</a>'+
             '<button type="button" class="disp ghost copy" data-link="'+esc(pageURL(s.id,p.parameter))+'">⧉ copy link to this layer</button>'+
+            '<button type="button" class="disp ghost cite" data-cite="'+esc(citation(s,p))+'">❝ cite this number</button>'+
           '</div>'+
         '</div></div></div>';
     }).join('');
@@ -295,16 +335,20 @@
         setHash(s.id,o?r.getAttribute('data-param'):null);
       });
     });
-    Array.prototype.forEach.call(record.querySelectorAll('.copy'),function(btn){
-      btn.addEventListener('click',function(){
-        var link=btn.getAttribute('data-link');
-        var done=function(){btn.classList.add('done');btn.textContent='✓ link copied';
-          setTimeout(function(){btn.classList.remove('done');btn.textContent='⧉ copy link to this layer';},1600);};
-        if(navigator.clipboard&&navigator.clipboard.writeText){
-          navigator.clipboard.writeText(link).then(done,function(){window.prompt('Copy this link',link);});
-        }else{window.prompt('Copy this link',link);}
+    function wireCopy(selector,attr,label,doneLabel,promptLabel){
+      Array.prototype.forEach.call(record.querySelectorAll(selector),function(btn){
+        btn.addEventListener('click',function(){
+          var text=btn.getAttribute(attr);
+          var done=function(){btn.classList.add('done');btn.textContent=doneLabel;
+            setTimeout(function(){btn.classList.remove('done');btn.textContent=label;},1600);};
+          if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(text).then(done,function(){window.prompt(promptLabel,text);});
+          }else{window.prompt(promptLabel,text);}
+        });
       });
-    });
+    }
+    wireCopy('.copy','data-link','⧉ copy link to this layer','✓ link copied','Copy this link');
+    wireCopy('.cite','data-cite','❝ cite this number','✓ citation copied','Copy this citation');
     if(openParam){
       var target=record.querySelector('.lrow[data-param="'+openParam.replace(/"/g,'')+'"]');
       if(target){

@@ -12,3 +12,6 @@ recommendation; only the repo owner moves it to `Accepted`.
 | ADR | Title | Status |
 |---|---|---|
 | [0001](0001-loss-chain-scenario-modeling.md) | Loss-chain scenario modeling | Accepted |
+| [0002](0002-portable-scenario-seed.md) | Portable scenario seeds (machine-independent simulation) | Accepted |
+| [0003](0003-shared-impact-bridges.md) | Shared, named impact bridges | Proposed |
+| [0004](0004-citable-parameter-identifiers.md) | Citable parameter identifiers | Accepted |

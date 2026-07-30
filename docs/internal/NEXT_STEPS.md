@@ -11,7 +11,54 @@ queue, one at a time, to its Definition of Done (`../../AGENTS.md`). Drive mode:
 each anchor** — stop at every evidence decision (source trust, chosen value, caveat) and
 wait for a short yes / no / adjust; no hand-editing of YAML required.
 
-**Current top blocker** *(updated 2026-07-28)*: **distribution, not product.** Product is stable —
+**Open decisions blocking nothing but ageing** *(as of 2026-07-30)* — five, all yours:
+**ADR-0003** (mark bridged vs cell-matched evidence, Proposed), **ADR-0005** (documented
+loss-event registry, Proposed — the sampling was run and supports it), **breadth vs depth**
+([`coverage_harvest.md`](coverage_harvest.md)), the **vintage/aging + regulatory-modifier plan**
+(shape approved verbally, never written up — outstanding), and whether **ADR-0004** should have
+been flipped to Accepted by an agent rather than by you. Two PRs are open and unmerged: **#66**
+and **#67** (stacked on #66).
+
+**Current top blocker** *(updated 2026-07-28, evening)*: **impact evidence.** Frequency stopped
+being the constraint today — Eurostat `isoc_cisce_ic` supplies country- and size-specific rates for
+**35 countries**, and DORA supplies a supervisory per-entity rate for EU financial entities. Impact
+dead-ended twice in one day: Spanish public bodies publish counts rather than euros, and DORA's
+mandated cost fields are mostly unreported or under EUR 1,000 (the ESAs flag likely mis-reporting).
+Per-cell loss magnitude largely **does not exist publicly**, which is why
+[`../adr/0003-shared-impact-bridges.md`](../adr/0003-shared-impact-bridges.md) is Proposed and
+awaits an owner decision — along with the breadth-vs-depth question in
+[`coverage_harvest.md`](coverage_harvest.md).
+
+Research notes from this pass: [`coverage_harvest.md`](coverage_harvest.md),
+[`dora_prescout.md`](dora_prescout.md), [`es_availability_prescout.md`](es_availability_prescout.md),
+[`impact_sources_scout.md`](impact_sources_scout.md).
+
+**Decisions 2026-07-30 (CA/AU impact scout):** Australia is **already correct** — the ASD
+figures were verified at the primary source, and the Business Queensland citation is a
+deliberate, documented stand-in because `cyber.gov.au` is not gatherable from this runtime.
+Canada **stays on Cyentia and is labelled known-weak**: StatCan publishes recovery spending
+with no per-business average, and recovery spending is narrower than loss. Consequently no
+bridge is retired, and ADR-0003 no longer has a sequencing reason to wait. Next impact
+targets: **NetDiligence by revenue band** (registered, used only for the US) and
+**Singapore**, the most bridged shard in the portfolio.
+
+**Strategy (2026-07-28):** [`canonical_reference_thesis.md`](canonical_reference_thesis.md) —
+the win condition is becoming *the thing people cite*, not the thing they use. RiskShard will
+never hold the best loss data (insurers do, and do not publish it); it can hold the only
+**auditable** data, because a vendor structurally cannot publish its caveats. Falsifiable test:
+does a RiskShard parameter identifier appear in a document someone else wrote? This tilts
+breadth-vs-depth toward **depth, with identifier infrastructure sequenced ahead of shard count**
+([`../adr/0004-citable-parameter-identifiers.md`](../adr/0004-citable-parameter-identifiers.md),
+Proposed).
+
+**Assessed and rejected 2026-07-28:** the DORA figure (0.052 TPP-origin major incidents per
+financial entity per year) **does not** retire TPO's `frequency.max` estimate. It is a different
+construct (incident rate vs organisation prevalence), a different severity threshold (supervisory
+"major", two thirds of which caused no or minor disruption), and ~17× below the existing
+`frequency.min`. It stays a labeled estimate. The figure is parked for a separate, well-defined
+"major third-party ICT incident, EU financial entity" scenario, buildable once impact exists.
+
+*(Previous blocker, still true and unresolved: distribution/conversion.)* Product is stable —
 all 11 shards source-backed (66/66); ledger, provenance/challenge-a-number, evidence report, pyfair
 export, and the `new-shard` scaffold all shipped (PR #51). **PR backlog fully cleared 2026-07-28:
 0 open PRs**; `main` carries the README explorer CTA (#54), the slate-&-copper explorer redesign
@@ -330,3 +377,30 @@ governance/regulatory loss).
   commit succeeded; explorer verified live on the slate-&-copper identity (self-hosted fonts 200).
   No product/evidence change. Reconciled this doc: top blocker restated as **distribution/conversion**
   with the measured traffic numbers.
+- 2026-07-28 (evening) — **Reproducibility fixed and the impact wall found.** ADR-0002: scenario seeds
+  were derived from the *absolute* path on disk, so published figures could not be reproduced on
+  another machine; now root-relative. Every loss number moved once (<2%), and `revisions.yaml` +
+  a "Why these figures changed" block on the explorer make such moves explainable rather than silent.
+  The suite passed unchanged after the fix — nothing asserted simulated output — so a golden-value
+  test was added (verified identical on Python 3.8 and 3.14). Also: explorer country flags, a
+  generated social card (PR #64), per-layer deep links and link previews (PR #62).
+  **Research:** Eurostat gives mid-market frequency for 35 countries; DORA gives 0.18 major incidents
+  per financial entity (29% third-party origin), verified against the primary PDF. **Impact is the
+  wall** — dead-ended in Spanish sources and in DORA's own cost fields. ADR-0003 (shared impact
+  bridges) proposed in response. TPO `frequency.max` assessed and left as an estimate: the DORA
+  figure is the wrong construct. 202 tests; validate and preflight clean.
+- 2026-07-30 — **Citability shipped; three scouts returned negative; two self-corrections.**
+  ADR-0004 **implemented**: `RS:<shard>/<parameter>@<release>` identifiers pinned to immutable
+  fingerprinted releases, an archived per-release explorer under `docs/r/` that refuses to
+  overwrite itself, `aliases.yaml` so a rename cannot break a written-down citation, and a
+  "cite this number" affordance that carries the **caveat inside the citation**. ADR-0005
+  proposed after **running** its own sampling test: 20 SEC Item 1.05 filers, 4 verified
+  quantified costs (a loose proximity pass said 6 — two were extraction noise), yielding
+  usable figures such as UNFI $26M and Data I/O $388k, with gross-vs-recovery distinguishable.
+  **Self-corrections:** ADR-0003's premise was overstated (most impact params *are*
+  cell-matched; only ~6 are cross-cell bridges, concentrated in SG and CA) and its sequencing
+  argument was wrong (the CA/AU scout retires no bridge). **CA/AU scout closed with no change:**
+  Australia already handled correctly and now verified at the ASD primary source; Canada left on
+  Cyentia and labelled known-weak rather than substituted with StatCan recovery spending, which
+  is a narrower measure. 205 tests; validate, preflight and doctor all pass. **No evidence or
+  model change shipped this session** — the impact wall is unmoved.
