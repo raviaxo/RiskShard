@@ -11,11 +11,11 @@ metadata:
     is reviewed.
 
 frequency:
-  min: 0.04
-  likely: 0.12
-  max: 0.25
+  min: 0.004
+  likely: 0.63
+  max: 0.74
 
 impact:
-  min: 25000
-  likely: 123000
-  max: 1200000
+  min: 50000
+  likely: 120000
+  max: 6400000
