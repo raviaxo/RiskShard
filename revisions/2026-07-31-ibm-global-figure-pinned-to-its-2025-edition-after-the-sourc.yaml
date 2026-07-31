@@ -1,0 +1,13 @@
+date: '2026-07-31'
+title: IBM global figure pinned to its 2025 edition after the source URL rolled
+decision: docs/internal/NEXT_STEPS.md
+effect: The Australian financial-services data-breach shard moved from AVG AUD 6,864,295 to 6,866,168,
+  a fraction of a percent, as impact.likely was corrected from a rounded USD 4.4M to the figure
+  the source states, USD 4.44M.
+reason: 'The evidence cited IBM''s 2025 global average cost of a data breach, but its source URL
+  was ibm.com/reports/data-breach - a living page that always serves the current edition. By July
+  2026 the gathered artifact was the 2026 report showing USD 4.99M, so the cited figure no longer
+  appeared in its own evidence and could not be verified. The source is now pinned to an edition-specific
+  URL that names the 2025 report and quotes the figure directly. No caveat changed: the limitation
+  that this is a global all-industry average applied to an Australian mid-market shard is unchanged
+  and still the dominant one.'

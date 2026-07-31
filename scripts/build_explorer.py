@@ -33,7 +33,7 @@ from engine.web_console import WebConsoleApp  # noqa: E402
 
 TEMPLATE = Path(__file__).resolve().parent / "explorer_template.html"
 REPO_URL = "https://github.com/raviaxo/RiskShard"
-REVISIONS_PATH = ROOT / "revisions.yaml"
+REVISIONS_DIR = ROOT / "revisions"
 ALIASES_PATH = ROOT / "aliases.yaml"
 RELEASES_DIR = ROOT / "data_pack_releases"
 # Where the built page is served. Absolute URLs are required by Open Graph /
@@ -57,20 +57,28 @@ def _loss_range(app_root, module_id):
 def load_revisions(path=None):
     """Method changes that moved published numbers (not evidence changes).
 
-    Shown on the page beside the figures they moved, so a reader who remembers an
-    older number can see what changed and why rather than assuming it was fudged.
+    One file per revision rather than one shared list: a single newest-first YAML file
+    meant every branch prepended to line 1 and collided with every other branch. Separate
+    files merge silently.
+
+    Newest first, by date then filename; same-day ordering is by filename and is not
+    otherwise meaningful.
     """
-    path = Path(path or REVISIONS_PATH)
-    if not path.exists():
+    directory = Path(path or REVISIONS_DIR)
+    if not directory.exists():
         return []
-    entries = yaml.safe_load(path.read_text(encoding="utf-8")) or []
-    return [{
-        "date": str(entry.get("date", "")),
-        "title": entry.get("title", ""),
-        "effect": (entry.get("effect") or "").strip(),
-        "reason": (entry.get("reason") or "").strip(),
-        "decision": entry.get("decision"),
-    } for entry in entries]
+    entries = []
+    for file_path in sorted(directory.glob("*.yaml"), reverse=True):
+        entry = yaml.safe_load(file_path.read_text(encoding="utf-8")) or {}
+        entries.append({
+            "date": str(entry.get("date", "")),
+            "title": entry.get("title", ""),
+            "effect": (entry.get("effect") or "").strip(),
+            "reason": (entry.get("reason") or "").strip(),
+            "decision": entry.get("decision"),
+        })
+    entries.sort(key=lambda e: e["date"], reverse=True)
+    return entries
 
 
 def latest_release(releases_dir=None):
@@ -178,7 +186,7 @@ def main(argv=None):
         archive = ROOT / "docs" / "r" / release / "index.html"
         if archive.exists():
             # A pinned citation must keep resolving to what it resolved to. Corrections
-            # are a new release plus a revisions.yaml entry, never an edit in place.
+            # are a new release plus a revisions/ entry, never an edit in place.
             print(f"Archive already exists, left untouched: {archive}")
             return 0
         archive.parent.mkdir(parents=True, exist_ok=True)

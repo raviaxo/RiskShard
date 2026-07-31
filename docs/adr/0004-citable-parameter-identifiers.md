@@ -5,7 +5,7 @@
 - **Deciders:** repo owner (records intent and a recommendation only)
 - **Related:** [`../internal/canonical_reference_thesis.md`](../internal/canonical_reference_thesis.md),
   [`0002-portable-scenario-seed.md`](0002-portable-scenario-seed.md),
-  [`../../revisions.yaml`](../../revisions.yaml)
+  [`../../revisions/`](../../revisions/)
 
 ## Context
 
@@ -62,7 +62,7 @@ These are the whole point; without them the identifier is decoration.
    so existing citations keep resolving. Renaming without an alias is a breaking change
    and is not permitted.
 3. **Pinned citations are immutable.** An archived release is never regenerated. If it is
-   wrong, the correction is a new release plus a `revisions.yaml` entry — never an edit in
+   wrong, the correction is a new release plus a `revisions/` entry — never an edit in
    place.
 4. **Integrity is checkable.** Each release already carries a fingerprint, so a reader can
    verify the pinned artefact is the one that was cited.

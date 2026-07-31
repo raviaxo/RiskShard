@@ -153,7 +153,7 @@ Parts 3 and 4 (declared shared bridges, documented transfer rules) matter most f
 **Singapore**, whose entire impact side is borrowed US data and for which no local source
 has been found.
 
-When it lands, take the headline drop deliberately and publicly, with a `revisions.yaml`
+When it lands, take the headline drop deliberately and publicly, with a `revisions/`
 entry explaining it — the mechanism built for exactly this kind of change. A metric that
 goes down for a stated reason is more credible than one that only ever goes up.
 

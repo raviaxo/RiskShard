@@ -55,15 +55,18 @@ class RenderTests(unittest.TestCase):
         from scripts.build_explorer import load_revisions
 
         revisions = load_revisions()
-        self.assertTrue(revisions, "revisions.yaml should carry the ADR-0002 entry")
-        first = revisions[0]
-        for field in ("date", "title", "effect", "reason"):
-            self.assertTrue(first[field], f"revision entry missing {field}")
+        self.assertTrue(revisions, "revisions/ should carry the ADR-0002 entry")
+        # every entry, not just the first: these render publicly, and a missing field
+        # shows as blank text on the live page rather than failing the build
+        for entry in revisions:
+            for field in ("date", "title", "effect", "reason"):
+                self.assertTrue(entry[field], f"{entry.get('title')!r} missing {field}")
+        self.assertEqual(revisions, sorted(revisions, key=lambda e: e["date"], reverse=True))
 
         sample = dict(SAMPLE, revisions=revisions)
         html = render(sample)
         self.assertIn("Why these figures changed", html)
-        self.assertIn(first["title"], html)
+        self.assertIn(revisions[0]["title"], html)
 
     def test_citations_pin_to_an_immutable_release(self):
         """ADR-0004: a cited figure must still resolve to the value that was cited."""

@@ -19,6 +19,14 @@ on:
       - "scripts/explorer_template.html"
       - "docs/social-card.png"
       - ".github/workflows/pages.yml"
+      # The page is generated from more than the evidence. Without these, a change that
+      # moves every published number (an engine change) or adds a revision note would not
+      # redeploy -- and since docs/index.html is no longer committed, a missed trigger is
+      # the only thing that can make the site stale.
+      - "engine/**"
+      - "revisions/**"
+      - "aliases.yaml"
+      - "data_pack_releases/**"
   workflow_dispatch:
 
 permissions:
