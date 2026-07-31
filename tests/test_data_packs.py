@@ -1,4 +1,7 @@
 import json
+import sys
+import subprocess
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -48,6 +51,28 @@ class DataPackTests(unittest.TestCase):
         manifest = build_data_pack_manifest(ROOT)
         covered = {entry["path"].split("/", 1)[0] for entry in manifest["files"]}
         self.assertIn("scenarios", covered)
+
+    def test_cutting_a_release_into_a_temp_dir_leaves_the_tracked_ledger_alone(self):
+        """Tests must not write repo state.
+
+        `data_pack_manifest.py --release` appends a strength-ledger entry, and
+        `--release-dir` redirects only the release artifact, not the ledger. The CLI smoke
+        test therefore appended a real entry on every run: it polluted the ledger with
+        zero-delta entries, fed them into the public README progress table, and made the
+        file conflict on every parallel branch. Found 2026-07-31; `--no-ledger` is the fix.
+        """
+        ledger = ROOT / "docs" / "internal" / "strength_ledger.json"
+        before = ledger.read_bytes()
+        env = {**os.environ, "PYTHONPATH": str(ROOT)}
+        with tempfile.TemporaryDirectory() as tmp:
+            result = subprocess.run(
+                [sys.executable, "scripts/data_pack_manifest.py", "--release",
+                 "2026.06.15-isolation-test", "--release-dir", tmp, "--no-ledger"],
+                cwd=ROOT, env=env, text=True, capture_output=True,
+            )
+        self.assertEqual(result.returncode, 0, msg=result.stderr)
+        self.assertEqual(before, ledger.read_bytes(),
+                         "cutting a release into a temp dir mutated the tracked ledger")
 
     def test_data_pack_manifest_can_be_written(self):
         manifest = build_data_pack_manifest(ROOT)

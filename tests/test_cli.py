@@ -169,14 +169,14 @@ class CliSmokeTests(unittest.TestCase):
             capture_output=True,
         )
 
-        self.assertEqual(
-            result.returncode,
-            0,
-            msg=f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}",
-        )
+        # Exit code follows the overall status, and the strength-ledger check is a
+        # release-time property that legitimately reports needs_review on a working
+        # branch -- see test_doctor for why this is not asserted as "pass".
+        self.assertIn(result.returncode, (0, 1), msg=f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}")
         self.assertIn("RiskShard doctor", result.stdout)
-        self.assertIn("Status: pass", result.stdout)
+        self.assertRegex(result.stdout, r"Status: (pass|needs_review)")
         self.assertIn("calibration drift", result.stdout)
+        self.assertIn("11 shards match their calibration", result.stdout)
 
     def test_data_pack_cli_writes_named_release(self):
         env = os.environ.copy()
@@ -191,6 +191,11 @@ class CliSmokeTests(unittest.TestCase):
                     "2026.06.15-test",
                     "--release-dir",
                     tmp,
+                    # Without this the smoke test appends a real entry to the tracked
+                    # strength ledger on every run: --release-dir redirects the release
+                    # artifact but not the ledger. That polluted the ledger with
+                    # zero-delta entries and made it conflict on every parallel branch.
+                    "--no-ledger",
                     "--notes",
                     "CLI smoke release",
                 ],
