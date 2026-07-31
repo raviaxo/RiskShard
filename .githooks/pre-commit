@@ -4,9 +4,18 @@
 # False positive? Re-run with:  git commit --no-verify
 #
 # Enable this hook once per clone:  git config core.hooksPath .githooks
+#
+# Also runnable over an arbitrary diff range, so CI can enforce the same patterns for
+# clones that never enabled the hook -- a per-clone guard protects only the person who
+# set it up. CI calls:  sh .githooks/pre-commit "<base>...<head>"
+#
+#   no argument  -> scan staged changes (git hook behaviour)
+#   one argument -> scan that diff range (CI behaviour)
 
-added=$(git diff --cached --no-color -U0 | grep '^+' | grep -v '^+++')
-staged_names=$(git diff --cached --name-only)
+range_arg="${1:---cached}"
+
+added=$(git diff "$range_arg" --no-color -U0 | grep '^+' | grep -v '^+++')
+staged_names=$(git diff "$range_arg" --name-only)
 
 hits=""
 
@@ -26,7 +35,7 @@ echo "$staged_names" | grep -qE '(^|/)\.env($|\.)|\.(pem|key|p12|pfx)$|(^|/)(cre
 
 if [ -n "$hits" ]; then
   echo "----------------------------------------------------------------------"
-  echo "COMMIT BLOCKED: possible secret in staged changes ->$hits"
+  echo "BLOCKED: possible secret in changes ->$hits"
   echo "RiskShard is a publishable open-source repo; nothing that couldn't be"
   echo "shown to a CISO tomorrow should be committed."
   echo "Review the staged diff. If this is a genuine false positive, bypass with:"

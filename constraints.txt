@@ -1,0 +1,21 @@
+# Pinned versions for the direct dependencies declared in requirements.txt.
+#
+# Why: requirements.txt declares ranges, so `pip install -r requirements.txt` resolves
+# differently over time. A project whose central claim is that a third party can reproduce
+# a published number (ADR-0002 portable seeds, ADR-0004 citable identifiers) should be able
+# to reproduce its own environment first.
+#
+# Use:  pip install -r requirements.txt -c constraints.txt
+#
+# Scope, stated honestly: only the three DIRECT dependencies are pinned. Transitive
+# packages still float, so this is reproducibility of what we declare, not a full lock.
+# Pinning the whole tree (with hashes) is the stronger form; it is deferred because the
+# resolved set here comes from Python 3.14 and CI runs 3.11, 3.12 and 3.13, where some
+# transitive pins would not be installable.
+#
+# Refresh deliberately, not automatically: bump a pin, let CI run the matrix, and treat a
+# failure as information about the dependency rather than something to unpin around.
+
+jsonschema==4.26.0
+matplotlib==3.11.0
+PyYAML==6.0.3
