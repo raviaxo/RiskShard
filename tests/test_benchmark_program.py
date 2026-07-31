@@ -25,11 +25,11 @@ class BenchmarkProgramTests(unittest.TestCase):
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["target_count"], 30)
         self.assertEqual(report["module_seeded_count"], 11)
-        self.assertEqual(report["benchmark_ready_count"], 6)
+        self.assertEqual(report["benchmark_ready_count"], 5)
         self.assertEqual(report["status_counts"]["missing_module"], 19)
-        self.assertEqual(report["status_counts"]["needs_evidence"], 5)
+        self.assertEqual(report["status_counts"]["needs_evidence"], 6)
         self.assertIn("Benchmark-Grade 30 Shard Program", output)
-        self.assertIn("benchmark-ready: 6", output)
+        self.assertIn("benchmark-ready: 5", output)
         self.assertIn("ca_finance_data_breach_midmarket", by_id)
         self.assertIn("de_industrial_ransomware_midmarket", by_id)
         self.assertIn("sg_finance_bec_midmarket", by_id)
@@ -60,9 +60,9 @@ class BenchmarkProgramTests(unittest.TestCase):
         self.assertEqual(cohort["cohort"]["title"], "Benchmark Cohort 1: seeded modules")
         self.assertEqual(cohort["status"], "needs_evidence")
         self.assertEqual(cohort["target_count"], 11)
-        self.assertEqual(cohort["benchmark_ready_count"], 6)
-        self.assertEqual(cohort["status_counts"]["benchmark_ready"], 6)
-        self.assertEqual(cohort["status_counts"]["needs_evidence"], 5)
+        self.assertEqual(cohort["benchmark_ready_count"], 5)
+        self.assertEqual(cohort["status_counts"]["benchmark_ready"], 5)
+        self.assertEqual(cohort["status_counts"]["needs_evidence"], 6)
         # Queue is ascending by blocker_count; several shards now tie at 1 blocker
         # (JP closed 2026-07-24, leaving only a country-relevance gap).
         self.assertEqual(cohort["upgrade_queue"][0]["blocker_count"], 1)
@@ -74,7 +74,14 @@ class BenchmarkProgramTests(unittest.TestCase):
         self.assertEqual(by_id["ca_finance_data_breach_midmarket"]["blockers"], [])
         self.assertEqual(by_id["gb_finance_data_breach_midmarket"]["blockers"], [])
         self.assertEqual(by_id["au_finance_ransomware_midmarket"]["blockers"], [])
-        self.assertEqual(by_id["au_finance_data_breach_midmarket"]["blockers"], [])
+        # AU data breach now carries an industry-relevance blocker on purpose: its
+        # impact.likely was reselected from a UK financial-services benchmark to IBM's
+        # global all-industry average, which is a shorter bridge for an Australian shard
+        # but is no longer industry-matched. The gate saying so is correct.
+        self.assertEqual(
+            [b["code"] for b in by_id["au_finance_data_breach_midmarket"]["blockers"]],
+            ["industry_relevance_gap"],
+        )
         self.assertEqual(by_id["de_industrial_ransomware_midmarket"]["metrics"]["source_backed_parameters"], 6)
         self.assertEqual(by_id["de_industrial_ransomware_midmarket"]["blockers"], [])
         self.assertEqual(by_id["au_finance_bec_midmarket"]["metrics"]["source_backed_parameters"], 6)
@@ -93,15 +100,15 @@ class BenchmarkProgramTests(unittest.TestCase):
 
         self.assertEqual(sprint["sprint"]["title"], "Seeded Evidence Upgrade Sprint A")
         self.assertEqual(sprint["status"], "needs_evidence_work")
-        self.assertEqual(sprint["target_count"], 5)
-        self.assertEqual(sprint["total_blocker_count"], 23)
+        self.assertEqual(sprint["target_count"], 6)
+        self.assertEqual(sprint["total_blocker_count"], 24)
         self.assertIn("frequency.max", sprint["focus_parameters"])
         self.assertIn("impact.max", sprint["focus_parameters"])
         self.assertNotIn("ca_finance_data_breach_midmarket", by_id)
         self.assertNotIn("de_industrial_ransomware_midmarket", by_id)
         self.assertIn("sg_finance_bec_midmarket", by_id)
         self.assertNotIn("au_finance_ransomware_midmarket", by_id)
-        self.assertNotIn("au_finance_data_breach_midmarket", by_id)
+        self.assertIn("au_finance_data_breach_midmarket", by_id)
         self.assertIn("Seeded Evidence Upgrade Sprint A", output)
         self.assertIn("Acceptance criteria", output)
         self.assertIn("jp_manufacturing_ransomware_midmarket: blockers=1", output)

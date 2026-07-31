@@ -119,6 +119,23 @@
         "shards": 11,
         "shards_fully_sourced": 11
       }
+    },
+    {
+      "data_pack_version": "2026.07.30",
+      "date": "2026-07-30",
+      "fingerprint": "afddcf3f923436ce3c7699acc881a8335880b8424c0082cae10f5cefdf867d21",
+      "grades": {
+        "benchmark_review_candidate": 5,
+        "governed_starter": 6
+      },
+      "metrics": {
+        "params_bridged": 0,
+        "params_missing": 0,
+        "params_source_backed": 66,
+        "params_total": 66,
+        "shards": 11,
+        "shards_fully_sourced": 11
+      }
     }
   ]
 }
