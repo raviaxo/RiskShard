@@ -158,7 +158,7 @@ python scripts/strength_ledger.py show                       # confirm the delta
 `--archive` writes an immutable copy of the explorer to `docs/r/<release>/` so that a
 citation pinned to this release keeps resolving to the values it was written against
 (ADR-0004). An existing archive is never regenerated: if a released figure turns out to be
-wrong, the correction is a **new** release plus a `revisions.yaml` entry, never an edit in
+wrong, the correction is a **new** release plus a `revisions/` entry, never an edit in
 place.
 
 The ledger entry is a no-op if the pack fingerprint is unchanged, so re-running is

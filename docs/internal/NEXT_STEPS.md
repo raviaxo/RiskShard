@@ -407,7 +407,7 @@ governance/regulatory loss).
   with the measured traffic numbers.
 - 2026-07-28 (evening) — **Reproducibility fixed and the impact wall found.** ADR-0002: scenario seeds
   were derived from the *absolute* path on disk, so published figures could not be reproduced on
-  another machine; now root-relative. Every loss number moved once (<2%), and `revisions.yaml` +
+  another machine; now root-relative. Every loss number moved once (<2%), and `revisions/` +
   a "Why these figures changed" block on the explorer make such moves explainable rather than silent.
   The suite passed unchanged after the fix — nothing asserted simulated output — so a golden-value
   test was added (verified identical on Python 3.8 and 3.14). Also: explorer country flags, a
