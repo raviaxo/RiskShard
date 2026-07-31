@@ -193,7 +193,7 @@ class CalibrationTests(unittest.TestCase):
         }
 
         self.assertEqual(scenario["frequency"], {"min": 0.0008, "likely": 0.65, "max": 0.69})
-        self.assertEqual(scenario["impact"], {"min": 97000, "likely": 10700000, "max": 50000000})
+        self.assertEqual(scenario["impact"], {"min": 97000, "likely": 6100000, "max": 50000000})
         self.assertEqual(
             warning_codes.count("parameter_from_non_source_backed_evidence"),
             0,
@@ -212,12 +212,14 @@ class CalibrationTests(unittest.TestCase):
         self.assertEqual(
             set(assumptions_by_evidence),
             {
-                "ibm_uk_2025_financial_services_breach_average_cost_gbp_au_bridge",
+                "ibm_cost_data_breach_2025_global_average_cost_usd",
             },
         )
         self.assertEqual(
             {item["rate_id"] for item in assumptions_by_evidence.values()},
-            {"gbp_to_aud_ecb_rba_cross_2026_06_04"},
+            # USD-denominated global IBM figure now converts via the RBA AUD/USD rate,
+        # inverted; the calibration report discloses the inversion.
+        {"inverse:aud_to_usd_rba_f11_1_2026_06_01"},
         )
         self.assertIn(
             "verizon_dbir_2026_vulnerability_exploitation_breach_entry_share",

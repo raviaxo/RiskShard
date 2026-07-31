@@ -36,11 +36,18 @@ parameters:
       round_to: 1000
       rationale: Locally gathered Australian medium-business cybercrime cost floor used conservatively until data-breach-specific Australian cost-floor evidence exists.
     likely:
-      evidence_id: ibm_uk_2025_financial_services_breach_average_cost_gbp_au_bridge
+      evidence_id: ibm_cost_data_breach_2025_global_average_cost_usd
       transform: currency_convert
       target_currency: AUD
       round_to: 100000
-      rationale: Financial-services-specific UK average data-breach cost benchmark, converted to AUD as an industry bridge until Australian financial-services breach-cost evidence exists.
+      rationale: >-
+        IBM global average data-breach cost converted to AUD. Replaces the UK
+        financial-services figure (GBP 5.74M, AUD 10.7M) selected previously: both are
+        bridges, and the choice trades country distance against industry specificity, but
+        applying a UK-specific benchmark to an Australian shard stacked a second mismatch
+        on top of an already enterprise-weighted average. Both overstate mid-market; the
+        global figure overstates by less and does not also import a foreign jurisdiction.
+        Revise when Australian financial-services breach-cost evidence exists.
     max:
       evidence_id: privacy_act_1988_au_body_corporate_serious_privacy_penalty_cap_2026
       transform: direct

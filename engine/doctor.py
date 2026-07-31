@@ -118,10 +118,10 @@ def calibration_drift_check(root):
     source-backed evidence beside a loss range that evidence never produced. Found
     2026-07-30 with five shards adrift.
 
-    Reported as pass-with-detail rather than a failing gate: correcting a drifted
-    scenario moves a published number, which is an owner decision, not a cleanup, and
-    doctor's exit code gates automation. The drift is printed on every run so it cannot
-    be missed. Promoting this to a blocking check is tracked in docs/internal/NEXT_STEPS.md.
+    Gating since 2026-07-30, once the four drifted shards were corrected. It was
+    introduced non-gating because correcting a drifted scenario moves a published number
+    and that was an owner decision; with the backlog cleared, any new drift is a defect
+    rather than a known state, and should fail.
     """
     import re as _re
     import yaml as _yaml
@@ -166,10 +166,11 @@ def calibration_drift_check(root):
         if drifted:
             return {
                 "name": "calibration drift",
-                "status": "pass",
-                "detail": (f"DRIFT: {len(drifted)} of {checked * 2} scenario blocks no longer "
-                           f"match their calibration and are simulating stale values "
-                           f"({', '.join(drifted)}); not gating yet - see NEXT_STEPS"),
+                "status": "fail",
+                "detail": (f"{len(drifted)} of {checked * 2} scenario blocks no longer match "
+                           f"their calibration and are simulating stale values "
+                           f"({', '.join(drifted)}); the loss range shown would not be "
+                           f"produced by the evidence displayed beside it"),
             }
         return {"name": "calibration drift", "status": "pass",
                 "detail": f"{checked} shards match their calibration"}

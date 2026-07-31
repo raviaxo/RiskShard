@@ -6,11 +6,11 @@ metadata:
   benchmark_status: starter_with_source_backed_impact
 
 frequency:
-  min: 0.05
-  likely: 0.2
-  max: 0.5
+  min: 0.0008
+  likely: 0.65
+  max: 0.69
 
 impact:
-  min: 100000
-  likely: 400000
-  max: 2000000
+  min: 97000
+  likely: 6100000
+  max: 50000000
