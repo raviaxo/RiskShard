@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from engine.data_packs import (
+    PACK_PATHS,
     build_data_pack_manifest,
     build_data_pack_release,
     write_data_pack_manifest,
@@ -30,6 +31,23 @@ class DataPackTests(unittest.TestCase):
             "risk_modules/au_finance_ransomware_midmarket.yaml",
             {item["path"] for item in manifest["files"]},
         )
+
+    def test_pack_covers_the_values_that_are_actually_simulated(self):
+        """A release fingerprint must cover the numbers it publishes.
+
+        `scenarios` was missing from PACK_PATHS until 2026-07-30. A scenario file holds
+        the frequency and impact the Monte Carlo runs, so a shard could drift away from
+        its calibration -- publishing a loss range its evidence did not produce -- inside
+        a released pack whose fingerprint never moved. Citations pinned to that release
+        (ADR-0004) would have claimed integrity over the evidence but not the numbers.
+        """
+        self.assertIn("scenarios", PACK_PATHS)
+        self.assertIn("calibrations", PACK_PATHS)
+        self.assertIn("evidence", PACK_PATHS)
+
+        manifest = build_data_pack_manifest(ROOT)
+        covered = {entry["path"].split("/", 1)[0] for entry in manifest["files"]}
+        self.assertIn("scenarios", covered)
 
     def test_data_pack_manifest_can_be_written(self):
         manifest = build_data_pack_manifest(ROOT)
