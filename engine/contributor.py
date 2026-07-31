@@ -345,7 +345,11 @@ def pack_benchmark_target_check(context):
     for path in module_files:
         try:
             module = load_yaml_file(path)
-        except Exception:
+        except Exception as exc:
+            # Previously `continue`: a malformed risk module vanished from the mapping
+            # instead of being reported, so this gate could pass while a module was
+            # unreadable. Report it and move on.
+            issues.append(f"{path.name}: could not be parsed ({exc.__class__.__name__})")
             continue
         module_id = module.get("id")
         target = (

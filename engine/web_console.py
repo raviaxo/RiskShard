@@ -879,9 +879,9 @@ INDEX_HTML = """<!doctype html>
 
 
 class WebConsoleApp:
-    def __init__(self, root=PROJECT_ROOT):
+    def __init__(self, root=PROJECT_ROOT, results_dir=None):
         self.root = Path(root)
-        self.console = RiskShardConsole(root=self.root, stdout=StringIO())
+        self.console = RiskShardConsole(root=self.root, stdout=StringIO(), results_dir=results_dir)
         self.lock = threading.Lock()
 
     def state(self):

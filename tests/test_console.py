@@ -12,7 +12,10 @@ ROOT = Path(__file__).resolve().parents[1]
 class ConsoleTests(unittest.TestCase):
     def setUp(self):
         self.output = io.StringIO()
-        self.console = RiskShardConsole(root=ROOT, stdout=self.output)
+        # results_dir keeps run/report artifacts out of the working tree
+        self._results = tempfile.TemporaryDirectory()
+        self.addCleanup(self._results.cleanup)
+        self.console = RiskShardConsole(root=ROOT, stdout=self.output, results_dir=self._results.name)
 
     def command(self, text):
         self.output.seek(0)

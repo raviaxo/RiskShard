@@ -1,3 +1,4 @@
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -9,7 +10,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class WebConsoleTests(unittest.TestCase):
     def test_web_console_runs_commands_and_preserves_state(self):
-        app = WebConsoleApp(root=ROOT)
+        results = tempfile.TemporaryDirectory()
+        self.addCleanup(results.cleanup)
+        app = WebConsoleApp(root=ROOT, results_dir=results.name)
 
         workflow = app.run_command("workflow")
         self.assertIn("First-run workflow", workflow["output"])
@@ -72,7 +75,8 @@ class WebConsoleTests(unittest.TestCase):
         self.assertIn("Run receipt", run["output"])
         self.assertIn("Risk Shard    : au_finance_ransomware_midmarket", run["output"])
         self.assertIn("Simulation    : trials=10000, dist=pert, seed=42", run["output"])
-        self.assertIn("LEC: results/lec_Console.png", run["output"])
+        # path now depends on results_dir; assert the chart was produced and reported
+        self.assertRegex(run["output"], r"LEC: .*lec_Console\.png")
 
         gb_proposal = app.run_command("propose gb_finance_data_breach_midmarket")
         self.assertIn("country=GB", gb_proposal["output"])

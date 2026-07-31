@@ -9,7 +9,6 @@ per parameter from the shard's evidence records, and generates a pre-filled
 It reads only real evidence-record fields; it never invents a value or a caveat.
 """
 import urllib.parse
-from pathlib import Path
 
 from engine.evidence_packs import (
     build_evidence_pack,
