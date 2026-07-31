@@ -135,7 +135,7 @@ class EvidenceMatchingTests(unittest.TestCase):
         )
         self.assertEqual(
             by_id["ibm_cost_data_breach_2025_global_average_cost_usd"]["value"],
-            4400000,
+            4440000,
         )
         self.assertEqual(
             by_id["cyentia_iris_2025_extreme_security_incident_loss_usd"]["currency"],

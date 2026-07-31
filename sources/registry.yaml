@@ -35,15 +35,20 @@ sources:
   title: Cost of a Data Breach Report 2025
   publisher: IBM
   source_type: data_breach_cost_research
-  url: https://www.ibm.com/reports/data-breach
+  url: https://www.ibm.com/think/x-force/2025-cost-of-a-data-breach-navigating-ai
   publication_date: '2025-07-30'
   access_mode: public_html
   intended_use:
   - data breach loss magnitude
   - global average breach cost
   - breach cost reduction context
-  usage_notes: 'Use as a data-breach-specific global loss benchmark. Preserve notes about geography, industry,
-    and methodology limitations when applying it to local scenario ranges.
+  usage_notes: 'IBM''s 2025 Cost of a Data Breach Report, global figures.
+
+    PINNED to an edition-specific URL on 2026-07-30. The previous URL was ibm.com/reports/data-breach,
+    a living page that always serves the current edition: by July 2026 it served the 2026 report (global
+    average USD 4.99M) while this record cited the 2025 figure, so the citation could no longer be verified
+    against its own gathered artifact. The content-type guard could not catch that - HTML was still HTML.
+    Any source whose URL is undated should be assumed to roll.
 
     '
 - id: itpro_ibm_data_breach_regional_costs_2025

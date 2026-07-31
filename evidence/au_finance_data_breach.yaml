@@ -238,16 +238,16 @@ records:
   - id: ibm_cost_data_breach_2025_global_average_cost_usd
     title: Global average cost of a data breach
     parameter: impact.likely
-    value: 4400000
+    value: 4440000
     unit: currency
     currency: USD
     source_id: ibm_cost_data_breach_2025
     source_name: IBM Cost of a Data Breach Report 2025
     source_type: data_breach_cost_research
-    source_url_or_citation: https://www.ibm.com/reports/data-breach
+    source_url_or_citation: https://www.ibm.com/think/x-force/2025-cost-of-a-data-breach-navigating-ai
     publication_date: "2025-07-30"
     extraction_date: "2026-06-03"
-    citation_detail: Public report page hero metric; global average cost of a data breach is USD 4.4M.
+    citation_detail: "IBM's newly released 2025 Cost of a Data Breach Report found that average global costs dropped to USD 4.44 million-down from USD 4.88 million, or 9%, in the year prior."
     extraction_notes: IBM reported a USD 4.4 million global average cost of a data breach for the 2025 report.
     normalization_notes: Stored in source currency and selected as the likely loss anchor because it is data-breach-specific.
     limitations: Global average across studied breached organizations; not Australia-specific, financial-services-specific, or size-band-specific.

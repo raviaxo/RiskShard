@@ -54,27 +54,27 @@
       "usage_notes": "Use as a threat-pattern and breach-vector source. It supports likelihood and applicability reasoning more than direct financial impact modeling.\n"
     },
     {
-      "access_mode": "public_html",
-      "content_length": 180111,
-      "content_type": "text/html;charset=utf-8",
-      "final_url": "https://www.ibm.com/reports/data-breach",
-      "gathered_at": "2026-07-14T13:55:46Z",
-      "http_status": 200,
       "id": "ibm_cost_data_breach_2025",
+      "title": "Cost of a Data Breach Report 2025",
+      "publisher": "IBM",
+      "source_type": "data_breach_cost_research",
+      "url": "https://www.ibm.com/think/x-force/2025-cost-of-a-data-breach-navigating-ai",
+      "publication_date": "2025-07-30",
+      "gathered_at": "2026-07-31T11:05:07Z",
+      "access_mode": "public_html",
       "intended_use": [
         "data breach loss magnitude",
         "global average breach cost",
         "breach cost reduction context"
       ],
-      "publication_date": "2025-07-30",
-      "publisher": "IBM",
-      "raw_path": "sources/raw/ibm_cost_data_breach_2025.html",
-      "sha256": "781f5fa5a3b830627af0037e0d858adb855f926756412dadb935fc5c542b85c9",
-      "source_type": "data_breach_cost_research",
+      "usage_notes": "IBM's 2025 Cost of a Data Breach Report, global figures.\nPINNED to an edition-specific URL on 2026-07-30. The previous URL was ibm.com/reports/data-breach, a living page that always serves the current edition: by July 2026 it served the 2026 report (global average USD 4.99M) while this record cited the 2025 figure, so the citation could no longer be verified against its own gathered artifact. The content-type guard could not catch that - HTML was still HTML. Any source whose URL is undated should be assumed to roll.\n",
       "status": "fetched",
-      "title": "Cost of a Data Breach Report 2025",
-      "url": "https://www.ibm.com/reports/data-breach",
-      "usage_notes": "Use as a data-breach-specific global loss benchmark. Preserve notes about geography, industry, and methodology limitations when applying it to local scenario ranges.\n"
+      "final_url": "https://www.ibm.com/think/x-force/2025-cost-of-a-data-breach-navigating-ai",
+      "http_status": 200,
+      "content_type": "text/html;charset=utf-8",
+      "content_length": 175366,
+      "sha256": "f63acd2c5a3f7e43e2e1d245d270ca47492c84d1511c9befabc7db40b4ab9164",
+      "raw_path": "sources/raw/ibm_cost_data_breach_2025.html"
     },
     {
       "access_mode": "public_html",
