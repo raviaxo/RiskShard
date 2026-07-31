@@ -88,9 +88,14 @@ class RiskShardConsole(cmd.Cmd):
         "    exit       leave\n"
     )
 
-    def __init__(self, root=PROJECT_ROOT, stdin=None, stdout=None):
+    def __init__(self, root=PROJECT_ROOT, stdin=None, stdout=None, results_dir=None):
         super().__init__(stdin=stdin, stdout=stdout)
         self.root = Path(root)
+        # Where run/report/calibrate artifacts land. Defaults to the repo's results/ so
+        # behaviour is unchanged; tests pass a temp directory so the suite stops writing
+        # into the working tree (same class of problem as the strength-ledger mutation
+        # fixed in 8085bc9).
+        self.results_dir = Path(results_dir) if results_dir else self.root / "results"
         self.scenario_path = None
         self.active_run_path = None
         self.module_id = None
@@ -153,9 +158,9 @@ class RiskShardConsole(cmd.Cmd):
             "org_profile": None,
             "calibration": None,
             "threat": None,
-            "report_output": self.root / "results" / "console_calibration.json",
-            "markdown_output": self.root / "results" / "console_calibration.md",
-            "scenario_output": self.root / "results" / "console_calibrated.yaml",
+            "report_output": self.results_dir / "console_calibration.json",
+            "markdown_output": self.results_dir / "console_calibration.md",
+            "scenario_output": self.results_dir / "console_calibrated.yaml",
         }
 
     def emptyline(self):
@@ -610,7 +615,7 @@ class RiskShardConsole(cmd.Cmd):
                 dist_type=self.options["dist"],
                 seed=self.options["seed"],
             )
-            lec_path = plot_lec(run["aggregate"], "Console")
+            lec_path = plot_lec(run["aggregate"], "Console", output_dir=self.results_dir)
         except Exception as exc:
             self.write(f"Run failed: {exc}\n")
             return None
@@ -641,6 +646,7 @@ class RiskShardConsole(cmd.Cmd):
             path = export_report(
                 self.last_run["shards"],
                 self.last_run["portfolio"],
+                output_dir=self.results_dir,
                 metadata=self.last_run["metadata"],
             )
             self.last_paths["simulation_json"] = path
@@ -672,7 +678,7 @@ class RiskShardConsole(cmd.Cmd):
         pack = registry["packs"][0] if registry["packs"] else {}
         report = build_executive_report(self.last_run, module, pack, root=self.root)
         markdown = format_executive_report_markdown(report)
-        output_path = self.root / "results" / f"exec_report_{module['id']}.md"
+        output_path = self.results_dir / f"exec_report_{module['id']}.md"
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(markdown, encoding="utf-8")
         self.last_paths["executive_markdown"] = output_path

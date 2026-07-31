@@ -38,7 +38,10 @@ def load_vcdb_records(cache_path=DEFAULT_CACHE, url=VCDB_URL, allow_download=Tru
             raise FileNotFoundError(f"VCDB cache missing and download disabled: {cache_path}")
         cache_path.parent.mkdir(parents=True, exist_ok=True)
         request = urllib.request.Request(url, headers={"User-Agent": "riskshard-backtest"})
-        with urllib.request.urlopen(request) as response:
+        # Bounded like every other fetch in the project (engine/sources.py,
+        # scripts/update_fx_rates.py). Without it a stalled connection hangs forever;
+        # generous because this pulls a multi-megabyte archive.
+        with urllib.request.urlopen(request, timeout=120) as response:
             cache_path.write_bytes(response.read())
 
     payload = cache_path.read_bytes()
