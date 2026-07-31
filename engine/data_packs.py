@@ -7,12 +7,18 @@ import re
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_RELEASE_DIR = PROJECT_ROOT / "data_pack_releases"
+# What a released data pack is fingerprinted over. `scenarios` was missing until
+# 2026-07-30: a scenario file holds the values the Monte Carlo actually runs, so the
+# fingerprint that anchors releases and pins citations (ADR-0004) did not cover the
+# numbers being published. The calibration-drift found this week could have sat inside a
+# released pack without changing its fingerprint.
 PACK_PATHS = (
     "sources/registry.yaml",
     "sources/manifest.json",
     "evidence",
     "extractions",
     "calibrations",
+    "scenarios",
     "taxonomies",
     "threat_library",
     "risk_modules",
