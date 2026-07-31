@@ -862,3 +862,29 @@ sources:
     specifically; losses swung 60% year on year, so a single year is not a stable central estimate.
 
     '
+- id: esas_dora_major_ict_incidents_2025
+  title: ESAs 2025 Report on major ICT-related incidents (JC 2026 16)
+  publisher: Joint Committee of the European Supervisory Authorities (EBA, EIOPA, ESMA)
+  source_type: regulator_report
+  url: https://www.eba.europa.eu/sites/default/files/2026-06/29b60c21-4ff3-4e1e-9308-7c8225d5cc01/ESAs%202025%20report%20on%20major%20ICT-related%20incidents.pdf
+  publication_date: '2026-06-03'
+  access_mode: public_pdf
+  intended_use:
+  - EU financial-sector major ICT incident rate per entity
+  - share of major incidents originating from ICT third-party providers
+  usage_notes: 'First annual report under Article 22(2) of DORA, covering 2025. Reports 3,383 major ICT-related
+    incidents, an average of 0.18 per financial entity subject to DORA, with 29% originating from an ICT
+    third-party provider (Figure 8). Supervisory reporting by regulated entities, so it is a reported
+    rate rather than a survey estimate.
+
+    Two limits must travel with any use. A ''major'' incident is a supervisory classification triggered
+    by materiality thresholds in Delegated Regulation (EU) 2024/1772, NOT a loss event: two thirds caused
+    no or minor disruption to clients and transactions. And the report supplies no usable impact data
+    despite Article 22(2) mandating cost reporting - half of incidents reported no direct or indirect
+    cost or under EUR 1,000, with a further 15% leaving the field blank, which the ESAs'' own footnote
+    flags as likely incorrect reporting practice.
+
+    Do not mix with organisation-level disruption prevalence (BCI, Interos): that is a different construct
+    measuring whether an organisation experienced any disruption.
+
+    '

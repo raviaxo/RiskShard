@@ -127,6 +127,22 @@ The Iberian blackout is a genuinely Spanish, genuinely availability-shaped, offi
 documented event. Note it is a **power-grid** failure, not a cyber attack — honest use
 would be as an external-event availability scenario, never as evidence of cyber frequency.
 
+## Registered 2026-07-30
+
+The report is now a gathered source (`esas_dora_major_ict_incidents_2025`, 867 KB PDF,
+sha256 `aecab177…`) and both verified anchors are evidence records in
+`evidence/third_party_outage.yaml`:
+
+- `esas_dora_2025_major_ict_incident_rate_per_entity` — 0.18, unit `annual_rate_per_entity`
+- `esas_dora_2025_third_party_origin_share` — 0.29, unit `proportion`
+
+**Deliberately not selected by any calibration.** They are on a different construct from the
+BCI/Interos organisation-level prevalence records in the same file, and mixing the two inside
+one parameter triple would be the category error this note already documents. The units say so
+explicitly — an annual *rate per entity* can exceed 1 and is not an annual probability.
+
+They are held as candidates for a separate DORA-basis scenario, which remains blocked on impact.
+
 ## Net position
 
 - **Frequency for the EU financial sector: solved**, and it complements Eurostat exactly

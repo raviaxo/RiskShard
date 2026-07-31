@@ -94,3 +94,57 @@ records:
       countries: [global]
       company_size_bands: [all]
       threats: [third_party_outage]
+
+  # --- DORA supervisory reporting (EU financial entities) -----------------------
+  # Registered 2026-07-30 and deliberately NOT selected by any calibration. These are
+  # on a different construct from the BCI/Interos records above: they count
+  # supervisory-classified *major incidents per entity*, not the share of organisations
+  # that experienced any disruption. Mixing the two inside one parameter triple would be
+  # a category error, so they are held as candidates for a separate DORA-basis scenario
+  # once impact evidence for it exists. See docs/internal/dora_prescout.md.
+  - id: esas_dora_2025_major_ict_incident_rate_per_entity
+    title: EU financial entity major ICT incident rate (DORA supervisory reporting)
+    parameter: frequency.likely
+    value: 0.18
+    unit: annual_rate_per_entity
+    source_id: esas_dora_major_ict_incidents_2025
+    source_name: ESAs 2025 Report on major ICT-related incidents (JC 2026 16)
+    source_type: regulator_report
+    source_url_or_citation: https://www.eba.europa.eu/sites/default/files/2026-06/29b60c21-4ff3-4e1e-9308-7c8225d5cc01/ESAs%202025%20report%20on%20major%20ICT-related%20incidents.pdf
+    publication_date: "2026-06-03"
+    extraction_date: "2026-07-30"
+    citation_detail: "Executive Summary, page 4: \"Overall, 3,383 major incidents (corresponding to an average of 0.18 major ICT related incidents per financial entity subject to DORA) were reported in 2025 across all financial sectors in the EU\"."
+    extraction_notes: Directly reported per-entity annual rate from supervisory returns, not a denominator this project constructed and not a survey estimate.
+    normalization_notes: "Stored as an annual rate per entity, NOT an annual probability. It is a count-per-entity and can exceed 1; it is not interchangeable with the organisation-level prevalence figures elsewhere in this file."
+    limitations: "A 'major' incident is a supervisory classification triggered by materiality thresholds in Commission Delegated Regulation (EU) 2024/1772, not a loss event: the report states two thirds of major incidents resulted in no or minor disruption to clients and transactions, and impact on clients was absent or minor in almost 60% of cases. Using this as a loss-event frequency would overstate substantially. EU financial entities only. First year of the regime, so there is no series and the ESAs note divergent reporting practices across sectors and jurisdictions; only incidents with a final report by the 5 February 2026 cutoff are counted; EEA coverage is partial (Norway from 1 July 2025, Iceland only from 2026)."
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [EU]
+      company_size_bands: [all]
+      threats: [third_party_outage]
+
+  - id: esas_dora_2025_third_party_origin_share
+    title: Share of EU financial-sector major ICT incidents originating from an ICT third-party provider
+    parameter: frequency.likely
+    value: 0.29
+    unit: proportion
+    source_id: esas_dora_major_ict_incidents_2025
+    source_name: ESAs 2025 Report on major ICT-related incidents (JC 2026 16)
+    source_type: regulator_report
+    source_url_or_citation: https://www.eba.europa.eu/sites/default/files/2026-06/29b60c21-4ff3-4e1e-9308-7c8225d5cc01/ESAs%202025%20report%20on%20major%20ICT-related%20incidents.pdf
+    publication_date: "2026-06-03"
+    extraction_date: "2026-07-30"
+    citation_detail: "Figure 8, page 15: originated from TPP 29%, not originated from TPP 68.9%, unknown/missing 2.13%. Paragraph 19 states that 29% of all major incidents are caused by a failure attributable to a TPP."
+    extraction_notes: "Use Figure 8's 29%, which is specifically ICT third-party service providers. The Executive Summary's \"almost one third\" covers a broader category including other financial entities and infrastructure providers; press coverage conflated the two. Combined with the 0.18 per-entity rate this implies roughly 0.052 third-party-origin major incidents per entity per year."
+    normalization_notes: "Stored as a proportion of major incidents, not a probability of occurrence. It is a modifier on the per-entity rate above, not a standalone frequency."
+    limitations: "Inherits every limit of the per-entity rate: supervisory classification rather than loss event, EU financial entities only, first year of the regime. 2.13% of incidents have unknown or missing origin, so the share is a floor."
+    confidence: medium
+    evidence_type: source_backed
+    applicability:
+      industries: [financial_services]
+      countries: [EU]
+      company_size_bands: [all]
+      threats: [third_party_outage]
+
