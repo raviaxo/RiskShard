@@ -1,8 +1,15 @@
 # ADR-0005 — Documented loss-event registry
 
-- **Status:** Proposed
+- **Status:** Deferred (2026-07-31)
 - **Date:** 2026-07-29
-- **Deciders:** repo owner (records intent and a recommendation only)
+- **Deciders:** repo owner
+- **Why deferred, not rejected:** the sampling below established **feasibility, not
+  priority** — those are different things. A ~27% yield is workable, but the registry is a
+  permanent curation commitment, it does **not** solve the mid-market impact gap (it is a
+  tail-and-defensibility instrument), and with no second maintainer every entry is
+  indefinite upkeep for one person. The research is kept intact rather than discarded.
+- **Revisit when:** the 2026 DORA edition lands (~June 2027, with automated cost-field
+  validation), or a second maintainer exists.
 - **Related:** [`0004-citable-parameter-identifiers.md`](0004-citable-parameter-identifiers.md),
   [`0003-shared-impact-bridges.md`](0003-shared-impact-bridges.md),
   [`../internal/canonical_reference_thesis.md`](../internal/canonical_reference_thesis.md)

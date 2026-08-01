@@ -39,22 +39,72 @@ decision, and doctor's exit code gates automation. Promoting it to a blocking ch
 **Note `us_finance_bec_midmarket` is the shard quoted in the live LinkedIn post** — correcting it
 will move those figures.
 
-**Open decisions blocking nothing but ageing** *(as of 2026-07-30)* — five, all yours:
-**ADR-0003** (mark bridged vs cell-matched evidence, Proposed), **ADR-0005** (documented
-loss-event registry, Proposed — the sampling was run and supports it), **breadth vs depth**
-([`coverage_harvest.md`](coverage_harvest.md)), the **vintage/aging + regulatory-modifier plan**
-(shape approved verbally, never written up — outstanding), and whether **ADR-0004** should have
-been flipped to Accepted by an agent rather than by you. Two PRs are open and unmerged: **#66**
-and **#67** (stacked on #66).
+**Decisions taken 2026-07-31** — recorded in ADRs, not here:
+[**ADR-0006 depth over breadth**](../adr/0006-depth-over-breadth.md) (Accepted: no new shards
+purely because frequency data exists); [**ADR-0003**](../adr/0003-shared-impact-bridges.md)
+Accepted for **parts 1-2 only** (declare the population mismatch, report cell-matched and
+bridged separately) on the strength of the ledger recording a fiftyfold AVG move as a zero
+delta; [**ADR-0005**](../adr/0005-documented-loss-event-registry.md) **Deferred** - the SEC
+sampling proved feasibility, not priority, and it does not solve the mid-market impact gap;
+[**ADR-0004**](../adr/0004-citable-parameter-identifiers.md) owner-confirmed.
 
-**Current top blocker** *(updated 2026-07-28, evening)*: **impact evidence.** Frequency stopped
-being the constraint today — Eurostat `isoc_cisce_ic` supplies country- and size-specific rates for
+**Dead-directory sweep, corrected.** The 2026-07-31 triage listed `library/`, `provenance/`
+and `control_profiles/` as unreferenced. That was wrong, and only `library/` was deleted:
+
+- `control_profiles/` is **live** - `risk_modules/au_finance_ransomware_midmarket.yaml`
+  declares `control_profiles/ransomware_basic_controls.yaml` as a `controls` artifact. The
+  triage grep only searched `engine/ scripts/ tests/` and missed `risk_modules/`.
+- `provenance/` holds one file and `engine/profiles.py` can load it, but **`load_provenance`
+  is never called** - scaffolding for a feature never wired up. Left in place; removing it
+  means deciding whether to drop the loader and `schemas/provenance_schema.json` too.
+
+Still open: ledger recording policy (record only at tagged release; 7 of 9 entries are
+zero-delta noise) and the narrow **`url_stability: dated | rolling`** source property that
+the IBM edition-roll argued for.
+
+**Active queue** *(as of 2026-07-31)* — two items, both carried over, neither blocked:
+
+1. **The source sweep.** 47 of 52 sources are `url_stability: unknown`, and ~37 are HTML pages
+   whose bytes change on every fetch, so their manifest `sha256` proves what was fetched at that
+   moment rather than that the document is unchanged. Re-gather all into temp paths, diff sha256
+   against the committed manifest, and for every changed artifact grep for the figure its
+   evidence record cites. The IBM edition-roll was found by accident via a byte count; this is
+   the deliberate version. Two entries have also never been gathered at all
+   (`asd_annual_cyber_threat_report_2024_2025`, blocked in this runtime, and
+   `first_epss_data_stats`).
+2. **ADR-0003 parts 1–2 implementation.** Accepted but not built: declare each record's
+   population mismatch, and report cell-matched separately from bridged. Expect the headline
+   66/66 to fall to roughly 59–60 cell-matched plus 6–7 bridged, concentrated in Singapore and
+   Canada. Take the drop publicly with a `revisions/` entry.
+
+**Deferred, with the reason recorded:** ADR-0005 (loss-event registry) until the 2026 DORA
+edition or a second maintainer; inflation normalisation and vintage classes from the aging plan,
+of which only `url_stability` was built; `tests.test_console` still leaves three artifacts in
+`results/` (gitignored, so untidiness not correctness); `provenance/` is scaffolding whose
+loader is never called, left alone rather than removed on faulty evidence.
+
+**Open decisions: none.** All five were taken on 2026-07-31 and recorded in ADRs (see the
+decisions block above). Nothing is waiting on a judgement call.
+
+**Current top blocker** *(updated 2026-07-31)*: **distribution.** Every product and machinery
+objective on the board is closed; the remaining gap is that nobody is arriving. 14 unique
+visitors in 14 days, 0 external stars, forks, Discussions or contributors, after two LinkedIn
+posts. [ADR-0006](../adr/0006-depth-over-breadth.md) makes this explicit: coverage is not the
+constraint and shard count is no longer a progress metric, so effort has nowhere useful to go
+inside the repo. The correction post (five shards found simulating stale values, corrected,
+with a gate that prevents recurrence) is the strongest opener available and is unwritten.
+
+*(Superseded: impact evidence was the top blocker 2026-07-28 to 2026-07-30. It remains
+genuinely unsolved — per-cell loss magnitude largely does not exist publicly — but ADR-0006
+and ADR-0005's deferral mean it is no longer the thing to push on.)*
+
+**Previously recorded impact context, still true.** Frequency stopped being the constraint on 2026-07-28 — Eurostat `isoc_cisce_ic` supplies country- and size-specific rates for
 **35 countries**, and DORA supplies a supervisory per-entity rate for EU financial entities. Impact
 dead-ended twice in one day: Spanish public bodies publish counts rather than euros, and DORA's
 mandated cost fields are mostly unreported or under EUR 1,000 (the ESAs flag likely mis-reporting).
-Per-cell loss magnitude largely **does not exist publicly**, which is why
-[`../adr/0003-shared-impact-bridges.md`](../adr/0003-shared-impact-bridges.md) is Proposed and
-awaits an owner decision — along with the breadth-vs-depth question in
+Per-cell loss magnitude largely **does not exist publicly**. That finding drove
+[ADR-0003](../adr/0003-shared-impact-bridges.md) (now Accepted, parts 1–2) and
+[ADR-0006](../adr/0006-depth-over-breadth.md), and it is recorded in
 [`coverage_harvest.md`](coverage_harvest.md).
 
 Research notes from this pass: [`coverage_harvest.md`](coverage_harvest.md),
@@ -432,3 +482,24 @@ governance/regulatory loss).
   Cyentia and labelled known-weak rather than substituted with StatCan recovery spending, which
   is a narrower measure. 205 tests; validate, preflight and doctor all pass. **No evidence or
   model change shipped this session** — the impact wall is unmoved.
+
+- 2026-07-31 — **Machinery hardened, decisions closed, nothing new built.** CI now enforces the
+  definition of done: `contributor_preflight` and the calibration-drift gate had never run
+  automatically, so a shard could drift on `main` with CI green. Added a secret-scan job reusing
+  `.githooks/pre-commit` over the PR range (the hook only protected clones that opted in) and
+  `constraints.txt` pinning the three direct dependencies. **Both new gates were verified to
+  fail, not merely to run.** Batch B: a `urlopen` with no timeout in `backtesting.py`, a gate
+  that swallowed unparseable modules, one genuinely unused import, and a `results_dir` seam so
+  the suite stops writing into the working tree. **Shrank the merge-conflict surface** rather
+  than rebasing around it: `docs/index.html` untracked (Pages regenerates it before every
+  deploy), `revisions.yaml` split into `revisions/*.yaml`, Pages triggers completed with
+  `engine/**` and friends, and `strict` branch protection turned off — four conflicts in two
+  days had three distinct causes, only one of which was discipline. **Decisions:** ADR-0006
+  depth-over-breadth (Accepted), ADR-0003 (Accepted, parts 1–2), ADR-0005 (Deferred), ADR-0004
+  (owner-confirmed). Ledger now records releases only — nine entries were collapsed to two after
+  finding the test suite itself was appending them. Added `url_stability` to sources after
+  `ibm.com/reports/data-breach` silently began serving the 2026 edition under a 2025 citation.
+  **Three corrections to my own work:** the "delete three dead directories" advice was wrong
+  (`control_profiles/` is live, referenced by a risk module), a "0 references" import removal
+  broke a re-export, and a `git reset --hard` destroyed uncommitted work that had to be redone.
+  211 tests; validate, preflight and the drift gate pass. **No evidence changed.**
