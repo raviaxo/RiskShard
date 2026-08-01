@@ -7,7 +7,7 @@ records:
     source_id: cybersecurity_insiders_insider_threat_2024
     source_name: Cybersecurity Insiders 2024 Insider Threat Report
     source_type: industry_survey_bridge
-    source_url_or_citation: https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report/
+    source_url_or_citation: https://web.archive.org/web/20241229032228/https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report-gurucul/
     publication_date: "2024-06-01"
     extraction_date: "2026-07-20"
     citation_detail: The Cybersecurity Insiders 2024 Insider Threat Report states that the share of organizations experiencing insider attacks rose from 66% in 2019 to 76% in 2024; the 66% figure is used here as a historical floor.
@@ -30,7 +30,7 @@ records:
     source_id: cybersecurity_insiders_insider_threat_2024
     source_name: Cybersecurity Insiders 2024 Insider Threat Report
     source_type: industry_survey_bridge
-    source_url_or_citation: https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report/
+    source_url_or_citation: https://web.archive.org/web/20241229032228/https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report-gurucul/
     publication_date: "2024-06-01"
     extraction_date: "2026-07-20"
     citation_detail: The Cybersecurity Insiders 2024 Insider Threat Report reports that 76% of organizations experienced insider attacks in 2024 (up from 66% in 2019).

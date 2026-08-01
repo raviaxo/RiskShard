@@ -38,7 +38,7 @@ records:
       - ico_self_reported_breach_cases_2024_25
     source_name: ICO monetary penalties 2024 and ICO self-reported breach cases 2024/25
     source_type: derived_regulator_statistical_benchmark
-    source_url_or_citation: https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
+    source_url_or_citation: https://web.archive.org/web/20250620071151/https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
     publication_date: "2025-01-01"
     extraction_date: "2026-07-20"
     citation_detail: The ICO issued about 17 monetary penalties in 2024 against about 12,412 self-reported breach reports in 2024/25; 17 / 12,412 = 0.00137, with roughly 85% of breaches resolved informally with no fine.
@@ -106,7 +106,7 @@ records:
     source_id: ico_monetary_penalties_2024
     source_name: ICO monetary penalties 2024 (enforcement analysis)
     source_type: regulator_statistics
-    source_url_or_citation: https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
+    source_url_or_citation: https://web.archive.org/web/20250620071151/https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
     publication_date: "2025-01-01"
     extraction_date: "2026-07-20"
     citation_detail: The average ICO fine in 2024 was GBP 153,722, with most penalties below GBP 250,000.
@@ -130,7 +130,7 @@ records:
     source_id: ico_monetary_penalties_2024
     source_name: ICO monetary penalties 2024 (enforcement analysis)
     source_type: regulator_statistics
-    source_url_or_citation: https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
+    source_url_or_citation: https://web.archive.org/web/20250620071151/https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
     publication_date: "2025-01-01"
     extraction_date: "2026-07-20"
     citation_detail: The ICO issued a GBP 12.7M penalty against TikTok in 2023; the statutory maximum is GBP 17.5M or 4% of turnover.

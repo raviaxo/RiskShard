@@ -33,7 +33,7 @@ records:
     source_id: afp_payments_fraud_2025
     source_name: 2025 AFP Payments Fraud and Control Survey Report
     source_type: industry_survey_bridge
-    source_url_or_citation: https://www.financialprofessionals.org/training-resources/resources/survey-research-economic-data/details/payments-fraud
+    source_url_or_citation: https://web.archive.org/web/20250707164054/https://www.financialprofessionals.org/training-resources/resources/survey-research-economic-data/details/payments-fraud
     publication_date: "2025-08-26"
     extraction_date: "2026-07-20"
     citation_detail: The 2025 AFP Payments Fraud and Control Survey reports business email compromise as the most common payments-fraud method, with 63% of organizations reporting BEC activity in 2024.
