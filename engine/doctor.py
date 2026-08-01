@@ -30,6 +30,7 @@ def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
         extraction_check(root),
         scenario_check(root),
         calibration_drift_check(root),
+        url_stability_check(root),
         readiness_check(root),
         package_check(root),
         data_pack_check(root),
@@ -176,6 +177,40 @@ def calibration_drift_check(root):
                 "detail": f"{checked} shards match their calibration"}
     except Exception as exc:  # pragma: no cover - diagnostic path
         return {"name": "calibration drift", "status": "fail", "detail": str(exc)}
+
+
+
+def url_stability_check(root):
+    """How many source URLs are known to be edition-stable.
+
+    Reported, never gated. A `rolling` URL is not a defect -- it is a fact about the
+    publisher that means the artifact will drift away from the citation and the record
+    needs re-verifying when it does. `unknown` means nobody has looked yet, which is the
+    honest default rather than an assumption of stability.
+
+    Prompted by ibm.com/reports/data-breach silently serving the 2026 edition under a
+    record citing the 2025 figure (2026-07-31). The content-type guard could not catch it:
+    HTML was still HTML.
+    """
+    import yaml as _yaml
+
+    try:
+        registry = _yaml.safe_load((root / "sources" / "registry.yaml").read_text(encoding="utf-8"))
+        sources = registry["sources"] if isinstance(registry, dict) else registry
+        counts = {"dated": 0, "rolling": 0, "unknown": 0}
+        rolling = []
+        for source in sources:
+            value = source.get("url_stability", "unknown")
+            counts[value] = counts.get(value, 0) + 1
+            if value == "rolling":
+                rolling.append(source["id"])
+        detail = (f"{counts['dated']} dated, {counts['rolling']} rolling, "
+                  f"{counts['unknown']} unassessed of {len(sources)}")
+        if rolling:
+            detail += f"; re-verify citations for: {', '.join(sorted(rolling))}"
+        return {"name": "source url stability", "status": "pass", "detail": detail}
+    except Exception as exc:  # pragma: no cover - diagnostic path
+        return {"name": "source url stability", "status": "fail", "detail": str(exc)}
 
 
 def readiness_check(root):

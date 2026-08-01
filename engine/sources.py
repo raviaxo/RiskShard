@@ -21,6 +21,21 @@ REQUIRED_SOURCE_FIELDS = {
     "usage_notes",
 }
 
+# Whether a source URL is edition-stable or serves whatever is current.
+#
+# Added 2026-07-31 after ibm.com/reports/data-breach -- registered as the 2025 Cost of a
+# Data Breach Report -- silently began serving the 2026 edition. The evidence cited USD
+# 4.4M; the gathered artifact said USD 4.99M; the cited figure appeared nowhere in its own
+# evidence. Nothing detected it. The access-mode guard could not: HTML was still HTML, and
+# the only visible symptom was a 23% drop in byte count spotted by accident.
+#
+#   dated    the URL is edition-specific and will keep serving this edition
+#            (a dated press release, a versioned PDF, an archived snapshot)
+#   rolling  the URL always serves the current edition, so the artifact will drift away
+#            from the citation and the record needs re-verification when it does
+#   unknown  not yet assessed (the default, so this is additive rather than a migration)
+URL_STABILITY_VALUES = {"dated", "rolling", "unknown"}
+
 CONTENT_TYPE_EXTENSIONS = {
     "application/pdf": ".pdf",
     "text/html": ".html",
@@ -79,6 +94,13 @@ def validate_source(source, seen_ids=None):
     parsed_url = urlparse(source["url"])
     if parsed_url.scheme not in {"http", "https"} or not parsed_url.netloc:
         raise SourceRegistryError(f"source {source_id} must use an http(s) URL")
+
+    stability = source.get("url_stability", "unknown")
+    if stability not in URL_STABILITY_VALUES:
+        raise SourceRegistryError(
+            f"source {source_id} url_stability must be one of "
+            f"{sorted(URL_STABILITY_VALUES)}, got {stability!r}"
+        )
 
     try:
         datetime.strptime(str(source["publication_date"]), "%Y-%m-%d")
@@ -188,6 +210,7 @@ def base_manifest_fields(source, gathered_at):
         "publication_date": source["publication_date"],
         "gathered_at": gathered_at,
         "access_mode": source["access_mode"],
+        "url_stability": source.get("url_stability", "unknown"),
         "intended_use": source["intended_use"],
         "usage_notes": source["usage_notes"],
     }
