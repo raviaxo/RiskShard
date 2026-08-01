@@ -15,7 +15,7 @@ sources:
     table and should not be treated as complete representation of all breaches.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: verizon_dbir_2025
   title: 2025 Data Breach Investigations Report
   publisher: Verizon Business
@@ -32,7 +32,7 @@ sources:
     reasoning more than direct financial impact modeling.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: ibm_cost_data_breach_2025
   title: Cost of a Data Breach Report 2025
   publisher: IBM
@@ -72,7 +72,7 @@ sources:
     regulator, or Canadian claims evidence before benchmark-grade claims.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: ibm_canada_cost_data_breach_2025
   title: 'IBM Report: Canadians'' Data Security Under Increased Threat, While Breach Costs Surge'
   publisher: IBM
@@ -93,7 +93,7 @@ sources:
     loss table. It replaces the low-confidence ITPro secondary bridge for the Canada likely-impact anchor.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: ibm_france_cost_data_breach_2025
   title: 'Rapport IBM 2025 : coût d''une violation de données en France'
   publisher: IBM
@@ -116,7 +116,7 @@ sources:
     USD via the reviewed ECB EUR/USD assumption in calibrations/fx_rates.yaml.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: eurostat_isoc_cisce_ic_2024
   title: Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France)
   publisher: Eurostat
@@ -138,7 +138,7 @@ sources:
     min (small) and likely (medium); the JSON query returns the exact values in the gathered bytes.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: cesin_barometre_cybersecurite_2025
   title: CESIN 11e Barometre annuel de la cybersecurite des entreprises (2025)
   publisher: CESIN
@@ -161,7 +161,7 @@ sources:
     Security Mag). Used only as an upper stress anchor for France frequency.max, never the central value.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: asteres_cout_cyberattaques_france_2022
   title: Asteres - Le cout des cyberattaques reussies en France (2022)
   publisher: Asteres
@@ -182,7 +182,7 @@ sources:
     assumption. Figure verified in the gathered PDF text.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: gdpr_article_83_administrative_fines
   title: GDPR Article 83(5) maximum administrative fine (via CNIL)
   publisher: CNIL
@@ -203,7 +203,7 @@ sources:
     or claims severity. EUR normalizes to USD via the reviewed ECB EUR/USD assumption.
 
     '
-  url_stability: unknown
+  url_stability: rolling
 - id: opc_annual_report_2025_2026
   title: 2025-2026 Annual Report to Parliament on the Privacy Act and PIPEDA
   publisher: Office of the Privacy Commissioner of Canada
@@ -221,7 +221,7 @@ sources:
     on reported PIPEDA breaches rather than financial-services mid-market organizations.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: uk_dsit_cyber_breaches_2026
   title: Cyber Security Breaches Survey 2025/2026
   publisher: UK Department for Science, Innovation and Technology and Home Office
@@ -239,7 +239,7 @@ sources:
     may undercount hidden or unidentified events.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: ibm_cost_data_breach_uk_2025
   title: IBM UK Cost of a Data Breach 2025 release
   publisher: IBM
@@ -256,7 +256,7 @@ sources:
     studied breach population, and applicability to a mid-market organization.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: fca_equifax_cyber_breach_fine_2023
   title: FCA fines Equifax Ltd over cyber security breach
   publisher: Financial Conduct Authority
@@ -289,12 +289,14 @@ sources:
     it with incident, notification, or loss-event counts from other sources.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: abs_characteristics_australian_business_2025
   title: Characteristics of Australian Business, 2024-25 financial year
   publisher: Australian Bureau of Statistics
   source_type: official_statistics
-  url: https://www.abs.gov.au/statistics/industry/technology-and-innovation/characteristics-australian-business/latest-release
+  url: https://www.abs.gov.au/statistics/industry/technology-and-innovation/characteristics-australian-business/2024-25
+  fallback_urls:
+  - https://www.abs.gov.au/statistics/industry/technology-and-innovation/characteristics-australian-business/latest-release
   publication_date: '2026-06-25'
   access_mode: public_html
   intended_use:
@@ -303,10 +305,12 @@ sources:
   usage_notes: 'Use as an official Australian org-level cyber-incident prevalence source (21% of businesses
     experienced a cyber security incident in 2024-25). It is an all-industry, all-size, all-cyber measure,
     not BEC-specific or mid-market-financial-services-specific. Preserve these limitations when using
-    it as a BEC frequency bridge.
+    it as a BEC frequency bridge. Re-pointed 2026-08-01 from the /latest-release alias to the edition-pinned
+    2024-25 URL so a future release cannot silently replace the cited edition (the ibm.com/reports failure
+    mode); the alias is kept as a fallback.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: myob_business_monitor_cyber_2024
   title: MYOB mid-sized business cyber attack survey 2024
   publisher: MYOB (survey conducted by Dynata)
@@ -324,12 +328,14 @@ sources:
     Figure accessed via CFOtech reporting of the MYOB survey.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: cybersecurity_insiders_insider_threat_2024
   title: Cybersecurity Insiders 2024 Insider Threat Report
   publisher: Cybersecurity Insiders
   source_type: industry_survey
-  url: https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report/
+  url: https://web.archive.org/web/20241229032228/https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report-gurucul/
+  fallback_urls:
+  - https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report-gurucul/
   publication_date: '2024-06-01'
   access_mode: public_html
   intended_use:
@@ -339,9 +345,14 @@ sources:
     experienced insider attacks in 2024, up from 66% in 2019. Vendor-sponsored survey (lower trust than
     official statistics); "insider attacks" is broad and includes negligent and careless insiders, not
     only deliberate misuse. Preserve these limitations when using it as a frequency bridge.
+    Re-pointed 2026-08-01: the originally registered URL (no -gurucul suffix) now redirects to the site
+    homepage, so the gathered artifact was unrelated content. Primary is an immutable archive.org snapshot
+    of the real report page. KNOWN GAP (2026-08-01 sweep): the snapshot page does not itself carry the
+    66%/76% prevalence figures (they are inside the gated report PDF), so the evidence records citing
+    them remain unverifiable against the artifact pending a record-level review.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: gurucul_insider_risk_report_2026
   title: Gurucul 2026 Insider Risk Report
   publisher: Cybersecurity Insiders (sponsored by Gurucul)
@@ -360,7 +371,7 @@ sources:
     bridge.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: bci_supply_chain_resilience_2024
   title: BCI Supply Chain Resilience Report 2024
   publisher: Business Continuity Institute
@@ -376,9 +387,12 @@ sources:
     experienced a disruption in the past year; 43.6% cite third-party failure as the top cause). Broad
     supply-chain disruption (all causes), not third-party-only, and not sector- or size-specific. Preserve
     these limitations when using it as a third-party-outage frequency bridge.
+    KNOWN GAP (2026-08-01 sweep): the 43.6% figure is not on this landing page (current or archived) —
+    it sits inside the gated report PDF, so the evidence record citing it cannot be verified against
+    the gathered artifact. Pending a record-level review or a public artifact carrying the figure.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: interos_global_supply_chain_2022
   title: Interos Annual Global Supply Chain Report (Resilience 2022)
   publisher: Interos
@@ -395,7 +409,7 @@ sources:
     an interpretive multi-event conversion, not a directly reported prevalence.
 
     '
-  url_stability: unknown
+  url_stability: rolling
 - id: spf_bec_interception_case_2024
   title: SPF Business Email Compromise scam interception case 2024
   publisher: Singapore Police Force
@@ -429,7 +443,7 @@ sources:
     "experienced a deepfake" is broad. Preserve these limitations.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: gartner_deepfake_attack_survey_2025
   title: Gartner deepfake attack survey (September 2025)
   publisher: Gartner (reported via Adaptive Security)
@@ -445,7 +459,7 @@ sources:
     attacks/attempts, not confirmed loss events; fast-rising. Figure accessed via secondary reporting.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: deepfake_business_impact_2024
   title: Deepfake business fraud impact statistics 2024
   publisher: Security.org (compilation of 2024 deepfake survey data)
@@ -460,9 +474,13 @@ sources:
     500,000 per incident, ~USD 603,000 in financial services; more than 10% of companies experienced deepfake
     fraud attempts in 2024). Secondary compilation of vendor survey data, lower trust; volatile and fast-rising.
     Preserve these limitations.
+    KNOWN GAP (2026-08-01 sweep): the USD 500,000 / 603,000 figures are absent from this page both today
+    and in the archive.org snapshot taken on the extraction date (2026-07-20) — they resemble Regula
+    survey figures (whose artifact reports ~USD 450,000 average) and appear misattributed to this page.
+    The evidence record citing them needs a record-level review before it can be called artifact-backed.
 
     '
-  url_stability: unknown
+  url_stability: rolling
 - id: arup_deepfake_case_2024
   title: Arup Hong Kong deepfake CFO fraud case 2024
   publisher: CNN (reporting Hong Kong Police)
@@ -479,7 +497,7 @@ sources:
     case, not a mid-market average or a loss percentile.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: ico_self_reported_breach_cases_2024_25
   title: ICO self-reported personal data breach cases (2024/25)
   publisher: Information Commissioner's Office
@@ -495,12 +513,14 @@ sources:
     no fine). Denominator for the conditional probability of an ICO monetary penalty given a breach.
 
     '
-  url_stability: unknown
+  url_stability: rolling
 - id: ico_monetary_penalties_2024
   title: ICO monetary penalties 2024 (enforcement analysis)
   publisher: Information Commissioner's Office (analysis via URM Consulting)
   source_type: regulator_statistics
-  url: https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
+  url: https://web.archive.org/web/20250620071151/https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
+  fallback_urls:
+  - https://www.urmconsulting.com/blog/analysis-of-fines-imposed-by-the-information-commissioners-office-in-2024
   publication_date: '2025-01-01'
   access_mode: public_html
   intended_use:
@@ -511,16 +531,21 @@ sources:
     average of GBP 153,722, most below GBP 250,000, a material 2024 fine of GBP 750,000, and a GBP 12.7M
     TikTok fine in 2023; statutory maximum GBP 17.5M or 4% of turnover. Not all penalties are data-breach
     specific (some are PECR/marketing). Numerator for P(penalty | breach) and the penalty impact distribution.
+    Re-pointed 2026-08-01 to an immutable archive.org snapshot after the sweep found the live page had
+    been edited; the snapshot carries the GBP 12.7M and GBP 17.5M figures. The 12,412 self-reported-breach
+    denominator cited alongside these belongs to ico_self_reported_breach_cases_2024_25, not this source.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: census_susb_2022
   title: Statistics of U.S. Businesses (SUSB) 2022 Annual Data
   publisher: U.S. Census Bureau
   source_type: official_statistics
-  url: https://www.census.gov/data/tables/2022/econ/susb/2022-susb-annual.html
+  url: https://www2.census.gov/programs-surveys/susb/tables/2022/us_state_naicssector_lfo_2022.xlsx
+  fallback_urls:
+  - https://www.census.gov/data/tables/2022/econ/susb/2022-susb-annual.html
   publication_date: '2025-01-16'
-  access_mode: public_html
+  access_mode: public_xlsx
   intended_use:
   - United States business population denominator
   - frequency normalization
@@ -529,15 +554,19 @@ sources:
     Statistics 2022) to 6.3M (SBA Office of Advocacy 2024) depending on program and vintage; the commonly
     cited total is ~6.1M. Preserve this range as a limitation, and note that it is an all-industry, all-size
     denominator, not financial-services or mid-market specific, when combining it with sector complaint
-    counts.
+    counts. Re-pointed 2026-08-01 from the tables index page (which carries no totals) to the actual
+    US & states / NAICS sector / LFO table, whose US all-sector row reports 6,198,713 employer firms —
+    the artifact now contains the denominator the evidence derives from (the tables index is a fallback).
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: afp_payments_fraud_2025
   title: 2025 AFP Payments Fraud and Control Survey Report
   publisher: Association for Financial Professionals
   source_type: industry_survey
-  url: https://www.financialprofessionals.org/training-resources/resources/survey-research-economic-data/details/payments-fraud
+  url: https://web.archive.org/web/20250707164054/https://www.financialprofessionals.org/training-resources/resources/survey-research-economic-data/details/payments-fraud
+  fallback_urls:
+  - https://www.financialprofessionals.org/training-resources/resources/survey-research-economic-data/details/payments-fraud
   publication_date: '2025-08-26'
   access_mode: public_html
   intended_use:
@@ -548,10 +577,12 @@ sources:
     measures organizations experiencing attempted or actual BEC, not confirmed financial-loss events;
     respondents skew toward corporate treasury and larger organizations (AFP reports 66% of BEC attempts
     target organizations with at least USD 1B in revenue), so it is not mid-market-specific. Preserve
-    these limitations when using it as a frequency bridge.
+    these limitations when using it as a frequency bridge. Re-pointed 2026-08-01 to an immutable
+    archive.org snapshot that carries the cited 63% BEC prevalence figure; the live AFP page no longer
+    states it (the full statistic sits behind the gated report). The live URL is kept as a fallback.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: afp_payments_fraud_2026
   title: 2026 AFP Payments Fraud and Control Survey Report
   publisher: Association for Financial Professionals
@@ -569,7 +600,7 @@ sources:
     bridge.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: coalition_ftf_largest_clawback_2023
   title: Coalition funds transfer fraud largest clawback case
   publisher: Coalition
@@ -586,7 +617,7 @@ sources:
     so model gross exposure. Preserve these limitations when using it as a stress anchor.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: fbi_ic3_2025_report
   title: 2025 IC3 Annual Report
   publisher: Federal Bureau of Investigation Internet Crime Complaint Center
@@ -603,7 +634,7 @@ sources:
     about US reporting, self-selection, and complaint averages when applying it to non-US scenarios.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: accc_targeting_scams_2025
   title: Targeting Scams Report 2025
   publisher: Australian Competition and Consumer Commission National Anti-Scam Centre
@@ -620,7 +651,7 @@ sources:
     reporting evidence, not complete organization-level BEC frequency.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: cyentia_iris_2025
   title: Information Risk Insights Study 2025
   publisher: Cyentia Institute
@@ -638,7 +669,7 @@ sources:
     gatherer stores the public page when direct PDF access is unavailable from the runtime.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: cyentia_iris_2022
   title: Information Risk Insights Study 2022
   publisher: Cyentia Institute
@@ -654,7 +685,7 @@ sources:
   usage_notes: 'Use as a historical quantitative cyber loss source and method reference.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: cyentia_iris_ransomware
   title: IRIS Ransomware
   publisher: Cyentia Institute
@@ -670,7 +701,7 @@ sources:
     registry entry.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: first_epss_data_stats
   title: EPSS Data and Statistics
   publisher: Forum of Incident Response and Security Teams
@@ -688,7 +719,7 @@ sources:
     shard that can preserve the EPSS definition and refresh cadence.
 
     '
-  url_stability: unknown
+  url_stability: rolling
 - id: asd_annual_cyber_threat_report_2024_2025
   title: Annual Cyber Threat Report 2024-2025
   publisher: Australian Signals Directorate
@@ -708,7 +739,7 @@ sources:
     source can be gathered reliably or after a stable alternate artifact is registered.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: business_qld_cyber_secure_guidance_2025
   title: Keeping your business cyber secure
   publisher: Business Queensland
@@ -725,7 +756,7 @@ sources:
     in this runtime.
 
     '
-  url_stability: unknown
+  url_stability: rolling
 - id: oaic_ndb_jul_dec_2024
   title: Notifiable Data Breaches Report July to December 2024
   publisher: Office of the Australian Information Commissioner
@@ -740,7 +771,7 @@ sources:
   usage_notes: 'Use for Australian notifiable data breach patterns and sector relevance.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: privacy_act_1988_latest
   title: Privacy Act 1988
   publisher: Federal Register of Legislation
@@ -759,7 +790,7 @@ sources:
     breach-cost benchmark.
 
     '
-  url_stability: unknown
+  url_stability: rolling
 - id: apra_cps_230
   title: CPS 230 Operational Risk Management
   publisher: Australian Prudential Regulation Authority
@@ -774,7 +805,7 @@ sources:
   usage_notes: 'Use to support regulatory-context assumptions for APRA-regulated financial-services organizations.
 
     '
-  url_stability: unknown
+  url_stability: rolling
 - id: sophos_state_ransomware_financial_services_2024
   title: State of Ransomware in Financial Services 2024
   publisher: Sophos
@@ -790,7 +821,7 @@ sources:
     in evidence records.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: bitkom_wirtschaftsschutz_2025
   title: Wirtschaftsschutz 2025
   publisher: Bitkom e.V.
@@ -808,7 +839,7 @@ sources:
     loss distribution.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: sophos_state_ransomware_manufacturing_2025
   title: State of Ransomware in Manufacturing and Production 2025
   publisher: Sophos
@@ -825,7 +856,7 @@ sources:
     hit by ransomware, and not Germany-specific.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: sophos_state_ransomware_manufacturing_2024
   title: State of Ransomware in Manufacturing and Production 2024
   publisher: Sophos
@@ -843,7 +874,7 @@ sources:
     and is not Japan-specific.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: ponemon_dtex_cost_insider_risks_2023
   title: Cost of Insider Risks Global Report 2023
   publisher: Ponemon Institute and DTEX Systems
@@ -859,7 +890,7 @@ sources:
     a true minimum and not a catastrophic tail — and are global and cross-industry, not country- or sector-specific.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: npa_japan_cyber_threats_2025_statistics
   title: 2025 Cyber Threat Situation Statistics Data
   publisher: National Police Agency of Japan
@@ -877,7 +908,7 @@ sources:
     cost bands are not full total-loss distributions.
 
     '
-  url_stability: unknown
+  url_stability: dated
 - id: netdiligence_cyber_claims_2025
   title: NetDiligence Cyber Claims Study 2025 (Fifteenth Annual)
   publisher: NetDiligence
@@ -899,7 +930,7 @@ sources:
     '
   fallback_urls:
   - https://rsmus.com/content/dam/rsm/insights/services/risk-fraud-cybersecurity/1pdf/net-diligence-cyber-claims-study-2025-report.inline.pdf
-  url_stability: unknown
+  url_stability: dated
 - id: spf_annual_scam_cybercrime_brief_2025
   title: SPF Annual Scam and Cybercrime Brief 2025
   publisher: Singapore Police Force

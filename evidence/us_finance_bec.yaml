@@ -78,7 +78,7 @@ records:
     source_id: census_susb_2022
     source_name: Statistics of U.S. Businesses (SUSB) 2022 Annual Data
     source_type: official_statistics
-    source_url_or_citation: https://www.census.gov/data/tables/2022/econ/susb/2022-susb-annual.html
+    source_url_or_citation: https://www2.census.gov/programs-surveys/susb/tables/2022/us_state_naicssector_lfo_2022.xlsx
     publication_date: "2025-01-16"
     extraction_date: "2026-07-20"
     citation_detail: SUSB 2022 U.S. all-industry employer-firm total, commonly cited as ~6.1 million employer firms. Cross-program counts range from 5.52M (Census Business Dynamics Statistics 2022) to ~6.3M (SBA Office of Advocacy 2024).
@@ -148,7 +148,7 @@ records:
     source_id: afp_payments_fraud_2025
     source_name: 2025 AFP Payments Fraud and Control Survey Report
     source_type: industry_survey_bridge
-    source_url_or_citation: https://www.financialprofessionals.org/training-resources/resources/survey-research-economic-data/details/payments-fraud
+    source_url_or_citation: https://web.archive.org/web/20250707164054/https://www.financialprofessionals.org/training-resources/resources/survey-research-economic-data/details/payments-fraud
     publication_date: "2025-08-26"
     extraction_date: "2026-07-20"
     citation_detail: The 2025 AFP Payments Fraud and Control Survey reports business email compromise as the most common payments-fraud method, with 63% of organizations reporting BEC activity in 2024.

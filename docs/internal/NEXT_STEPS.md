@@ -25,8 +25,9 @@ now corrected. **Worth knowing:** ~37 of the registered sources are HTML pages w
 change on every fetch, so their manifest `sha256` proves *what was fetched at that moment*, not
 that the document is unchanged. One shrank materially (`ibm_cost_data_breach_2025`, 180,111 →
 138,855 bytes), which may mean the page has been edited since the evidence was extracted.
-Unresolved: two registry entries are registered but have never been gathered
-(`asd_annual_cyber_threat_report_2024_2025`, blocked in this runtime, and `first_epss_data_stats`).
+*(Resolved 2026-08-01: the two never-gathered entries are `active: false` inactive candidates,
+parked deliberately — not gaps. The deliberate sweep ran; see
+[`source_sweep_2026-08-01.md`](source_sweep_2026-08-01.md).)*
 
 **⚠️ Open defect — calibration drift** *(found 2026-07-30)*: **four shards simulate values their
 own calibrations no longer produce**, so the explorer shows source-backed evidence beside a loss
@@ -62,17 +63,21 @@ Still open: ledger recording policy (record only at tagged release; 7 of 9 entri
 zero-delta noise) and the narrow **`url_stability: dated | rolling`** source property that
 the IBM edition-roll argued for.
 
-**Active queue** *(as of 2026-07-31)* — two items, both carried over, neither blocked:
+**Active queue** *(as of 2026-08-01)*:
 
-1. **The source sweep.** 47 of 52 sources are `url_stability: unknown`, and ~37 are HTML pages
-   whose bytes change on every fetch, so their manifest `sha256` proves what was fetched at that
-   moment rather than that the document is unchanged. Re-gather all into temp paths, diff sha256
-   against the committed manifest, and for every changed artifact grep for the figure its
-   evidence record cites. The IBM edition-roll was found by accident via a byte count; this is
-   the deliberate version. Two entries have also never been gathered at all
-   (`asd_annual_cyber_threat_report_2024_2025`, blocked in this runtime, and
-   `first_epss_data_stats`).
-2. **ADR-0003 parts 1–2 implementation.** Accepted but not built: declare each record's
+1. **✅ The source sweep (DONE 2026-08-01).** All 52 sources re-gathered and diffed; **no cited
+   figure has drifted** — but six artifacts never evidenced their cited line at all. Four fixed
+   (archive.org snapshots for AFP-2025 / URM-ICO / the real Insiders report page; the SUSB xlsx
+   carrying 6,198,713 firms; ABS re-pinned off `/latest-release`), two documented as KNOWN GAPs.
+   `url_stability` now 42 dated / 10 rolling, 0 unknown. Full record:
+   [`source_sweep_2026-08-01.md`](source_sweep_2026-08-01.md).
+2. **Record-level review of 3 evidence records** *(new, from the sweep — approve-each-anchor)*:
+   `insider_misuse` 66%/76% (stats live in the gated report PDF; the Gurucul landing-page 76% is
+   a *different* statistic), `third_party_outage` 43.6% (gated PDF only), `ai_enabled_fraud`
+   USD 500k/603k (likely misattributed — resembles Regula, whose artifact says ~USD 450k avg;
+   reattribution may move the record's source and value). Minor rider: SUSB denominator framing
+   "~6.1M" vs the artifact's 6,198,713 (derived 0.004 unchanged).
+3. **ADR-0003 parts 1–2 implementation.** Accepted but not built: declare each record's
    population mismatch, and report cell-matched separately from bridged. Expect the headline
    66/66 to fall to roughly 59–60 cell-matched plus 6–7 bridged, concentrated in Singapore and
    Canada. Take the drop publicly with a `revisions/` entry.
@@ -507,3 +512,11 @@ governance/regulatory loss).
   CI green, and the explorer live. The one non-pass is `riskshard_doctor` reporting the
   strength ledger as "not logged — record on release", which is the new rule working: no
   release has been cut since. CI gates on the calibration-drift check, not on doctor.
+- 2026-08-01 — **Explorer redesigned as a filing; source sweep closed.** The public page and
+  social card rebuilt in a regulatory-exhibit idiom (white/black/Plex Mono, whole record
+  printed, revisions collapsed to a Note) after the owner judged the mineral identity read as
+  AI-generated; no number changed (PRs #83/#84, deployed and verified live). The deliberate
+  source sweep then ran: 52 sources re-gathered and diffed, **no cited figure has drifted**,
+  47 `url_stability` unknowns classified (42 dated / 10 rolling), and six artifacts found to
+  have *never* evidenced their cited line — four fixed with verified stable artifacts, two
+  recorded as KNOWN GAPs plus a 3-record review queued (see `source_sweep_2026-08-01.md`).
