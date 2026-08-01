@@ -1,19 +1,19 @@
 records:
-  - id: cybersecurity_insiders_2019_insider_attack_prevalence_frequency_floor
-    title: Organization-level insider-attack prevalence (2019 baseline) used as frequency floor
+  - id: cybersecurity_insiders_2024_six_plus_attacks_frequency_floor
+    title: Organizations with six or more insider attacks in the past year, used as frequency floor
     parameter: frequency.min
-    value: 0.66
+    value: 0.51
     unit: annual_probability
     source_id: cybersecurity_insiders_insider_threat_2024
     source_name: Cybersecurity Insiders 2024 Insider Threat Report
     source_type: industry_survey_bridge
     source_url_or_citation: https://web.archive.org/web/20241229032228/https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report-gurucul/
     publication_date: "2024-06-01"
-    extraction_date: "2026-07-20"
-    citation_detail: The Cybersecurity Insiders 2024 Insider Threat Report states that the share of organizations experiencing insider attacks rose from 66% in 2019 to 76% in 2024; the 66% figure is used here as a historical floor.
-    extraction_notes: Converted the 66% (2019) organization-level insider-attack prevalence to 0.66 as a source-backed frequency floor.
-    normalization_notes: Converted 66% to 0.66. Used as a historical-baseline exposure floor, below the 0.76 current-prevalence likely.
-    limitations: Vendor-sponsored survey, lower trust than official statistics; "insider attacks" is broad and includes negligent and careless insiders, not only deliberate misuse, so it overstates misuse-specific frequency; a 2019 baseline used as a conservative floor. Revise when misuse-specific or sector-specific insider frequency is reviewed.
+    extraction_date: "2026-08-01"
+    citation_detail: "The 2024 Insider Threat Report (Cybersecurity Insiders, sponsored by Gurucul; 413 IT and cybersecurity professionals) key findings state: 51% experienced six or more attacks in the past year."
+    extraction_notes: Used the 51% share of organizations with six or more insider attacks as a hard floor on at-least-one-attack prevalence (any organization with six or more attacks experienced at least one).
+    normalization_notes: Converted 51% to 0.51. A deliberate understatement of at-least-one prevalence, used as a conservative floor below the 0.83 likely.
+    limitations: Understates true at-least-one-attack prevalence by construction (counts only organizations with six or more attacks); vendor-sponsored survey, lower trust than official statistics; "insider attacks" is broad and includes negligent and careless insiders, not only deliberate misuse, so it still overstates misuse-specific frequency. Replaces a retracted 66%-in-2019 figure that appears in no primary source (2026-08-01 record review). Revise when misuse-specific or sector-specific insider frequency is reviewed.
     confidence: low
     evidence_type: source_backed
     applicability:
@@ -22,21 +22,21 @@ records:
       company_size_bands: [all]
       threats: [insider_misuse]
 
-  - id: cybersecurity_insiders_2024_insider_attack_prevalence_frequency_likely
-    title: Organization-level insider-attack prevalence (2024) used as likely frequency
+  - id: gurucul_2026_insider_incident_prevalence_2024_frequency_likely
+    title: Organization-level insider-incident prevalence (2024 reading) used as likely frequency
     parameter: frequency.likely
-    value: 0.76
+    value: 0.83
     unit: annual_probability
-    source_id: cybersecurity_insiders_insider_threat_2024
-    source_name: Cybersecurity Insiders 2024 Insider Threat Report
+    source_id: gurucul_insider_risk_report_2026
+    source_name: Gurucul 2026 Insider Risk Report
     source_type: industry_survey_bridge
-    source_url_or_citation: https://web.archive.org/web/20241229032228/https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report-gurucul/
-    publication_date: "2024-06-01"
-    extraction_date: "2026-07-20"
-    citation_detail: The Cybersecurity Insiders 2024 Insider Threat Report reports that 76% of organizations experienced insider attacks in 2024 (up from 66% in 2019).
-    extraction_notes: Converted the 76% (2024) organization-level insider-attack prevalence to 0.76 as a source-backed likely-frequency exposure bridge.
-    normalization_notes: Converted 76% to 0.76. Selected as a current organization-level insider-attack exposure bridge.
-    limitations: Vendor-sponsored survey, lower trust than official statistics; "insider attacks" is broad and includes negligent and careless insiders, not only deliberate misuse, so it overstates misuse-specific frequency; not sector- or size-specific. Revise when misuse-specific insider frequency is reviewed.
+    source_url_or_citation: https://www.cybersecurity-insiders.com/inside-threats-how-ai-transformed-2026s-insider-risk-landscape/
+    publication_date: "2026-03-19"
+    extraction_date: "2026-08-01"
+    citation_detail: "The Gurucul 2026 Insider Risk Report states: only 10% of organizations report zero insider incidents in the past 12 months, down from 17% in 2024 — put differently, 90% experienced at least one insider incident. The 2024 reading (100% − 17% = 83% experienced at least one) is used here."
+    extraction_notes: Used the report's own 2024 comparison point (17% of organizations with zero insider incidents, i.e. 83% with at least one) as the likely organization-level insider-incident prevalence.
+    normalization_notes: Converted 83% to 0.83. Sits between the 0.51 six-or-more-attacks floor and the 0.90 (2025 survey year) stress figure, all three from the same publisher's survey series.
+    limitations: Retrospective comparison point self-reported inside the 2026 survey, not an independent 2024 measurement; vendor-sponsored survey, lower trust than official statistics; "insider incidents" is broad and includes negligent insiders, not only deliberate misuse, so it overstates misuse-specific frequency; not sector- or size-specific. Replaces a retracted 76%-in-2024 figure that appears in no primary source (2026-08-01 record review). Revise when misuse-specific insider frequency is reviewed.
     confidence: low
     evidence_type: source_backed
     applicability:
@@ -115,7 +115,7 @@ records:
     extraction_date: "2026-07-20"
     citation_detail: The Gurucul 2026 Insider Risk Report (survey of 725 professionals, late 2025) reports that only 10% of organizations had zero insider incidents in the past 12 months, i.e. 90% experienced at least one (up from 83% in 2024).
     extraction_notes: Converted the 90% (2026) organization-level insider-incident prevalence to 0.90 as a source-backed stress-frequency bridge.
-    normalization_notes: Converted 90% to 0.90. Selected as the most recent, highest observed organization-level insider-incident prevalence, above the 0.76 likely.
+    normalization_notes: Converted 90% to 0.90. Selected as the most recent, highest observed organization-level insider-incident prevalence, above the 0.83 likely (the same report's 2024 reading).
     limitations: Vendor-sponsored survey, lower trust than official statistics; "insider incidents" is broad and includes negligent insiders, not only deliberate misuse, so it overstates misuse-specific frequency; a different metric (incidents) than the min/likely attacks figures, and not sector- or size-specific. Revise when misuse-specific insider frequency is reviewed.
     confidence: low
     evidence_type: source_backed

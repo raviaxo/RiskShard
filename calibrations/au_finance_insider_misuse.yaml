@@ -5,10 +5,13 @@ metadata:
   notes: >
     Starter calibration profile for the Insider Misuse top risk. All six direct
     parameters are source-backed, but the two sides differ sharply in strength.
-    FREQUENCY has three dedicated insider records (Cybersecurity Insiders 66%
-    2019 floor / 76% 2024 likely, Gurucul 90% 2026 stress) - but "insider
-    attacks/incidents" is broad and includes negligent and careless insiders,
-    so it OVERSTATES deliberate-misuse frequency. IMPACT rests ENTIRELY on
+    FREQUENCY has three dedicated insider records from one survey family
+    (Cybersecurity Insiders/Gurucul: 51% six-or-more-attacks 2024 floor,
+    83% at-least-one-incident 2024 likely, 90% 2025-survey stress; the
+    previous 66%/76% figures were retracted 2026-08-01 as appearing in no
+    primary source) - but "insider attacks/incidents" is broad and includes
+    negligent and careless insiders, so it OVERSTATES deliberate-misuse
+    frequency. IMPACT rests ENTIRELY on
     generic cross-cyber Cyentia loss bridges (typical $266k floor, median $3M
     likely, extreme $32M stress) - NONE insider-misuse-specific. This is a
     governed starter, not a human-approved benchmark; revise when
@@ -20,13 +23,13 @@ target_currency: USD
 parameters:
   frequency:
     min:
-      evidence_id: cybersecurity_insiders_2019_insider_attack_prevalence_frequency_floor
+      evidence_id: cybersecurity_insiders_2024_six_plus_attacks_frequency_floor
       transform: direct
-      rationale: Source-backed historical floor - Cybersecurity Insiders 66% (2019) organization-level insider-attack prevalence; broad (incl. negligent insiders), overstates deliberate misuse.
+      rationale: Source-backed floor - Cybersecurity Insiders 2024 report, 51% of organizations experienced six or more insider attacks in the past year; a hard floor on at-least-one prevalence that understates by construction. Broad (incl. negligent insiders), overstates deliberate misuse.
     likely:
-      evidence_id: cybersecurity_insiders_2024_insider_attack_prevalence_frequency_likely
+      evidence_id: gurucul_2026_insider_incident_prevalence_2024_frequency_likely
       transform: direct
-      rationale: Source-backed likely-frequency bridge - Cybersecurity Insiders 76% (2024) organization-level insider-attack prevalence; broad exposure, not misuse-specific.
+      rationale: Source-backed likely-frequency bridge - Gurucul 2026 report's 2024 reading, 83% of organizations experienced at least one insider incident (17% zero); broad exposure, not misuse-specific.
     max:
       evidence_id: gurucul_2026_insider_incident_prevalence_frequency_stress
       transform: direct

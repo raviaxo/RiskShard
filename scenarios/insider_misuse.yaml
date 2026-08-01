@@ -6,20 +6,24 @@ metadata:
   benchmark_status: starter_source_backed_frequency_generic_impact_bridges
   description: >
     Starter Insider Misuse shard. Frequency uses three dedicated source-backed
-    insider-prevalence bridges (broad, incl. negligent insiders, so it
-    overstates deliberate misuse). Impact rests entirely on generic cross-cyber
-    Cyentia loss bridges, NONE insider-misuse-specific. Governed starter, not a
+    insider-prevalence bridges from one survey family (Cybersecurity
+    Insiders/Gurucul: 51% six-or-more-attacks floor, 83% at-least-one 2024
+    likely, 90% 2025 stress; broad, incl. negligent insiders, so it overstates
+    deliberate misuse — a prior 66%/76% pair was retracted 2026-08-01 as
+    appearing in no primary source). Impact min/likely are insider-specific
+    (Ponemon/DTEX 2023 per-incident costs); the catastrophic tail is the sole
+    remaining generic cross-cyber Cyentia bridge. Governed starter, not a
     human-approved benchmark. Calibrate from
     calibrations/au_finance_insider_misuse.yaml; caveats live per-record in
     evidence/insider_misuse.yaml. (A separate demo_fixture, insider_threat.yaml,
     remains for fixtures.)
 
 frequency:
-  min: 0.66
-  likely: 0.76
+  min: 0.51
+  likely: 0.83
   max: 0.90
 
 impact:
-  min: 266000
-  likely: 3000000
+  min: 680000
+  likely: 700000
   max: 32000000

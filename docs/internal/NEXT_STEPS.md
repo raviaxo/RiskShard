@@ -71,12 +71,17 @@ the IBM edition-roll argued for.
    carrying 6,198,713 firms; ABS re-pinned off `/latest-release`), two documented as KNOWN GAPs.
    `url_stability` now 42 dated / 10 rolling, 0 unknown. Full record:
    [`source_sweep_2026-08-01.md`](source_sweep_2026-08-01.md).
-2. **Record-level review of 3 evidence records** *(new, from the sweep — approve-each-anchor)*:
-   `insider_misuse` 66%/76% (stats live in the gated report PDF; the Gurucul landing-page 76% is
-   a *different* statistic), `third_party_outage` 43.6% (gated PDF only), `ai_enabled_fraud`
-   USD 500k/603k (likely misattributed — resembles Regula, whose artifact says ~USD 450k avg;
-   reattribution may move the record's source and value). Minor rider: SUSB denominator framing
-   "~6.1M" vs the artifact's 6,198,713 (derived 0.004 unchanged).
+2. **✅ Record-level review of 3 evidence records (DONE 2026-08-01, all four anchors owner-approved).**
+   The 66%/76% insider pair was **retracted** — it appears in no primary source (the Gurucul
+   report says 48% more-frequent / 51% six-or-more; Securonix's 76% is a different construct).
+   Replaced with artifact-backed figures from the same survey family: frequency.min 0.51
+   (six-or-more hard floor), likely **0.83** (Gurucul 2026's 2024 reading), max 0.90 kept. The
+   AI-fraud impact.likely was **reattributed to Regula** at USD **450k** (the 500k/603k pair was
+   never on the cited page). BCI re-anchored to its own news release (immutable snapshot carrying
+   both 43.6% and the ~80%); TPO values unchanged. The stale insider scenario (still simulating
+   pre-Ponemon 266k/3M impacts, invisible to the drift gate because top-risk scenarios are not
+   risk modules) regenerated to match its calibration: 680k/700k/32M. Rider still open: SUSB
+   "~6.1M" framing vs the artifact's 6,198,713 (derived 0.004 unchanged).
 3. **ADR-0003 parts 1–2 implementation.** Accepted but not built: declare each record's
    population mismatch, and report cell-matched separately from bridged. Expect the headline
    66/66 to fall to roughly 59–60 cell-matched plus 6–7 bridged, concentrated in Singapore and
@@ -520,3 +525,9 @@ governance/regulatory loss).
   47 `url_stability` unknowns classified (42 dated / 10 rolling), and six artifacts found to
   have *never* evidenced their cited line — four fixed with verified stable artifacts, two
   recorded as KNOWN GAPs plus a 3-record review queued (see `source_sweep_2026-08-01.md`).
+  **The 3-record review then ran the same day** (owner-approved anchors): the insider 66%/76%
+  pair retracted as appearing in no primary source → replaced with 0.51/0.83 from the same
+  survey family's artifacts; AI-fraud impact.likely reattributed to Regula at USD 450k; BCI
+  re-anchored to its news release (both figures verified). Also caught the insider scenario
+  still simulating pre-Ponemon impacts (outside the drift gate's coverage) and regenerated it.
+  212 tests, validate, preflight, drift gate all green.
