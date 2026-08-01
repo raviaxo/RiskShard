@@ -39,6 +39,29 @@ decision, and doctor's exit code gates automation. Promoting it to a blocking ch
 **Note `us_finance_bec_midmarket` is the shard quoted in the live LinkedIn post** — correcting it
 will move those figures.
 
+**Decisions taken 2026-07-31** — recorded in ADRs, not here:
+[**ADR-0006 depth over breadth**](../adr/0006-depth-over-breadth.md) (Accepted: no new shards
+purely because frequency data exists); [**ADR-0003**](../adr/0003-shared-impact-bridges.md)
+Accepted for **parts 1-2 only** (declare the population mismatch, report cell-matched and
+bridged separately) on the strength of the ledger recording a fiftyfold AVG move as a zero
+delta; [**ADR-0005**](../adr/0005-documented-loss-event-registry.md) **Deferred** - the SEC
+sampling proved feasibility, not priority, and it does not solve the mid-market impact gap;
+[**ADR-0004**](../adr/0004-citable-parameter-identifiers.md) owner-confirmed.
+
+**Dead-directory sweep, corrected.** The 2026-07-31 triage listed `library/`, `provenance/`
+and `control_profiles/` as unreferenced. That was wrong, and only `library/` was deleted:
+
+- `control_profiles/` is **live** - `risk_modules/au_finance_ransomware_midmarket.yaml`
+  declares `control_profiles/ransomware_basic_controls.yaml` as a `controls` artifact. The
+  triage grep only searched `engine/ scripts/ tests/` and missed `risk_modules/`.
+- `provenance/` holds one file and `engine/profiles.py` can load it, but **`load_provenance`
+  is never called** - scaffolding for a feature never wired up. Left in place; removing it
+  means deciding whether to drop the loader and `schemas/provenance_schema.json` too.
+
+Still open: ledger recording policy (record only at tagged release; 7 of 9 entries are
+zero-delta noise) and the narrow **`url_stability: dated | rolling`** source property that
+the IBM edition-roll argued for.
+
 **Open decisions blocking nothing but ageing** *(as of 2026-07-30)* — five, all yours:
 **ADR-0003** (mark bridged vs cell-matched evidence, Proposed), **ADR-0005** (documented
 loss-event registry, Proposed — the sampling was run and supports it), **breadth vs depth**

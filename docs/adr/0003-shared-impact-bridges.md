@@ -1,8 +1,15 @@
 # ADR-0003 — Shared, named impact bridges
 
-- **Status:** Proposed
+- **Status:** Accepted (2026-07-31) — **parts 1 and 2 only**
 - **Date:** 2026-07-28
-- **Deciders:** repo owner (this ADR records intent and a recommendation only)
+- **Deciders:** repo owner
+- **Scope accepted:** declare the population mismatch on each record (part 1) and report
+  cell-matched and bridged counts separately (part 2). Parts 3 and 4 (shared bridge objects,
+  documented transfer rules) are **not** accepted and stay available if something forces them.
+- **Deciding evidence:** on 2026-07-30 the strength ledger recorded the Australian impact
+  reselect — a swap from IBM's UK enterprise-weighted benchmark to its global average, moving
+  that shard's AVG roughly fiftyfold — as `66/66 -> 66/66`, a zero delta. The headline metric
+  cannot see evidence quality change, which is the defect this ADR fixes.
 - **Related:** [`../internal/coverage_harvest.md`](../internal/coverage_harvest.md),
   [`../internal/dora_prescout.md`](../internal/dora_prescout.md),
   [`../internal/es_availability_prescout.md`](../internal/es_availability_prescout.md),

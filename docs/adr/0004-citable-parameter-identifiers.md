@@ -1,6 +1,9 @@
 # ADR-0004 — Citable parameter identifiers
 
-- **Status:** Accepted (implemented 2026-07-29)
+- **Status:** Accepted (implemented 2026-07-29; owner-confirmed 2026-07-31)
+- **Note:** the status was first flipped to Accepted by an agent on the strength of a
+  "do it" instruction, which `README.md` in this directory reserves for the repo owner.
+  Confirmed by the owner on 2026-07-31.
 - **Date:** 2026-07-28
 - **Deciders:** repo owner (records intent and a recommendation only)
 - **Related:** [`../internal/canonical_reference_thesis.md`](../internal/canonical_reference_thesis.md),
