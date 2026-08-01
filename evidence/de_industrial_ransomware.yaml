@@ -16,6 +16,8 @@ records:
     limitations: Global cross-sector estimate; not Germany-specific, manufacturing-specific, or size-band-specific.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -39,6 +41,8 @@ records:
     limitations: Cross-industry Germany company survey; not manufacturing-specific, not limited to mid-market organizations, and reflects damage-causing ransomware rather than all attack attempts.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [DE]
@@ -62,6 +66,8 @@ records:
     limitations: Derived from survey basis counts rather than a standalone plotted rate; cross-industry, survey-based, and broader than damage-causing ransomware.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [DE]
@@ -86,6 +92,8 @@ records:
     limitations: Payment-only lower-band anchor, not total event loss, recovery cost, downtime, or a Germany industrial claims distribution.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [DE]
@@ -110,6 +118,8 @@ records:
     limitations: Global cyber-event benchmark, not Germany-specific, ransomware-specific, manufacturing-specific, selected by the current calibration, or a true minimum loss quantile.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -134,6 +144,8 @@ records:
     limitations: Global security-incident benchmark, not Germany-specific, ransomware-only, manufacturing-specific, mid-market-specific, or selected by the current calibration.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -158,6 +170,8 @@ records:
     limitations: Global manufacturing survey of organizations hit by ransomware; excludes ransoms paid, is not Germany-specific, and is not a full total-loss distribution.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [manufacturing]
       countries: [global]
@@ -182,6 +196,8 @@ records:
     limitations: Global security-incident benchmark, not Germany-specific, ransomware-only, manufacturing-specific, selected by the current calibration, or a formal percentile for this scenario.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -206,6 +222,8 @@ records:
     limitations: Threshold for extreme ransom demands and payouts, not total event loss, not Germany-specific, and not a formal percentile or upper bound.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [manufacturing]
       countries: [global]

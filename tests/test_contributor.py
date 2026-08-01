@@ -125,6 +125,8 @@ def build_example_pack(pack):
             f"    limitations: Fixture only.\n"
             f"    confidence: low\n"
             f"    evidence_type: source_backed\n"
+            f"    population_match:\n"
+            f"      status: matched\n"
             f"    applicability:\n"
             f"      industries: [financial_services]\n"
             f"      countries: [CA]\n"

@@ -16,6 +16,8 @@ records:
     limitations: Global cross-sector estimate; not Japan-specific, manufacturing-specific, or size-band-specific.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -46,6 +48,8 @@ records:
       Read the frequency as attack-incidence on the same basis as the impact side.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [manufacturing]
       countries: [global]
@@ -74,6 +78,8 @@ records:
       Read as attack-incidence on the same basis as the impact side.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [manufacturing]
       countries: [global]
@@ -98,6 +104,8 @@ records:
     limitations: Global cyber-event benchmark, not Japan-specific, ransomware-specific, manufacturing-specific, or a true minimum loss quantile.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -122,6 +130,8 @@ records:
     limitations: Global security-incident benchmark, not Japan-specific, ransomware-only, manufacturing-specific, or mid-market-specific.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -146,6 +156,8 @@ records:
     limitations: Global security-incident benchmark, not Japan-specific, ransomware-only, manufacturing-specific, or a formal percentile for this scenario.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -169,6 +181,8 @@ records:
     limitations: Law-enforcement report count; affected by reporting behavior and missing a denominator for all exposed organizations.
     confidence: high
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [JP]
@@ -192,6 +206,8 @@ records:
     limitations: Industry report count, not an annual probability for a manufacturing company and not normalized by the Japan manufacturing-company population.
     confidence: high
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [manufacturing]
       countries: [JP]
@@ -215,6 +231,8 @@ records:
     limitations: Share of reported incidents by sector; reporting patterns and organization population sizes are not controlled.
     confidence: high
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [manufacturing]
       countries: [JP]
@@ -238,6 +256,8 @@ records:
     limitations: Share of reported incidents by organization size; does not control for the population of SMEs or reporting bias.
     confidence: high
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [JP]
@@ -262,6 +282,8 @@ records:
     limitations: Investigation/restoration cost band only; excludes broader business interruption, ransom, legal, customer, and strategic impacts.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [JP]
@@ -286,6 +308,8 @@ records:
     limitations: Global survey of organizations hit by ransomware; not Japan-specific and excludes ransom payments.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [manufacturing]
       countries: [global]
@@ -310,6 +334,8 @@ records:
     limitations: Threshold for extreme ransom demands and payouts; not Japan-specific, not total event loss, and not a formal percentile.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [manufacturing]
       countries: [global]

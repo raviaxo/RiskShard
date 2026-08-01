@@ -123,5 +123,44 @@ class PortfolioProvenanceTests(unittest.TestCase):
         self.assertIn("assumption_only", md)             # bridged rows shown, not hidden
 
 
+class PopulationMatchTests(unittest.TestCase):
+    """ADR-0003: the headline splits cell-matched from bridged, and the split is honest."""
+
+    def test_card_population_is_country_strict(self):
+        from engine.provenance import _card_population
+
+        # A record that names the shard's country and is population-matched: cell-matched.
+        record = {"population_match": {"status": "matched"},
+                  "applicability": {"countries": ["GB"]}}
+        self.assertEqual(_card_population(record, "GB")["status"], "matched")
+
+        # A global survey consumed by a concrete cell is bridged on country,
+        # whatever it honestly declared.
+        record = {"population_match": {"status": "matched"},
+                  "applicability": {"countries": ["global"]}}
+        pop = _card_population(record, "AU")
+        self.assertEqual(pop["status"], "bridged")
+        self.assertIn("country", pop["bridged_on"])
+
+        # Stored over-claims survive into the card even when the country matches.
+        record = {"population_match": {"status": "bridged", "bridged_on": ["sector", "size"]},
+                  "applicability": {"countries": ["US"]}}
+        pop = _card_population(record, "US")
+        self.assertEqual(pop["status"], "bridged")
+        self.assertEqual(pop["bridged_on"], ["sector", "size"])
+
+    def test_portfolio_totals_split_and_sum(self):
+        from pathlib import Path
+
+        totals = build_portfolio_provenance(Path(__file__).resolve().parents[1])["totals"]
+        self.assertEqual(
+            totals["params_cell_matched"] + totals["params_cross_cell"],
+            totals["params_source_backed"],
+        )
+        self.assertLessEqual(totals["params_cross_country"], totals["params_cross_cell"])
+        # The split exists to be able to fall: bridged must be visible, not zeroed.
+        self.assertGreater(totals["params_cross_cell"], 0)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -16,6 +16,8 @@ records:
     limitations: Covers identified breaches or attacks, not privacy-only data breaches; hidden or unidentified events may be absent; all-business figure is not financial-services-specific.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [GB]
@@ -39,6 +41,8 @@ records:
     limitations: Covers identified breaches or attacks, not privacy-only data breaches; not financial-services-specific and may include high-volume low-impact events.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [GB]
@@ -62,6 +66,8 @@ records:
     limitations: Covers identified breaches or attacks, not privacy-only data breaches; larger organization prevalence may overstate mid-market frequency.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [GB]
@@ -86,6 +92,8 @@ records:
     limitations: Perceived cost of the most disruptive breach or attack; broader than privacy breach cost; sample and cost definition differ from enterprise breach-cost studies. Confidence is medium only for use as a conservative UK mid-market material-cost floor.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [GB]
@@ -110,6 +118,8 @@ records:
     limitations: Surveyed/studied breach population; sponsor methodology; not mid-market-specific, not a full distribution, and not a regulator-reported loss table.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [GB]
@@ -133,6 +143,8 @@ records:
     limitations: IBM studied breach population; not a direct annual likelihood or cost parameter.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [GB]
@@ -157,6 +169,8 @@ records:
     limitations: Regulatory penalty only; not total event loss, insurance claim severity, or a full tail distribution; the incident was a large credit-reference data breach, not a mid-market-specific loss sample. Confidence is medium only for use as a source-backed UK regulatory stress anchor.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [GB]

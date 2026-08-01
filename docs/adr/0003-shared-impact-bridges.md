@@ -167,3 +167,22 @@ goes down for a stated reason is more credible than one that only ever goes up.
 **Open questions for the owner:** whether the relationship is a field on the existing
 record or a separate declared object; whether the migration is retroactive or new-records-
 only; and what the coverage tools report as the headline once the two categories split.
+
+## Implementation decisions (owner-approved 2026-08-01, implemented same day)
+
+- **Field on the record**, two layers: `population_match` stores the fact about the record
+  (specific declared applicability beyond the source's measured population); the per-shard
+  card view combines it with a **country-strict** consumption check — a record whose
+  applicability does not name the shard's own country (a global survey, or a foreign
+  declaration reached by direct calibration reference) is bridged on country for that shard.
+  Sector/size/threat come from the stored layer only: honest wildcard declarations are
+  dilution, carried by the caveat, not counted as borrowing.
+- **Same-survey adjacent-band anchors** (a floor from the small-business band or a stress
+  from the large-business band of the shard's own country survey), documented single-case
+  anchors and statutory parameters are the range-anchoring **method**, not borrowing: matched.
+- **Retroactive**: all 120 source-backed records classified; the field is schema-required
+  for `evidence_type: source_backed`.
+- **Headline**: "N cell-matched · M bridged, of which K cross-country". Measured result on
+  implementation: **28 cell-matched · 38 bridged (26 cross-country) of 66** — larger than
+  this ADR's rough 6–7, which was measured on impact parameters only and before the
+  country-strict rule was chosen. The drop is the point; the `revisions/` entry records it.

@@ -16,6 +16,8 @@ records:
     limitations: Sector notification count reflects reportable privacy breaches under the NDB scheme, not all data breach events or organization-level likelihood.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -39,6 +41,8 @@ records:
     limitations: Industry-wide denominator includes all active businesses, including non-employing and very small businesses; not mid-market-specific.
     confidence: high
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -65,6 +69,8 @@ records:
     limitations: Covers eligible Australian NDB notifications only; all-size sector denominator is not mid-market-specific; multiple notifications by one entity and unreported/non-reportable breaches can distort organization-level probability. Confidence is medium for a reported-notification floor, not for a likely breach rate.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -88,6 +94,8 @@ records:
     limitations: UK official survey; covers identified cyber breaches or attacks, not privacy-only data breaches; not Australia-specific, not financial-services-specific, and may include high-volume low-impact events.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -111,6 +119,8 @@ records:
     limitations: UK official survey; covers identified cyber breaches or attacks, not privacy-only data breaches; large-business prevalence can overstate mid-market likelihood; not Australia-specific or financial-services-specific.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -134,6 +144,8 @@ records:
     limitations: Global DBIR breach corpus; not Australia-specific, not financial-services-specific, and not a frequency or impact parameter.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -157,6 +169,8 @@ records:
     limitations: Global DBIR breach corpus; not Australia-specific, not financial-services-specific, and not a direct scenario frequency or loss magnitude.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -181,6 +195,9 @@ records:
     limitations: Secondary government guidance page that links to ASD as the primary source; cybercrime-wide rather than data-breach-specific, not financial-services-specific, and not a loss distribution quantile.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [threat]
     applicability:
       industries: [all]
       countries: [AU]
@@ -205,6 +222,8 @@ records:
     limitations: Statutory maximum penalty cap, not a total event-loss estimate, not expected loss, not financial-services-specific, and actual penalties depend on regulator and court facts.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [AU]
@@ -229,6 +248,8 @@ records:
     limitations: Global cyber-event benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a true minimum loss quantile.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -253,6 +274,8 @@ records:
     limitations: Global average across studied breached organizations; not Australia-specific, financial-services-specific, or size-band-specific.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -277,6 +300,8 @@ records:
     limitations: UK-specific IBM/Ponemon studied breach population; not Australia-specific, not mid-market-specific, not a full distribution, and not a regulator-reported loss table.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [GB]
@@ -301,6 +326,8 @@ records:
     limitations: Global security-incident benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a formal percentile for this scenario.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]

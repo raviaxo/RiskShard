@@ -16,6 +16,8 @@ records:
     limitations: Eurostat survey population excludes the financial sector (nace_r2 = C10-S951_X_K), so this is a non-financial-sector proxy; self-reported disclosure incidents are narrower than "any cyberattack"; small-enterprise rate used as a floor.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [FR]
@@ -39,6 +41,8 @@ records:
     limitations: Eurostat survey population excludes the financial sector, which is typically more targeted, so this likely understates; self-reported disclosure incidents are narrower than "any cyberattack."
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [FR]
@@ -62,6 +66,8 @@ records:
     limitations: CESIN sample skews large (43% ETI, 40% large enterprises), so it overstates mid-market prevalence; measures any significant cyberattack rather than data breach specifically; the value is a derived product; the CESIN primary is a PDF, with figures byte-verified in named trade coverage. Retained as a documented higher-tail alternative; not the selected frequency.max (the Eurostat large-enterprise rate is selected instead for a consistent, medium-confidence official series).
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [FR]
@@ -85,6 +91,8 @@ records:
     limitations: Eurostat survey population excludes the financial sector, which is typically more targeted, so this likely understates; large-enterprise rate used as an upper bound for a mid-market shard.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [FR]
@@ -109,6 +117,9 @@ records:
     limitations: Economy-wide France average across all organization sizes and all cyberattack types, not data-breach-specific, financial-services-specific, or a true minimum quantile. Used only as a conservative lower-bound anchor.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [threat]
     applicability:
       industries: [all]
       countries: [FR]
@@ -133,6 +144,8 @@ records:
     limitations: All-sector France national average, not mid-market- or financial-services-specific; based on 34 French organizations and enterprise-weighted, so treat as an upper-leaning mid-market likely anchor. The France financial-services sub-figure (EUR 4.65M) rests on a small sample and is recorded as sector context, not the selected anchor.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [FR]
@@ -157,6 +170,8 @@ records:
     limitations: Statutory maximum penalty cap, not a total event-loss estimate, expected loss, or claims severity; actual fines depend on regulator and case facts.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [FR]

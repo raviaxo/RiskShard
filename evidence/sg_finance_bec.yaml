@@ -19,6 +19,9 @@ records:
     limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. Both numerator and denominator are United States figures (IC3 complaints, US Census firms); used only as a conservative global reported-complaint floor until a Singapore denominator-derived BEC frequency (e.g. SPF business-email-impersonation cases over SingStat enterprise counts) is reviewed.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [country]
     applicability:
       industries: [financial_services]
       countries: [SG, global]
@@ -42,6 +45,9 @@ records:
     limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. US survey; measures organizations experiencing attempted or actual BEC, not confirmed loss events; respondents skew corporate-treasury and larger organizations. Revise when a Singapore organization-level BEC prevalence is reviewed.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [country]
     applicability:
       industries: [financial_services]
       countries: [SG, global]
@@ -65,6 +71,9 @@ records:
     limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. US survey, attempts/affected not confirmed loss events, large-organization skew. Revise when a Singapore stress-frequency is reviewed.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [country]
     applicability:
       industries: [financial_services]
       countries: [SG, global]
@@ -89,6 +98,9 @@ records:
     limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. Median of FBI IC3 complaint-reported (US) BEC losses; complaint-driven and self-reported; not a Singapore or mid-market figure. Revise when a Singapore BEC loss floor is reviewed.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [country]
     applicability:
       industries: [financial_services]
       countries: [SG, global]
@@ -113,6 +125,8 @@ records:
     limitations: One documented extreme Singapore BEC case (an investment banking firm), not a mid-market average or a loss percentile; over USD 5M was intercepted, but recovery is not guaranteed so the gross figure is modeled. Revise when a Singapore BEC loss distribution with tail quantiles is reviewed.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [SG]
@@ -222,6 +236,8 @@ records:
     limitations: "Reported cases only, so this is an incidence-and-loss floor: BEC losses that were never reported to police are invisible. Covers all sectors, not financial services specifically, and is not mid-market-specific. Two-year pooling hides a 60 percent single-year swing in total losses, so the central estimate is stable but the underlying series is volatile. Currency converted at a single reference-rate date rather than at each incident's own rate."
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries:
       - all

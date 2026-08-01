@@ -132,6 +132,9 @@ def build_data(root):
                 "source_name": c.get("source_name"), "source_type": c.get("source_type"),
                 "publication_date": c.get("publication_date"), "quote": c.get("cited_line"),
                 "caveat": c.get("caveat"),
+                # ADR-0003: whether the evidence is drawn from the shard's own cell,
+                # and which dimension it is borrowed across when not.
+                "population": c.get("population"),
             } for c in module["cards"]],
         })
     return {"totals": portfolio["totals"], "shards": shards, "repo": REPO_URL,

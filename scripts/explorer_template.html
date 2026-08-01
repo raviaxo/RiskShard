@@ -100,6 +100,7 @@
   table.params td.val{font-weight:600}
   .st{white-space:nowrap;font-size:11.5px;letter-spacing:.02em;text-transform:uppercase}
   .st.est{color:var(--flag);font-weight:600}
+  .st.brg{color:var(--grey);font-weight:600}
   .prow.hl td{background:#f3f0e2}
   .sub{color:var(--grey);font-size:12px}
   .subrow td{padding-top:2px;border-bottom:1px solid var(--hair)}
@@ -155,7 +156,11 @@
     <p>Monte Carlo, 10,000 trials, seed 42, machine-independent seeding — a modeled range from
     public evidence, not a prediction. A parameter marked <span class="st est">estimate</span> is
     an interpretive value whose limitation is stated on its face; all other parameters cite a
-    named public source. Grades follow the maturity ladder: governed_starter → benchmark_review_candidate
+    named public source. A parameter marked <span class="st brg">bridged</span> is source-backed
+    by evidence <em>not drawn from this item's own cell</em> — the dimension borrowed across
+    (country, sector, size, threat) is named in its status. Bridging is declared, never hidden:
+    a reader counting the source-backed total should not infer more cell-specific evidence than
+    exists. Grades follow the maturity ladder: governed_starter → benchmark_review_candidate
     → benchmark-grade (the last only after a recorded human review; no item on this page holds it).</p>
   </div>
 
@@ -208,8 +213,10 @@
   }
 
   var t=DATA.totals;
+  var split=(t.params_cell_matched!=null)?
+    (' — '+t.params_cell_matched+' cell-matched · '+t.params_cross_cell+' bridged'):'';
   document.getElementById('filemeta').textContent=
-    t.params_source_backed+' / '+t.params_total+' parameters source-backed';
+    t.params_source_backed+' / '+t.params_total+' parameters source-backed'+split;
   document.getElementById('repo').href=REPO;
   document.getElementById('disputelink').href=REPO+'/issues/new';
 
@@ -217,7 +224,9 @@
   var facts=[
     ['Items on file',DATA.shards.length+' risk shards'],
     ['Jurisdictions',Object.keys(countries).length],
-    ['Parameters',t.params_source_backed+' of '+t.params_total+' source-backed'],
+    ['Parameters',t.params_source_backed+' of '+t.params_total+' source-backed'+
+      ((t.params_cell_matched!=null)?(' — '+t.params_cell_matched+' cell-matched, '+
+      t.params_cross_cell+' bridged (of which '+t.params_cross_country+' cross-country)'):'')],
     ['Method','Monte Carlo · 10,000 trials · seed 42'],
     ['Data release',DATA.release?DATA.release:'(unreleased working state)'],
     ['Repository','<a href="'+esc(REPO)+'">'+esc(REPO.replace('https://',''))+'</a>']
@@ -291,11 +300,16 @@
   var itemsHTML=DATA.shards.map(function(s,i){
     var prows=s.params.map(function(p){
       var backed=p.status==='source_backed';
+      /* ADR-0003: a bridged parameter is source-backed by evidence not drawn from
+         this shard's own cell; the borrowed dimension is named on its face. */
+      var pop=p.population||{};
+      var st=backed?'source-backed':'estimate';
+      if(backed&&pop.status==='bridged') st='bridged · '+(pop.bridged_on||[]).join(', ');
       return '<tr class="prow" data-param="'+esc(p.parameter)+'" id="'+esc(s.id)+'--'+esc(p.parameter)+'">'+
         '<td>'+esc(p.parameter)+'</td>'+
         '<td class="val num">'+esc(displayValue(s,p))+'</td>'+
         '<td>'+esc(p.source_name||'—')+(p.publication_date?(' <span class="sub">· '+esc(p.publication_date)+'</span>'):'')+'</td>'+
-        '<td class="st'+(backed?'':' est')+'">'+(backed?'source-backed':'estimate')+'</td>'+
+        '<td class="st'+(backed?(pop.status==='bridged'?' brg':''):' est')+'">'+esc(st)+'</td>'+
         '</tr>'+
         '<tr class="subrow"><td class="lbl">cited</td><td colspan="3" class="sub quote">'+
           (p.quote?('“'+esc(p.quote)+'”'):'—')+'</td></tr>'+
