@@ -82,7 +82,13 @@ the IBM edition-roll argued for.
    pre-Ponemon 266k/3M impacts, invisible to the drift gate because top-risk scenarios are not
    risk modules) regenerated to match its calibration: 680k/700k/32M. Rider still open: SUSB
    "~6.1M" framing vs the artifact's 6,198,713 (derived 0.004 unchanged).
-3. **ADR-0003 parts 1–2 implementation.** Accepted but not built: declare each record's
+3. **ADR-0003 parts 1–2 implementation** — *scouted 2026-08-01, one owner decision needed
+   before building*: what "bridged" counts in the headline (cross-country only ≈ 10–14 of 66,
+   vs any cross-cell dimension ≈ 25+, vs the ADR's impact-only prediction of 6–7), and how
+   same-survey adjacent-size-band anchors are treated (they are the range-anchoring method,
+   not borrowing). Design, surfaces map, and a draft per-record classification are in
+   [`adr0003_implementation_scout.md`](adr0003_implementation_scout.md) — start there.
+   Original scope: declare each record's
    population mismatch, and report cell-matched separately from bridged. Expect the headline
    66/66 to fall to roughly 59–60 cell-matched plus 6–7 bridged, concentrated in Singapore and
    Canada. Take the drop publicly with a `revisions/` entry.
