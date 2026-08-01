@@ -341,15 +341,18 @@ sources:
   intended_use:
   - organization-level insider attack prevalence
   - frequency bridge
-  usage_notes: 'Use as an organization-level insider-attack prevalence source. Reports that 76% of organizations
-    experienced insider attacks in 2024, up from 66% in 2019. Vendor-sponsored survey (lower trust than
-    official statistics); "insider attacks" is broad and includes negligent and careless insiders, not
-    only deliberate misuse. Preserve these limitations when using it as a frequency bridge.
-    Re-pointed 2026-08-01: the originally registered URL (no -gurucul suffix) now redirects to the site
-    homepage, so the gathered artifact was unrelated content. Primary is an immutable archive.org snapshot
-    of the real report page. KNOWN GAP (2026-08-01 sweep): the snapshot page does not itself carry the
-    66%/76% prevalence figures (they are inside the gated report PDF), so the evidence records citing
-    them remain unverifiable against the artifact pending a record-level review.
+  usage_notes: 'Use as an organization-level insider-attack frequency source. The report page states
+    that 48% of organizations reported insider attacks became more frequent over the past 12 months and
+    51% experienced six or more attacks in the past year (average remediation cost exceeding USD 1M for
+    29%). Vendor-sponsored survey (lower trust than official statistics); "insider attacks" is broad and
+    includes negligent and careless insiders, not only deliberate misuse. Preserve these limitations
+    when using it as a frequency bridge. Re-pointed 2026-08-01: the originally registered URL (no
+    -gurucul suffix) now redirects to the site homepage, so the gathered artifact was unrelated content;
+    primary is an immutable archive.org snapshot of the real report page. Record review 2026-08-01: the
+    previously quoted "76% experienced insider attacks in 2024, up from 66% in 2019" appears in neither
+    this report nor the Securonix 2024 release (whose 76% is "detected increased insider threat activity
+    over the past five years" - a different construct); it was a secondary-compilation distortion and
+    the evidence records that cited it have been corrected to artifact-backed figures.
 
     '
   url_stability: dated
@@ -376,20 +379,24 @@ sources:
   title: BCI Supply Chain Resilience Report 2024
   publisher: Business Continuity Institute
   source_type: industry_survey
-  url: https://www.thebci.org/resource/bci-supply-chain-resilience-report-2024.html
+  url: https://web.archive.org/web/20260701164556/https://www.thebci.org/news/supply-chain-disruptions-drive-increased-tier-mapping-and-insurance-uptake.html
+  fallback_urls:
+  - https://www.thebci.org/news/supply-chain-disruptions-drive-increased-tier-mapping-and-insurance-uptake.html
+  - https://www.thebci.org/resource/bci-supply-chain-resilience-report-2024.html
   publication_date: '2024-11-01'
   access_mode: public_html
   intended_use:
   - organization-level supply-chain disruption prevalence
   - third-party disruption cause share
   - frequency bridge
-  usage_notes: 'Use as an organization-level supply-chain disruption prevalence source (~80% of organizations
-    experienced a disruption in the past year; 43.6% cite third-party failure as the top cause). Broad
-    supply-chain disruption (all causes), not third-party-only, and not sector- or size-specific. Preserve
-    these limitations when using it as a third-party-outage frequency bridge.
-    KNOWN GAP (2026-08-01 sweep): the 43.6% figure is not on this landing page (current or archived) —
-    it sits inside the gated report PDF, so the evidence record citing it cannot be verified against
-    the gathered artifact. Pending a record-level review or a public artifact carrying the figure.
+  usage_notes: 'Use as an organization-level supply-chain disruption prevalence source (almost 80% of
+    organizations supply chains disrupted in the past twelve months; 43.6% of organizations experienced
+    supply chain disruption due to third-party failures, the most frequent cause). Broad supply-chain
+    disruption (all causes) for the 80% figure, and BCI-membership survey (resilience-mature skew), not
+    sector- or size-specific. Preserve these limitations when using it as a third-party-outage frequency
+    bridge. Re-pointed 2026-08-01 (record review): the report landing page never carried the 43.6%
+    figure (gated PDF); the artifact is now an immutable snapshot of the BCI news release, which states
+    both figures - verified before registering. The live news URL and the report page are fallbacks.
 
     '
   url_stability: dated
@@ -470,14 +477,14 @@ sources:
   intended_use:
   - deepfake fraud average loss
   - early prevalence baseline
-  usage_notes: 'Use as a compiled 2024 deepfake business-fraud statistics source (average loss near USD
-    500,000 per incident, ~USD 603,000 in financial services; more than 10% of companies experienced deepfake
-    fraud attempts in 2024). Secondary compilation of vendor survey data, lower trust; volatile and fast-rising.
-    Preserve these limitations.
-    KNOWN GAP (2026-08-01 sweep): the USD 500,000 / 603,000 figures are absent from this page both today
-    and in the archive.org snapshot taken on the extraction date (2026-07-20) — they resemble Regula
-    survey figures (whose artifact reports ~USD 450,000 average) and appear misattributed to this page.
-    The evidence record citing them needs a record-level review before it can be called artifact-backed.
+  usage_notes: 'Use as a compiled 2024 deepfake business-fraud statistics source for the prevalence
+    floor only (more than 10% of companies experienced deepfake fraud attempts in 2024 - verified in
+    the artifact). Secondary compilation of vendor survey data, lower trust; volatile and fast-rising.
+    Preserve these limitations. Record review 2026-08-01: the USD 500,000 / 603,000 loss figures
+    previously described here are absent from this page both today and in the snapshot taken on the
+    extraction date; the loss record was reattributed to regula_deepfake_survey_2024, whose artifact
+    states the figure it cites (~USD 450,000 average). This source now backs only the attempt-prevalence
+    floor.
 
     '
   url_stability: rolling

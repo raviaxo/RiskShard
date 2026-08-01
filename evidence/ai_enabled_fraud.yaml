@@ -92,22 +92,22 @@ records:
       company_size_bands: [all]
       threats: [ai_enabled_fraud]
 
-  - id: deepfake_2024_average_incident_loss_impact_likely
-    title: Average deepfake fraud incident loss (2024) used as likely impact
+  - id: regula_2024_average_deepfake_loss_impact_likely
+    title: Regula 2024 average business deepfake loss used as likely impact
     parameter: impact.likely
-    value: 500000
+    value: 450000
     unit: currency
     currency: USD
-    source_id: deepfake_business_impact_2024
-    source_name: Deepfake business fraud impact statistics 2024
+    source_id: regula_deepfake_survey_2024
+    source_name: Regula Deepfake Fraud Impact Survey 2024
     source_type: industry_survey_bridge
-    source_url_or_citation: https://www.security.org/resources/deepfake-statistics/
-    publication_date: "2025-01-01"
-    extraction_date: "2026-07-20"
-    citation_detail: Compiled 2024 deepfake statistics report an average loss of nearly USD 500,000 per deepfake-related incident, and about USD 603,000 per affected company in financial services.
-    extraction_notes: Used the ~USD 500,000 average deepfake incident loss as the likely single-event impact (financial services runs higher, ~USD 603,000).
-    normalization_notes: Stored USD 500,000 as the all-business average; financial services averages ~USD 603,000, noted for a finance-specific run.
-    limitations: Secondary compilation of vendor survey data, low trust; an average, not a distribution quantile; deepfake losses are volatile and fast-rising; the finance-sector figure (~USD 603,000) is higher. Revise as the evidence base matures.
+    source_url_or_citation: https://regulaforensics.com/blog/impact-of-deepfakes-on-idv-regula-survey/
+    publication_date: "2024-10-01"
+    extraction_date: "2026-08-01"
+    citation_detail: "The Regula survey states: on average, businesses across industries have lost nearly USD 450,000 to deepfakes. The largest group of respondents (28%) reported losses between USD 250,000 and USD 500,000."
+    extraction_notes: Used Regula's cross-industry average deepfake loss as the likely single-event impact. Replaces a USD 500,000 / 603,000 pair previously attributed to a compiled-statistics page that never carried those figures (2026-08-01 record review) — the values resembled Regula's but did not match its artifact.
+    normalization_notes: Stored USD 450,000 as the all-industry average. Financial-services losses skew higher in the same survey (its per-industry extremes table puts 23% of financial-services respondents above USD 1,000,000), noted for a finance-specific run but not stored as a separate parameter.
+    limitations: Vendor survey (identity-verification vendor with a product interest in the threat), low trust; an average of survey-reported losses, not a distribution quantile; deepfake losses are volatile and fast-rising. Revise as the evidence base matures.
     confidence: low
     evidence_type: source_backed
     applicability:

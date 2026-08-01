@@ -42,13 +42,13 @@ parameters:
       transform: direct
       target_currency: USD
       round_to: 1000
-      rationale: Source-backed AI-fraud impact floor - Verizon DBIR 2026 (IC3-derived) median BEC loss, a global bridge below the ~USD 500k likely.
+      rationale: Source-backed AI-fraud impact floor - Verizon DBIR 2026 (IC3-derived) median BEC loss, a global bridge below the ~USD 450k likely.
     likely:
-      evidence_id: deepfake_2024_average_incident_loss_impact_likely
+      evidence_id: regula_2024_average_deepfake_loss_impact_likely
       transform: direct
       target_currency: USD
       round_to: 10000
-      rationale: Source-backed likely single-event impact - ~USD 500k average deepfake incident loss (financial services runs higher, ~USD 603k).
+      rationale: Source-backed likely single-event impact - Regula 2024 survey, businesses across industries lost nearly USD 450k on average to deepfakes (financial-services losses skew higher; the prior USD 500k/603k pair was retracted 2026-08-01 as not artifact-backed).
     max:
       evidence_id: arup_2024_deepfake_case_impact_stress
       transform: direct

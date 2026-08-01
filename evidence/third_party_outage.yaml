@@ -7,13 +7,13 @@ records:
     source_id: bci_supply_chain_resilience_2024
     source_name: BCI Supply Chain Resilience Report 2024
     source_type: industry_survey_bridge
-    source_url_or_citation: https://www.thebci.org/resource/bci-supply-chain-resilience-report-2024.html
+    source_url_or_citation: https://web.archive.org/web/20260701164556/https://www.thebci.org/news/supply-chain-disruptions-drive-increased-tier-mapping-and-insurance-uptake.html
     publication_date: "2024-11-01"
-    extraction_date: "2026-07-20"
-    citation_detail: The BCI Supply Chain Resilience Report 2024 reports that 43.6% of respondents cite third-party failure as their top cause of supply-chain disruption.
-    extraction_notes: Used the 43.6% third-party-failure-as-top-cause share (rounded to 0.44) as a third-party-specific frequency floor.
+    extraction_date: "2026-08-01"
+    citation_detail: "The BCI news release for the Supply Chain Resilience Report 2024 states: 43.6% of organizations experienced supply chain disruption due to third party failures — the most frequent cause of disruption."
+    extraction_notes: Used the 43.6% share of organizations that experienced third-party-caused disruption (rounded to 0.44) as a third-party-specific frequency floor. Re-anchored 2026-08-01 to BCI's own news release, which states the figure on a gatherable page (the report landing page never carried it); BCI's phrasing is a per-organization experienced-disruption share, a stronger construct than the top-cause share previously described.
     normalization_notes: Converted 43.6% to 0.44. Used as a conservative third-party-attributable disruption floor, below the broad ~0.80 disruption likely.
-    limitations: Vendor-membership survey, lower trust than official statistics; this is the share of respondents naming third-party failure as their top cause, not a clean per-organization annual probability; not sector- or size-specific. Revise when a third-party-outage-specific organization-level frequency is reviewed.
+    limitations: Vendor-membership survey (BCI members skew resilience-mature), lower trust than official statistics; supply-chain disruption due to third-party failure is broader than a third-party IT/service outage, and the survey window is one year of member experience, not a clean per-organization annual probability; not sector- or size-specific. Revise when a third-party-outage-specific organization-level frequency is reviewed.
     confidence: low
     evidence_type: source_backed
     applicability:
@@ -30,11 +30,11 @@ records:
     source_id: bci_supply_chain_resilience_2024
     source_name: BCI Supply Chain Resilience Report 2024
     source_type: industry_survey_bridge
-    source_url_or_citation: https://www.thebci.org/resource/bci-supply-chain-resilience-report-2024.html
+    source_url_or_citation: https://web.archive.org/web/20260701164556/https://www.thebci.org/news/supply-chain-disruptions-drive-increased-tier-mapping-and-insurance-uptake.html
     publication_date: "2024-11-01"
-    extraction_date: "2026-07-20"
-    citation_detail: The BCI Supply Chain Resilience Report 2024 reports that nearly 80% of organizations experienced supply-chain disruptions in the past year, most facing between one and ten incidents.
-    extraction_notes: Converted the ~80% organization-level supply-chain disruption prevalence to 0.80 as a source-backed likely-frequency exposure bridge.
+    extraction_date: "2026-08-01"
+    citation_detail: "The BCI news release for the Supply Chain Resilience Report 2024 states: almost 80% of organizations' supply chains were disrupted over the past twelve months, with most experiencing between one and ten disruptions."
+    extraction_notes: Converted the ~80% organization-level supply-chain disruption prevalence to 0.80 as a source-backed likely-frequency exposure bridge. Re-anchored 2026-08-01 to BCI's own news release (same figure, now stated on the gathered artifact).
     normalization_notes: Converted ~80% to 0.80. Selected as a current organization-level supply-chain disruption exposure bridge; third-party failure is the single largest cause.
     limitations: Vendor-membership survey, lower trust than official statistics; measures all-cause supply-chain disruption (weather, cyber, third-party, etc.), not third-party outages specifically, so it overstates third-party-only frequency; not sector- or size-specific. Revise when a third-party-outage-specific frequency is reviewed.
     confidence: low

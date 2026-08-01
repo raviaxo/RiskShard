@@ -25,14 +25,15 @@ verifiable; this was a provenance-strength audit, not a correctness incident.
 
 ## url_stability: 47 unknowns classified
 
-Now **42 dated / 10 rolling** across all 52 (was 5 dated / 47 unknown). `rolling`
+Now **44 dated / 8 rolling** across all 52 (was 5 dated / 47 unknown). `rolling`
 means the URL will drift from the citation by design; doctor lists these for
 re-verification on every run: `privacy_act_1988_latest` (a /latest alias),
 `apra_cps_230` (redirects to the current standard), `gdpr_article_83` (living CNIL
 FAQ), `business_qld`, `ico_self_reported_breach_cases_2024_25`, `interos`,
-`first_epss_data_stats` (live stats page), `bci_supply_chain_resilience_2024`,
-`deepfake_business_impact_2024` (guide rewritten in place), and
-`gurucul_insider_risk_report_2026`.
+`first_epss_data_stats` (live stats page), and `deepfake_business_impact_2024`
+(guide rewritten in place). *(Corrected 2026-08-01, same day: an earlier draft of
+this note listed 42/10 and wrongly included `bci` and `gurucul_insider_risk_report_2026`
+in the rolling set.)*
 
 ## Six artifacts never evidenced their cited line — 4 fixed, 2 documented
 
