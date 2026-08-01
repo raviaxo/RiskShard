@@ -132,7 +132,7 @@ def build_fields(root, shard_id, parameter, headline, outcome):
         "__RS_PARAM__": html.escape(parameter),
         "__RS_VALUE__": html.escape(shown),
         "__RS_SOURCE__": html.escape(source),
-        "__RS_TAG__": "✓ verified" if backed else "estimate",
+        "__RS_TAG__": "source-backed" if backed else "estimate",
         "__RS_TAGCLASS__": "" if backed else "est",
         "__RS_SHARDS__": str(totals["shards"]),
         "__RS_BACKED__": f"{totals['params_source_backed']} / {totals['params_total']}",

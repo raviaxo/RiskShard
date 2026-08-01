@@ -7,86 +7,88 @@
   @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-400.woff2") format("woff2");font-weight:400}
   @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-500.woff2") format("woff2");font-weight:500}
   @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-600.woff2") format("woff2");font-weight:600}
-  @font-face{font-family:"Fraunces";src:url("fonts/fraunces-500-normal.woff2") format("woff2");font-weight:500;font-style:normal}
-  @font-face{font-family:"Fraunces";src:url("fonts/fraunces-600-normal.woff2") format("woff2");font-weight:600;font-style:normal}
-  @font-face{font-family:"Fraunces";src:url("fonts/fraunces-500-italic.woff2") format("woff2");font-weight:500;font-style:italic}
+  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-700.woff2") format("woff2");font-weight:700}
 
+  /* Same idiom as the explorer: a filing, printed on white. One typeface, black
+     ink, rule lines; color is reserved for status. */
   :root{
-    --ground:#0E1216; --panel:#161B20; --edge:#28313A;
-    --ink:#EAE4D6; --muted:#9BA0A0; --faint:#69706F;
-    --copper:#C79459; --amethyst:#9A7BB8; --malachite:#46B27A; --amber:#CBA255;
-    --mono:"Plex Mono",monospace; --serif:"Fraunces",Georgia,serif;
+    --ink:#111111; --grey:#555555; --faint:#8a8a8a;
+    --rule:#111111; --hair:#cfcfcf; --flag:#a11212;
+    --mono:"Plex Mono",ui-monospace,"Courier New",monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  body{background:var(--ground)}
-  .card{width:1280px;height:640px;background:var(--ground);color:var(--ink);
-    font-family:var(--mono);position:relative;overflow:hidden;
-    display:flex;flex-direction:column;padding:52px 68px 54px;-webkit-font-smoothing:antialiased}
-  /* stone grain — same device as the explorer */
-  .card::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.055;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-  /* stratigraphic edge — same device as the explorer record */
-  .card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;
-    background:linear-gradient(180deg,var(--copper) 0 20%,var(--amethyst) 20% 40%,var(--malachite) 40% 88%,var(--faint) 88% 100%)}
-  .card>*{position:relative;z-index:1}
+  body{background:#ffffff}
+  .card{width:1280px;height:640px;background:#ffffff;color:var(--ink);
+    font-family:var(--mono);display:flex;flex-direction:column;
+    padding:44px 64px 48px;-webkit-font-smoothing:antialiased}
 
-  .top{display:flex;justify-content:space-between;align-items:center;
-    padding-bottom:15px;border-bottom:1px solid var(--edge)}
-  .brand{display:flex;align-items:center;gap:13px;font-size:15px;font-weight:600;letter-spacing:.24em}
-  .top .kicker{font-size:13px;letter-spacing:.2em;color:var(--muted)}
+  .cover-rule{border-top:2px solid var(--rule)}
+  .top{display:flex;justify-content:space-between;align-items:baseline;
+    padding:10px 0 9px;border-bottom:1px solid var(--rule)}
+  .brand{font-size:16px;font-weight:700;letter-spacing:.04em}
+  .top .kicker{font-size:13px;color:var(--grey)}
 
-  .mid{flex:1;display:flex;flex-direction:column;justify-content:center;gap:22px;padding:6px 0}
-  h1{font-family:var(--serif);font-weight:500;font-size:60px;line-height:1.08;letter-spacing:-.015em}
-  h1 em{font-style:italic;color:var(--copper)}
-  .out{font-size:20px;line-height:1.55;color:var(--muted);max-width:62ch}
-  .out b{color:var(--ink);font-weight:500}
+  .mid{flex:1;display:flex;flex-direction:column;justify-content:center;gap:20px;padding:6px 0}
+  h1{font-size:47px;font-weight:700;line-height:1.16;letter-spacing:.005em;max-width:24ch}
+  h1 em{font-style:normal;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:3px}
+  .out{font-size:19px;line-height:1.55;color:var(--grey);max-width:64ch}
+  .out b{color:var(--ink);font-weight:600}
 
   /* miniature evidence row — the product's actual atom, generated from repo data */
-  .speccap{font-size:11.5px;letter-spacing:.14em;color:var(--faint);margin-bottom:-10px}
-  .proof{display:flex;align-items:center;gap:18px;background:var(--panel);border:1px solid var(--edge);
-    border-radius:2px;padding:12px 18px;font-size:14.5px;max-width:min(100%,920px)}
-  .proof .p{color:var(--muted);min-width:118px}
-  .proof .v{font-weight:600;font-variant-numeric:tabular-nums;min-width:104px;color:var(--ink)}
-  .proof .s{color:var(--faint);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .proof .t{color:var(--malachite);font-weight:600;font-size:13px;letter-spacing:.03em}
-  .proof .t.est{color:var(--amber)}
+  .proofblock{max-width:1000px}
+  .speccap{font-size:12px;letter-spacing:.02em;color:var(--faint);text-transform:uppercase;
+    padding-bottom:6px}
+  .proofhead{display:flex;gap:20px;font-size:11px;font-weight:600;letter-spacing:.02em;
+    text-transform:uppercase;color:var(--grey);border-bottom:1px solid var(--rule);padding:0 0 5px}
+  .proof{display:flex;align-items:baseline;gap:20px;font-size:16px;
+    border-bottom:1px solid var(--hair);padding:9px 0}
+  .col-p{width:150px;flex:none}
+  .col-v{width:140px;flex:none;text-align:right;font-variant-numeric:tabular-nums}
+  .col-s{flex:1;min-width:0}
+  .col-t{width:150px;flex:none;text-align:right}
+  .proof .p{color:var(--grey)}
+  .proof .v{font-weight:700}
+  .proof .s{color:var(--grey);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .proof .t{font-size:12.5px;font-weight:600;letter-spacing:.02em;text-transform:uppercase}
+  .proof .t.est{color:var(--flag)}
 
-  .bot{display:flex;justify-content:space-between;align-items:flex-end;
-    padding-top:18px;border-top:1px solid var(--edge)}
-  .stats{display:flex;gap:46px}
-  .stat .n{font-family:var(--serif);font-weight:600;font-size:29px;line-height:1;font-variant-numeric:tabular-nums}
-  .stat .n.ok{color:var(--malachite)}
-  .stat .l{font-size:11.5px;letter-spacing:.13em;color:var(--faint);margin-top:7px}
-  .url{font-size:19px;color:var(--ink);font-weight:500}
+  .bot{display:flex;justify-content:space-between;align-items:baseline;
+    padding-top:14px;border-top:3px double var(--rule);font-size:16px}
+  .stats{color:var(--grey)}
+  .stats b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+  .url{font-weight:700}
 </style>
 </head>
 <body>
 <div class="card">
+  <div class="cover-rule"></div>
   <div class="top">
-    <span class="brand">
-      <svg width="19" height="19" viewBox="0 0 100 100"><path d="M50 8 L50 92 L14 50 Z" fill="#9A7BB8"/><path d="M50 8 L86 50 L50 92 Z" fill="#C79459"/></svg>RISKSHARD
-    </span>
-    <span class="kicker">EVIDENCE, IN DOLLARS</span>
+    <span class="brand">RISKSHARD</span>
+    <span class="kicker">Modeled annual cyber loss · every input source-backed</span>
   </div>
 
   <div class="mid">
     <h1>Tell your CEO what it <em>costs.</em></h1>
     <p class="out">Cyber risk as a defensible dollar range instead of another red square — and <b>every input traces to a named public source</b>, down to the line it came from.</p>
-    <div class="speccap">US · FINANCIAL SERVICES · MID-MARKET · BUSINESS EMAIL COMPROMISE</div>
-    <div class="proof">
-      <span class="p">impact.likely</span>
-      <span class="v">$123,005</span>
-      <span class="s">FBI IC3 2025 Annual Report · Apr 2026</span>
-      <span class="t ">✓ verified</span>
+    <div class="proofblock">
+      <div class="speccap">US · FINANCIAL SERVICES · MID-MARKET · BUSINESS EMAIL COMPROMISE</div>
+      <div class="proofhead">
+        <span class="col-p">Parameter</span>
+        <span class="col-v">Value</span>
+        <span class="col-s">Source</span>
+        <span class="col-t">Status</span>
+      </div>
+      <div class="proof">
+        <span class="p col-p">impact.likely</span>
+        <span class="v col-v">$123,005</span>
+        <span class="s col-s">FBI IC3 2025 Annual Report · Apr 2026</span>
+        <span class="t col-t ">source-backed</span>
+      </div>
     </div>
   </div>
 
   <div class="bot">
-    <div class="stats">
-      <div class="stat"><div class="n">11</div><div class="l">RISK SHARDS</div></div>
-      <div class="stat"><div class="n ok">66 / 66</div><div class="l">SOURCE-BACKED</div></div>
-      <div class="stat"><div class="n">8</div><div class="l">COUNTRIES</div></div>
-    </div>
+    <span class="stats"><b>11</b> risk shards · <b>66 / 66</b> parameters source-backed · <b>8</b> jurisdictions</span>
     <span class="url">raviaxo.github.io/RiskShard</span>
   </div>
 </div>
