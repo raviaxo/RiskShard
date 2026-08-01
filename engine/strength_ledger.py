@@ -101,15 +101,24 @@ def compute_delta(prev_metrics, curr_metrics):
     return {k: int(curr_metrics.get(k, 0)) - int(prev_metrics.get(k, 0)) for k in METRIC_KEYS}
 
 
-def record_snapshot(ledger_path, dashboard, date):
-    """Append the current snapshot to the ledger — but only for a new release.
+def record_snapshot(ledger_path, dashboard, date, release_version):
+    """Append the current snapshot to the ledger — for a named release only.
 
-    A new entry is written only when the data-pack fingerprint differs from the
-    last recorded entry (the "on release only" rule). Returns
-    (entry, appended, delta): `appended` is False when the fingerprint is
-    unchanged (no-op), `delta` is the change vs the prior entry (None for the
-    first-ever, baseline, entry).
+    `release_version` is required and is the enforcement: the rule was documented as
+    "on release only" but implemented as "fingerprint differs", and a fingerprint moves
+    on any pack edit. Between 2026-07-24 and 2026-07-30 that produced nine entries of
+    which one corresponded to an actual release; the rest were noise from a test that
+    cut releases into a temp directory and from recording on feature branches. Requiring
+    a release version means a bare `record` cannot silently append.
+
+    Still a no-op when the data-pack fingerprint matches the last entry. Returns
+    (entry, appended, delta); `delta` is None for the first-ever, baseline, entry.
     """
+    if not release_version:
+        raise ValueError(
+            "record_snapshot requires a release_version: the ledger records releases, "
+            "not every pack edit"
+        )
     entries = load_ledger(ledger_path)
     snapshot = capture_snapshot(dashboard)
     prev = entries[-1] if entries else None
@@ -120,7 +129,7 @@ def record_snapshot(ledger_path, dashboard, date):
         base = entries[-2]["metrics"] if len(entries) > 1 else None
         return prev, False, compute_delta(base, prev["metrics"])
 
-    entry = {"date": date, **snapshot}
+    entry = {"date": date, "release_version": release_version, **snapshot}
     delta = compute_delta(prev_metrics, snapshot["metrics"])
     entries.append(entry)
     save_ledger(ledger_path, entries)

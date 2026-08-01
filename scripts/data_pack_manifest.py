@@ -59,7 +59,7 @@ def main(argv=None):
             # record_snapshot is a no-op if this pack's fingerprint is already logged.
             dashboard = build_readiness_dashboard(ROOT)
             entry, appended, _ = record_snapshot(
-                ROOT / LEDGER_RELPATH, dashboard, datetime.date.today().isoformat()
+                ROOT / LEDGER_RELPATH, dashboard, datetime.date.today().isoformat(), args.release
             )
             ledger_msg = (
                 f"Strength ledger: recorded {entry['data_pack_version']}."

@@ -95,7 +95,17 @@ def _show(ledger_path):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Strength-over-time progress ledger.")
     sub = parser.add_subparsers(dest="cmd")
-    p_record = sub.add_parser("record", help="Append the current release snapshot (no-op if unchanged).")
+    p_record = sub.add_parser(
+        "record",
+        help="Append a snapshot for a named release (no-op if the pack fingerprint is unchanged).",
+    )
+    p_record.add_argument(
+        "--release",
+        required=True,
+        help="Release version this snapshot belongs to. Required: the ledger records "
+             "releases, not every pack edit. Cutting a release with "
+             "data_pack_manifest.py --release does this for you.",
+    )
     p_record.add_argument(
         "--date",
         default=None,
@@ -117,7 +127,7 @@ def main(argv=None):
     if args.cmd == "record":
         date = args.date or datetime.date.today().isoformat()
         dashboard = build_readiness_dashboard(ROOT)
-        entry, appended, delta = record_snapshot(ledger_path, dashboard, date)
+        entry, appended, delta = record_snapshot(ledger_path, dashboard, date, args.release)
         if args.json:
             print(json.dumps({"appended": appended, "entry": entry, "delta": delta}, indent=2, sort_keys=True))
             return 0

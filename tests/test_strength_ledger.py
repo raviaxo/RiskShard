@@ -73,25 +73,36 @@ class RecordTests(unittest.TestCase):
 
     def test_first_record_is_baseline_with_no_delta(self):
         entry, appended, delta = record_snapshot(
-            self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24"
+            self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24", "2026-07-24-test"
         )
         self.assertTrue(appended)
         self.assertIsNone(delta)
         self.assertEqual(entry["date"], "2026-07-24")
         self.assertEqual(len(load_ledger(self.ledger)), 1)
 
+    def test_recording_without_a_release_version_is_refused(self):
+        """The ledger records releases, not every pack edit.
+
+        The rule was documented as "on release only" but implemented as "fingerprint
+        differs", and a fingerprint moves on any pack edit. That produced nine entries
+        between 2026-07-24 and 2026-07-30 of which one matched an actual release.
+        """
+        with self.assertRaises(ValueError):
+            record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24", "")
+        self.assertEqual(load_ledger(self.ledger), [])
+
     def test_unchanged_fingerprint_is_a_noop(self):
-        record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24")
+        record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24", "2026-07-24-test")
         entry, appended, _ = record_snapshot(
-            self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-31"
+            self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-31", "2026-07-31-test"
         )
         self.assertFalse(appended)
         self.assertEqual(len(load_ledger(self.ledger)), 1)  # not padded
 
     def test_new_release_appends_and_reports_delta(self):
-        record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24")
+        record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24", "2026-07-24-test")
         entry, appended, delta = record_snapshot(
-            self.ledger, _dashboard(IMPROVED_MATRIX, "def"), "2026-07-31"
+            self.ledger, _dashboard(IMPROVED_MATRIX, "def"), "2026-07-31", "2026-07-31-test"
         )
         self.assertTrue(appended)
         self.assertEqual(delta["params_source_backed"], 2)
@@ -99,14 +110,14 @@ class RecordTests(unittest.TestCase):
         self.assertEqual(len(load_ledger(self.ledger)), 2)
 
     def test_ledger_file_is_structured_json(self):
-        record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24")
+        record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24", "2026-07-24-test")
         data = json.loads(self.ledger.read_text(encoding="utf-8"))
         self.assertIn("entries", data)
         self.assertEqual(len(data["entries"]), 1)
 
     def test_latest_delta_tracks_the_last_two_entries(self):
-        record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24")
-        record_snapshot(self.ledger, _dashboard(IMPROVED_MATRIX, "def"), "2026-07-31")
+        record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24", "2026-07-24-test")
+        record_snapshot(self.ledger, _dashboard(IMPROVED_MATRIX, "def"), "2026-07-31", "2026-07-31-test")
         latest, delta = latest_delta(self.ledger)
         self.assertEqual(latest["fingerprint"], "def")
         self.assertEqual(delta["params_source_backed"], 2)
@@ -116,8 +127,8 @@ class TrendAndBaselineTests(unittest.TestCase):
     def setUp(self):
         self._tmp = tempfile.TemporaryDirectory()
         self.ledger = Path(self._tmp.name) / "strength_ledger.json"
-        record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24")
-        record_snapshot(self.ledger, _dashboard(IMPROVED_MATRIX, "def"), "2026-07-31")
+        record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24", "2026-07-24-test")
+        record_snapshot(self.ledger, _dashboard(IMPROVED_MATRIX, "def"), "2026-07-31", "2026-07-31-test")
 
     def tearDown(self):
         self._tmp.cleanup()
@@ -138,7 +149,7 @@ class TrendAndBaselineTests(unittest.TestCase):
         tmp = tempfile.TemporaryDirectory()
         try:
             ledger = Path(tmp.name) / "l.json"
-            record_snapshot(ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24")
+            record_snapshot(ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24", "2026-07-24-test")
             self.assertEqual(baseline_delta(ledger), (None, None))
         finally:
             tmp.cleanup()
@@ -155,7 +166,7 @@ class ReadmeWriterTests(unittest.TestCase):
     def setUp(self):
         self._tmp = tempfile.TemporaryDirectory()
         self.ledger = Path(self._tmp.name) / "strength_ledger.json"
-        record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24")
+        record_snapshot(self.ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24", "2026-07-24-test")
         self.readme = Path(self._tmp.name) / "README.md"
 
     def tearDown(self):
