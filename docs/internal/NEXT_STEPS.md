@@ -502,4 +502,8 @@ governance/regulatory loss).
   **Three corrections to my own work:** the "delete three dead directories" advice was wrong
   (`control_profiles/` is live, referenced by a risk module), a "0 references" import removal
   broke a re-export, and a `git reset --hard` destroyed uncommitted work that had to be redone.
-  211 tests; validate, preflight and the drift gate pass. **No evidence changed.**
+  212 tests; validate, preflight and the drift gate pass. **No evidence changed.**
+  All of it merged the same day (PRs #76–#81); `main` closed at `f5e8912` with 0 open PRs,
+  CI green, and the explorer live. The one non-pass is `riskshard_doctor` reporting the
+  strength ledger as "not logged — record on release", which is the new rule working: no
+  release has been cut since. CI gates on the calibration-drift check, not on doctor.
