@@ -203,6 +203,29 @@ class SourceRegistryTests(unittest.TestCase):
         # an unrecognised mode is not policed
         self.assertTrue(content_matches_access_mode("public_api", "application/octet-stream"))
 
+    def test_url_stability_is_validated_and_defaults_to_unassessed(self):
+        """A rolling URL serves whatever edition is current, so the artifact drifts away
+        from the citation. ibm.com/reports/data-breach did exactly that on 2026-07-31,
+        under a record citing the 2025 figure. The field records the property; `unknown`
+        is the honest default rather than assuming stability.
+        """
+        base = {
+            "id": "stability_fixture",
+            "title": "Fixture",
+            "publisher": "Example Publisher",
+            "source_type": "report",
+            "url": "https://example.com/report-2025",
+            "publication_date": "2026-01-01",
+            "access_mode": "public_html",
+            "intended_use": ["testing"],
+            "usage_notes": "Unit test fixture.",
+        }
+        validate_source(dict(base))  # absent -> defaults, does not raise
+        for value in ("dated", "rolling", "unknown"):
+            validate_source({**base, "url_stability": value})
+        with self.assertRaises(SourceRegistryError):
+            validate_source({**base, "url_stability": "probably-fine"})
+
     def test_gather_sources_skips_inactive_registry_entries(self):
         registry_text = """
 sources:
