@@ -17,6 +17,8 @@ records:
     limitations: US IC3 complaint population; self-reported and complaint-driven; not financial-services-specific, mid-market-specific, or a full loss distribution.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [US]
@@ -40,6 +42,8 @@ records:
     limitations: Complaint count without a complete business denominator; not financial-services-specific.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [US]
@@ -64,6 +68,8 @@ records:
     limitations: Complaint-driven adjusted losses may not represent all events, sector-specific losses, or mid-market severity.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [US]
@@ -87,6 +93,8 @@ records:
     limitations: All-industry, all-size denominator; not financial-services-specific or mid-market-specific. Authoritative national employer-firm counts range roughly 5.5M-6.3M by program and vintage; the derived reported-complaint floor of 0.004 is stable across that entire range.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [US]
@@ -113,6 +121,9 @@ records:
     limitations: IC3 counts only complaints reported to the FBI and substantially undercounts true BEC incidence; numerator and denominator are both all-sector/all-industry, so this is an economy-wide reported floor, not financial-services-specific or mid-market-specific; it is a lower-bound floor, not a central likelihood. Confidence is medium for a reported-complaint floor, not for a likely BEC rate.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [sector, size]
     applicability:
       industries: [financial_services]
       countries: [US]
@@ -157,6 +168,9 @@ records:
     limitations: Survey measures organizations experiencing attempted or actual BEC, not confirmed financial-loss events; AFP respondents skew toward corporate treasury and larger organizations (AFP reports 66% of BEC attempts target organizations with at least USD 1B revenue), so this overall prevalence likely overstates a mid-market financial-services rate; not financial-services-specific. Revise when mid-market-specific BEC event-frequency evidence is reviewed.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [sector, size]
     applicability:
       industries: [financial_services]
       countries: [US]
@@ -201,6 +215,9 @@ records:
     limitations: Survey measures organizations experiencing attempted or actual BEC, not confirmed financial-loss events; AFP respondents skew toward corporate treasury and larger organizations, so this overall prevalence likely overstates a mid-market financial-services rate; it is drawn from the subsequent (2026) AFP edition rather than the same edition as the likely bridge; not financial-services-specific. Revise when mid-market-specific BEC event-frequency evidence is reviewed.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [sector, size]
     applicability:
       industries: [financial_services]
       countries: [US]
@@ -246,6 +263,9 @@ records:
     limitations: Median of FBI IC3 complaint-reported BEC losses as presented by Verizon DBIR; complaint-driven and self-reported, not financial-services-specific or mid-market-specific, and not a formal minimum quantile for this scenario.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [sector, size]
     applicability:
       industries: [financial_services]
       countries: [US]
@@ -292,6 +312,8 @@ records:
     limitations: One documented extreme funds-transfer-fraud case from a cyber insurer's book, not a modeled loss percentile or a financial-services mid-market average; 85% was recovered via clawback in this instance, but recovery is not guaranteed, so the gross figure is modeled; BEC/FTF-specific but drawn from a single case. Revise when a US mid-market BEC loss distribution with tail quantiles is reviewed.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [US]

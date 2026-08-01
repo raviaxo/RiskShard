@@ -47,6 +47,9 @@ records:
     limitations: Not all ICO penalties are data-breach specific (some are PECR/marketing), so the true breach-penalty rate is somewhat lower; a rare, tail-driving stage.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [sector, size]
     applicability:
       industries: [financial_services]
       countries: [GB]
@@ -115,6 +118,9 @@ records:
     limitations: A mean enforcement outcome, not a loss quantile; the distribution is right-skewed, so the mean overstates the modal fine; not all penalties are data-breach specific.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [sector, size]
     applicability:
       industries: [financial_services]
       countries: [GB]
@@ -139,6 +145,9 @@ records:
     limitations: A rare, headline fine, not a typical outcome; below the statutory maximum; not all penalties are data-breach specific.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [sector, size]
     applicability:
       industries: [financial_services]
       countries: [GB]

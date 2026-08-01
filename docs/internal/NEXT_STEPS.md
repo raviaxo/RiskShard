@@ -82,12 +82,15 @@ the IBM edition-roll argued for.
    pre-Ponemon 266k/3M impacts, invisible to the drift gate because top-risk scenarios are not
    risk modules) regenerated to match its calibration: 680k/700k/32M. Rider still open: SUSB
    "~6.1M" framing vs the artifact's 6,198,713 (derived 0.004 unchanged).
-3. **ADR-0003 parts 1–2 implementation** — *scouted 2026-08-01, one owner decision needed
-   before building*: what "bridged" counts in the headline (cross-country only ≈ 10–14 of 66,
-   vs any cross-cell dimension ≈ 25+, vs the ADR's impact-only prediction of 6–7), and how
-   same-survey adjacent-size-band anchors are treated (they are the range-anchoring method,
-   not borrowing). Design, surfaces map, and a draft per-record classification are in
-   [`adr0003_implementation_scout.md`](adr0003_implementation_scout.md) — start there.
+3. **✅ ADR-0003 parts 1–2 implemented (DONE 2026-08-01)** — owner picked the strict rule
+   (full-cell, country-strict card layer, adjacent-band anchors = method). All 120
+   source-backed records carry `population_match` (schema-required); the headline is now
+   **28 cell-matched · 38 bridged (26 cross-country) of 66**, on the explorer (per-row
+   "bridged · country" status + cover facts), the evidence report, and the provenance CLI.
+   The decision and measured result are recorded in the ADR's implementation-decisions
+   section; the headline change has a `revisions/` entry. **Small follow-up:** extend the
+   strength-ledger snapshot with the split at the next release cut (its snapshot derives
+   from the readiness matrix, which does not carry population data).
    Original scope: declare each record's
    population mismatch, and report cell-matched separately from bridged. Expect the headline
    66/66 to fall to roughly 59–60 cell-matched plus 6–7 bridged, concentrated in Singapore and
@@ -536,4 +539,9 @@ governance/regulatory loss).
   survey family's artifacts; AI-fraud impact.likely reattributed to Regula at USD 450k; BCI
   re-anchored to its news release (both figures verified). Also caught the insider scenario
   still simulating pre-Ponemon impacts (outside the drift gate's coverage) and regenerated it.
-  212 tests, validate, preflight, drift gate all green.
+  212 tests, validate, preflight, drift gate all green. **ADR-0003 parts 1–2 then implemented**
+  (owner picked the strict rule after a scouted checkpoint): all 120 source-backed records
+  carry `population_match`, and the public headline is now 28 cell-matched · 38 bridged
+  (26 cross-country) of 66 — on the explorer per-row, the evidence report, and the cover
+  facts, with the ADR carrying the decision record and a `revisions/` entry carrying the
+  headline change. GB is the only fully cell-matched shard; the bridged map is the work queue.

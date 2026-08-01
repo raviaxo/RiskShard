@@ -1,0 +1,18 @@
+date: '2026-08-01'
+title: The source-backed headline now splits into cell-matched and bridged
+decision: docs/adr/0003-shared-impact-bridges.md
+effect: 'No loss figure moved. The headline claim changed shape: "66/66 source-backed" is now
+  reported as 66 source-backed, of which 28 are cell-matched and 38 are bridged (26 of those
+  across a country border). Every bridged parameter now names the dimension it borrows across
+  on its face.'
+reason: 'ADR-0003 (accepted 2026-07-31, parts 1-2): a well-written caveat and a borrowed source
+  were textually indistinguishable, so nothing could say how many of the 66 source-backed
+  parameters were backed by evidence drawn from the shard''s own cell, and a reader reasonably
+  inferred more cell-specific evidence than exists. Every evidence record now declares its
+  source population against its claimed applicability, and the per-shard view computes whether
+  the evidence behind each number comes from that shard''s own country and cell. The count is
+  deliberately strict - a global survey consumed by a concrete country cell counts as bridged
+  on country - which is why the bridged number is larger than the rough impact-only estimate
+  in the ADR. A metric that cannot fall is not a measurement. The map this produces is the
+  work queue: the United Kingdom item is the only one whose evidence is entirely cell-matched;
+  Singapore, Canada, Japan and the ransomware and US-frequency items carry the borrowing.'

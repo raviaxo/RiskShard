@@ -16,6 +16,9 @@ records:
     limitations: Combines a cross-sector organization survey fact with a conditional PIPEDA reported-breach harm share; not financial-services-specific, mid-market-specific, or a denominator-backed sector incident rate.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [sector, size]
     applicability:
       industries: [all, financial_services]
       countries: [CA]
@@ -39,6 +42,9 @@ records:
     limitations: Cross-sector Canadian organization survey fact cited by OPC/CIRA; not limited to financial services, mid-market companies, material events, or regulator-reportable breaches.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [sector, size]
     applicability:
       industries: [all, financial_services]
       countries: [CA]
@@ -83,6 +89,9 @@ records:
     limitations: Cross-sector Canadian organization survey fact cited by OPC/CIRA; not limited to financial services, mid-market companies, material events, or regulator-reportable breaches.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [sector, size]
     applicability:
       industries: [all, financial_services]
       countries: [CA]
@@ -107,6 +116,9 @@ records:
     limitations: Global cyber-event benchmark, not Canada-specific, data-breach-only, financial-services-specific, or a true minimum loss quantile. Accept only as a benchmark-review bridge with this caveat.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [country, threat]
     applicability:
       industries: [all]
       countries: [global, CA]
@@ -134,6 +146,8 @@ records:
     limitations: Secondary article, not primary IBM Canada release; not financial-services-specific or size-band-specific. Replace with primary IBM regional table, Canadian claims data, insurer data, or regulator/sector evidence before benchmark claims.
     confidence: low
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [CA]
@@ -158,6 +172,9 @@ records:
     limitations: Primary IBM source but global average across studied breached organizations; not Canada-specific, financial-services-specific, or size-band-specific. The secondary Canada row remains useful context but is not selected for benchmark-review automation.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [country]
     applicability:
       industries: [all]
       countries: [global, CA]
@@ -182,6 +199,8 @@ records:
     limitations: Primary IBM Canada release, but an all-sector national average across studied breached organizations, not mid-market-specific or financial-services-specific; IBM's sample skews toward larger organizations, so this is an upper-leaning mid-market likely anchor.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [CA]
@@ -206,6 +225,9 @@ records:
     limitations: Global security-incident benchmark, not Canada-specific, data-breach-only, financial-services-specific, or a formal percentile for this scenario. Accept only as a benchmark-review stress bridge with this caveat.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [country, threat]
     applicability:
       industries: [all]
       countries: [global, CA]

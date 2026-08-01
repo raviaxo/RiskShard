@@ -38,6 +38,33 @@
             "type": "string",
             "enum": ["source_backed", "estimated", "synthetic"]
           },
+          "population_match": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": ["matched", "bridged"]
+              },
+              "bridged_on": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["country", "sector", "size", "threat"]
+                },
+                "minItems": 1
+              }
+            },
+            "required": ["status"],
+            "if": {
+              "properties": { "status": { "const": "bridged" } }
+            },
+            "then": {
+              "required": ["status", "bridged_on"]
+            },
+            "else": {
+              "not": { "required": ["bridged_on"] }
+            }
+          },
           "applicability": {
             "type": "object",
             "properties": {
@@ -82,7 +109,14 @@
           "confidence",
           "evidence_type",
           "applicability"
-        ]
+        ],
+        "if": {
+          "properties": { "evidence_type": { "const": "source_backed" } },
+          "required": ["evidence_type"]
+        },
+        "then": {
+          "required": ["population_match"]
+        }
       }
     }
   },

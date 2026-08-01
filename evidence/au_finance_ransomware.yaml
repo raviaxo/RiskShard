@@ -16,6 +16,8 @@ records:
     limitations: Global financial-services survey, not Australia-specific; survey population may not equal the target organization's peer group.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [global]
@@ -39,6 +41,8 @@ records:
     limitations: Global cross-sector estimate; not Australia-specific and not financial-services-specific.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -104,6 +108,9 @@ records:
     limitations: Global financial-services survey, not Australia-specific; using the same 65% statistic for likely and max means the frequency range is intentionally conservative and awaits better tail-frequency evidence.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [country, size]
     applicability:
       industries: [financial_services]
       countries: [global, AU]
@@ -128,6 +135,9 @@ records:
     limitations: Secondary government guidance page that links to ASD as the primary source; cybercrime-wide rather than ransomware-specific, not financial-services-specific, and not a loss distribution quantile.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [threat]
     applicability:
       industries: [all]
       countries: [AU]
@@ -152,6 +162,8 @@ records:
     limitations: Global financial-services value, not Australia-specific; the public article does not provide size-band segmentation.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [global]
@@ -198,6 +210,9 @@ records:
     limitations: Global cyber-event loss benchmark, not Australia-specific, ransomware-only, financial-services-specific, or a formal ransomware claim-severity percentile. Use as an automated benchmark-review stress bridge only with human caveat review.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [country, sector, size, threat]
     applicability:
       industries: [all, financial_services]
       countries: [global, AU]
@@ -221,6 +236,8 @@ records:
     limitations: Incident-share statistic, not annual probability or loss magnitude; source page does not isolate Australia.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [global]
@@ -244,6 +261,8 @@ records:
     limitations: Global cross-sector incident-share statistic; not Australia-specific and not financial-services-specific.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -267,6 +286,8 @@ records:
     limitations: Covers eligible Australian data breaches notified to OAIC, not all ransomware events or all financial loss events.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [all]
       countries: [AU]
@@ -290,6 +311,8 @@ records:
     limitations: Sector notification count is not ransomware-specific; it reflects reportable privacy breaches under the NDB scheme.
     confidence: medium
     evidence_type: source_backed
+    population_match:
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [AU]

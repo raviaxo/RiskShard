@@ -33,6 +33,25 @@ def repo_slug_from_remote(remote_url):
     return "/".join(parts[-2:]) if len(parts) >= 2 else ""
 
 
+def _card_population(record, cell_country):
+    """ADR-0003: is this card's evidence drawn from the shard's own cell?
+
+    Combines two layers: the record's stored `population_match` (specific declared
+    applicability beyond the source's measured population) and a country-strict
+    consumption check — a record whose applicability does not name the shard's own
+    country (a global survey, or a foreign declaration reached via direct
+    calibration reference) is bridged on country for this shard, whatever it
+    honestly declared. Sector/size/threat come from the stored layer only:
+    honest wildcard declarations are dilution, carried by the caveat, not borrowing.
+    """
+    pm = record.get("population_match") or {}
+    dims = set(pm.get("bridged_on") or [])
+    countries = (record.get("applicability") or {}).get("countries") or []
+    if cell_country and cell_country not in countries:
+        dims.add("country")
+    return {"status": "bridged" if dims else "matched", "bridged_on": sorted(dims)}
+
+
 def build_module_provenance(module_id, root, feeds_by_id=None):
     """One provenance card per direct parameter of a shard, in parameter order.
 
@@ -44,6 +63,7 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
     module = find_risk_module(module_id, root)
     pack = build_evidence_pack(module, root, feeds_by_id=feeds_by_id)
     records_by_id = {r["id"]: r for r in load_module_evidence_records(module, root)}
+    cell_country = ((module or {}).get("context") or {}).get("country")
 
     cards = []
     for dp in pack.get("direct_parameters", []):
@@ -81,6 +101,7 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
                     "cited_line": record.get("citation_detail"),
                     "caveat": record.get("limitations"),
                     "resolved": True,
+                    "population": _card_population(record, cell_country),
                 }
             )
         cards.append(card)
@@ -101,11 +122,21 @@ def build_portfolio_provenance(root, module_ids=None):
     modules = [build_module_provenance(mid, root) for mid in module_ids]
 
     source_backed = bridged = missing = total = 0
+    cell_matched = cross_cell = cross_country = 0
     for m in modules:
         for c in m["cards"]:
             total += 1
             if c.get("status") == "source_backed":
                 source_backed += 1
+                # ADR-0003 part 2: split the headline so "source-backed" stops
+                # implying cell-specificity it cannot verify.
+                pop = c.get("population") or {}
+                if pop.get("status") == "bridged":
+                    cross_cell += 1
+                    if "country" in (pop.get("bridged_on") or []):
+                        cross_country += 1
+                else:
+                    cell_matched += 1
             elif c.get("resolved"):
                 bridged += 1
             else:
@@ -116,6 +147,9 @@ def build_portfolio_provenance(root, module_ids=None):
             "shards": len(modules),
             "params_total": total,
             "params_source_backed": source_backed,
+            "params_cell_matched": cell_matched,
+            "params_cross_cell": cross_cell,
+            "params_cross_country": cross_country,
             "params_bridged": bridged,
             "params_missing": missing,
         },
@@ -137,8 +171,12 @@ def format_portfolio_markdown(portfolio):
         "hand-written. Dispute any row: `riskshard_modules.py provenance <shard> --dispute <param>`.",
         "",
         f"**Portfolio:** {t['shards']} shards · {t['params_source_backed']} of "
-        f"{t['params_total']} parameters source-backed · {t['params_bridged']} bridged/estimated "
-        f"· {t['params_missing']} missing.",
+        f"{t['params_total']} parameters source-backed — {t.get('params_cell_matched', 0)} "
+        f"cell-matched, {t.get('params_cross_cell', 0)} bridged (of which "
+        f"{t.get('params_cross_country', 0)} cross-country) · {t['params_bridged']} "
+        f"bridged/estimated · {t['params_missing']} missing. A bridged parameter is "
+        "source-backed by evidence not drawn from the shard's own cell (ADR-0003); "
+        "the dimension borrowed across is named per row.",
         "",
     ]
     for m in portfolio["modules"]:
@@ -154,8 +192,12 @@ def format_portfolio_markdown(portfolio):
             if c.get("publication_date"):
                 source += f" ({c['publication_date']})"
             caveat = (c.get("caveat") or "—").replace("|", "\\|").replace("\n", " ")
+            status = c.get("status") or "—"
+            pop = c.get("population") or {}
+            if pop.get("status") == "bridged":
+                status += f" (bridged: {', '.join(pop.get('bridged_on') or [])})"
             lines.append(
-                f"| `{c['parameter']}` | {_fmt_value(c)} | {c.get('status') or '—'} "
+                f"| `{c['parameter']}` | {_fmt_value(c)} | {status} "
                 f"| {source.replace('|', chr(92) + '|')} | {caveat} |"
             )
         lines.append("")
