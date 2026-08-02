@@ -134,12 +134,20 @@ def _format_strength(strength):
         ("shards 6/6", "shards_fully_sourced"),
         ("bridged / estimated", "params_bridged"),
     ]
+    if "params_cell_matched" in m:
+        # ADR-0003 split — only entries recorded since v0.2.0 carry it.
+        rows.append(("cell-matched", "params_cell_matched"))
+        rows.append(("population-bridged", "params_cross_cell"))
     if delta is None:
         lines[0] = "Strength (baseline):"
         for label, key in rows:
             lines.append(f"  {label}: {m[key]}")
     else:
         for label, key in rows:
+            if key not in delta:
+                # The prior release predates this metric — no honest arrow to draw.
+                lines.append(f"  {label}: {m[key]} (newly measured)")
+                continue
             d = delta[key]
             prev = m[key] - d
             tail = f" ({_signed(d)})" if d else " (no change)"

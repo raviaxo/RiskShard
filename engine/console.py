@@ -119,8 +119,14 @@ class RiskShardConsole(cmd.Cmd):
                 return ""
             m = latest["metrics"]
             version = latest.get("data_pack_version", "")
+            split = (
+                f" · {m['params_cell_matched']} cell-matched"
+                if "params_cell_matched" in m
+                else ""
+            )
             return (
                 f"  Strength: {m['params_source_backed']}/{m['params_total']} params source-backed"
+                f"{split}"
                 f" · {m['shards_fully_sourced']}/{m['shards']} shards at 6/6"
                 f"{f' ({version})' if version else ''}\n"
             )

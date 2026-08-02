@@ -10,6 +10,16 @@ rather than an assertion. The strength axis it tracks:
   - shards_fully_sourced : shards where all 6 direct parameters are source-backed
   - grades               : module maturity-label counts (claim discipline)
 
+ADR-0003 split (recorded since v0.2.0, from the portfolio provenance totals —
+the readiness matrix does not carry population data, so these arrive as a
+separate input and are absent from pre-split entries):
+
+  - params_cell_matched  : source-backed params whose evidence is drawn from the
+                           shard's own population cell
+  - params_cross_cell    : source-backed but population-bridged (the public
+                           headline calls these "bridged")
+  - params_cross_country : the subset of cross-cell bridged on country
+
 An entry is appended only when the data-pack fingerprint changes — i.e. on a
 real release. Re-running `record` against an unchanged pack is a no-op, so the
 trend cannot be padded with vanity ticks. The ledger JSON is the canonical owner
@@ -28,16 +38,33 @@ METRIC_KEYS = (
     "params_total",
     "shards",
     "shards_fully_sourced",
+    "params_cell_matched",
+    "params_cross_cell",
+    "params_cross_country",
+)
+
+# The ADR-0003 population-split subset of METRIC_KEYS: present only in entries
+# recorded with portfolio-provenance totals (v0.2.0 onward).
+POPULATION_KEYS = (
+    "params_cell_matched",
+    "params_cross_cell",
+    "params_cross_country",
 )
 
 LEDGER_RELPATH = Path("docs/internal/strength_ledger.json")
 
 
-def capture_snapshot(dashboard):
+def capture_snapshot(dashboard, population_totals=None):
     """Reduce a readiness dashboard to the strength snapshot we track over time.
 
     Returns a dict with the release identity (data-pack version + fingerprint),
     the summed parameter metrics, and the module grade counts. Pure: no I/O.
+
+    `population_totals` is the `totals` dict from
+    `engine.provenance.build_portfolio_provenance` — when given, the ADR-0003
+    split (cell-matched / cross-cell / cross-country) is recorded alongside the
+    matrix metrics. It is a separate input because the readiness matrix does not
+    carry population data.
     """
     matrix = dashboard.get("evidence_packs", {}).get("coverage_matrix", [])
     source_backed = sum(int(r.get("source_backed_direct", 0)) for r in matrix)
@@ -51,17 +78,21 @@ def capture_snapshot(dashboard):
     )
     modules = dashboard.get("risk_modules", {})
     data_pack = dashboard.get("data_pack") or {}
+    metrics = {
+        "params_source_backed": source_backed,
+        "params_bridged": bridged,
+        "params_missing": missing,
+        "params_total": total,
+        "shards": modules.get("module_count", len(matrix)),
+        "shards_fully_sourced": fully_sourced,
+    }
+    if population_totals is not None:
+        for key in POPULATION_KEYS:
+            metrics[key] = int(population_totals.get(key, 0))
     return {
         "data_pack_version": data_pack.get("pack_version", ""),
         "fingerprint": data_pack.get("fingerprint", ""),
-        "metrics": {
-            "params_source_backed": source_backed,
-            "params_bridged": bridged,
-            "params_missing": missing,
-            "params_total": total,
-            "shards": modules.get("module_count", len(matrix)),
-            "shards_fully_sourced": fully_sourced,
-        },
+        "metrics": metrics,
         "grades": dict(modules.get("status_counts", {})),
     }
 
@@ -95,13 +126,22 @@ def save_ledger(ledger_path, entries):
 
 
 def compute_delta(prev_metrics, curr_metrics):
-    """Per-metric (current - previous). None if there is no prior entry."""
+    """Per-metric (current - previous). None if there is no prior entry.
+
+    A key is only included when both entries measured it: pre-split entries
+    lack the ADR-0003 population keys, and reporting "+28 cell-matched" against
+    an entry that never measured the split would be a fabricated improvement.
+    """
     if prev_metrics is None:
         return None
-    return {k: int(curr_metrics.get(k, 0)) - int(prev_metrics.get(k, 0)) for k in METRIC_KEYS}
+    return {
+        k: int(curr_metrics.get(k, 0)) - int(prev_metrics.get(k, 0))
+        for k in METRIC_KEYS
+        if k in prev_metrics and k in curr_metrics
+    }
 
 
-def record_snapshot(ledger_path, dashboard, date, release_version):
+def record_snapshot(ledger_path, dashboard, date, release_version, population_totals=None):
     """Append the current snapshot to the ledger — for a named release only.
 
     `release_version` is required and is the enforcement: the rule was documented as
@@ -120,7 +160,7 @@ def record_snapshot(ledger_path, dashboard, date, release_version):
             "not every pack edit"
         )
     entries = load_ledger(ledger_path)
-    snapshot = capture_snapshot(dashboard)
+    snapshot = capture_snapshot(dashboard, population_totals=population_totals)
     prev = entries[-1] if entries else None
     prev_metrics = prev["metrics"] if prev else None
 
@@ -215,23 +255,26 @@ def format_progress_markdown(ledger_path):
         return "_No releases recorded yet._\n"
     rows = trend(ledger_path)
     lines = [
-        "| Release | Date | Source-backed params | Shards 6/6 | Bridged/est. |",
-        "| --- | --- | --- | --- | --- |",
+        "| Release | Date | Source-backed params | Cell-matched | Shards 6/6 | Bridged/est. |",
+        "| --- | --- | --- | --- | --- | --- |",
     ]
     for entry, delta in reversed(rows):
         m = entry["metrics"]
 
         def cell(key, total_key=None):
+            if key not in m:
+                return "—"  # entry predates this metric (e.g. the ADR-0003 split)
             base = f"{m[key]}"
             if total_key:
                 base += f" / {m[total_key]}"
-            if delta and delta[key]:
+            if delta and delta.get(key):
                 base += f" ({_signed(delta[key])})"
             return base
 
         lines.append(
             f"| {entry.get('data_pack_version', '?')} | {entry.get('date', '?')} | "
             f"{cell('params_source_backed', 'params_total')} | "
+            f"{cell('params_cell_matched')} | "
             f"{cell('shards_fully_sourced', 'shards')} | "
             f"{cell('params_bridged')} |"
         )

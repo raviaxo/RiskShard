@@ -27,6 +27,7 @@ ROOT = find_project_root(fallback=SCRIPT_ROOT)
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.readiness import build_readiness_dashboard  # noqa: E402
 from engine.strength_ledger import (  # noqa: E402
     LEDGER_RELPATH,
@@ -49,12 +50,28 @@ def _format_metrics_line(metrics, delta):
             return str(v)
         return f"{v} ({_fmt_signed(delta[key])})"
 
-    return (
+    def cell_if_measured(key):
+        # Pre-split entries never measured the ADR-0003 keys; delta then omits
+        # them too (compute_delta drops keys absent from either side).
+        v = metrics.get(key, 0)
+        if delta is None or key not in delta:
+            return str(v)
+        return f"{v} ({_fmt_signed(delta[key])})"
+
+    lines = (
         f"  source-backed params : {cell('params_source_backed')} of {metrics.get('params_total', 0)}\n"
         f"  shards 6/6           : {cell('shards_fully_sourced')} of {metrics.get('shards', 0)}\n"
         f"  bridged / estimated  : {cell('params_bridged')}\n"
         f"  missing              : {cell('params_missing')}"
     )
+    if "params_cell_matched" in metrics:
+        lines += (
+            f"\n  cell-matched         : {cell_if_measured('params_cell_matched')}"
+            f" of {metrics.get('params_source_backed', 0)} source-backed\n"
+            f"  population-bridged   : {cell_if_measured('params_cross_cell')}"
+            f" ({cell_if_measured('params_cross_country')} cross-country)"
+        )
+    return lines
 
 
 def _history(ledger_path):
@@ -66,9 +83,13 @@ def _history(ledger_path):
     for entry, delta in rows:
         m = entry["metrics"]
         tag = "baseline" if delta is None else _fmt_signed(delta["params_source_backed"]) + " params"
+        split = (
+            f"cell-matched {m['params_cell_matched']}  " if "params_cell_matched" in m else ""
+        )
         print(
             f"  {entry.get('date','?'):10}  {entry.get('data_pack_version','?'):12}  "
             f"source-backed {m['params_source_backed']}/{m['params_total']}  "
+            f"{split}"
             f"6-of-6 {m['shards_fully_sourced']}/{m['shards']}  "
             f"bridged {m['params_bridged']}  [{tag}]"
         )
@@ -127,7 +148,11 @@ def main(argv=None):
     if args.cmd == "record":
         date = args.date or datetime.date.today().isoformat()
         dashboard = build_readiness_dashboard(ROOT)
-        entry, appended, delta = record_snapshot(ledger_path, dashboard, date, args.release)
+        # ADR-0003: the split lives in the provenance layer, not the readiness matrix.
+        population_totals = build_portfolio_provenance(ROOT)["totals"]
+        entry, appended, delta = record_snapshot(
+            ledger_path, dashboard, date, args.release, population_totals=population_totals
+        )
         if args.json:
             print(json.dumps({"appended": appended, "entry": entry, "delta": delta}, indent=2, sort_keys=True))
             return 0
