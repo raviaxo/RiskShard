@@ -10,10 +10,12 @@ metadata:
     (finance and insurance, medium enterprises, incidents to steal personal or
     financial information) - a motive-classified incident construct, not
     confirmed breaches, with the stress anchor's 2021 cell carrying StatCan
-    quality code C. Impact is expressed in CAD: min, likely, and max use
-    primary governed global USD loss anchors converted with a Bank of Canada
-    FX assumption because primary Canada-specific impact evidence has not been
-    gathered.
+    quality code C. Impact is expressed in CAD: likely uses the primary IBM
+    Canada national average; min and max use Canadian insured-claims anchors
+    from NetDiligence (Hacker-cause average, N=8, and the dataset maximum,
+    N=84) converted with a Bank of Canada FX assumption - country-matched but
+    thin cells, with the cause-of-loss taxonomy as the remaining threat
+    bridge.
 
 frequency:
   min: 0.15
@@ -21,6 +23,6 @@ frequency:
   max: 0.273
 
 impact:
-  min: 370000
+  min: 90000
   likely: 6980000
-  max: 44500000
+  max: 20800000

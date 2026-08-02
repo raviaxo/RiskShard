@@ -13,11 +13,14 @@ metadata:
     motive-classified impactful incidents, not confirmed breaches, and the
     stress anchor's 2021 cell carries StatCan quality code C. Impact likely
     uses the primary IBM Canada national average breach cost (CA$6.98M, 2025),
-    reported directly in CAD. Impact min/max still use primary governed global
-    USD loss anchors converted to CAD until Canada-specific breach-response
-    and tail-loss evidence is reviewed (known-weak, per the 2026-07-30
-    decision). Human review must accept the incident-motive construct and the
-    remaining global impact bridges before any public benchmark-grade claim.
+    reported directly in CAD. Impact min/max now use Canadian insured-claims
+    anchors from NetDiligence (Hacker-cause average USD 66K, N=8, as the
+    floor; dataset maximum USD 15M, N=84, as the stress), converted to CAD -
+    country-matched where the prior Cyentia anchors were global, with the
+    cause-of-loss taxonomy as the remaining threat bridge and thin samples
+    caveated on the records. Human review must accept the incident-motive
+    frequency construct, the thin Canadian claim cells, and the insured-claims
+    tail truncation before any public benchmark-grade claim.
 
 target_currency: CAD
 
@@ -38,19 +41,19 @@ parameters:
 
   impact:
     min:
-      evidence_id: cyentia_iris_2022_typical_cyber_event_loss_usd_ca_context
+      evidence_id: netdiligence_2025_ca_hacker_claims_average_cost_usd
       transform: currency_convert
       target_currency: CAD
       round_to: 10000
-      rationale: Source-backed global lower loss anchor converted to CAD until Canadian breach response-cost evidence is reviewed.
+      rationale: Canadian Hacker-cause claims average (NetDiligence 2020-2024, N=8, USD 66K) as a conservative country-matched floor, converted to CAD; replaces the Cyentia global all-cyber bridge.
     likely:
       evidence_id: ibm_canada_2025_average_breach_cost_cad
       transform: direct
       round_to: 10000
       rationale: Primary IBM Canada national average breach cost (CA$6.98M, 2025), already reported in CAD, replacing the global IBM bridge and the low-confidence ITPro secondary. All-sector and enterprise-weighted, so treated as an upper-leaning mid-market likely anchor rather than a mid-market-specific figure.
     max:
-      evidence_id: cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context
+      evidence_id: netdiligence_2025_ca_maximum_incident_cost_usd
       transform: currency_convert
       target_currency: CAD
       round_to: 100000
-      rationale: Source-backed global extreme security-incident loss benchmark converted to CAD until Canadian data-breach tail-loss evidence is reviewed.
+      rationale: Documented maximum of the Canadian insured-claims dataset (NetDiligence 2020-2024, N=84, USD 15M) converted to CAD; country-matched where the Cyentia USD 32M global extreme was not. Insured-claims truncation of the tail is caveated on the record, with the Cyentia alternative documented.
