@@ -983,3 +983,33 @@ sources:
 
     '
   url_stability: dated
+- id: statcan_cscsc_incident_types_22100076
+  title: Statistics Canada Table 22-10-0076-01 - Types of cyber security incidents that impact enterprises, by industry and size
+  publisher: Statistics Canada
+  source_type: official_statistics
+  url: https://www150.statcan.gc.ca/n1/tbl/csv/22100076-eng.zip
+  fallback_urls:
+  - https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2210007601
+  publication_date: '2024-10-21'
+  access_mode: public_zip
+  intended_use:
+  - Canada financial-services mid-market data-breach frequency (full-cell match)
+  - incident-type prevalence by industry and enterprise size
+  usage_notes: 'Full-table CSV download of the Canadian Survey of Cyber Security and Cybercrime
+    (CSCSC) incident-type table: percentage of enterprises impacted, by incident type, NAICS
+    industry and size class, reference years 2017/2019/2021/2023 (2023 released 2024-10-21).
+    The cell used for the Canada finance data-breach shard is "Incidents to steal personal or
+    financial information" x "Finance and insurance [52]" x "Medium size enterprises" (50-249
+    employees; footnote 8). Three limits must travel with any use. The construct is
+    motive-classified impactful incidents, not confirmed data breaches: it can overstate
+    confirmed-breach frequency (impactful attempts count) and understate it (breaches motivated
+    by ransom or with unknown motive are classified elsewhere). StatCan medium is 50-249
+    employees while the shard org profile models 450 employees, which falls in StatCan large
+    (250+); the adjacent large-band cells are usable stress anchors per ADR-0003. Quality
+    codes: the finance medium-band cells are B (very good) in 2017/2019/2023 and C (use with
+    caution) in 2021 - carry the C flag on any 2021-anchored value. The survey covers
+    enterprises with 10+ employees. Biennial; the 2025 reference-year cycle is expected to
+    release around October 2026 - refresh then.
+
+    '
+  url_stability: rolling

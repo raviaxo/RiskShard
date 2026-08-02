@@ -6,17 +6,19 @@ metadata:
   benchmark_status: benchmark_review_candidate
   description: >
     Benchmark-review candidate Canadian financial-services data-breach shard.
-    Frequency min, likely, and max use Canadian OPC/CIRA prevalence anchors,
-    while the stress frequency currently equals the likely prevalence until
-    Canadian tail evidence is reviewed. Impact is expressed in CAD: min,
-    likely, and max use primary governed global USD loss anchors converted with
-    a Bank of Canada FX assumption because primary Canada-specific impact
-    evidence has not been gathered.
+    Frequency min, likely, and max use the StatCan CSCSC full-cell readings
+    (finance and insurance, medium enterprises, incidents to steal personal or
+    financial information) - a motive-classified incident construct, not
+    confirmed breaches, with the stress anchor's 2021 cell carrying StatCan
+    quality code C. Impact is expressed in CAD: min, likely, and max use
+    primary governed global USD loss anchors converted with a Bank of Canada
+    FX assumption because primary Canada-specific impact evidence has not been
+    gathered.
 
 frequency:
-  min: 0.2436
-  likely: 0.42
-  max: 0.42
+  min: 0.15
+  likely: 0.201
+  max: 0.273
 
 impact:
   min: 370000

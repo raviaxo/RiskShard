@@ -1,35 +1,48 @@
 extractions:
-  - id: opc_cira_ca_org_customer_employee_data_breach_prevalence_2026
-    source_id: opc_annual_report_2025_2026
-    source_name: OPC 2025-2026 Annual Report to Parliament
-    source_url_or_citation: https://www.priv.gc.ca/en/opc-actions-and-decisions/ar_index/202526/ar_202526/
-    publication_date: "2026-06-04"
-    extraction_date: "2026-07-13"
-    citation_detail: Top trends in privacy reports that 42% of Canadian organizations experienced a breach of customer or employee data in the last 12 months; footnote 8 cites the CIRA survey.
-    fact: OPC reported, citing CIRA, that 42% of Canadian organizations experienced a breach of customer or employee data in the last 12 months.
-    value: 0.42
+  - id: statcan_cscsc_ca_finance_medium_steal_info_2019_floor
+    source_id: statcan_cscsc_incident_types_22100076
+    source_name: Statistics Canada Table 22-10-0076-01 (Canadian Survey of Cyber Security and Cybercrime)
+    source_url_or_citation: https://www150.statcan.gc.ca/n1/tbl/csv/22100076-eng.zip
+    publication_date: "2024-10-21"
+    extraction_date: "2026-08-02"
+    citation_detail: Table cell "Incidents to steal personal or financial information" x "Finance and insurance [52]" x "Medium size enterprises", reference year 2019, reads 15.0% (quality B); medium is 50 to 249 employees (footnote 8).
+    fact: StatCan reported that 15.0% of Canadian finance-and-insurance medium-size enterprises were impacted by incidents to steal personal or financial information in 2019, the lowest of the four survey cycles.
+    value: 0.15
     unit: annual_probability
-    normalization_notes: Stored as 0.42 annual probability and selected as the likely organization-level data-breach prevalence anchor for the Canada starter.
-    limitations: Cross-sector Canadian organization survey fact; not financial-services-specific, mid-market-specific, or limited to material/regulator-reportable breaches.
+    normalization_notes: Stored as 0.15 annual probability; lowest same-cell reading across the 2017/2019/2021/2023 cycles, used as the frequency floor.
+    limitations: Motive-classified impactful incidents, not confirmed breaches; StatCan medium is 50-249 employees while the shard org profile models 450; survey covers enterprises with 10+ employees.
     evidence_record_ids:
-      - opc_cira_ca_org_customer_employee_data_breach_prevalence_2026
-      - opc_cira_ca_org_customer_employee_data_breach_prevalence_stress_2026
-      - opc_cira_ca_material_data_breach_prevalence_proxy_2026
+      - statcan_cscsc_ca_finance_medium_steal_info_2019_floor
 
-  - id: opc_2026_pipeda_significant_harm_breach_share
-    source_id: opc_annual_report_2025_2026
-    source_name: OPC 2025-2026 Annual Report to Parliament
-    source_url_or_citation: https://www.priv.gc.ca/en/opc-actions-and-decisions/ar_index/202526/ar_202526/
-    publication_date: "2026-06-04"
-    extraction_date: "2026-07-13"
-    citation_detail: Breaches section reports that 58% of PIPEDA breaches were likely to create a real risk of significant harm.
-    fact: OPC reported that 58% of PIPEDA breaches were likely to create a real risk of significant harm.
-    value: 0.58
-    unit: share_of_reported_pipeda_breaches
-    normalization_notes: Multiplied by the 0.42 Canadian organization data-breach prevalence fact to produce a low-confidence material-breach proxy of 0.2436.
-    limitations: Conditional on reported PIPEDA breaches; not an organization-level probability, and not financial-services-specific.
+  - id: statcan_cscsc_ca_finance_medium_steal_info_2023_likely
+    source_id: statcan_cscsc_incident_types_22100076
+    source_name: Statistics Canada Table 22-10-0076-01 (Canadian Survey of Cyber Security and Cybercrime)
+    source_url_or_citation: https://www150.statcan.gc.ca/n1/tbl/csv/22100076-eng.zip
+    publication_date: "2024-10-21"
+    extraction_date: "2026-08-02"
+    citation_detail: Table cell "Incidents to steal personal or financial information" x "Finance and insurance [52]" x "Medium size enterprises", reference year 2023, reads 20.1% (quality B); medium is 50 to 249 employees (footnote 8).
+    fact: StatCan reported that 20.1% of Canadian finance-and-insurance medium-size enterprises were impacted by incidents to steal personal or financial information in 2023.
+    value: 0.201
+    unit: annual_probability
+    normalization_notes: Stored as 0.201 annual probability; the most recent survey cycle's reading of the shard's own cell, used as the likely anchor.
+    limitations: Motive-classified impactful incidents, not confirmed breaches; StatCan medium is 50-249 employees while the shard org profile models 450; survey covers enterprises with 10+ employees.
     evidence_record_ids:
-      - opc_cira_ca_material_data_breach_prevalence_proxy_2026
+      - statcan_cscsc_ca_finance_medium_steal_info_2023_likely
+
+  - id: statcan_cscsc_ca_finance_medium_steal_info_2021_stress
+    source_id: statcan_cscsc_incident_types_22100076
+    source_name: Statistics Canada Table 22-10-0076-01 (Canadian Survey of Cyber Security and Cybercrime)
+    source_url_or_citation: https://www150.statcan.gc.ca/n1/tbl/csv/22100076-eng.zip
+    publication_date: "2024-10-21"
+    extraction_date: "2026-08-02"
+    citation_detail: Table cell "Incidents to steal personal or financial information" x "Finance and insurance [52]" x "Medium size enterprises", reference year 2021, reads 27.3% (quality C, use with caution); medium is 50 to 249 employees (footnote 8).
+    fact: StatCan reported that 27.3% of Canadian finance-and-insurance medium-size enterprises were impacted by incidents to steal personal or financial information in 2021, the highest of the four survey cycles, flagged quality C.
+    value: 0.273
+    unit: annual_probability
+    normalization_notes: Stored as 0.273 annual probability; highest same-cell reading across the four cycles, used as the stress anchor with the quality-C flag carried on the record.
+    limitations: StatCan quality code C (use with caution); motive-classified impactful incidents, not confirmed breaches; the adjacent large-band 2023 cell (23.9%, quality B) is the documented alternative stress anchor.
+    evidence_record_ids:
+      - statcan_cscsc_ca_finance_medium_steal_info_2021_stress
 
   - id: cyentia_iris_2022_typical_cyber_event_loss_usd_ca_context
     source_id: cyentia_iris_2022

@@ -5,31 +5,36 @@ metadata:
   notes: >
     Starter calibration profile for a Canadian mid-market financial-services
     data-breach shard. It is an automated benchmark-review candidate, not a
-    silently certified benchmark. Frequency min/likely/max use Canadian
-    OPC/CIRA prevalence anchors. Impact likely now uses the primary IBM Canada
-    national average breach cost (CA$6.98M, 2025), reported directly in CAD.
-    Impact min/max still use primary governed global USD loss anchors converted
-    to CAD until Canada-specific breach-response and tail-loss evidence is
-    reviewed. Human review must accept that the likely anchor is an all-sector,
-    enterprise-weighted Canada average (upper-leaning for mid-market) and that
-    min/max remain global bridges, before any public benchmark-grade claim.
+    silently certified benchmark. Frequency min/likely/max use the StatCan
+    CSCSC full-cell readings (finance and insurance, medium enterprises,
+    incidents to steal personal or financial information) - official
+    statistics matched to the shard's own country, sector and size band,
+    replacing the prior OPC/CIRA all-organization prevalence. The construct is
+    motive-classified impactful incidents, not confirmed breaches, and the
+    stress anchor's 2021 cell carries StatCan quality code C. Impact likely
+    uses the primary IBM Canada national average breach cost (CA$6.98M, 2025),
+    reported directly in CAD. Impact min/max still use primary governed global
+    USD loss anchors converted to CAD until Canada-specific breach-response
+    and tail-loss evidence is reviewed (known-weak, per the 2026-07-30
+    decision). Human review must accept the incident-motive construct and the
+    remaining global impact bridges before any public benchmark-grade claim.
 
 target_currency: CAD
 
 parameters:
   frequency:
     min:
-      evidence_id: opc_cira_ca_material_data_breach_prevalence_proxy_2026
+      evidence_id: statcan_cscsc_ca_finance_medium_steal_info_2019_floor
       transform: direct
-      rationale: Low-confidence material-breach proxy from Canadian organization breach prevalence and OPC significant-harm share.
+      rationale: Lowest of the four StatCan CSCSC cycle readings for the shard's own cell (finance and insurance, medium enterprises, data-theft incidents; 2019, 15.0%, quality B).
     likely:
-      evidence_id: opc_cira_ca_org_customer_employee_data_breach_prevalence_2026
+      evidence_id: statcan_cscsc_ca_finance_medium_steal_info_2023_likely
       transform: direct
-      rationale: Canadian organization-level customer or employee data-breach prevalence anchor cited in OPC's 2025-2026 annual report.
+      rationale: Most recent StatCan CSCSC reading of the shard's own cell (2023, 20.1%, quality B).
     max:
-      evidence_id: opc_cira_ca_org_customer_employee_data_breach_prevalence_stress_2026
+      evidence_id: statcan_cscsc_ca_finance_medium_steal_info_2021_stress
       transform: direct
-      rationale: Source-backed Canadian organization-level data-breach prevalence reused as the stress frequency anchor until Canadian financial-services tail-frequency evidence is available.
+      rationale: Highest of the four StatCan CSCSC cycle readings for the shard's own cell (2021, 27.3%; StatCan quality code C, use with caution - the weakest anchor, caveated on the record).
 
   impact:
     min:

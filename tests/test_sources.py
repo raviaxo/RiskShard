@@ -203,6 +203,13 @@ class SourceRegistryTests(unittest.TestCase):
         # an unrecognised mode is not policed
         self.assertTrue(content_matches_access_mode("public_api", "application/octet-stream"))
 
+    def test_zip_access_mode_polices_the_content_type(self):
+        """A registry zip artifact (e.g. a StatCan table download) must come back as a
+        zip, not the table's HTML viewer page."""
+        self.assertTrue(content_matches_access_mode("public_zip", "application/zip"))
+        self.assertTrue(content_matches_access_mode("public_zip", "application/x-zip-compressed"))
+        self.assertFalse(content_matches_access_mode("public_zip", "text/html; charset=utf-8"))
+
     def test_url_stability_is_validated_and_defaults_to_unassessed(self):
         """A rolling URL serves whatever edition is current, so the artifact drifts away
         from the citation. ibm.com/reports/data-breach did exactly that on 2026-07-31,
