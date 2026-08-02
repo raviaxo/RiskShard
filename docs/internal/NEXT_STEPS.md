@@ -29,16 +29,12 @@ that the document is unchanged. One shrank materially (`ibm_cost_data_breach_202
 parked deliberately — not gaps. The deliberate sweep ran; see
 [`source_sweep_2026-08-01.md`](source_sweep_2026-08-01.md).)*
 
-**⚠️ Open defect — calibration drift** *(found 2026-07-30)*: **four shards simulate values their
-own calibrations no longer produce**, so the explorer shows source-backed evidence beside a loss
-range that evidence did not generate: `au_finance_data_breach_midmarket` (scenario likely 400k vs
-calibrated **10.7M**, max 2M vs **50M**), `au_finance_ransomware_midmarket`, `ca_finance_data_breach_midmarket`,
-and `us_finance_bec_midmarket` (scenario 25k/123k/1.2M vs calibrated 50k/120k/6.4M). Singapore had the
-same defect and was corrected 2026-07-30. `riskshard_doctor` now prints the drift on every run but
-**does not gate on it**: correcting a drifted scenario moves a published number, which is an owner
-decision, and doctor's exit code gates automation. Promoting it to a blocking check is your call.
-**Note `us_finance_bec_midmarket` is the shard quoted in the live LinkedIn post** — correcting it
-will move those figures.
+**✅ Calibration drift — RESOLVED** *(found 2026-07-30, corrected 2026-07-30/31)*: all drifted
+shards were corrected with `revisions/` entries, and CI now **gates** on the calibration-drift
+check (added 2026-07-31). Doctor reports "11 shards match their calibration" on every run. The
+same defect class was found once more on 2026-08-01 in a *top-risk* scenario (insider misuse,
+outside the risk-module gate's coverage) and corrected the same day — extending the drift gate
+to top-risk scenarios is an open hardening idea, not a defect.
 
 **Decisions taken 2026-07-31** — recorded in ADRs, not here:
 [**ADR-0006 depth over breadth**](../adr/0006-depth-over-breadth.md) (Accepted: no new shards
@@ -63,7 +59,26 @@ Still open: ledger recording policy (record only at tagged release; 7 of 9 entri
 zero-delta noise) and the narrow **`url_stability: dated | rolling`** source property that
 the IBM edition-roll argued for.
 
-**Active queue** *(as of 2026-08-01)*:
+**Active queue** *(as of 2026-08-01 close — all three items DONE; next objectives below)*:
+
+**Next objectives, not yet started** *(any order; each is its own session)*:
+
+- **Cut a release** (v0.1.1 or v0.2.0). Since v0.1.0: the filing identity, the source sweep
+  (url_stability 44/8/0, four provenance repairs), the insider 66/76 retraction (0.51/0.83),
+  the AI-fraud Regula reattribution ($450k), and the ADR-0003 headline split. The ledger
+  records at release only, so this captures the first real strength tick since v0.1.0 —
+  and it is the moment to add the split fields (cell-matched/bridged/cross-country) to the
+  ledger snapshot (small follow-up from ADR-0003 implementation).
+- **Strengthen the bridged shards** — the new map is the queue (ADR-0006-compliant depth):
+  SG (4 bridged), CA (5), JP (5), AU-ransomware (6), US-frequency (3). Each bridge retired
+  moves the public cell-matched number up for a stated reason. NetDiligence-by-revenue-band
+  (registered, US-only use today) is the known first candidate for CA/SG impact.
+- **The correction post** (distribution, the top blocker). The material is now: a re-audit
+  of all 52 sources, a retraction of two figures that appeared in no primary source, and a
+  headline we deliberately split so it fell (28 cell-matched of 66). Tier-1 pull per
+  memory `gtm-strategy`, not broadcast.
+
+**Completed queue (2026-08-01)**:
 
 1. **✅ The source sweep (DONE 2026-08-01).** All 52 sources re-gathered and diffed; **no cited
    figure has drifted** — but six artifacts never evidenced their cited line at all. Four fixed
@@ -363,7 +378,12 @@ shards are now source-backed. This is the Sunday post.
 
 ---
 
-## ⚠️ Open defect — cross-machine reproducibility (found 2026-07-28, NOT fixed)
+## ✅ Cross-machine reproducibility — FIXED same day (ADR-0002, 2026-07-28)
+
+*(Resolved the evening it was found: seeds now derive from a repository-relative path, every
+loss number moved once (<2%) with a `revisions/` entry and an explorer "Why these figures
+changed" block, and a golden-value test pins the fix across Python 3.8/3.14. The block below
+is kept as the original diagnosis for the record.)*
 
 **The same shard, same `seed 42`, same evidence produces different loss numbers on different
 machines.** Found by diffing the locally built explorer against the CI-built page now live:
