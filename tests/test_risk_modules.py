@@ -153,7 +153,7 @@ class RiskModuleTests(unittest.TestCase):
         )
         self.assertEqual(
             canada_by_parameter["impact.max"]["best"]["id"],
-            "cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context",
+            "netdiligence_2025_ca_maximum_incident_cost_usd",
         )
 
         france = propose_module_calibration("fr_finance_data_breach_midmarket", ROOT)

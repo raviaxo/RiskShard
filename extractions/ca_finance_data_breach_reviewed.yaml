@@ -44,21 +44,21 @@ extractions:
     evidence_record_ids:
       - statcan_cscsc_ca_finance_medium_steal_info_2021_stress
 
-  - id: cyentia_iris_2022_typical_cyber_event_loss_usd_ca_context
-    source_id: cyentia_iris_2022
-    source_name: Cyentia Information Risk Insights Study 2022
-    source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
-    publication_date: "2022-01-01"
-    extraction_date: "2026-07-13"
-    citation_detail: Public source page key findings; typical financial cost reported for a cyber event is USD 266K.
-    fact: Cyentia reported a typical financial cost of USD 266,000 for a cyber event.
-    value: 266000
+  - id: netdiligence_2025_ca_hacker_claims_average_cost_usd
+    source_id: netdiligence_cyber_claims_2025
+    source_name: NetDiligence Cyber Claims Study 2025 (Fifteenth Annual)
+    source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
+    publication_date: "2025-09-23"
+    extraction_date: "2026-08-02"
+    citation_detail: Claims from Canada section (page 49, Table 2, Canada Top Causes of Loss 2020-2024) reports the Hacker cause of loss at 8 claims with an average incident cost of USD 66K.
+    fact: NetDiligence reported an average incident cost of USD 66,000 across 8 Canadian Hacker-cause claims, 2020-2024.
+    value: 66000
     unit: currency
     currency: USD
-    normalization_notes: Stored in source currency and used as a conservative lower loss anchor for the Canada data-breach starter.
-    limitations: Global cyber-event benchmark, not Canada-specific, data-breach-only, financial-services-specific, or a true minimum loss quantile.
+    normalization_notes: Stored in source currency USD and used as a conservative Canadian per-incident floor; calibration converts to CAD.
+    limitations: N=8 claims; an average used as a floor, not a minimum quantile; cause-of-loss taxonomy, not confirmed data compromise; all-sector, enterprise-leaning, insured claims only.
     evidence_record_ids:
-      - cyentia_iris_2022_typical_cyber_event_loss_usd_ca_context
+      - netdiligence_2025_ca_hacker_claims_average_cost_usd
 
   - id: itpro_ibm_ca_2025_average_breach_cost_usd
     source_id: itpro_ibm_data_breach_regional_costs_2025
@@ -92,21 +92,21 @@ extractions:
     evidence_record_ids:
       - ibm_cost_data_breach_2025_global_average_cost_usd_ca_context
 
-  - id: cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context
-    source_id: cyentia_iris_2025
-    source_name: Cyentia Information Risk Insights Study 2025
-    source_url_or_citation: https://www.cyentia.com/publication/iris2025/
-    publication_date: "2025-06-10"
-    extraction_date: "2026-07-13"
-    citation_detail: Public source page key findings; median losses rose toward USD 3M, with extreme events reaching USD 32M.
-    fact: Cyentia reported that extreme security incidents reached USD 32 million.
-    value: 32000000
+  - id: netdiligence_2025_ca_maximum_incident_cost_usd
+    source_id: netdiligence_cyber_claims_2025
+    source_name: NetDiligence Cyber Claims Study 2025 (Fifteenth Annual)
+    source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
+    publication_date: "2025-09-23"
+    extraction_date: "2026-08-02"
+    citation_detail: Claims from Canada section (page 49) reports the average five-year total incident cost for Canadian claims at USD 874K with a documented maximum of USD 15M (N=84 claims, 2020-2024).
+    fact: NetDiligence reported a maximum total incident cost of USD 15 million across 84 Canadian claims, 2020-2024.
+    value: 15000000
     unit: currency
     currency: USD
-    normalization_notes: Stored in source currency and used as a stress loss anchor for the Canada data-breach starter.
-    limitations: Global security-incident benchmark, not Canada-specific, data-breach-only, financial-services-specific, or a formal percentile for this scenario.
+    normalization_notes: Stored in source currency USD and used as the Canadian stress anchor; calibration converts to CAD. A dataset maximum, not a formal percentile.
+    limitations: All-cause maximum of 84 insured Canadian claims; threat bridged; insured-claims data truncates the uninsured tail (review may prefer the wider Cyentia USD 32M global extreme).
     evidence_record_ids:
-      - cyentia_iris_2025_extreme_security_incident_loss_usd_ca_context
+      - netdiligence_2025_ca_maximum_incident_cost_usd
 
   - id: ibm_canada_2025_average_breach_cost_cad
     source_id: ibm_canada_cost_data_breach_2025

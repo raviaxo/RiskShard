@@ -1,0 +1,21 @@
+date: '2026-08-02'
+title: Canada impact floor and stress move to Canadian claims data
+effect: 'The Canada finance data-breach shard''s impact floor moved from CAD 370,000
+  (Cyentia global all-cyber typical loss, converted) to CAD 90,000 (NetDiligence Canadian
+  Hacker-cause claims average, USD 66K, N=8, converted), and its stress bound from CAD
+  44,500,000 (Cyentia global extreme, converted) to CAD 20,800,000 (the documented maximum
+  of 84 Canadian insured claims 2020-2024, USD 15M, converted). Same-day simulated losses
+  moved from AVG CAD 2.49M / P95 5.44M / P99 6.83M to AVG 1.66M / P95 3.11M / P99 3.70M
+  (seed 42). Both parameters remain bridged on threat, but stop being bridged on country:
+  the cross-country count falls from 26 to 24.'
+reason: 'The prior anchors were global all-cyber benchmarks doing duty for Canada.
+  NetDiligence''s 2025 claims study carries a dedicated Canadian section - real Canadian
+  insured claims, 2020-2024 - which is closer to the shard''s cell on the dimension that
+  matters most and was flagged known-weak on 2026-07-30. The trade is stated on the
+  records, not hidden: the new cells are thin (8 Hacker claims for the floor, 84 claims
+  behind the maximum), classified by cause of loss rather than confirmed data compromise
+  (threat stays bridged), drawn from an enterprise-leaning insured population, and the
+  claims maximum structurally truncates the uninsured tail - the wider Cyentia global
+  extreme (USD 32M) is documented on the record as the alternative if review prefers tail
+  conservatism over country specificity. The loss range narrowed because the evidence got
+  closer to home, not because Canadian breaches got cheaper.'
