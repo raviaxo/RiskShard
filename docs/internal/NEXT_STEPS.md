@@ -63,12 +63,14 @@ the IBM edition-roll argued for.
 
 **Next objectives, not yet started** *(any order; each is its own session)*:
 
-- **Cut a release** (v0.1.1 or v0.2.0). Since v0.1.0: the filing identity, the source sweep
-  (url_stability 44/8/0, four provenance repairs), the insider 66/76 retraction (0.51/0.83),
-  the AI-fraud Regula reattribution ($450k), and the ADR-0003 headline split. The ledger
-  records at release only, so this captures the first real strength tick since v0.1.0 —
-  and it is the moment to add the split fields (cell-matched/bridged/cross-country) to the
-  ledger snapshot (small follow-up from ADR-0003 implementation).
+- **✅ Cut a release (DONE 2026-08-01 — v0.2.0, PR #90).** Tagged `v0.2.0` on `6bcb7ea`
+  with a GitHub Release; data pack `2026.08.01-v0.2.0` (90 files, fp `9d006267794a`).
+  The ledger snapshot now carries the ADR-0003 split (`params_cell_matched` /
+  `params_cross_cell` / `params_cross_country`, fed from portfolio provenance because
+  the readiness matrix has no population data) — the ADR-0003 small follow-up is closed.
+  Design rule: pre-split entries are never compared against the new metrics, so the first
+  split entry reads "newly measured", not a fabricated "+28". Doctor's "record on
+  release" finding cleared. 220 tests; all gates green.
 - **Strengthen the bridged shards** — the new map is the queue (ADR-0006-compliant depth):
   SG (4 bridged), CA (5), JP (5), AU-ransomware (6), US-frequency (3). Each bridge retired
   moves the public cell-matched number up for a stated reason. NetDiligence-by-revenue-band
@@ -105,7 +107,8 @@ the IBM edition-roll argued for.
    The decision and measured result are recorded in the ADR's implementation-decisions
    section; the headline change has a `revisions/` entry. **Small follow-up:** extend the
    strength-ledger snapshot with the split at the next release cut (its snapshot derives
-   from the readiness matrix, which does not carry population data).
+   from the readiness matrix, which does not carry population data). *(Follow-up closed
+   2026-08-01 with the v0.2.0 release cut — the ledger records the split per release.)*
    Original scope: declare each record's
    population mismatch, and report cell-matched separately from bridged. Expect the headline
    66/66 to fall to roughly 59–60 cell-matched plus 6–7 bridged, concentrated in Singapore and
@@ -565,3 +568,11 @@ governance/regulatory loss).
   (26 cross-country) of 66 — on the explorer per-row, the evidence report, and the cover
   facts, with the ADR carrying the decision record and a `revisions/` entry carrying the
   headline change. GB is the only fully cell-matched shard; the bridged map is the work queue.
+- 2026-08-01 (later) — **v0.2.0 cut, "the correction release" (PR #90, tag `v0.2.0`).**
+  The strength ledger gained the ADR-0003 split fields (cell-matched / cross-cell /
+  cross-country, from portfolio provenance totals), rendered in the CLI, README progress
+  table, weekly digest, console, and readiness dashboard; deltas are never fabricated
+  against pre-split entries. Release recorded the first real strength tick since v0.1.0:
+  66/66 source-backed with 28 cell-matched newly measured. CHANGELOG covers the whole
+  v0.1.0→v0.2.0 arc (retraction, reattribution, sweep, ADR-0002/3/4, CI gates). 220 tests
+  green twice (pre- and post-cut); doctor fully green including the ledger check.
