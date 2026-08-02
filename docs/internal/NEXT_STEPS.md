@@ -93,10 +93,15 @@ the IBM edition-roll argued for.
   verified artifact; N=8 thinness carried as caveat) — **flagged for owner review**, along
   with the C-quality frequency.max cell. NetDiligence carries no SG-usable cells (US/CA
   claims only); SG stays open on the impact wall.
-- **The correction post** (distribution, the top blocker). The material is now: a re-audit
-  of all 52 sources, a retraction of two figures that appeared in no primary source, and a
-  headline we deliberately split so it fell (28 cell-matched of 66). Tier-1 pull per
-  memory `gtm-strategy`, not broadcast.
+- **The correction post** (distribution, the top blocker) — **drafted 2026-08-02, posting
+  Tuesday 2026-08-04 after Ser's review.** Two venue-shaped drafts (r/GRC + GRC Engineering
+  Club) with title options and posting notes live on `~/Desktop/riskshard-correction-post-drafts.md`
+  — deliberately NOT in this repo (public GTM playbook next to the posts would undercut them).
+  Hook: falsifiable challenge ("pick any number and try to break it"), not a feedback ask.
+  Tier-1 pull per memory `gtm-strategy`, not broadcast. **Also pending Ser: pick among the
+  five strategic paths proposed 2026-08-02** (citation play / commons play / evidence layer /
+  emergent-risk author / distribution sprint — recommendation was the distribution sprint
+  with the citation play as complement).
 
 **Completed queue (2026-08-01)**:
 
@@ -141,7 +146,11 @@ loader is never called, left alone rather than removed on faulty evidence.
 **Open decisions: none.** All five were taken on 2026-07-31 and recorded in ADRs (see the
 decisions block above). Nothing is waiting on a judgement call.
 
-**Current top blocker** *(updated 2026-07-31)*: **distribution.** Every product and machinery
+**Current top blocker** *(updated 2026-08-02)*: **distribution — now with the safety off.**
+The correction post is drafted (Desktop), posting Tuesday 2026-08-04 pending Ser's review;
+the five-path strategic choice is also pending Ser. Until those two decisions land, product
+work has no higher-leverage target than the queue below. *(Original 2026-07-31 statement
+kept for context:)* Every product and machinery
 objective on the board is closed; the remaining gap is that nobody is arriving. 14 unique
 visitors in 14 days, 0 external stars, forks, Discussions or contributors, after two LinkedIn
 posts. [ADR-0006](../adr/0006-depth-over-breadth.md) makes this explicit: coverage is not the
@@ -603,3 +612,12 @@ governance/regulatory loss).
   FR-impact-floor and US-frequency scouts returned structurally negative (recorded above).
   Correction-post drafts delivered to ~/Desktop (kept off-repo deliberately); posting Tuesday
   after Ser's review.
+- 2026-08-02 (close) — **CA impact moved to Canadian claims data (PRs #96/#97); five paths
+  proposed.** NetDiligence Claims-from-Canada anchors replaced both Cyentia global impact
+  bridges (cross-country 26 → 24, live-verified); two owner-review flags recorded in the
+  queue (medium confidence on N=8/N=84 cells; C-quality frequency stress cell). Five
+  strategic paths proposed to Ser (distribution sprint recommended); choice pending. Session
+  totals: v0.2.0 tagged with ledger split fields, CA frequency + impact reworked
+  (28 → 31 cell-matched · 26 → 24 cross-country), correction post drafted, 9 PRs merged
+  (#90–#97 + fixes), 221 tests, all gates green at close; ledger correctly holds the
+  +3 cell-matched / −2 cross-country tick for the next release cut.
