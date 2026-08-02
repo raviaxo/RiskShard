@@ -25,9 +25,12 @@ def _strength_trend_line(root):
     if latest is None:
         return ""
     m = latest["metrics"]
+    split = (
+        f" ({m['params_cell_matched']} cell-matched)" if "params_cell_matched" in m else ""
+    )
     head = (
         f"Strength trend: {m['params_source_backed']}/{m['params_total']} params "
-        f"source-backed at {latest.get('data_pack_version', '?')}"
+        f"source-backed{split} at {latest.get('data_pack_version', '?')}"
     )
     if delta is not None:
         d = delta["params_source_backed"]

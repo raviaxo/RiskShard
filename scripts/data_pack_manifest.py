@@ -24,6 +24,7 @@ from engine.data_packs import (  # noqa: E402
     write_data_pack_manifest,
     write_data_pack_release,
 )
+from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.readiness import build_readiness_dashboard  # noqa: E402
 from engine.strength_ledger import LEDGER_RELPATH, record_snapshot  # noqa: E402
 
@@ -58,8 +59,14 @@ def main(argv=None):
             # Cutting a release is exactly when the strength trend should tick.
             # record_snapshot is a no-op if this pack's fingerprint is already logged.
             dashboard = build_readiness_dashboard(ROOT)
+            # ADR-0003: the split lives in the provenance layer, not the readiness matrix.
+            population_totals = build_portfolio_provenance(ROOT)["totals"]
             entry, appended, _ = record_snapshot(
-                ROOT / LEDGER_RELPATH, dashboard, datetime.date.today().isoformat(), args.release
+                ROOT / LEDGER_RELPATH,
+                dashboard,
+                datetime.date.today().isoformat(),
+                args.release,
+                population_totals=population_totals,
             )
             ledger_msg = (
                 f"Strength ledger: recorded {entry['data_pack_version']}."

@@ -36,6 +36,9 @@ BASELINE_MATRIX = (
 # The JP shard closed: now 11/11 fully sourced, 0 bridged.
 IMPROVED_MATRIX = [{"source_backed_direct": 6, "assumption_only_direct": 0, "missing_direct": 0, "direct_total": 6}] * 11
 
+# ADR-0003 portfolio-provenance totals — the v0.2.0 headline split.
+POP_TOTALS = {"params_cell_matched": 28, "params_cross_cell": 38, "params_cross_country": 26}
+
 
 class CaptureTests(unittest.TestCase):
     def test_snapshot_sums_the_matrix(self):
@@ -48,6 +51,60 @@ class CaptureTests(unittest.TestCase):
         self.assertEqual(m["shards"], 11)
         self.assertEqual(m["shards_fully_sourced"], 10)
         self.assertEqual(snap["fingerprint"], "abc123")
+
+
+class PopulationSplitTests(unittest.TestCase):
+    """ADR-0003: the split arrives as a separate input (the readiness matrix has
+    no population data) and must never fabricate a delta against entries that
+    predate it."""
+
+    def test_snapshot_records_the_split_when_totals_are_given(self):
+        snap = capture_snapshot(_dashboard(IMPROVED_MATRIX, "abc"), population_totals=POP_TOTALS)
+        m = snap["metrics"]
+        self.assertEqual(m["params_cell_matched"], 28)
+        self.assertEqual(m["params_cross_cell"], 38)
+        self.assertEqual(m["params_cross_country"], 26)
+
+    def test_snapshot_omits_the_split_without_totals(self):
+        m = capture_snapshot(_dashboard(IMPROVED_MATRIX, "abc"))["metrics"]
+        self.assertNotIn("params_cell_matched", m)
+        self.assertNotIn("params_cross_cell", m)
+        self.assertNotIn("params_cross_country", m)
+
+    def test_delta_omits_split_keys_the_prior_entry_never_measured(self):
+        prev = capture_snapshot(_dashboard(BASELINE_MATRIX, "abc"))["metrics"]
+        curr = capture_snapshot(_dashboard(IMPROVED_MATRIX, "def"), population_totals=POP_TOTALS)["metrics"]
+        delta = compute_delta(prev, curr)
+        self.assertEqual(delta["params_source_backed"], 2)  # base keys still compared
+        self.assertNotIn("params_cell_matched", delta)      # no fabricated "+28"
+
+    def test_delta_compares_split_keys_when_both_entries_carry_them(self):
+        prev = capture_snapshot(_dashboard(IMPROVED_MATRIX, "abc"), population_totals=POP_TOTALS)["metrics"]
+        later = {"params_cell_matched": 32, "params_cross_cell": 34, "params_cross_country": 22}
+        curr = capture_snapshot(_dashboard(IMPROVED_MATRIX, "def"), population_totals=later)["metrics"]
+        delta = compute_delta(prev, curr)
+        self.assertEqual(delta["params_cell_matched"], 4)
+        self.assertEqual(delta["params_cross_cell"], -4)
+        self.assertEqual(delta["params_cross_country"], -4)
+
+    def test_markdown_shows_a_dash_for_pre_split_entries(self):
+        tmp = tempfile.TemporaryDirectory()
+        try:
+            ledger = Path(tmp.name) / "l.json"
+            record_snapshot(ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24", "v0.1.0-test")
+            record_snapshot(
+                ledger,
+                _dashboard(IMPROVED_MATRIX, "def"),
+                "2026-08-01",
+                "v0.2.0-test",
+                population_totals=POP_TOTALS,
+            )
+            md = format_progress_markdown(ledger)
+            self.assertIn("Cell-matched", md)
+            self.assertIn("| — |", md)   # the pre-split row
+            self.assertIn("| 28 |", md)  # the split row, no fabricated delta
+        finally:
+            tmp.cleanup()
 
 
 class DeltaTests(unittest.TestCase):
@@ -204,6 +261,13 @@ class DigestRenderTests(unittest.TestCase):
         out = "\n".join(_format_strength({"metrics": curr, "delta": compute_delta(prev, curr)}))
         self.assertIn("source-backed params: 64 -> 66 (+2)", out)
         self.assertIn("bridged / estimated: 2 -> 0 (-2)", out)
+
+    def test_split_rows_render_and_pre_split_delta_says_newly_measured(self):
+        prev = capture_snapshot(_dashboard(BASELINE_MATRIX, "abc"))["metrics"]
+        curr = capture_snapshot(_dashboard(IMPROVED_MATRIX, "def"), population_totals=POP_TOTALS)["metrics"]
+        out = "\n".join(_format_strength({"metrics": curr, "delta": compute_delta(prev, curr)}))
+        self.assertIn("cell-matched: 28 (newly measured)", out)
+        self.assertIn("population-bridged: 38 (newly measured)", out)
 
     def test_since_baseline_line_when_present(self):
         prev = capture_snapshot(_dashboard(BASELINE_MATRIX, "abc"))["metrics"]

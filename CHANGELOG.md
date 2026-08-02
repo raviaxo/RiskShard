@@ -5,6 +5,91 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.2.0 — 2026-08-01
+
+The correction release. Most of what shipped since v0.1.0 exists to make the
+numbers harder to rebut — including where that meant retracting our own figures
+and deliberately making the headline smaller.
+
+Data-pack release: `data_pack_releases/2026.08.01-v0.2.0.json`
+(90 files, fingerprint `9d006267794a…`).
+
+### Corrections (the point of this release)
+- **Retracted the insider-misuse 66%/76% frequency pair** — those figures appear
+  in no primary source. Replaced with artifact-backed values from the same survey
+  family: `frequency.min` **0.51** (six-or-more-incidents hard floor),
+  `frequency.likely` **0.83** (Gurucul 2026's 2024 reading); `frequency.max` 0.90 kept.
+- **Reattributed the AI-fraud `impact.likely` to Regula at USD 450k** — the
+  previously cited $500k/$603k pair was never on the cited page.
+- **Re-anchored BCI third-party-outage evidence to its own news release** (an
+  immutable snapshot carrying both cited figures); values unchanged.
+- **Regenerated the insider-misuse top-risk scenario**, which was still simulating
+  pre-correction impacts — it sat outside the calibration-drift gate's coverage
+  (top-risk scenarios are not risk modules; extending the gate is tracked).
+
+### The headline now tells the truth about populations (ADR-0003, parts 1–2)
+- Every source-backed record declares `population_match` (schema-required), and a
+  country-strict check classifies each parameter as **cell-matched** (evidence from
+  the shard's own population cell) or **bridged**. The public headline split from
+  "66/66 source-backed" to **28 cell-matched · 38 bridged (26 cross-country) of 66**
+  — smaller on purpose; the explorer, evidence report, and provenance CLI all
+  carry the per-parameter status.
+- **The strength ledger now records the split** per release (new
+  `params_cell_matched` / `params_cross_cell` / `params_cross_country` metrics),
+  so retiring a bridge is a measured tick, not an assertion. Pre-split entries
+  are never compared against the new metrics (no fabricated deltas).
+
+### Evidence integrity
+- **Full source sweep (2026-08-01):** all 52 registered sources re-gathered and
+  diffed — **no cited figure has drifted** — but six artifacts had never actually
+  evidenced their cited line. Four fixed with verified stable artifacts
+  (archive.org snapshots, the SUSB workbook, ABS re-pinned off `/latest-release`);
+  two recorded as KNOWN GAPs rather than papered over.
+- Every source now carries **`url_stability: dated | rolling`** (44 dated /
+  8 rolling) after `ibm.com/reports/data-breach` silently began serving the next
+  edition under a prior-year citation.
+- `gather_sources.py` refuses artifacts that do not match their declared
+  `access_mode` — a landing page can no longer silently replace a cited PDF.
+
+### Citability and reproducibility
+- **Citable parameter identifiers** (ADR-0004): `RS:<shard>/<parameter>@<release>`
+  pinned to immutable fingerprinted releases, with archived per-release explorer
+  pages, an alias map so renames cannot break written-down citations, and a
+  "cite this number" affordance that carries the caveat inside the citation.
+- **Cross-machine reproducibility** (ADR-0002): scenario seeds no longer depend on
+  the repo's absolute path; published numbers reproduce on any machine, pinned by
+  a golden-value test across Python versions. Every loss figure moved once (<2%),
+  recorded in `revisions/` and explained on the explorer.
+
+### Coverage and machinery
+- `jp_manufacturing_ransomware_midmarket` closed 4/6 → 6/6 — **all 11 shards
+  source-backed** (the v0.1.0 known limitation).
+- Insider-misuse impact rests on Ponemon 2023 insider-specific costs (2 of 3
+  generic cross-cyber bridges retired).
+- CI now enforces the definition of done: contributor preflight, the
+  calibration-drift gate, and a secret scan run on every PR (both new gates
+  verified to fail, not merely to run).
+- **Challenge-a-number**: `provenance` shows value + source + exact cited line +
+  caveat per parameter; `--dispute` pre-fills a GitHub issue. Portfolio-wide
+  evidence report and pyfair export shipped alongside.
+- Public explorer at <https://raviaxo.github.io/RiskShard/> rebuilt in the
+  regulatory-filing identity; per-release archived copies under `docs/r/`.
+
+### Known limitations (loud, not hidden)
+- Only GB is fully cell-matched; the bridged map (SG 4, CA 5, JP 5,
+  AU-ransomware 6, US-frequency 3) is the declared work queue.
+- Per-cell loss magnitude largely does not exist publicly; impact evidence
+  remains the structural gap (ADR-0003 declares it rather than hiding it).
+- Two KNOWN-GAP artifacts from the source sweep are documented in
+  `docs/internal/source_sweep_2026-08-01.md`.
+- Nothing is benchmark-grade; the automated gate's best rung remains
+  `benchmark_review_candidate`.
+
+### Gates at release
+- `python -m unittest discover -s tests` → **220 tests pass**
+- `validate_evidence.py`, `contributor_preflight.py`, calibration-drift gate,
+  `riskshard_doctor.py` → clean/pass
+
 ## v0.1.0 — 2026-07-21
 
 First tagged stable practitioner beta. A coherent, self-consistent baseline
