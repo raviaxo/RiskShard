@@ -82,9 +82,17 @@ the IBM edition-roll argued for.
   FR (1). **Scouted negative 2026-08-02:** FR `impact.min` (Asteres has no per-attack-type
   cost; AMRAE LUCY is all-peril claims — threat bridge survives either way) and US-DB frequency
   (no US official org-level breach-prevalence statistic exists — Hiscox/ITRC trade the country
-  bridge for threat/size bridges; that is why the UK survey was borrowed). Next real candidate:
-  **NetDiligence-by-revenue-band** (registered, artifact in repo) for CA/SG impact — needs a
-  deliberate read of the PDF's revenue-band and cause-of-loss tables.
+  bridge for threat/size bridges; that is why the UK survey was borrowed).
+  **✅ CA impact DONE 2026-08-02 (PR #96):** NetDiligence's Claims-from-Canada section
+  (page 49) supplied Canadian insured-claims anchors — impact.min USD 66K (Hacker-cause
+  average, N=8), impact.max USD 15M (dataset maximum, N=84) — replacing both Cyentia
+  global bridges. Threat stays bridged (cause taxonomy is not confirmed compromise) but
+  country retires: **cross-country 26 → 24**; CA's known-weak impact label retired;
+  calibration quality issues 3 → 0; simulated CA range narrowed (AVG 2.49M → 1.66M CAD,
+  revisions entry explains). Confidence rated medium per the house scale (primary study +
+  verified artifact; N=8 thinness carried as caveat) — **flagged for owner review**, along
+  with the C-quality frequency.max cell. NetDiligence carries no SG-usable cells (US/CA
+  claims only); SG stays open on the impact wall.
 - **The correction post** (distribution, the top blocker). The material is now: a re-audit
   of all 52 sources, a retraction of two figures that appeared in no primary source, and a
   headline we deliberately split so it fell (28 cell-matched of 66). Tier-1 pull per
