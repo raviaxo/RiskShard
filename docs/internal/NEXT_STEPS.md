@@ -73,10 +73,18 @@ the IBM edition-roll argued for.
   Design rule: pre-split entries are never compared against the new metrics, so the first
   split entry reads "newly measured", not a fabricated "+28". Doctor's "record on
   release" finding cleared. 220 tests; all gates green.
-- **Strengthen the bridged shards** — the new map is the queue (ADR-0006-compliant depth):
-  SG (4 bridged), CA (5), JP (5), AU-ransomware (6), US-frequency (3). Each bridge retired
-  moves the public cell-matched number up for a stated reason. NetDiligence-by-revenue-band
-  (registered, US-only use today) is the known first candidate for CA/SG impact.
+- **Strengthen the bridged shards** — the map is the queue (ADR-0006-compliant depth).
+  **✅ CA frequency DONE 2026-08-02 (PR #94):** all three CA frequency bridges retired with
+  StatCan CSCSC 22-10-0076-01 full-cell readings (finance × medium × steal-personal/financial-
+  info; 0.15/0.201/0.273 replacing 0.2436/0.42/0.42); headline **28 → 31 cell-matched**,
+  simulated CA losses roughly halved, `revisions/` entry explains. Remaining map: AU-ransomware
+  (6), JP (5), SG (4), AU-data-breach (4), US-BEC (4), US-DB-frequency (3), DE (3), AU-BEC (3),
+  FR (1). **Scouted negative 2026-08-02:** FR `impact.min` (Asteres has no per-attack-type
+  cost; AMRAE LUCY is all-peril claims — threat bridge survives either way) and US-DB frequency
+  (no US official org-level breach-prevalence statistic exists — Hiscox/ITRC trade the country
+  bridge for threat/size bridges; that is why the UK survey was borrowed). Next real candidate:
+  **NetDiligence-by-revenue-band** (registered, artifact in repo) for CA/SG impact — needs a
+  deliberate read of the PDF's revenue-band and cause-of-loss tables.
 - **The correction post** (distribution, the top blocker). The material is now: a re-audit
   of all 52 sources, a retraction of two figures that appeared in no primary source, and a
   headline we deliberately split so it fell (28 cell-matched of 66). Tier-1 pull per
@@ -578,3 +586,12 @@ governance/regulatory loss).
   66/66 source-backed with 28 cell-matched newly measured. CHANGELOG covers the whole
   v0.1.0→v0.2.0 arc (retraction, reattribution, sweep, ADR-0002/3/4, CI gates). 220 tests
   green twice (pre- and post-cut); doctor fully green including the ledger check.
+- 2026-08-02 (later) — **CA frequency bridges retired (PR #94); drive mode changed.** Ser
+  retired approve-each-anchor ("auto mode… you keep asking me too many edits"): execute with
+  recommended anchors, review at close. StatCan CSCSC full-cell readings replaced the OPC/CIRA
+  all-organization anchors; three params flipped to cell-matched (28 → 31 of 66), the pack's
+  last estimated assumption retired, new `public_zip` access mode with test, surgical manifest
+  merge (no other sha256 touched). 221 tests; all gates green; explorer verified live at 31.
+  FR-impact-floor and US-frequency scouts returned structurally negative (recorded above).
+  Correction-post drafts delivered to ~/Desktop (kept off-repo deliberately); posting Tuesday
+  after Ser's review.
