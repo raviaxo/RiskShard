@@ -1,0 +1,19 @@
+date: '2026-08-02'
+title: Canada data-breach frequency moves to StatCan full-cell readings
+effect: 'The Canada finance data-breach shard''s frequency range moved from 0.2436/0.42/0.42
+  (OPC/CIRA all-organization prevalence, one derived) to 0.15/0.201/0.273 (StatCan CSCSC
+  table 22-10-0076-01, the shard''s own cell: finance and insurance, medium enterprises,
+  incidents to steal personal or financial information, cycles 2019/2023/2021). Simulated
+  losses roughly halved: AVG CAD 4.78M to 2.49M, P95 10.22M to 5.44M, P99 12.36M to 6.83M
+  (seed 42). Three parameters flipped from population-bridged to cell-matched; the public
+  headline moves from 28 to 31 cell-matched of 66.'
+reason: 'The prior anchors measured all Canadian organizations of every sector and size -
+  honest but borrowed, declared bridged on sector and size under ADR-0003. Statistics
+  Canada''s Survey of Cyber Security and Cybercrime publishes the exact cell this shard
+  models, so the borrowing is retired with official statistics rather than a survey cited
+  in a regulator''s report. The new values are lower because the specific cell is lower
+  than the all-organization rate, not because the risk shrank. Two caveats travel with the
+  new range: the StatCan construct is motive-classified impactful incidents, not confirmed
+  breaches (it can overstate or understate confirmed-breach frequency), and the stress
+  anchor''s 2021 cell carries StatCan quality code C, use with caution - the alternative
+  large-band 2023 cell (23.9%, quality B) is documented on the record.'

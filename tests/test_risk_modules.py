@@ -92,10 +92,11 @@ class RiskModuleTests(unittest.TestCase):
 
         canada = build_evidence_pack_registry(ROOT, "ca_finance_data_breach_midmarket")["packs"][0]
         self.assertEqual(canada["pack_confidence"], "medium")
-        # 8 source-backed after the primary IBM Canada likely-impact record was
-        # added alongside the retained global bridge and ITPro secondary.
+        # 8 source-backed: three StatCan CSCSC full-cell frequency records (which
+        # replaced three OPC/CIRA records plus the last estimated stress assumption)
+        # and five impact records. Nothing estimated remains in this pack.
         self.assertEqual(canada["evidence_type_counts"]["source_backed"], 8)
-        self.assertEqual(canada["evidence_type_counts"]["estimated"], 1)
+        self.assertNotIn("estimated", canada["evidence_type_counts"])
 
     def test_evidence_pack_artifact_fingerprints_module_files(self):
         artifact = build_evidence_pack_artifact("au_finance_ransomware_midmarket", ROOT)

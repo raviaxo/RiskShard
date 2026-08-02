@@ -153,6 +153,7 @@ ACCESS_MODE_CONTENT = {
     "public_html": ("text/html", "application/xhtml"),
     "public_json": ("application/json", "text/json"),
     "public_csv": ("text/csv", "application/csv", "text/plain"),
+    "public_zip": ("application/zip", "application/x-zip-compressed"),
 }
 
 

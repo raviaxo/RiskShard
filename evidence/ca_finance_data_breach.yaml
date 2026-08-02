@@ -1,101 +1,77 @@
 records:
-  - id: opc_cira_ca_material_data_breach_prevalence_proxy_2026
-    title: Canadian organization material data-breach prevalence proxy
+  - id: statcan_cscsc_ca_finance_medium_steal_info_2019_floor
+    title: Canada finance-and-insurance medium-enterprise data-theft incident prevalence, 2019 cycle floor
     parameter: frequency.min
-    value: 0.2436
+    value: 0.15
     unit: annual_probability
-    source_id: opc_annual_report_2025_2026
-    source_name: OPC 2025-2026 Annual Report to Parliament
-    source_type: derived_privacy_regulator_survey_benchmark
-    source_url_or_citation: https://www.priv.gc.ca/en/opc-actions-and-decisions/ar_index/202526/ar_202526/
-    publication_date: "2026-06-04"
-    extraction_date: "2026-07-13"
-    citation_detail: Top trends in privacy reports that 42% of Canadian organizations experienced a breach of customer or employee data in the last 12 months; Breaches section reports 58% of PIPEDA breaches were likely to create a real risk of significant harm.
-    extraction_notes: Derived a conservative material-breach proxy by multiplying the organization-level data breach prevalence by the significant-harm share of reported PIPEDA breaches.
-    normalization_notes: Calculation is 0.42 * 0.58 = 0.2436. Used as a benchmark-review material-breach lower bound, not as a directly observed financial-services mid-market rate.
-    limitations: Combines a cross-sector organization survey fact with a conditional PIPEDA reported-breach harm share; not financial-services-specific, mid-market-specific, or a denominator-backed sector incident rate.
+    source_id: statcan_cscsc_incident_types_22100076
+    source_name: Statistics Canada Table 22-10-0076-01 (Canadian Survey of Cyber Security and Cybercrime)
+    source_type: official_statistics
+    source_url_or_citation: https://www150.statcan.gc.ca/n1/tbl/csv/22100076-eng.zip
+    publication_date: "2024-10-21"
+    extraction_date: "2026-08-02"
+    citation_detail: Table cell "Incidents to steal personal or financial information" x "Finance and insurance [52]" x "Medium size enterprises", reference year 2019, reads 15.0% (quality B, very good); the lowest reading of the four survey cycles (2017 25.8, 2019 15.0, 2021 27.3, 2023 20.1). Medium is 50 to 249 employees (table footnote 8).
+    extraction_notes: Selected the lowest same-cell reading across the four biennial cycles as the frequency floor. Verified in the gathered full-table CSV artifact (22100076.csv inside the registry zip).
+    normalization_notes: Stored directly as 0.15 annual probability; the survey construct is enterprises impacted at least once during the reference year.
+    limitations: Motive-classified construct, not confirmed breaches - counts impactful incidents aimed at stealing personal or financial information, so it can overstate confirmed-breach frequency (impactful attempts count) and understate it (breaches motivated by ransom or with unknown motive are classified under other incident types). StatCan medium is 50-249 employees while the shard org profile models 450 employees, which falls in StatCan large (250+); the same-cycle large-band cell reads 21.5%. Survey covers enterprises with 10 or more employees. Biennial; 2025 cycle expected around October 2026.
     confidence: medium
     evidence_type: source_backed
     population_match:
-      status: bridged
-      bridged_on: [sector, size]
-    applicability:
-      industries: [all, financial_services]
-      countries: [CA]
-      company_size_bands: [all, mid_market]
-      threats: [data_breach]
-
-  - id: opc_cira_ca_org_customer_employee_data_breach_prevalence_2026
-    title: Canadian organization customer or employee data-breach prevalence
-    parameter: frequency.likely
-    value: 0.42
-    unit: annual_probability
-    source_id: opc_annual_report_2025_2026
-    source_name: OPC 2025-2026 Annual Report to Parliament
-    source_type: privacy_regulator_report
-    source_url_or_citation: https://www.priv.gc.ca/en/opc-actions-and-decisions/ar_index/202526/ar_202526/
-    publication_date: "2026-06-04"
-    extraction_date: "2026-07-13"
-    citation_detail: Top trends in privacy reports that 42% of Canadian organizations experienced a breach of customer or employee data in the last 12 months; footnote 8 cites the CIRA survey.
-    extraction_notes: Interpreted the 12-month organization-level data-breach prevalence as an annual probability anchor for Canadian organizations.
-    normalization_notes: Stored directly as 0.42 annual probability. Selected as the likely frequency anchor until financial-services or mid-market-specific Canadian prevalence evidence is reviewed.
-    limitations: Cross-sector Canadian organization survey fact cited by OPC/CIRA; not limited to financial services, mid-market companies, material events, or regulator-reportable breaches.
-    confidence: medium
-    evidence_type: source_backed
-    population_match:
-      status: bridged
-      bridged_on: [sector, size]
-    applicability:
-      industries: [all, financial_services]
-      countries: [CA]
-      company_size_bands: [all, mid_market]
-      threats: [data_breach]
-
-  - id: riskshard_ca_data_breach_frequency_stress_2026
-    title: Estimated Canada finance data breach frequency stress bound
-    parameter: frequency.max
-    value: 0.6
-    unit: annual_probability
-    source_name: RiskShard Canada data breach starter
-    source_type: model_assumption
-    source_url_or_citation: Stress estimate retained above the OPC/CIRA 42% broad organization prevalence anchor pending Canada-specific tail-frequency evidence.
-    publication_date: "2026-07-13"
-    extraction_date: "2026-07-13"
-    extraction_notes: Estimated upper annual probability for a Canadian mid-market financial-services data-breach starter after replacing likely frequency with a 42% Canadian organization prevalence anchor.
-    normalization_notes: Kept explicit as an assumption until Canadian financial-services, mid-market, or tail-frequency data-breach evidence is reviewed.
-    limitations: Not source-backed; replace with Canadian financial-services-specific tail-frequency or high-exposure organization prevalence evidence before benchmark claims.
-    confidence: low
-    evidence_type: estimated
+      status: matched
     applicability:
       industries: [financial_services]
       countries: [CA]
       company_size_bands: [mid_market]
       threats: [data_breach]
 
-  - id: opc_cira_ca_org_customer_employee_data_breach_prevalence_stress_2026
-    title: Canadian organization customer or employee data-breach stress prevalence
-    parameter: frequency.max
-    value: 0.42
+  - id: statcan_cscsc_ca_finance_medium_steal_info_2023_likely
+    title: Canada finance-and-insurance medium-enterprise data-theft incident prevalence, 2023 latest reading
+    parameter: frequency.likely
+    value: 0.201
     unit: annual_probability
-    source_id: opc_annual_report_2025_2026
-    source_name: OPC 2025-2026 Annual Report to Parliament
-    source_type: privacy_regulator_report
-    source_url_or_citation: https://www.priv.gc.ca/en/opc-actions-and-decisions/ar_index/202526/ar_202526/
-    publication_date: "2026-06-04"
-    extraction_date: "2026-07-13"
-    citation_detail: Top trends in privacy reports that 42% of Canadian organizations experienced a breach of customer or employee data in the last 12 months; footnote 8 cites the CIRA survey.
-    extraction_notes: Reused the 42% Canadian organization-level data-breach prevalence as the stress frequency anchor to replace the prior estimated 60% stress assumption.
-    normalization_notes: Stored directly as 0.42 annual probability. Because no higher Canadian financial-services tail-frequency source is reviewed yet, the stress anchor equals the likely anchor.
-    limitations: Cross-sector Canadian organization survey fact cited by OPC/CIRA; not limited to financial services, mid-market companies, material events, or regulator-reportable breaches.
+    source_id: statcan_cscsc_incident_types_22100076
+    source_name: Statistics Canada Table 22-10-0076-01 (Canadian Survey of Cyber Security and Cybercrime)
+    source_type: official_statistics
+    source_url_or_citation: https://www150.statcan.gc.ca/n1/tbl/csv/22100076-eng.zip
+    publication_date: "2024-10-21"
+    extraction_date: "2026-08-02"
+    citation_detail: Table cell "Incidents to steal personal or financial information" x "Finance and insurance [52]" x "Medium size enterprises", reference year 2023, reads 20.1% (quality B, very good). Medium is 50 to 249 employees (table footnote 8).
+    extraction_notes: Selected the most recent survey cycle's reading of the shard's own cell as the likely anchor. Verified in the gathered full-table CSV artifact (22100076.csv inside the registry zip). Replaces the OPC/CIRA 42% all-organization prevalence, which measured all sectors and sizes.
+    normalization_notes: Stored directly as 0.201 annual probability; the survey construct is enterprises impacted at least once during the reference year.
+    limitations: Motive-classified construct, not confirmed breaches - counts impactful incidents aimed at stealing personal or financial information, so it can overstate confirmed-breach frequency (impactful attempts count) and understate it (breaches motivated by ransom or with unknown motive are classified under other incident types). StatCan medium is 50-249 employees while the shard org profile models 450 employees, which falls in StatCan large (250+); the same-cycle large-band cell reads 23.9%. Survey covers enterprises with 10 or more employees. Biennial; 2025 cycle expected around October 2026.
     confidence: medium
     evidence_type: source_backed
     population_match:
-      status: bridged
-      bridged_on: [sector, size]
+      status: matched
     applicability:
-      industries: [all, financial_services]
+      industries: [financial_services]
       countries: [CA]
-      company_size_bands: [all, mid_market]
+      company_size_bands: [mid_market]
+      threats: [data_breach]
+
+  - id: statcan_cscsc_ca_finance_medium_steal_info_2021_stress
+    title: Canada finance-and-insurance medium-enterprise data-theft incident prevalence, 2021 cycle high
+    parameter: frequency.max
+    value: 0.273
+    unit: annual_probability
+    source_id: statcan_cscsc_incident_types_22100076
+    source_name: Statistics Canada Table 22-10-0076-01 (Canadian Survey of Cyber Security and Cybercrime)
+    source_type: official_statistics
+    source_url_or_citation: https://www150.statcan.gc.ca/n1/tbl/csv/22100076-eng.zip
+    publication_date: "2024-10-21"
+    extraction_date: "2026-08-02"
+    citation_detail: Table cell "Incidents to steal personal or financial information" x "Finance and insurance [52]" x "Medium size enterprises", reference year 2021, reads 27.3% - StatCan quality code C, "use with caution" - the highest reading of the four survey cycles. Medium is 50 to 249 employees (table footnote 8).
+    extraction_notes: Selected the highest same-cell reading across the four biennial cycles as the stress anchor. Verified in the gathered full-table CSV artifact (22100076.csv inside the registry zip). Replaces the reused OPC/CIRA 42% all-organization anchor, under which the stress bound equalled the likely bound.
+    normalization_notes: Stored directly as 0.273 annual probability; the survey construct is enterprises impacted at least once during the reference year.
+    limitations: The 2021 cell carries StatCan quality code C (use with caution) - the weakest of the three anchors; the adjacent large-band 2023 cell (23.9%, quality B) is the alternative stress anchor if the C-coded cell is rejected on review. Motive-classified construct, not confirmed breaches - counts impactful incidents aimed at stealing personal or financial information, so it can overstate confirmed-breach frequency (impactful attempts count) and understate it (breaches motivated by ransom or with unknown motive are classified under other incident types). StatCan medium is 50-249 employees while the shard org profile models 450 employees. Survey covers enterprises with 10 or more employees.
+    confidence: medium
+    evidence_type: source_backed
+    population_match:
+      status: matched
+    applicability:
+      industries: [financial_services]
+      countries: [CA]
+      company_size_bands: [mid_market]
       threats: [data_breach]
 
   - id: cyentia_iris_2022_typical_cyber_event_loss_usd_ca_context
