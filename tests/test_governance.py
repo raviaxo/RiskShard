@@ -41,7 +41,7 @@ class GovernanceTests(unittest.TestCase):
         self.assertEqual(uk_dsit["trust_tier"], "high")
         self.assertEqual(uk_dsit["evidence_record_count"], 9)
         self.assertEqual(ibm_uk["trust_tier"], "medium")
-        self.assertEqual(ibm_uk["evidence_record_count"], 3)
+        self.assertEqual(ibm_uk["evidence_record_count"], 2)
         self.assertEqual(fca_equifax["source_status"], "fetched")
         self.assertEqual(fca_equifax["trust_tier"], "high")
         self.assertEqual(fca_equifax["evidence_record_count"], 1)

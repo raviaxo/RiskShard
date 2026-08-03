@@ -36,18 +36,20 @@ parameters:
       round_to: 1000
       rationale: Locally gathered Australian medium-business cybercrime cost floor used conservatively until data-breach-specific Australian cost-floor evidence exists.
     likely:
-      evidence_id: ibm_cost_data_breach_2025_global_average_cost_usd
-      transform: currency_convert
+      evidence_id: securitybrief_ibm_2026_au_finserv_breach_average_cost_aud
+      transform: direct
       target_currency: AUD
       round_to: 100000
       rationale: >-
-        IBM global average data-breach cost converted to AUD. Replaces the UK
-        financial-services figure (GBP 5.74M, AUD 10.7M) selected previously: both are
-        bridges, and the choice trades country distance against industry specificity, but
-        applying a UK-specific benchmark to an Australian shard stacked a second mismatch
-        on top of an already enterprise-weighted average. Both overstate mid-market; the
-        global figure overstates by less and does not also import a foreign jurisdiction.
-        Revise when Australian financial-services breach-cost evidence exists.
+        IBM's 2026 Australian financial-services average breach cost (AUD 6.31M), the
+        exact cell this shard models, via verified secondary coverage because IBM gates
+        the report PDF. The prior selection's own rationale said to revise when
+        Australian financial-services breach-cost evidence exists - this is that
+        revision. The value barely moves (AUD 6.2M converted-global to 6.31M local); the
+        country and industry dimensions stop being bridged, size stays bridged
+        (enterprise-leaning study, per-cell sample size unpublished). The IBM 2025
+        global average (USD 4.44M) and the UK financial-services figure (GBP 5.74M)
+        remain on the records as the documented alternatives.
     max:
       evidence_id: privacy_act_1988_au_body_corporate_serious_privacy_penalty_cap_2026
       transform: direct

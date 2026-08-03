@@ -130,12 +130,12 @@ class EvidenceMatchingTests(unittest.TestCase):
             ["oaic_ndb_jul_dec_2024", "abs_counts_australian_businesses_2025"],
         )
         self.assertEqual(
-            by_id["ibm_cost_data_breach_2025_global_average_cost_usd"]["evidence_type"],
+            by_id["securitybrief_ibm_2026_au_finserv_breach_average_cost_aud"]["evidence_type"],
             "source_backed",
         )
         self.assertEqual(
-            by_id["ibm_cost_data_breach_2025_global_average_cost_usd"]["value"],
-            4440000,
+            by_id["securitybrief_ibm_2026_au_finserv_breach_average_cost_aud"]["value"],
+            6310000,
         )
         self.assertEqual(
             by_id["cyentia_iris_2025_extreme_security_incident_loss_usd"]["currency"],

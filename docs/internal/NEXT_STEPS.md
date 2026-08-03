@@ -140,6 +140,25 @@ the IBM edition-roll argued for.
   README front-door correction folded in: the "JP is 4/6 assumption-bridged" paragraph had
   been stale since 2026-07-24. Scouted negative: no Japan country cut of the Sophos
   recovery-cost survey exists — the impact-side country bridge is structural.
+  **✅ AU-data-breach impact DONE 2026-08-02:** impact.likely moved from IBM 2025 global
+  (USD 4.44M → AUD 6.2M converted) to **IBM 2026's Australian financial-services cell
+  (AUD 6.31M)** via verified SecurityBrief coverage (IBM gates the PDF; same pattern as
+  the CA regional figure). The value barely moves; country AND industry stop being
+  bridged (size stays — enterprise-leaning, per-cell N unpublished). **Cross-country
+  18 → 17**; the industry_relevance_gap blocker clears, AU-DB flips **benchmark_ready
+  (5 → 6)**, and its over-labeled mismatch resolves upward — the label it already carried
+  is now earned. Only one label/gate mismatch remains: US-data-breach under-labeled
+  (owner decision, untouched). **Design lesson recorded:** superseded records for a
+  parameter must be deleted, not kept as "alternatives" — the provenance card picks by
+  confidence-then-id, not calibration selection, so a kept non-selected record makes the
+  public card display evidence the simulation does not use (found when the card kept
+  showing the old IBM global record). The IBM-global and UK-finserv values stay quoted in
+  the calibration rationale as documented alternatives. AU-DB's calibration now carries
+  zero FX assumptions. **DE scouted structurally negative:** Bitkom has no per-company
+  damage figure, no Sophos DE country cut exists, Pilz has no precise primary figure, and
+  Rheinmetall's EUR 3-4M/week disclosure was the 2019 malware incident (not confirmed
+  ransomware) — DE's 3 remaining bridges (Cyentia floor + both Sophos manufacturing
+  impact anchors) are structural for now.
 - **The correction post** (distribution, the top blocker) — **drafted 2026-08-02, posting
   Tuesday 2026-08-04 after Ser's review.** Two venue-shaped drafts (r/GRC + GRC Engineering
   Club) with title options and posting notes live on `~/Desktop/riskshard-correction-post-drafts.md`
@@ -687,3 +706,10 @@ governance/regulatory loss).
   country bridges (cross-country 20 -> 18) at zero gathering cost; JP flipped
   benchmark_ready and was promoted to benchmark_review_candidate (label-follows-gate);
   the stale "JP is 4/6" README paragraph corrected. 221 tests; all gates green.
+- 2026-08-02 (same session, cont. 2) — **AU-data-breach impact moved to IBM's Australian
+  finserv cell.** Cross-country 18 -> 17; the industry blocker cleared and AU-DB flipped
+  benchmark_ready (6 total), resolving its over-labeled mismatch upward; only US-DB
+  under-labeled remains. Found and recorded a real design lesson: kept "alternative"
+  records make the provenance card display evidence the calibration does not use (card
+  picks by id, not selection) — superseded records now get deleted. DE scouted
+  structurally negative. 221 tests; all gates green.

@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 55,
+  "fetched_count": 56,
   "generated_at": "2026-08-01T21:47:07Z",
   "manifest_version": "1.0",
-  "source_count": 55,
+  "source_count": 56,
   "sources": [
     {
       "access_mode": "public_html",
@@ -1023,6 +1023,29 @@
       "url": "https://regulaforensics.com/blog/impact-of-deepfakes-on-idv-regula-survey/",
       "url_stability": "dated",
       "usage_notes": "Use as an organization-level deepfake-fraud prevalence source (Regula 2024 reports 92% of businesses experienced financial loss due to a deepfake, and about 50% and 49% experienced video and audio deepfakes). Vendor survey (identity-verification vendor), lower trust; fast-rising and volatile; \"experienced a deepfake\" is broad. Preserve these limitations.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 87303,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://securitybrief.com.au/story/australia-breach-costs-hit-aud-4-22-million-ibm-says",
+      "gathered_at": "2026-08-03T01:17:23Z",
+      "http_status": 200,
+      "id": "securitybrief_ibm_au_breach_costs_2026",
+      "intended_use": [
+        "Australia financial-services average data-breach cost (IBM 2026 Australian industry cut)",
+        "Australia average data-breach cost context"
+      ],
+      "publication_date": "2026-07-31",
+      "publisher": "SecurityBrief Australia (TechDay)",
+      "raw_path": "sources/raw/securitybrief_ibm_au_breach_costs_2026.html",
+      "sha256": "36018b189df6db8b2a011afd24e1eba281396fe6f3090614caad5420433f3235",
+      "source_type": "news_report",
+      "status": "fetched",
+      "title": "SecurityBrief Australia coverage of IBM Cost of a Data Breach 2026 Australian figures",
+      "url": "https://securitybrief.com.au/story/australia-breach-costs-hit-aud-4-22-million-ibm-says",
+      "url_stability": "dated",
+      "usage_notes": "Secondary coverage of IBM's Cost of a Data Breach 2026 Australian figures, used because IBM gates the full report PDF behind a form and its public pages do not expose the Australian industry rows - the same pattern as itpro_ibm_data_breach_regional_costs_2025 for Canada. Key figures: Australian average breach cost AUD 4.22M; financial services the costliest Australian industry at AUD 6.31M per incident; study basis 602 breached organisations globally (March 2025 to February 2026 breaches). Two limits travel with any use: IBM does not publish per-country-per-industry sample sizes, so the Australian financial-services cell is thin by construction; and the studied population is enterprise-leaning relative to a mid-market org profile. Article published 2026-07-31.\n"
     },
     {
       "access_mode": "public_pdf",

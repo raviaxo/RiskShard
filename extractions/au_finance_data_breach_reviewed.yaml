@@ -154,37 +154,6 @@ extractions:
     evidence_record_ids:
       - cyentia_iris_2022_typical_cyber_event_loss_usd
 
-  - id: ibm_cost_data_breach_2025_global_average_cost_usd
-    source_id: ibm_cost_data_breach_2025
-    source_name: IBM Cost of a Data Breach Report 2025
-    source_url_or_citation: https://www.ibm.com/reports/data-breach
-    publication_date: "2025-07-30"
-    extraction_date: "2026-06-03"
-    citation_detail: Public report page hero metric; global average cost of a data breach is USD 4.4M.
-    fact: IBM reported that the 2025 global average cost of a data breach was USD 4.4 million.
-    value: 4400000
-    unit: currency
-    normalization_notes: Stored in source currency and used as a data-breach-specific likely loss anchor.
-    limitations: Global average across studied breached organizations; not Australia-specific, financial-services-specific, or size-band-specific.
-    evidence_record_ids:
-      - ibm_cost_data_breach_2025_global_average_cost_usd
-
-  - id: ibm_uk_2025_financial_services_breach_average_cost_gbp_au_bridge
-    source_id: ibm_cost_data_breach_uk_2025
-    source_name: IBM UK Cost of a Data Breach 2025 release
-    source_url_or_citation: https://uk.newsroom.ibm.com/2025-cost-of-data-breach-UK
-    publication_date: "2025-07-30"
-    extraction_date: "2026-07-14"
-    citation_detail: UK release states that financial services remained the costliest UK industry for data breaches, with an average cost of GBP 5.74 million in 2025.
-    fact: IBM reported that the UK financial-services sector had an average data-breach cost of GBP 5.74 million in 2025.
-    value: 5740000
-    unit: currency
-    currency: GBP
-    normalization_notes: Stored in source currency as a financial-services-specific likely-impact bridge for the Australia starter calibration; FX conversion to AUD is handled only in the calibration profile.
-    limitations: UK-specific IBM/Ponemon studied breach population; not Australia-specific, not mid-market-specific, not a full distribution, and not a regulator-reported loss table.
-    evidence_record_ids:
-      - ibm_uk_2025_financial_services_breach_average_cost_gbp_au_bridge
-
   - id: cyentia_iris_2025_extreme_security_incident_loss_usd
     source_id: cyentia_iris_2025
     source_name: Cyentia Information Risk Insights Study 2025
@@ -199,3 +168,19 @@ extractions:
     limitations: Global security-incident benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a formal percentile for this scenario.
     evidence_record_ids:
       - cyentia_iris_2025_extreme_security_incident_loss_usd
+
+  - id: securitybrief_ibm_2026_au_finserv_breach_average_cost
+    source_id: securitybrief_ibm_au_breach_costs_2026
+    source_name: SecurityBrief Australia coverage of IBM Cost of a Data Breach 2026
+    source_url_or_citation: https://securitybrief.com.au/story/australia-breach-costs-hit-aud-4-22-million-ibm-says
+    publication_date: "2026-07-31"
+    extraction_date: "2026-08-02"
+    citation_detail: Article sentence "Financial services recorded the highest average breach cost at AUD $6.31 million per incident"; Australian average AUD 4.22M in the same coverage.
+    fact: SecurityBrief reported IBM's 2026 Australian industry cut with financial services the costliest at AUD 6.31 million average breach cost per incident.
+    value: 6310000
+    unit: currency
+    currency: AUD
+    normalization_notes: Stored in AUD as reported; selected as the Australia financial-services likely-impact anchor, no FX conversion.
+    limitations: Secondary coverage of the gated IBM report; per-cell sample size unpublished (thin by construction); enterprise-leaning studied population; an average, not a quantile.
+    evidence_record_ids:
+      - securitybrief_ibm_2026_au_finserv_breach_average_cost_aud
