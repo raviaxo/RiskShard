@@ -1,0 +1,31 @@
+date: '2026-08-02'
+title: Australia data-breach typical loss moves to IBM's Australian financial-services cell
+effect: 'The au_finance_data_breach_midmarket impact.likely anchor moved from IBM''s 2025
+  global average (USD 4.44M, converted to AUD 6,200,000) to IBM''s 2026 Australian
+  financial-services average breach cost (AUD 6,310,000, via verified SecurityBrief
+  coverage of the Australian industry cut). Same-day simulated losses at seed 42 moved
+  from AVG AUD 6,866,168 / P95 16,282,477 / P99 20,689,010 to AVG 6,898,688 /
+  P95 16,059,192 / P99 21,072,747 - the value barely moves; the provenance becomes
+  country- and industry-resident. The parameter stops being bridged on country and
+  becomes bridged on size only: the cross-country count falls from 18 to 17. With an
+  industry-matched impact anchor the shard clears the automated benchmark gate''s
+  industry-relevance minimum and flips needs_evidence -> benchmark_ready (benchmark-ready
+  count 5 -> 6), which resolves its recorded over-labeled mismatch upward - the
+  benchmark_review_candidate label it already carried is now consistent with the gate.
+  The superseded IBM 2025 global record and the UK financial-services record were removed
+  from the evidence file (their values stay quoted in the calibration rationale as the
+  documented alternatives): keeping non-selected records for a parameter makes the public
+  provenance card display evidence the calibration does not use, because the card picks
+  by confidence-then-id, not by calibration selection.'
+reason: 'The 2026-07-30 reselection to the global average recorded its own revision
+  condition: revise when Australian financial-services breach-cost evidence exists. IBM''s
+  2026 report publishes exactly that cell (financial services the costliest Australian
+  industry at AUD 6.31M), reported 2026-07-31 by SecurityBrief Australia - secondary
+  coverage is used because IBM gates the report PDF behind a form and its public pages do
+  not expose the Australian industry rows, the same pattern already accepted for the
+  Canada regional figure. Two limits are carried loudly: IBM does not publish
+  per-country-per-industry sample sizes, so the cell is thin by construction; and the
+  studied population is enterprise-leaning relative to the mid-market org profile, which
+  is why the size dimension stays bridged. The near-identical value (6.2M converted vs
+  6.31M local) is reassuring, not suspicious: the global average was doing honest duty,
+  and the local cell confirms it while removing two borrowed dimensions.'

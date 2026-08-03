@@ -434,7 +434,7 @@ class CliSmokeTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, msg=result.stderr)
         self.assertIn("Benchmark-Grade 30 Shard Program", result.stdout)
         self.assertIn("Targets: 30", result.stdout)
-        self.assertIn("benchmark-ready: 5", result.stdout)
+        self.assertIn("benchmark-ready: 6", result.stdout)
         self.assertIn("confidence>=medium=6/6", result.stdout)
 
         cohort_result = subprocess.run(

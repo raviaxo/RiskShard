@@ -198,7 +198,7 @@ class CalibrationTests(unittest.TestCase):
         }
 
         self.assertEqual(scenario["frequency"], {"min": 0.0008, "likely": 0.65, "max": 0.69})
-        self.assertEqual(scenario["impact"], {"min": 97000, "likely": 6200000, "max": 50000000})
+        self.assertEqual(scenario["impact"], {"min": 97000, "likely": 6300000, "max": 50000000})
         self.assertEqual(
             warning_codes.count("parameter_from_non_source_backed_evidence"),
             0,
@@ -214,18 +214,9 @@ class CalibrationTests(unittest.TestCase):
                 "impact.max": "source_backed",
             },
         )
-        self.assertEqual(
-            set(assumptions_by_evidence),
-            {
-                "ibm_cost_data_breach_2025_global_average_cost_usd",
-            },
-        )
-        self.assertEqual(
-            {item["rate_id"] for item in assumptions_by_evidence.values()},
-            # USD-denominated global IBM figure now converts via the RBA AUD/USD rate,
-        # inverted; the calibration report discloses the inversion.
-        {"inverse:aud_to_usd_rba_f11_1_2026_06_01"},
-        )
+        # After the 2026-08-02 move to IBM's Australian financial-services cell
+        # (already AUD), this calibration carries no FX assumptions at all.
+        self.assertEqual(set(assumptions_by_evidence), set())
         self.assertIn(
             "verizon_dbir_2026_vulnerability_exploitation_breach_entry_share",
             {item["id"] for item in report["excluded_evidence"]},

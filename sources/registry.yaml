@@ -1105,3 +1105,25 @@ sources:
 
     '
   url_stability: dated
+- id: securitybrief_ibm_au_breach_costs_2026
+  title: SecurityBrief Australia coverage of IBM Cost of a Data Breach 2026 Australian figures
+  publisher: SecurityBrief Australia (TechDay)
+  source_type: news_report
+  url: https://securitybrief.com.au/story/australia-breach-costs-hit-aud-4-22-million-ibm-says
+  publication_date: '2026-07-31'
+  access_mode: public_html
+  intended_use:
+  - Australia financial-services average data-breach cost (IBM 2026 Australian industry cut)
+  - Australia average data-breach cost context
+  usage_notes: 'Secondary coverage of IBM''s Cost of a Data Breach 2026 Australian figures,
+    used because IBM gates the full report PDF behind a form and its public pages do not
+    expose the Australian industry rows - the same pattern as itpro_ibm_data_breach_regional_costs_2025
+    for Canada. Key figures: Australian average breach cost AUD 4.22M; financial services
+    the costliest Australian industry at AUD 6.31M per incident; study basis 602 breached
+    organisations globally (March 2025 to February 2026 breaches). Two limits travel with
+    any use: IBM does not publish per-country-per-industry sample sizes, so the Australian
+    financial-services cell is thin by construction; and the studied population is
+    enterprise-leaning relative to a mid-market org profile. Article published 2026-07-31.
+
+    '
+  url_stability: dated
