@@ -1,4 +1,12 @@
 metadata:
+  drift_watch:
+    # Pairs this calibration with the scenario file it maintains so the
+    # calibration-drift gate covers it. Top-risk scenarios sit outside the
+    # risk-module artifact graph, which is how the insider scenario once
+    # drifted invisibly (found 2026-08-01); this block closes that gap.
+    scenario: scenarios/ai_enabled_fraud.yaml
+    org_profile: org_profiles/au_finance_midmarket.yaml
+    threat: ai_enabled_fraud
   name: AI-Enabled Fraud calibration
   scenario_name: AI-Enabled Fraud Midmarket - Calibrated Draft
   version: "0.1"

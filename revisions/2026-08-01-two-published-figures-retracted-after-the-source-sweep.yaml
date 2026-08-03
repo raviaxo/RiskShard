@@ -1,0 +1,24 @@
+date: '2026-08-01'
+title: Two published figures retracted - they appear in no primary source
+retractions: 2
+effect: 'Two published figures were retracted outright after the 2026-08-01 source sweep,
+  because they appear in no primary source. The insider-misuse frequency pair (66% / 76%),
+  a stat that circulates widely in survey summaries, was replaced with what the survey
+  family''s artifacts actually say: frequency.min 0.51 (six-or-more-incidents hard floor)
+  and frequency.likely 0.83 (Gurucul 2026''s 2024 reading) - the 76% turned out to be a
+  different vendor measuring a different construct. The AI-enabled-fraud impact.likely
+  (~USD 500k) was not on the page it cited; it was reattributed to the Regula report that
+  actually contains a figure, at USD 450,000. Both retracted values lived in top-risk
+  evidence records, so no exhibit item''s loss range moved; the insider top-risk scenario,
+  which was still simulating pre-correction impacts, was regenerated the same day and the
+  calibration-drift gate was later extended so that class of scenario can no longer drift
+  outside coverage.'
+reason: 'The rule of this project is that every number traces to a public primary source
+  or is labeled an estimate - including retroactively, when the tracing fails. Both
+  figures entered the dataset through survey-summary telephone: secondary write-ups
+  quoting each other until the number detached from any artifact. That is exactly the
+  failure mode the governed source manifest exists to prevent, and the sweep that caught
+  it now runs against archived artifacts with verified hashes. This entry was recorded in
+  the correction log on 2026-08-03, two days after the retraction shipped in v0.2.0 - the
+  retraction itself was public in the changelog and release notes from day one; the log
+  entry is backfilled so the correction record on this page is complete.'

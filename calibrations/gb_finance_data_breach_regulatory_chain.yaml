@@ -1,4 +1,12 @@
 metadata:
+  drift_watch:
+    # Pairs this calibration with the scenario file it maintains so the
+    # calibration-drift gate covers it. Top-risk scenarios sit outside the
+    # risk-module artifact graph, which is how the insider scenario once
+    # drifted invisibly (found 2026-08-01); this block closes that gap.
+    scenario: scenarios/gb_finance_data_breach_regulatory_chain.yaml
+    org_profile: org_profiles/gb_finance_midmarket.yaml
+    threat: data_breach
   name: United Kingdom financial-services data breach with regulatory-penalty chain
   scenario_name: UK Finance Data Breach with Regulatory Penalty Chain - Calibrated
   version: "0.1"
