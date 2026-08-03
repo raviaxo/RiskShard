@@ -1013,3 +1013,95 @@ sources:
 
     '
   url_stability: rolling
+- id: sophos_state_ransomware_2023
+  title: The State of Ransomware 2023 (whitepaper, archived snapshot)
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://web.archive.org/web/20230511013336if_/https://assets.sophos.com/X24WTUEQ/at/c949g7693gsnjh9rb9gr8/sophos-state-of-ransomware-2023-wp.pdf
+  publication_date: '2023-05-01'
+  access_mode: public_pdf
+  intended_use:
+  - Australia ransomware attack prevalence, 2022 and 2023 survey readings
+  - per-country ransomware hit rates (Additional Charts)
+  usage_notes: 'Immutable Internet Archive snapshot (2023-05-11) of the full 2023 whitepaper
+    PDF. The snapshot is the canonical URL on purpose: Sophos reuses asset URLs across
+    editions (the 2024 whitepaper URL was observed serving the 2025 edition on 2026-08-02),
+    so only an archived capture pins the cited edition. The per-country chart used here is
+    "Rate of Ransomware Attacks by Country: 2022 vs. 2023" (Additional Charts, printed page
+    18): Australia n=250 (2022) / n=200 (2023), readings 80% and 70%. Survey population is
+    organizations with 100-5,000 employees, all sectors, surveyed January-March 2023. The
+    construct is attack prevalence ("hit by ransomware in the last year"), not loss-event
+    frequency - preserve that limitation in every evidence record.
+
+    '
+  url_stability: dated
+- id: sophos_state_ransomware_2024
+  title: The State of Ransomware 2024 (whitepaper, archived snapshot)
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://web.archive.org/web/20240430145048if_/https://assets.sophos.com/X24WTUEQ/at/9brgj5n44hqvgsp5f5bqcps/sophos-state-of-ransomware-2024-wp.pdf
+  publication_date: '2024-04-30'
+  access_mode: public_pdf
+  intended_use:
+  - Australia ransomware attack prevalence, 2024 survey reading
+  - per-country ransomware hit rates
+  usage_notes: 'Immutable Internet Archive snapshot (2024-04-30) of the full 2024 whitepaper
+    PDF. The snapshot is the canonical URL on purpose: the original assets.sophos.com URL
+    (kept in this note, not as a fallback) was observed on 2026-08-02 serving the June 2025
+    edition under the 2024 filename - a silent edition roll that would invalidate citations,
+    the same failure mode recorded for ibm_cost_data_breach_2025. Original URL:
+    https://assets.sophos.com/X24WTUEQ/at/9brgj5n44hqvgsp5f5bqcps/sophos-state-of-ransomware-2024-wp.pdf.
+    Australia readings: prose (printed page 3) "the lowest reported attack rates were by
+    respondents in Brazil (44%), Japan (51%), and Australia (54%)"; the by-country chart
+    (n=330 for Australia) carries the same 54% with the 2023 comparator. Survey: 5,000
+    IT/cybersecurity leaders, 14 countries, organizations with 100-5,000 employees,
+    January-February 2024, by Vanson Bourne. Attack prevalence, not loss-event frequency.
+
+    '
+  url_stability: dated
+- id: sophos_state_ransomware_australia_2025
+  title: The State of Ransomware in Australia 2025 (whitepaper)
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://assets.sophos.com/X24WTUEQ/at/k5krqsjhn4zbvj84448rhh/sophos-state-of-ransomware-in-australia-2025.pdf
+  publication_date: '2025-06-19'
+  access_mode: public_pdf
+  intended_use:
+  - Australia ransomware recovery cost (mean, excluding ransom payments)
+  - Australia ransom demand and payment medians (context)
+  usage_notes: 'Australia country cut of the 2025 State of Ransomware survey: 191 Australian
+    IT/cybersecurity leaders in organizations of 100-5,000 employees that were hit by
+    ransomware in the last year, surveyed January-March 2025, all financial figures USD.
+    Key figures: mean recovery cost USD 0.65M excluding any ransom payments (down from USD
+    2.37M reported by Australian respondents in 2024); median ransom demand USD 217,000;
+    median ransom payment USD 350,000 (n=26 payers); 41% paid. Because the whole sample was
+    hit, this edition carries NO attack-prevalence rate - do not cite it for frequency. The
+    filename is edition-specific, but Sophos has been observed rolling asset URLs across
+    editions; re-verify the sha256 against the cited figures before reusing after a new
+    edition ships.
+
+    '
+  url_stability: dated
+- id: latitude_1h23_results_2023
+  title: Latitude Group Holdings 1H23 Results Investor Presentation
+  publisher: Latitude Group Holdings Limited (ASX LFS)
+  source_type: company_disclosure
+  url: https://investors.latitudefinancial.com.au/DownloadFile.axd?file=%2FReport%2FComNews%2F20230818%2F02698845.pdf
+  publication_date: '2023-08-18'
+  access_mode: public_pdf
+  intended_use:
+  - documented Australian financial-services cyber-extortion loss (stress anchor)
+  usage_notes: 'ASX results presentation released 2023-08-18 for the half-year ended 30 June
+    2023. The Notable Items slide (printed page 22) reports Cyber at AUD 76M pre-tax:
+    AUD 11.8M costs incurred responding to the March 2023 incident plus AUD 64.1M provided
+    for ID remediation and legal cost estimates; ID replacements are ~80% of costs. The
+    figure excludes potential regulatory fines, class actions and future system uplift, and
+    may be partly offset by insurance recoveries - as a loss anchor it is therefore
+    conservative for the tail. The incident was a data-theft extortion event (ransom
+    demanded and refused, consistent with government advice); encryption was not confirmed
+    and Latitude describes it as a cyber incident, so the ransomware threat dimension stays
+    bridged wherever this is cited. Latitude is a large ASX-listed lender (~A$1B revenue
+    scale), well above the mid-market org profile - size stays bridged too.
+
+    '
+  url_stability: dated

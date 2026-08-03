@@ -27,21 +27,23 @@ class CalibrationTests(unittest.TestCase):
 
         scenario = report["generated_scenario"]
 
-        self.assertEqual(scenario["frequency"], {"min": 0.1, "likely": 0.65, "max": 0.65})
+        self.assertEqual(scenario["frequency"], {"min": 0.1, "likely": 0.54, "max": 0.7})
         self.assertEqual(scenario["impact"]["min"], 97000)
-        self.assertEqual(scenario["impact"]["likely"], 3590000)
-        self.assertEqual(scenario["impact"]["max"], 72300000)
+        self.assertEqual(scenario["impact"]["likely"], 900000)
+        self.assertEqual(scenario["impact"]["max"], 76000000)
         self.assertEqual(report["warnings"], [])
         selected_by_id = {
             item["evidence_id"]: item
             for item in report["selected_evidence"]
         }
         self.assertTrue(
-            selected_by_id["sophos_fin_services_ransomware_frequency_2024"]["selection"][
+            selected_by_id["sophos_2024_au_ransomware_attack_rate_likely"]["selection"][
                 "best_available_for_parameter"
             ]
         )
-        self.assertFalse(
+        # After the 2026-08-02 rework every selected anchor is the best available
+        # for its parameter (the superseded legacy estimated records are gone).
+        self.assertTrue(
             selected_by_id["cyentia_global_ransomware_probability_2025"]["selection"][
                 "best_available_for_parameter"
             ]
@@ -49,9 +51,11 @@ class CalibrationTests(unittest.TestCase):
         self.assertEqual(
             selected_by_id["cyentia_global_ransomware_probability_2025"]["selection"][
                 "higher_scored_alternatives"
-            ][0]["id"],
-            "riskshard_au_sme_cybercrime_frequency_floor_2026",
+            ],
+            [],
         )
+        # One FX assumption remains: the Sophos Australia recovery cost is USD.
+        self.assertEqual(len(report["assumptions"]), 1)
         self.assertEqual(
             report["assumptions"][0]["rate_id"],
             "inverse:aud_to_usd_rba_f11_1_2026_06_01",
@@ -60,8 +64,8 @@ class CalibrationTests(unittest.TestCase):
         self.assertEqual(report["assumptions"][0]["retrieved_at"], "2026-06-01")
         self.assertIn("F11.1 Exchange Rates", report["assumptions"][0]["citation_detail"])
         self.assertEqual(
-            report["assumptions"][1]["evidence_id"],
-            "cyentia_iris_2022_top5_cyber_event_loss_usd_au_ransomware_context",
+            report["assumptions"][0]["evidence_id"],
+            "sophos_au_2025_ransomware_recovery_cost_usd",
         )
 
     def test_calibration_generates_loss_stages_from_profile(self):
@@ -169,7 +173,8 @@ class CalibrationTests(unittest.TestCase):
         self.assertIn("## Warnings", markdown)
         self.assertIn("## Quality Issues", markdown)
         self.assertIn("Reserve Bank of Australia Statistical Table F11.1", markdown)
-        self.assertIn("Higher-scored alternatives:", markdown)
+        # "Higher-scored alternatives:" no longer appears for this shard - every
+        # selected anchor is best-available after the 2026-08-02 rework.
         self.assertIn("Best available for parameter:", markdown)
 
     def test_data_breach_calibration_is_runnable_with_frequency_bridges(self):

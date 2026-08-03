@@ -21,7 +21,7 @@ class BetaReadinessTests(unittest.TestCase):
         self.assertEqual(checks["BETA-DATA-02"]["actual"], 11)
         self.assertEqual(checks["BETA-DATA-02"]["target"], 10)
         self.assertEqual(checks["BETA-DATA-03"]["status"], "pass")
-        self.assertEqual(checks["BETA-DATA-03"]["actual"], 5)
+        self.assertEqual(checks["BETA-DATA-03"]["actual"], 4)
         self.assertEqual(checks["BETA-DATA-03"]["target"], 3)
         self.assertEqual(checks["BETA-ENG-03"]["status"], "pass")
         self.assertEqual(checks["BETA-GOV-01"]["status"], "pass")

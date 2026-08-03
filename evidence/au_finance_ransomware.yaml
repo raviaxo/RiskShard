@@ -1,26 +1,27 @@
 records:
-  - id: sophos_fin_services_ransomware_frequency_2024
-    title: Financial-services organizations hit by ransomware
+  - id: sophos_2024_au_ransomware_attack_rate_likely
+    title: Australian organizations hit by ransomware, 2024 survey reading
     parameter: frequency.likely
-    value: 0.65
+    value: 0.54
     unit: annual_probability
-    source_id: sophos_state_ransomware_financial_services_2024
-    source_name: Sophos State of Ransomware in Financial Services 2024
+    source_id: sophos_state_ransomware_2024
+    source_name: Sophos The State of Ransomware 2024 (archived snapshot)
     source_type: industry_survey
-    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-financial-services-2024
-    publication_date: "2024-06-24"
-    extraction_date: "2026-05-26"
-    citation_detail: Article section "Attack rates have remained steady, but recovery is more expensive."
-    extraction_notes: Sophos reported that 65% of financial-services organizations were hit by ransomware in 2024.
-    normalization_notes: Used directly as a financial-services ransomware frequency anchor.
-    limitations: Global financial-services survey, not Australia-specific; survey population may not equal the target organization's peer group.
+    source_url_or_citation: https://web.archive.org/web/20240430145048if_/https://assets.sophos.com/X24WTUEQ/at/9brgj5n44hqvgsp5f5bqcps/sophos-state-of-ransomware-2024-wp.pdf
+    publication_date: "2024-04-30"
+    extraction_date: "2026-08-02"
+    citation_detail: Attack-rate prose (printed page 3) reads "the lowest reported attack rates were by respondents in Brazil (44%), Japan (51%), and Australia (54%)"; the by-country chart carries the same 54% for Australia (n=330). Verified in the gathered snapshot artifact.
+    extraction_notes: Selected the Australian reading of the 2024 global survey as the likely anchor, replacing the Sophos financial-services global rate (65%), which was country-bridged. The swap trades the sector dimension for the country dimension; the sector bridge is recorded. The live assets.sophos.com URL was observed serving the 2025 edition under the 2024 filename on 2026-08-02, so the anchor cites an immutable Internet Archive snapshot.
+    normalization_notes: Stored directly as 0.54 annual probability; the survey construct is organizations hit by ransomware at least once in the last year.
+    limitations: Attack prevalence ("hit by ransomware"), not loss-event frequency - it counts organizations attacked, including attacks stopped before material loss, so it overstates loss-event frequency. All-sector Australian sample used for a financial-services shard; the sector dimension stays bridged (the global financial-services comparator read 65% in the same survey year). Survey population is organizations with 100-5,000 employees - the 450-employee org profile is inside the window, but the window is far broader than mid-market. Vendor-commissioned survey, n=330 Australian respondents. The Australian series is falling steeply (80% in 2022, 70% in 2023, 54% in 2024) and the 2025 edition dropped prevalence reporting entirely, so this reading cannot be refreshed like-for-like.
     confidence: medium
     evidence_type: source_backed
     population_match:
-      status: matched
+      status: bridged
+      bridged_on: [sector]
     applicability:
-      industries: [financial_services]
-      countries: [global]
+      industries: [all]
+      countries: [AU]
       company_size_bands: [all]
       threats: [ransomware]
 
@@ -49,72 +50,30 @@ records:
       company_size_bands: [all]
       threats: [ransomware]
 
-  - id: riskshard_au_sme_cybercrime_frequency_floor_2026
-    title: Estimated Australian SME cybercrime frequency floor
-    parameter: frequency.min
-    value: 0.22
-    unit: annual_probability
-    source_name: RiskShard Australia cybercrime context assumption
-    source_type: model_assumption
-    source_url_or_citation: Prior external review of official Australian cybercrime reporting; not part of the governed source manifest.
-    publication_date: "2026-06-04"
-    extraction_date: "2026-06-04"
-    extraction_notes: Planning floor retained for Australia SME cybercrime context after the official ASD/AIC artifacts failed local automated gathering.
-    normalization_notes: Used as a conservative Australia lower-frequency context point, not as a ransomware-specific frequency estimate.
-    limitations: Estimated placeholder, cybercrime-wide rather than ransomware-specific, and not governed source-backed evidence. Replace with a locally gathered Australia SME or ransomware source before treating this as benchmark-grade.
-    confidence: low
-    evidence_type: estimated
-    applicability:
-      industries: [all]
-      countries: [AU]
-      company_size_bands: [small, mid_market]
-      threats: [ransomware]
-
-  - id: riskshard_ransomware_frequency_upper_bound_2026
-    title: Estimated ransomware frequency stress bound
+  - id: sophos_2023_au_ransomware_attack_rate_stress
+    title: Australian organizations hit by ransomware, 2023 survey reading (stress)
     parameter: frequency.max
-    value: 0.85
+    value: 0.70
     unit: annual_probability
-    source_name: RiskShard range calibration
-    source_type: model_assumption
-    source_url_or_citation: Derived from source-backed frequency evidence in this file.
-    publication_date: "2026-05-26"
-    extraction_date: "2026-05-26"
-    extraction_notes: Estimated stress-case upper bound above the Sophos financial-services ransomware rate.
-    normalization_notes: Kept explicit so the simulation range is inspectable.
-    limitations: Not directly source-backed; replace with tail-frequency evidence when available.
-    confidence: low
-    evidence_type: estimated
-    applicability:
-      industries: [financial_services]
-      countries: [AU, global]
-      company_size_bands: [mid_market]
-      threats: [ransomware]
-
-  - id: sophos_fin_services_ransomware_frequency_stress_2024
-    title: Financial-services ransomware stress frequency anchor
-    parameter: frequency.max
-    value: 0.65
-    unit: annual_probability
-    source_id: sophos_state_ransomware_financial_services_2024
-    source_name: Sophos State of Ransomware in Financial Services 2024
+    source_id: sophos_state_ransomware_2023
+    source_name: Sophos The State of Ransomware 2023 (archived snapshot)
     source_type: industry_survey
-    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-financial-services-2024
-    publication_date: "2024-06-24"
-    extraction_date: "2026-07-13"
-    citation_detail: Article section "Attack rates have remained steady, but recovery is more expensive."
-    extraction_notes: Sophos reported that 65% of financial-services organizations were hit by ransomware in 2024.
-    normalization_notes: Reused the source-backed financial-services attack rate as the upper frequency anchor, replacing the prior estimated 85% stress bound. Because no higher tail-frequency source is reviewed yet, the stress anchor equals the likely anchor.
-    limitations: Global financial-services survey, not Australia-specific; using the same 65% statistic for likely and max means the frequency range is intentionally conservative and awaits better tail-frequency evidence.
+    source_url_or_citation: https://web.archive.org/web/20230511013336if_/https://assets.sophos.com/X24WTUEQ/at/c949g7693gsnjh9rb9gr8/sophos-state-of-ransomware-2023-wp.pdf
+    publication_date: "2023-05-01"
+    extraction_date: "2026-08-02"
+    citation_detail: Additional Charts, "Rate of Ransomware Attacks by Country. 2022 vs. 2023" (printed page 18) - Australia (n=250 in 2022, n=200 in 2023) reads 80% for 2022 and 70% for 2023. The chart's numeric labels are present in the artifact text; the label-to-country pairing was verified visually on the rendered page of the gathered snapshot.
+    extraction_notes: Selected the prior-year (2023) Australian reading as the stress anchor above the 2024 likely reading of 0.54, replacing the reuse of the global financial-services 65% as both likely and max - the stress bound is now a genuinely distinct, higher, Australia-resident reading. The 2022 reading (0.80) is the documented alternative if a harsher stress bound is preferred on review.
+    normalization_notes: Stored directly as 0.70 annual probability; same survey construct as the likely anchor (organizations hit at least once in the last year).
+    limitations: Attack prevalence, not loss-event frequency (see the likely record). The stress anchor is one survey-year older than the likely anchor, taken from a declining series (80% 2022, 70% 2023, 54% 2024) - using an older, higher reading as the stress bound is a deliberate conservative choice, not a tail percentile. All-sector Australian sample; sector stays bridged. n=200 Australian respondents in the 2023 cycle. Vendor-commissioned.
     confidence: medium
     evidence_type: source_backed
     population_match:
       status: bridged
-      bridged_on: [country, size]
+      bridged_on: [sector]
     applicability:
-      industries: [financial_services]
-      countries: [global, AU]
-      company_size_bands: [all, mid_market]
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [all]
       threats: [ransomware]
 
   - id: business_qld_au_medium_business_cybercrime_cost_2025
@@ -144,80 +103,59 @@ records:
       company_size_bands: [mid_market]
       threats: [ransomware]
 
-  - id: sophos_fin_services_ransomware_recovery_cost_2024
-    title: Financial-services ransomware recovery cost
+  - id: sophos_au_2025_ransomware_recovery_cost_usd
+    title: Australian mean ransomware recovery cost, excluding ransom payments
     parameter: impact.likely
-    value: 2580000
+    value: 650000
     unit: currency
     currency: USD
-    source_id: sophos_state_ransomware_financial_services_2024
-    source_name: Sophos State of Ransomware in Financial Services 2024
+    source_id: sophos_state_ransomware_australia_2025
+    source_name: Sophos The State of Ransomware in Australia 2025
     source_type: industry_survey
-    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-financial-services-2024
-    publication_date: "2024-06-24"
-    extraction_date: "2026-05-26"
-    citation_detail: Article section "Attack rates have remained steady, but recovery is more expensive."
-    extraction_notes: Sophos reported that the mean cost for financial-services organizations to recover from a ransomware attack was USD 2.58 million in 2024.
-    normalization_notes: Stored in source currency. Convert before using as an AUD scenario parameter.
-    limitations: Global financial-services value, not Australia-specific; the public article does not provide size-band segmentation.
-    confidence: medium
-    evidence_type: source_backed
-    population_match:
-      status: matched
-    applicability:
-      industries: [financial_services]
-      countries: [global]
-      company_size_bands: [all]
-      threats: [ransomware]
-
-  - id: riskshard_ransomware_impact_upper_bound_2026
-    title: Estimated ransomware impact stress bound
-    parameter: impact.max
-    value: 9000000
-    unit: currency
-    currency: AUD
-    source_name: RiskShard range calibration
-    source_type: model_assumption
-    source_url_or_citation: Derived from source-backed recovery-cost evidence in this file.
-    publication_date: "2026-05-26"
-    extraction_date: "2026-05-26"
-    extraction_notes: Estimated stress-case upper bound above the Sophos mean recovery-cost value after planning-level AUD normalization.
-    normalization_notes: Kept explicit so the simulation range is inspectable.
-    limitations: Not directly source-backed; replace with Australia-specific tail-loss evidence when available.
-    confidence: low
-    evidence_type: estimated
-    applicability:
-      industries: [financial_services]
-      countries: [AU, global]
-      company_size_bands: [mid_market]
-      threats: [ransomware]
-
-  - id: cyentia_iris_2022_top5_cyber_event_loss_usd_au_ransomware_context
-    title: Top 5% reported cyber-event loss for Australia ransomware starter
-    parameter: impact.max
-    value: 52000000
-    unit: currency
-    currency: USD
-    source_id: cyentia_iris_2022
-    source_name: Cyentia Information Risk Insights Study 2022
-    source_type: cyber_loss_research
-    source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
-    publication_date: "2022-01-01"
-    extraction_date: "2026-07-13"
-    citation_detail: Public source page key findings; the top 5% of loss events balloon to USD 52M.
-    extraction_notes: Reused the governed Cyentia top-5% cyber-event loss anchor as the Australia ransomware stress-loss bridge.
-    normalization_notes: Stored in source currency. Calibration converts to AUD with the explicit AUD/USD FX assumption.
-    limitations: Global cyber-event loss benchmark, not Australia-specific, ransomware-only, financial-services-specific, or a formal ransomware claim-severity percentile. Use as an automated benchmark-review stress bridge only with human caveat review.
+    source_url_or_citation: https://assets.sophos.com/X24WTUEQ/at/k5krqsjhn4zbvj84448rhh/sophos-state-of-ransomware-in-australia-2025.pdf
+    publication_date: "2025-06-19"
+    extraction_date: "2026-08-02"
+    citation_detail: Business impact section (printed page 3) reads "the average (mean) bill incurred by Australian organizations to recover from a ransomware attack in the last year came in at just $0.65 million"; the About page carries the same USD 650K headline tile. Verified in the gathered artifact.
+    extraction_notes: Replaces the Sophos global financial-services mean recovery cost (USD 2.58M, 2024 survey), which was country-bridged. The same whitepaper's Australian 2024-survey comparator was USD 2.37M, so the loss anchor moved because the evidence got closer to home AND because the Australian reading itself fell steeply year over year.
+    normalization_notes: Stored in source currency USD; calibration converts to AUD with the explicit RBA FX assumption. The construct covers downtime, people time, device cost, network cost and lost opportunity.
+    limitations: Excludes any ransom payments - the same survey reports a median Australian ransom payment of USD 350,000 among the 41% who paid, so the all-in cost of a paid incident can be materially higher than this anchor. Mean over 191 Australian organizations of 100-5,000 employees across all sectors, conditional on being hit; the sector dimension stays bridged for a financial-services shard. Self-reported, vendor-commissioned, and a steep one-year move (USD 2.37M to 0.65M) in a small sample suggests volatility - treat the level as indicative, not stable.
     confidence: medium
     evidence_type: source_backed
     population_match:
       status: bridged
-      bridged_on: [country, sector, size, threat]
+      bridged_on: [sector]
     applicability:
-      industries: [all, financial_services]
-      countries: [global, AU]
-      company_size_bands: [all, mid_market]
-      threats: [all, ransomware]
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [ransomware]
+
+  - id: latitude_1h23_au_cyber_incident_cost_aud
+    title: Latitude Financial documented cyber-incident cost (stress anchor)
+    parameter: impact.max
+    value: 76000000
+    unit: currency
+    currency: AUD
+    source_id: latitude_1h23_results_2023
+    source_name: Latitude Group Holdings 1H23 Results Investor Presentation
+    source_type: company_disclosure
+    source_url_or_citation: https://investors.latitudefinancial.com.au/DownloadFile.axd?file=%2FReport%2FComNews%2F20230818%2F02698845.pdf
+    publication_date: "2023-08-18"
+    extraction_date: "2026-08-02"
+    citation_detail: Notable Items slide (printed page 22) reports Cyber at AUD 76M pre-tax for the half-year ended 30 June 2023 - AUD 11.8M costs incurred responding to the March 2023 incident plus AUD 64.1M provided for ID remediation and legal cost estimates. Verified in the gathered PDF text.
+    extraction_notes: Replaces the Cyentia global top-5% cyber-event loss bridge (USD 52M, previously converted to AUD 72.3M) with a documented Australian financial-services loss disclosed to the ASX - the stress bound barely moves (AUD 72.3M to 76M) while the anchor becomes country- and sector-resident.
+    normalization_notes: Stored in AUD as disclosed; used directly with rounding, no FX conversion. Pre-tax costs and provisions as reported at 1H23.
+    limitations: A single documented event, not a loss-distribution percentile. The March 2023 incident was a data-theft extortion attack (a ransom was demanded and refused, consistent with government advice); encryption was not confirmed and Latitude describes it as a cyber incident, so the ransomware threat dimension stays bridged. Latitude is a large ASX-listed lender far above the mid-market org profile - the size dimension stays bridged, and an AUD 76M loss is a deliberate stress ceiling, not a plausible mid-market outcome. The disclosed figure excludes potential regulatory fines, class actions and future system uplift (understating the true tail) and ignores possible insurance recoveries (overstating net loss).
+    confidence: medium
+    evidence_type: source_backed
+    population_match:
+      status: bridged
+      bridged_on: [size, threat]
+    applicability:
+      industries: [financial_services]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [all]
 
   - id: cyentia_fin_services_ransomware_incident_share_2025
     title: Ransomware share of financial-services incidents

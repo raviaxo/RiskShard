@@ -73,7 +73,7 @@ class EvidenceMatchingTests(unittest.TestCase):
             0.15,
         )
         self.assertEqual(
-            records["sophos_fin_services_ransomware_recovery_cost_2024"]["currency"],
+            records["sophos_au_2025_ransomware_recovery_cost_usd"]["currency"],
             "USD",
         )
 
@@ -201,10 +201,20 @@ class EvidenceMatchingTests(unittest.TestCase):
         self.assertEqual(summary["target_context"]["country"], "AU")
         self.assertEqual(
             summary["best_by_parameter"]["frequency.likely"]["id"],
-            "sophos_fin_services_ransomware_frequency_2024",
+            "sophos_2024_au_ransomware_attack_rate_likely",
         )
         self.assertEqual(
             summary["best_by_parameter"]["frequency.likely"]["applicability"]["country"]["match"],
+            "exact",
+        )
+        # The frequency floor is still the global Cyentia bridge - the fallback
+        # explanation is exercised there.
+        self.assertEqual(
+            summary["best_by_parameter"]["frequency.min"]["id"],
+            "cyentia_global_ransomware_probability_2025",
+        )
+        self.assertEqual(
+            summary["best_by_parameter"]["frequency.min"]["applicability"]["country"]["match"],
             "fallback",
         )
         self.assertEqual(

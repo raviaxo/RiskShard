@@ -1,13 +1,17 @@
 id: au_finance_ransomware_midmarket
 title: Australia Finance Ransomware Midmarket
-version: "0.2"
-status: benchmark_review_candidate
+version: "0.3"
+status: governed_starter
 threat: ransomware
 description: >
-  Benchmark-review candidate ransomware shard for an Australian mid-market
+  Governed-starter ransomware shard for an Australian mid-market
   financial-services organization. All six direct calibration parameters are
-  source-backed, but stress frequency and stress impact still require human
-  caveat review because they use global/sector bridge evidence.
+  source-backed and five of six are Australia-resident (Sophos Australian
+  survey readings, a documented Latitude loss), but the Australian anchors are
+  all-sector, so the shard no longer clears the automated benchmark gate's
+  industry-relevance minimum - it deliberately traded sector-resident global
+  evidence for country-resident evidence (2026-08-02) and is labeled down
+  accordingly rather than over-claiming.
 context:
   industry: financial_services
   country: AU
@@ -35,5 +39,5 @@ tags:
   - mid_market
   - ransomware
 practitioner_notes:
-  good_for: Human benchmark review of an Australian financial-services ransomware shard with all six direct parameters source-backed and extraction-mapped.
-  not_good_for: Treating the stress frequency as a true tail rate or the Cyentia global tail-loss bridge as an Australia ransomware claims distribution without human review.
+  good_for: An Australian ransomware shard whose frequency and typical-loss anchors are Australian survey readings and whose stress loss is a documented ASX-disclosed event, with every remaining bridge named per record.
+  not_good_for: Treating the all-sector Australian readings as financial-services rates, the stress frequency as a true tail percentile, or the Latitude enterprise extortion loss as a plausible mid-market ransomware outcome.

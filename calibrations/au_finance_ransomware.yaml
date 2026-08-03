@@ -1,13 +1,17 @@
 metadata:
   name: Australia financial-services ransomware calibration
   scenario_name: Australia Finance Ransomware Midmarket - Calibrated Draft
-  version: "0.1"
+  version: "0.2"
   notes: >
-    Benchmark-review candidate calibration profile. It uses source-backed facts
-    for all six direct parameters, but the frequency stress anchor equals the
-    Sophos financial-services attack rate and the impact stress anchor is a
-    global Cyentia cyber-event tail-loss bridge rather than an Australia
-    ransomware claims distribution.
+    Benchmark-review candidate calibration profile. All six direct parameters are
+    source-backed, and five of six are Australia-resident (2026-08-02 rework):
+    frequency likely/max are the 2024/2023 Australian readings of the Sophos State
+    of Ransomware surveys, impact likely is the Australian mean recovery cost from
+    the Sophos Australia 2025 country cut, and impact max is Latitude's ASX-disclosed
+    AUD 76M cyber-incident cost. The remaining bridges are honest and recorded per
+    record: the frequency floor is still the global Cyentia likelihood, the Sophos
+    anchors are all-sector (sector bridged), and the Latitude stress anchor is a
+    large-company extortion event (size and threat bridged).
 
 target_currency: AUD
 
@@ -16,15 +20,15 @@ parameters:
     min:
       evidence_id: cyentia_global_ransomware_probability_2025
       transform: direct
-      rationale: Global ransomware likelihood floor from Cyentia IRIS Ransomware.
+      rationale: Global ransomware likelihood floor from Cyentia IRIS Ransomware - no Australian floor construct exists (OAIC notification counts are not org-level prevalence), so the floor stays a global bridge.
     likely:
-      evidence_id: sophos_fin_services_ransomware_frequency_2024
+      evidence_id: sophos_2024_au_ransomware_attack_rate_likely
       transform: direct
-      rationale: Financial-services ransomware survey rate from Sophos.
+      rationale: Australian reading (54%) of the Sophos 2024 survey - country-resident, ransomware-specific attack prevalence, replacing the country-bridged global financial-services rate.
     max:
-      evidence_id: sophos_fin_services_ransomware_frequency_stress_2024
+      evidence_id: sophos_2023_au_ransomware_attack_rate_stress
       transform: direct
-      rationale: Source-backed financial-services attack rate reused as the stress frequency anchor until stronger tail-frequency evidence is available.
+      rationale: Prior-year Australian reading (70%, Sophos 2023 survey) as a genuinely distinct stress bound above the likely anchor, replacing the reuse of one figure for both likely and max.
 
   impact:
     min:
@@ -34,14 +38,14 @@ parameters:
       round_to: 1000
       rationale: Locally gathered Australian medium-business cybercrime cost floor from Business Queensland guidance.
     likely:
-      evidence_id: sophos_fin_services_ransomware_recovery_cost_2024
+      evidence_id: sophos_au_2025_ransomware_recovery_cost_usd
       transform: currency_convert
       target_currency: AUD
       round_to: 10000
-      rationale: Sophos financial-services ransomware recovery cost converted from USD to AUD.
+      rationale: Australian mean ransomware recovery cost (Sophos Australia 2025 country cut, excluding ransom payments) converted from USD to AUD, replacing the country-bridged global financial-services recovery cost.
     max:
-      evidence_id: cyentia_iris_2022_top5_cyber_event_loss_usd_au_ransomware_context
-      transform: currency_convert
+      evidence_id: latitude_1h23_au_cyber_incident_cost_aud
+      transform: direct
       target_currency: AUD
       round_to: 100000
-      rationale: Source-backed Cyentia top-5% cyber-event loss bridge converted to AUD until Australia-specific ransomware tail-loss evidence is available.
+      rationale: Documented Australian financial-services cyber-extortion loss (Latitude 1H23, AUD 76M pre-tax disclosed to the ASX), replacing the Cyentia global top-5% cyber-event bridge at nearly the same level (AUD 72.3M).

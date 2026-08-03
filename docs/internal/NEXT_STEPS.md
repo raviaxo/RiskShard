@@ -77,9 +77,11 @@ the IBM edition-roll argued for.
   **✅ CA frequency DONE 2026-08-02 (PR #94):** all three CA frequency bridges retired with
   StatCan CSCSC 22-10-0076-01 full-cell readings (finance × medium × steal-personal/financial-
   info; 0.15/0.201/0.273 replacing 0.2436/0.42/0.42); headline **28 → 31 cell-matched**,
-  simulated CA losses roughly halved, `revisions/` entry explains. Remaining map: AU-ransomware
-  (6), JP (5), SG (4), AU-data-breach (4), US-BEC (4), US-DB-frequency (3), DE (3), AU-BEC (3),
-  FR (1). **Scouted negative 2026-08-02:** FR `impact.min` (Asteres has no per-attack-type
+  simulated CA losses roughly halved, `revisions/` entry explains. Remaining map
+  (cross-cell bridges, with cross-country in parentheses, as of 2026-08-02 close):
+  AU-ransomware 6 (1 — remaining bridges are sector-structural; no AU finserv ransomware
+  source exists), JP 5 (5), SG 4 (4), AU-data-breach 4 (3), US-BEC 4 (0), US-DB 3 (3),
+  DE 3 (3), AU-BEC 3 (1), FR 1 (0). **Scouted negative 2026-08-02:** FR `impact.min` (Asteres has no per-attack-type
   cost; AMRAE LUCY is all-peril claims — threat bridge survives either way) and US-DB frequency
   (no US official org-level breach-prevalence statistic exists — Hiscox/ITRC trade the country
   bridge for threat/size bridges; that is why the UK survey was borrowed).
@@ -93,6 +95,35 @@ the IBM edition-roll argued for.
   verified artifact; N=8 thinness carried as caveat) — **flagged for owner review**, along
   with the C-quality frequency.max cell. NetDiligence carries no SG-usable cells (US/CA
   claims only); SG stays open on the impact wall.
+  **✅ AU-ransomware country bridges DONE 2026-08-02:** four of five country bridges
+  retired with Australia-resident anchors — frequency.likely 0.54 (Sophos 2024 AU reading,
+  n=330), frequency.max 0.70 (Sophos 2023 AU reading; stress is no longer a duplicate of
+  likely), impact.likely USD 0.65M (Sophos *State of Ransomware in Australia 2025*, mean
+  recovery cost excl. ransoms), impact.max AUD 76M (Latitude 1H23 ASX disclosure,
+  documented AU finserv extortion loss, replacing Cyentia's 72.3M at nearly the same
+  level). **Cross-country 24 → 20**; cell-matched stays 31 (the anchors are all-sector, so
+  every param stays bridged on ≥1 dimension). Simulated AVG AUD 8.10M → 6.70M (seed 42).
+  The Sophos 2023/2024 whitepapers are pinned to **immutable Wayback snapshots** — the live
+  2024 asset URL now serves the 2025 edition under the 2024 filename (IBM-style edition
+  roll). **Deliberate cost, flagged loudly:** industry-specific selected params fell 4 → 1,
+  below the benchmark gate's minimum of 2, so the shard was **relabeled
+  benchmark_review_candidate → governed_starter** (benchmark-ready 5 → 4; still above the
+  beta gate's floor of 3) rather than argued with. Three superseded legacy estimated
+  records deleted (pack_confidence now reads "high" — that is record hygiene, not a data
+  strength claim). `company_disclosure` added to the source-type taxonomy (Latitude; ADR-0005
+  SEC filings would need it too). **Owner-review flags:** the 0.70-vs-0.80 stress choice on
+  a declining series (0.80 = documented harsher alternative); the Latitude threat call
+  (ransom demanded/refused, encryption unconfirmed → threat+size stay bridged, sizes
+  declared [all] for applicability per the NetDiligence idiom); the governed_starter
+  demotion itself. **Scouted negatives:** Sophos's 2025 editions dropped prevalence
+  reporting entirely (the AU frequency series cannot refresh like-for-like); ASD remains
+  ungatherable and the Wayback availability API has no snapshot of the report page; the
+  OAIC-counts frequency floor was rejected again (notification counts, not org-level
+  prevalence) so frequency.min stays the global Cyentia bridge — the shard's last
+  cross-country param. **Also surfaced (owner decisions, untouched):** maturity audit
+  shows two pre-existing label/gate mismatches — au_finance_data_breach over-labeled
+  (benchmark_review_candidate vs needs_evidence) and us_finance_data_breach under-labeled
+  (governed_starter vs benchmark_ready).
 - **The correction post** (distribution, the top blocker) — **drafted 2026-08-02, posting
   Tuesday 2026-08-04 after Ser's review.** Two venue-shaped drafts (r/GRC + GRC Engineering
   Club) with title options and posting notes live on `~/Desktop/riskshard-correction-post-drafts.md`
@@ -621,3 +652,14 @@ governance/regulatory loss).
   (28 → 31 cell-matched · 26 → 24 cross-country), correction post drafted, 9 PRs merged
   (#90–#97 + fixes), 221 tests, all gates green at close; ledger correctly holds the
   +3 cell-matched / −2 cross-country tick for the next release cut.
+- 2026-08-02 (next session, evening) — **AU-ransomware moved to Australian readings; four country bridges
+  retired; honest demotion taken.** The largest remaining cross-country cluster reworked:
+  Sophos AU survey readings (0.54/0.70) for frequency, the Sophos Australia 2025 recovery
+  cost (USD 0.65M) for impact.likely, and Latitude's ASX-disclosed AUD 76M for impact.max.
+  Cross-country 24 → 20; simulated AVG 8.10M → 6.70M AUD; three legacy estimated records
+  deleted; `company_disclosure` added to the source-type vocabulary. The trade's cost taken
+  openly: industry-specific selected params fell below the benchmark gate's minimum, so the
+  shard was relabeled governed_starter (benchmark-ready 5 → 4) instead of over-claiming.
+  Sophos 2023/2024 artifacts pinned to Wayback snapshots after catching the 2024 asset URL
+  serving the 2025 edition (IBM-style edition roll). 221 tests; validate, preflight, drift
+  gate, doctor all green. Anchor set presented for owner review at close per drive mode.
