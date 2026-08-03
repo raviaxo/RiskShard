@@ -1,19 +1,24 @@
 metadata:
   name: Singapore Finance Business Email Compromise Midmarket
-  version: "0.1"
+  version: "0.2"
   currency: USD
   scenario_stage: governed_starter
-  benchmark_status: starter_with_global_bec_loss_anchor_and_estimated_frequency
+  benchmark_status: starter_with_singapore_floor_ceiling_and_spf_losses
   description: >
-    Starter Singapore financial-services business email compromise shard. It
-    uses an FBI IC3 BEC complaint-average loss anchor for likely impact and
-    keeps frequency and loss bounds as explicit assumptions until Singapore
-    payment-fraud and financial-sector evidence is reviewed.
+    Singapore financial-services business email compromise shard. Four of six
+    anchors are Singapore-resident: the frequency floor is SPF reported BEC
+    cases over SingStat enterprise counts (0.001), the stress frequency is
+    CSA's all-cyber organisation prevalence used as a deliberate ceiling (0.80,
+    threat bridged), and the likely and stress losses are SPF figures (pooled
+    average per reported case; a documented interception case). The likely
+    frequency keeps the US AFP payments-fraud prevalence and the loss floor
+    keeps the DBIR median - both recorded as structural bridges because no
+    Singapore equivalent exists publicly.
 
 frequency:
-  min: 0.004
+  min: 0.001
   likely: 0.63
-  max: 0.74
+  max: 0.8
 
 impact:
   min: 50000

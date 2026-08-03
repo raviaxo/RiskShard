@@ -1127,3 +1127,48 @@ sources:
 
     '
   url_stability: dated
+- id: singstat_enterprise_landscape_m600981
+  title: SingStat Table M600981 - Enterprise Landscape By SMEs And Non-SMEs, Annual
+  publisher: Singapore Department of Statistics
+  source_type: official_statistics
+  url: https://tablebuilder.singstat.gov.sg/api/table/tabledata/M600981
+  fallback_urls:
+  - https://tablebuilder.singstat.gov.sg/table/TS/M600981
+  publication_date: '2026-01-01'
+  access_mode: public_json
+  intended_use:
+  - Singapore enterprise-count denominator for reported-case frequency floors
+  usage_notes: 'Official DOS enterprise landscape table via the SingStat Table Builder
+    JSON API. The cell used is "Enterprises Count, Total" - 371.0 thousand enterprises
+    for reference year 2025 (SMEs 369.5K, non-SMEs 1.5K; values are in thousands).
+    The API always serves the latest revision of the table (rolling), so the manifest
+    sha256 proves what was fetched at gathering time, not that the table is unchanged;
+    re-verify the cited cell when re-gathering. The denominator counts all enterprises
+    of every size and sector - any ratio built on it is all-sector, all-size by
+    construction.
+
+    '
+  url_stability: rolling
+- id: csa_cybersecurity_health_report_2023
+  title: CSA Singapore Cybersecurity Health Report 2023
+  publisher: Cyber Security Agency of Singapore
+  source_type: government_report
+  url: https://isomer-user-content.by.gov.sg/36/1051bace-6be7-4c59-934a-e43c952a32ed/csa-singapore-cybersecurity-health-report-2023.pdf
+  fallback_urls:
+  - https://www.csa.gov.sg/our-programmes/support-for-enterprises/sg-cyber-safe-programme/cybersecurity-health-survey-of-organisations/
+  publication_date: '2024-03-26'
+  access_mode: public_pdf
+  intended_use:
+  - Singapore organisation-level cyber-incident prevalence (all-cyber ceiling)
+  usage_notes: 'First CSA Cybersecurity Health Report: survey of 2,036 Singapore
+    organisations (businesses and non-profits, various sizes and sectors), fielded
+    May-August 2023. Key figure: "OVER 8 IN 10 organisations have encountered a
+    cybersecurity incident in a year", with about half encountering incidents several
+    times a year; top incident categories ransomware and social engineering. The
+    prevalence is ALL-CYBER, not BEC- or threat-specific, and the report publishes no
+    per-incident-type organisation prevalence - any threat-specific use is a threat
+    bridge and must say so. "Over 8 in 10" is taken conservatively as 0.80. The gov.sg
+    CDN rejects some default user agents but serves the gatherer''s UA.
+
+    '
+  url_stability: dated

@@ -140,6 +140,27 @@ the IBM edition-roll argued for.
   README front-door correction folded in: the "JP is 4/6 assumption-bridged" paragraph had
   been stale since 2026-07-24. Scouted negative: no Japan country cut of the Sophos
   recovery-cost survey exists — the impact-side country bridge is structural.
+  **✅ SG frequency floor + ceiling DONE 2026-08-03:** freq.min 0.001 (SPF 377 reported
+  BEC cases ÷ SingStat 371,000 enterprises — the revision the old US-derived record's own
+  limitations asked for) and freq.max 0.80 (CSA Health Report 2023 all-cyber prevalence as
+  a deliberate threat-bridged ceiling, MYOB-precedent) replace the IC3÷Census floor and
+  AFP US stress. **Cross-country 17 → 15.** Two new sources (SingStat M600981 JSON API,
+  CSA PDF); four legacy estimated placeholders deleted. **Flagged for owner review:** the
+  country-for-threat ceiling trade. **Structural negatives recorded on the records:** no
+  SG organisation-level BEC prevalence exists (freq.likely keeps AFP US) and no SG BEC
+  loss floor exists (impact.min keeps DBIR). **AU-BEC impact.likely scouted negative
+  2026-08-03:** ACCC false-billing data is voluntary small-business reports (median ~AUD
+  1k, average ~10k — below the shard's own floor); construct-inappropriate for mid-market;
+  the IC3 US average stays, structural. **THE MAP IS NOW FINISHED as far as public data
+  allows** — every remaining bridge is either structural (no such source exists, scouted
+  and recorded) or a deliberate methodological floor/ceiling. Final map (cross-cell,
+  cross-country): AU-ransomware 6 (1), JP 5 (3), SG 4 (2), AU-DB 4 (2), US-BEC 4 (0),
+  US-DB 3 (3), DE 3 (3), AU-BEC 3 (1), FR 1 (0), CA 2 (0), GB 0 (0). The 15 remaining
+  cross-country params: 5 Cyentia/DBIR floors-and-medians with no local construct, JP+DE
+  impact sides (no country cuts exist), US-DB frequency (no US official statistic —
+  scouted 2026-08-02), SG/AU likelies (no local prevalence), AU-DB frequency (UK DSIT,
+  kept deliberately 2026-07-30). Further cross-country reduction now requires new data to
+  be PUBLISHED, not found.
   **✅ AU-data-breach impact DONE 2026-08-02:** impact.likely moved from IBM 2025 global
   (USD 4.44M → AUD 6.2M converted) to **IBM 2026's Australian financial-services cell
   (AUD 6.31M)** via verified SecurityBrief coverage (IBM gates the PDF; same pattern as
@@ -713,3 +734,9 @@ governance/regulatory loss).
   records make the provenance card display evidence the calibration does not use (card
   picks by id, not selection) — superseded records now get deleted. DE scouted
   structurally negative. 221 tests; all gates green.
+- 2026-08-03 — **SG frequency reworked; the bridged map finished as far as public data
+  allows.** SPF÷SingStat floor (0.001) and CSA all-cyber ceiling (0.80) replaced the two
+  US frequency bridges (cross-country 17 -> 15); AU-BEC impact scouted negative (ACCC
+  small-business construct inappropriate); every remaining bridge now carries either a
+  structural-negative scout record or a deliberate-method note. Cross-country went 24 -> 15
+  across the two-day arc. 221 tests; all gates green.

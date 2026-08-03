@@ -1,0 +1,32 @@
+date: '2026-08-03'
+title: Singapore BEC frequency floor and ceiling move to Singapore anchors
+effect: 'Two of the sg_finance_bec_midmarket frequency parameters moved from US bridges to
+  Singapore-resident anchors. frequency.min moved from 0.004 (US IC3 complaints over US
+  Census firms, reused as Singapore context) to 0.001 (SPF''s 377 reported Singapore BEC
+  cases in 2025 over SingStat''s 371,000 enterprises) - the revision the old record''s own
+  limitations asked for. frequency.max moved from 0.74 (US AFP payments-fraud prevalence)
+  to 0.80 (CSA Singapore Cybersecurity Health Report 2023: over 8 in 10 organisations
+  encountered a cybersecurity incident in a year, taken conservatively as 0.80) - a
+  Singapore-resident all-cyber ceiling, deliberately threat-bridged, the same construct
+  role MYOB''s all-cyber 81% plays for the Australian BEC stress anchor. Same-day simulated
+  losses at seed 42 moved from AVG USD 660,539 / P95 1,774,131 / P99 2,554,931 to AVG
+  669,297 / P95 1,829,833 / P99 2,550,381. The cross-country count falls from 17 to 15;
+  cell-matched stays 31. Four superseded legacy estimated records (the 0.04/0.12/0.30
+  frequency and 25,000 impact placeholders) were deleted per the record-hygiene rule from
+  the same day''s Australia data-breach revision. Two new sources registered: SingStat
+  Table M600981 (enterprise counts, JSON API, rolling) and the CSA Cybersecurity Health
+  Report 2023 (PDF, dated).'
+reason: 'These were the last cross-country bridges in the portfolio with viable
+  local replacements. The floor trade is strict improvement: same construct (reported
+  cases over business population), both terms now Singapore figures; the floor falls
+  fourfold because Singapore''s reported-case rate is lower than the US complaint rate,
+  not because the risk shrank - under-reporting is loud on the record. The ceiling trade
+  is country-for-threat and is flagged for owner review: the CSA figure is all-cyber, so
+  it bounds BEC prevalence from above rather than measuring it; the US payments-fraud
+  figure it replaces was threat-closer but country-foreign. Deliberately NOT moved, with
+  the negatives recorded on the records: frequency.likely keeps the US AFP prevalence
+  (no Singapore organisation-level BEC prevalence exists publicly - CSA publishes no
+  per-incident-type prevalence and SPF publishes case counts, not organisation rates)
+  and impact.min keeps the DBIR median (no Singapore BEC loss floor exists publicly).
+  Those two, plus the sector dimension on the new anchors, are structural until better
+  Singapore data is published.'
