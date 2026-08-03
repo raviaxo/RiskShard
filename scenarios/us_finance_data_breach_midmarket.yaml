@@ -3,7 +3,7 @@ metadata:
   version: "0.1"
   currency: USD
   scenario_stage: governed_starter
-  benchmark_status: starter_with_source_backed_us_impact_and_bridged_frequency
+  benchmark_status: benchmark_review_candidate
   description: >
     Starter United States financial-services data-breach shard. Impact is
     source-backed by NetDiligence cyber-insurance claims, matched on country,

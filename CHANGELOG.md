@@ -5,6 +5,47 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.4.0 — 2026-08-03
+
+The finished map. Since v0.3.0 every remaining viable cross-country bridge was
+retired, and every bridge still standing now carries either a recorded
+structural-negative scout (the source does not exist publicly) or a deliberate
+methodological note. Further cross-country reduction requires new data to be
+published, not found.
+
+Data-pack release: `data_pack_releases/2026.08.03-v0.4.0.json`.
+Ledger tick since v0.3.0: **cross-country bridges 20 → 15**; labels now carry
+**zero label/gate mismatches** for the first time.
+
+### Japan: frequency moves to Japanese readings
+- 0.51 (2024 survey, n=500) and 0.58 (2023 survey, n=300) replace the global
+  manufacturing rates, from the same Wayback-pinned Sophos editions as the
+  Australian rework. The recorded doubt about whether the survey sampled Japan
+  is settled. The shard meets the gate's country-relevance minimum and is
+  promoted to `benchmark_review_candidate`.
+
+### Australia data breach: typical loss moves to IBM's Australian financial-services cell
+- AUD 6.31M (IBM 2026 Australian industry cut, via verified secondary coverage
+  because IBM gates the report) replaces the converted global average at nearly
+  the same value — the country and industry dimensions stop being bridged. The
+  shard clears the gate and its label is earned rather than over-claimed.
+
+### Singapore: frequency floor and ceiling move to Singapore anchors
+- Floor 0.001 (SPF's 377 reported BEC cases over SingStat's 371,000
+  enterprises — the revision the old US-derived record asked for) and ceiling
+  0.80 (CSA's all-cyber organisation prevalence, deliberately threat-bridged)
+  replace the two US frequency bridges.
+
+### Honesty machinery
+- **Superseded records are now deleted, not kept as alternatives:** the public
+  provenance card selects by confidence-then-id, not calibration selection, so
+  a kept non-selected record made the card display evidence the simulation did
+  not use. Found, fixed, and recorded in the revisions log.
+- The last eight legacy `estimated` placeholder records across SG and AU were
+  removed; documented alternatives live in the calibration rationales.
+- US data breach promoted to `benchmark_review_candidate` (it had been
+  under-labeled against a passing gate — under-claiming is also drift).
+
 ## v0.3.0 — 2026-08-02
 
 The residency release. Every change since v0.2.0 moves evidence closer to the

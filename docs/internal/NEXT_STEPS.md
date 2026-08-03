@@ -233,6 +233,16 @@ loader is never called, left alone rather than removed on faulty evidence.
 **Open decisions: none.** All five were taken on 2026-07-31 and recorded in ADRs (see the
 decisions block above). Nothing is waiting on a judgement call.
 
+**Decisions taken 2026-08-03 (Ser):** all standing recommendations approved — the anchor
+judgments stand as recorded, US-data-breach promoted (maturity audit now reports **zero
+label/gate mismatches**), and the strategic path is chosen: **distribution sprint with the
+citation play as complement** (paths 1+2 of the five proposed 2026-08-02). The five-path
+question is closed. Next sessions are distribution sessions, not repo sessions, until the
+first-believer metric moves. v0.4.0 ("the finished map") cut 2026-08-03 so `RS:` citations
+pin to the finished-map values before the post; post drafts on ~/Desktop refreshed the same
+day (marked edit block at top: headline arc 28/38 → 31/35, exactness note re-pinned to
+v0.4.0, edition-roll bullet added to Draft B).
+
 **Current top blocker** *(updated 2026-08-02)*: **distribution — now with the safety off.**
 The correction post is drafted (Desktop), posting Tuesday 2026-08-04 pending Ser's review;
 the five-path strategic choice is also pending Ser. Until those two decisions land, product
