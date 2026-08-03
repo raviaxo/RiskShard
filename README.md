@@ -117,8 +117,9 @@ RS:us_finance_bec_midmarket/impact.likely@2026.07.21-v0.1.0-stable
 citation with the value, the source, **the caveat**, and a permanent link — so a figure
 quoted in a board deck or an audit workpaper carries its limitation with it, and still
 resolves to what it said when it was written. Identifiers are never reused or deleted; a
-renamed shard keeps resolving through `aliases.yaml`. See
-[ADR-0004](docs/adr/0004-citable-parameter-identifiers.md).
+renamed shard keeps resolving through `aliases.yaml`. Worked examples — a risk-register
+row, a board-deck footnote, a prose sentence — are in [docs/CITING.md](docs/CITING.md);
+the design is [ADR-0004](docs/adr/0004-citable-parameter-identifiers.md).
 
 The whole system at once: [docs/EVIDENCE_REPORT.md](docs/EVIDENCE_REPORT.md) is every
 parameter in every shard — value, source, and caveat — regenerated with
