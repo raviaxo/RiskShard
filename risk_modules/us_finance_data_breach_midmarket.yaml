@@ -1,7 +1,7 @@
 id: us_finance_data_breach_midmarket
 title: United States Finance Data Breach Midmarket
 version: "0.1"
-status: governed_starter
+status: benchmark_review_candidate
 threat: data_breach
 description: >
   Governed starter data-breach shard for a United States mid-market
