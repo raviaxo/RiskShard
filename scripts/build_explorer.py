@@ -76,6 +76,10 @@ def load_revisions(path=None):
             "effect": (entry.get("effect") or "").strip(),
             "reason": (entry.get("reason") or "").strip(),
             "decision": entry.get("decision"),
+            # Count of outright retractions this entry records (a figure withdrawn
+            # because it appears in no primary source), as opposed to a value moved
+            # by better evidence. Feeds the "numbers broken so far" tally.
+            "retractions": int(entry.get("retractions") or 0),
         })
     entries.sort(key=lambda e: e["date"], reverse=True)
     return entries

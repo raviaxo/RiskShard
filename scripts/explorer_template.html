@@ -72,6 +72,13 @@
   table.grid tr:last-child td{border-bottom:1px solid var(--rule)}
   table.grid .item{white-space:nowrap}
 
+  /* challenge notice — same paper as the rest; a rule, not a color, marks it */
+  .challenge{margin:18px 0 0;max-width:80ch;border:1px solid #000;padding:12px 16px}
+  .challenge .challengehead{font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.85em}
+  .challenge ol{margin:8px 0 0;padding-left:1.4em}
+  .challenge li{margin:4px 0}
+  .challenge p{margin:10px 0 0}
+
   /* notes */
   .note{margin:14px 0 0;max-width:80ch}
   .note summary{cursor:pointer;font-weight:600;list-style:none}
@@ -145,6 +152,16 @@
     not human-approved benchmarks. Loss tails (P95/P99) are directional, not precise.</p>
   </div>
 
+  <div class="challenge" id="challenge">
+    <div class="challengehead">Notice to readers — how to break a number</div>
+    <ol>
+      <li>Pick any figure in any item below.</li>
+      <li>Follow it to the named source and the exact cited line — both are printed on the parameter's row.</li>
+      <li>If the value, the source, or the caveat is wrong, use the [dispute] link on that row. It opens a pre-filled issue; state what is wrong and the public source that shows it.</li>
+    </ol>
+    <p id="challengetally"></p>
+  </div>
+
   <h2 id="index">Index of items</h2>
   <p class="h2sub">Figures are modeled annual loss in local currency. Click an item for its full parameter record.</p>
   <div class="tblwrap">
@@ -164,11 +181,12 @@
     → benchmark-grade (the last only after a recorded human review; no item on this page holds it).</p>
   </div>
 
-  <h2>Note 2 — Why these figures changed</h2>
-  <details class="note" id="revnote">
-    <summary id="revsummary"></summary>
+  <h2>Note 2 — The correction record</h2>
+  <p class="h2sub">Why these figures changed. Every correction ever made, newest first; none was silent.</p>
+  <div class="note" id="revnote">
+    <p id="revsummary"></p>
     <div id="revbody"></div>
-  </details>
+  </div>
 
   <div id="items"></div>
 
@@ -284,17 +302,29 @@
   }).join('');
   document.getElementById('indextable').innerHTML=head+'<tbody>'+rows+'</tbody>';
 
-  /* Note 2 — revisions. If a published figure moved for a method reason, say so on the
-     page rather than letting a returning reader think the number was quietly changed. */
+  /* Note 2 — the correction record. If a published figure moved — or was withdrawn —
+     say so on the page rather than letting a returning reader think the number was
+     quietly changed. Retractions (a figure that appears in no primary source) are
+     tallied separately from revisions (a value moved by better evidence). */
   var revs=DATA.revisions||[];
+  var broken=revs.reduce(function(n,r){return n+(r.retractions||0);},0);
   document.getElementById('revsummary').textContent=
-    revs.length?('This exhibit has been revised '+revs.length+' times. Every revision is recorded below; none was silent.'):
-    'No revisions recorded.';
+    revs.length?('This exhibit has been corrected '+revs.length+' times, including '+broken+
+      ' outright retraction'+(broken===1?'':'s')+'. Every correction is recorded below; none was silent.'):
+    'No corrections recorded.';
   document.getElementById('revbody').innerHTML=revs.map(function(r){
     var link=r.decision?(' · <a href="'+REPO+'/blob/main/'+esc(r.decision)+'">decision record</a>'):'';
-    return '<div class="rev"><div class="revhead">'+esc(r.date)+' — '+esc(r.title)+link+'</div>'+
+    var tag=r.retractions?('<span class="st est">retraction</span> '):'';
+    return '<div class="rev"><div class="revhead">'+esc(r.date)+' — '+tag+esc(r.title)+link+'</div>'+
       '<p>'+esc(r.effect)+' '+esc(r.reason)+'</p></div>';
   }).join('');
+  /* The tally is computed, so the sentence must survive the count changing —
+     "both by us" is only true while the score is exactly 2–0 to the maintainer. */
+  var whose=(broken===2)?' — both by us':(broken>0?' — so far all by us':'');
+  var next=(broken===2)?'Be the third':'Be the next';
+  document.getElementById('challengetally').textContent=
+    'Numbers broken so far: '+broken+whose+' (see Note 2, the correction record). '+
+    next+': a confirmed break is retracted publicly and credited by handle in the changelog.';
 
   /* Items 01..NN — the full record, printed. A document does not hide its notes. */
   var itemsHTML=DATA.shards.map(function(s,i){

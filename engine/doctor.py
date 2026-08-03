@@ -162,6 +162,33 @@ def calibration_drift_check(root):
                 current = scenario.get(block.lower(), {})
                 if any(not _close(current.get(k), v) for k, v in calibrated.items()):
                     drifted.append(f"{module['id']}/{block.lower()}")
+        # Top-risk scenarios sit outside the risk-module artifact graph, which is
+        # how the insider scenario once drifted invisibly (found 2026-08-01, fixed
+        # same day, gap left open). A calibration that maintains such a scenario
+        # declares the pairing in `metadata.drift_watch`; every declared pair is
+        # held to the same effectively-exact standard as the module shards.
+        from engine.calibration import run_calibration
+
+        for path in sorted((root / "calibrations").glob("*.yaml")):
+            profile = _yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+            watch = (profile.get("metadata") or {}).get("drift_watch") or {}
+            if not {"scenario", "org_profile", "threat"} <= set(watch):
+                continue
+            report = run_calibration(
+                root / watch["scenario"],
+                root / watch["org_profile"],
+                root / "evidence",
+                path,
+                threat=watch["threat"],
+            )
+            generated = report["generated_scenario"]
+            scenario = _yaml.safe_load((root / watch["scenario"]).read_text(encoding="utf-8")) or {}
+            checked += 1
+            for block in ("frequency", "impact"):
+                current = scenario.get(block, {})
+                calibrated = generated.get(block, {})
+                if any(not _close(current.get(k), v) for k, v in calibrated.items()):
+                    drifted.append(f"toprisk:{Path(watch['scenario']).stem}/{block}")
         if not checked:
             return {"name": "calibration drift", "status": "pass", "detail": "no calibrated shards"}
         if drifted:
@@ -174,7 +201,7 @@ def calibration_drift_check(root):
                            f"produced by the evidence displayed beside it"),
             }
         return {"name": "calibration drift", "status": "pass",
-                "detail": f"{checked} shards match their calibration"}
+                "detail": f"{checked} scenario/calibration pairs match (risk-module shards + drift_watch top-risk scenarios)"}
     except Exception as exc:  # pragma: no cover - diagnostic path
         return {"name": "calibration drift", "status": "fail", "detail": str(exc)}
 

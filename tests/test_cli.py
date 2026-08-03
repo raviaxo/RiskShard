@@ -176,7 +176,7 @@ class CliSmokeTests(unittest.TestCase):
         self.assertIn("RiskShard doctor", result.stdout)
         self.assertRegex(result.stdout, r"Status: (pass|needs_review)")
         self.assertIn("calibration drift", result.stdout)
-        self.assertIn("11 shards match their calibration", result.stdout)
+        self.assertIn("15 scenario/calibration pairs match", result.stdout)
 
     def test_data_pack_cli_writes_named_release(self):
         env = os.environ.copy()

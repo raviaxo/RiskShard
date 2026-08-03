@@ -52,27 +52,62 @@ def _card_population(record, cell_country):
     return {"status": "bridged" if dims else "matched", "bridged_on": sorted(dims)}
 
 
+def _calibration_selected_evidence(module, root):
+    """Map parameter -> evidence_id as the module's calibration profile selects it.
+
+    The card must display the record the simulation actually uses. The evidence
+    pack's `best_evidence_id` ranks candidates by confidence-then-id, which can
+    disagree with the calibration's explicit `evidence_id` whenever a parameter
+    carries more than one record (found 2026-08-02: a superseded record kept "for
+    reference" sorted first and the public card displayed evidence the calibration
+    did not use). The calibration profile is the authority; the pack ranking is
+    only a fallback for parameters the calibration does not name.
+    """
+    import yaml
+
+    calibration_path = ((module or {}).get("artifacts") or {}).get("calibration")
+    if not calibration_path:
+        return {}
+    try:
+        profile = yaml.safe_load((root / calibration_path).read_text(encoding="utf-8")) or {}
+    except OSError:
+        return {}
+    selected = {}
+    for block, entries in (profile.get("parameters") or {}).items():
+        for bound, spec in (entries or {}).items():
+            evidence_id = (spec or {}).get("evidence_id")
+            if evidence_id:
+                selected[f"{block}.{bound}"] = evidence_id
+    return selected
+
+
 def build_module_provenance(module_id, root, feeds_by_id=None):
     """One provenance card per direct parameter of a shard, in parameter order.
 
     Each card carries the chosen value + unit, source identity, the cited line,
-    the caveat (record `limitations`), confidence, and status. Parameters whose
-    best evidence record can't be found still yield a card marked `missing` so a
-    gap is visible, never silently dropped.
+    the caveat (record `limitations`), confidence, and status. The record shown is
+    the one the module's calibration profile selects for that parameter — what the
+    simulation actually uses — falling back to the evidence pack's ranking only
+    when the calibration does not name one. Parameters whose record can't be found
+    still yield a card marked `missing` so a gap is visible, never silently dropped.
     """
     module = find_risk_module(module_id, root)
     pack = build_evidence_pack(module, root, feeds_by_id=feeds_by_id)
     records_by_id = {r["id"]: r for r in load_module_evidence_records(module, root)}
     cell_country = ((module or {}).get("context") or {}).get("country")
+    calibration_selected = _calibration_selected_evidence(module, root)
 
     cards = []
     for dp in pack.get("direct_parameters", []):
-        record = records_by_id.get(dp.get("best_evidence_id"))
+        selected_id = calibration_selected.get(dp.get("parameter"))
+        if selected_id not in records_by_id:
+            selected_id = dp.get("best_evidence_id")
+        record = records_by_id.get(selected_id)
         card = {
             "parameter": dp.get("parameter"),
             "status": dp.get("status"),
-            "confidence": dp.get("best_confidence"),
-            "evidence_id": dp.get("best_evidence_id"),
+            "confidence": (record or {}).get("confidence", dp.get("best_confidence")),
+            "evidence_id": selected_id,
         }
         if record is None:
             card.update(

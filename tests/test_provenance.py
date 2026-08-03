@@ -149,6 +149,31 @@ class PopulationMatchTests(unittest.TestCase):
         self.assertEqual(pop["status"], "bridged")
         self.assertEqual(pop["bridged_on"], ["sector", "size"])
 
+    def test_cards_display_the_record_the_calibration_selects(self):
+        # The invariant behind the challenge affordance: the record a card shows
+        # must be the record the simulation uses. Found violated 2026-08-02 when a
+        # superseded record kept "for reference" outranked the calibration's
+        # selection in the pack's confidence-then-id ordering. Checked repo-wide:
+        # every card of every shard whose calibration names an evidence_id for
+        # that parameter must display exactly that record.
+        from engine.provenance import _calibration_selected_evidence
+        from engine.risk_modules import load_risk_modules
+
+        for module in load_risk_modules(ROOT):
+            selected = _calibration_selected_evidence(module, ROOT)
+            if not selected:
+                continue
+            prov = build_module_provenance(module["id"], ROOT)
+            for card in prov["cards"]:
+                expected = selected.get(card["parameter"])
+                if expected:
+                    self.assertEqual(
+                        card["evidence_id"],
+                        expected,
+                        f"{module['id']}/{card['parameter']} displays "
+                        f"{card['evidence_id']} but the calibration selects {expected}",
+                    )
+
     def test_portfolio_totals_split_and_sum(self):
         from pathlib import Path
 

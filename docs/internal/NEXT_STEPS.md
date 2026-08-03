@@ -744,6 +744,18 @@ governance/regulatory loss).
   records make the provenance card display evidence the calibration does not use (card
   picks by id, not selection) — superseded records now get deleted. DE scouted
   structurally negative. 221 tests; all gates green.
+- 2026-08-03 (pre-post build) — **Honesty hardening + challenge surfaces shipped in the
+  36h before the post.** (1) Provenance cards now display the record the calibration
+  selects (repo-wide invariant test added) — the display-vs-simulation divergence class
+  is closed at the engine, not by deletion discipline. (2) The calibration-drift gate now
+  covers top-risk scenarios via `drift_watch` blocks in their calibrations (15 pairs
+  checked; gate verified to FAIL on induced drift). All four previously-uncovered pairs
+  were in sync — no number moved. (3) The explorer gained a "Notice to readers — how to
+  break a number" box and Note 2 became "The correction record" with a computed
+  retraction tally; the two 2026-08-01 retractions were backfilled into `revisions/`
+  (recorded-late stated in the entry) so the correction record the post links to carries
+  its own headline story. New optional `retractions:` field on revision entries feeds the
+  tally.
 - 2026-08-03 — **SG frequency reworked; the bridged map finished as far as public data
   allows.** SPF÷SingStat floor (0.001) and CSA all-cyber ceiling (0.80) replaced the two
   US frequency bridges (cross-country 17 -> 15); AU-BEC impact scouted negative (ACCC
