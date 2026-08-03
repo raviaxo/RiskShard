@@ -1,0 +1,41 @@
+date: '2026-08-02'
+title: Australia ransomware moves to Australian readings; four country bridges retired
+effect: 'Four of the six au_finance_ransomware_midmarket parameters moved from global
+  bridges to Australia-resident anchors. frequency.likely moved from 0.65 (Sophos global
+  financial-services rate) to 0.54 (Sophos 2024 survey, Australian reading, n=330);
+  frequency.max from 0.65 (the same global figure reused as both likely and max) to 0.70
+  (Sophos 2023 survey, Australian reading, n=200) - the stress bound is now a genuinely
+  distinct reading instead of a duplicate. impact.likely moved from AUD 3,590,000 (Sophos
+  global financial-services mean recovery cost, USD 2.58M converted) to AUD 900,000 (Sophos
+  State of Ransomware in Australia 2025 mean recovery cost, USD 0.65M converted, excluding
+  ransom payments). impact.max moved from AUD 72,300,000 (Cyentia global top-5% cyber-event
+  loss, USD 52M converted) to AUD 76,000,000 (Latitude Group Holdings 1H23 ASX disclosure,
+  pre-tax costs and provisions for the March 2023 incident). Same-day simulated losses at
+  seed 42 moved from AVG AUD 8.10M / P95 20.24M / P99 27.10M to AVG 6.70M / P95 18.18M /
+  P99 24.83M. All six parameters remain bridged on at least one dimension (the Sophos
+  anchors are all-sector; Latitude is a large-company extortion event bridged on size and
+  threat; the frequency floor stays the global Cyentia likelihood), so the cell-matched
+  count is unchanged at 31, but the cross-country count falls from 24 to 20. Three
+  superseded legacy estimated records (an ungoverned 0.22 frequency floor and the 0.85 /
+  AUD 9M stress placeholders) were removed from the evidence file in the same pass. The
+  shard''s maturity label falls from benchmark_review_candidate to governed_starter: the
+  automated benchmark gate requires at least two financial-services-specific selected
+  parameters, and the Australian anchors are all-sector, so industry-specific selected
+  parameters fell from four to one (Latitude) while country-specific rose to five. The
+  benchmark-ready count falls from 5 to 4 - the label was reduced rather than the gate
+  argued with.'
+reason: 'The prior anchors were global benchmarks doing duty for Australia - the largest
+  remaining cross-country cluster in the portfolio after the Canada rework. Sophos publishes
+  per-country readings that are Australia-resident and ransomware-specific, and Latitude''s
+  ASX disclosure is a documented Australian financial-services loss at nearly the level the
+  global bridge had assumed. The frequency range narrowed and the typical loss fell because
+  the evidence got closer to home (and because the Australian readings themselves fell year
+  over year), not because ransomware got cheaper by assumption. Two deliberate judgments
+  travel with this change and are flagged for owner review: the 2024/2023 survey pair is a
+  declining series, so the stress anchor is an older, higher reading rather than a tail
+  percentile (the 2022 reading, 0.80, is the documented harsher alternative); and the
+  Latitude event is data-theft extortion at an enterprise-scale lender, kept as a deliberate
+  stress ceiling with size and threat bridged rather than presented as a mid-market
+  ransomware outcome. The Sophos 2023/2024 whitepapers are cited via immutable Internet
+  Archive snapshots because the live 2024 asset URL was observed serving the 2025 edition
+  under the 2024 filename - the same silent edition-roll failure mode recorded for IBM.'

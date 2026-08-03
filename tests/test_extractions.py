@@ -13,7 +13,7 @@ class ExtractionTests(unittest.TestCase):
 
         self.assertGreaterEqual(len(records), 8)
         self.assertIn(
-            "sophos_fin_services_hit_rate_2024",
+            "sophos_2024_au_ransomware_attack_rate",
             {record["id"] for record in records},
         )
         self.assertIn(

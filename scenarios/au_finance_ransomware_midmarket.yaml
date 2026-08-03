@@ -1,22 +1,26 @@
 metadata:
   name: Australia Finance Ransomware Midmarket
-  version: "0.2"
+  version: "0.3"
   currency: AUD
   scenario_stage: governed_starter
-  benchmark_status: benchmark_review_candidate
+  benchmark_status: starter_country_resident_anchors_sector_bridged
   description: >
-    Benchmark-review candidate shard for a small or mid-market financial-services
-    organization in Australia. All six direct parameters are source-backed, but
-    frequency max reuses the financial-services hit rate and impact max uses a
-    global cyber-event tail-loss bridge until Australia-specific ransomware tail
-    evidence is reviewed.
+    Governed-starter shard for a small or mid-market financial-services
+    organization in Australia. All six direct parameters are source-backed and five
+    of six are Australia-resident: frequency likely/max are the 2024/2023 Australian
+    readings of the Sophos State of Ransomware surveys, impact likely is the
+    Australian mean recovery cost (Sophos Australia 2025, excluding ransom payments),
+    and impact max is Latitude's ASX-disclosed AUD 76M cyber-incident cost. The
+    frequency floor remains a global Cyentia bridge, the Sophos anchors are
+    all-sector, and the Latitude stress anchor is a large-company extortion event -
+    each bridge is recorded on its evidence record.
 
 frequency:
   min: 0.1
-  likely: 0.65
-  max: 0.65
+  likely: 0.54
+  max: 0.7
 
 impact:
   min: 97000
-  likely: 3590000
-  max: 72300000
+  likely: 900000
+  max: 76000000

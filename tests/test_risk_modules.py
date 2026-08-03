@@ -86,7 +86,7 @@ class RiskModuleTests(unittest.TestCase):
         self.assertEqual(registry["pack_count"], 11)
         self.assertIn("Evidence packs", output)
         self.assertEqual(ransomware["freshness_status"], "current")
-        self.assertEqual(ransomware["pack_confidence"], "medium")
+        self.assertEqual(ransomware["pack_confidence"], "high")
         self.assertIn("frequency.max: source_backed", detail)
         self.assertIn("source_gathered", detail)
 

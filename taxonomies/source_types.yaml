@@ -30,6 +30,7 @@ base:
   - vulnerability_exploitation_prior
   - industry_survey
   - analyst_survey
+  - company_disclosure
   - news_report
   - government_report
   - government_business_guidance
