@@ -418,14 +418,15 @@ python scripts/riskshard_toprisks.py           # top-risk calibration status
 ```
 
 **Country shards — 11 modules across 8 countries (AU, CA, DE, FR, GB, JP, SG, US).**
-Ten are 6/6 source-backed across business email compromise, data breach, and ransomware
-— every BEC shard (US, AU, SG) is fully source-backed, and `gb_finance_data_breach_midmarket`
-carries the highest-confidence sourcing (UK official prevalence + IBM UK cost + an FCA
-Equifax penalty stress anchor). The one exception is `jp_manufacturing_ransomware_midmarket`
-(4/6, assumption-bridged): its impact floor and Japan reported-incidence context are
-source-backed, but two frequency parameters remain **labeled estimates** pending
-denominator-aware Japan evidence. It is explicitly a contribution scaffold, not part of
-any benchmark claim.
+All eleven are 6/6 source-backed across business email compromise, data breach, and
+ransomware — every BEC shard (US, AU, SG) is fully source-backed, and
+`gb_finance_data_breach_midmarket` carries the highest-confidence sourcing (UK official
+prevalence + IBM UK cost + an FCA Equifax penalty stress anchor; it is also the only
+shard whose evidence is entirely cell-matched). Source-backed does not mean cell-matched:
+the per-parameter population status (cell-matched vs bridged, and on which dimension)
+is on the [explorer](https://raviaxo.github.io/RiskShard/) and in the evidence report —
+that split is the honest headline, and the coverage tools above are the authoritative
+view.
 
 **Top-risk threats — all six now runnable, not merely evidenced.** Business email
 compromise, data breach, ransomware, insider misuse, and AI-enabled (deepfake) fraud

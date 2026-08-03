@@ -1,15 +1,18 @@
 metadata:
   name: Japan manufacturing ransomware calibration
   scenario_name: Japan Manufacturing Ransomware Midmarket - Calibrated Draft
-  version: "0.1"
+  version: "0.2"
   notes: >
-    Starter calibration profile for a Japan mid-market manufacturing
-    ransomware shard. Governed-starter: frequency.min uses a global ransomware
-    likelihood floor, frequency.likely/max use Sophos manufacturing survey
-    attack-prevalence (55/56/65% series; attack prevalence, which overstates
-    loss-event frequency and is not Japan-specific), impact.min uses Japan NPA
-    restoration-cost evidence, and impact.likely/max use manufacturing-sector
-    ransomware benchmarks until Japan manufacturing full-loss evidence is reviewed.
+    Starter calibration profile for a Japan mid-market manufacturing ransomware
+    shard. Frequency likely/max are Japan-resident (2026-08-02 rework): the
+    2024/2023 Japanese readings of the Sophos State of Ransomware surveys
+    (51%/58%, all-sector - the sector dimension stays bridged), on the same
+    "hit by ransomware" event basis as the Sophos manufacturing impact anchors.
+    frequency.min stays a global Cyentia likelihood floor. impact.min is Japan
+    NPA restoration-cost evidence; impact.likely/max stay manufacturing-sector
+    global benchmarks - no Japan country cut of the recovery-cost survey exists
+    (scouted 2026-08-02), so the country bridge on the impact side is structural
+    until Japanese loss data is published.
 
 target_currency: USD
 
@@ -20,13 +23,13 @@ parameters:
       transform: direct
       rationale: Global ransomware likelihood floor from Cyentia IRIS Ransomware.
     likely:
-      evidence_id: sophos_manufacturing_ransomware_prevalence_2023_likely_jp_context
+      evidence_id: sophos_2024_jp_ransomware_attack_rate_likely
       transform: direct
-      rationale: Sophos manufacturing ransomware attack-prevalence (56%, 2023 as reported in the 2024 report); attack prevalence overstates loss-event frequency and is not Japan-specific.
+      rationale: Japanese reading (51%) of the Sophos 2024 survey - country-resident, ransomware-specific attack prevalence, replacing the country-bridged global manufacturing rate.
     max:
-      evidence_id: sophos_manufacturing_ransomware_prevalence_2024_stress_jp_context
+      evidence_id: sophos_2023_jp_ransomware_attack_rate_stress
       transform: direct
-      rationale: Sophos manufacturing ransomware attack-prevalence peak (65%, 2024); recent-peak stress anchor, attack prevalence, not Japan-specific.
+      rationale: Prior-year Japanese reading (58%, Sophos 2023 survey) as a genuinely distinct stress bound above the likely anchor; the 2022 reading (61%) is the documented harsher alternative.
 
   impact:
     min:

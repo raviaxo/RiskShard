@@ -24,65 +24,71 @@ records:
       company_size_bands: [all]
       threats: [ransomware]
 
-  - id: sophos_manufacturing_ransomware_prevalence_2023_likely_jp_context
-    title: Manufacturing ransomware attack prevalence (prior-year) for Japan context
+  - id: sophos_2024_jp_ransomware_attack_rate_likely
+    title: Japanese organizations hit by ransomware, 2024 survey reading
     parameter: frequency.likely
-    value: 0.56
+    value: 0.51
     unit: annual_probability
-    source_id: sophos_state_ransomware_manufacturing_2024
-    source_name: Sophos State of Ransomware in Manufacturing and Production 2024
+    source_id: sophos_state_ransomware_2024
+    source_name: Sophos The State of Ransomware 2024 (archived snapshot)
     source_type: industry_survey
-    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2024
-    publication_date: "2024-05-28"
-    extraction_date: "2026-07-24"
-    citation_detail: "Attack rates and recovery costs section; 65% of manufacturing and production organizations were hit by ransomware last year, a notable increase from the previous two years (56% in 2023 and 55% in 2022)."
-    extraction_notes: Selected the reported 2023 manufacturing ransomware attack-prevalence (56%) as the representative likely annual frequency for a Japan mid-market manufacturing starter.
-    normalization_notes: Stored 56% as 0.56. Paired with the shard's Sophos manufacturing recovery-cost impact, which is likewise measured over organizations hit by ransomware, so frequency and impact share one "hit by ransomware" event basis.
+    source_url_or_citation: https://web.archive.org/web/20240430145048if_/https://assets.sophos.com/X24WTUEQ/at/9brgj5n44hqvgsp5f5bqcps/sophos-state-of-ransomware-2024-wp.pdf
+    publication_date: "2024-04-30"
+    extraction_date: "2026-08-02"
+    citation_detail: Attack-rate prose (printed page 3) reads "the lowest reported attack rates were by respondents in Brazil (44%), Japan (51%), and Australia (54%)"; the by-country chart carries the same 51% for Japan (n=500). Verified in the gathered snapshot artifact.
+    extraction_notes: Selected the Japanese reading of the 2024 global survey as the likely anchor, replacing the global manufacturing rate (56%, 2023 reading), which was country-bridged and not confirmed to include Japan. The swap trades the sector dimension for the country dimension; the sector bridge is recorded.
+    normalization_notes: Stored 51% as 0.51. Same "hit by ransomware" survey construct as the shard's Sophos manufacturing recovery-cost impact anchors, so frequency and impact keep one attack-event basis.
     limitations: >
-      Global survey of organizations with 100-5,000 employees (17 countries; not
-      confirmed to include Japan), not Japan-specific or size-band-specific. Reports
-      ATTACK prevalence ("hit by ransomware"), which OVERSTATES loss-event frequency:
-      in the 2025 report only ~40% of manufacturing attacks resulted in encryption.
-      Survey respondents (orgs with IT/security leaders) may overstate population
-      prevalence, and the 55/56/65% series is rising, so a point estimate hides the trend.
-      Read the frequency as attack-incidence on the same basis as the impact side.
+      Attack prevalence ("hit by ransomware"), not loss-event frequency - it counts
+      organizations attacked, including attacks stopped before material loss, so it
+      overstates loss-event frequency (in the 2025 manufacturing report only ~40% of
+      attacks resulted in encryption). All-sector Japanese sample used for a
+      manufacturing shard; the sector dimension stays bridged (the global
+      manufacturing comparator read 65% in the same survey year, above Japan's
+      all-sector rate). Survey population is organizations with 100-5,000 employees.
+      Vendor-commissioned, n=500 Japanese respondents. The Japanese series is falling
+      (61% in 2022, 58% in 2023, 51% in 2024) and the 2025 edition dropped prevalence
+      reporting entirely, so this reading cannot be refreshed like-for-like.
     confidence: medium
     evidence_type: source_backed
     population_match:
-      status: matched
+      status: bridged
+      bridged_on: [sector]
     applicability:
-      industries: [manufacturing]
-      countries: [global]
+      industries: [all]
+      countries: [JP]
       company_size_bands: [mid_market, enterprise]
       threats: [ransomware]
 
-  - id: sophos_manufacturing_ransomware_prevalence_2024_stress_jp_context
-    title: Manufacturing ransomware attack prevalence (current-year peak) for Japan context
+  - id: sophos_2023_jp_ransomware_attack_rate_stress
+    title: Japanese organizations hit by ransomware, 2023 survey reading (stress)
     parameter: frequency.max
-    value: 0.65
+    value: 0.58
     unit: annual_probability
-    source_id: sophos_state_ransomware_manufacturing_2024
-    source_name: Sophos State of Ransomware in Manufacturing and Production 2024
+    source_id: sophos_state_ransomware_2023
+    source_name: Sophos The State of Ransomware 2023 (archived snapshot)
     source_type: industry_survey
-    source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2024
-    publication_date: "2024-05-28"
-    extraction_date: "2026-07-24"
-    citation_detail: "Attack rates and recovery costs section; 65% of manufacturing and production organizations reported they were hit by ransomware last year, the highest of the reported 55%/56%/65% (2022/2023/2024) series."
-    extraction_notes: Selected the reported 2024 manufacturing ransomware attack-prevalence (65%), the highest observed year, as the stress/high frequency anchor.
-    normalization_notes: Stored 65% as 0.65. Same "hit by ransomware" event basis as the shard's Sophos manufacturing impact anchors.
+    source_url_or_citation: https://web.archive.org/web/20230511013336if_/https://assets.sophos.com/X24WTUEQ/at/c949g7693gsnjh9rb9gr8/sophos-state-of-ransomware-2023-wp.pdf
+    publication_date: "2023-05-01"
+    extraction_date: "2026-08-02"
+    citation_detail: Additional Charts, "Rate of Ransomware Attacks by Country. 2022 vs. 2023" (printed page 18) - Japan (n=300) reads 61% for 2022 and 58% for 2023. The chart's numeric labels are present in the artifact text; the label-to-country pairing was verified visually on the rendered page of the gathered snapshot.
+    extraction_notes: Selected the prior-year (2023) Japanese reading as the stress anchor above the 2024 likely reading of 0.51, replacing the global manufacturing peak (65%), which was country-bridged. The 2022 reading (0.61) is the documented alternative if a harsher stress bound is preferred on review. The stress bound falls (0.65 to 0.58) because the Japanese all-sector series runs below the global manufacturing series.
+    normalization_notes: Stored 58% as 0.58. Same "hit by ransomware" survey construct as the shard's Sophos manufacturing impact anchors.
     limitations: >
-      Highest observed year of a rising 55/56/65% (2022/2023/2024) series, so it is a
-      recent peak rather than a formal tail percentile. Global survey of organizations
-      with 100-5,000 employees (not Japan-specific). Reports ATTACK prevalence, which
-      OVERSTATES loss-event frequency (only ~40% of 2025 manufacturing attacks encrypted).
-      Read as attack-incidence on the same basis as the impact side.
+      Attack prevalence, not loss-event frequency (see the likely record). The stress
+      anchor is one survey-year older than the likely anchor, taken from a declining
+      series (61% 2022, 58% 2023, 51% 2024) - an older, higher reading used as a
+      deliberate conservative stress bound, not a tail percentile. All-sector Japanese
+      sample; sector stays bridged. n=300 Japanese respondents in the 2023 cycle.
+      Vendor-commissioned.
     confidence: medium
     evidence_type: source_backed
     population_match:
-      status: matched
+      status: bridged
+      bridged_on: [sector]
     applicability:
-      industries: [manufacturing]
-      countries: [global]
+      industries: [all]
+      countries: [JP]
       company_size_bands: [mid_market, enterprise]
       threats: [ransomware]
 
