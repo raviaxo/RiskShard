@@ -5,6 +5,54 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.3.0 — 2026-08-02
+
+The residency release. Every change since v0.2.0 moves evidence closer to the
+population it claims to describe — and takes the cost of that trade openly,
+including a maturity demotion the automated gate demanded.
+
+Data-pack release: `data_pack_releases/2026.08.02-v0.3.0.json`.
+Ledger tick since v0.2.0: **cell-matched 28 → 31 · cross-country bridges 26 → 20**.
+
+### Canada: both sides of the shard move to Canadian data
+- **Frequency** moved to Statistics Canada CSCSC full-cell readings (finance ×
+  medium × steal-personal/financial-info): 0.15 / 0.201 / 0.273 replacing the
+  OPC/CIRA all-organization anchors — three parameters flipped to cell-matched.
+  The stress cell carries StatCan quality code C ("use with caution") on its face,
+  with the quality-B alternative documented on the record.
+- **Impact** moved to NetDiligence Claims-from-Canada insured-claims anchors:
+  floor USD 66K (Hacker-cause average, N=8), stress USD 15M (dataset maximum,
+  N=84), replacing both Cyentia global bridges. Thin cells are carried loudly;
+  threat stays bridged (cause taxonomy is not confirmed compromise). Simulated
+  CA range narrowed because the evidence got closer to home.
+
+### Australia ransomware: four country bridges retired
+- Frequency moved to the Australian readings of the Sophos State of Ransomware
+  surveys — likely **0.54** (2024, n=330), stress **0.70** (2023, n=200; no longer
+  a duplicate of the likely anchor). Typical loss moved to the Sophos *State of
+  Ransomware in Australia 2025* mean recovery cost (**USD 0.65M**, excluding
+  ransom payments — exclusion carried loudly). The stress loss is now Latitude
+  Group's ASX-disclosed **AUD 76M** cyber-incident cost — a documented Australian
+  financial-services extortion loss replacing a global percentile bridge at
+  nearly the same level.
+- **The trade's cost, taken openly:** the Australian anchors are all-sector, so
+  the shard fell below the automated benchmark gate's industry-relevance minimum
+  and is relabeled `benchmark_review_candidate` → `governed_starter`
+  (benchmark-ready 5 → 4) rather than over-claiming.
+- **Edition-roll catch:** Sophos's live 2024 whitepaper URL now serves the 2025
+  edition under the 2024 filename — the same silent roll previously recorded for
+  IBM. Both global Sophos editions are pinned to immutable Internet Archive
+  snapshots, with every cited line verified in the gathered artifact.
+
+### Machinery
+- New `public_zip` access mode (StatCan full-table downloads), with the
+  content-type guard extended and tested.
+- `company_disclosure` added to the controlled source-type vocabulary (Latitude
+  ASX disclosure; any future issuer filings share it).
+- Three superseded legacy `estimated` records removed from the AU ransomware
+  evidence file — the pack's evidence-type counts no longer carry placeholder
+  assumptions that nothing selects.
+
 ## v0.2.0 — 2026-08-01
 
 The correction release. Most of what shipped since v0.1.0 exists to make the
