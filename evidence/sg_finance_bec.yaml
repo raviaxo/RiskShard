@@ -1,31 +1,31 @@
 records:
-  - id: ic3_census_global_bec_reported_complaint_rate_floor_sg_context
-    title: Global reported-BEC-complaint rate floor used as Singapore context
+  - id: spf_singstat_sg_bec_reported_case_rate_floor_2025
+    title: Singapore reported-BEC-case rate floor (SPF cases over SingStat enterprises)
     parameter: frequency.min
-    value: 0.004
+    value: 0.001
     unit: annual_probability
-    source_id: fbi_ic3_2025_report
+    source_id: spf_annual_scam_cybercrime_brief_2025
     source_ids:
-      - fbi_ic3_2025_report
-      - census_susb_2022
-    source_name: FBI IC3 2025 Annual Report and U.S. Census SUSB 2022
-    source_type: derived_statistical_benchmark_bridge
-    source_url_or_citation: https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
-    publication_date: "2026-04-16"
-    extraction_date: "2026-07-20"
-    citation_detail: FBI IC3 2025 reported 24,768 US BEC complaints; US Census SUSB 2022 reports ~6.1M US employer firms; 24,768 / 6,100,000 = 0.004.
-    extraction_notes: Reused the US reported-BEC-complaint rate floor as a global-context bridge for Singapore.
-    normalization_notes: 24,768 / 6,100,000 = 0.00406, rounded to 0.004. A reported-complaint floor, not a likely rate.
-    limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. Both numerator and denominator are United States figures (IC3 complaints, US Census firms); used only as a conservative global reported-complaint floor until a Singapore denominator-derived BEC frequency (e.g. SPF business-email-impersonation cases over SingStat enterprise counts) is reviewed.
-    confidence: low
+      - spf_annual_scam_cybercrime_brief_2025
+      - singstat_enterprise_landscape_m600981
+    source_name: SPF Annual Scam and Cybercrime Brief 2025 and SingStat Enterprise Landscape M600981
+    source_type: derived_law_enforcement_statistical_benchmark
+    source_url_or_citation: https://www.police.gov.sg/-/media/SPF/Media-Room/Statistics/Annual-Scams-and-Cybercrime-Brief-2025/Annual-Scam-and-Cybercrime-Brief-2025.pdf
+    publication_date: "2026-02-26"
+    extraction_date: "2026-08-03"
+    citation_detail: SPF Annex (printed page 22) reports 377 Business Email Compromise scam cases in 2025 (368 in 2024); SingStat Table M600981 row "Enterprises Count, Total" reads 371.0 thousand enterprises for 2025. 377 / 371,000 = 0.001016. Both cells verified in the gathered artifacts.
+    extraction_notes: Replaces the US-derived IC3-over-Census floor (0.004), whose own limitations named exactly this revision - SPF BEC cases over SingStat enterprise counts. Both numerator and denominator are now Singapore figures; the floor falls from 0.004 to 0.001 because Singapore's reported-case rate is lower than the US complaint rate, not because the risk shrank.
+    normalization_notes: 377 / 371,000 = 0.001016, rounded to 0.001. A reported-case floor, not a likely rate - unreported incidents make the true rate higher, which is why this anchors only the minimum.
+    limitations: Reported police cases only - BEC is heavily under-reported, so this is a hard floor, not an incidence estimate. The numerator counts all reported Singapore BEC cases across every sector and victim size while the denominator counts all enterprises, so the ratio is all-sector, all-size by construction (sector stays bridged for a financial-services shard). Case counts and enterprise counts come from different collection systems; multiple cases can involve one organisation. The SingStat API serves the latest table revision (rolling) - re-verify the denominator on re-gathering.
+    confidence: medium
     evidence_type: source_backed
     population_match:
       status: bridged
-      bridged_on: [country]
+      bridged_on: [sector]
     applicability:
-      industries: [financial_services]
-      countries: [SG, global]
-      company_size_bands: [mid_market]
+      industries: [all]
+      countries: [SG]
+      company_size_bands: [all]
       threats: [business_email_compromise]
 
   - id: afp_2025_bec_org_prevalence_frequency_likely_sg_context
@@ -42,7 +42,7 @@ records:
     citation_detail: The 2025 AFP Payments Fraud and Control Survey reports business email compromise as the most common payments-fraud method, with 63% of organizations reporting BEC activity in 2024.
     extraction_notes: Reused the US AFP organization-level BEC prevalence as a global-context likely-frequency bridge for Singapore.
     normalization_notes: Converted 63% to 0.63.
-    limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. US survey; measures organizations experiencing attempted or actual BEC, not confirmed loss events; respondents skew corporate-treasury and larger organizations. Revise when a Singapore organization-level BEC prevalence is reviewed.
+    limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. US survey; measures organizations experiencing attempted or actual BEC, not confirmed loss events; respondents skew corporate-treasury and larger organizations. Scouted 2026-08-03 - no Singapore organisation-level BEC-specific prevalence exists publicly (the CSA Health Report 2023 publishes only an all-cyber prevalence, used as this shard's stress ceiling; SPF publishes case counts, not organisation prevalence), so this US anchor is kept as the threat-closest likely rate and the country bridge here is structural until CSA publishes per-incident-type prevalence.
     confidence: low
     evidence_type: source_backed
     population_match:
@@ -54,31 +54,31 @@ records:
       company_size_bands: [mid_market]
       threats: [business_email_compromise]
 
-  - id: afp_2026_bec_org_prevalence_frequency_stress_sg_context
-    title: US organization-level BEC prevalence used as Singapore stress-frequency bridge
+  - id: csa_2023_sg_org_cyber_incident_prevalence_stress
+    title: Singapore organisation cyber-incident prevalence used as BEC stress ceiling
     parameter: frequency.max
-    value: 0.74
+    value: 0.80
     unit: annual_probability
-    source_id: afp_payments_fraud_2026
-    source_name: 2026 AFP Payments Fraud and Control Survey Report
-    source_type: industry_survey_bridge
-    source_url_or_citation: https://www.financialprofessionals.org/about/learn-more/press-releases/Details/over-75-percent-of-us-firms-experienced-payments-fraud-in-2025-while-ai-adoption-for-fraud-mitigation-lags
-    publication_date: "2026-04-14"
-    extraction_date: "2026-07-20"
-    citation_detail: The 2026 AFP Payments Fraud and Control Survey reports that business email compromise affected 74% of organizations in 2025.
-    extraction_notes: Reused the US AFP 2026 organization-level BEC prevalence as a global-context stress-frequency bridge for Singapore.
-    normalization_notes: Converted 74% to 0.74.
-    limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. US survey, attempts/affected not confirmed loss events, large-organization skew. Revise when a Singapore stress-frequency is reviewed.
-    confidence: low
+    source_id: csa_cybersecurity_health_report_2023
+    source_name: CSA Singapore Cybersecurity Health Report 2023
+    source_type: government_report
+    source_url_or_citation: https://isomer-user-content.by.gov.sg/36/1051bace-6be7-4c59-934a-e43c952a32ed/csa-singapore-cybersecurity-health-report-2023.pdf
+    publication_date: "2024-03-26"
+    extraction_date: "2026-08-03"
+    citation_detail: Threat Landscape section reads "OVER 8 IN 10 organisations have encountered a cybersecurity incident in a year" (survey of 2,036 Singapore organisations, May-August 2023). Verified in the gathered artifact; "over 8 in 10" taken conservatively as 0.80.
+    extraction_notes: Replaces the US AFP 2026 payments-fraud prevalence (0.74) as the stress anchor. The trade is country-for-threat - the CSA figure is Singapore-resident but all-cyber, so it serves as a ceiling (BEC prevalence cannot exceed all-incident prevalence), the same construct role the MYOB all-cyber 81% plays for the Australian BEC shard's stress anchor.
+    normalization_notes: '"Over 8 in 10" stored conservatively as 0.80; the report publishes no more precise overall prevalence figure.'
+    limitations: ALL-CYBER, NOT BEC-SPECIFIC - the report publishes no per-incident-type organisation prevalence, so this is a deliberate stress ceiling (any-incident prevalence bounds BEC prevalence from above), not a BEC rate; the threat dimension is bridged. All-sector, all-size Singapore sample (2,036 organisations including non-profits); sector stays bridged for a financial-services shard. Survey-based, single 2023 fielding - no trend series yet. Encounter construct includes incidents without material loss.
+    confidence: medium
     evidence_type: source_backed
     population_match:
       status: bridged
-      bridged_on: [country]
+      bridged_on: [sector, threat]
     applicability:
-      industries: [financial_services]
-      countries: [SG, global]
-      company_size_bands: [mid_market]
-      threats: [business_email_compromise]
+      industries: [all]
+      countries: [SG]
+      company_size_bands: [all]
+      threats: [all]
 
   - id: verizon_dbir_2026_bec_median_loss_impact_floor_sg_context
     title: Median BEC loss used as Singapore impact floor
@@ -127,91 +127,6 @@ records:
     evidence_type: source_backed
     population_match:
       status: matched
-    applicability:
-      industries: [financial_services]
-      countries: [SG]
-      company_size_bands: [mid_market]
-      threats: [business_email_compromise]
-
-  - id: riskshard_sg_finance_bec_frequency_floor_2026
-    title: Estimated Singapore finance BEC frequency floor
-    parameter: frequency.min
-    value: 0.04
-    unit: annual_probability
-    source_name: RiskShard Singapore finance BEC starter pack
-    source_type: model_assumption
-    source_url_or_citation: Starter assumption pending reviewed Singapore payment-fraud or BEC event-frequency evidence.
-    publication_date: "2026-07-13"
-    extraction_date: "2026-07-13"
-    extraction_notes: Estimated lower annual probability for a Singapore mid-market financial-services BEC draft.
-    normalization_notes: Kept explicit as an assumption until source-backed Singapore BEC frequency evidence is reviewed.
-    limitations: Not source-backed; replace with Singapore payment-fraud, scam, insurer, or sector-denominator evidence.
-    confidence: low
-    evidence_type: estimated
-    applicability:
-      industries: [financial_services]
-      countries: [SG]
-      company_size_bands: [mid_market]
-      threats: [business_email_compromise]
-
-  - id: riskshard_sg_finance_bec_frequency_likely_2026
-    title: Estimated Singapore finance BEC likely frequency
-    parameter: frequency.likely
-    value: 0.12
-    unit: annual_probability
-    source_name: RiskShard Singapore finance BEC starter pack
-    source_type: model_assumption
-    source_url_or_citation: Starter assumption pending reviewed Singapore payment-fraud or BEC event-frequency evidence.
-    publication_date: "2026-07-13"
-    extraction_date: "2026-07-13"
-    extraction_notes: Estimated likely annual probability for a Singapore mid-market financial-services BEC draft.
-    normalization_notes: Kept explicit as an assumption until denominator-aware Singapore BEC frequency evidence is reviewed.
-    limitations: Not source-backed; replace before benchmark claims.
-    confidence: low
-    evidence_type: estimated
-    applicability:
-      industries: [financial_services]
-      countries: [SG]
-      company_size_bands: [mid_market]
-      threats: [business_email_compromise]
-
-  - id: riskshard_sg_finance_bec_frequency_stress_2026
-    title: Estimated Singapore finance BEC frequency stress bound
-    parameter: frequency.max
-    value: 0.30
-    unit: annual_probability
-    source_name: RiskShard Singapore finance BEC starter pack
-    source_type: model_assumption
-    source_url_or_citation: Starter assumption pending reviewed Singapore payment-fraud or BEC tail-frequency evidence.
-    publication_date: "2026-07-13"
-    extraction_date: "2026-07-13"
-    extraction_notes: Estimated stress annual probability for a Singapore mid-market financial-services BEC draft.
-    normalization_notes: Kept explicit as an assumption until source-backed Singapore BEC tail-frequency evidence is reviewed.
-    limitations: Not source-backed; replace before benchmark claims.
-    confidence: low
-    evidence_type: estimated
-    applicability:
-      industries: [financial_services]
-      countries: [SG]
-      company_size_bands: [mid_market]
-      threats: [business_email_compromise]
-
-  - id: riskshard_sg_finance_bec_impact_floor_2026
-    title: Estimated Singapore finance BEC impact floor
-    parameter: impact.min
-    value: 25000
-    unit: currency
-    currency: USD
-    source_name: RiskShard Singapore finance BEC starter pack
-    source_type: model_assumption
-    source_url_or_citation: Starter assumption pending reviewed Singapore fraudulent-payment floor evidence.
-    publication_date: "2026-07-13"
-    extraction_date: "2026-07-13"
-    extraction_notes: Estimated lower single-event impact for a Singapore financial-services BEC draft.
-    normalization_notes: Kept explicit as an assumption until Singapore fraudulent-payment floor evidence is reviewed.
-    limitations: Not source-backed; replace before benchmark claims.
-    confidence: low
-    evidence_type: estimated
     applicability:
       industries: [financial_services]
       countries: [SG]

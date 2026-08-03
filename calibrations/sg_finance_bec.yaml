@@ -1,32 +1,35 @@
 metadata:
   name: Singapore financial-services BEC calibration
   scenario_name: Singapore Finance Business Email Compromise Midmarket - Calibrated Draft
-  version: "0.2"
+  version: "0.3"
   notes: >
-    Starter calibration profile for Singapore financial-services business email
-    compromise. It uses a source-backed FBI IC3 complaint-average BEC loss
-    anchor for likely impact, All six direct parameters are now source-backed. Frequency and the lower
-    loss bound use global bridges (US IC3/Census floor, AFP US BEC prevalence,
-    Verizon DBIR median) as Singapore context; only the stress impact is
-    Singapore-specific (a documented SPF BEC case). Governed-starter grade: the
-    bridges are not Singapore-specific and are caveated in each evidence record.
+    Calibration profile for Singapore financial-services business email
+    compromise. Four of six anchors are Singapore-resident (2026-08-03 rework):
+    the frequency floor is SPF reported BEC cases over SingStat enterprise
+    counts, the stress frequency is CSA's all-cyber organisation prevalence used
+    as a deliberate ceiling (threat bridged), and both the likely and stress
+    impact are SPF figures. The remaining US bridges are recorded and structural:
+    frequency.likely keeps the AFP payments-fraud prevalence (no Singapore
+    organisation-level BEC prevalence exists publicly) and impact.min keeps the
+    DBIR median (no Singapore BEC loss floor exists publicly). Every bridge is
+    caveated on its evidence record.
 
 target_currency: USD
 
 parameters:
   frequency:
     min:
-      evidence_id: ic3_census_global_bec_reported_complaint_rate_floor_sg_context
+      evidence_id: spf_singstat_sg_bec_reported_case_rate_floor_2025
       transform: direct
-      rationale: Source-backed global reported-BEC-complaint floor (US IC3 over US Census) reused as Singapore context.
+      rationale: Singapore reported-BEC-case floor (SPF 377 cases over SingStat 371,000 enterprises = 0.001), replacing the US IC3-over-Census floor its own record said to revise toward.
     likely:
       evidence_id: afp_2025_bec_org_prevalence_frequency_likely_sg_context
       transform: direct
-      rationale: Source-backed AFP 2025 US organization-level BEC prevalence reused as a Singapore-context likely bridge.
+      rationale: AFP 2025 US organization-level BEC prevalence kept as the threat-closest likely anchor - scouted 2026-08-03, no Singapore organisation-level BEC prevalence exists publicly, so this country bridge is structural.
     max:
-      evidence_id: afp_2026_bec_org_prevalence_frequency_stress_sg_context
+      evidence_id: csa_2023_sg_org_cyber_incident_prevalence_stress
       transform: direct
-      rationale: Source-backed AFP 2026 US organization-level BEC prevalence reused as a Singapore-context stress bridge.
+      rationale: CSA Singapore all-cyber organisation prevalence (over 8 in 10, taken as 0.80) as a deliberate stress ceiling - Singapore-resident but threat-bridged, the same construct role MYOB's all-cyber 81% plays for the Australian BEC stress anchor. Replaces the US AFP 2026 payments-fraud prevalence (0.74).
 
   impact:
     min:

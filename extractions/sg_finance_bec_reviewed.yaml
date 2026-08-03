@@ -14,3 +14,33 @@ extractions:
     limitations: Reported cases only, so an incidence-and-loss floor; all sectors rather than financial services; two-year pooling smooths a 60 percent single-year swing in total losses.
     evidence_record_ids:
       - spf_2025_sg_bec_average_loss_per_reported_case_usd
+
+  - id: spf_singstat_sg_bec_reported_case_rate_2025
+    source_id: spf_annual_scam_cybercrime_brief_2025
+    source_name: SPF Annual Scam and Cybercrime Brief 2025 and SingStat Enterprise Landscape M600981
+    source_url_or_citation: https://www.police.gov.sg/-/media/SPF/Media-Room/Statistics/Annual-Scams-and-Cybercrime-Brief-2025/Annual-Scam-and-Cybercrime-Brief-2025.pdf
+    publication_date: "2026-02-26"
+    extraction_date: "2026-08-03"
+    citation_detail: SPF Annex (printed page 22), 377 BEC cases in 2025; SingStat M600981 "Enterprises Count, Total" 371.0 thousand for 2025.
+    fact: SPF reported 377 business email compromise cases in 2025 against SingStat's 371,000 Singapore enterprises, a reported-case rate of 0.001016.
+    value: 0.001
+    unit: annual_probability
+    normalization_notes: 377 / 371,000 = 0.001016, rounded to 0.001; a Singapore reported-case floor replacing the US IC3-over-Census floor.
+    limitations: Reported cases only (under-reporting makes the true rate higher); all-sector numerator and denominator; different collection systems.
+    evidence_record_ids:
+      - spf_singstat_sg_bec_reported_case_rate_floor_2025
+
+  - id: csa_2023_sg_org_cyber_incident_prevalence
+    source_id: csa_cybersecurity_health_report_2023
+    source_name: CSA Singapore Cybersecurity Health Report 2023
+    source_url_or_citation: https://isomer-user-content.by.gov.sg/36/1051bace-6be7-4c59-934a-e43c952a32ed/csa-singapore-cybersecurity-health-report-2023.pdf
+    publication_date: "2024-03-26"
+    extraction_date: "2026-08-03"
+    citation_detail: Threat Landscape section, "OVER 8 IN 10 organisations have encountered a cybersecurity incident in a year" (n=2,036, May-August 2023).
+    fact: CSA reported that over 8 in 10 Singapore organisations encountered a cybersecurity incident within a year.
+    value: 0.80
+    unit: annual_probability
+    normalization_notes: '"Over 8 in 10" stored conservatively as 0.80; used as an all-cyber stress ceiling for the BEC shard.'
+    limitations: All-cyber prevalence, not BEC-specific; all-sector, all-size sample including non-profits; encounter construct includes incidents without material loss.
+    evidence_record_ids:
+      - csa_2023_sg_org_cyber_incident_prevalence_stress

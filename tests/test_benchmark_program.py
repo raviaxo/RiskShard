@@ -106,7 +106,7 @@ class BenchmarkProgramTests(unittest.TestCase):
         self.assertEqual(sprint["sprint"]["title"], "Seeded Evidence Upgrade Sprint A")
         self.assertEqual(sprint["status"], "needs_evidence_work")
         self.assertEqual(sprint["target_count"], 5)
-        self.assertEqual(sprint["total_blocker_count"], 23)
+        self.assertEqual(sprint["total_blocker_count"], 19)
         self.assertIn("frequency.max", sprint["focus_parameters"])
         self.assertIn("impact.max", sprint["focus_parameters"])
         self.assertNotIn("ca_finance_data_breach_midmarket", by_id)
