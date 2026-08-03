@@ -124,6 +124,22 @@ the IBM edition-roll argued for.
   shows two pre-existing label/gate mismatches — au_finance_data_breach over-labeled
   (benchmark_review_candidate vs needs_evidence) and us_finance_data_breach under-labeled
   (governed_starter vs benchmark_ready).
+  **✅ v0.3.0 CUT 2026-08-02 (PR #100, tag `v0.3.0` + GitHub Release).** The residency
+  release: ledger recorded cell-matched 28 → 31 · cross-country 26 → 20 · grades 4/7;
+  immutable explorer archive under `docs/r/2026.08.02-v0.3.0/`; doctor fully green
+  including the ledger check. Cut deliberately before Tuesday's correction post so pinned
+  citations resolve against current reality.
+  **✅ JP frequency DONE 2026-08-02:** frequency.likely 0.51 (Sophos 2024 Japan reading,
+  n=500) and frequency.max 0.58 (Sophos 2023 Japan reading, n=300; 0.61 = documented 2022
+  alternative) replace the global manufacturing 0.56/0.65 — same Wayback-pinned sources as
+  the AU move, zero new gathers. **Cross-country 20 → 18**; simulated AVG USD 853K → 770K.
+  The old "not confirmed to include Japan" doubt is settled (Japan sampled directly). With
+  3 Japan-resident params the shard **meets the gate's country minimum and flips
+  benchmark_ready (4 → 5); label promoted governed_starter → benchmark_review_candidate**
+  (label-follows-gate, mirror of the AU demotion — flagged for owner review together).
+  README front-door correction folded in: the "JP is 4/6 assumption-bridged" paragraph had
+  been stale since 2026-07-24. Scouted negative: no Japan country cut of the Sophos
+  recovery-cost survey exists — the impact-side country bridge is structural.
 - **The correction post** (distribution, the top blocker) — **drafted 2026-08-02, posting
   Tuesday 2026-08-04 after Ser's review.** Two venue-shaped drafts (r/GRC + GRC Engineering
   Club) with title options and posting notes live on `~/Desktop/riskshard-correction-post-drafts.md`
@@ -663,3 +679,11 @@ governance/regulatory loss).
   Sophos 2023/2024 artifacts pinned to Wayback snapshots after catching the 2024 asset URL
   serving the 2025 edition (IBM-style edition roll). 221 tests; validate, preflight, drift
   gate, doctor all green. Anchor set presented for owner review at close per drive mode.
+- 2026-08-02 (same session, cont.) — **v0.3.0 cut; JP frequency moved to Japanese readings.**
+  Ser approved the proposed top-3 queue. The residency release tagged and published
+  (PR #100) with the ledger tick recorded (31 cell-matched / 20 cross-country) and an
+  immutable citation archive, sequenced before Tuesday's post on purpose. Then JP:
+  0.51/0.58 Japan readings from the already-pinned Sophos snapshots retired two more
+  country bridges (cross-country 20 -> 18) at zero gathering cost; JP flipped
+  benchmark_ready and was promoted to benchmark_review_candidate (label-follows-gate);
+  the stale "JP is 4/6" README paragraph corrected. 221 tests; all gates green.

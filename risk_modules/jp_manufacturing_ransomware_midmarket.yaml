@@ -1,13 +1,16 @@
 id: jp_manufacturing_ransomware_midmarket
 title: Japan Manufacturing Ransomware Midmarket
 version: "0.1"
-status: governed_starter
+status: benchmark_review_candidate
 threat: ransomware
 description: >
-  Governed starter ransomware shard for a Japan mid-market manufacturer. It
-  gives APAC manufacturing contributors a full artifact chain with Japan NPA
-  ransomware report context, a local restoration-cost floor, manufacturing
-  loss bridges, and explicit remaining frequency gaps.
+  Benchmark-review candidate ransomware shard for a Japan mid-market
+  manufacturer. Frequency likely/max are Japanese survey readings (Sophos
+  2024/2023, all-sector - sector bridged), impact.min is a Japan NPA
+  restoration-cost floor, and impact.likely/max are manufacturing-sector
+  global benchmarks whose country bridge is structural until Japanese loss
+  data is published. Promoted from governed_starter on 2026-08-02 when the
+  Japan frequency readings met the automated gate's country-relevance minimum.
 context:
   industry: manufacturing
   country: JP

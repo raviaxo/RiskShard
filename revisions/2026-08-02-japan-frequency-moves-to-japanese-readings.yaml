@@ -1,0 +1,29 @@
+date: '2026-08-02'
+title: Japan frequency moves to Japanese readings; two country bridges retired
+effect: 'The jp_manufacturing_ransomware_midmarket frequency anchors moved from global
+  manufacturing survey rates to Japan-resident readings of the same Sophos survey program.
+  frequency.likely moved from 0.56 (global manufacturing, 2023 reading) to 0.51 (Japanese
+  reading of the 2024 survey, n=500); frequency.max from 0.65 (global manufacturing peak,
+  2024) to 0.58 (Japanese reading of the 2023 survey, n=300). Same-day simulated losses at
+  seed 42 moved from AVG USD 853,210 / P95 1,754,863 / P99 2,179,061 to AVG 770,395 /
+  P95 1,571,943 / P99 1,926,650. The cross-country count falls from 20 to 18; cell-matched
+  stays 31 (the Japanese readings are all-sector, so the sector dimension stays bridged).
+  With three Japan-resident parameters the shard now meets the automated benchmark gate''s
+  country-relevance minimum and flips needs_evidence -> benchmark_ready (benchmark-ready
+  count 4 -> 5); its label is promoted governed_starter -> benchmark_review_candidate to
+  match the gate, per the same label-follows-gate rule that demoted the Australian
+  ransomware shard earlier today. The README front-door paragraph still describing this
+  shard as "4/6, assumption-bridged" - stale since it reached 6/6 source-backed on
+  2026-07-24 - was corrected in the same pass.'
+reason: 'The prior anchors were global manufacturing rates doing duty for Japan, with a
+  recorded doubt about whether the survey sample even included Japan. The global report''s
+  by-country data settles it: Japan is sampled directly (n=500 in 2024), and its all-sector
+  readings run below the global manufacturing series, so the frequency range narrowed
+  because the evidence got closer to home. The trade is sector-for-country, the same shape
+  as the Australian rework: for a manufacturing shard the sector bridge is recorded per
+  record, with the global manufacturing comparator (65% in 2024) named in the caveat. The
+  stress anchor is the adjacent-year (2023) reading on a declining series (61/58/51); the
+  2022 reading (0.61) is the documented harsher alternative - flagged for owner review
+  alongside the promotion. The impact side is deliberately unchanged: no Japan country cut
+  of the Sophos recovery-cost survey exists (scouted 2026-08-02), so its country bridge is
+  structural until Japanese loss data is published.'

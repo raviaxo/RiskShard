@@ -1,22 +1,23 @@
 metadata:
   name: Japan Manufacturing Ransomware Midmarket
-  version: "0.1"
+  version: "0.2"
   currency: USD
   scenario_stage: governed_starter
-  benchmark_status: starter_with_local_restoration_floor_and_survey_prevalence_frequency
+  benchmark_status: benchmark_review_candidate
   description: >
-    Starter Japan manufacturing ransomware shard. It uses a global ransomware
-    likelihood floor, Sophos manufacturing survey attack-prevalence for the likely
-    and stress frequency (55/56/65% series; attack prevalence, which overstates
-    loss-event frequency and is not Japan-specific), an official Japan
-    restoration-cost floor, and manufacturing-sector ransomware recovery/stress
-    impact anchors. Frequency and impact share one "hit by ransomware" event basis.
-    Not yet Japan-manufacturing-specific for frequency or full-loss impact.
+    Starter Japan manufacturing ransomware shard. Frequency likely/max are the
+    Japanese readings of the Sophos State of Ransomware surveys (51% in 2024,
+    58% in 2023 - all-sector, so the sector dimension stays bridged; attack
+    prevalence, which overstates loss-event frequency), above a global ransomware
+    likelihood floor. Impact uses an official Japan restoration-cost floor and
+    manufacturing-sector recovery/stress anchors - no Japan country cut of the
+    recovery-cost survey exists, so the impact country bridge is structural.
+    Frequency and impact share one "hit by ransomware" event basis.
 
 frequency:
-  min: 0.10
-  likely: 0.56
-  max: 0.65
+  min: 0.1
+  likely: 0.51
+  max: 0.58
 
 impact:
   min: 6000
