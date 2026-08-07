@@ -159,6 +159,7 @@ def _evidence_record(shard_id, parameter, country, industry, size, threat):
     limitations: SCAFFOLD placeholder, not source-backed. Replace before benchmark or decision use.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [{industry}]
       countries: [{country}]

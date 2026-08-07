@@ -16,6 +16,7 @@ records:
     limitations: UK official survey used as a bridge; not US-specific and not financial-services-specific; covers identified breaches or attacks, broader than privacy-only data breach.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: bridged
       bridged_on: [country]
@@ -42,6 +43,7 @@ records:
     limitations: UK official survey used as a bridge; not US-specific and not financial-services-specific; may include high-volume low-impact events.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: bridged
       bridged_on: [country]
@@ -68,6 +70,7 @@ records:
     limitations: UK official survey used as a bridge; not US-specific and not financial-services-specific; large-business prevalence can overstate mid-market likelihood.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: bridged
       bridged_on: [country]
@@ -95,6 +98,7 @@ records:
     limitations: Insured-claim crisis-services subset; not full total loss; SME band is broad (under USD 2B revenue) and not isolated to financial services.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: cost_component
     population_match:
       status: matched
     applicability:
@@ -121,6 +125,7 @@ records:
     limitations: "Insured-claim sample: covers claims of USD 1K or more that reached an insurer, so it excludes uninsured, self-absorbed and unreported losses, and is censored by policy limits and self-insured retentions. The SME band spans revenue up to USD 2B even though the financial-services sample averages USD 113M. Pooled 2020-2024 in nominal dollars with no inflation adjustment. RiskShard's mid_market band is defined by headcount while this segmentation is by revenue - the mapping is an explicit assumption, not a measurement."
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: matched
     applicability:
@@ -147,6 +152,7 @@ records:
     limitations: "A single observed claim, not a modelled percentile - it is the maximum of 579 claims over five years, so it says nothing about how much worse a loss could be, and a larger sample would likely show a larger maximum. Insured-claim basis, so it is censored by policy limits and excludes uninsured or unreported losses. The SME band spans revenue up to USD 2B. Nominal 2020-2024 dollars, not inflation-adjusted."
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: observed_extremum
     population_match:
       status: matched
     applicability:

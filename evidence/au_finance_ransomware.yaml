@@ -16,6 +16,7 @@ records:
     limitations: Attack prevalence ("hit by ransomware"), not loss-event frequency - it counts organizations attacked, including attacks stopped before material loss, so it overstates loss-event frequency. All-sector Australian sample used for a financial-services shard; the sector dimension stays bridged (the global financial-services comparator read 65% in the same survey year). Survey population is organizations with 100-5,000 employees - the 450-employee org profile is inside the window, but the window is far broader than mid-market. Vendor-commissioned survey, n=330 Australian respondents. The Australian series is falling steeply (80% in 2022, 70% in 2023, 54% in 2024) and the 2025 edition dropped prevalence reporting entirely, so this reading cannot be refreshed like-for-like.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: bridged
       bridged_on: [sector]
@@ -42,6 +43,7 @@ records:
     limitations: Global cross-sector estimate; not Australia-specific and not financial-services-specific.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_loss_event
     population_match:
       status: matched
     applicability:
@@ -67,6 +69,7 @@ records:
     limitations: Attack prevalence, not loss-event frequency (see the likely record). The stress anchor is one survey-year older than the likely anchor, taken from a declining series (80% 2022, 70% 2023, 54% 2024) - using an older, higher reading as the stress bound is a deliberate conservative choice, not a tail percentile. All-sector Australian sample; sector stays bridged. n=200 Australian respondents in the 2023 cycle. Vendor-commissioned.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: bridged
       bridged_on: [sector]
@@ -94,6 +97,7 @@ records:
     limitations: Secondary government guidance page that links to ASD as the primary source; cybercrime-wide rather than ransomware-specific, not financial-services-specific, and not a loss distribution quantile.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: bridged
       bridged_on: [threat]
@@ -121,6 +125,7 @@ records:
     limitations: Excludes any ransom payments - the same survey reports a median Australian ransom payment of USD 350,000 among the 41% who paid, so the all-in cost of a paid incident can be materially higher than this anchor. Mean over 191 Australian organizations of 100-5,000 employees across all sectors, conditional on being hit; the sector dimension stays bridged for a financial-services shard. Self-reported, vendor-commissioned, and a steep one-year move (USD 2.37M to 0.65M) in a small sample suggests volatility - treat the level as indicative, not stable.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: cost_component
     population_match:
       status: bridged
       bridged_on: [sector]
@@ -148,6 +153,7 @@ records:
     limitations: A single documented event, not a loss-distribution percentile. The March 2023 incident was a data-theft extortion attack (a ransom was demanded and refused, consistent with government advice); encryption was not confirmed and Latitude describes it as a cyber incident, so the ransomware threat dimension stays bridged. Latitude is a large ASX-listed lender far above the mid-market org profile - the size dimension stays bridged, and an AUD 76M loss is a deliberate stress ceiling, not a plausible mid-market outcome. The disclosed figure excludes potential regulatory fines, class actions and future system uplift (understating the true tail) and ignores possible insurance recoveries (overstating net loss).
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: single_documented_event_loss
     population_match:
       status: bridged
       bridged_on: [size, threat]
@@ -174,6 +180,7 @@ records:
     limitations: Incident-share statistic, not annual probability or loss magnitude; source page does not isolate Australia.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -199,6 +206,7 @@ records:
     limitations: Global cross-sector incident-share statistic; not Australia-specific and not financial-services-specific.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -224,6 +232,7 @@ records:
     limitations: Covers eligible Australian data breaches notified to OAIC, not all ransomware events or all financial loss events.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -249,6 +258,7 @@ records:
     limitations: Sector notification count is not ransomware-specific; it reflects reportable privacy breaches under the NDB scheme.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:

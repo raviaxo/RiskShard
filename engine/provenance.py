@@ -121,6 +121,7 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
                     "cited_line": None,
                     "caveat": None,
                     "resolved": False,
+                    "measurement_basis": None,
                 }
             )
         else:
@@ -137,6 +138,7 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
                     "caveat": record.get("limitations"),
                     "resolved": True,
                     "population": _card_population(record, cell_country),
+                    "measurement_basis": record.get("measurement_basis"),
                 }
             )
         cards.append(card)
@@ -197,7 +199,16 @@ def format_portfolio_markdown(portfolio):
     This is the whole-system "answers nobody can rebut" artifact — one document where
     every model input is traceable to a named public source or labeled honestly.
     """
+    from engine.coherence import module_coherence  # local: coherence imports this module
+
     t = portfolio["totals"]
+    coherence_by_module = {
+        m["module_id"]: module_coherence(m) for m in portfolio["modules"]
+    }
+    all_families = [f for fams in coherence_by_module.values() for f in fams]
+    coherent = sum(1 for f in all_families if f["status"] == "coherent")
+    mixed = sum(1 for f in all_families if f["status"] == "mixed")
+
     lines = [
         "# RiskShard Evidence Report",
         "",
@@ -213,6 +224,13 @@ def format_portfolio_markdown(portfolio):
         "source-backed by evidence not drawn from the shard's own cell (ADR-0003); "
         "the dimension borrowed across is named per row.",
         "",
+        f"**Range coherence:** {coherent} coherent · {mixed} mixed of "
+        f"{len(all_families)} parameter families. A *mixed* range composes anchors that "
+        "measure different quantities — each validly sourced, but not readings of the same "
+        "thing (ADR-0007). Read this together with the line above: population match and "
+        "measurement basis are independent, and a fully cell-matched parameter can still "
+        "sit in a mixed range. The basis of every anchor is named per row.",
+        "",
     ]
     for m in portfolio["modules"]:
         lines.append(f"## {m['module_id']}")
@@ -220,8 +238,16 @@ def format_portfolio_markdown(portfolio):
         if title:
             lines.append(f"_{title}_")
         lines.append("")
-        lines.append("| Parameter | Value | Status | Source | Caveat |")
-        lines.append("| --- | --- | --- | --- | --- |")
+        for family in coherence_by_module.get(m["module_id"], []):
+            if family["status"] == "mixed":
+                lines.append(
+                    f"> **`{family['family']}` is a mixed range** — its anchors measure "
+                    f"{len(family['bases'])} different quantities: "
+                    f"{', '.join('`' + b + '`' for b in family['bases'])}."
+                )
+                lines.append("")
+        lines.append("| Parameter | Value | Status | Measures | Source | Caveat |")
+        lines.append("| --- | --- | --- | --- | --- | --- |")
         for c in m["cards"]:
             source = c.get("source_name") or "—"
             if c.get("publication_date"):
@@ -231,8 +257,9 @@ def format_portfolio_markdown(portfolio):
             pop = c.get("population") or {}
             if pop.get("status") == "bridged":
                 status += f" (bridged: {', '.join(pop.get('bridged_on') or [])})"
+            basis = c.get("measurement_basis") or "—"
             lines.append(
-                f"| `{c['parameter']}` | {_fmt_value(c)} | {status} "
+                f"| `{c['parameter']}` | {_fmt_value(c)} | {status} | `{basis}` "
                 f"| {source.replace('|', chr(92) + '|')} | {caveat} |"
             )
         lines.append("")

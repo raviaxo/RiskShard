@@ -17,6 +17,7 @@ records:
     limitations: US IC3 complaint population; self-reported and complaint-driven; not Australia-specific, financial-services-specific, mid-market-specific, or a full loss distribution.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: matched
     applicability:
@@ -42,6 +43,7 @@ records:
     limitations: US complaint count; not a complete population denominator and not an Australia financial-services annual probability.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -68,6 +70,7 @@ records:
     limitations: US IC3 adjusted losses are complaint-driven and may not represent all events, Australia, or financial-services mid-market loss severity.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -93,6 +96,7 @@ records:
     limitations: Small and micro business Scamwatch reports only; not mid-market-specific, financial-services-specific, or complete across all reporting channels.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -118,6 +122,7 @@ records:
     limitations: Small and micro business Scamwatch reports only; not mid-market-specific, financial-services-specific, or a complete loss-event population.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -144,6 +149,7 @@ records:
     limitations: Scamwatch small-business aggregate loss only; not BEC-only, not mid-market-specific, and not a scenario impact quantile.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -170,6 +176,7 @@ records:
     limitations: Small and micro business aggregate Scamwatch losses; not financial-services-specific, mid-market-specific, or a direct organization-level BEC impact parameter.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -196,6 +203,7 @@ records:
     limitations: Scam-wide small-business average from Scamwatch reports, not BEC-only, financial-services-specific, mid-market-specific, or a full severity distribution.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: matched
     applicability:
@@ -221,6 +229,7 @@ records:
     limitations: Whole-economy denominator includes all industries and sizes; not financial-services-specific or mid-market-specific.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -249,6 +258,7 @@ records:
     limitations: Scamwatch loss reports are not complete BEC events, not financial-services-specific, and the denominator is all Australian businesses rather than mid-market financial-services firms.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: reported_case_rate
     population_match:
       status: matched
     applicability:
@@ -275,6 +285,7 @@ records:
     limitations: Aggregate small-business Scamwatch losses; not financial-services-specific, mid-market-specific, or a direct tail quantile.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: aggregate_population_loss
     population_match:
       status: matched
     applicability:
@@ -298,6 +309,7 @@ records:
     limitations: Not source-backed; replace with reviewed payment-fraud or BEC frequency evidence before using in a calibrated scenario.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -321,6 +333,7 @@ records:
     limitations: All-industry, all-size, all-cyber measure, not BEC-specific and not mid-market-financial-services-specific; it counts businesses experiencing any cyber security incident, not confirmed BEC loss events, so it overstates BEC-only frequency. Revise when BEC-specific AU mid-market evidence is reviewed.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: bridged
       bridged_on: [sector, size, threat]
@@ -347,6 +360,7 @@ records:
     limitations: Commercial vendor survey (MYOB/Dynata), lower trust than official statistics; measures all cyber attacks, not BEC-specific, and counts businesses experiencing an attack rather than confirmed BEC loss events; mid-sized defined as 20-500 FTE with revenue over AUD 5M. Revise when official AU finance mid-market BEC frequency is available.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: bridged
       bridged_on: [threat]
@@ -371,6 +385,7 @@ records:
     limitations: Not source-backed; replace with reviewed payment-fraud or BEC frequency evidence before using in a calibrated scenario.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -392,6 +407,7 @@ records:
     limitations: Not source-backed; replace with reviewed payment-fraud or BEC frequency evidence before using in a calibrated scenario.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -414,6 +430,7 @@ records:
     limitations: Not source-backed; replace with reviewed fraudulent payment size, recovery rate, and response-cost evidence.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -436,6 +453,7 @@ records:
     limitations: Not source-backed; replace with reviewed fraudulent payment size, recovery rate, and response-cost evidence.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -458,6 +476,7 @@ records:
     limitations: Not source-backed; replace with reviewed fraudulent payment size, recovery rate, and response-cost evidence.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [AU]

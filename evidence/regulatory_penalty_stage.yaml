@@ -21,6 +21,7 @@ records:
     limitations: Not directly source-backed; a modeled lower bound of the enforcement-rate range. Replace with a multi-year ICO breach-penalty rate series.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [GB]
@@ -47,6 +48,7 @@ records:
     limitations: Not all ICO penalties are data-breach specific (some are PECR/marketing), so the true breach-penalty rate is somewhat lower; a rare, tail-driving stage.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: conditional_probability
     population_match:
       status: bridged
       bridged_on: [sector, size]
@@ -71,6 +73,7 @@ records:
     limitations: Not directly source-backed; a modeled upper bound of the enforcement-rate range. Replace with a multi-year ICO breach-penalty rate series.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [GB]
@@ -94,6 +97,7 @@ records:
     limitations: Not directly source-backed; a modeled floor. Replace with an ICO small-penalty quantile when available.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [GB]
@@ -118,6 +122,7 @@ records:
     limitations: A mean enforcement outcome, not a loss quantile; the distribution is right-skewed, so the mean overstates the modal fine; not all penalties are data-breach specific.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: regulatory_penalty_issued
     population_match:
       status: bridged
       bridged_on: [sector, size]
@@ -145,6 +150,7 @@ records:
     limitations: A rare, headline fine, not a typical outcome; below the statutory maximum; not all penalties are data-breach specific.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: regulatory_penalty_issued
     population_match:
       status: bridged
       bridged_on: [sector, size]

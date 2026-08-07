@@ -16,6 +16,7 @@ records:
     limitations: Vendor-membership survey (BCI members skew resilience-mature), lower trust than official statistics; supply-chain disruption due to third-party failure is broader than a third-party IT/service outage, and the survey window is one year of member experience, not a clean per-organization annual probability; not sector- or size-specific. Revise when a third-party-outage-specific organization-level frequency is reviewed.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: matched
     applicability:
@@ -41,6 +42,7 @@ records:
     limitations: Vendor-membership survey, lower trust than official statistics; measures all-cause supply-chain disruption (weather, cyber, third-party, etc.), not third-party outages specifically, so it overstates third-party-only frequency; not sector- or size-specific. Revise when a third-party-outage-specific frequency is reviewed.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: matched
     applicability:
@@ -67,6 +69,7 @@ records:
     limitations: GENERIC CROSS-CYBER BRIDGE. Global all-incident median, NOT third-party-outage-specific (excludes business-interruption/SLA-credit dynamics that dominate outage loss), not sector- or size-specific, and not a distribution quantile. The third-party-outage impact side rests entirely on generic cross-cyber loss bridges; revise when third-party-outage-specific loss evidence is reviewed.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: median_total_event_cost
     population_match:
       status: bridged
       bridged_on: [threat]
@@ -96,6 +99,7 @@ records:
     limitations: WEAKEST anchor in this set. It is an interpretive conversion from multi-event findings (BCI "one to ten incidents", Interos "three major events"), NOT a directly reported organization-level prevalence; all-cause supply-chain events, not third-party-only; vendor surveys, lower trust. Replace with a directly reported high-percentile third-party-outage frequency when one is reviewed.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [all]
       countries: [global]
@@ -126,6 +130,7 @@ records:
     limitations: "A 'major' incident is a supervisory classification triggered by materiality thresholds in Commission Delegated Regulation (EU) 2024/1772, not a loss event: the report states two thirds of major incidents resulted in no or minor disruption to clients and transactions, and impact on clients was absent or minor in almost 60% of cases. Using this as a loss-event frequency would overstate substantially. EU financial entities only. First year of the regime, so there is no series and the ESAs note divergent reporting practices across sectors and jurisdictions; only incidents with a final report by the 5 February 2026 cutoff are counted; EEA coverage is partial (Norway from 1 July 2025, Iceland only from 2026)."
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: event_rate_per_entity
     population_match:
       status: matched
     applicability:
@@ -151,6 +156,7 @@ records:
     limitations: "Inherits every limit of the per-entity rate: supervisory classification rather than loss event, EU financial entities only, first year of the regime. 2.13% of incidents have unknown or missing origin, so the share is a floor."
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: attribution_share
     population_match:
       status: matched
     applicability:

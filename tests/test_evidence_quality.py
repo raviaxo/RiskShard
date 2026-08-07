@@ -37,6 +37,7 @@ class EvidenceQualityTests(unittest.TestCase):
                 "    limitations: test\n"
                 "    confidence: low\n"
                 "    evidence_type: source_backed\n"
+                "    measurement_basis: org_prevalence_incident\n"
                 "    population_match:\n"
                 "      status: matched\n"
                 "    applicability:\n"

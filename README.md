@@ -422,13 +422,23 @@ python scripts/riskshard_toprisks.py           # top-risk calibration status
 **Country shards — 11 modules across 8 countries (AU, CA, DE, FR, GB, JP, SG, US).**
 All eleven are 6/6 source-backed across business email compromise, data breach, and
 ransomware — every BEC shard (US, AU, SG) is fully source-backed, and
-`gb_finance_data_breach_midmarket` carries the highest-confidence sourcing (UK official
-prevalence + IBM UK cost + an FCA Equifax penalty stress anchor; it is also the only
-shard whose evidence is entirely cell-matched). Source-backed does not mean cell-matched:
-the per-parameter population status (cell-matched vs bridged, and on which dimension)
-is on the [explorer](https://raviaxo.github.io/RiskShard/) and in the evidence report —
-that split is the honest headline, and the coverage tools above are the authoritative
-view.
+`gb_finance_data_breach_midmarket` is the only shard whose evidence is entirely
+cell-matched. Source-backed does not mean cell-matched: the per-parameter population
+status (cell-matched vs bridged, and on which dimension) is on the
+[explorer](https://raviaxo.github.io/RiskShard/) and in the evidence report — that split
+is the honest headline, and the coverage tools above are the authoritative view.
+
+**And cell-matched does not mean coherent.** A second, independent axis
+([ADR-0007](docs/adr/0007-construct-coherence.md), added 2026-08-07 after a practitioner
+asked the question in the open): every record now declares *what quantity* it measures,
+and a range is `mixed` when its `min`/`likely`/`max` do not share one basis. Portfolio-wide
+that is **4 coherent · 18 mixed of 22 parameter families — every shard carries at least one
+mixed range, and no impact range is coherent.** `gb_finance_data_breach_midmarket` is the
+sharpest example precisely *because* it is fully cell-matched: its impact range runs a
+self-reported *perceived* cost, an *average total* breach cost, and an FCA *regulatory
+penalty* — three different quantities, each correctly sourced. Mixed is declared, not
+hidden, and which mixes are acceptable is an open question in the ADR rather than a settled
+call. Read the two axes together; neither alone tells you a range is safe to use.
 
 **Top-risk threats — all six now runnable, not merely evidenced.** Business email
 compromise, data breach, ransomware, insider misuse, and AI-enabled (deepfake) fraud

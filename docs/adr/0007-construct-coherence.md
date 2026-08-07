@@ -1,0 +1,187 @@
+# ADR-0007 — Declared measurement basis and range coherence
+
+- **Status:** Proposed (2026-08-07)
+- **Date:** 2026-08-07
+- **Deciders:** repo owner
+- **Scope proposed:** declare a `measurement_basis` on every evidence record (part 1) and
+  report, per parameter family, whether a shard's selected anchors share one basis (part 2).
+  Parts 3 (deciding which mixes are acceptable) and 4 (gating in CI) are **not** proposed
+  here and are deliberately left open — see *Open questions*.
+- **Prompted by:** John Flack (GRC Engineering Club, 2026-08-06), who asked how to test
+  "not only whether a parameter is source-backed, but whether the three anchors are
+  measuring sufficiently comparable things to belong in the same distribution."
+- **Related:** [`0003-shared-impact-bridges.md`](0003-shared-impact-bridges.md) (the
+  population axis), [`../METHODOLOGY.md`](../METHODOLOGY.md)
+
+## Context
+
+ADR-0003 established that every source-backed record declares **who** was measured — its
+`population_match`, and the dimensions it is bridged on. That closed a real gap: a US-heavy
+or disclosure-biased source standing in for another country, sector or size band is now
+labelled, and the caveat rides inside any citation of the number.
+
+It does not close a second, independent gap. `population_match` answers *who was measured*.
+It says nothing about *what quantity was measured*. Two anchors can both be full-cell
+matches for a shard and still be different random variables.
+
+The engine composes `min`, `likely` and `max` into a single triangular distribution. That
+composition is only meaningful if the three anchors measure the same quantity. Nothing in
+the schema, the validator or the readiness tooling has ever checked that they do.
+
+### The defect, in the repo's own data
+
+Measured 2026-08-07 across the calibration-selected anchors of all 11 shards.
+
+`gb_finance_data_breach_midmarket` is the clearest case, and it is the shard the portfolio
+reports as **fully cell-matched** — `population_match: matched` on all six parameters:
+
+| anchor | value | what it actually measures |
+| --- | --- | --- |
+| `impact.min` | GBP 10,000 | DSIT top-5% **perceived** cost, self-reported by survey respondents |
+| `impact.likely` | GBP 5,740,000 | IBM **average total** breach cost, activity-based costing |
+| `impact.max` | GBP 11,164,400 | The Equifax **regulatory penalty** issued by the FCA |
+
+Three different quantities. Each is correctly sourced, correctly cited, correctly caveated,
+and full-cell matched. The range built from them is not a distribution of anything.
+
+The same pattern recurs:
+
+- **`fr_finance_data_breach_midmarket`** and **`au_finance_data_breach_midmarket`** put a
+  **statutory penalty cap** (GDPR Article 83(5), Privacy Act s13G(3)) at `impact.max`. A
+  legal ceiling is not an observed loss and has no sampling relationship to the mean.
+- **`sg_finance_bec_midmarket`** frequency runs *reported police cases ÷ enterprise count*
+  (0.001) → *organisation prevalence of BEC activity* (0.63) → *organisation prevalence of
+  **any** cyber incident* (0.80). Three constructs; the 800× span between floor and mode is
+  mostly construct, not uncertainty.
+- **`au_finance_bec_midmarket`** `impact.max` is AUD 2.0M, the ACCC's **national aggregate**
+  of small-business false-billing losses for the year. An aggregate across a population is
+  being used as one organisation's tail loss.
+- The ransomware shards (**AU**, **JP**, **DE**) anchor `frequency.min` to a
+  **loss-event** prevalence (Cyentia IRIS) and `likely`/`max` to **attack** prevalence
+  (Sophos, Bitkom). Every record says so in prose; nothing makes it structural.
+
+A second and third class appear alongside it, both invisible to `population_match`:
+
+- **Strata as spread.** GB, FR and US-DB frequency use *different size bands of one
+  cross-section* as min/likely/max (all-business → medium → large). The width encodes
+  between-group variation, not uncertainty about the shard's own cell.
+- **Vintage as spread.** CA frequency is StatCan 2019 / 2023 / 2021; AU and JP are Sophos
+  2024 / 2023. The width is a short time series. CA is the portfolio's proudest full-cell
+  match and is affected.
+
+This is the same shape of defect ADR-0003 addressed, on a different axis, and it was found
+the same way: from outside, by a practitioner reading the published record.
+
+## Decision
+
+**Part 1 — declare the basis.** Every evidence record carries a `measurement_basis` drawn
+from a controlled vocabulary. The vocabulary is deliberately about the *quantity measured*,
+not the source or the method of collection — those are already covered by `source_type` and
+`population_match`.
+
+Frequency-side bases:
+
+| term | meaning |
+| --- | --- |
+| `org_prevalence_incident` | share of organisations with ≥1 incident of the named type in the period |
+| `org_prevalence_loss_event` | share of organisations with ≥1 event of confirmed financial loss |
+| `org_prevalence_threshold` | share of organisations with ≥N incidents, N > 1 |
+| `reported_case_rate` | reported cases, complaints or notifications ÷ a population denominator |
+| `event_rate_per_entity` | events per entity per period; a count, may exceed 1 |
+| `attribution_share` | share of events attributable to a named cause |
+| `conditional_probability` | probability of a stage given a prior event (loss chains) |
+
+Impact-side bases:
+
+| term | meaning |
+| --- | --- |
+| `mean_total_event_cost` | mean total cost per event |
+| `median_total_event_cost` | median total cost per event |
+| `cost_component` | a named subset of total cost (crisis services, restoration, ransom paid, recovery excluding ransom) |
+| `single_documented_event_loss` | the loss from one named, documented incident |
+| `perceived_cost_self_reported` | cost as estimated by a survey respondent, not measured |
+| `observed_extremum` | maximum or extreme band of an observed dataset |
+| `statutory_penalty_cap` | a legal maximum; not an observed loss |
+| `regulatory_penalty_issued` | a penalty actually levied by a regulator |
+| `aggregate_population_loss` | total loss across a population, not per event |
+
+Shared:
+
+| term | meaning |
+| --- | --- |
+| `interpretive_estimate` | not a reported statistic; a labelled modelling judgment |
+| `context_statistic` | supporting evidence that never anchors a range (a `context.*` parameter) |
+
+**Part 2 — report coherence separately.** For each shard and each parameter family
+(`frequency`, `impact`, and each loss stage), the tooling reports the set of distinct bases
+across the calibration-selected anchors:
+
+- `coherent` — all selected anchors share one basis.
+- `mixed` — two or more bases, **named**, in the same way `population_match` names the
+  bridged dimensions.
+
+This is a declaration, not a verdict. `mixed` is not automatically an error — a median floor
+under a mean mode may well be defensible. What is not defensible is it being invisible.
+
+## Measured result (2026-08-07)
+
+All 141 evidence records annotated; `scripts/riskshard_modules.py coherence` reports:
+
+> **4 coherent · 18 mixed** of 22 parameter families across 11 shards.
+> **All 11 shards carry at least one mixed family. No impact family is coherent — all 11 are mixed.**
+
+The four coherent families are worth reading closely, because they are the finding:
+
+| shard | family | basis |
+| --- | --- | --- |
+| `ca_finance_data_breach_midmarket` | frequency | `org_prevalence_incident` |
+| `fr_finance_data_breach_midmarket` | frequency | `org_prevalence_incident` |
+| `gb_finance_data_breach_midmarket` | frequency | `org_prevalence_incident` |
+| `us_finance_data_breach_midmarket` | frequency | `org_prevalence_incident` |
+
+Every one of them passes the construct test **because its spread comes from somewhere else
+entirely**: GB, FR and US-DB are size strata (all-business → medium → large), CA is a survey
+vintage series (2019 → 2023 → 2021). They are coherent on the axis this ADR measures and
+questionable on an axis nothing measures yet. That is the strongest available argument for
+open question 3.
+
+Three anchors were revealed as construct-inappropriate rather than merely mixed:
+
+- `au_finance_bec_midmarket` `impact.max` — AUD 2.0M, the ACCC's **national aggregate** of
+  small-business false-billing losses, standing in for one organisation's tail loss
+  (`aggregate_population_loss`, a basis that should never anchor a range).
+- `fr_finance_data_breach_midmarket` and `au_finance_data_breach_midmarket` `impact.max` —
+  statutory penalty caps carrying no likelihood information.
+
+These are corrections, not declarations, and are queued as their own objective rather than
+folded in here.
+
+## Consequences
+
+- The public headline gains a second axis and it will read worse than the first. That is the
+  same trade ADR-0003 took, for the same reason.
+- `population_match: matched` stops implying a number is safe to combine. The two axes must
+  be read together, and the explorer and evidence report must present them together.
+- Records already carry the information in prose — nearly every affected record names its own
+  construct limitation in `limitations` or `normalization_notes`. This ADR makes it
+  structural, sortable and countable rather than a paragraph a reader has to notice.
+- Some anchors will be revealed as construct-inappropriate rather than merely mixed — the
+  ACCC aggregate at `au_finance_bec` `impact.max` is the clearest. Those are corrections, and
+  they follow the normal `revisions/` path.
+
+## Open questions — deliberately not decided here
+
+These are the judgment calls, and they are published rather than resolved quietly:
+
+1. **Which mixes are acceptable?** Is `median_total_event_cost` → `mean_total_event_cost`
+   an acceptable floor-to-mode pairing? Is a `single_documented_event_loss` a legitimate tail
+   anchor, or does it need a stated exceedance probability to belong in the range?
+2. **Should a statutory cap ever anchor `impact.max`?** It bounds the loss but carries no
+   information about its likelihood. The alternative is dropping it and losing the only
+   evidence of the regulatory tail.
+3. **Strata-as-spread and vintage-as-spread** — are these a third and fourth declared status,
+   or a note on the calibration rather than the record?
+4. **Does this gate?** ADR-0003 part 2 reports without gating. The calibration-drift check
+   gates. Coherence could do either.
+
+Question 1 is the one that decides the rest.

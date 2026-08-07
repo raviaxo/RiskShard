@@ -27,6 +27,7 @@ ROOT = find_project_root(fallback=SCRIPT_ROOT)
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from engine.coherence import module_coherence  # noqa: E402
 from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.risk_modules import find_risk_module  # noqa: E402
 from engine.web_console import WebConsoleApp  # noqa: E402
@@ -116,13 +117,22 @@ def load_aliases(path=None):
 def build_data(root):
     portfolio = build_portfolio_provenance(root)
     shards = []
+    coherent = mixed = 0
     for module in portfolio["modules"]:
         mid = module["module_id"]
         mod = find_risk_module(mid, root)
         ctx = (mod or {}).get("context", {})
         rng = _loss_range(root, mid)
+        # ADR-0007: does each range compose anchors that measure the same quantity?
+        families = module_coherence(module)
+        coherent += sum(1 for f in families if f["status"] == "coherent")
+        mixed += sum(1 for f in families if f["status"] == "mixed")
         shards.append({
             "id": mid,
+            "coherence": [
+                {"family": f["family"], "status": f["status"], "bases": f["bases"]}
+                for f in families
+            ],
             "title": module.get("title"),
             "country": ctx.get("country"),
             "industry": ctx.get("industry"),
@@ -139,9 +149,16 @@ def build_data(root):
                 # ADR-0003: whether the evidence is drawn from the shard's own cell,
                 # and which dimension it is borrowed across when not.
                 "population": c.get("population"),
+                # ADR-0007: what quantity this anchor measures, independent of who
+                # it was measured on.
+                "basis": c.get("measurement_basis"),
             } for c in module["cards"]],
         })
-    return {"totals": portfolio["totals"], "shards": shards, "repo": REPO_URL,
+    totals = dict(portfolio["totals"])
+    totals["families_coherent"] = coherent
+    totals["families_mixed"] = mixed
+    totals["families_total"] = coherent + mixed
+    return {"totals": totals, "shards": shards, "repo": REPO_URL,
             "revisions": load_revisions(), "release": latest_release(),
             "aliases": load_aliases(), "site": SITE_URL}
 

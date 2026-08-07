@@ -16,6 +16,7 @@ records:
     limitations: Sector notification count reflects reportable privacy breaches under the NDB scheme, not all data breach events or organization-level likelihood.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -41,6 +42,7 @@ records:
     limitations: Industry-wide denominator includes all active businesses, including non-employing and very small businesses; not mid-market-specific.
     confidence: high
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -69,6 +71,7 @@ records:
     limitations: Covers eligible Australian NDB notifications only; all-size sector denominator is not mid-market-specific; multiple notifications by one entity and unreported/non-reportable breaches can distort organization-level probability. Confidence is medium for a reported-notification floor, not for a likely breach rate.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: reported_case_rate
     population_match:
       status: matched
     applicability:
@@ -94,6 +97,7 @@ records:
     limitations: UK official survey; covers identified cyber breaches or attacks, not privacy-only data breaches; not Australia-specific, not financial-services-specific, and may include high-volume low-impact events.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: matched
     applicability:
@@ -119,6 +123,7 @@ records:
     limitations: UK official survey; covers identified cyber breaches or attacks, not privacy-only data breaches; large-business prevalence can overstate mid-market likelihood; not Australia-specific or financial-services-specific.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: matched
     applicability:
@@ -144,6 +149,7 @@ records:
     limitations: Global DBIR breach corpus; not Australia-specific, not financial-services-specific, and not a frequency or impact parameter.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -169,6 +175,7 @@ records:
     limitations: Global DBIR breach corpus; not Australia-specific, not financial-services-specific, and not a direct scenario frequency or loss magnitude.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -195,6 +202,7 @@ records:
     limitations: Secondary government guidance page that links to ASD as the primary source; cybercrime-wide rather than data-breach-specific, not financial-services-specific, and not a loss distribution quantile.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: bridged
       bridged_on: [threat]
@@ -222,6 +230,7 @@ records:
     limitations: Statutory maximum penalty cap, not a total event-loss estimate, not expected loss, not financial-services-specific, and actual penalties depend on regulator and court facts.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: statutory_penalty_cap
     population_match:
       status: matched
     applicability:
@@ -248,6 +257,7 @@ records:
     limitations: Global cyber-event benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a true minimum loss quantile.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: median_total_event_cost
     population_match:
       status: matched
     applicability:
@@ -274,6 +284,7 @@ records:
     limitations: Average across IBM's studied Australian financial-services breaches - IBM does not publish per-country-per-industry sample sizes, so this cell is thin by construction and the level should be treated as indicative. Enterprise-leaning studied population used for a mid-market org profile (size stays bridged); an average, not a distribution quantile. Secondary news coverage of the report rather than the gated primary PDF; the cited sentence was verified in the gathered artifact. Newer study year (2025-26 breaches) than the global 2025 anchor it replaces.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: bridged
       bridged_on: [size]
@@ -301,6 +312,7 @@ records:
     limitations: Global security-incident benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a formal percentile for this scenario.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: observed_extremum
     population_match:
       status: matched
     applicability:
@@ -324,6 +336,7 @@ records:
     limitations: Not directly source-backed; replace with denominator-backed Australian financial-services breach likelihood evidence.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -345,6 +358,7 @@ records:
     limitations: Not directly source-backed; replace with denominator-backed Australian financial-services breach likelihood evidence.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -366,6 +380,7 @@ records:
     limitations: Not directly source-backed; replace with denominator-backed Australian financial-services breach likelihood evidence.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -388,6 +403,7 @@ records:
     limitations: Not directly source-backed; replace with Australia-specific breach response cost and tail-loss evidence.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -410,6 +426,7 @@ records:
     limitations: Not directly source-backed; replace with Australia-specific breach response cost and tail-loss evidence.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -432,6 +449,7 @@ records:
     limitations: Not directly source-backed; replace with Australia-specific breach response cost and tail-loss evidence.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [AU]
