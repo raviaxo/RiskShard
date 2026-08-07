@@ -19,6 +19,7 @@ records:
     limitations: Reported police cases only - BEC is heavily under-reported, so this is a hard floor, not an incidence estimate. The numerator counts all reported Singapore BEC cases across every sector and victim size while the denominator counts all enterprises, so the ratio is all-sector, all-size by construction (sector stays bridged for a financial-services shard). Case counts and enterprise counts come from different collection systems; multiple cases can involve one organisation. The SingStat API serves the latest table revision (rolling) - re-verify the denominator on re-gathering.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: reported_case_rate
     population_match:
       status: bridged
       bridged_on: [sector]
@@ -45,6 +46,7 @@ records:
     limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. US survey; measures organizations experiencing attempted or actual BEC, not confirmed loss events; respondents skew corporate-treasury and larger organizations. Scouted 2026-08-03 - no Singapore organisation-level BEC-specific prevalence exists publicly (the CSA Health Report 2023 publishes only an all-cyber prevalence, used as this shard's stress ceiling; SPF publishes case counts, not organisation prevalence), so this US anchor is kept as the threat-closest likely rate and the country bridge here is structural until CSA publishes per-incident-type prevalence.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: bridged
       bridged_on: [country]
@@ -71,6 +73,7 @@ records:
     limitations: ALL-CYBER, NOT BEC-SPECIFIC - the report publishes no per-incident-type organisation prevalence, so this is a deliberate stress ceiling (any-incident prevalence bounds BEC prevalence from above), not a BEC rate; the threat dimension is bridged. All-sector, all-size Singapore sample (2,036 organisations including non-profits); sector stays bridged for a financial-services shard. Survey-based, single 2023 fielding - no trend series yet. Encounter construct includes incidents without material loss.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: bridged
       bridged_on: [sector, threat]
@@ -98,6 +101,7 @@ records:
     limitations: GLOBAL BRIDGE, NOT SINGAPORE-SPECIFIC. Median of FBI IC3 complaint-reported (US) BEC losses; complaint-driven and self-reported; not a Singapore or mid-market figure. Revise when a Singapore BEC loss floor is reviewed.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: median_total_event_cost
     population_match:
       status: bridged
       bridged_on: [country]
@@ -125,6 +129,7 @@ records:
     limitations: One documented extreme Singapore BEC case (an investment banking firm), not a mid-market average or a loss percentile; over USD 5M was intercepted, but recovery is not guaranteed so the gross figure is modeled. Revise when a Singapore BEC loss distribution with tail quantiles is reviewed.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: single_documented_event_loss
     population_match:
       status: matched
     applicability:
@@ -151,6 +156,7 @@ records:
     limitations: "Reported cases only, so this is an incidence-and-loss floor: BEC losses that were never reported to police are invisible. Covers all sectors, not financial services specifically, and is not mid-market-specific. Two-year pooling hides a 60 percent single-year swing in total losses, so the central estimate is stable but the underlying series is volatile. Currency converted at a single reference-rate date rather than at each incident's own rate."
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: matched
     applicability:
@@ -179,6 +185,7 @@ records:
     limitations: Not source-backed; replace before benchmark claims.
     confidence: low
     evidence_type: estimated
+    measurement_basis: interpretive_estimate
     applicability:
       industries: [financial_services]
       countries: [SG]

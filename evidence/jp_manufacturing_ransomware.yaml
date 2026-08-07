@@ -16,6 +16,7 @@ records:
     limitations: Global cross-sector estimate; not Japan-specific, manufacturing-specific, or size-band-specific.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_loss_event
     population_match:
       status: matched
     applicability:
@@ -51,6 +52,7 @@ records:
       reporting entirely, so this reading cannot be refreshed like-for-like.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: bridged
       bridged_on: [sector]
@@ -83,6 +85,7 @@ records:
       Vendor-commissioned.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: bridged
       bridged_on: [sector]
@@ -110,6 +113,7 @@ records:
     limitations: Global cyber-event benchmark, not Japan-specific, ransomware-specific, manufacturing-specific, or a true minimum loss quantile.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: median_total_event_cost
     population_match:
       status: matched
     applicability:
@@ -136,6 +140,7 @@ records:
     limitations: Global security-incident benchmark, not Japan-specific, ransomware-only, manufacturing-specific, or mid-market-specific.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: median_total_event_cost
     population_match:
       status: matched
     applicability:
@@ -162,6 +167,7 @@ records:
     limitations: Global security-incident benchmark, not Japan-specific, ransomware-only, manufacturing-specific, or a formal percentile for this scenario.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: observed_extremum
     population_match:
       status: matched
     applicability:
@@ -187,6 +193,7 @@ records:
     limitations: Law-enforcement report count; affected by reporting behavior and missing a denominator for all exposed organizations.
     confidence: high
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -212,6 +219,7 @@ records:
     limitations: Industry report count, not an annual probability for a manufacturing company and not normalized by the Japan manufacturing-company population.
     confidence: high
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -237,6 +245,7 @@ records:
     limitations: Share of reported incidents by sector; reporting patterns and organization population sizes are not controlled.
     confidence: high
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -262,6 +271,7 @@ records:
     limitations: Share of reported incidents by organization size; does not control for the population of SMEs or reporting bias.
     confidence: high
     evidence_type: source_backed
+    measurement_basis: context_statistic
     population_match:
       status: matched
     applicability:
@@ -288,6 +298,7 @@ records:
     limitations: Investigation/restoration cost band only; excludes broader business interruption, ransom, legal, customer, and strategic impacts.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: cost_component
     population_match:
       status: matched
     applicability:
@@ -314,6 +325,7 @@ records:
     limitations: Global survey of organizations hit by ransomware; not Japan-specific and excludes ransom payments.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: cost_component
     population_match:
       status: matched
     applicability:
@@ -340,6 +352,7 @@ records:
     limitations: Threshold for extreme ransom demands and payouts; not Japan-specific, not total event loss, and not a formal percentile.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: observed_extremum
     population_match:
       status: matched
     applicability:

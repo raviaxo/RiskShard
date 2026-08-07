@@ -38,6 +38,30 @@
             "type": "string",
             "enum": ["source_backed", "estimated", "synthetic"]
           },
+          "measurement_basis": {
+            "type": "string",
+            "description": "What quantity this record measures (ADR-0007). Distinct from source_type (how it was collected) and population_match (who was measured).",
+            "enum": [
+              "org_prevalence_incident",
+              "org_prevalence_loss_event",
+              "org_prevalence_threshold",
+              "reported_case_rate",
+              "event_rate_per_entity",
+              "attribution_share",
+              "conditional_probability",
+              "mean_total_event_cost",
+              "median_total_event_cost",
+              "cost_component",
+              "single_documented_event_loss",
+              "perceived_cost_self_reported",
+              "observed_extremum",
+              "statutory_penalty_cap",
+              "regulatory_penalty_issued",
+              "aggregate_population_loss",
+              "interpretive_estimate",
+              "context_statistic"
+            ]
+          },
           "population_match": {
             "type": "object",
             "properties": {
@@ -108,6 +132,7 @@
           "limitations",
           "confidence",
           "evidence_type",
+          "measurement_basis",
           "applicability"
         ],
         "if": {

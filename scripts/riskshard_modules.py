@@ -48,6 +48,10 @@ from engine.coverage import (  # noqa: E402
     build_coverage_report,
     format_coverage_report,
 )
+from engine.coherence import (  # noqa: E402
+    build_portfolio_coherence,
+    format_portfolio_markdown as format_coherence_markdown,
+)
 from engine.provenance import (  # noqa: E402
     build_dispute_issue,
     build_module_provenance,
@@ -96,6 +100,19 @@ def parse_args(argv=None):
     coverage_parser = subparsers.add_parser("coverage", help="Grade shard data strength and confidence.")
     coverage_parser.add_argument("module_id", nargs="?")
     coverage_parser.add_argument("--json", action="store_true")
+
+    coherence_parser = subparsers.add_parser(
+        "coherence",
+        help="Do a range's min/likely/max anchors measure the same quantity? (ADR-0007)",
+    )
+    coherence_parser.add_argument("module_id", nargs="?")
+    coherence_parser.add_argument(
+        "--report",
+        type=Path,
+        metavar="PATH",
+        help="Write the Markdown coherence report to PATH.",
+    )
+    coherence_parser.add_argument("--json", action="store_true")
 
     prov_parser = subparsers.add_parser(
         "provenance", help="Challenge a number: show value, source, quote, and caveat per parameter."
@@ -252,6 +269,19 @@ def main(argv=None):
             print(json.dumps(report, indent=2, sort_keys=True))
         else:
             print(format_coverage_report(report), end="")
+        return 0
+
+    if command == "coherence":
+        module_ids = [args.module_id] if args.module_id else None
+        portfolio = build_portfolio_coherence(ROOT, module_ids=module_ids)
+        if args.report:
+            args.report.parent.mkdir(parents=True, exist_ok=True)
+            args.report.write_text(format_coherence_markdown(portfolio), encoding="utf-8")
+            print(f"Coherence report written: {args.report}")
+        elif args.json:
+            print(json.dumps(portfolio, indent=2, sort_keys=True))
+        else:
+            print(format_coherence_markdown(portfolio), end="")
         return 0
 
     if command == "provenance":

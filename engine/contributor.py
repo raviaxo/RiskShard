@@ -667,6 +667,7 @@ def render_scaffold_evidence(module_id, evidence_ids, country, industry, company
             "    limitations: Low-confidence scaffold estimate. Replace before benchmark or public claims.\n"
             "    confidence: low\n"
             "    evidence_type: estimated\n"
+            "    measurement_basis: interpretive_estimate\n"
             "    applicability:\n"
             f"      industries: [{industry}]\n"
             f"      countries: [{country}]\n"

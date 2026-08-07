@@ -16,6 +16,7 @@ records:
     limitations: Motive-classified construct, not confirmed breaches - counts impactful incidents aimed at stealing personal or financial information, so it can overstate confirmed-breach frequency (impactful attempts count) and understate it (breaches motivated by ransom or with unknown motive are classified under other incident types). StatCan medium is 50-249 employees while the shard org profile models 450 employees, which falls in StatCan large (250+); the same-cycle large-band cell reads 21.5%. Survey covers enterprises with 10 or more employees. Biennial; 2025 cycle expected around October 2026.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: matched
     applicability:
@@ -41,6 +42,7 @@ records:
     limitations: Motive-classified construct, not confirmed breaches - counts impactful incidents aimed at stealing personal or financial information, so it can overstate confirmed-breach frequency (impactful attempts count) and understate it (breaches motivated by ransom or with unknown motive are classified under other incident types). StatCan medium is 50-249 employees while the shard org profile models 450 employees, which falls in StatCan large (250+); the same-cycle large-band cell reads 23.9%. Survey covers enterprises with 10 or more employees. Biennial; 2025 cycle expected around October 2026.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: matched
     applicability:
@@ -66,6 +68,7 @@ records:
     limitations: The 2021 cell carries StatCan quality code C (use with caution) - the weakest of the three anchors; the adjacent large-band 2023 cell (23.9%, quality B) is the alternative stress anchor if the C-coded cell is rejected on review. Motive-classified construct, not confirmed breaches - counts impactful incidents aimed at stealing personal or financial information, so it can overstate confirmed-breach frequency (impactful attempts count) and understate it (breaches motivated by ransom or with unknown motive are classified under other incident types). StatCan medium is 50-249 employees while the shard org profile models 450 employees. Survey covers enterprises with 10 or more employees.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: matched
     applicability:
@@ -92,6 +95,7 @@ records:
     limitations: N=8 Canadian Hacker claims over five years - a thin cell; an average used as a floor, not a minimum quantile. NetDiligence classifies claims by cause of loss, not outcome, so Hacker claims are unauthorized-intrusion claims that may or may not involve confirmed data compromise - the threat dimension remains bridged. All-sector dataset whose Canadian organizations average USD 654M annual revenue (enterprise-leaning vs the 85M CAD org profile). Insured claims only, so uninsured incidents and self-retained costs are invisible.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: bridged
       bridged_on: [threat]
@@ -122,6 +126,7 @@ records:
     limitations: Secondary article, not primary IBM Canada release; not financial-services-specific or size-band-specific. Replace with primary IBM regional table, Canadian claims data, insurer data, or regulator/sector evidence before benchmark claims.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: matched
     applicability:
@@ -148,6 +153,7 @@ records:
     limitations: Primary IBM source but global average across studied breached organizations; not Canada-specific, financial-services-specific, or size-band-specific. The secondary Canada row remains useful context but is not selected for benchmark-review automation.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: bridged
       bridged_on: [country]
@@ -175,6 +181,7 @@ records:
     limitations: Primary IBM Canada release, but an all-sector national average across studied breached organizations, not mid-market-specific or financial-services-specific; IBM's sample skews toward larger organizations, so this is an upper-leaning mid-market likely anchor.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: matched
     applicability:
@@ -201,6 +208,7 @@ records:
     limitations: The maximum of 84 Canadian insured claims across all causes of loss, 2020-2024 - not data-breach-specific (threat bridged) and not a formal tail percentile. Insured-claims data structurally truncates the tail - uninsured organizations, self-retained costs above policy limits, and outlier Canadian breach losses (e.g. enterprise-scale events such as Desjardins, an order of magnitude larger) are invisible; review may prefer the wider Cyentia global extreme (USD 32M) if tail conservatism outweighs country specificity. Canadian organizations in the dataset average USD 654M annual revenue (enterprise-leaning vs the 85M CAD org profile), which makes the maximum an upper-leaning midmarket stress rather than an understated one.
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: observed_extremum
     population_match:
       status: bridged
       bridged_on: [threat]

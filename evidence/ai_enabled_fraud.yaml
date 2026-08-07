@@ -16,6 +16,7 @@ records:
     limitations: Secondary compilation of vendor survey data, low trust; deepfake fraud is fast-rising and volatile so any single figure dates quickly; attempts, not confirmed loss events; not sector- or size-specific. Revise as the deepfake evidence base matures.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: matched
     applicability:
@@ -41,6 +42,7 @@ records:
     limitations: Analyst survey accessed via secondary reporting, lower trust; measures deepfake attacks/attempts, not confirmed fraud-loss events; fast-rising and volatile; not sector- or size-specific. Revise as the evidence base matures.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: matched
     applicability:
@@ -66,6 +68,7 @@ records:
     limitations: Vendor (identity-verification) survey, lower trust; "experienced financial loss due to a deepfake" is broad and self-reported; fast-rising and volatile; not sector- or size-specific. Revise as the evidence base matures.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: org_prevalence_loss_event
     population_match:
       status: matched
     applicability:
@@ -92,6 +95,7 @@ records:
     limitations: GLOBAL BRIDGE. Median of FBI IC3 complaint-reported BEC losses used as an AI-fraud floor; not deepfake-specific and not a mid-market figure. Revise when a deepfake-specific loss floor is reviewed.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: median_total_event_cost
     population_match:
       status: bridged
       bridged_on: [threat]
@@ -119,6 +123,7 @@ records:
     limitations: Vendor survey (identity-verification vendor with a product interest in the threat), low trust; an average of survey-reported losses, not a distribution quantile; deepfake losses are volatile and fast-rising. Revise as the evidence base matures.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: matched
     applicability:
@@ -145,6 +150,7 @@ records:
     limitations: One documented extreme case at a large engineering firm, not a mid-market average or a loss percentile; a single incident, not a distribution. Revise when a deepfake-fraud loss distribution with tail quantiles is reviewed.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: single_documented_event_loss
     population_match:
       status: matched
     applicability:

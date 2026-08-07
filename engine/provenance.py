@@ -121,6 +121,7 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
                     "cited_line": None,
                     "caveat": None,
                     "resolved": False,
+                    "measurement_basis": None,
                 }
             )
         else:
@@ -137,6 +138,7 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
                     "caveat": record.get("limitations"),
                     "resolved": True,
                     "population": _card_population(record, cell_country),
+                    "measurement_basis": record.get("measurement_basis"),
                 }
             )
         cards.append(card)

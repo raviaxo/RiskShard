@@ -16,6 +16,7 @@ records:
     limitations: Understates true at-least-one-attack prevalence by construction (counts only organizations with six or more attacks); vendor-sponsored survey, lower trust than official statistics; "insider attacks" is broad and includes negligent and careless insiders, not only deliberate misuse, so it still overstates misuse-specific frequency. Replaces a retracted 66%-in-2019 figure that appears in no primary source (2026-08-01 record review). Revise when misuse-specific or sector-specific insider frequency is reviewed.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: org_prevalence_threshold
     population_match:
       status: matched
     applicability:
@@ -41,6 +42,7 @@ records:
     limitations: Retrospective comparison point self-reported inside the 2026 survey, not an independent 2024 measurement; vendor-sponsored survey, lower trust than official statistics; "insider incidents" is broad and includes negligent insiders, not only deliberate misuse, so it overstates misuse-specific frequency; not sector- or size-specific. Replaces a retracted 76%-in-2024 figure that appears in no primary source (2026-08-01 record review). Revise when misuse-specific insider frequency is reviewed.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: matched
     applicability:
@@ -71,6 +73,7 @@ records:
       Insider-specific (an improvement over the prior generic cross-cyber bridge).
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: matched
     applicability:
@@ -102,6 +105,7 @@ records:
       generic cross-cyber bridge).
     confidence: medium
     evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
     population_match:
       status: matched
     applicability:
@@ -127,6 +131,7 @@ records:
     limitations: Vendor-sponsored survey, lower trust than official statistics; "insider incidents" is broad and includes negligent insiders, not only deliberate misuse, so it overstates misuse-specific frequency; a different metric (incidents) than the min/likely attacks figures, and not sector- or size-specific. Revise when misuse-specific insider frequency is reviewed.
     confidence: low
     evidence_type: source_backed
+    measurement_basis: org_prevalence_incident
     population_match:
       status: matched
     applicability:
