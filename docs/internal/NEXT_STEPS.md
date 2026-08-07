@@ -41,8 +41,17 @@ evidence report Measures column + callouts + headline; README front door correct
    `au_finance_bec` `impact.max` is an ACCC *national aggregate* standing in for one firm's
    tail loss; `fr_finance_data_breach` and `au_finance_data_breach` `impact.max` are statutory
    penalty caps carrying no likelihood information. Item 3 depends on decision 1.
-4. **The worked decision artifact** *(IN PROGRESS 2026-08-07; publicly committed — the r/GRC
-   reply went out 2026-08-07, so this is on a clock)* — asked for by Old_Positive2231:
+4. ✅ **DONE 2026-08-07 — the first worked decision published** (PR #113):
+   [`docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md`](../WORKED_DECISION_AU_RANSOMWARE_LIMIT.md).
+   Recommends **AUD 20M as a floor under review** for a synthetic AU mid-market finserv firm.
+   Three findings worth carrying forward: (a) the shard's headline AVG/P95/P99 are
+   **annualised** and are not limit-setting inputs — a limit is per-occurrence and sized
+   against the `impact` range (per-event mean 13.28M vs annualised 6.59M); (b) the per-event
+   mean is **14.8x its own mode** because `impact.max` is a `single_documented_event_loss`
+   with no exceedance probability, which drives the mean rather than bounding it; (c) changing
+   only the max anchor swings P(event > AUD 20M) from **0% to 23%**. Seven tests pin the
+   figures, including that no FX rate is invented. **Third-party outage is the committed
+   second one.** Original framing note, kept because it was the call that unblocked this:
    pick a concrete decision, publish the model *and* the decision impact. Committed publicly
    to **ransomware limit, AU mid-market financial services** first, third-party outage second.
    **Framing resolved 2026-08-07:** the original plan was to sequence this behind a coherent
