@@ -137,5 +137,43 @@ class PortfolioCoherenceTests(unittest.TestCase):
         self.assertIn("mixed", markdown)
 
 
+class PublishedSurfaceTests(unittest.TestCase):
+    """The count has to reach a reader, not just the CLI.
+
+    ADR-0003's lesson was that a caveat only counts where it is published. These
+    pin the coherence declaration to the two surfaces a reader actually meets, so
+    it cannot quietly drop out of either.
+    """
+
+    def test_evidence_report_carries_the_headline_and_a_basis_per_row(self):
+        from engine.provenance import build_portfolio_provenance, format_portfolio_markdown as report
+
+        markdown = report(build_portfolio_provenance(ROOT))
+        self.assertIn("**Range coherence:**", markdown)
+        self.assertIn("| Parameter | Value | Status | Measures | Source | Caveat |", markdown)
+        self.assertIn("is a mixed range", markdown)
+        self.assertIn("`perceived_cost_self_reported`", markdown)
+
+    def test_explorer_payload_carries_basis_coherence_and_totals(self):
+        from scripts.build_explorer import build_data
+
+        data = build_data(ROOT)
+        totals = data["totals"]
+        for key in ("families_coherent", "families_mixed", "families_total"):
+            self.assertIn(key, totals)
+        self.assertEqual(
+            totals["families_total"], totals["families_coherent"] + totals["families_mixed"]
+        )
+
+        gb = next(s for s in data["shards"] if s["id"] == "gb_finance_data_breach_midmarket")
+        impact = next(f for f in gb["coherence"] if f["family"] == "impact")
+        self.assertEqual(impact["status"], "mixed")
+        self.assertIn("perceived_cost_self_reported", impact["bases"])
+        self.assertTrue(
+            all(p.get("basis") for p in gb["params"]),
+            "every explorer parameter row must state what it measures",
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
