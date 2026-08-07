@@ -145,7 +145,9 @@ vintage series (2019 → 2023 → 2021). They are coherent on the axis this ADR 
 questionable on an axis nothing measures yet. That is the strongest available argument for
 open question 3.
 
-Three anchors were revealed as construct-inappropriate rather than merely mixed:
+Three anchors were revealed as construct-inappropriate rather than merely mixed. **The owner
+subsequently ruled two of the three deliberate** (open question 2, decided 2026-08-07); only the
+first remains a defect:
 
 - `au_finance_bec_midmarket` `impact.max` — AUD 2.0M, the ACCC's **national aggregate** of
   small-business false-billing losses, standing in for one organisation's tail loss
@@ -176,9 +178,17 @@ These are the judgment calls, and they are published rather than resolved quietl
 1. **Which mixes are acceptable?** Is `median_total_event_cost` → `mean_total_event_cost`
    an acceptable floor-to-mode pairing? Is a `single_documented_event_loss` a legitimate tail
    anchor, or does it need a stated exceedance probability to belong in the range?
-2. **Should a statutory cap ever anchor `impact.max`?** It bounds the loss but carries no
-   information about its likelihood. The alternative is dropping it and losing the only
-   evidence of the regulatory tail.
+2. ~~**Should a statutory cap ever anchor `impact.max`?**~~ **DECIDED 2026-08-07 (owner): yes —
+   a statutory cap may anchor `impact.max`.** Dropping it would lose the only evidence of the
+   regulatory tail, and the cap is a real, citable bound. The condition is that it stays
+   *declared*: `statutory_penalty_cap` is its own basis, the range reads `mixed` because of it,
+   and the reader is told on the item's face that a legal ceiling carries no information about
+   likelihood. `fr_finance_data_breach_midmarket` (GDPR Art. 83(5), EUR 20M) and
+   `au_finance_data_breach_midmarket` (Privacy Act s13G(3), AUD 50M) therefore **stand as
+   deliberate methodological choices, not defects**, and leave the correction queue. The cost is
+   now measured rather than assumed: see
+   [the worked decision](../WORKED_DECISION_AU_RANSOMWARE_LIMIT.md) — a maximum carrying no
+   exceedance probability does not merely bound a PERT, it drives its mean.
 3. **Strata-as-spread and vintage-as-spread** — are these a third and fourth declared status,
    or a note on the calibration rather than the record?
 4. **Does this gate?** ADR-0003 part 2 reports without gating. The calibration-drift check
