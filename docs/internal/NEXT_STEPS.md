@@ -30,10 +30,10 @@ surfaces are done (explorer per-row `measures` + mixed-range notes + cover fact 
 evidence report Measures column + callouts + headline; README front door corrected —
 "cell-matched does not mean coherent"). The next objectives, in order:
 
-1. **Reply to John Flack** (GRC EC) with the measured result and the ADR's four open
-   questions — question 1 (which mixes are acceptable) is the one that decides the rest.
-   Draft written; link ADR-0007 only after #112 merges or it 404s on `main`.
-   Comms lives in `~/business-os/comms/`, not here. Highest-value relationship open.
+1. ✅ **DONE 2026-08-07 — replied to John Flack** (GRC EC), sent by Ser after #112 merged,
+   with the measured result, the third-axis admission, and ADR open question 1 handed to him
+   as a real ask (which mixes are acceptable — it decides the rest). ADR-0007 link verified
+   live on `main`. **Now awaiting his answer**; it changes ~12 parameters.
 2. ✅ **DONE 2026-08-07 — coherence published on the public surfaces** (was: CLI-only).
    Rendering verified live; two surface tests pin the count to both and were verified to
    fail when it is stripped.
@@ -44,8 +44,16 @@ evidence report Measures column + callouts + headline; README front door correct
 4. **The worked decision artifact** — asked for by Old_Positive2231 (r/GRC, RAW2026 orbit):
    pick a concrete decision, publish the model *and* the decision impact. Committed publicly
    to **ransomware limit, AU mid-market financial services** first, third-party outage second.
-   Deliberately sequenced *after* coherence: a limit decision priced off an incoherent range
-   launders the problem instead of exposing it.
+   **Framing resolved 2026-08-07:** the original plan was to sequence this behind a coherent
+   range, but the ADR-0007 measurement shows **no impact range in the portfolio is coherent**,
+   so waiting for a clean one means never publishing. AU-ransomware `impact` is mixed across
+   three bases (`mean_total_event_cost` floor / `cost_component` mode — Sophos recovery
+   *excluding* ransom / `single_documented_event_loss` ceiling — Latitude's AUD 76M). The
+   decision artifact should therefore make the mixed range *part of the argument*: what the
+   range says, why its width is partly definitional rather than uncertainty, and how that
+   changes the limit a reader would actually pick. That is a stronger and more honest artifact
+   than a decision resting on a range pretending to be clean, and it is the thing no vendor
+   can publish.
 5. **Cut v0.5.0** carrying the above, the way v0.3.0 carried the residency work. Do not cut
    before — this is a headline change and deserves the release. **Fold in at the cut:**
    extend the strength-ledger snapshot with the coherence split (`families_coherent` /
