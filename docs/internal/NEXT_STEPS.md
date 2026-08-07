@@ -41,7 +41,8 @@ evidence report Measures column + callouts + headline; README front door correct
    `au_finance_bec` `impact.max` is an ACCC *national aggregate* standing in for one firm's
    tail loss; `fr_finance_data_breach` and `au_finance_data_breach` `impact.max` are statutory
    penalty caps carrying no likelihood information. Item 3 depends on decision 1.
-4. **The worked decision artifact** — asked for by Old_Positive2231 (r/GRC, RAW2026 orbit):
+4. **The worked decision artifact** *(IN PROGRESS 2026-08-07; publicly committed — the r/GRC
+   reply went out 2026-08-07, so this is on a clock)* — asked for by Old_Positive2231:
    pick a concrete decision, publish the model *and* the decision impact. Committed publicly
    to **ransomware limit, AU mid-market financial services** first, third-party outage second.
    **Framing resolved 2026-08-07:** the original plan was to sequence this behind a coherent
