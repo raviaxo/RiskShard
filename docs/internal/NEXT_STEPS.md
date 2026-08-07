@@ -47,7 +47,13 @@ evidence report Measures column + callouts + headline; README front door correct
    Deliberately sequenced *after* coherence: a limit decision priced off an incoherent range
    launders the problem instead of exposing it.
 5. **Cut v0.5.0** carrying the above, the way v0.3.0 carried the residency work. Do not cut
-   before — this is a headline change and deserves the release.
+   before — this is a headline change and deserves the release. **Fold in at the cut:**
+   extend the strength-ledger snapshot with the coherence split (`families_coherent` /
+   `families_mixed`), exactly as the ADR-0003 population split was added at the v0.2.0 cut.
+   The readiness dashboard's strength line reads from the ledger, so it picks the numbers up
+   for free once recorded — deliberately not bolted on ahead of a release, and pre-split
+   entries must not be compared against the new metrics (same rule as ADR-0003: the first
+   split entry reads "newly measured", never a fabricated delta).
 
 **Deprioritized by external signal (2026-08-06/07):** the two queued owner discussions
 (FTC-UDAP cyber-cases source; compliance-impact shards) are both *more coverage*. Two
