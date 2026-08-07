@@ -37,7 +37,15 @@ evidence report Measures column + callouts + headline; README front door correct
 2. ✅ **DONE 2026-08-07 — coherence published on the public surfaces** (was: CLI-only).
    Rendering verified live; two surface tests pin the count to both and were verified to
    fail when it is stripped.
-3. **Correct the three construct-inappropriate anchors** (own objective, `revisions/` entry):
+3. **Correct the ONE remaining construct-inappropriate anchor** (own objective, `revisions/`
+   entry). **Narrowed 2026-08-07:** the owner decided ADR-0007 open question 2 — a statutory cap
+   MAY anchor `impact.max`, provided it stays declared — so the FR and AU-DB caps are deliberate
+   choices and leave this queue. What remains is `au_finance_bec` `impact.max`: the ACCC figure
+   is a **national aggregate** of all small-business false-billing losses standing in for one
+   firm's tail loss (`aggregate_population_loss`, a basis that should never anchor a range).
+   That one is unambiguous. It needs an Australian BEC tail source, and the 2026-08-03 scout
+   returned structurally negative, so expect a documented negative rather than a fix.
+   *(Superseded description:)*
    `au_finance_bec` `impact.max` is an ACCC *national aggregate* standing in for one firm's
    tail loss; `fr_finance_data_breach` and `au_finance_data_breach` `impact.max` are statutory
    penalty caps carrying no likelihood information. Item 3 depends on decision 1.
@@ -82,9 +90,14 @@ That is ADR-0006 confirmed from outside. Neither is dead — both are simply beh
 above was stale. The GitHub API genuinely cannot pin discussions (no `pinDiscussion`
 mutation) — it is UI-only, as recorded.
 
-**Parked, unassessed (Ser, 2026-08-07):** <https://destroyedbybreach.com/> — sent with
-"check this out later", deliberately not opened yet. Assess next session for whether it is
-a citable loss-event source (ADR-0005 territory), a competitor, or a comms venue.
+**✅ Assessed 2026-08-07: <https://destroyedbybreach.com/>** — Adrian Sanabria's index of the
+35 organisations known to have died from a cyber incident (2002-2026, 12 countries). Full note:
+[`destroyed_by_breach_scout.md`](destroyed_by_breach_scout.md). **No dollar figures at all**, so
+it does not move the impact wall — but it supplies the half the worked decision just showed is
+missing: a base rate for the extreme tail ("once or twice per year, globally"), where our
+`single_documented_event_loss` maxima carry no exceedance probability. Not a competitor. His open
+question — whether to build a "badly hurt by a breach" list — **is ADR-0005**, deferred here for
+want of a second maintainer. Recommended owner action recorded in the note.
 
 Run `/session:start`. **The repo is in launch-support mode (since 2026-08-04):** the
 correction-post campaign is live and campaign operations live OUTSIDE this repo in
