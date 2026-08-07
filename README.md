@@ -36,6 +36,14 @@ You select a Risk Shard (say, a UK financial-services data breach), inspect whic
 parameters are source-backed versus assumptions, run a Monte Carlo loss
 simulation, get a board-ready summary, and see the next evidence gap to close.
 
+**One decision, made out loud:**
+[How much ransomware cover should an Australian mid-market financial firm buy?](docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md)
+— the model, the seed, the exceedance table, the recommendation, and the reason the
+obvious answer is wrong. It is also where the governance layer stops being bookkeeping:
+the shard's `impact.max` is one company's disclosed loss with no exceedance probability
+attached, and swapping it alone moves the chance a single event exceeds AUD 20M from
+0% to 23%. The limit decision is a decision about that one anchor.
+
 ## Try it in one command
 
 ```bash
