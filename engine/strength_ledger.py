@@ -28,6 +28,18 @@ provenance layer measures construct. Absent from pre-split entries):
                            one measurement_basis
   - families_mixed       : families composing two or more bases into one range
 
+ADR-0008 split (recorded since v0.6.0, from the portfolio exceedance and
+tail-sensitivity layers — the third and last axis, absent from earlier entries):
+
+  - maxima               : impact maxima in the portfolio (the denominator; a
+                           maximum is neither quantified nor none_known when it
+                           is a legal ceiling, so the two do not sum to it)
+  - maxima_quantified    : impact maxima carrying an exceedance statement
+                           (modeled_quantile or observed_rank)
+  - maxima_none_known    : maxima that declare no exceedance probability at all
+  - shards_tail_driven   : shards taking most of their modeled per-event loss
+                           from the impact.max anchor alone
+
 An entry is appended only when the data-pack fingerprint changes — i.e. on a
 real release. Re-running `record` against an unchanged pack is a no-op, so the
 trend cannot be padded with vanity ticks. The ledger JSON is the canonical owner
@@ -51,6 +63,10 @@ METRIC_KEYS = (
     "params_cross_country",
     "families_coherent",
     "families_mixed",
+    "maxima",
+    "maxima_quantified",
+    "maxima_none_known",
+    "shards_tail_driven",
 )
 
 # The ADR-0003 population-split subset of METRIC_KEYS: present only in entries
@@ -70,10 +86,22 @@ COHERENCE_KEYS = (
     "families_mixed",
 )
 
+# The ADR-0008 tail subset of METRIC_KEYS: present only in entries recorded with
+# exceedance totals (v0.6.0 onward). Same rule again — the delta drops a key the
+# other side never measured, so the first entry reads "newly measured".
+TAIL_KEYS = (
+    "maxima",
+    "maxima_quantified",
+    "maxima_none_known",
+    "shards_tail_driven",
+)
+
 LEDGER_RELPATH = Path("docs/internal/strength_ledger.json")
 
 
-def capture_snapshot(dashboard, population_totals=None, coherence_totals=None):
+def capture_snapshot(
+    dashboard, population_totals=None, coherence_totals=None, tail_totals=None
+):
     """Reduce a readiness dashboard to the strength snapshot we track over time.
 
     Returns a dict with the release identity (data-pack version + fingerprint),
@@ -89,6 +117,12 @@ def capture_snapshot(dashboard, population_totals=None, coherence_totals=None):
     `engine.coherence.build_portfolio_coherence` — when given, the ADR-0007
     construct split (coherent / mixed families) is recorded too. Separate for the
     same reason: construct is measured by neither of the other two layers.
+
+    `tail_totals` carries the ADR-0008 axis: `quantified` and `none_known` from
+    `engine.exceedance.build_portfolio_exceedance`, plus
+    `shards_majority_driven_by_max` from
+    `engine.tail_sensitivity.build_portfolio_tail_sensitivity`. Merged by the
+    caller because they come from two modules measuring one axis.
     """
     matrix = dashboard.get("evidence_packs", {}).get("coverage_matrix", [])
     source_backed = sum(int(r.get("source_backed_direct", 0)) for r in matrix)
@@ -118,6 +152,13 @@ def capture_snapshot(dashboard, population_totals=None, coherence_totals=None):
         # them so a metric key is never ambiguous about what it counts.
         metrics["families_coherent"] = int(coherence_totals.get("coherent", 0))
         metrics["families_mixed"] = int(coherence_totals.get("mixed", 0))
+    if tail_totals is not None:
+        metrics["maxima"] = int(tail_totals.get("maxima", 0))
+        metrics["maxima_quantified"] = int(tail_totals.get("quantified", 0))
+        metrics["maxima_none_known"] = int(tail_totals.get("none_known", 0))
+        metrics["shards_tail_driven"] = int(
+            tail_totals.get("shards_majority_driven_by_max", 0)
+        )
     return {
         "data_pack_version": data_pack.get("pack_version", ""),
         "fingerprint": data_pack.get("fingerprint", ""),
@@ -177,6 +218,7 @@ def record_snapshot(
     release_version,
     population_totals=None,
     coherence_totals=None,
+    tail_totals=None,
 ):
     """Append the current snapshot to the ledger — for a named release only.
 
@@ -197,7 +239,10 @@ def record_snapshot(
         )
     entries = load_ledger(ledger_path)
     snapshot = capture_snapshot(
-        dashboard, population_totals=population_totals, coherence_totals=coherence_totals
+        dashboard,
+        population_totals=population_totals,
+        coherence_totals=coherence_totals,
+        tail_totals=tail_totals,
     )
     prev = entries[-1] if entries else None
     prev_metrics = prev["metrics"] if prev else None

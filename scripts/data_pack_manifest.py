@@ -25,6 +25,7 @@ from engine.data_packs import (  # noqa: E402
     write_data_pack_release,
 )
 from engine.coherence import build_portfolio_coherence  # noqa: E402
+from engine.tail_sensitivity import build_tail_totals  # noqa: E402
 from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.readiness import build_readiness_dashboard  # noqa: E402
 from engine.strength_ledger import LEDGER_RELPATH, record_snapshot  # noqa: E402
@@ -71,6 +72,7 @@ def main(argv=None):
                 args.release,
                 population_totals=population_totals,
                 coherence_totals=coherence_totals,
+                tail_totals=build_tail_totals(ROOT),
             )
             ledger_msg = (
                 f"Strength ledger: recorded {entry['data_pack_version']}."

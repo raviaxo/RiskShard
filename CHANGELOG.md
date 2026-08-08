@@ -5,7 +5,18 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
-## Unreleased
+## v0.6.0 — 2026-08-08
+
+The tail, declared and measured. v0.5.0 carried the ADR-0008 *decision*; this
+carries the work. Every `impact.max` now says what it bounds, and every shard says
+how much of its answer rests on that one anchor.
+
+Data-pack release: `data_pack_releases/2026.08.08-v0.6.0.json`.
+Ledger tick since v0.5.0: **the ADR-0008 axis is newly measured** — 2 of 11 maxima
+carry an exceedance statement, 7 carry none, 7 shards are tail-driven. Every other
+count is unchanged (cell-matched 31, cross-country 15, 4 coherent / 18 mixed).
+Three axes have now been added at three releases, each recorded as *newly measured*
+on arrival rather than as a fabricated improvement.
 
 ### ADR-0008 commitment 2 — the maximum is doing most of the work, and now says so
 - `engine/tail_sensitivity.py` + `riskshard_modules.py tail`. Two readings, deliberately
@@ -55,6 +66,16 @@ that remains a recorded human review decision.
   none_known` for maxima, which also puts the question in front of a contributor rather
   than behind them. `CONTRIBUTING.md` and the content checklist say when and how to claim
   something stronger.
+
+### Honesty machinery
+- The strength ledger records the **ADR-0008 axis** (`maxima`, `maxima_quantified`,
+  `maxima_none_known`, `shards_tail_driven`), folded in at the cut as the ADR-0003 and
+  ADR-0007 splits were at v0.2.0 and v0.5.0. Same guard, third time: pre-axis entries
+  never receive a delta on it, pinned by a test verified to fail.
+- **Caught at the cut:** the first ledger line read "2 of 9" because the denominator
+  summed quantified + none_known and silently dropped the two legal ceilings. The total
+  is now recorded explicitly rather than inferred, and the first entry was re-recorded
+  rather than shipped wrong.
 
 ## v0.5.0 — 2026-08-07
 
