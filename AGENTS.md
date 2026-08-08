@@ -53,6 +53,12 @@ real run of the affected path succeeds.** For a content/evidence change also run
   [`docs/PUBLISHABLE_REQUIREMENTS.md`](docs/PUBLISHABLE_REQUIREMENTS.md).
 - **One objective per session.** New important items go to `docs/internal/NEXT_STEPS.md`,
   not into scope.
+- **Know what is out of scope.** [ADR-0009](docs/adr/0009-what-riskshard-is-and-is-not.md)
+  decides it: RiskShard is a governed evidence commons, **not** a CRQ methodology project.
+  Ask *does this make an existing published number more correct, or does it make the method
+  more sophisticated?* The first is always in scope. The second is declined and recorded,
+  however good the idea. In particular, a new declared axis may only be born from a defect
+  **measured in our own data**, never from a good idea about measurement.
 - **Strategic decision with no owner doc?** Surface it and stop — see
   `docs/PUBLISHABLE_REQUIREMENTS.md` → Change Control.
 

@@ -19,3 +19,4 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0006](0006-depth-over-breadth.md) | Depth over breadth | Accepted |
 | [0007](0007-construct-coherence.md) | Declared measurement basis and range coherence | Proposed |
 | [0008](0008-the-governed-tail.md) | The governed tail: a maximum must say what it bounds | Accepted |
+| [0009](0009-what-riskshard-is-and-is-not.md) | What RiskShard is, and what it is not (scope) | Accepted |

@@ -28,6 +28,13 @@ This file is the canonical owner of the *bar itself*; CONTRIBUTING points to it.
 
 ## Change Control
 
+**What is in scope at all** is decided by
+[ADR-0009](adr/0009-what-riskshard-is-and-is-not.md): RiskShard is a governed evidence
+commons, not a CRQ methodology project. Anything that makes a published number *wrong*
+is always in scope; work whose value is a more sophisticated method is not. Apply its
+test before the process below — a proposal that fails it does not need a decision, it
+needs a recorded decline.
+
 The bar above and other strategic choices (schema direction, maturity definitions,
 what counts as benchmark-grade, licensing posture) change only through a recorded
 decision with a named owner doc.
