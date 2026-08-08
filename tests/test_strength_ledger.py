@@ -115,6 +115,47 @@ class PopulationSplitTests(unittest.TestCase):
         )["metrics"]
         self.assertEqual(compute_delta(curr, later)["families_coherent"], 5)
 
+    def test_tail_split_records_and_never_fabricates_a_delta(self):
+        """ADR-0008's split, folded in at v0.6.0 — third axis, same rule as the first two.
+
+        Three splits have now been added at three releases. Each must read "newly
+        measured" on arrival and compare normally afterwards; an entry from before an
+        axis existed must never receive a delta on it.
+        """
+        coh = {"coherent": 4, "mixed": 18}
+        tail = {"quantified": 2, "none_known": 7, "shards_majority_driven_by_max": 7}
+        curr = capture_snapshot(
+            _dashboard(IMPROVED_MATRIX, "def"),
+            population_totals=POP_TOTALS,
+            coherence_totals=coh,
+            tail_totals=tail,
+        )["metrics"]
+        self.assertEqual(curr["maxima_quantified"], 2)
+        self.assertEqual(curr["maxima_none_known"], 7)
+        self.assertEqual(curr["shards_tail_driven"], 7)
+
+        pre_tail = capture_snapshot(
+            _dashboard(IMPROVED_MATRIX, "abc"),
+            population_totals=POP_TOTALS,
+            coherence_totals=coh,
+        )
+        self.assertNotIn("maxima_quantified", pre_tail["metrics"])
+        delta = compute_delta(pre_tail["metrics"], curr)
+        self.assertIn("families_coherent", delta)       # the v0.5.0 axis compares
+        self.assertNotIn("maxima_quantified", delta)    # the v0.6.0 axis is newly measured
+        self.assertNotIn("shards_tail_driven", delta)
+
+        later = capture_snapshot(
+            _dashboard(IMPROVED_MATRIX, "ghi"),
+            population_totals=POP_TOTALS,
+            coherence_totals=coh,
+            tail_totals={"quantified": 5, "none_known": 4, "shards_majority_driven_by_max": 5},
+        )["metrics"]
+        moved = compute_delta(curr, later)
+        self.assertEqual(moved["maxima_quantified"], 3)
+        self.assertEqual(moved["maxima_none_known"], -3)
+        self.assertEqual(moved["shards_tail_driven"], -2)
+
     def test_markdown_shows_a_dash_for_pre_split_entries(self):
         tmp = tempfile.TemporaryDirectory()
         try:

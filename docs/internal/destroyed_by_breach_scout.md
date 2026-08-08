@@ -53,8 +53,23 @@ mortality set on ours.
 
 **3. Person / venue? The highest-value contact surfaced this session.** Sanabria is
 well-known in the industry (his words: "I quickly became known throughout the cybersecurity
-industry for this project"), the site takes public suggestions, and his founding act is a
-provenance debunk. Persona fit is near-exact for [[gtm-strategy]]'s tier-1/tier-2.
+industry for this project"), and his founding act is a provenance debunk. Persona fit is
+near-exact for [[gtm-strategy]]'s tier-1/tier-2.
+
+**Contact route — corrected 2026-08-08.** The earlier line "the site takes public suggestions"
+was true but misleading as a route. Checked both properties in-browser:
+
+- `destroyedbybreach.com/suggest` is a **company-submission form only** — fields are company
+  name, website, media links, other details, submitter email. It is for nominating an
+  organisation for the list. Using it to answer his open question would put a
+  methodology reply into a triage queue built for something else.
+- There is **no email address, contact form or social link anywhere** on
+  `destroyedbybreach.com` (list / stories / suggest / about all checked).
+- `defendersinitiative.com` is a Substack; the only route it offers is a subscription.
+
+So the realistic route is **LinkedIn** (`linkedin.com/in/adrian-sanabria/`), which is also
+where his professional presence is. Subscribing to the Substack first is cheap, real, and
+makes the approach a reader's reply rather than a cold DM.
 
 ## The real opportunity
 

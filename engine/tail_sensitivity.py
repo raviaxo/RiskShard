@@ -163,6 +163,25 @@ def build_portfolio_tail_sensitivity(root, module_ids=None, factors=SWING_FACTOR
     }
 
 
+def build_tail_totals(root):
+    """The ADR-0008 axis as one dict, for the strength ledger.
+
+    One axis, two modules: exceedance answers *what the maximum admits* and this
+    module answers *how much of the answer rests on it*. The ledger records a single
+    axis, so they are merged here rather than at each call site.
+    """
+    from engine.exceedance import build_portfolio_exceedance
+
+    exceedance = build_portfolio_exceedance(root)["totals"]
+    sensitivity = build_portfolio_tail_sensitivity(root)["totals"]
+    return {
+        "maxima": exceedance["maxima"],
+        "quantified": exceedance["quantified"],
+        "none_known": exceedance["none_known"],
+        "shards_majority_driven_by_max": sensitivity["shards_majority_driven_by_max"],
+    }
+
+
 def headline(totals):
     """The one sentence a reader should leave with."""
     return (

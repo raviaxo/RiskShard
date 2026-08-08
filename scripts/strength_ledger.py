@@ -29,6 +29,7 @@ if str(ROOT) not in sys.path:
 
 from engine.coherence import build_portfolio_coherence  # noqa: E402
 from engine.provenance import build_portfolio_provenance  # noqa: E402
+from engine.tail_sensitivity import build_tail_totals  # noqa: E402
 from engine.readiness import build_readiness_dashboard  # noqa: E402
 from engine.strength_ledger import (  # noqa: E402
     LEDGER_RELPATH,
@@ -71,6 +72,13 @@ def _format_metrics_line(metrics, delta):
             f" of {metrics.get('params_source_backed', 0)} source-backed\n"
             f"  population-bridged   : {cell_if_measured('params_cross_cell')}"
             f" ({cell_if_measured('params_cross_country')} cross-country)"
+        )
+    if "maxima_quantified" in metrics:
+        lines += (
+            f"\n  maxima w/ exceedance : {cell_if_measured('maxima_quantified')}"
+            f" of {metrics['maxima']}\n"
+            f"  maxima w/ none known : {cell_if_measured('maxima_none_known')}\n"
+            f"  tail-driven shards   : {cell_if_measured('shards_tail_driven')}"
         )
     if "families_coherent" in metrics:
         families = metrics["families_coherent"] + metrics["families_mixed"]
@@ -161,6 +169,8 @@ def main(argv=None):
         # ADR-0007: construct lives in the coherence layer, measured by neither of
         # the other two. Folded in at the v0.5.0 cut, per the ADR-0003 precedent.
         coherence_totals = build_portfolio_coherence(ROOT)["totals"]
+        # ADR-0008: the tail axis spans two modules; build_tail_totals merges them.
+        tail_totals = build_tail_totals(ROOT)
         entry, appended, delta = record_snapshot(
             ledger_path,
             dashboard,
@@ -168,6 +178,7 @@ def main(argv=None):
             args.release,
             population_totals=population_totals,
             coherence_totals=coherence_totals,
+            tail_totals=tail_totals,
         )
         if args.json:
             print(json.dumps({"appended": appended, "entry": entry, "delta": delta}, indent=2, sort_keys=True))
