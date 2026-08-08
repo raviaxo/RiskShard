@@ -130,6 +130,7 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: single_documented_event_loss
+    exceedance_basis: none_known
     population_match:
       status: matched
     applicability:
@@ -186,6 +187,7 @@ records:
     confidence: low
     evidence_type: estimated
     measurement_basis: interpretive_estimate
+    exceedance_basis: none_known
     applicability:
       industries: [financial_services]
       countries: [SG]

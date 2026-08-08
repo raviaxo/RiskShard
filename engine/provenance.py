@@ -122,6 +122,8 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
                     "caveat": None,
                     "resolved": False,
                     "measurement_basis": None,
+                    "exceedance_basis": None,
+                    "exceedance_detail": None,
                 }
             )
         else:
@@ -139,6 +141,9 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
                     "resolved": True,
                     "population": _card_population(record, cell_country),
                     "measurement_basis": record.get("measurement_basis"),
+                    # ADR-0008: only ever set on an impact maximum, by schema rule.
+                    "exceedance_basis": record.get("exceedance_basis"),
+                    "exceedance_detail": record.get("exceedance_detail"),
                 }
             )
         cards.append(card)
@@ -209,6 +214,20 @@ def format_portfolio_markdown(portfolio):
     coherent = sum(1 for f in all_families if f["status"] == "coherent")
     mixed = sum(1 for f in all_families if f["status"] == "mixed")
 
+    # ADR-0008: the third axis, computed from the same cards.
+    from engine.exceedance import module_exceedance
+
+    exceedance_by_module = {m["module_id"]: module_exceedance(m) for m in portfolio["modules"]}
+    all_maxima = [e for maxima in exceedance_by_module.values() for e in maxima]
+    exc = {
+        "maxima": len(all_maxima),
+        "quantified": sum(1 for e in all_maxima if e["quantified"]),
+        "by_basis": {
+            basis: sum(1 for e in all_maxima if e["exceedance_basis"] == basis)
+            for basis in ("modeled_quantile", "observed_rank", "population_ceiling", "none_known")
+        },
+    }
+
     lines = [
         "# RiskShard Evidence Report",
         "",
@@ -231,6 +250,14 @@ def format_portfolio_markdown(portfolio):
         "measurement basis are independent, and a fully cell-matched parameter can still "
         "sit in a mixed range. The basis of every anchor is named per row.",
         "",
+        f"**Tail exceedance:** {exc['quantified']} of {exc['maxima']} `impact.max` anchors "
+        f"carry an exceedance statement — {exc['by_basis']['modeled_quantile']} modeled "
+        f"quantiles, {exc['by_basis']['observed_rank']} observed ranks. "
+        f"{exc['by_basis']['population_ceiling']} are legal ceilings and "
+        f"{exc['by_basis']['none_known']} carry nothing at all (ADR-0008). A maximum here is "
+        "*the largest loss we found*, not *the largest loss that can happen*, unless its row "
+        "says otherwise — and the maximum is the anchor a simulated mean is most sensitive to.",
+        "",
     ]
     for m in portfolio["modules"]:
         lines.append(f"## {m['module_id']}")
@@ -246,8 +273,23 @@ def format_portfolio_markdown(portfolio):
                     f"{', '.join('`' + b + '`' for b in family['bases'])}."
                 )
                 lines.append("")
-        lines.append("| Parameter | Value | Status | Measures | Source | Caveat |")
-        lines.append("| --- | --- | --- | --- | --- | --- |")
+        for entry in exceedance_by_module.get(m["module_id"], []):
+            if entry["exceedance_basis"] == "none_known":
+                lines.append(
+                    f"> **`{entry['parameter']}` bounds nothing** — it carries no exceedance "
+                    "probability (ADR-0008). It says a loss this size happened, not how often "
+                    "a loss is worse. Treat it as the largest loss found, not the largest "
+                    "possible."
+                )
+                lines.append("")
+            elif entry["exceedance_detail"]:
+                lines.append(
+                    f"> **`{entry['parameter']}` exceedance** (`{entry['exceedance_basis']}`) — "
+                    f"{entry['exceedance_detail']}"
+                )
+                lines.append("")
+        lines.append("| Parameter | Value | Status | Measures | Exceedance | Source | Caveat |")
+        lines.append("| --- | --- | --- | --- | --- | --- | --- |")
         for c in m["cards"]:
             source = c.get("source_name") or "—"
             if c.get("publication_date"):
@@ -258,8 +300,10 @@ def format_portfolio_markdown(portfolio):
             if pop.get("status") == "bridged":
                 status += f" (bridged: {', '.join(pop.get('bridged_on') or [])})"
             basis = c.get("measurement_basis") or "—"
+            # ADR-0008: only maxima carry this, so every other row reads "—".
+            exceedance = f"`{c['exceedance_basis']}`" if c.get("exceedance_basis") else "—"
             lines.append(
-                f"| `{c['parameter']}` | {_fmt_value(c)} | {status} | `{basis}` "
+                f"| `{c['parameter']}` | {_fmt_value(c)} | {status} | `{basis}` | {exceedance} "
                 f"| {source.replace('|', chr(92) + '|')} | {caveat} |"
             )
         lines.append("")

@@ -176,6 +176,7 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: regulatory_penalty_issued
+    exceedance_basis: none_known
     population_match:
       status: matched
     applicability:

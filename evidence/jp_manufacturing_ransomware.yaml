@@ -168,6 +168,7 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: observed_extremum
+    exceedance_basis: none_known
     population_match:
       status: matched
     applicability:
@@ -353,6 +354,7 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: observed_extremum
+    exceedance_basis: none_known
     population_match:
       status: matched
     applicability:

@@ -142,6 +142,18 @@ regulatory_intensity: moderate
 """
 
 
+def _exceedance_line(parameter):
+    """ADR-0008: a maximum must declare what it bounds, scaffolds included.
+
+    A scaffold placeholder knows nothing about exceedance, so `none_known` is both the
+    only honest value and the one the contributor should have to look at and replace.
+    Emitted only for maxima — the field is meaningless anywhere else.
+    """
+    if not parameter.endswith("impact.max"):
+        return ""
+    return "\n    exceedance_basis: none_known"
+
+
 def _evidence_record(shard_id, parameter, country, industry, size, threat):
     rid = f"{shard_id}_{parameter.replace('.', '_')}_scaffold"
     return f"""  - id: {rid}
@@ -159,7 +171,7 @@ def _evidence_record(shard_id, parameter, country, industry, size, threat):
     limitations: SCAFFOLD placeholder, not source-backed. Replace before benchmark or decision use.
     confidence: low
     evidence_type: estimated
-    measurement_basis: interpretive_estimate
+    measurement_basis: interpretive_estimate{_exceedance_line(parameter)}
     applicability:
       industries: [{industry}]
       countries: [{country}]

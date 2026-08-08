@@ -5,6 +5,35 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## Unreleased
+
+### ADR-0008 commitment 1 — every maximum now declares what it bounds
+- `exceedance_basis` is in the schema and **required on any record whose parameter is an
+  impact maximum**, with `exceedance_detail` required whenever the basis claims a quantile
+  or a rank — so a quantified claim cannot ship without its number. All 20
+  maximum-anchoring records declared. Verified to fail on a stripped declaration.
+- `engine/exceedance.py` measures it; `riskshard_modules.py exceedance` reports it; the
+  explorer gains a cover fact, a per-anchor `exceedance` line and a Note 1 paragraph; the
+  evidence report gains a headline, an `Exceedance` column and a per-shard callout. Each
+  surface is pinned by a test **verified to fail** when that surface is stripped, and
+  rendering was confirmed live in-browser (11 exceedance lines for 11 maxima).
+- **The measurement beat the prediction.** ADR-0008 expected `none_known` on nearly
+  everything. Actual, across the 11 selected maxima: **0 modeled quantiles · 2 observed
+  ranks · 2 legal ceilings · 7 none_known.** US and CA data breach *did* admit an empirical
+  exceedance — rank 1 of N=579 and rank 1 of N=84 — because their sources state N and nobody
+  had written the ratio down. Both are declared as a **floor, not an estimate**: they are
+  within-sample rates on insured claims, so policy limits and uninsured losses mean the true
+  rate above those values is *higher*, not lower. The ADR was corrected to match rather than
+  the finding being trimmed to fit the ADR.
+- The load-bearing claim — **no maximum in this portfolio is a modeled quantile** — is now
+  pinned by a test instead of a memo.
+- **Caught by the suite, not by review:** the schema rule broke the contributor path —
+  a freshly scaffolded pack emitted an `impact.max` placeholder with no declaration and
+  failed its own preflight. Both scaffold generators now emit `exceedance_basis:
+  none_known` for maxima, which also puts the question in front of a contributor rather
+  than behind them. `CONTRIBUTING.md` and the content checklist say when and how to claim
+  something stronger.
+
 ## v0.5.0 — 2026-08-07
 
 The governed tail. Three people who do not know each other pushed on RiskShard

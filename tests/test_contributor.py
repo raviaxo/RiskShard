@@ -127,7 +127,9 @@ def build_example_pack(pack):
             f"    evidence_type: source_backed\n"
             f"    measurement_basis: "
             f"{'mean_total_event_cost' if unit == 'currency' else 'org_prevalence_incident'}\n"
-            f"    population_match:\n"
+            # ADR-0008: the schema requires an exceedance declaration on any maximum.
+            + ("    exceedance_basis: none_known\n" if parameter == "impact.max" else "")
+            + f"    population_match:\n"
             f"      status: matched\n"
             f"    applicability:\n"
             f"      industries: [financial_services]\n"

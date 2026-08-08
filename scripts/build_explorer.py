@@ -28,6 +28,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from engine.coherence import module_coherence  # noqa: E402
+from engine.exceedance import module_exceedance  # noqa: E402
 from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.risk_modules import find_risk_module  # noqa: E402
 from engine.web_console import WebConsoleApp  # noqa: E402
@@ -118,6 +119,7 @@ def build_data(root):
     portfolio = build_portfolio_provenance(root)
     shards = []
     coherent = mixed = 0
+    maxima_total = maxima_quantified = maxima_none_known = 0
     for module in portfolio["modules"]:
         mid = module["module_id"]
         mod = find_risk_module(mid, root)
@@ -127,6 +129,11 @@ def build_data(root):
         families = module_coherence(module)
         coherent += sum(1 for f in families if f["status"] == "coherent")
         mixed += sum(1 for f in families if f["status"] == "mixed")
+        # ADR-0008: does this shard's maximum say anything about being exceeded?
+        for entry in module_exceedance(module):
+            maxima_total += 1
+            maxima_quantified += 1 if entry["quantified"] else 0
+            maxima_none_known += 1 if entry["exceedance_basis"] == "none_known" else 0
         shards.append({
             "id": mid,
             "coherence": [
@@ -152,12 +159,19 @@ def build_data(root):
                 # ADR-0007: what quantity this anchor measures, independent of who
                 # it was measured on.
                 "basis": c.get("measurement_basis"),
+                # ADR-0008: what is known about this value being exceeded. Set on
+                # impact maxima only — every other parameter carries null.
+                "exceedance": c.get("exceedance_basis"),
+                "exceedance_detail": c.get("exceedance_detail"),
             } for c in module["cards"]],
         })
     totals = dict(portfolio["totals"])
     totals["families_coherent"] = coherent
     totals["families_mixed"] = mixed
     totals["families_total"] = coherent + mixed
+    totals["maxima"] = maxima_total
+    totals["maxima_quantified"] = maxima_quantified
+    totals["maxima_none_known"] = maxima_none_known
     return {"totals": totals, "shards": shards, "repo": REPO_URL,
             "revisions": load_revisions(), "release": latest_release(),
             "aliases": load_aliases(), "site": SITE_URL}
