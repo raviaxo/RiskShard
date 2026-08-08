@@ -20,8 +20,20 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
 2. ✅ **CLOSED 2026-08-08 — v0.6.0 cut** (Ser said do it). Citations pin to
    `2026.08.08-v0.6.0`, so anything published about the tail work now resolves against a
    release that contains it.
-3. **Awaiting John Flack** on ADR-0007 open question 1 (which mixes are acceptable) — sent
-   2026-08-07, changes ~12 parameters. No action yet; not stale until ~2026-08-14.
+3. **Reply to John Flack** (GRC EC `#labs_demos`, he answered 2026-08-07; Ser sent a holding
+   reply 2026-08-08). Two things to say, and they go in opposite directions — that is the
+   point, and [ADR-0009](../adr/0009-what-riskshard-is-and-is-not.md) is now the reason:
+   **accepted**, his mean-as-mode / median-as-floor finding is a real defect in our numbers
+   (see the queue below); **declined**, the `anchor_role` / `variation_source` fourth axis,
+   because the question it asks already has a home in the per-parameter calibration
+   `rationale` and a new axis must be born from a measured defect, not a good idea. Tell him
+   both, tell him which of his points landed hardest, and credit the mean-as-mode catch
+   plainly — he found in one reply what three days of our own instrumentation did not.
+
+   *(This supersedes the old "awaiting John Flack" item. He replied on 2026-08-07 and
+   reframed the question rather than answering it as asked: the problem is not which mixes
+   are acceptable, it is why a number is allowed to occupy a slot at all. ADR-0007 open
+   question 1 should be closed against that reframing when the correctness objective lands.)*
 4. **Seven anchor judgments on record** — no action unless overruled; documented
    alternatives on each record: AU-ransomware stress 0.70-vs-0.80 · Latitude threat/size ·
    JP stress 0.58-vs-0.61 · CA NetDiligence thin cells · CA C-quality stress cell ·
@@ -44,7 +56,35 @@ denominator was inferred as `quantified + none_known`, silently dropping the two
 rather than shipped wrong. Inferring a denominator from the categories you happened to name is a
 repeatable mistake.
 
-**THE NEXT OBJECTIVE IS: ADR-0008 commitment 3 — base rates, ADR-0005 revisited.** This one needs
+**THE NEXT OBJECTIVE IS: correct the anchor-slot assignment — our published numbers are
+mis-specified.** Found by John Flack 2026-08-07, verified in our own data 2026-08-08, and in
+scope without argument under [ADR-0009](../adr/0009-what-riskshard-is-and-is-not.md) obligation 1.
+
+A beta-PERT's second parameter is the **mode**. Measured across the portfolio:
+
+- **7 of 11 shards feed a `mean_total_event_cost` into the mode slot.** A mean is not a mode.
+- **7 of 11 use a central-tendency measure (mean or median) as the floor.** A mean is not a
+  minimum.
+- **6 of 11 do both**, and four of those use *a mean at `min` and a different mean at `likely`* —
+  two means, ordered by magnitude, labelled as if they were a floor and a mode. That is exactly
+  what John described: "they don't automatically become 'min' and 'likely' because one happens
+  to be smaller."
+
+**Direction of the error, and why it matters more than it looks:** a mean standing in for a mode
+is too high for right-skewed loss data, and a mean standing in for a floor is too high by
+construction. Both push the same way, and so does the maximum driving up to 95% of the mean
+(ADR-0008). **Every defect found this week inflates the published numbers.** The portfolio is
+very likely overstating loss. The size of that is unknown and must not be guessed — we do not
+know the true modes.
+
+Scope discipline for this objective, per ADR-0009: fix the assignment where existing sources
+allow it; where a source publishes only a mean, **say so on the record and leave it** rather than
+inventing a mode or re-engineering the engine. Do **not** add a fourth axis — the "why does this
+number occupy this slot" question goes in the per-parameter calibration `rationale` as prose.
+Expect the corrected numbers to fall, and expect that to be the headline of the release that
+carries it.
+
+Behind it: **ADR-0008 commitment 3 — base rates, ADR-0005 revisited.** This one needs
 Ser, not code: it is an outreach move. A documented loss-event registry is precisely an exceedance
 denominator, which is the thing 7 of our 11 maxima lack, and Adrian Sanabria has both the dataset
 (destroyedbybreach.com, 35 organisations, 2002–2026) and the open question ("should there be a
@@ -1128,3 +1168,32 @@ governance/regulatory loss).
   to a "badly hurt" list, conditional on a loss figure, its source, and **what the figure
   measures** per entry — with our own tail weakness as the reason we care, and no link, no
   ADR-0005 mention and no collaboration ask in the first message.
+- 2026-08-08 (second session) — **ADR-0009: what RiskShard is and is not.** Ser's steer, recorded
+  before it could be forgotten: *"risk shard has a vision and can be wrong, but it is not trying
+  to fix CRQ, however needs to get CRQ right; the end game is the same — useful vetted external
+  data in an open source project free to all."* Prompted by John Flack's reply, which contained
+  one finding and one temptation, and by the fact that nothing in the repo could tell them apart.
+  **The trajectory was the problem.** Three external critiques in three days produced three
+  declared axes — population (ADR-0003), construct (ADR-0007), exceedance (ADR-0008) — each
+  individually justified and collectively a drift toward being a research project about how to
+  measure cyber risk. On 2026-08-08 a fourth was offered (`anchor_role` / `variation_source`),
+  in good faith, by the same practitioner whose question produced ADR-0007, and he flagged the
+  risk himself: *"that may be a little too navel-gazing."* Every one of those calls had to be
+  argued from judgment because no document said what the project is for.
+  **The decision:** RiskShard is a governed evidence commons, not a CRQ methodology project. Two
+  asymmetric obligations — *get CRQ right* (anything that makes a published number wrong is a
+  defect, fixed regardless of cost) and *do not fix CRQ* (work whose value is a more sophisticated
+  method is declined, however good). The test: **does this make an existing published number more
+  correct, or does it make the method more sophisticated?**
+  **The rule that will actually do the work:** an axis may only be born from a defect *measured in
+  our own data*, never from a good idea about measurement. It retro-justifies all three existing
+  axes (each was proposed after the defect was counted) and forbids a fourth proposed in the
+  abstract. It also **supersedes ADR-0008's "three axes is the ceiling"** — the number was never
+  the discriminator; the provenance of the proposal is. Capping axes at three would have been
+  arbitrary and would have blocked a legitimate fourth while permitting an illegitimate third.
+  Pointers added from `AGENTS.md` (what an agent reads first) and from Change Control in
+  `PUBLISHABLE_REQUIREMENTS.md` (which owns the process), content in neither — one canonical owner.
+  **Immediate application, both directions:** John's mean-as-mode / median-as-floor finding is
+  **accepted** as a correctness defect and becomes the next objective; his fourth axis is
+  **declined** and recorded with its reason, because declining silently would cost the
+  relationship that produced the last three improvements.
