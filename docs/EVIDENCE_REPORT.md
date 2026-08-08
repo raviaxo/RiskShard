@@ -15,6 +15,8 @@ _Australia Finance Business Email Compromise Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 2 different quantities: `mean_total_event_cost`, `single_documented_event_loss`.
 
+> **84% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
+
 > **`impact.max` bounds nothing** — it carries no exceedance probability (ADR-0008). It says a loss this size happened, not how often a loss is worse. Treat it as the largest loss found, not the largest possible.
 
 | Parameter | Value | Status | Measures | Exceedance | Source | Caveat |
@@ -33,6 +35,8 @@ _Australia Finance Data Breach Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 2 different quantities: `mean_total_event_cost`, `statutory_penalty_cap`.
 
+> **66% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
+
 | Parameter | Value | Status | Measures | Exceedance | Source | Caveat |
 | --- | --- | --- | --- | --- | --- | --- |
 | `frequency.min` | 0.0008 annual_probability | source_backed | `reported_case_rate` | — | OAIC NDB Report July-Dec 2024 and ABS Counts of Australian Businesses 2024-25 (2025-05-13) | Covers eligible Australian NDB notifications only; all-size sector denominator is not mid-market-specific; multiple notifications by one entity and unreported/non-reportable breaches can distort organization-level probability. Confidence is medium for a reported-notification floor, not for a likely breach rate. |
@@ -48,6 +52,8 @@ _Australia Finance Ransomware Midmarket_
 > **`frequency` is a mixed range** — its anchors measure 2 different quantities: `org_prevalence_loss_event`, `org_prevalence_incident`.
 
 > **`impact` is a mixed range** — its anchors measure 3 different quantities: `mean_total_event_cost`, `cost_component`, `single_documented_event_loss`.
+
+> **97% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
 
 > **`impact.max` bounds nothing** — it carries no exceedance probability (ADR-0008). It says a loss this size happened, not how often a loss is worse. Treat it as the largest loss found, not the largest possible.
 
@@ -99,6 +105,8 @@ _France Finance Data Breach Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 2 different quantities: `mean_total_event_cost`, `statutory_penalty_cap`.
 
+> **58% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
+
 | Parameter | Value | Status | Measures | Exceedance | Source | Caveat |
 | --- | --- | --- | --- | --- | --- | --- |
 | `frequency.min` | 0.0198 annual_probability | source_backed | `org_prevalence_incident` | — | Eurostat ISOC_CISCE_IC - ICT security incidents by size class (France) (2025-10-08) | Eurostat survey population excludes the financial sector (nace_r2 = C10-S951_X_K), so this is a non-financial-sector proxy; self-reported disclosure incidents are narrower than "any cyberattack"; small-enterprise rate used as a floor. |
@@ -149,6 +157,8 @@ _Singapore Finance Business Email Compromise Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 3 different quantities: `median_total_event_cost`, `mean_total_event_cost`, `single_documented_event_loss`.
 
+> **92% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
+
 > **`impact.max` bounds nothing** — it carries no exceedance probability (ADR-0008). It says a loss this size happened, not how often a loss is worse. Treat it as the largest loss found, not the largest possible.
 
 | Parameter | Value | Status | Measures | Exceedance | Source | Caveat |
@@ -167,6 +177,8 @@ _United States Finance Business Email Compromise Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 3 different quantities: `median_total_event_cost`, `mean_total_event_cost`, `single_documented_event_loss`.
 
+> **92% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
+
 > **`impact.max` bounds nothing** — it carries no exceedance probability (ADR-0008). It says a loss this size happened, not how often a loss is worse. Treat it as the largest loss found, not the largest possible.
 
 | Parameter | Value | Status | Measures | Exceedance | Source | Caveat |
@@ -182,6 +194,8 @@ _United States Finance Business Email Compromise Midmarket_
 _United States Finance Data Breach Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 3 different quantities: `cost_component`, `mean_total_event_cost`, `observed_extremum`.
+
+> **89% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
 
 > **`impact.max` exceedance** (`observed_rank`) — Rank 1 of N=579 US financial-services SME claims, 2020-2024, so the observed exceedance within the sample is 1/579 (~0.17% of claims). That is a WITHIN-SAMPLE rate on insured claims, not a population exceedance: the sample is censored by policy limits and excludes uninsured and unreported losses, so the true rate of losses above USD 11.5M is higher than 1/579, not lower.
 

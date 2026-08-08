@@ -1,6 +1,6 @@
 # ADR-0008 — The governed tail: a maximum must say what it bounds
 
-- **Status:** Accepted (2026-08-07) — **commitment 1 implemented** 2026-08-07; commitments 2–3 open, see *Scope*
+- **Status:** Accepted (2026-08-07) — **commitments 1 and 2 implemented** 2026-08-07; commitment 3 open, see *Scope*
 - **Date:** 2026-08-07
 - **Deciders:** repo owner
 - **Prompted by:** three independent external critiques within four days, which turned out to
@@ -153,11 +153,39 @@ lower. Saying so on the record is the whole point of the axis.
 The ADR's load-bearing claim — no maximum is a modeled quantile — is unchanged and is now pinned
 by a test rather than a memo.
 
-**Still open.** Commitment 2 (tail sensitivity as an output) and commitment 3 (base rates,
-ADR-0005 revisited) are not built. Nor is *value* gating: the schema forces a maximum to carry a
-declaration, but nothing forbids `none_known`, and nothing should until there is somewhere better
-for those seven to go. Sequencing lives in
-[`../internal/NEXT_STEPS.md`](../internal/NEXT_STEPS.md).
+**Built 2026-08-07 (commitment 2).** `engine/tail_sensitivity.py`, `riskshard_modules.py tail`,
+and a line on both surfaces. Two readings, deliberately different in kind:
+
+- **Leverage is analytic.** The engine samples a beta-PERT at confidence 4, whose mean is exactly
+  `(min + 4·likely + max) / 6`. So the maximum's share of the per-event mean is
+  `max / (min + 4·likely + max)` — an identity, needing no seed, no trials and no Monte Carlo
+  error. It is pinned against the engine's *own sampler*, not against itself, so that changing the
+  distribution fails the test rather than silently turning two public surfaces into fiction.
+- **Swing is simulated.** Leverage says how much of the mean comes from the maximum; it says
+  nothing about what a decision does. The swing re-runs the published simulation (10,000 trials,
+  seed 42) with `impact.max` alone moved by ½ and 2×, and reports what the annual figures do.
+
+The module reproduces the hand computation it generalises: it independently returns **14.8×** for
+`au_finance_ransomware_midmarket`'s mean-over-mode, the figure
+[the worked decision](../WORKED_DECISION_AU_RANSOMWARE_LIMIT.md) computed by hand before this code
+existed. That agreement is pinned by a test.
+
+### What commitment 2 found
+
+**7 of 11 shards take most of their modeled per-event loss from the `impact.max` anchor alone, and
+4 of those maxima declare `none_known`.** Leverage runs from 33% (`gb_finance_data_breach`) to
+**95%** (`au_finance_ransomware`) — meaning 95% of that shard's modeled per-event loss comes from
+one documented event with no exceedance probability attached. Doubling that single anchor moves
+the published annual average by **+94%**.
+
+This is the join the three axes were built for. A parameter can be cell-matched (ADR-0003), sit in
+a declared range (ADR-0007), and still be the number carrying almost the whole answer while
+admitting it cannot say how often it is exceeded.
+
+**Still open.** Commitment 3 (base rates, ADR-0005 revisited) is not built and needs an outreach
+decision, not code. Nor is *value* gating: the schema forces a maximum to carry a declaration, but
+nothing forbids `none_known`, and nothing should until there is somewhere better for those seven
+to go. Sequencing lives in [`../internal/NEXT_STEPS.md`](../internal/NEXT_STEPS.md).
 
 ## Consequences
 

@@ -40,18 +40,33 @@ insured-claims samples are censored by policy limits. The ADR was corrected to m
 measurement. *(Note: the pack fingerprint has moved since v0.5.0, so doctor's ledger check is
 amber again until the next cut. Correct and expected.)*
 
-**THE NEXT OBJECTIVE IS: ADR-0008 commitment 2 — tail sensitivity as an output.** The 14.8x and
-the 0%→23% were computed by hand for one shard in the worked decision; all 11 shards have the
-same shape, and 9 of them now carry a maximum that admits nothing about being exceeded. Build the
-readout that answers, per shard: *what does the decision do when `impact.max` alone moves?* The
-raw material is already there — `engine/exceedance.py` knows which maxima are unquantified, and
-the worked decision has the method. Likely files: `engine/exceedance.py` or a sibling,
-`scripts/riskshard_modules.py`, plus a surface decision (probably the explorer, since that is
-where a reader meets the number).
+✅ **DONE 2026-08-07 — ADR-0008 commitment 2 shipped.** `engine/tail_sensitivity.py` +
+`riskshard_modules.py tail`, on both surfaces. **Leverage is analytic** (the beta-PERT mean is
+`(min + 4·likely + max)/6`, so the maximum's share is an identity, not a sample) and **swing is
+simulated** (published run, `impact.max` alone moved ½ and 2×). **Result: 7 of 11 shards take most
+of their modeled per-event loss from `impact.max` alone, and 4 of those maxima declare
+`none_known`.** Leverage 33% → 95%; AU ransomware sits at 95% with a `+94%` annual-average swing on
+a 2× move of that one anchor. The module independently reproduces the worked decision's
+hand-computed **14.8×**, which is pinned by a test. The analytic claim is pinned against the
+engine's *own sampler* — change the distribution and the test fails rather than the surfaces
+silently becoming fiction.
 
-After that: **revisit ADR-0005** on exceedance grounds — a documented loss-event registry is an
-exceedance denominator, and Sanabria has both the dataset and the open question (commitment 3).
-This is the one that needs Ser: it is an outreach move, not a code move.
+**THE NEXT OBJECTIVE IS: ADR-0008 commitment 3 — base rates, ADR-0005 revisited.** This one needs
+Ser, not code: it is an outreach move. A documented loss-event registry is precisely an exceedance
+denominator, which is the thing 7 of our 11 maxima lack, and Adrian Sanabria has both the dataset
+(destroyedbybreach.com, 35 organisations, 2002–2026) and the open question ("should there be a
+badly-hurt-by-a-breach list?"). ADR-0005 was Deferred for want of a second maintainer; that is
+exactly what has appeared. See [`destroyed_by_breach_scout.md`](destroyed_by_breach_scout.md) for
+the recommended approach.
+
+**Also now available and worth using:** the tail-sensitivity table is the strongest artifact the
+repo has for the "so what?" question, because it is checkable, uncomfortable, and about our own
+numbers. It is the obvious spine for the **second worked decision** (third-party outage is the
+committed one) and for the next Shard Notes.
+
+**Still deliberately NOT done:** value gating (`none_known` stays legal), and a v0.6.0 cut — the
+pack fingerprint has moved twice since v0.5.0, so doctor's ledger check is amber until then, which
+is correct.
 
 **Still deliberately NOT done:** value gating. The schema forces a maximum to carry a declaration,
 but nothing forbids `none_known`, and nothing should until those seven have somewhere better to
@@ -1070,3 +1085,30 @@ governance/regulatory loss).
   the 11 maintained shards silently applies to every pack anyone will ever scaffold. 244 → 258
   tests. Deliberately not built: value gating — `none_known` stays legal until those seven have
   somewhere better to go.
+- 2026-08-07 (fourth session) — **ADR-0008 commitment 2: the join between the three axes, and the
+  most uncomfortable number the repo has produced.** `engine/tail_sensitivity.py` +
+  `riskshard_modules.py tail`, on both surfaces. The design decision worth keeping is that the two
+  readings are **deliberately different in kind**. *Leverage* is analytic: the engine samples a
+  beta-PERT at confidence 4, whose mean is exactly `(min + 4·likely + max)/6`, so the maximum's
+  share of the per-event mean is an identity — no seed, no trials, no Monte Carlo error, and no
+  reason to dress it as an estimate. *Swing* is simulated, because leverage says how much of the
+  mean comes from the maximum and says nothing about what a decision does. Reporting one number
+  where the honest answer needed two would have been the easy mistake.
+  **Result: 7 of 11 shards take most of their modeled per-event loss from `impact.max` alone, and
+  4 of those maxima declare `none_known`.** Leverage runs 33% (GB-DB) → 95% (AU-ransomware). At 95%,
+  effectively the whole of that shard's per-event answer is one documented event carrying no
+  exceedance probability; doubling that single anchor moves the published annual average +94%.
+  That is the payoff of building three axes rather than one: a parameter can be cell-matched
+  (ADR-0003), sit in a declared range (ADR-0007), and still be the number carrying almost the
+  entire answer while admitting it cannot say how often it is exceeded.
+  **Two verification choices worth repeating.** First, the module was made to reproduce the
+  worked decision's hand-computed **14.8×** mean-over-mode for AU ransomware — a figure written in
+  a document before this code existed — and that agreement is a test. Generalising a hand
+  computation without checking it against the hand computation would have been faith, not
+  engineering. Second, the analytic identity is pinned against the **engine's own sampler**, not
+  against itself: inducing a distribution change (confidence 4 → 3) turns it red, which is exactly
+  the failure mode that would otherwise leave two public surfaces quietly wrong. Also verified to
+  fail: dropping the evidence-report callout, and dropping leverage from the explorer payload.
+  Live rendering confirmed 7 notes for 7 tail-driven items. 258 → 270 tests.
+  **Next is Ser's, not mine:** commitment 3 is an outreach move — ADR-0005 was Deferred for want of
+  a second maintainer, and Sanabria has the dataset and the open question.
