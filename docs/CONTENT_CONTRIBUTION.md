@@ -25,6 +25,12 @@ RiskShard content should grow through reviewed source, extraction, evidence, and
 - Source-backed evidence must include `source_id` and `citation_detail`.
 - Estimated or synthetic records must explain limitations and normalization assumptions.
 - Use taxonomy IDs from `taxonomies/`.
+- Declare `measurement_basis` on every record — *what quantity* the number measures (ADR-0007).
+- Declare `exceedance_basis` on every record anchoring an `impact.max` — what is known about the
+  value being **exceeded** (ADR-0008). `none_known` is honest and common; `observed_rank` and
+  `modeled_quantile` additionally require `exceedance_detail` stating the rank-and-N or the
+  percentile, and the schema rejects them without it. See
+  `python scripts/riskshard_modules.py exceedance` for how existing maxima are declared.
 
 ## Calibration Checklist
 

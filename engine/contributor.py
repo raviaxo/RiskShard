@@ -668,7 +668,11 @@ def render_scaffold_evidence(module_id, evidence_ids, country, industry, company
             "    confidence: low\n"
             "    evidence_type: estimated\n"
             "    measurement_basis: interpretive_estimate\n"
-            "    applicability:\n"
+            # ADR-0008: a maximum must declare what it bounds. A placeholder knows
+            # nothing about exceedance, so none_known is the only honest value — and
+            # it puts the question in front of the contributor rather than behind them.
+            + ("    exceedance_basis: none_known\n" if parameter.endswith("impact.max") else "")
+            + "    applicability:\n"
             f"      industries: [{industry}]\n"
             f"      countries: [{country}]\n"
             f"      company_size_bands: [{company_size}]\n"

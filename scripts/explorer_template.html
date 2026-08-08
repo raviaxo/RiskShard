@@ -199,6 +199,19 @@
     of uncertainty, and a reader should not treat it as a spread. This declaration was added after a
     practitioner asked the question in the open; which mixes are acceptable is not yet settled and is
     recorded as an open question in the repository, not decided quietly.</p>
+    <p><b>A maximum on this page is not a bound.</b> Each item's <code>impact.max</code> also states
+    <em>what is known about it being exceeded</em>, on its <span class="lbl">exceedance</span> line.
+    Most say <b>none known</b>, and that is the honest answer rather than an omission: published loss
+    distributions carrying tail quantiles are rare and mostly commercial, so nearly every public
+    maximum is one documented event, the largest row in someone's dataset, or a legal ceiling.
+    Read those as <em>the largest loss found</em>, never <em>the largest loss that can happen</em> —
+    a figure with no exceedance statement says a loss that size occurred, not how often a loss is
+    worse. This matters more than it looks: because the model composes minimum, likely and maximum
+    into one distribution, the maximum <em>drives</em> the modeled average rather than capping it, so
+    it is simultaneously the least evidenced anchor and the one the result is most sensitive to.
+    Where an exceedance <em>can</em> be stated the line gives it — and the rate shown is a
+    within-sample rate on insured claims, which is a floor: losses above it are more common than the
+    sample says, not less.</p>
   </div>
 
   <h2>Note 2 — The correction record</h2>
@@ -268,6 +281,9 @@
     ['Range coherence',(t.families_total!=null)?
       (t.families_coherent+' of '+t.families_total+' ranges coherent — '+
        t.families_mixed+' mixed (see Note 1)'):'—'],
+    ['Tail exceedance',(t.maxima!=null)?
+      (t.maxima_quantified+' of '+t.maxima+' maxima carry an exceedance statement — '+
+       t.maxima_none_known+' carry none (see Note 1)'):'—'],
     ['Method','Monte Carlo · 10,000 trials · seed 42'],
     ['Data release',DATA.release?DATA.release:'(unreleased working state)'],
     ['Repository','<a href="'+esc(REPO)+'">'+esc(REPO.replace('https://',''))+'</a>']
@@ -367,6 +383,14 @@
         '<tr class="subrow"><td class="lbl">cited</td><td colspan="3" class="sub quote">'+
           (p.quote?('“'+esc(p.quote)+'”'):'—')+'</td></tr>'+
         (p.basis?('<tr class="subrow"><td class="lbl">measures</td><td colspan="3" class="sub">'+esc(p.basis.replace(/_/g,' '))+'</td></tr>'):'')+
+        /* ADR-0008: on a maximum, what is known about it being exceeded. Sits next to
+           the number, not in a footnote, because this is the anchor a reader is most
+           likely to mistake for a bound. */
+        (p.exceedance?('<tr class="subrow"><td class="lbl">exceedance</td><td colspan="3" class="sub">'+
+          (p.exceedance==='none_known'
+            ?'<b>none known</b> — this is the largest loss found, not the largest that can happen. It says a loss this size happened, not how often a loss is worse.'
+            :esc(p.exceedance.replace(/_/g,' '))+(p.exceedance_detail?(' — '+esc(p.exceedance_detail)):''))+
+          '</td></tr>'):'')+
         (p.caveat?('<tr class="subrow"><td class="lbl">caveat</td><td colspan="3" class="sub">'+esc(p.caveat)+'</td></tr>'):'')+
         '<tr class="subrow"><td class="lbl">ref</td><td colspan="2" class="rsid">'+esc(paramID(s.id,p.parameter))+'</td>'+
           '<td class="acts">'+

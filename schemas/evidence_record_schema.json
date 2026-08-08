@@ -62,6 +62,20 @@
               "context_statistic"
             ]
           },
+          "exceedance_basis": {
+            "type": "string",
+            "description": "What is known about this value being exceeded (ADR-0008). Required on any record anchoring an impact maximum. `none_known` is a legal and currently common answer — it must be declared, never left silent.",
+            "enum": [
+              "modeled_quantile",
+              "observed_rank",
+              "population_ceiling",
+              "none_known"
+            ]
+          },
+          "exceedance_detail": {
+            "type": "string",
+            "description": "The exceedance statement itself, when one exists — e.g. the percentile and its distribution, or the rank and N. Required when exceedance_basis is modeled_quantile or observed_rank; meaningless for none_known."
+          },
           "population_match": {
             "type": "object",
             "properties": {
@@ -135,13 +149,39 @@
           "measurement_basis",
           "applicability"
         ],
-        "if": {
-          "properties": { "evidence_type": { "const": "source_backed" } },
-          "required": ["evidence_type"]
-        },
-        "then": {
-          "required": ["population_match"]
-        }
+        "allOf": [
+          {
+            "if": {
+              "properties": { "evidence_type": { "const": "source_backed" } },
+              "required": ["evidence_type"]
+            },
+            "then": {
+              "required": ["population_match"]
+            }
+          },
+          {
+            "$comment": "ADR-0008: a record anchoring an impact maximum must say what, if anything, is known about being exceeded. Matches `impact.max` and staged forms such as `loss_stage.regulatory_penalty.impact.max`.",
+            "if": {
+              "properties": { "parameter": { "pattern": "(^|\\.)impact\\.max$" } },
+              "required": ["parameter"]
+            },
+            "then": {
+              "required": ["exceedance_basis"]
+            }
+          },
+          {
+            "$comment": "ADR-0008: an exceedance statement that claims a quantile or a rank must carry the statement itself, or the declaration is empty.",
+            "if": {
+              "properties": {
+                "exceedance_basis": { "enum": ["modeled_quantile", "observed_rank"] }
+              },
+              "required": ["exceedance_basis"]
+            },
+            "then": {
+              "required": ["exceedance_detail"]
+            }
+          }
+        ]
       }
     }
   },

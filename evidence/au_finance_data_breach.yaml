@@ -231,6 +231,7 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: statutory_penalty_cap
+    exceedance_basis: population_ceiling
     population_match:
       status: matched
     applicability:
@@ -313,6 +314,7 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: observed_extremum
+    exceedance_basis: none_known
     population_match:
       status: matched
     applicability:
@@ -450,6 +452,7 @@ records:
     confidence: low
     evidence_type: estimated
     measurement_basis: interpretive_estimate
+    exceedance_basis: none_known
     applicability:
       industries: [financial_services]
       countries: [AU]

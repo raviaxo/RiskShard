@@ -28,20 +28,34 @@ immutable explorer archive under `docs/r/2026.08.07-v0.5.0/`; `RS:` citations re
 / 18 mixed) with **no other count moving** — cell-matched stays 31, cross-country stays 15.
 That flat line is correct and deliberate: this release moved a construct, not a number.
 
-**THE NEXT OBJECTIVE IS: implement ADR-0008 part 1 — declare `exceedance_basis` on every
-`impact.max`.** The ADR is Accepted and **nothing is built**. Follow the ADR-0007 shape that
-worked: (1) add the field to the schema with the four-term vocabulary
-(`modeled_quantile` / `observed_rank` / `population_ceiling` / `none_known`) and declare it on
-all 11 maxima — expect `none_known` on nearly all of them, which is the honest answer, not a
-gap to be closed; (2) surface it on the explorer and the evidence report, on the face of the
-number, in the same breath as the value; (3) decide gating last. Verify each new gate and
-surface test **fails** on an induced defect before believing it. Files: `schemas/`,
-`evidence/*.yaml`, `engine/coherence.py` or a sibling, `scripts/build_explorer.py`,
-`engine/provenance.py`.
+✅ **DONE 2026-08-07 — ADR-0008 commitment 1 shipped.** `exceedance_basis` is schema-required on
+every impact maximum (`exceedance_detail` required with it whenever the basis claims a quantile or
+a rank), all 20 maximum-anchoring records declared, `engine/exceedance.py` +
+`riskshard_modules.py exceedance` measure it, and both reader surfaces carry it. Every gate and
+surface test verified to fail on an induced defect; explorer rendering confirmed live.
+**Measured result, better than the ADR predicted: 0 modeled quantiles · 2 observed ranks · 2 legal
+ceilings · 7 none_known.** US-DB and CA-DB admitted an empirical exceedance (rank 1 of N=579, rank
+1 of N=84) that nobody had written down — both declared as a **floor, not an estimate**, because
+insured-claims samples are censored by policy limits. The ADR was corrected to match the
+measurement. *(Note: the pack fingerprint has moved since v0.5.0, so doctor's ledger check is
+amber again until the next cut. Correct and expected.)*
 
-After that, in order: **tail sensitivity as an output** (ADR-0008 commitment 2 — the 14.8x and
-0%→23% were computed by hand for one shard; every shard has the same shape), then **revisit
-ADR-0005** on exceedance grounds with Sanabria as the possible second maintainer (commitment 3).
+**THE NEXT OBJECTIVE IS: ADR-0008 commitment 2 — tail sensitivity as an output.** The 14.8x and
+the 0%→23% were computed by hand for one shard in the worked decision; all 11 shards have the
+same shape, and 9 of them now carry a maximum that admits nothing about being exceeded. Build the
+readout that answers, per shard: *what does the decision do when `impact.max` alone moves?* The
+raw material is already there — `engine/exceedance.py` knows which maxima are unquantified, and
+the worked decision has the method. Likely files: `engine/exceedance.py` or a sibling,
+`scripts/riskshard_modules.py`, plus a surface decision (probably the explorer, since that is
+where a reader meets the number).
+
+After that: **revisit ADR-0005** on exceedance grounds — a documented loss-event registry is an
+exceedance denominator, and Sanabria has both the dataset and the open question (commitment 3).
+This is the one that needs Ser: it is an outreach move, not a code move.
+
+**Still deliberately NOT done:** value gating. The schema forces a maximum to carry a declaration,
+but nothing forbids `none_known`, and nothing should until those seven have somewhere better to
+go. Recorded as open in the ADR rather than decided quietly.
 
 ADR-0007 (construct coherence) is **shipped, merged and published**. Headline:
 **4 coherent · 18 mixed of 22 parameter families; every shard carries at least one mixed
@@ -1025,3 +1039,34 @@ governance/regulatory loss).
   rather than a number, and it was left flat rather than dressed up. Three ADR-sized objectives
   in one session at Ser's explicit direction, against the one-objective rule, flagged once and
   then executed. 243 → 244 tests.
+- 2026-08-07 (third session) — **ADR-0008 commitment 1: the third axis is declared, measured and
+  published.** Same shape as ADR-0007, run in one pass: schema field → declaration on all 20
+  maximum-anchoring records → measurement module → CLI → both reader surfaces → tests verified to
+  fail. `exceedance_basis` is **conditionally required**: the schema demands it on any record whose
+  parameter matches `impact.max` (including staged forms), and demands `exceedance_detail`
+  alongside it whenever the basis claims a `modeled_quantile` or an `observed_rank` — so a
+  quantified claim structurally cannot ship without the number that backs it. That second
+  conditional is the one worth keeping: it is the difference between declaring an axis and
+  enforcing it. **The measurement beat the ADR's own prediction and the ADR was corrected, not the
+  finding.** I had written "expect `none_known` on nearly all of them"; the truth is 0 modeled
+  quantiles, 2 observed ranks, 2 legal ceilings, 7 `none_known`. Two shards (US-DB, CA-DB) had a
+  real empirical exceedance sitting unused in their own citation text — NetDiligence states N=579
+  and N=84, so rank 1 of N gives 1/579 and 1/84, and nobody had ever written the ratio down. Both
+  are declared as a **floor, not an estimate**, and the record says why: insured-claims samples are
+  censored by policy limits and blind to uninsured losses, so the true rate above those values is
+  *higher* than the sample rate, never lower. Getting that direction right is the whole value of
+  the axis — a within-sample rate presented as an estimate would have been worse than declaring
+  nothing. The load-bearing ADR claim (no maximum is a modeled quantile) is now a test, not a memo,
+  and the test says out loud that a future modeled quantile is good news to be handled
+  deliberately rather than a reason to reword the claim. Verification held: three separate induced
+  defects (evidence-report column, explorer template note, explorer payload) each turned the
+  corresponding surface test red, and live in-browser rendering confirmed 11 exceedance lines for
+  11 maxima. **The suite caught a regression review would have missed:** the new schema rule broke
+  the *contributor* path — `new-shard` and the contributor scaffold both emit an `impact.max`
+  placeholder, so a freshly scaffolded pack failed its own preflight. Both generators now emit
+  `exceedance_basis: none_known`, which is the honest value for a placeholder and puts the question
+  in front of the contributor instead of behind them; `CONTRIBUTING.md` and the content checklist
+  now say when a stronger claim is allowed. Worth remembering as a class: a schema rule added for
+  the 11 maintained shards silently applies to every pack anyone will ever scaffold. 244 → 258
+  tests. Deliberately not built: value gating — `none_known` stays legal until those seven have
+  somewhere better to go.

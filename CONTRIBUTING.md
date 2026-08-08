@@ -57,6 +57,14 @@ evidence/ → calibrations/` — and keep bridges and estimates labeled as such.
   reusable logic in `engine/`, make the minimal change, and keep diffs scoped and
   coherent. Definition of done: tests pass, `validate_evidence` is clean, and a
   real run of the affected path succeeds.
+- **If your record anchors an `impact.max`**, it must also declare an
+  `exceedance_basis` — what is known about the value being exceeded
+  ([ADR-0008](docs/adr/0008-the-governed-tail.md)). Use `none_known` unless the
+  source genuinely supports otherwise; that is the honest answer for most published
+  evidence and it is *not* a defect. Claim `observed_rank` only when the source
+  states N (then say so in `exceedance_detail` — "rank 1 of N=579"), and
+  `modeled_quantile` only when the source publishes an actual percentile. The
+  schema rejects a quantile or rank claim with no statement behind it.
 - The end-to-end example of taking a source to a passing contribution:
   [`docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md`](docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md).
 - The benchmark target / content-pack / preflight workflow:

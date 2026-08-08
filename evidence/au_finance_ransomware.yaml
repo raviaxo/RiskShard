@@ -154,6 +154,7 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: single_documented_event_loss
+    exceedance_basis: none_known
     population_match:
       status: bridged
       bridged_on: [size, threat]

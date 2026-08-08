@@ -153,6 +153,12 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: observed_extremum
+    exceedance_basis: observed_rank
+    exceedance_detail: >-
+      Rank 1 of N=579 US financial-services SME claims, 2020-2024, so the observed exceedance within the
+      sample is 1/579 (~0.17% of claims). That is a WITHIN-SAMPLE rate on insured claims, not a population
+      exceedance: the sample is censored by policy limits and excludes uninsured and unreported losses, so
+      the true rate of losses above USD 11.5M is higher than 1/579, not lower.
     population_match:
       status: matched
     applicability:

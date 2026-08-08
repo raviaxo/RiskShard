@@ -1,6 +1,6 @@
 # ADR-0008 — The governed tail: a maximum must say what it bounds
 
-- **Status:** Accepted (2026-08-07) — decision taken; **implementation not started**, see *Scope*
+- **Status:** Accepted (2026-08-07) — **commitment 1 implemented** 2026-08-07; commitments 2–3 open, see *Scope*
 - **Date:** 2026-08-07
 - **Deciders:** repo owner
 - **Prompted by:** three independent external critiques within four days, which turned out to
@@ -122,10 +122,41 @@ should be revisited on those grounds, not resurrected on the old ones.
 
 **Decided here:** the direction, the third axis and its vocabulary, and the three commitments.
 
-**Not built here.** No field, gate, surface or CLI ships with this ADR. `v0.5.0` carries the
-decision, not an implementation. Implementation is the next objective and follows the ADR-0007
-shape: declare on every `impact.max` first, surface it on the explorer and the evidence report
-second, decide gating third. Sequencing and the fact that nothing is built yet are recorded in
+**Built 2026-08-07 (commitment 1).** `v0.5.0` carried the decision only; the declaration shipped
+immediately after. `exceedance_basis` is in the schema and **required on any record whose
+parameter is an impact maximum** — the conditional is enforced by the schema, verified to fail on
+a stripped declaration, and `exceedance_detail` is required whenever the basis claims a quantile
+or a rank, so a quantified claim cannot ship without its number. All 20 maximum-anchoring records
+are declared. `engine/exceedance.py` measures the portfolio, `riskshard_modules.py exceedance`
+reports it, and both reader-facing surfaces carry it: a cover fact and a per-anchor `exceedance`
+line on the explorer, a headline, a column and a per-shard callout in the evidence report. Each
+surface has a test verified to fail when the surface is stripped.
+
+### What the measurement found
+
+The prediction in this ADR was "expect `none_known` on nearly all of them." That was too
+pessimistic, and the correction is worth recording:
+
+| basis | selected maxima |
+| --- | --- |
+| `modeled_quantile` | **0** |
+| `observed_rank` | **2** — US data breach (rank 1 of N=579 claims) and CA data breach (rank 1 of N=84) |
+| `population_ceiling` | **2** — the FR and AU statutory caps |
+| `none_known` | **7** |
+
+Two maxima *did* admit an empirical exceedance, because their sources state N and nobody had
+written the ratio down. Both are within-sample rates on **insured** claims, so each is declared as
+a **floor, not an estimate**: policy limits censor the sample and uninsured losses are invisible
+to it, which means the true rate of losses above those values is *higher* than 1/579 and 1/84, not
+lower. Saying so on the record is the whole point of the axis.
+
+The ADR's load-bearing claim — no maximum is a modeled quantile — is unchanged and is now pinned
+by a test rather than a memo.
+
+**Still open.** Commitment 2 (tail sensitivity as an output) and commitment 3 (base rates,
+ADR-0005 revisited) are not built. Nor is *value* gating: the schema forces a maximum to carry a
+declaration, but nothing forbids `none_known`, and nothing should until there is somewhere better
+for those seven to go. Sequencing lives in
 [`../internal/NEXT_STEPS.md`](../internal/NEXT_STEPS.md).
 
 ## Consequences

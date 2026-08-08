@@ -85,6 +85,8 @@ def module_coherence(module_provenance):
                         "parameter": card.get("parameter"),
                         "value": card.get("value"),
                         "measurement_basis": card.get("measurement_basis"),
+                        "exceedance_basis": card.get("exceedance_basis"),
+                        "exceedance_detail": card.get("exceedance_detail"),
                         "title": card.get("title"),
                     }
                     for anchor, card in anchors.items()
