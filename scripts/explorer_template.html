@@ -212,6 +212,15 @@
     Where an exceedance <em>can</em> be stated the line gives it — and the rate shown is a
     within-sample rate on insured claims, which is a floor: losses above it are more common than the
     sample says, not less.</p>
+    <p><b>How much of each figure comes from that maximum is stated on its face.</b> The model
+    composes minimum, likely and maximum into one distribution whose average is a weighted blend of
+    the three, so the maximum's share of the modeled average can be computed exactly — no sampling,
+    no seed, no error term. Where that share exceeds half, the item says so directly under its loss
+    figure. Read it together with that item's <span class="lbl">exceedance</span> line: a figure
+    mostly produced by an anchor that admits no exceedance probability is a figure resting on one
+    observation, however carefully that observation was sourced. Run
+    <code>python scripts/riskshard_modules.py tail</code> for the full table, including what each
+    item's annual average does when only the maximum is moved.</p>
   </div>
 
   <h2>Note 2 — The correction record</h2>
@@ -284,6 +293,9 @@
     ['Tail exceedance',(t.maxima!=null)?
       (t.maxima_quantified+' of '+t.maxima+' maxima carry an exceedance statement — '+
        t.maxima_none_known+' carry none (see Note 1)'):'—'],
+    ['Tail sensitivity',(t.shards_tail_driven!=null)?
+      (t.shards_tail_driven+' of '+DATA.shards.length+
+       ' items take most of their modeled loss from the maximum alone'):'—'],
     ['Method','Monte Carlo · 10,000 trials · seed 42'],
     ['Data release',DATA.release?DATA.release:'(unreleased working state)'],
     ['Repository','<a href="'+esc(REPO)+'">'+esc(REPO.replace('https://',''))+'</a>']
@@ -406,6 +418,17 @@
       '<div class="lossline"><div class="avg tnum">'+esc(s.avg||'—')+'</div>'+
         '<div class="pcts">P95 bad year <b class="tnum">'+esc(s.p95||'—')+'</b> · P99 severe <b class="tnum">'+esc(s.p99||'—')+'</b></div></div>'+
       '<div class="methline">Modeled avg / yr · see Note 1</div>'+
+      /* ADR-0008 commitment 2: how much of the figure above comes from the maximum.
+         Analytic, not sampled — the beta-PERT mean is a weighted sum of the three
+         anchors, so the maximum's share of it is exact. Placed directly under the
+         loss figure because it is the caveat on that figure. */
+      ((s.leverage!=null && s.leverage>=0.5)?
+        ('<div class="mixnote"><b>'+Math.round(s.leverage*100)+'% of this figure comes from '+
+         'the maximum alone</b> — the modeled average is a weighted blend of the three impact '+
+         'anchors, and this item\'s maximum carries most of that weight. Read it with the '+
+         'maximum\'s <span class="lbl">exceedance</span> line below: a figure mostly driven by '+
+         'an anchor that admits no exceedance probability is a figure resting on one observation.'+
+         '</div>'):'')+
       /* ADR-0007: a mixed range composes anchors that measure different quantities.
          Stated on the item's face, above its own table — not left to a footnote. */
       (s.coherence||[]).filter(function(f){return f.status==='mixed';}).map(function(f){

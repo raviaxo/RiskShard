@@ -463,6 +463,15 @@ can happen*. Where an exceedance rate **is** stated it is a within-sample rate o
 claims, and therefore a floor: losses above it are more common than the sample says, not
 less. Run `python scripts/riskshard_modules.py exceedance` to see all eleven.
 
+**And that maximum is doing most of the work.** The model composes min/likely/max into one
+distribution whose mean is a weighted blend of the three, so each anchor's contribution is
+exactly computable. **7 of 11 shards take most of their modeled per-event loss from
+`impact.max` alone — and 4 of those maxima declare `none_known`.** Leverage runs from 33%
+to **95%**: on `au_finance_ransomware_midmarket`, 95% of the modeled per-event loss comes
+from one documented event carrying no exceedance probability, and doubling that single
+anchor moves the published annual average by +94%. That is the number to interrogate first
+in any shard here. `python scripts/riskshard_modules.py tail` prints the whole table.
+
 **Top-risk threats — all six now runnable, not merely evidenced.** Business email
 compromise, data breach, ransomware, insider misuse, and AI-enabled (deepfake) fraud
 calibrate and simulate cleanly; third-party outage calibrates with one honestly-labeled

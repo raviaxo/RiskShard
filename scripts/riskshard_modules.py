@@ -52,6 +52,10 @@ from engine.exceedance import (  # noqa: E402
     build_portfolio_exceedance,
     format_portfolio_markdown as format_exceedance_markdown,
 )
+from engine.tail_sensitivity import (  # noqa: E402
+    build_portfolio_tail_sensitivity,
+    format_portfolio_markdown as format_tail_markdown,
+)
 from engine.coherence import (  # noqa: E402
     build_portfolio_coherence,
     format_portfolio_markdown as format_coherence_markdown,
@@ -130,6 +134,19 @@ def parse_args(argv=None):
         help="Write the Markdown exceedance report to PATH.",
     )
     exceedance_parser.add_argument("--json", action="store_true")
+
+    tail_parser = subparsers.add_parser(
+        "tail",
+        help="How much of a shard's answer rests on its maximum? (ADR-0008)",
+    )
+    tail_parser.add_argument("module_id", nargs="?")
+    tail_parser.add_argument(
+        "--report",
+        type=Path,
+        metavar="PATH",
+        help="Write the Markdown tail-sensitivity report to PATH.",
+    )
+    tail_parser.add_argument("--json", action="store_true")
 
     prov_parser = subparsers.add_parser(
         "provenance", help="Challenge a number: show value, source, quote, and caveat per parameter."
@@ -312,6 +329,19 @@ def main(argv=None):
             print(json.dumps(portfolio, indent=2, sort_keys=True))
         else:
             print(format_exceedance_markdown(portfolio), end="")
+        return 0
+
+    if command == "tail":
+        module_ids = [args.module_id] if args.module_id else None
+        portfolio = build_portfolio_tail_sensitivity(ROOT, module_ids=module_ids)
+        if args.report:
+            args.report.parent.mkdir(parents=True, exist_ok=True)
+            args.report.write_text(format_tail_markdown(portfolio), encoding="utf-8")
+            print(f"Tail-sensitivity report written: {args.report}")
+        elif args.json:
+            print(json.dumps(portfolio, indent=2, sort_keys=True))
+        else:
+            print(format_tail_markdown(portfolio), end="")
         return 0
 
     if command == "provenance":

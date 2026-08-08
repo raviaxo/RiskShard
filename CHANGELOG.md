@@ -7,6 +7,28 @@ that remains a recorded human review decision.
 
 ## Unreleased
 
+### ADR-0008 commitment 2 — the maximum is doing most of the work, and now says so
+- `engine/tail_sensitivity.py` + `riskshard_modules.py tail`. Two readings, deliberately
+  different in kind. **Leverage is analytic**: the engine samples a beta-PERT at
+  confidence 4 whose mean is exactly `(min + 4·likely + max) / 6`, so the maximum's share
+  of the per-event mean is an identity — no seed, no trials, no error term. **Swing is
+  simulated**: the published run (10,000 trials, seed 42) re-executed with `impact.max`
+  alone moved by ½ and 2×.
+- **7 of 11 shards take most of their modeled per-event loss from `impact.max` alone, and
+  4 of those maxima declare `none_known`.** Leverage runs 33% → **95%**. On
+  `au_finance_ransomware_midmarket`, 95% of the modeled per-event loss comes from one
+  documented event with no exceedance probability, and doubling that anchor moves the
+  published annual average **+94%**.
+- It reproduces the hand computation it generalises: **14.8×** mean-over-mode for AU
+  ransomware, the exact figure the worked decision computed by hand before this code
+  existed. Pinned by a test.
+- The analytic claim is pinned against the **engine's own sampler**, not against itself —
+  changing the distribution fails the test rather than silently turning two public
+  surfaces into fiction. Verified by inducing exactly that change.
+- Both surfaces carry it: a cover fact plus a per-item note under the loss figure on the
+  explorer, and a per-shard callout in the evidence report. Rendering confirmed live (7
+  notes for 7 tail-driven items).
+
 ### ADR-0008 commitment 1 — every maximum now declares what it bounds
 - `exceedance_basis` is in the schema and **required on any record whose parameter is an
   impact maximum**, with `exceedance_detail` required whenever the basis claims a quantile

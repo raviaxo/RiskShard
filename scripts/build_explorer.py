@@ -29,6 +29,7 @@ if str(ROOT) not in sys.path:
 
 from engine.coherence import module_coherence  # noqa: E402
 from engine.exceedance import module_exceedance  # noqa: E402
+from engine.tail_sensitivity import LEVERAGE_CONCERN, max_leverage  # noqa: E402
 from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.risk_modules import find_risk_module  # noqa: E402
 from engine.web_console import WebConsoleApp  # noqa: E402
@@ -41,6 +42,20 @@ RELEASES_DIR = ROOT / "data_pack_releases"
 # Where the built page is served. Absolute URLs are required by Open Graph /
 # Twitter cards, so link previews resolve when the page is shared.
 SITE_URL = "https://raviaxo.github.io/RiskShard/"
+
+
+def _scenario_impact(root, module_id):
+    """The impact range the simulation actually runs, straight from the scenario file.
+
+    Read from the scenario rather than the calibration because the scenario carries the
+    values the Monte Carlo composes — the same reason the drift gate compares the two.
+    """
+    module = find_risk_module(module_id, root) or {}
+    scenario_path = root / ((module.get("artifacts") or {}).get("scenario") or "")
+    if not scenario_path.is_file():
+        return None
+    scenario = yaml.safe_load(scenario_path.read_text(encoding="utf-8")) or {}
+    return scenario.get("impact")
 
 
 def _loss_range(app_root, module_id):
@@ -120,6 +135,7 @@ def build_data(root):
     shards = []
     coherent = mixed = 0
     maxima_total = maxima_quantified = maxima_none_known = 0
+    shards_tail_driven = 0
     for module in portfolio["modules"]:
         mid = module["module_id"]
         mod = find_risk_module(mid, root)
@@ -134,8 +150,14 @@ def build_data(root):
             maxima_total += 1
             maxima_quantified += 1 if entry["quantified"] else 0
             maxima_none_known += 1 if entry["exceedance_basis"] == "none_known" else 0
+        # ADR-0008 commitment 2: how much of the modeled loss comes from that maximum.
+        # Analytic, so this costs no extra simulation.
+        leverage = max_leverage(_scenario_impact(root, mid))
+        if leverage is not None and leverage >= LEVERAGE_CONCERN:
+            shards_tail_driven += 1
         shards.append({
             "id": mid,
+            "leverage": leverage,
             "coherence": [
                 {"family": f["family"], "status": f["status"], "bases": f["bases"]}
                 for f in families
@@ -172,6 +194,7 @@ def build_data(root):
     totals["maxima"] = maxima_total
     totals["maxima_quantified"] = maxima_quantified
     totals["maxima_none_known"] = maxima_none_known
+    totals["shards_tail_driven"] = shards_tail_driven
     return {"totals": totals, "shards": shards, "repo": REPO_URL,
             "revisions": load_revisions(), "release": latest_release(),
             "aliases": load_aliases(), "site": SITE_URL}

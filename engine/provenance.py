@@ -198,6 +198,22 @@ def build_portfolio_provenance(root, module_ids=None):
     }
 
 
+def _impact_anchors(module_provenance):
+    """The shard's three impact anchors as the cards report them, or None if incomplete.
+
+    Uses the calibration-selected cards rather than re-reading the scenario, so this
+    stays consistent with everything else in the report.
+    """
+    found = {}
+    for card in module_provenance.get("cards", []):
+        parameter = card.get("parameter") or ""
+        if parameter in ("impact.min", "impact.likely", "impact.max"):
+            found[parameter.split(".")[1]] = card.get("value")
+    if set(found) != {"min", "likely", "max"} or any(v is None for v in found.values()):
+        return None
+    return found
+
+
 def format_portfolio_markdown(portfolio):
     """A single shareable evidence report: every number, its source, and its caveat.
 
@@ -216,8 +232,14 @@ def format_portfolio_markdown(portfolio):
 
     # ADR-0008: the third axis, computed from the same cards.
     from engine.exceedance import module_exceedance
+    from engine.tail_sensitivity import LEVERAGE_CONCERN, max_leverage
 
     exceedance_by_module = {m["module_id"]: module_exceedance(m) for m in portfolio["modules"]}
+    # Commitment 2: the maximum's share of the modeled mean, from the same anchors the
+    # cards already carry — no scenario read and no simulation needed here.
+    leverage_by_module = {
+        m["module_id"]: max_leverage(_impact_anchors(m)) for m in portfolio["modules"]
+    }
     all_maxima = [e for maxima in exceedance_by_module.values() for e in maxima]
     exc = {
         "maxima": len(all_maxima),
@@ -273,6 +295,15 @@ def format_portfolio_markdown(portfolio):
                     f"{', '.join('`' + b + '`' for b in family['bases'])}."
                 )
                 lines.append("")
+        # ADR-0008 commitment 2: analytic, so it costs no simulation to state here.
+        leverage = leverage_by_module.get(m["module_id"])
+        if leverage is not None and leverage >= LEVERAGE_CONCERN:
+            lines.append(
+                f"> **{leverage:.0%} of this shard's modeled loss comes from `impact.max` alone** "
+                "— the distribution's mean is a weighted blend of the three impact anchors and the "
+                "maximum carries most of that weight. Read it with the exceedance line below."
+            )
+            lines.append("")
         for entry in exceedance_by_module.get(m["module_id"], []):
             if entry["exceedance_basis"] == "none_known":
                 lines.append(
