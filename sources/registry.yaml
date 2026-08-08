@@ -1172,3 +1172,28 @@ sources:
 
     '
   url_stability: dated
+- id: afp_bec_australian_victim_case_2021
+  title: Business Email Compromise cost Australian victims more than $79 million in the past year
+  publisher: Australian Federal Police
+  source_type: law_enforcement_report
+  url: https://www.afp.gov.au/news-centre/media-release/business-email-compromise-cost-australian-victims-more-79-million-past
+  publication_date: '2021-07-10'
+  access_mode: public_html
+  intended_use:
+  - documented single-event Australian BEC loss
+  - Australian BEC tail severity
+  usage_notes: 'AFP media release on the national BEC taskforce. Use it for the one
+    documented single-victim Australian case it describes: in September 2020 a business
+    whose finance area received internal invoice emails with altered bank details
+    "processed two payments within a few days - transferring $519,545 and then
+    $2,148,938 to a Singaporean bank account", i.e. AUD 2,668,483 gross. It is ONE
+    documented case reported by a law-enforcement agency, not a modeled loss percentile
+    and not a distribution. The victim is described only as "an Australian business":
+    sector and size are unknown, so any sector- or size-specific use is dilution and must
+    say so. AUD 2.1 million of the AUD 2.6 million was recovered through AFP/Interpol/SPF
+    interception, but recovery depends on same-week detection and is not guaranteed, so
+    model the gross figure - the same idiom as the Coalition funds-transfer-fraud clawback
+    case. The 2020/21 vintage predates current payment-verification controls.
+
+    '
+  url_stability: dated

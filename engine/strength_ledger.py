@@ -20,6 +20,14 @@ separate input and are absent from pre-split entries):
                            headline calls these "bridged")
   - params_cross_country : the subset of cross-cell bridged on country
 
+ADR-0007 split (recorded since v0.5.0, from the portfolio coherence totals — a
+third separate input, for the same reason: neither the readiness matrix nor the
+provenance layer measures construct. Absent from pre-split entries):
+
+  - families_coherent    : parameter families whose selected anchors all share
+                           one measurement_basis
+  - families_mixed       : families composing two or more bases into one range
+
 An entry is appended only when the data-pack fingerprint changes — i.e. on a
 real release. Re-running `record` against an unchanged pack is a no-op, so the
 trend cannot be padded with vanity ticks. The ledger JSON is the canonical owner
@@ -41,6 +49,8 @@ METRIC_KEYS = (
     "params_cell_matched",
     "params_cross_cell",
     "params_cross_country",
+    "families_coherent",
+    "families_mixed",
 )
 
 # The ADR-0003 population-split subset of METRIC_KEYS: present only in entries
@@ -51,10 +61,19 @@ POPULATION_KEYS = (
     "params_cross_country",
 )
 
+# The ADR-0007 construct-split subset of METRIC_KEYS: present only in entries
+# recorded with portfolio-coherence totals (v0.5.0 onward). Same rule as
+# POPULATION_KEYS — compute_delta drops a key absent from either side, so the
+# first entry carrying these reads "newly measured", never a fabricated delta.
+COHERENCE_KEYS = (
+    "families_coherent",
+    "families_mixed",
+)
+
 LEDGER_RELPATH = Path("docs/internal/strength_ledger.json")
 
 
-def capture_snapshot(dashboard, population_totals=None):
+def capture_snapshot(dashboard, population_totals=None, coherence_totals=None):
     """Reduce a readiness dashboard to the strength snapshot we track over time.
 
     Returns a dict with the release identity (data-pack version + fingerprint),
@@ -65,6 +84,11 @@ def capture_snapshot(dashboard, population_totals=None):
     split (cell-matched / cross-cell / cross-country) is recorded alongside the
     matrix metrics. It is a separate input because the readiness matrix does not
     carry population data.
+
+    `coherence_totals` is the `totals` dict from
+    `engine.coherence.build_portfolio_coherence` — when given, the ADR-0007
+    construct split (coherent / mixed families) is recorded too. Separate for the
+    same reason: construct is measured by neither of the other two layers.
     """
     matrix = dashboard.get("evidence_packs", {}).get("coverage_matrix", [])
     source_backed = sum(int(r.get("source_backed_direct", 0)) for r in matrix)
@@ -89,6 +113,11 @@ def capture_snapshot(dashboard, population_totals=None):
     if population_totals is not None:
         for key in POPULATION_KEYS:
             metrics[key] = int(population_totals.get(key, 0))
+    if coherence_totals is not None:
+        # The coherence layer names these `coherent`/`mixed`; the ledger prefixes
+        # them so a metric key is never ambiguous about what it counts.
+        metrics["families_coherent"] = int(coherence_totals.get("coherent", 0))
+        metrics["families_mixed"] = int(coherence_totals.get("mixed", 0))
     return {
         "data_pack_version": data_pack.get("pack_version", ""),
         "fingerprint": data_pack.get("fingerprint", ""),
@@ -141,7 +170,14 @@ def compute_delta(prev_metrics, curr_metrics):
     }
 
 
-def record_snapshot(ledger_path, dashboard, date, release_version, population_totals=None):
+def record_snapshot(
+    ledger_path,
+    dashboard,
+    date,
+    release_version,
+    population_totals=None,
+    coherence_totals=None,
+):
     """Append the current snapshot to the ledger — for a named release only.
 
     `release_version` is required and is the enforcement: the rule was documented as
@@ -160,7 +196,9 @@ def record_snapshot(ledger_path, dashboard, date, release_version, population_to
             "not every pack edit"
         )
     entries = load_ledger(ledger_path)
-    snapshot = capture_snapshot(dashboard, population_totals=population_totals)
+    snapshot = capture_snapshot(
+        dashboard, population_totals=population_totals, coherence_totals=coherence_totals
+    )
     prev = entries[-1] if entries else None
     prev_metrics = prev["metrics"] if prev else None
 

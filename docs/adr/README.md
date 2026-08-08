@@ -17,3 +17,5 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0004](0004-citable-parameter-identifiers.md) | Citable parameter identifiers | Accepted |
 | [0005](0005-documented-loss-event-registry.md) | Documented loss-event registry | Deferred |
 | [0006](0006-depth-over-breadth.md) | Depth over breadth | Accepted |
+| [0007](0007-construct-coherence.md) | Declared measurement basis and range coherence | Proposed |
+| [0008](0008-the-governed-tail.md) | The governed tail: a maximum must say what it bounds | Accepted |

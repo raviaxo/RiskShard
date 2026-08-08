@@ -267,25 +267,31 @@ records:
       company_size_bands: [all]
       threats: [business_email_compromise]
 
-  - id: accc_2025_small_business_false_billing_loss_stress_aud
-    title: ACCC small-business false billing stress anchor
+  - id: afp_2020_au_bec_documented_single_event_loss_aud
+    title: Documented Australian BEC single-event loss used as stress impact
     parameter: impact.max
-    value: 2000000
+    value: 2668483
     unit: currency
     currency: AUD
-    source_id: accc_targeting_scams_2025
-    source_name: ACCC Targeting Scams Report 2025
-    source_type: scam_report
-    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
-    publication_date: "2026-03-30"
-    extraction_date: "2026-07-14"
-    citation_detail: Figure 10 reports AUD 2.0 million in false billing losses for small businesses, and notes false billing generally relates to payment redirections also known as BEC scams.
-    extraction_notes: Stored as a local BEC-adjacent stress anchor for a starter shard, not as a formal single-event maximum.
-    normalization_notes: Selected as a source-backed stress envelope until BEC-specific tail-loss evidence is available.
-    limitations: Aggregate small-business Scamwatch losses; not financial-services-specific, mid-market-specific, or a direct tail quantile.
+    source_id: afp_bec_australian_victim_case_2021
+    source_name: AFP media release - Business Email Compromise cost Australian victims more than $79 million in the past year
+    source_type: law_enforcement_report
+    source_url_or_citation: https://www.afp.gov.au/news-centre/media-release/business-email-compromise-cost-australian-victims-more-79-million-past
+    publication_date: "2021-07-10"
+    extraction_date: "2026-08-07"
+    citation_detail: >-
+      BEC taskforce section: "In one case in September 2020, the taskforce assisted an
+      Australian business, which was compromised when offenders who claimed to be staff sent
+      internal invoice emails to the company's finance area, but with altered bank details.
+      The business processed two payments within a few days - transferring $519,545 and then
+      $2,148,938 to a Singaporean bank account." The release adds that "$2.1 million of the
+      $2.6 million was recovered."
+    extraction_notes: Summed the two documented fraudulent transfers of one event (519,545 + 2,148,938 = 2,668,483) as its gross single-event loss.
+    normalization_notes: Stored in AUD - an Australian law-enforcement agency reporting an Australian business's losses. Gross of recovery, following the Coalition funds-transfer-fraud precedent used at us_finance_bec impact.max, 79 percent was clawed back here through same-week AFP/Interpol/Singapore Police interception, but recovery depends on detection speed and is not guaranteed. Replaces the ACCC false-billing aggregate that previously anchored this parameter.
+    limitations: One documented case, not a modeled tail quantile and not a loss distribution - it establishes that an event of this size happened in Australia, not how often it happens or how much worse it gets. The victim is described only as "an Australian business", so sector and size are unknown and financial-services mid-market applicability is dilution rather than measurement. The 2020/21 vintage predates current payment-verification controls. Revise when an Australian BEC loss distribution with tail quantiles is published.
     confidence: low
     evidence_type: source_backed
-    measurement_basis: aggregate_population_loss
+    measurement_basis: single_documented_event_loss
     population_match:
       status: matched
     applicability:

@@ -242,7 +242,7 @@ class CalibrationTests(unittest.TestCase):
             scenario["frequency"],
             {"min": 0.00010514176186819692, "likely": 0.21, "max": 0.81},
         )
-        self.assertEqual(scenario["impact"], {"min": 33000, "likely": 170000, "max": 2000000})
+        self.assertEqual(scenario["impact"], {"min": 33000, "likely": 170000, "max": 2670000})
         self.assertEqual(
             warning_codes.count("parameter_from_non_source_backed_evidence"),
             0,
@@ -272,7 +272,7 @@ class CalibrationTests(unittest.TestCase):
         )
         self.assertEqual(
             report["selected_evidence"][5]["evidence_id"],
-            "accc_2025_small_business_false_billing_loss_stress_aud",
+            "afp_2020_au_bec_documented_single_event_loss_aud",
         )
 
     def test_gb_data_breach_calibration_uses_source_backed_direct_parameters(self):

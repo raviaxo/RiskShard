@@ -157,18 +157,18 @@ extractions:
     evidence_record_ids:
       - accc_abs_au_small_business_scam_loss_report_rate_floor_2025
 
-  - id: accc_2025_small_business_false_billing_loss_stress_aud
-    source_id: accc_targeting_scams_2025
-    source_name: ACCC Targeting Scams Report 2025
-    source_url_or_citation: https://www.accc.gov.au/system/files/targeting-scams-report-2025.pdf
-    publication_date: "2026-03-30"
-    extraction_date: "2026-07-14"
-    citation_detail: Small-business section and Figure 10.
-    fact: ACCC reported AUD 2.0 million in small-business false billing losses and stated false billing reports from business generally relate to payment redirections also known as BEC scams.
-    value: 2000000
+  - id: afp_2020_au_bec_documented_single_event_loss_aud
+    source_id: afp_bec_australian_victim_case_2021
+    source_name: AFP media release - Business Email Compromise cost Australian victims more than $79 million in the past year
+    source_url_or_citation: https://www.afp.gov.au/news-centre/media-release/business-email-compromise-cost-australian-victims-more-79-million-past
+    publication_date: "2021-07-10"
+    extraction_date: "2026-08-07"
+    citation_detail: BEC taskforce section, September 2020 case study.
+    fact: The AFP reported that an Australian business whose finance area received internal invoice emails with altered bank details processed two payments within a few days, transferring AUD 519,545 and then AUD 2,148,938 to a Singaporean bank account, and that AUD 2.1 million of the AUD 2.6 million was later recovered.
+    value: 2668483
     unit: currency
     currency: AUD
-    normalization_notes: Stored as a local BEC-adjacent stress anchor for a starter shard, not as a formal single-event maximum.
-    limitations: Aggregate small-business Scamwatch losses; not financial-services-specific, mid-market-specific, or a direct tail quantile.
+    normalization_notes: Summed the two transfers of the single event as its gross loss and stored it gross of recovery, following the Coalition funds-transfer-fraud precedent.
+    limitations: One documented case, not a tail quantile or a distribution; the victim's sector and size are not stated; the 2020/21 vintage predates current payment-verification controls.
     evidence_record_ids:
-      - accc_2025_small_business_false_billing_loss_stress_aud
+      - afp_2020_au_bec_documented_single_event_loss_aud

@@ -11,7 +11,7 @@ _Australia Finance Business Email Compromise Midmarket_
 
 > **`frequency` is a mixed range** — its anchors measure 2 different quantities: `reported_case_rate`, `org_prevalence_incident`.
 
-> **`impact` is a mixed range** — its anchors measure 2 different quantities: `mean_total_event_cost`, `aggregate_population_loss`.
+> **`impact` is a mixed range** — its anchors measure 2 different quantities: `mean_total_event_cost`, `single_documented_event_loss`.
 
 | Parameter | Value | Status | Measures | Source | Caveat |
 | --- | --- | --- | --- | --- | --- |
@@ -20,7 +20,7 @@ _Australia Finance Business Email Compromise Midmarket_
 | `frequency.max` | 0.81 annual_probability | source_backed (bridged: threat) | `org_prevalence_incident` | MYOB mid-sized business cyber attack survey 2024 (2024-06-01) | Commercial vendor survey (MYOB/Dynata), lower trust than official statistics; measures all cyber attacks, not BEC-specific, and counts businesses experiencing an attack rather than confirmed BEC loss events; mid-sized defined as 20-500 FTE with revenue over AUD 5M. Revise when official AU finance mid-market BEC frequency is available. |
 | `impact.min` | 33101.05 currency | source_backed | `mean_total_event_cost` | ACCC Targeting Scams Report 2025 (2026-03-30) | Scam-wide small-business average from Scamwatch reports, not BEC-only, financial-services-specific, mid-market-specific, or a full severity distribution. |
 | `impact.likely` | 123005.43 currency | source_backed (bridged: country) | `mean_total_event_cost` | FBI IC3 2025 Annual Report (2026-04-16) | US IC3 complaint population; self-reported and complaint-driven; not Australia-specific, financial-services-specific, mid-market-specific, or a full loss distribution. |
-| `impact.max` | 2000000 currency | source_backed | `aggregate_population_loss` | ACCC Targeting Scams Report 2025 (2026-03-30) | Aggregate small-business Scamwatch losses; not financial-services-specific, mid-market-specific, or a direct tail quantile. |
+| `impact.max` | 2668483 currency | source_backed | `single_documented_event_loss` | AFP media release - Business Email Compromise cost Australian victims more than $79 million in the past year (2021-07-10) | One documented case, not a modeled tail quantile and not a loss distribution - it establishes that an event of this size happened in Australia, not how often it happens or how much worse it gets. The victim is described only as "an Australian business", so sector and size are unknown and financial-services mid-market applicability is dilution rather than measurement. The 2020/21 vintage predates current payment-verification controls. Revise when an Australian BEC loss distribution with tail quantiles is published. |
 
 ## au_finance_data_breach_midmarket
 _Australia Finance Data Breach Midmarket_
