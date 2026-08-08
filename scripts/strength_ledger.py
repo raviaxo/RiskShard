@@ -27,6 +27,7 @@ ROOT = find_project_root(fallback=SCRIPT_ROOT)
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from engine.coherence import build_portfolio_coherence  # noqa: E402
 from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.readiness import build_readiness_dashboard  # noqa: E402
 from engine.strength_ledger import (  # noqa: E402
@@ -70,6 +71,13 @@ def _format_metrics_line(metrics, delta):
             f" of {metrics.get('params_source_backed', 0)} source-backed\n"
             f"  population-bridged   : {cell_if_measured('params_cross_cell')}"
             f" ({cell_if_measured('params_cross_country')} cross-country)"
+        )
+    if "families_coherent" in metrics:
+        families = metrics["families_coherent"] + metrics["families_mixed"]
+        lines += (
+            f"\n  coherent families    : {cell_if_measured('families_coherent')}"
+            f" of {families}\n"
+            f"  mixed families       : {cell_if_measured('families_mixed')}"
         )
     return lines
 
@@ -150,8 +158,16 @@ def main(argv=None):
         dashboard = build_readiness_dashboard(ROOT)
         # ADR-0003: the split lives in the provenance layer, not the readiness matrix.
         population_totals = build_portfolio_provenance(ROOT)["totals"]
+        # ADR-0007: construct lives in the coherence layer, measured by neither of
+        # the other two. Folded in at the v0.5.0 cut, per the ADR-0003 precedent.
+        coherence_totals = build_portfolio_coherence(ROOT)["totals"]
         entry, appended, delta = record_snapshot(
-            ledger_path, dashboard, date, args.release, population_totals=population_totals
+            ledger_path,
+            dashboard,
+            date,
+            args.release,
+            population_totals=population_totals,
+            coherence_totals=coherence_totals,
         )
         if args.json:
             print(json.dumps({"appended": appended, "entry": entry, "delta": delta}, indent=2, sort_keys=True))

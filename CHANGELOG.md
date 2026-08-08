@@ -5,6 +5,62 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.5.0 — 2026-08-07
+
+The governed tail. Three people who do not know each other pushed on RiskShard
+from three directions in four days, and all three turned out to be pushing on the
+same joint: **the maximum**. This release records what that costs, corrects the
+last anchor that could not be defended, and pins citations to current reality —
+`RS:` identifiers resolved to `v0.4.0` and therefore predated everything shipped
+on 2026-08-07.
+
+Data-pack release: `data_pack_releases/2026.08.07-v0.5.0.json`.
+Ledger tick since v0.4.0: **no count moved** — cell-matched stays 31, cross-country
+stays 15. This release moved a construct, not a number, and the ledger says so
+rather than manufacturing progress.
+
+### ADR-0008 — a maximum must say what it bounds (Accepted)
+- Measured across all 11 shards: `impact.max` is a modeled quantile in **0 of 11**.
+  Every one is a single documented event (4), a dataset extremum (4), a statutory
+  cap (2) or an issued penalty (1). **Not one carries an exceedance probability.**
+- `frequency.max` is `org_prevalence_incident` in **11 of 11** — the same construct
+  as its own `frequency.likely`. The portfolio's notion of "stress" is a bigger
+  reading of the same survey plus one anecdote.
+- This is not cosmetic. The [worked decision](docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md)
+  measured it: the per-event mean is **14.8× its own mode** because the maximum
+  drives the distribution instead of bounding it, and moving that one anchor swings
+  P(event > AUD 20M) from **0% to 23%**.
+- The decision: a third declared axis (`exceedance_basis`), where `none_known` is a
+  legal and currently common value that must appear on the face of the number.
+  It answers the tail half of [ADR-0007](docs/adr/0007-construct-coherence.md)'s
+  open question 1; which *mixes* are acceptable remains open.
+- **Nothing is built yet.** v0.5.0 carries the decision, not an implementation.
+
+### Australia BEC: the last construct-inappropriate anchor is corrected
+- `impact.max` moves from AUD 2,000,000 — the ACCC's *national aggregate* of all
+  small-business false-billing losses for the year — to AUD 2,668,483, one
+  documented Australian BEC event reported by the AFP (two transfers of $519,545
+  and $2,148,938, September 2020). A whole-country loss total is not a quantity a
+  single firm can incur; it also sat *below* the real documented Australian tail.
+- Modeled gross although AUD 2.1M of AUD 2.6M was recovered, matching the Coalition
+  funds-transfer-fraud precedent already used at `us_finance_bec`. Simulated losses
+  at seed 42: AVG AUD 125,110 → 154,815, P99 550,725 → 664,247.
+- Scouted and rejected: Levitas Capital would have matched sector and size, but no
+  primary document states its loss and the reported figures diverge across secondary
+  coverage. A law-enforcement primary source with one unambiguous figure wins.
+- The family stays ADR-0007 `mixed`, which is the point — the fix was
+  construct-appropriateness, not coherence.
+
+### Honesty machinery
+- The strength ledger records the **ADR-0007 coherence split** (`families_coherent`
+  / `families_mixed`), folded in at the cut exactly as the ADR-0003 population split
+  was at v0.2.0. The first entry carrying it reads *newly measured*, never a
+  fabricated "+4" against entries that never counted families — pinned by a test
+  verified to fail when the guard is removed.
+- README front door carries the third axis: a maximum here is *the largest loss we
+  found*, never *the largest loss that can happen*.
+- ADR-0007 was missing from the ADR index; both it and ADR-0008 are now listed.
+
 ## v0.4.0 — 2026-08-03
 
 The finished map. Since v0.3.0 every remaining viable cross-country bridge was

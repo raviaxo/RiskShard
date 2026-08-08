@@ -6,9 +6,10 @@ metadata:
     Starter reviewed calibration profile for Australia financial-services
     business email compromise. It uses a source-backed ACCC/ABS reported-loss
     frequency floor, a source-backed FBI IC3 complaint-average likely loss
-    anchor, and an ACCC false-billing stress anchor. Frequency likely/max
-    remain explicit estimates until denominator-aware Australia or sector BEC
-    evidence is reviewed.
+    anchor, and an AFP-documented single-event Australian BEC loss as the
+    stress anchor. The impact range is mixed on ADR-0007 grounds (two means
+    beneath one documented event) but every anchor now measures a quantity a
+    single firm can actually incur.
 
 target_currency: AUD
 
@@ -41,8 +42,8 @@ parameters:
       round_to: 10000
       rationale: Source-backed FBI IC3 BEC average adjusted loss per complaint, converted to AUD as the first likely loss anchor.
     max:
-      evidence_id: accc_2025_small_business_false_billing_loss_stress_aud
+      evidence_id: afp_2020_au_bec_documented_single_event_loss_aud
       transform: direct
       target_currency: AUD
       round_to: 10000
-      rationale: Australia small-business false-billing aggregate loss used as a BEC-adjacent local stress envelope.
+      rationale: One documented Australian BEC event (AFP taskforce case, September 2020, AUD 2,668,483 gross across two transfers) used as the stress anchor. Replaces the ACCC false-billing aggregate, which measured a whole-country small-business loss total and could never bound one firm's event.

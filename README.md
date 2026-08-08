@@ -83,6 +83,7 @@ model parameters trace to a reviewed public source over time.
 <!-- strength-ledger:begin (regenerate with: python scripts/strength_ledger.py markdown) -->
 | Release | Date | Source-backed params | Cell-matched | Shards 6/6 | Bridged/est. |
 | --- | --- | --- | --- | --- | --- |
+| 2026.08.07 | 2026-08-07 | 66 / 66 | 31 | 11 / 11 | 0 |
 | 2026.08.03 | 2026-08-03 | 66 / 66 | 31 | 11 / 11 | 0 |
 | 2026.08.02 | 2026-08-02 | 66 / 66 | 31 (+3) | 11 / 11 | 0 |
 | 2026.08.01 | 2026-08-01 | 66 / 66 | 28 | 11 / 11 | 0 |
@@ -447,6 +448,18 @@ self-reported *perceived* cost, an *average total* breach cost, and an FCA *regu
 penalty* — three different quantities, each correctly sourced. Mixed is declared, not
 hidden, and which mixes are acceptable is an open question in the ADR rather than a settled
 call. Read the two axes together; neither alone tells you a range is safe to use.
+
+**And a maximum here is not a bound.** Measuring the second axis exposed a third
+([ADR-0008](docs/adr/0008-the-governed-tail.md), accepted 2026-08-07): `impact.max` is a
+modeled quantile in **0 of 11 shards**. Every maximum in the portfolio is one documented
+event, the largest row in someone's dataset, or a legal ceiling — none of them answers *how
+often is a loss worse than this?* That is not a footnote: in
+[the worked decision](docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md) the per-event mean runs
+**14.8× its own mode** because the maximum drives the distribution rather than bounding it,
+and moving that one anchor swings P(event > AUD 20M) from **0% to 23%**. Treat every
+`impact.max` you see here as *the largest loss we found*, never *the largest loss that can
+happen*. Declaring this per-anchor is the next objective; today the honest statement is the
+portfolio-wide one above.
 
 **Top-risk threats — all six now runnable, not merely evidenced.** Business email
 compromise, data breach, ransomware, insider misuse, and AI-enabled (deepfake) fraud

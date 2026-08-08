@@ -100,6 +100,29 @@
         "shards_fully_sourced": 11
       },
       "release_version": "2026.08.03-v0.4.0"
+    },
+    {
+      "data_pack_version": "2026.08.07",
+      "date": "2026-08-07",
+      "fingerprint": "b6355a6e51277e4c5a9121581280360fb7d761b49f1da532db65cbf807cce64b",
+      "grades": {
+        "benchmark_review_candidate": 6,
+        "governed_starter": 5
+      },
+      "metrics": {
+        "families_coherent": 4,
+        "families_mixed": 18,
+        "params_bridged": 0,
+        "params_cell_matched": 31,
+        "params_cross_cell": 35,
+        "params_cross_country": 15,
+        "params_missing": 0,
+        "params_source_backed": 66,
+        "params_total": 66,
+        "shards": 11,
+        "shards_fully_sourced": 11
+      },
+      "release_version": "2026.08.07-v0.5.0"
     }
   ]
 }

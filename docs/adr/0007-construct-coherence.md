@@ -55,7 +55,12 @@ The same pattern recurs:
   mostly construct, not uncertainty.
 - **`au_finance_bec_midmarket`** `impact.max` is AUD 2.0M, the ACCC's **national aggregate**
   of small-business false-billing losses for the year. An aggregate across a population is
-  being used as one organisation's tail loss.
+  being used as one organisation's tail loss. *(**Corrected 2026-08-07** — this was the last
+  construct-inappropriate anchor and the one the owner's decision on open question 2 did not
+  excuse. It now reads AUD 2,668,483, one documented Australian BEC event reported by the AFP;
+  see the [revision](../../revisions/2026-08-07-australia-bec-stress-anchor-moves-to-a-documented-event.yaml).
+  The family stays `mixed`, which is the point: the fix was construct-appropriateness, not
+  coherence.)*
 - The ransomware shards (**AU**, **JP**, **DE**) anchor `frequency.min` to a
   **loss-event** prevalence (Cyentia IRIS) and `likely`/`max` to **attack** prevalence
   (Sophos, Bitkom). Every record says so in prose; nothing makes it structural.
@@ -176,8 +181,12 @@ folded in here.
 These are the judgment calls, and they are published rather than resolved quietly:
 
 1. **Which mixes are acceptable?** Is `median_total_event_cost` → `mean_total_event_cost`
-   an acceptable floor-to-mode pairing? Is a `single_documented_event_loss` a legitimate tail
-   anchor, or does it need a stated exceedance probability to belong in the range?
+   an acceptable floor-to-mode pairing? ~~Is a `single_documented_event_loss` a legitimate tail
+   anchor, or does it need a stated exceedance probability to belong in the range?~~ **The tail
+   half is DECIDED 2026-08-07 (owner) in [ADR-0008](0008-the-governed-tail.md): it needs a
+   stated *exceedance basis*, and `none_known` is an acceptable one — declared, never silent.
+   Measured across the portfolio, `impact.max` carries a modeled quantile in 0 of 11 shards.**
+   Which *mixes* are acceptable remains open and remains John's question.
 2. ~~**Should a statutory cap ever anchor `impact.max`?**~~ **DECIDED 2026-08-07 (owner): yes —
    a statutory cap may anchor `impact.max`.** Dropping it would lose the only evidence of the
    regulatory tail, and the cap is a real, citable bound. The condition is that it stays

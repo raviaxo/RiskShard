@@ -1,0 +1,50 @@
+date: '2026-08-07'
+title: Australia BEC stress anchor moves from a national aggregate to a documented event
+effect: 'The au_finance_bec_midmarket impact.max anchor moved from AUD 2,000,000 (ACCC
+  Targeting Scams Report 2025, Figure 10: total false-billing losses reported by all
+  Australian small businesses in a year) to AUD 2,668,483 (Australian Federal Police media
+  release, 10 July 2021: one September 2020 BEC case in which a business "processed two
+  payments within a few days - transferring $519,545 and then $2,148,938 to a Singaporean
+  bank account"). The scenario''s impact.max moved 2,000,000 -> 2,670,000 after the
+  calibration''s 10,000 rounding. Same-day simulated losses at seed 42 moved from AVG AUD
+  125,110 / P95 356,230 / P99 550,725 to AVG 154,815 / P95 451,905 / P99 664,247. The
+  measurement_basis moved from aggregate_population_loss to single_documented_event_loss;
+  the impact family stays ADR-0007 "mixed" (two means beneath one documented event) and the
+  portfolio headline stays 4 coherent / 18 mixed of 22 families. Cell-matched and
+  cross-country counts are unchanged: both the retired and the replacing record are
+  AU-resident and declare industries [all] / sizes [all], which is dilution carried by the
+  caveat, not borrowing. One source registered: the AFP media release (public HTML, dated),
+  merged surgically into the manifest. The retired evidence record was deleted; the same
+  ACCC figure survives unchanged as context (accc_2025_small_business_false_billing_losses_aud),
+  so no fact was lost - only its promotion to a range anchor.'
+reason: 'This was the last construct-inappropriate anchor identified by ADR-0007, and the
+  only one of the three that survived the owner''s decision on open question 2 (a statutory
+  cap MAY anchor impact.max if it stays declared; the FR and AU data-breach caps are
+  therefore deliberate). It is unambiguous in a way the other two are not: a whole-country
+  annual loss total for a population of small businesses is not a quantity any single firm
+  can incur, so it could never bound one firm''s event no matter how it was declared. It
+  also happened to sit BELOW the real documented Australian tail, so the shard was
+  understating its own stress case while citing a number that measured the wrong thing.
+
+  The replacement is a documented single event, which is the same construct the US and
+  Singapore BEC shards already use at impact.max (Coalition''s USD 6.4M funds-transfer-fraud
+  case; the SPF interception case). The gross figure is modeled although AUD 2.1 million of
+  the AUD 2.6 million was recovered - the identical treatment the Coalition record already
+  carries, because recovery depended on same-week detection and Interpol/Singapore Police
+  interception and is not guaranteed. Confidence stays low and the caveats get louder, not
+  quieter: one case is not a tail quantile, it says an event of this size happened in
+  Australia, not how often it happens or how much worse it gets; the AFP describes the
+  victim only as "an Australian business", so sector and size are unknown; and the 2020/21
+  vintage predates current payment-verification controls.
+
+  Scouted and rejected: Levitas Capital (the Sydney hedge fund that closed after a
+  September 2020 whaling attack) would have retired the sector and size dilution as well,
+  being an Australian financial-services firm, but no primary document states its loss - the
+  reported figures diverge across secondary coverage (AUD 8.7M invoiced, AUD 1.2M paid, and
+  various withdrawal totals), and the matter went to litigation rather than a published
+  finding. A law-enforcement primary source with one unambiguous figure beats a
+  sector-matching case whose number cannot be pinned. ASD''s Annual Cyber Threat Report
+  publishes average self-reported BEC losses by business size, which is a mean and cannot
+  anchor a maximum, and remains ungatherable in any case. An Australian BEC loss
+  distribution with tail quantiles still does not exist publicly; that gap is structural,
+  and the record says so.'

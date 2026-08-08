@@ -47,7 +47,7 @@ class GovernanceTests(unittest.TestCase):
         self.assertEqual(fca_equifax["evidence_record_count"], 1)
         self.assertEqual(fca_equifax["evidence_confidence"], "medium")
         self.assertEqual(accc["trust_tier"], "high")
-        self.assertEqual(accc["evidence_record_count"], 7)
+        self.assertEqual(accc["evidence_record_count"], 6)  # AU BEC impact.max moved to the AFP documented event
         self.assertEqual(business_qld["source_status"], "fetched")
         self.assertEqual(business_qld["trust_tier"], "medium")
         self.assertEqual(business_qld["evidence_record_count"], 2)

@@ -87,6 +87,34 @@ class PopulationSplitTests(unittest.TestCase):
         self.assertEqual(delta["params_cross_cell"], -4)
         self.assertEqual(delta["params_cross_country"], -4)
 
+    def test_coherence_split_records_and_never_fabricates_a_delta(self):
+        """ADR-0007's split, folded in at the v0.5.0 cut, obeys the ADR-0003 rule.
+
+        The coherence layer names its totals `coherent`/`mixed`; the ledger stores
+        them prefixed. Entries that predate the split must read "newly measured",
+        never "+4 coherent" against an entry that never counted families.
+        """
+        coh = {"coherent": 4, "mixed": 18, "undeclared": 0, "families": 22}
+        curr = capture_snapshot(
+            _dashboard(IMPROVED_MATRIX, "def"), population_totals=POP_TOTALS, coherence_totals=coh
+        )["metrics"]
+        self.assertEqual(curr["families_coherent"], 4)
+        self.assertEqual(curr["families_mixed"], 18)
+
+        pre_split = capture_snapshot(_dashboard(IMPROVED_MATRIX, "abc"), population_totals=POP_TOTALS)
+        self.assertNotIn("families_coherent", pre_split["metrics"])
+        delta = compute_delta(pre_split["metrics"], curr)
+        self.assertIn("params_cell_matched", delta)      # the older split still compares
+        self.assertNotIn("families_coherent", delta)     # no fabricated "+4"
+        self.assertNotIn("families_mixed", delta)
+
+        later = capture_snapshot(
+            _dashboard(IMPROVED_MATRIX, "ghi"),
+            population_totals=POP_TOTALS,
+            coherence_totals={"coherent": 9, "mixed": 13},
+        )["metrics"]
+        self.assertEqual(compute_delta(curr, later)["families_coherent"], 5)
+
     def test_markdown_shows_a_dash_for_pre_split_entries(self):
         tmp = tempfile.TemporaryDirectory()
         try:
