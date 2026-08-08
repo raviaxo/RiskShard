@@ -70,21 +70,63 @@ A beta-PERT's second parameter is the **mode**. Measured across the portfolio:
   what John described: "they don't automatically become 'min' and 'likely' because one happens
   to be smaller."
 
-**Direction of the error, and why it matters more than it looks:** a mean standing in for a mode
-is too high for right-skewed loss data, and a mean standing in for a floor is too high by
-construction. Both push the same way, and so does the maximum driving up to 95% of the mean
-(ADR-0008). **Every defect found this week inflates the published numbers.** The portfolio is
-very likely overstating loss. The size of that is unknown and must not be guessed — we do not
-know the true modes.
+**CORRECTED 2026-08-08 (owner).** An earlier version of this entry said "every defect found this
+week inflates the published numbers; the portfolio is very likely overstating loss." **That claim
+was wrong and is withdrawn.** It presumes a true value to be high *relative to*, and no such
+observable target exists:
+
+- The sources are not wrong. Verizon, Cyentia, IBM and NetDiligence measure what they say they
+  measure. Nothing found this week impugns them.
+- A shard describes a **cell** (country × sector × size × threat), not a company. Within that
+  cell, loss varies by orders of magnitude on dimensions the shard does not model at all —
+  account takeover on a learning-and-development system at a AUD 100M-revenue firm versus the
+  same threat against the general ledger of a AUD 10B firm, with different exposure windows,
+  are not the same event and share no true number.
+- "Too high" therefore has no referent. Direction-of-error language must not reappear here
+  without an observable target to compare against.
+
+What survives is narrower and still real: **a specification mismatch.** A beta-PERT's second
+parameter is a *mode*, and we pass a published *mean*. That is a statement about the model's
+internal consistency, true regardless of context, and it does not license any claim about
+whether the output is high or low.
+
+*Recording the error class, because it is the one this repo exists to catch: a valid measurement
+had a directional conclusion attached that it did not support. The measurement was fine; the
+inference was not.*
 
 Scope discipline for this objective, per ADR-0009: fix the assignment where existing sources
 allow it; where a source publishes only a mean, **say so on the record and leave it** rather than
 inventing a mode or re-engineering the engine. Do **not** add a fourth axis — the "why does this
 number occupy this slot" question goes in the per-parameter calibration `rationale` as prose.
-Expect the corrected numbers to fall, and expect that to be the headline of the release that
-carries it.
+**Do not predict which way the corrected numbers will move.** Some may rise, some may fall, and
+saying otherwise in advance is the withdrawn claim in a new costume.
 
-Behind it: **ADR-0008 commitment 3 — base rates, ADR-0005 revisited.** This one needs
+Note the cheapest honest option is probably not a data change at all: state plainly that the
+`likely` anchor is a **published central-tendency statistic, not a calibrated mode**, and that
+the engine treats it as one. That is truthful, costs no invented data, and is more in the repo's
+idiom than manufacturing a mode nobody measured.
+
+---
+
+**AND THE ONE THAT DECIDES RELEVANCE: the shard is blind to company context.** Raised by Ser
+2026-08-08; measured the same day. `org_profiles/au_finance_midmarket.yaml` declares
+`annual_revenue_or_budget: 85000000`, `employees: 450`, `data_sensitivity: high`,
+`internet_exposure: moderate`, `third_party_dependency: high`, `regulatory_intensity: high` —
+and **not one of those six fields affects any number.** The profile is consumed only to *match*
+evidence on country, industry and size. Grep confirms zero uses outside `profiles.py`.
+
+So two firms in the same cell get the same answer no matter which system is in scope, how
+critical it is, or how long it was exposed. That is the gap between "a governed statistic about a
+cell" and "a number a practitioner can act on", and it is a **data and context** gap, not a
+methodology one — squarely on-mission under ADR-0009, where a fourth measurement axis is not.
+
+**Hard constraint if this is taken up:** a revenue multiplier or criticality factor invented to
+make the model feel responsive is precisely what this project exists to refuse. Any context
+dimension must be evidence-backed like everything else — IBM and NetDiligence publish cost by
+revenue band, DBIR breaks down by asset — or it does not ship. Scout first; the answer may be a
+documented negative.
+
+Behind both: **ADR-0008 commitment 3 — base rates, ADR-0005 revisited.** This one needs
 Ser, not code: it is an outreach move. A documented loss-event registry is precisely an exceedance
 denominator, which is the thing 7 of our 11 maxima lack, and Adrian Sanabria has both the dataset
 (destroyedbybreach.com, 35 organisations, 2002–2026) and the open question ("should there be a
@@ -1197,3 +1239,28 @@ governance/regulatory loss).
   **accepted** as a correctness defect and becomes the next objective; his fourth axis is
   **declined** and recorded with its reason, because declining silently would cost the
   relationship that produced the last three improvements.
+- 2026-08-08 (third session) — **A withdrawn claim, and the gap that actually decides relevance.**
+  I had written, here and in the ADR-0009 PR, that "every defect found this week inflates the
+  published numbers; the portfolio is very likely overstating loss." **Ser withdrew it, and he was
+  right.** The claim presumes a true value to be high relative to, and none is observable: the
+  sources are not wrong (Verizon, Cyentia, IBM, NetDiligence measure what they say they measure),
+  and a shard describes a *cell*, not a company. Account takeover on a learning-and-development
+  system at a AUD 100M firm and the same threat against a AUD 10B firm's general ledger, over
+  different exposure windows, share no true number. **The error class is the one this repo exists
+  to catch, committed by me: a valid measurement with a directional conclusion attached that it
+  did not support.** John's finding survives in its narrow form — a beta-PERT's second parameter
+  is a mode and we pass a published mean, which is a statement about internal consistency and
+  licenses nothing about high or low. The correction is recorded in the objective rather than
+  quietly edited away.
+  **Ser's second point is the more valuable one: is this even the right input?** John's frame is
+  FAIR calibration rigor, where min/likely/max is one organisation's uncertainty. RiskShard's
+  range is not that — it is published population statistics arranged into a range. Some of the
+  critique therefore lands on a target we are not aiming at, which is why ADR-0009 exists.
+  **Measured the same day:** the org profile declares revenue, headcount, data sensitivity,
+  internet exposure, third-party dependency and regulatory intensity, and **none of the six
+  touches a number** — grep shows zero uses outside `profiles.py`; the profile only matches
+  evidence on country/industry/size. That blindness, not the PERT parameterisation, is what
+  stands between a governed statistic and a number a practitioner can act on. It is a data and
+  context gap, on-mission under ADR-0009 in a way a fourth measurement axis is not — with the
+  standing constraint that an invented revenue multiplier would be exactly the thing this project
+  refuses. Evidence-backed or documented negative.
