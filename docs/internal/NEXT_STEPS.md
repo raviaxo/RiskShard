@@ -51,7 +51,29 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
 
 ## Restart point
 
-**v0.6.0 cut 2026-08-08.** Release `2026.08.08-v0.6.0`; immutable explorer archive under
+**Session closed 2026-08-08. Tree clean, `main` = `origin/main`, 0 open PRs, 271 tests, every
+gate green including the strength ledger.** The day ended somewhere different from where it
+started: two releases shipped, then the project's scope and thesis were both written down for the
+first time, and one of them was stated publicly.
+
+**What changed that is bigger than the code.** [ADR-0009](../adr/0009-what-riskshard-is-and-is-not.md)
+records what RiskShard is — a governed evidence commons, **not** a CRQ methodology project — with
+the test *does this make an existing published number more correct, or the method more
+sophisticated?* and the rule that **a new declared axis may only be born from a defect measured in
+our own data**. Then the thesis itself was said out loud to John Flack in GRC EC: **"It's not the
+analysis. It's closer to Metasploit for risk — a vetted module library."** Take the external part,
+add your context, own the result, contribute back if you want. That reframing is worth carrying
+into every future decision, because it changes what the three declared axes *are*: not internal
+rigor, but the label on the module — what it targets, what it measured, where it breaks — which is
+the metadata a consumer needs to judge whether our number is safe in *their* model.
+
+**Two questions are out with John and one of them can invalidate the project**: what fraction of a
+real analysis could ever legitimately come from outside the org (5% = footnote, 40% = thesis), and
+what a parameter must carry for him to use it without wincing. Do not stall the queue on them —
+that mistake was made once already — but do not start the front-door repositioning without the
+second answer, since it designs exactly that.
+
+*Release detail:* `2026.08.08-v0.6.0`; immutable explorer archive under
 `docs/r/2026.08.08-v0.6.0/`. **The ADR-0008 axis is recorded in the ledger as newly measured**
 (`maxima` 11 · `maxima_quantified` 2 · `maxima_none_known` 7 · `shards_tail_driven` 7); the
 ADR-0007 coherence keys now compare normally against v0.5.0 and read 0 change, as does every
@@ -64,8 +86,12 @@ denominator was inferred as `quantified + none_known`, silently dropping the two
 rather than shipped wrong. Inferring a denominator from the categories you happened to name is a
 repeatable mistake.
 
-**THE NEXT OBJECTIVE IS: correct the anchor-slot assignment — our published numbers are
-mis-specified.** Found by John Flack 2026-08-07, verified in our own data 2026-08-08, and in
+**THE NEXT OBJECTIVE IS: correct the anchor-slot assignment.** Chosen because it is the one
+correctness item that is true *regardless* of how John answers — it needs no external input and
+holds under any thesis. The front-door repositioning (owner list item 1, publicly committed) is
+the bigger move but is better done with his answer to the parameter-spec question in hand.
+
+The defect: **our published anchors are mis-specified against the slots they occupy.** Found by John Flack 2026-08-07, verified in our own data 2026-08-08, and in
 scope without argument under [ADR-0009](../adr/0009-what-riskshard-is-and-is-not.md) obligation 1.
 
 A beta-PERT's second parameter is the **mode**. Measured across the portfolio:
