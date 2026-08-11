@@ -17,7 +17,18 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
    product and the simulation is a reference rendering. Reconciling the front door with that
    is a real repositioning and its own objective — see the thesis note below before starting.
 
-2. **Send the Sanabria message** (drafted 2026-08-08, two lengths, in
+2. ✅ **SENT 2026-08-11 — the Sanabria message went out**, on its due date. Route friction
+   worth remembering: the LinkedIn *connection invite* failed (a prior invite had been
+   withdrawn; LinkedIn blocks resending for three weeks) and the mobile app was unreliable
+   — but the invite was never a blocker on messaging, since he is 2nd-degree with ~6.6k
+   followers and Ser was already Following. Desktop was the working surface. **What went out
+   was the 300-char connection note**, lightly edited by Ser at send — so the ~245-word
+   message is now the **follow-up, sent only if he accepts**, never alongside. **No action
+   owed; awaiting his response.** If he engages, the highest-value thing to give him is the
+   field list — entity, date, figure, currency, *what the figure measures*, source URL,
+   gross or net of recovery — and the date-field observation is the sequenced second
+   message, never a gotcha. Reply posture and both message variants are in the draft file.
+   *(Original entry, kept for the route record:)* **Send the Sanabria message** (drafted 2026-08-08, two lengths, in
    `~/business-os/comms/ventures/riskshard/drafts/2026-08-sanabria-badly-hurt-list.md`;
    registered in that venture's `people.yaml`, due 2026-08-11). Route is **LinkedIn** — the
    scout's "the site takes suggestions" line was corrected: `/suggest` is a
@@ -28,20 +39,17 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
 3. ✅ **CLOSED 2026-08-08 — v0.6.0 cut** (Ser said do it). Citations pin to
    `2026.08.08-v0.6.0`, so anything published about the tail work now resolves against a
    release that contains it.
-4. **Reply to John Flack** (GRC EC `#labs_demos`, he answered 2026-08-07; Ser sent a holding
-   reply 2026-08-08). Two things to say, and they go in opposite directions — that is the
-   point, and [ADR-0009](../adr/0009-what-riskshard-is-and-is-not.md) is now the reason:
-   **accepted**, his mean-as-mode / median-as-floor finding is a real defect in our numbers
-   (see the queue below); **declined**, the `anchor_role` / `variation_source` fourth axis,
-   because the question it asks already has a home in the per-parameter calibration
-   `rationale` and a new axis must be born from a measured defect, not a good idea. Tell him
-   both, tell him which of his points landed hardest, and credit the mean-as-mode catch
-   plainly — he found in one reply what three days of our own instrumentation did not.
+4. ✅ **SENT 2026-08-08 — reply to John Flack posted** (GRC EC `#labs_demos`). It conceded the
+   mean-as-mode defect ("that's on me"), took his spread-is-geography point one step further
+   (*if the width isn't uncertainty, the thing isn't really a distribution*), stated the thesis
+   — **"It's not the analysis. It's closer to Metasploit for risk — a vetted module library"** —
+   and put two questions back to him. **Now awaiting his response; no action owed.**
+   *Entry corrected 2026-08-09 — it had been left standing as "to send" after the reply went out.*
 
-   *(This supersedes the old "awaiting John Flack" item. He replied on 2026-08-07 and
-   reframed the question rather than answering it as asked: the problem is not which mixes
-   are acceptable, it is why a number is allowed to occupy a slot at all. ADR-0007 open
-   question 1 should be closed against that reframing when the correctness objective lands.)*
+   *(He replied 2026-08-07 and reframed the question rather than answering it as asked: the
+   problem is not which mixes are acceptable, it is why a number is allowed to occupy a slot at
+   all. ADR-0007 open question 1 should be closed against that reframing when the correctness
+   objective lands.)*
 5. **Seven anchor judgments on record** — no action unless overruled; documented
    alternatives on each record: AU-ransomware stress 0.70-vs-0.80 · Latitude threat/size ·
    JP stress 0.58-vs-0.61 · CA NetDiligence thin cells · CA C-quality stress cell ·
@@ -51,10 +59,20 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
 
 ## Restart point
 
-**Session closed 2026-08-08. Tree clean, `main` = `origin/main`, 0 open PRs, 271 tests, every
-gate green including the strength ledger.** The day ended somewhere different from where it
-started: two releases shipped, then the project's scope and thesis were both written down for the
-first time, and one of them was stated publicly.
+**Session closed 2026-08-11. Tree clean, `main` = `origin/main`, 0 open PRs, 271 tests, every
+gate green including the strength ledger (fingerprint `613292b257a4`).** This was an **outreach
+and bookkeeping session — no product code changed and the next objective is untouched.** Two owner
+items closed: the Sanabria message was sent on its due date, and the John Flack reply was found to
+have been sent on 2026-08-08 and left standing in this list as if it were still owed. That second
+one is the lesson: **an item that goes out gets struck the same day, or the queue starts lying.**
+
+**THE NEXT OBJECTIVE IS UNCHANGED — correct the anchor-slot assignment** (detail below). It needs
+no external input and holds under any thesis. The front-door repositioning stays gated on John's
+parameter-spec answer, which is now one of two things outstanding with him.
+
+*Prior close, kept because it is what the objective rests on:* **2026-08-08** — two releases
+shipped, then the project's scope and thesis were both written down for the first time, and one of
+them was stated publicly.
 
 **What changed that is bigger than the code.** [ADR-0009](../adr/0009-what-riskshard-is-and-is-not.md)
 records what RiskShard is — a governed evidence commons, **not** a CRQ methodology project — with
@@ -1320,3 +1338,20 @@ governance/regulatory loss).
   Voice learning from diffing drafted-vs-sent is recorded in
   `~/business-os/comms/ventures/riskshard/voice.md` — cut the opener, unnumber the lists, make
   "we" into "me" where something went wrong, end on a question.
+- 2026-08-09 → 08-11 (fifth session) — **Outreach and a queue that was lying.** No product code
+  changed; both movements were on the owner list. **The Sanabria message went out 2026-08-11, on
+  its due date** — the answer to the "badly hurt by a breach" question he asks publicly on
+  `destroyedbybreach.com/about` (quote verified live at send time, not from the scout note). Route
+  friction worth keeping: the LinkedIn *connection invite* failed on a three-week block from a
+  previously withdrawn invite, and the mobile app was unreliable — but the invite was never a
+  blocker on messaging, since he is 2nd-degree with ~6.6k followers and Ser was already Following.
+  Desktop was the working surface. Standing fallback if LinkedIn ever gates it: subscribe to
+  defendersinitiative.com and reply to a post email, which reaches the author's inbox in the same
+  reader's-reply posture. **What went out was the 284-char connection note**, lightly edited by
+  Ser at send; the ~245-word message is now the follow-up, sent only if he accepts. Both variants
+  and the reply posture live in the comms draft file; `people.yaml` is `state: sent`.
+  **The correction that matters more:** owner item 4, "reply to John Flack", was still listed as
+  owed at session open — **it had been sent on 2026-08-08**, and the session log three sections
+  below said so. Ser caught it. An item that goes out gets struck the same day; a queue that
+  carries closed work is worse than no queue, because it is trusted. **Ser's call on the
+  follow-up: leave it — no chase, awaiting his response.**
