@@ -13,9 +13,19 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
    front page is a demo of what the evidence implies, not the product — though that's not
    obvious from how it's presented, which is mine to fix."* Said to John Flack, in the club,
    with the founder reading the thread. It is now owed, not optional. The explorer currently
-   leads with AVG/P95/P99; under the module-library thesis the governed **parameter** is the
+   leads with AVG/P95/P99; the governed **parameter** is the
    product and the simulation is a reference rendering. Reconciling the front door with that
    is a real repositioning and its own objective — see the thesis note below before starting.
+
+   **UNGATED 2026-08-11.** This was blocked on one answer from John Flack — what a parameter
+   must carry for him to use it without wincing. He answered on 2026-08-09 and went further,
+   arguing the project should stop before quantification altogether. Recorded in
+   [ADR-0010](../adr/0010-where-riskshard-stops.md), which also retires the
+   module-library framing (his objection to it is correct) and gives the repositioning a field
+   list to design against instead of a guess. The owner restated the commitment in
+   `#labs_demos` on 2026-08-11: *"the parameter is the product and the simulation is one
+   rendering of it, so it comes off the front door."* **Nothing external is outstanding on this
+   item any more — it is now just work.**
 
 2. ✅ **SENT 2026-08-11 — the Sanabria message went out**, on its due date. Route friction
    worth remembering: the LinkedIn *connection invite* failed (a prior invite had been
@@ -23,11 +33,25 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
    — but the invite was never a blocker on messaging, since he is 2nd-degree with ~6.6k
    followers and Ser was already Following. Desktop was the working surface. **What went out
    was the 300-char connection note**, lightly edited by Ser at send — so the ~245-word
-   message is now the **follow-up, sent only if he accepts**, never alongside. **No action
-   owed; awaiting his response.** If he engages, the highest-value thing to give him is the
-   field list — entity, date, figure, currency, *what the figure measures*, source URL,
-   gross or net of recovery — and the date-field observation is the sequenced second
+   message is now the **follow-up, sent only if he accepts**, never alongside.
+
+   **HE REPLIED 2026-08-11, warmly** ("nice to meet you, by the way"), and confirmed the thesis
+   without being asked: breach reporting is inconsistent · `cybersecuritycasestudies.com` carries
+   financial data *but collection is automated, "so it isn't always correct"* · his own
+   destroyed-by-breach dataset has loss data, *"but again, it is inconsistent."* The person who
+   maintains one of these datasets says the loss figures exist and nobody governs them. That is
+   the strongest external validation the commons position has, and it arrived the same day as
+   John Flack's, from someone who has never spoken to him — recorded in
+   [ADR-0010](../adr/0010-where-riskshard-stops.md).
+
+   **Owner has replied to say he will review the source; the field-list message is drafted and
+   deliberately held** — entity, date, figure, currency, *what the figure measures*, source URL,
+   gross or net of recovery. The date-field observation stays the sequenced second
    message, never a gotcha. Reply posture and both message variants are in the draft file.
+
+   **On `cybersecuritycasestudies.com`:** he flagged the automation problem himself, so under
+   our own rules it is a candidate to verify figure-by-figure, **not** a source to admit. It
+   does not enter `sources/manifest.json` on a pointer.
    *(Original entry, kept for the route record:)* **Send the Sanabria message** (drafted 2026-08-08, two lengths, in
    `~/business-os/comms/ventures/riskshard/drafts/2026-08-sanabria-badly-hurt-list.md`;
    registered in that venture's `people.yaml`, due 2026-08-11). Route is **LinkedIn** — the
@@ -43,13 +67,24 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
    mean-as-mode defect ("that's on me"), took his spread-is-geography point one step further
    (*if the width isn't uncertainty, the thing isn't really a distribution*), stated the thesis
    — **"It's not the analysis. It's closer to Metasploit for risk — a vetted module library"** —
-   and put two questions back to him. **Now awaiting his response; no action owed.**
+   and put two questions back to him.
    *Entry corrected 2026-08-09 — it had been left standing as "to send" after the reply went out.*
 
-   *(He replied 2026-08-07 and reframed the question rather than answering it as asked: the
-   problem is not which mixes are acceptable, it is why a number is allowed to occupy a slot at
-   all. ADR-0007 open question 1 should be closed against that reframing when the correctness
-   objective lands.)*
+   **✅ ANSWERED 2026-08-09 — and the answer is [ADR-0010](../adr/0010-where-riskshard-stops.md).**
+   Of the two questions: the 5%-or-40% one he **declined** as the wrong worry (*"I do end up
+   worrying less around '5% or 40%' and more where RiskShard stops"*) — it is closed by refusal,
+   not outstanding. The parameter-spec one he **answered with a field list**, of which we carry
+   three, carry one wrongly, and do not carry two. He also retired our Metasploit framing and
+   argued for stopping before quantification. **Owner replied 2026-08-11**, conceding the
+   analogy, publishing the 7-of-11 mis-specification count against his own "what statistical role
+   does it really have", committing the front door, and putting one question back: does
+   distance-from-your-context live on the evidence object, or is it the analyst's to compute?
+   **Now awaiting that; no action owed.**
+
+   *(He also replied 2026-08-07 and reframed the mixes question rather than answering it as
+   asked: the problem is not which mixes are acceptable, it is why a number is allowed to occupy
+   a slot at all. On 2026-08-09 he relocated it entirely to the analyst. ADR-0007 open question 1
+   now carries both reframings and a recommended closure — owner's call.)*
 5. **Seven anchor judgments on record** — no action unless overruled; documented
    alternatives on each record: AU-ransomware stress 0.70-vs-0.80 · Latitude threat/size ·
    JP stress 0.58-vs-0.61 · CA NetDiligence thin cells · CA C-quality stress cell ·
@@ -67,8 +102,15 @@ have been sent on 2026-08-08 and left standing in this list as if it were still 
 one is the lesson: **an item that goes out gets struck the same day, or the queue starts lying.**
 
 **THE NEXT OBJECTIVE IS UNCHANGED — correct the anchor-slot assignment** (detail below). It needs
-no external input and holds under any thesis. The front-door repositioning stays gated on John's
-parameter-spec answer, which is now one of two things outstanding with him.
+no external input and holds under any thesis.
+
+**UPDATE 2026-08-11 (same day, later session).** Both replies landed. John Flack answered the
+parameter-spec question and argued for stopping before quantification; Adrian Sanabria replied
+warmly and confirmed the supply-side problem from inside one of these datasets.
+[ADR-0010](../adr/0010-where-riskshard-stops.md) records it: **the evidence object is the product,
+the simulation is a reference rendering and comes off the front door, and the Metasploit framing
+is retired.** The front-door repositioning is **no longer gated** — it is the objective after this
+one. Nothing external is outstanding except one question put back to John.
 
 *Prior close, kept because it is what the objective rests on:* **2026-08-08** — two releases
 shipped, then the project's scope and thesis were both written down for the first time, and one of
@@ -78,18 +120,33 @@ them was stated publicly.
 records what RiskShard is — a governed evidence commons, **not** a CRQ methodology project — with
 the test *does this make an existing published number more correct, or the method more
 sophisticated?* and the rule that **a new declared axis may only be born from a defect measured in
-our own data**. Then the thesis itself was said out loud to John Flack in GRC EC: **"It's not the
-analysis. It's closer to Metasploit for risk — a vetted module library."** Take the external part,
-add your context, own the result, contribute back if you want. That reframing is worth carrying
-into every future decision, because it changes what the three declared axes *are*: not internal
-rigor, but the label on the module — what it targets, what it measured, where it breaks — which is
-the metadata a consumer needs to judge whether our number is safe in *their* model.
+our own data**. ~~Then the thesis itself was said out loud to John Flack in GRC EC: **"It's not the
+analysis. It's closer to Metasploit for risk — a vetted module library."**~~
 
-**Two questions are out with John and one of them can invalidate the project**: what fraction of a
-real analysis could ever legitimately come from outside the org (5% = footnote, 40% = thesis), and
-what a parameter must carry for him to use it without wincing. Do not stall the queue on them —
-that mistake was made once already — but do not start the front-door repositioning without the
-second answer, since it designs exactly that.
+⚠️ **THAT ANALOGY IS RETIRED — 2026-08-11, publicly, by the owner who made it publicly.** Do not
+pick it up from this record and mistake it for the current thesis; see
+[ADR-0010](../adr/0010-where-riskshard-stops.md). John's objection is correct and lands on the
+analogy's only load-bearing claim, portability: *an exploit module is stable once you know the
+target conditions, but for a risk observation the org, controls, threat environment, dependencies
+and time horizon **are** the thing being estimated*, so no residue travels. What survives is
+narrower and true: **a governed observation with its distance from you declared.** Not portable —
+labelled well enough that you can decide whether it travels.
+
+What *does* still hold from that entry is the part about the axes: they are not internal rigor,
+they are the label — what was measured, on whom, how, in what role, how far from you, and what it
+cannot support. That is the metadata a consumer needs to judge whether our number is safe in
+*their* model, and it is now specified in ADR-0010 rather than paraphrased here.
+
+**Both questions with John are resolved — 2026-08-09.** The one recorded here as able to
+invalidate the project (what fraction of a real analysis can legitimately come from outside the
+org — 5% = footnote, 40% = thesis) he **declined as the wrong worry**, replacing it with *where
+does RiskShard stop*. The second — what a parameter must carry for him to use it without wincing
+— he **answered**, and that answer is ADR-0010. The front-door repositioning is no longer gated
+on anything external.
+
+**One new question is out with him** (put 2026-08-11): does *how far it is from my context* live
+on the evidence object, or is it the analyst's to compute and our duty only to give them enough
+to compute it? Do not stall the queue on it — that mistake was made once already.
 
 *Release detail:* `2026.08.08-v0.6.0`; immutable explorer archive under
 `docs/r/2026.08.08-v0.6.0/`. **The ADR-0008 axis is recorded in the ledger as newly measured**
@@ -161,7 +218,12 @@ idiom than manufacturing a mode nobody measured.
 ---
 
 **AND THE ONE THAT DECIDES RELEVANCE: the shard is blind to company context.** Raised by Ser
-2026-08-08; measured the same day. `org_profiles/au_finance_midmarket.yaml` declares
+2026-08-08; measured the same day. **Externally corroborated 2026-08-09** — it is John Flack's
+*"how far it is from my context"*, one of the two fields on his list we do not carry at all
+([ADR-0010](../adr/0010-where-riskshard-stops.md)). Note it therefore **clears the ADR-0009
+gate**: it was born from a defect measured in our own data on 2026-08-08, not from his good idea
+about measurement. Clearing the gate is not scheduling it, and the hard constraint below is
+unchanged. `org_profiles/au_finance_midmarket.yaml` declares
 `annual_revenue_or_budget: 85000000`, `employees: 450`, `data_sensitivity: high`,
 `internet_exposure: moderate`, `third_party_dependency: high`, `regulatory_intensity: high` —
 and **not one of those six fields affects any number.** The profile is consumed only to *match*

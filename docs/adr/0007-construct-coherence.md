@@ -187,6 +187,18 @@ These are the judgment calls, and they are published rather than resolved quietl
    stated *exceedance basis*, and `none_known` is an acceptable one — declared, never silent.
    Measured across the portfolio, `impact.max` carries a modeled quantile in 0 of 11 shards.**
    Which *mixes* are acceptable remains open and remains John's question.
+
+   *Asked of him directly and declined twice — 2026-08-07, where he reframed it (the problem is
+   not which mixes are acceptable, it is why a number is allowed to occupy a slot at all), and
+   2026-08-09, where he relocated the decision entirely: the evidence object declares what it
+   is, and **the analyst owns whether it belongs in the model, how it is transformed, and what
+   structure it goes into**. Read straight, that dissolves the question rather than answering
+   it — no mix is acceptable or unacceptable in general, our duty is to label, and admission is
+   the consumer's call. That reading is consistent with
+   [ADR-0010](0010-where-riskshard-stops.md) and is **recommended for closure on those terms**.
+   Left open here because closing an ADR question is the owner's, and because a declared
+   `mixed` range still owes its reader a plain statement of what the mixing does to the
+   number — which is a labelling duty this ADR has not discharged.*
 2. ~~**Should a statutory cap ever anchor `impact.max`?**~~ **DECIDED 2026-08-07 (owner): yes —
    a statutory cap may anchor `impact.max`.** Dropping it would lose the only evidence of the
    regulatory tail, and the cap is a real, citable bound. The condition is that it stays

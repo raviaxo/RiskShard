@@ -20,3 +20,4 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0007](0007-construct-coherence.md) | Declared measurement basis and range coherence | Proposed |
 | [0008](0008-the-governed-tail.md) | The governed tail: a maximum must say what it bounds | Accepted |
 | [0009](0009-what-riskshard-is-and-is-not.md) | What RiskShard is, and what it is not (scope) | Accepted |
+| [0010](0010-where-riskshard-stops.md) | Where RiskShard stops: the evidence object is the product | Accepted |
