@@ -171,9 +171,18 @@ scope without argument under [ADR-0009](../adr/0009-what-riskshard-is-and-is-not
 
 A beta-PERT's second parameter is the **mode**. Measured across the portfolio:
 
-- **7 of 11 shards feed a `mean_total_event_cost` into the mode slot.** A mean is not a mode.
+- **8 of 11 shards feed a `mean_total_event_cost` into the mode slot.** A mean is not a mode.
+  **⚠️ RECOUNTED 2026-08-12: this was published as 7 and it is 8.** The re-measure resolved every
+  anchor's `measurement_basis` mechanically across all 15 calibration profiles and then restricted
+  to the 11 risk-module shards; the two other counts on this list reproduced exactly, this one did
+  not. The eight are `au_bec`, `au_data_breach`, `ca_data_breach`, `fr_data_breach`,
+  `gb_data_breach`, `sg_bec`, `us_bec`, `us_data_breach`. Six of them also carry a central-tendency
+  floor; **`gb_data_breach` and `us_data_breach` carry the mean at `likely` only**, which is the
+  likely mechanism of the original error — six "both" plus one of those two reads as seven.
+  `transform` does not explain it away: every impact anchor is `direct` or `currency_convert`, and
+  a converted mean is still a mean. **The defect is one shard worse than published, not better.**
 - **7 of 11 use a central-tendency measure (mean or median) as the floor.** A mean is not a
-  minimum.
+  minimum. *(Reproduced exactly on the 2026-08-12 recount.)*
 - **6 of 11 do both**, and four of those use *a mean at `min` and a different mean at `likely`* —
   two means, ordered by magnitude, labelled as if they were a floor and a mode. That is exactly
   what John described: "they don't automatically become 'min' and 'likely' because one happens

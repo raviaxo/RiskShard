@@ -49,8 +49,11 @@ of cost or embarrassment. Being wrong about the quantitative method discredits t
 is the entire product. This is not negotiable and has no budget.
 
 The 2026-08-08 finding is the worked example: a beta-PERT's second parameter is the **mode**,
-and 7 of 11 shards feed a **mean** into it, while 7 of 11 use a central-tendency measure as the
-**floor**. Two means, ordered by magnitude, labelled `min` and `likely`. That is not a
+and ~~7~~ **8** of 11 shards feed a **mean** into it, while 7 of 11 use a central-tendency
+measure as the **floor**. *(The mode-slot count was published as 7 and corrected to 8 on a
+mechanical recount, 2026-08-12 — see [ADR-0010](0010-where-riskshard-stops.md) and
+`../internal/NEXT_STEPS.md`. The floor count reproduced exactly. The defect is one shard worse
+than first published; the obligation below is unchanged and this is a worked example of it.)* Two means, ordered by magnitude, labelled `min` and `likely`. That is not a
 methodological preference — the distributions are mis-specified and the published numbers are
 wrong. In scope, immediately.
 

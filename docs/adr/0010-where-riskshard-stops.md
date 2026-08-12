@@ -80,7 +80,7 @@ The engine stays in the repository for one reason, and it is not sentiment: **it
 mechanism that finds our own defects.** The tail-sensitivity table — the strongest artifact this
 project has for the "so what?" question — exists only because there is a simulation to be
 sensitive. The mis-specification counted in [ADR-0009](0009-what-riskshard-is-and-is-not.md)
-obligation 1 (7 of 11 shards passing a mean into a mode slot) is visible only because something
+obligation 1 (8 of 11 shards passing a mean into a mode slot) is visible only because something
 composes those anchors into a distribution. Delete the engine and the evidence layer loses its
 best critic.
 
@@ -105,7 +105,7 @@ travels.
 | who it was observed on | ✅ `population_match` ([ADR-0003](0003-shared-impact-bridges.md)) |
 | when | ⚠️ present in the source record, not a declared field |
 | how it was measured | ✅ `measurement_basis` ([ADR-0007](0007-construct-coherence.md)) |
-| **what statistical role it really has** | ❌ **carried wrongly** — 7 of 11 shards pass a published mean into the mode slot; 7 of 11 use a central-tendency figure as the floor |
+| **what statistical role it really has** | ❌ **carried wrongly** — 8 of 11 shards pass a published mean into the mode slot; 7 of 11 use a central-tendency figure as the floor |
 | **how far it is from my context** | ❌ **not carried at all** |
 | what it can't end up supporting | ⚠️ declared for the tail only ([ADR-0008](0008-the-governed-tail.md)) |
 
