@@ -37,13 +37,13 @@ parameters:
       transform: direct
       target_currency: USD
       round_to: 1000
-      rationale: Source-backed Verizon DBIR 2026 median BEC loss reused as a Singapore-context lower impact bridge.
+      rationale: Source-backed Verizon DBIR 2026 median BEC loss reused as a Singapore-context lower impact bridge. Slot declaration - this is a published median, not an observed minimum; the engine composes it as the beta-PERT floor.
     likely:
       evidence_id: spf_2025_sg_bec_average_loss_per_reported_case_usd
       transform: direct
       target_currency: USD
       round_to: 10000
-      rationale: Singapore-specific average loss per reported BEC case (SPF, 2024-2025 pooled), replacing the FBI IC3 US complaint average previously used as Singapore context.
+      rationale: Singapore-specific average loss per reported BEC case (SPF, 2024-2025 pooled), replacing the FBI IC3 US complaint average previously used as Singapore context. Slot declaration - this is a published mean, not a calibrated mode; the engine composes it as the mode of a beta-PERT. No source consulted publishes a mode for this population.
     max:
       evidence_id: spf_2024_sg_bec_documented_case_impact_stress
       transform: direct

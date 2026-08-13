@@ -37,13 +37,13 @@ parameters:
       transform: direct
       target_currency: USD
       round_to: 1000
-      rationale: Source-backed median BEC loss floor from Verizon DBIR 2026 (IC3-derived), below the IC3 mean used for likely.
+      rationale: Source-backed median BEC loss floor from Verizon DBIR 2026 (IC3-derived), below the IC3 mean used for likely. Slot declaration - this is a published median, not an observed minimum; the engine composes it as the beta-PERT floor.
     likely:
       evidence_id: fbi_ic3_2025_us_bec_average_loss_per_complaint_usd
       transform: direct
       target_currency: USD
       round_to: 10000
-      rationale: Source-backed FBI IC3 BEC average adjusted loss per complaint as the US likely loss anchor.
+      rationale: Source-backed FBI IC3 BEC average adjusted loss per complaint as the US likely loss anchor. Slot declaration - this is a published mean, not a calibrated mode; the engine composes it as the mode of a beta-PERT. No source consulted publishes a mode for this population.
     max:
       evidence_id: coalition_2023_us_ftf_largest_loss_impact_stress
       transform: direct

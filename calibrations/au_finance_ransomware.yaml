@@ -36,7 +36,7 @@ parameters:
       transform: direct
       target_currency: AUD
       round_to: 1000
-      rationale: Locally gathered Australian medium-business cybercrime cost floor from Business Queensland guidance.
+      rationale: Locally gathered Australian medium-business cybercrime cost floor from Business Queensland guidance. Slot declaration - this is a published mean, not an observed minimum; the engine composes it as the beta-PERT floor.
     likely:
       evidence_id: sophos_au_2025_ransomware_recovery_cost_usd
       transform: currency_convert

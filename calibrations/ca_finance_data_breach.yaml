@@ -45,12 +45,12 @@ parameters:
       transform: currency_convert
       target_currency: CAD
       round_to: 10000
-      rationale: Canadian Hacker-cause claims average (NetDiligence 2020-2024, N=8, USD 66K) as a conservative country-matched floor, converted to CAD; replaces the Cyentia global all-cyber bridge.
+      rationale: Canadian Hacker-cause claims average (NetDiligence 2020-2024, N=8, USD 66K) as a conservative country-matched floor, converted to CAD; replaces the Cyentia global all-cyber bridge. Slot declaration - this is a published mean, not an observed minimum; the engine composes it as the beta-PERT floor.
     likely:
       evidence_id: ibm_canada_2025_average_breach_cost_cad
       transform: direct
       round_to: 10000
-      rationale: Primary IBM Canada national average breach cost (CA$6.98M, 2025), already reported in CAD, replacing the global IBM bridge and the low-confidence ITPro secondary. All-sector and enterprise-weighted, so treated as an upper-leaning mid-market likely anchor rather than a mid-market-specific figure.
+      rationale: Primary IBM Canada national average breach cost (CA$6.98M, 2025), already reported in CAD, replacing the global IBM bridge and the low-confidence ITPro secondary. All-sector and enterprise-weighted, so treated as an upper-leaning mid-market likely anchor rather than a mid-market-specific figure. Slot declaration - this is a published mean, not a calibrated mode; the engine composes it as the mode of a beta-PERT. No source consulted publishes a mode for this population.
     max:
       evidence_id: netdiligence_2025_ca_maximum_incident_cost_usd
       transform: currency_convert

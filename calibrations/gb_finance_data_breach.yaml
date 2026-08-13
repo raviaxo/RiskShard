@@ -39,7 +39,7 @@ parameters:
       transform: direct
       target_currency: GBP
       round_to: 10000
-      rationale: UK financial-services average data-breach cost anchor from IBM's 2025 UK breach release.
+      rationale: UK financial-services average data-breach cost anchor from IBM's 2025 UK breach release. Slot declaration - this is a published mean, not a calibrated mode; the engine composes it as the mode of a beta-PERT. No source consulted publishes a mode for this population.
     max:
       evidence_id: fca_equifax_2023_cyber_breach_fine_gbp
       transform: direct

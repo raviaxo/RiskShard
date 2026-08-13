@@ -4,6 +4,23 @@
 size the correctness objective before any data changes. The queue owner is
 [`NEXT_STEPS.md`](NEXT_STEPS.md); this file is the measurement behind one of its entries.*
 
+> **✅ ACTED ON 2026-08-13 — "declare, don't invent" shipped.** All 15 central-tendency anchors
+> (8 at `likely`, 7 at `min`) carry a written slot declaration in their calibration `rationale`,
+> and the declaration is **derived** rather than hand-maintained (`engine/slot_roles.py`),
+> appearing per-anchor in the evidence report and on every shard in the explorer.
+> **No published number moved** — all 11 shards' AVG/P95/P99 are byte-identical, which is what
+> a declaration-only fix must do.
+>
+> **One finding this file did not have.** The dead end is worse than "no source we hold offers a
+> mode": **no value in the 18-entry `measurement_basis` vocabulary denotes a mode at all**, so
+> the schema could not express one if a source published it. That makes the mode-slot statement
+> structural rather than per-shard — **all 11 `impact.likely` anchors** are something other than
+> a calibrated mode, of which the 8 central-tendency ones are the sharper case. Both counts are
+> pinned in `tests/test_slot_roles.py`.
+>
+> The optional source check ran and returned the expected documented negative: NetDiligence 2025
+> reports averages and Verizon DBIR 2026 carries no loss median in prose. Neither yields a mode.
+
 ## Method
 
 Every `evidence_id` referenced by every calibration profile was resolved mechanically to its

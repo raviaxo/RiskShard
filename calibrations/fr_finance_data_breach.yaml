@@ -42,13 +42,13 @@ parameters:
       transform: currency_convert
       target_currency: USD
       round_to: 10000
-      rationale: Asteres France average cost of a successful cyberattack (EUR 58,600), converted from EUR to USD, as a conservative France-specific impact floor replacing the global Cyentia bridge. Economy-wide all-cyber average, used only as a lower bound.
+      rationale: Asteres France average cost of a successful cyberattack (EUR 58,600), converted from EUR to USD, as a conservative France-specific impact floor replacing the global Cyentia bridge. Economy-wide all-cyber average, used only as a lower bound. Slot declaration - this is a published mean, not an observed minimum; the engine composes it as the beta-PERT floor.
     likely:
       evidence_id: ibm_france_2025_national_average_breach_cost_eur
       transform: currency_convert
       target_currency: USD
       round_to: 100000
-      rationale: Primary IBM France 2025 national average breach cost (EUR 3.59M), converted from EUR to USD via the reviewed ECB EUR/USD assumption, replacing the global IBM average bridge. All-sector, enterprise-weighted France average used as an upper-leaning mid-market likely anchor.
+      rationale: Primary IBM France 2025 national average breach cost (EUR 3.59M), converted from EUR to USD via the reviewed ECB EUR/USD assumption, replacing the global IBM average bridge. All-sector, enterprise-weighted France average used as an upper-leaning mid-market likely anchor. Slot declaration - this is a published mean, not a calibrated mode; the engine composes it as the mode of a beta-PERT. No source consulted publishes a mode for this population.
     max:
       evidence_id: gdpr_article_83_max_fine_2018
       transform: currency_convert

@@ -34,7 +34,7 @@ parameters:
       transform: direct
       target_currency: AUD
       round_to: 1000
-      rationale: Locally gathered Australian medium-business cybercrime cost floor used conservatively until data-breach-specific Australian cost-floor evidence exists.
+      rationale: Locally gathered Australian medium-business cybercrime cost floor used conservatively until data-breach-specific Australian cost-floor evidence exists. Slot declaration - this is a published mean, not an observed minimum; the engine composes it as the beta-PERT floor.
     likely:
       evidence_id: securitybrief_ibm_2026_au_finserv_breach_average_cost_aud
       transform: direct
@@ -50,6 +50,7 @@ parameters:
         (enterprise-leaning study, per-cell sample size unpublished). The IBM 2025
         global average (USD 4.44M) and the UK financial-services figure (GBP 5.74M)
         remain on the records as the documented alternatives.
+        Slot declaration - this is a published mean, not a calibrated mode; the engine composes it as the mode of a beta-PERT. No source consulted publishes a mode for this population.
     max:
       evidence_id: privacy_act_1988_au_body_corporate_serious_privacy_penalty_cap_2026
       transform: direct
