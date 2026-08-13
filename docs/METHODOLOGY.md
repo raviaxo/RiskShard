@@ -102,6 +102,42 @@ Neither distribution invents information beyond the three declared points. The
 model is exactly as good as those points, which is why provenance — not the
 sampler — is the real product.
 
+### What actually occupies the mode slot
+
+Both samplers treat `likely` as the **mode** — the most probable single value.
+Nothing in this repository supplies one.
+
+**No value in the declared `measurement_basis` vocabulary denotes a mode.** All
+eighteen name means, medians, cost components, prevalences, statutory ceilings,
+single observations or estimates. So this is not a gap in some shards: **none of
+the 11 `impact.likely` anchors is a calibrated mode**, and the schema could not
+express one if a source published it.
+
+Of those, **8 carry a published mean or median** — a central-tendency statistic
+standing in the mode slot. A further **7 use a central tendency as `min`**, which
+is not a lower bound on loss: half a measured population sits below its median,
+and a great deal of a right-skewed one sits below its mean. Six shards do both,
+and four of those pass *a mean at `min` and a different mean at `likely`* — two
+central tendencies ordered by magnitude and then labelled as a floor and a mode.
+
+This is **declared, not corrected.** No source consulted publishes a mode
+(NetDiligence 2025 and Verizon DBIR 2026 were checked directly for this: neither
+does), and manufacturing one to fill the slot would be inventing the most
+load-bearing number in the model. The honest move is to say what the number is
+and let the reader judge the composition.
+
+Two things this claim is **not**. It is not a statement that the sources are
+wrong — Verizon, Cyentia, IBM and NetDiligence measure what they say they
+measure. And it is not a claim that the outputs are too high or too low: a shard
+describes a *cell*, not a company, and within that cell loss varies by orders of
+magnitude on dimensions the shard does not model, so "too high" has no referent
+to be measured against. What survives is precise and still worth stating — a
+**specification mismatch** between what a beta-PERT's second parameter means and
+what is passed into it.
+
+The declaration is derived, never hand-maintained (`engine/slot_roles.py`), and
+appears per-anchor in the evidence report and on each shard in the explorer.
+
 ## The frequency / severity asymmetry (the honest core)
 
 **Frequency and severity are not equally knowable, and the current model treats

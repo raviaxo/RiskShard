@@ -8,12 +8,18 @@ Every model parameter in every shard, with the source it traces to and the cavea
 
 **Tail exceedance:** 2 of 11 `impact.max` anchors carry an exceedance statement — 0 modeled quantiles, 2 observed ranks. 2 are legal ceilings and 7 carry nothing at all (ADR-0008). A maximum here is *the largest loss we found*, not *the largest loss that can happen*, unless its row says otherwise — and the maximum is the anchor a simulated mean is most sensitive to.
 
+**Anchor slot roles:** the engine composes each range as a beta-PERT, which needs a floor, a **mode** and a ceiling. None of the 11 `impact.likely` anchors is a calibrated mode — no value in the declared measurement vocabulary denotes one — and 8 of them are a published mean or median, a central-tendency statistic standing in the mode slot. A further 7 use a central tendency as the floor, which is not a lower bound on loss. This is declared and not corrected: no source consulted publishes a mode, and inventing one to fill the slot would be manufacturing data. It is a statement about the model's internal consistency and it implies nothing about whether the output is high or low.
+
 ## au_finance_bec_midmarket
 _Australia Finance Business Email Compromise Midmarket_
 
 > **`frequency` is a mixed range** — its anchors measure 2 different quantities: `reported_case_rate`, `org_prevalence_incident`.
 
 > **`impact` is a mixed range** — its anchors measure 2 different quantities: `mean_total_event_cost`, `single_documented_event_loss`.
+
+> **`impact.min` is a published mean total event cost, not an observed minimum** — it is a central-tendency statistic and the engine composes it as the floor of a beta-PERT. Half the measured population sits below a median, and a great deal of it sits below a mean, so this floor is not a lower bound on loss.
+
+> **`impact.likely` is a published mean total event cost, not a calibrated mode** — it is a central-tendency statistic and the engine composes it as the mode of a beta-PERT. No source held for this shard publishes a mode, and no value in the declared measurement vocabulary denotes one, so this is stated rather than corrected: the number is what its source measured, and the slot is the engine's, not the source's.
 
 > **84% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
 
@@ -35,6 +41,10 @@ _Australia Finance Data Breach Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 2 different quantities: `mean_total_event_cost`, `statutory_penalty_cap`.
 
+> **`impact.min` is a published mean total event cost, not an observed minimum** — it is a central-tendency statistic and the engine composes it as the floor of a beta-PERT. Half the measured population sits below a median, and a great deal of it sits below a mean, so this floor is not a lower bound on loss.
+
+> **`impact.likely` is a published mean total event cost, not a calibrated mode** — it is a central-tendency statistic and the engine composes it as the mode of a beta-PERT. No source held for this shard publishes a mode, and no value in the declared measurement vocabulary denotes one, so this is stated rather than corrected: the number is what its source measured, and the slot is the engine's, not the source's.
+
 > **66% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
 
 | Parameter | Value | Status | Measures | Exceedance | Source | Caveat |
@@ -52,6 +62,10 @@ _Australia Finance Ransomware Midmarket_
 > **`frequency` is a mixed range** — its anchors measure 2 different quantities: `org_prevalence_loss_event`, `org_prevalence_incident`.
 
 > **`impact` is a mixed range** — its anchors measure 3 different quantities: `mean_total_event_cost`, `cost_component`, `single_documented_event_loss`.
+
+> **`impact.min` is a published mean total event cost, not an observed minimum** — it is a central-tendency statistic and the engine composes it as the floor of a beta-PERT. Half the measured population sits below a median, and a great deal of it sits below a mean, so this floor is not a lower bound on loss.
+
+> **`impact.likely` is a published cost component, not a calibrated mode** — the engine composes it as the mode of a beta-PERT. No value in the declared measurement vocabulary denotes a mode, so no anchor can occupy this slot correctly.
 
 > **97% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
 
@@ -71,6 +85,10 @@ _Canada Finance Data Breach Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 2 different quantities: `mean_total_event_cost`, `observed_extremum`.
 
+> **`impact.min` is a published mean total event cost, not an observed minimum** — it is a central-tendency statistic and the engine composes it as the floor of a beta-PERT. Half the measured population sits below a median, and a great deal of it sits below a mean, so this floor is not a lower bound on loss.
+
+> **`impact.likely` is a published mean total event cost, not a calibrated mode** — it is a central-tendency statistic and the engine composes it as the mode of a beta-PERT. No source held for this shard publishes a mode, and no value in the declared measurement vocabulary denotes one, so this is stated rather than corrected: the number is what its source measured, and the slot is the engine's, not the source's.
+
 > **`impact.max` exceedance** (`observed_rank`) — Rank 1 of N=84 Canadian insured claims, 2020-2024, so the observed exceedance within the sample is 1/84 (~1.2% of claims). Within-sample and on a thin cell: 84 claims is a small denominator, the data is censored by policy limits, and the record already notes that larger Canadian losses (e.g. Desjardins) are invisible to it. The true rate above USD 15M is higher than 1/84.
 
 | Parameter | Value | Status | Measures | Exceedance | Source | Caveat |
@@ -89,6 +107,8 @@ _Germany Industrial Ransomware Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 2 different quantities: `cost_component`, `observed_extremum`.
 
+> **`impact.likely` is a published cost component, not a calibrated mode** — the engine composes it as the mode of a beta-PERT. No value in the declared measurement vocabulary denotes a mode, so no anchor can occupy this slot correctly.
+
 > **`impact.max` bounds nothing** — it carries no exceedance probability (ADR-0008). It says a loss this size happened, not how often a loss is worse. Treat it as the largest loss found, not the largest possible.
 
 | Parameter | Value | Status | Measures | Exceedance | Source | Caveat |
@@ -105,6 +125,10 @@ _France Finance Data Breach Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 2 different quantities: `mean_total_event_cost`, `statutory_penalty_cap`.
 
+> **`impact.min` is a published mean total event cost, not an observed minimum** — it is a central-tendency statistic and the engine composes it as the floor of a beta-PERT. Half the measured population sits below a median, and a great deal of it sits below a mean, so this floor is not a lower bound on loss.
+
+> **`impact.likely` is a published mean total event cost, not a calibrated mode** — it is a central-tendency statistic and the engine composes it as the mode of a beta-PERT. No source held for this shard publishes a mode, and no value in the declared measurement vocabulary denotes one, so this is stated rather than corrected: the number is what its source measured, and the slot is the engine's, not the source's.
+
 > **58% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
 
 | Parameter | Value | Status | Measures | Exceedance | Source | Caveat |
@@ -120,6 +144,8 @@ _France Finance Data Breach Midmarket_
 _United Kingdom Finance Data Breach Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 3 different quantities: `perceived_cost_self_reported`, `mean_total_event_cost`, `regulatory_penalty_issued`.
+
+> **`impact.likely` is a published mean total event cost, not a calibrated mode** — it is a central-tendency statistic and the engine composes it as the mode of a beta-PERT. No source held for this shard publishes a mode, and no value in the declared measurement vocabulary denotes one, so this is stated rather than corrected: the number is what its source measured, and the slot is the engine's, not the source's.
 
 > **`impact.max` bounds nothing** — it carries no exceedance probability (ADR-0008). It says a loss this size happened, not how often a loss is worse. Treat it as the largest loss found, not the largest possible.
 
@@ -139,6 +165,8 @@ _Japan Manufacturing Ransomware Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 2 different quantities: `cost_component`, `observed_extremum`.
 
+> **`impact.likely` is a published cost component, not a calibrated mode** — the engine composes it as the mode of a beta-PERT. No value in the declared measurement vocabulary denotes a mode, so no anchor can occupy this slot correctly.
+
 > **`impact.max` bounds nothing** — it carries no exceedance probability (ADR-0008). It says a loss this size happened, not how often a loss is worse. Treat it as the largest loss found, not the largest possible.
 
 | Parameter | Value | Status | Measures | Exceedance | Source | Caveat |
@@ -156,6 +184,10 @@ _Singapore Finance Business Email Compromise Midmarket_
 > **`frequency` is a mixed range** — its anchors measure 2 different quantities: `reported_case_rate`, `org_prevalence_incident`.
 
 > **`impact` is a mixed range** — its anchors measure 3 different quantities: `median_total_event_cost`, `mean_total_event_cost`, `single_documented_event_loss`.
+
+> **`impact.min` is a published median total event cost, not an observed minimum** — it is a central-tendency statistic and the engine composes it as the floor of a beta-PERT. Half the measured population sits below a median, and a great deal of it sits below a mean, so this floor is not a lower bound on loss.
+
+> **`impact.likely` is a published mean total event cost, not a calibrated mode** — it is a central-tendency statistic and the engine composes it as the mode of a beta-PERT. No source held for this shard publishes a mode, and no value in the declared measurement vocabulary denotes one, so this is stated rather than corrected: the number is what its source measured, and the slot is the engine's, not the source's.
 
 > **92% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
 
@@ -177,6 +209,10 @@ _United States Finance Business Email Compromise Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 3 different quantities: `median_total_event_cost`, `mean_total_event_cost`, `single_documented_event_loss`.
 
+> **`impact.min` is a published median total event cost, not an observed minimum** — it is a central-tendency statistic and the engine composes it as the floor of a beta-PERT. Half the measured population sits below a median, and a great deal of it sits below a mean, so this floor is not a lower bound on loss.
+
+> **`impact.likely` is a published mean total event cost, not a calibrated mode** — it is a central-tendency statistic and the engine composes it as the mode of a beta-PERT. No source held for this shard publishes a mode, and no value in the declared measurement vocabulary denotes one, so this is stated rather than corrected: the number is what its source measured, and the slot is the engine's, not the source's.
+
 > **92% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
 
 > **`impact.max` bounds nothing** — it carries no exceedance probability (ADR-0008). It says a loss this size happened, not how often a loss is worse. Treat it as the largest loss found, not the largest possible.
@@ -194,6 +230,8 @@ _United States Finance Business Email Compromise Midmarket_
 _United States Finance Data Breach Midmarket_
 
 > **`impact` is a mixed range** — its anchors measure 3 different quantities: `cost_component`, `mean_total_event_cost`, `observed_extremum`.
+
+> **`impact.likely` is a published mean total event cost, not a calibrated mode** — it is a central-tendency statistic and the engine composes it as the mode of a beta-PERT. No source held for this shard publishes a mode, and no value in the declared measurement vocabulary denotes one, so this is stated rather than corrected: the number is what its source measured, and the slot is the engine's, not the source's.
 
 > **89% of this shard's modeled loss comes from `impact.max` alone** — the distribution's mean is a weighted blend of the three impact anchors and the maximum carries most of that weight. Read it with the exceedance line below.
 

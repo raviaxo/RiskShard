@@ -429,6 +429,13 @@
          'maximum\'s <span class="lbl">exceedance</span> line below: a figure mostly driven by '+
          'an anchor that admits no exceedance probability is a figure resting on one observation.'+
          '</div>'):'')+
+      /* The anchor-slot declaration: a beta-PERT needs a floor, a mode and a ceiling,
+         and what occupies each slot is not always that thing. Stated on the item's
+         face for the same reason as the mixed-range note below it. */
+      (s.slots||[]).map(function(d){
+        return '<div class="mixnote"><b>'+esc(d.headline.replace(/`/g,''))+'</b> — '+
+          esc(d.detail)+'</div>';
+      }).join('')+
       /* ADR-0007: a mixed range composes anchors that measure different quantities.
          Stated on the item's face, above its own table — not left to a footnote. */
       (s.coherence||[]).filter(function(f){return f.status==='mixed';}).map(function(f){

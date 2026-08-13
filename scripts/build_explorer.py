@@ -32,6 +32,7 @@ from engine.exceedance import module_exceedance  # noqa: E402
 from engine.tail_sensitivity import LEVERAGE_CONCERN, max_leverage  # noqa: E402
 from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.risk_modules import find_risk_module  # noqa: E402
+from engine.slot_roles import slot_declarations  # noqa: E402
 from engine.web_console import WebConsoleApp  # noqa: E402
 
 TEMPLATE = Path(__file__).resolve().parent / "explorer_template.html"
@@ -161,6 +162,13 @@ def build_data(root):
             "coherence": [
                 {"family": f["family"], "status": f["status"], "bases": f["bases"]}
                 for f in families
+            ],
+            # The anchor-slot declaration: what statistical role each anchor really
+            # plays versus the role its slot requires. Derived, never hand-written.
+            "slots": [
+                {"parameter": d["parameter"], "kind": d["kind"],
+                 "headline": d["headline"], "detail": d["detail"]}
+                for d in slot_declarations(module)
             ],
             "title": module.get("title"),
             "country": ctx.get("country"),

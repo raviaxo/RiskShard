@@ -34,13 +34,13 @@ parameters:
       transform: direct
       target_currency: AUD
       round_to: 1000
-      rationale: Australia small-business Scamwatch average loss per loss report as a source-backed lower impact floor.
+      rationale: Australia small-business Scamwatch average loss per loss report as a source-backed lower impact floor. Slot declaration - this is a published mean, not an observed minimum; the engine composes it as the beta-PERT floor.
     likely:
       evidence_id: fbi_ic3_2025_bec_average_loss_per_complaint_usd
       transform: currency_convert
       target_currency: AUD
       round_to: 10000
-      rationale: Source-backed FBI IC3 BEC average adjusted loss per complaint, converted to AUD as the first likely loss anchor.
+      rationale: Source-backed FBI IC3 BEC average adjusted loss per complaint, converted to AUD as the first likely loss anchor. Slot declaration - this is a published mean, not a calibrated mode; the engine composes it as the mode of a beta-PERT. No source consulted publishes a mode for this population.
     max:
       evidence_id: afp_2020_au_bec_documented_single_event_loss_aud
       transform: direct

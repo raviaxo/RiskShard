@@ -235,6 +235,16 @@ def format_portfolio_markdown(portfolio):
     from engine.tail_sensitivity import LEVERAGE_CONCERN, max_leverage
 
     exceedance_by_module = {m["module_id"]: module_exceedance(m) for m in portfolio["modules"]}
+
+    # The anchor-slot declaration: does each anchor's measured quantity play the
+    # statistical role its slot requires? Derived from the same cards.
+    from engine.slot_roles import slot_declarations
+
+    slots_by_module = {m["module_id"]: slot_declarations(m) for m in portfolio["modules"]}
+    all_slots = [d for ds in slots_by_module.values() for d in ds]
+    slot_mode = [d for d in all_slots if d["kind"] == "mode_slot"]
+    slot_mode_ct = [d for d in slot_mode if d["central_tendency"]]
+    slot_floor = [d for d in all_slots if d["kind"] == "floor_slot"]
     # Commitment 2: the maximum's share of the modeled mean, from the same anchors the
     # cards already carry — no scenario read and no simulation needed here.
     leverage_by_module = {
@@ -280,6 +290,16 @@ def format_portfolio_markdown(portfolio):
         "*the largest loss we found*, not *the largest loss that can happen*, unless its row "
         "says otherwise — and the maximum is the anchor a simulated mean is most sensitive to.",
         "",
+        f"**Anchor slot roles:** the engine composes each range as a beta-PERT, which needs a "
+        f"floor, a **mode** and a ceiling. None of the {len(slot_mode)} `impact.likely` anchors "
+        f"is a calibrated mode — no value in the declared measurement vocabulary denotes one — "
+        f"and {len(slot_mode_ct)} of them are a published mean or median, a central-tendency "
+        f"statistic standing in the mode slot. A further {len(slot_floor)} use a central "
+        "tendency as the floor, which is not a lower bound on loss. This is declared and not "
+        "corrected: no source consulted publishes a mode, and inventing one to fill the slot "
+        "would be manufacturing data. It is a statement about the model's internal consistency "
+        "and it implies nothing about whether the output is high or low.",
+        "",
     ]
     for m in portfolio["modules"]:
         lines.append(f"## {m['module_id']}")
@@ -295,6 +315,9 @@ def format_portfolio_markdown(portfolio):
                     f"{', '.join('`' + b + '`' for b in family['bases'])}."
                 )
                 lines.append("")
+        for d in slots_by_module.get(m["module_id"], []):
+            lines.append(f"> **{d['headline']}** — {d['detail']}")
+            lines.append("")
         # ADR-0008 commitment 2: analytic, so it costs no simulation to state here.
         leverage = leverage_by_module.get(m["module_id"])
         if leverage is not None and leverage >= LEVERAGE_CONCERN:

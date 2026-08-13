@@ -41,7 +41,7 @@ parameters:
       transform: direct
       target_currency: USD
       round_to: 1000
-      rationale: US financial-services SME five-year average incident cost - matched on country, industry and size.
+      rationale: US financial-services SME five-year average incident cost - matched on country, industry and size. Slot declaration - this is a published mean, not a calibrated mode; the engine composes it as the mode of a beta-PERT. No source consulted publishes a mode for this population.
     max:
       evidence_id: us_finance_breach_impact_max_netdiligence_fs_sme_observed_usd
       transform: direct
