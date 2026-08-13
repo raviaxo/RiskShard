@@ -44,10 +44,17 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
    John Flack's, from someone who has never spoken to him — recorded in
    [ADR-0010](../adr/0010-where-riskshard-stops.md).
 
-   **Owner has replied to say he will review the source; the field-list message is drafted and
-   deliberately held** — entity, date, figure, currency, *what the figure measures*, source URL,
-   gross or net of recovery. The date-field observation stays the sequenced second
-   message, never a gotcha. Reply posture and both message variants are in the draft file.
+   **✅ CLOSED 2026-08-13 — he handed over the whole dataset and we did the work.** Asked for ten
+   of his entries; he replied with the public Sheet for all of them. All 37 were run through the
+   loss-record fields and delivered back as a published exhibit plus a CSV. The date-field
+   observation went out inside that, measured rather than held.
+
+   **What the measurement found is bigger than the outreach:
+   [`destroyed_by_breach_extraction.md`](destroyed_by_breach_extraction.md).** 0 of 37 entries
+   carry a figure that is the cost of the breach to the company; 18 of 37 breach dates are a month
+   or year coerced into an exact day; 12 of 37 cite no source. **It is a mortality register, not a
+   loss registry** — which withdraws the denominator premise recorded further down this file.
+   No further action owed; awaiting his response.
 
    **On `cybersecuritycasestudies.com`:** he flagged the automation problem himself, so under
    our own rules it is a candidate to verify figure-by-figure, **not** a source to admit. It
@@ -94,23 +101,32 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
 
 ## Restart point
 
-**Session closed 2026-08-11. Tree clean, `main` = `origin/main`, 0 open PRs, 271 tests, every
-gate green including the strength ledger (fingerprint `613292b257a4`).** This was an **outreach
-and bookkeeping session — no product code changed and the next objective is untouched.** Two owner
-items closed: the Sanabria message was sent on its due date, and the John Flack reply was found to
-have been sent on 2026-08-08 and left standing in this list as if it were still owed. That second
-one is the lesson: **an item that goes out gets struck the same day, or the queue starts lying.**
+**Session closed 2026-08-13. Tree clean, 271 tests, all four gates green, fingerprint
+`613292b257a4` unchanged.** No product code changed: this session answered both outstanding
+conversations, recorded the decision they produced, and corrected two published claims against our
+own data.
 
-**THE NEXT OBJECTIVE IS UNCHANGED — correct the anchor-slot assignment** (detail below). It needs
-no external input and holds under any thesis.
+**What is settled.** [ADR-0010](../adr/0010-where-riskshard-stops.md) — **the governed evidence
+object is the product; the simulation is a reference rendering and comes off the front door; the
+"Metasploit for risk" framing is retired.** The engine is demoted, not deleted, because it is the
+mechanism that finds our own defects. **The front-door repositioning is no longer gated on
+anything external.** Both questions with John Flack are resolved: the parameter-spec one answered,
+the 5%-or-40% one closed by refusal.
 
-**UPDATE 2026-08-11 (same day, later session).** Both replies landed. John Flack answered the
-parameter-spec question and argued for stopping before quantification; Adrian Sanabria replied
-warmly and confirmed the supply-side problem from inside one of these datasets.
-[ADR-0010](../adr/0010-where-riskshard-stops.md) records it: **the evidence object is the product,
-the simulation is a reference rendering and comes off the front door, and the Metasploit framing
-is retired.** The front-door repositioning is **no longer gated** — it is the objective after this
-one. Nothing external is outstanding except one question put back to John.
+**THE NEXT OBJECTIVE IS STILL — correct the anchor-slot assignment** (detail below), and it is now
+fully scoped: [`anchor_slot_inventory.md`](anchor_slot_inventory.md) has all 11 shards in four
+repair classes. **Start there, not from the raw calibrations.** Two things it settled:
+
+- **The count was wrong: 8 of 11, not the published 7.** The defect is one shard worse than we
+  said. Corrected in ADR-0009, ADR-0010 and this file.
+- **The cheap repair is dead.** No source we already hold offers a mode. "Declare, don't invent"
+  is the only option the data supports — say `likely` is a published central-tendency statistic and
+  not a calibrated mode, and that the engine composes it as one. **This fix should move no
+  published number**, which is the argument for doing it.
+
+Optional and cheap before starting: one look each at NetDiligence (publishes median claim severity)
+and Verizon DBIR (publishes BEC loss percentiles) to see whether either yields a genuine mode. The
+honest expected outcome for IBM is a documented negative.
 
 *Prior close, kept because it is what the objective rests on:* **2026-08-08** — two releases
 shipped, then the project's scope and thesis were both written down for the first time, and one of
@@ -250,12 +266,33 @@ revenue band, DBIR breaks down by asset — or it does not ship. Scout first; th
 documented negative.
 
 Behind both: **ADR-0008 commitment 3 — base rates, ADR-0005 revisited.** This one needs
-Ser, not code: it is an outreach move. A documented loss-event registry is precisely an exceedance
+Ser, not code: it is an outreach move. ~~A documented loss-event registry is precisely an exceedance
 denominator, which is the thing 7 of our 11 maxima lack, and Adrian Sanabria has both the dataset
 (destroyedbybreach.com, 35 organisations, 2002–2026) and the open question ("should there be a
-badly-hurt-by-a-breach list?"). ADR-0005 was Deferred for want of a second maintainer; that is
+badly-hurt-by-a-breach list?").~~ ADR-0005 was Deferred for want of a second maintainer; that is
 exactly what has appeared. See [`destroyed_by_breach_scout.md`](destroyed_by_breach_scout.md) for
-the recommended approach.
+the recommended approach, and
+[`destroyed_by_breach_extraction.md`](destroyed_by_breach_extraction.md) for what the dataset
+actually contains.
+
+⚠️ **THE DENOMINATOR CLAIM IS WITHDRAWN — measured 2026-08-12.** Adrian Sanabria shared the full
+dataset (public Sheet export, 37 entries) and every entry was run through a loss-record schema.
+**0 of 37 carry a figure that is the cost of the breach to the company.** Four entries contain a
+currency amount and all four measure something else: a debt owed to a creditor, a court settlement,
+a ransom that was *refused*, and a bribe paid *by the attackers*. There is no figure column at all —
+the four amounts sit in free-text prose.
+
+So the scout's premise was right in general and wrong about this dataset in particular. **This is a
+mortality register, not a loss registry.** It answers *which organisations died after a breach* —
+P(death | breach), a numerator still lacking its own denominator — and not *how often a loss of size
+X is exceeded*, which is what our seven undeclared maxima need. **The two are different statistics
+and conflating them is precisely the error class this repo exists to catch.** Recording it because
+we asserted the conflation to him in writing before measuring it.
+
+What survives, and it is not nothing: the registry is rare, he maintains it openly, and he handed
+over the whole thing on first contact. A loss-carrying registry would still be the denominator —
+it just does not exist yet, here or anywhere we have found. Adding figures to his is the offer
+already on the table.
 
 **Also now available and worth using:** the tail-sensitivity table is the strongest artifact the
 repo has for the "so what?" question, because it is checkable, uncomfortable, and about our own
@@ -1426,3 +1463,36 @@ governance/regulatory loss).
   below said so. Ser caught it. An item that goes out gets struck the same day; a queue that
   carries closed work is worse than no queue, because it is trusted. **Ser's call on the
   follow-up: leave it — no chase, awaiting his response.**
+
+- 2026-08-11/13 — **Both outstanding conversations answered, and two published claims corrected
+  against our own data.** John Flack answered the parameter-spec question (2026-08-09) and argued
+  the project should stop before quantification; the owner agreed publicly and
+  [ADR-0010](../adr/0010-where-riskshard-stops.md) records it — **the governed evidence object is
+  the product, the simulation is a reference rendering and comes off the front door, the
+  "Metasploit for risk" framing is retired.** The engine is demoted, not deleted, because it is
+  what finds our own defects. His field list became the label spec and we are audited against it:
+  three carried, one carried wrongly, two not carried at all. The front-door repositioning is
+  **ungated**; the 5%-or-40% question is **closed by refusal**, not outstanding.
+
+  **Correction 1 — the mode-slot count.** Scoping the anchor-slot objective meant resolving all 90
+  calibration anchors to their `measurement_basis` mechanically instead of by eye. Two of the three
+  published counts reproduced; the third did not. **It was published as 7 of 11 and it is 8 of 11**
+  (`gb_data_breach` and `us_data_breach` carry the mean at `likely` only, which is how six "both"
+  plus one reads as seven). The defect is one shard worse than published. Inventory and four repair
+  classes in [`anchor_slot_inventory.md`](anchor_slot_inventory.md), which also kills the cheap
+  repair: **no source we hold offers a mode**, so "declare, don't invent" is now the only option the
+  data supports. **Ser's call: no correction to John — the number is right in the repo and the
+  point he was making is unchanged.**
+
+  **Correction 2 — the denominator premise.** Adrian Sanabria replied, then handed over the entire
+  Destroyed by Breach dataset on first contact. All 37 entries were run through the loss-record
+  fields and delivered back to him as a published exhibit plus a CSV. **0 of 37 carry a figure that
+  is the cost of the breach to the company**; the four amounts present are a creditor's debt, a
+  court settlement, a ransom that was refused, and a bribe paid by the attackers. Also: 18 of 37
+  breach dates are a month or year coerced into an exact day, and 12 of 37 cite no source. **It is
+  a mortality register, not a loss registry** — so the claim that it is our exceedance denominator
+  is withdrawn, having been asserted to him in writing before it was measured. Measurement in
+  [`destroyed_by_breach_extraction.md`](destroyed_by_breach_extraction.md).
+
+  No product code changed in any of it. 271 tests, all four gates green, fingerprint `613292b257a4`
+  unchanged throughout.
