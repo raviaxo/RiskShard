@@ -106,7 +106,7 @@ travels.
 | when | ⚠️ present in the source record, not a declared field |
 | how it was measured | ✅ `measurement_basis` ([ADR-0007](0007-construct-coherence.md)) |
 | **what statistical role it really has** | ❌ **carried wrongly** — 8 of 11 shards pass a published mean into the mode slot; 7 of 11 use a central-tendency figure as the floor |
-| **how far it is from my context** | ❌ **not carried at all** |
+| **how far it is from my context** | ⚠️ **partially carried, wrongly framed** — four of five facets exist as fields (`applicability`, `population_match`, `measurement_basis`); fit is presented as a property of the record rather than as a computation against a target, and control environment is absent. Specified in [ADR-0011](0011-fit-is-a-facet-set.md) *(was ❌ not carried at all, corrected 2026-08-13)* |
 | what it can't end up supporting | ⚠️ declared for the tail only ([ADR-0008](0008-the-governed-tail.md)) |
 
 This is a *labelling* specification, not a new measurement axis. It ratifies the three declared
@@ -153,8 +153,15 @@ axes and names what is missing beside them.
 
 ## Open questions
 
-1. **Where does "how far it is from my context" live?** On the evidence object, or is it the
+1. ~~**Where does "how far it is from my context" live?** On the evidence object, or is it the
    consumer's computation and our duty is only to give them enough to compute it? Put back to
-   John Flack on 2026-08-11; unanswered.
+   John Flack on 2026-08-11; unanswered.~~
+   **✅ ANSWERED 2026-08-12 — closed by [ADR-0011](0011-fit-is-a-facet-set.md).** Both: the object
+   must carry enough structured context for distance to be computed, but the distance itself
+   exists only relative to a target, so it is computed and never stored. Exposed as a **facet
+   set** — geography, sector, org size, control environment, measurement basis — never a composite
+   score, so the analyst decides which mismatches bite. He also warned that calling the artefact a
+   *"parameter"* sneaks portability back in after we had just retired it; ADR-0011 accepts that
+   too.
 2. **Does "what it can't end up supporting" generalise beyond the tail?** ADR-0008 declares it
    for maxima. Whether every parameter owes a statement of what it cannot bear is undecided.
