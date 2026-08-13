@@ -10,3 +10,10 @@ maintained. They are kept so a claim made from them can be re-run and checked.
   re-checks the hits at sentence level. The difference between them (6 apparent hits vs 4
   real ones) is why the ADR requires verification-assisted extraction rather than
   automatic.
+- `edgar_corpus_census.py` — the three-lane census behind
+  [`../edgar_corpus_census.md`](../edgar_corpus_census.md), which sizes the ADR-0005
+  registry decision. Supersedes `edgar_sample.py` as the discovery method: matching
+  periodic reports directly on cost phrases reaches roughly three times as many issuers as
+  following Item 1.05 filings, because the cost lands quarters after the incident and often
+  with no 8-K at all. Run `discover` → `quantify` → `report`; results cache under
+  `$EDGAR_CACHE` (default: a temp directory), so re-runs are cheap.
