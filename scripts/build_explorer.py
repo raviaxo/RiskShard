@@ -167,6 +167,7 @@ def build_data(root):
             # plays versus the role its slot requires. Derived, never hand-written.
             "slots": [
                 {"parameter": d["parameter"], "kind": d["kind"],
+                 "central_tendency": d["central_tendency"],
                  "headline": d["headline"], "detail": d["detail"]}
                 for d in slot_declarations(module)
             ],
@@ -199,6 +200,14 @@ def build_data(root):
     totals["families_coherent"] = coherent
     totals["families_mixed"] = mixed
     totals["families_total"] = coherent + mixed
+    # The anchor-slot declaration, as a cover fact beside coherence and exceedance.
+    all_slots = [d for s in shards for d in s["slots"]]
+    totals["slots_mode"] = sum(1 for d in all_slots if d["kind"] == "mode_slot")
+    totals["slots_mode_central"] = sum(
+        1 for s in shards
+        for d in s["slots"] if d["kind"] == "mode_slot" and d["central_tendency"]
+    )
+    totals["slots_floor"] = sum(1 for d in all_slots if d["kind"] == "floor_slot")
     totals["maxima"] = maxima_total
     totals["maxima_quantified"] = maxima_quantified
     totals["maxima_none_known"] = maxima_none_known

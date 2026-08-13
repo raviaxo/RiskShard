@@ -1,40 +1,61 @@
 # 🔷 RiskShard
 
-**The open, evidence-governed computation layer for cyber risk quantification.**
+**A governed commons of public cyber-loss evidence, labelled well enough to tell you
+when not to use it.**
 
-### ▶ [Try it live in your browser](https://raviaxo.github.io/RiskShard/) — no install
+### ▶ [Read the evidence live in your browser](https://raviaxo.github.io/RiskShard/) — no install
 
-Pick a risk shard, see its modeled dollar loss range, then open any input to read the
-exact public source it came from and the caveat that bounds it — and dispute it in one
-click. Prefer the terminal? [Jump to the one-command demo](#try-it-in-one-command).
-
-RiskShard turns machine-readable "risk shards" into financial loss simulations, so
-security, GRC, and risk teams can move from "high / medium / low" ratings to
-defensible, dollar-based decisions — with every number traceable to a reviewed
-public source. Think of it as a Metasploit-style module library for risk
-quantification: pick a shard, see how much to trust it, run it, improve it.
+Open any number and read the exact public source it came from, what quantity it
+actually measures, whose population it was measured on, what it cannot support — and
+dispute it in one click. Prefer the terminal? [Jump to the one-command demo](#try-it-in-one-command).
 
 ## What RiskShard is — and isn't
 
-**It is** an open way to turn a cyber risk scenario into a defensible dollar
-range — every input either traceable to a reviewed public source or honestly
-labeled as an estimate, with the limits shown right next to the number.
+**It is** a governed evidence object: a public figure carrying the label a
+practitioner needs to decide whether it belongs in *their* model — what was observed,
+who it was observed on, when, how it was measured, what statistical role it really
+has, and what it can't end up supporting ([ADR-0010](docs/adr/0010-where-riskshard-stops.md)).
 
-**It isn't** a finished product, a black-box score, or a human-certified
-benchmark. It's a working practitioner beta: a shard that clears the automated
-gate is a *review candidate*, never "benchmark-grade" — that stays a recorded
-human decision. Known gaps are written down in
-[docs/internal/NEXT_STEPS.md](docs/internal/NEXT_STEPS.md), not buried.
+**It isn't** portable, and that is not a caveat — it is the finding. An org's controls,
+threat environment, dependencies and time horizon are part of the thing being estimated,
+so nothing travels intact. What we can do is label an observation well enough that you
+can judge whether it travels to you. Fit is exposed as separate **facets** — geography,
+sector, size, measurement basis — never a single score, because only you know which
+mismatch matters for your scenario ([ADR-0011](docs/adr/0011-fit-is-a-facet-set.md)).
+
+**The simulation is a reference rendering, not the product.** RiskShard stops at
+governed evidence with its limits declared; quantification is your step. The engine is
+kept because it is the mechanism that finds our own defects — every finding below exists
+because something composes these anchors into a distribution and the result could be
+inspected. It is never offered as the thing being sold.
+
+**And it isn't finished.** A shard that clears the automated gate is a *review
+candidate*, never "benchmark-grade" — that stays a recorded human decision.
+
+## What we found in our own numbers
+
+The point of governing evidence is that it lets you measure your own defects. These are
+ours, each derived mechanically and re-runnable, and each published before anyone asked:
+
+- **None of the 11 `impact.likely` anchors is a calibrated mode**, though the sampler
+  treats it as one — and no value in the 18-entry measurement vocabulary denotes a mode,
+  so the schema could not express one. **8** carry a published mean or median instead;
+  **7** use a central tendency as a floor, which is not a lower bound on loss.
+- **4 of 22 parameter families are coherent.** The other 18 compose anchors that measure
+  different quantities, each validly sourced, none a reading of the same thing.
+- **7 of 11 impact maxima carry no exceedance probability.** They say a loss this size
+  happened, not how often a loss is worse.
+- **Two published claims retracted** after measurement contradicted them, including one
+  asserted in writing to a dataset maintainer before it was checked.
+
+None of this says the sources are wrong, and none of it says the outputs are too high or
+too low — a shard describes a *cell*, not a company, so "too high" has no referent.
 
 ## The question RiskShard answers
 
-> Given my geography, industry, company size, and threat concern: which risk
-> scenarios apply, how much should I trust them, what loss range do they imply,
-> and how do I improve the data?
-
-You select a Risk Shard (say, a UK financial-services data breach), inspect which
-parameters are source-backed versus assumptions, run a Monte Carlo loss
-simulation, get a board-ready summary, and see the next evidence gap to close.
+> Given my geography, industry, company size, and threat concern: what public evidence
+> exists, what does each figure actually measure, how far is it from my context, and
+> what can it not be made to support?
 
 **One decision, made out loud:**
 [How much ransomware cover should an Australian mid-market financial firm buy?](docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md)
@@ -189,7 +210,7 @@ RiskShard aims to become a shared computation layer for cyber risk:
 - Per-scenario RNG isolation and seed metadata for seeded JSON exports
 - Interactive practitioner console for search, calibration, simulation, reports, and validation
 - Local `doctor` command for environment, source, evidence, extraction, scenario, readiness, package, data-pack, and test-readiness checks
-- Risk module catalog for Metasploit-style `modules`, `info`, `use`, `packs`, `propose`, `calibrate`, and `run` workflows
+- Risk module catalog with `modules`, `info`, `use`, `packs`, `propose`, `calibrate`, and `run` workflows
 - Evidence-pack registry that shows source gather dates, evidence ingestion dates, trust tier, confidence, renewal status, and remaining assumptions per module
 - Country expansion priority map covering 25 countries so regional contributors can pick high-value evidence packs
 - Reviewed source-to-extraction-to-evidence-to-calibration workflow

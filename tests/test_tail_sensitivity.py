@@ -144,7 +144,9 @@ class PublishedSurfaceTests(unittest.TestCase):
 
     def test_explorer_template_renders_the_leverage_note_and_the_paragraph(self):
         template = (ROOT / "scripts" / "explorer_template.html").read_text(encoding="utf-8")
-        self.assertIn("comes from '+\n         'the maximum alone", template)
+        # Indentation moved when the note was nested inside the reference-rendering
+        # block: it is a caveat on the loss figure, so it travels with it.
+        self.assertIn("comes from '+\n           'the maximum alone", template)
         self.assertIn("How much of each figure comes from that maximum", template)
 
 
