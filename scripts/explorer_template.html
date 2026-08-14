@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="RiskShard — modeled annual cyber loss by jurisdiction, industry and threat. Every input parameter cites a named public source and the caveat that bounds it; any line can be disputed.">
+<meta name="description" content="RiskShard — public cyber-loss evidence, labelled with what each figure measures, whose population it came from, and what it cannot support. Every line cites a named public source and can be disputed.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Crect%20x=%228%22%20y=%228%22%20width=%2284%22%20height=%2284%22%20fill=%22%23111%22/%3E%3Cpath%20d=%22M50%2020%20L50%2080%20L26%2050%20Z%22%20fill=%22%23fff%22/%3E%3C/svg%3E">
-<title>RiskShard — modeled annual cyber loss, source-backed</title>
+<title>RiskShard — governed public cyber-loss evidence</title>
 <link rel="canonical" href="__RS_SITE__">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RiskShard">
 <meta property="og:url" content="__RS_SITE__">
 <meta property="og:title" content="RiskShard — every number traces to a public source">
-<meta property="og:description" content="Modeled annual cyber loss by jurisdiction, industry and threat. Every input cites a named public source and its caveat — and can be disputed in one click.">
+<meta property="og:description" content="Public cyber-loss evidence with its limits declared: what each figure measures, who it was measured on, and what it cannot support. Every line is disputable in one click.">
 <meta property="og:image" content="__RS_SITE__social-card.png">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
 <meta property="og:image:alt" content="RiskShard — every number traces to a public source. 11 risk shards, 66/66 source-backed, 8 countries.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="RiskShard — every number traces to a public source">
-<meta name="twitter:description" content="Modeled annual cyber loss where every input is traceable to a named public source — and disputable in one click.">
+<meta name="twitter:description" content="Public cyber-loss evidence where every figure states what it measures and what it cannot support — and is disputable in one click.">
 <meta name="twitter:image" content="__RS_SITE__social-card.png">
 <style>
   @font-face{font-family:"Plex Mono";src:url("__RS_ASSETS__fonts/plex-mono-400.woff2") format("woff2");font-weight:400;font-display:swap}
@@ -97,11 +97,18 @@
   .itemhead .mid{font-size:12px;color:var(--grey)}
   .grade{font-size:11.5px;color:var(--grey);text-transform:uppercase;letter-spacing:.02em}
   .grade b{color:var(--flag);font-weight:600}
-  .lossline{margin:14px 0 4px}
-  .lossline .avg{font-size:clamp(20px,3vw,26px);font-weight:700;letter-spacing:.01em}
-  .lossline .pcts{margin-top:4px;font-size:12.5px;color:var(--grey)}
+  /* The simulation, set as a subordinate exhibit rather than the item's headline:
+     ruled off, smaller than the evidence table it follows, and labelled. It used to
+     lead the item, which is the presentation ADR-0010 came off the front door. */
+  .rendering{margin:14px 0 2px;padding:9px 0 0;border-top:1px solid var(--hair)}
+  .renderhead{font-size:11px;color:var(--faint);text-transform:uppercase;
+    letter-spacing:.06em;margin-bottom:5px}
+  .renderfoot{font-size:11.5px;color:var(--grey);margin:6px 0 10px;max-width:80ch}
+  .lossline{margin:2px 0 4px}
+  .lossline .avg{font-size:clamp(15px,1.8vw,18px);font-weight:600;letter-spacing:.01em}
+  .lossline .pcts{margin-top:4px;font-size:12px;color:var(--grey)}
   .lossline .pcts b{color:var(--ink);font-weight:600}
-  .methline{font-size:11.5px;color:var(--faint);margin:2px 0 12px}
+  .methline{font-size:11.5px;color:var(--faint);margin:2px 0 0}
   /* A mixed range is a qualification on the figures above it: set as a marginal
      note against the rule, not as a coloured warning box. */
   .mixnote{font-size:11.5px;color:var(--grey);margin:0 0 10px;padding:5px 0 5px 10px;
@@ -141,18 +148,23 @@
   </div>
 
   <div class="titleblock">
-    <h1>Modeled annual cyber loss<br>by jurisdiction, industry and threat</h1>
-    <div class="sub">An exhibit of source-backed risk parameters. Every figure below traces to a named public source and the caveat that bounds it.</div>
+    <h1>Public cyber-loss evidence<br>and what each figure can and cannot support</h1>
+    <div class="sub">Every figure traces to a named public source, states the quantity it actually measures, names the population it was measured on, and declares what it cannot bear. The loss simulation further down each item is a reference rendering of that evidence — not the product.</div>
   </div>
 
   <table class="facts" id="facts"></table>
 
   <div class="preamble">
     <p>This page is generated from the open repository — nothing on it is hand-written. Each
-    item models one jurisdiction / industry / threat cell. The loss range is a seeded Monte
-    Carlo run over six input parameters; each parameter states its source, the exact line
-    cited, and its limitation. Any line can be <a id="disputelink" href="#">disputed as a
-    GitHub issue</a>.</p>
+    item covers one jurisdiction / industry / threat cell and lists the public evidence found
+    for it: every parameter states its source, the exact line cited, the quantity it measures,
+    the population it was measured on, and its limitation. Any line can be
+    <a id="disputelink" href="#">disputed as a GitHub issue</a>.</p>
+    <p><b>The evidence is the exhibit; the simulation at the foot of each item is a reference
+    rendering of it.</b> It is shown because composing these anchors is what exposes their
+    defects — every declaration on this page exists because there was a distribution to
+    inspect — and not because the output is the thing being offered. Whether this evidence
+    belongs in your model, and in what shape, is your decision to make.</p>
     <p>Read the maturity honestly: these are governed-starter and review-candidate shards,
     not human-approved benchmarks. Loss tails (P95/P99) are directional, not precise.</p>
   </div>
@@ -296,6 +308,10 @@
     ['Tail sensitivity',(t.shards_tail_driven!=null)?
       (t.shards_tail_driven+' of '+DATA.shards.length+
        ' items take most of their modeled loss from the maximum alone'):'—'],
+    ['Anchor slot roles',(t.slots_mode_central!=null)?
+      ('0 of '+t.slots_mode+' likely anchors is a calibrated mode — '+t.slots_mode_central+
+       ' are a published mean or median; '+t.slots_floor+
+       ' items use a central tendency as the floor'):'—'],
     ['Method','Monte Carlo · 10,000 trials · seed 42'],
     ['Data release',DATA.release?DATA.release:'(unreleased working state)'],
     ['Repository','<a href="'+esc(REPO)+'">'+esc(REPO.replace('https://',''))+'</a>']
@@ -341,7 +357,7 @@
 
   /* Index of items */
   var head='<thead><tr><th>Item</th><th>Jurisdiction</th><th>Industry</th><th>Threat</th>'+
-    '<th class="num">Modeled avg / yr</th><th class="num">P95</th><th>Grade</th></tr></thead>';
+    '<th class="num">Rendered avg / yr</th><th class="num">P95</th><th>Grade</th></tr></thead>';
   var rows=DATA.shards.map(function(s,i){
     return '<tr><td class="item"><a href="#'+esc(s.id)+'">'+pad2(i+1)+'</a></td>'+
       '<td>'+esc(cname(s.country))+'</td>'+
@@ -415,20 +431,6 @@
       '<div class="itemhead"><h3>Item '+pad2(i+1)+' — '+esc(cname(s.country))+' · '+esc(fmt(s.industry))+' · '+esc(fmt(s.threat))+'</h3>'+
         '<span class="mid">'+esc(s.id)+'</span></div>'+
       '<div class="grade">'+esc(fmt(s.status))+' — <b>not benchmark-grade</b></div>'+
-      '<div class="lossline"><div class="avg tnum">'+esc(s.avg||'—')+'</div>'+
-        '<div class="pcts">P95 bad year <b class="tnum">'+esc(s.p95||'—')+'</b> · P99 severe <b class="tnum">'+esc(s.p99||'—')+'</b></div></div>'+
-      '<div class="methline">Modeled avg / yr · see Note 1</div>'+
-      /* ADR-0008 commitment 2: how much of the figure above comes from the maximum.
-         Analytic, not sampled — the beta-PERT mean is a weighted sum of the three
-         anchors, so the maximum's share of it is exact. Placed directly under the
-         loss figure because it is the caveat on that figure. */
-      ((s.leverage!=null && s.leverage>=0.5)?
-        ('<div class="mixnote"><b>'+Math.round(s.leverage*100)+'% of this figure comes from '+
-         'the maximum alone</b> — the modeled average is a weighted blend of the three impact '+
-         'anchors, and this item\'s maximum carries most of that weight. Read it with the '+
-         'maximum\'s <span class="lbl">exceedance</span> line below: a figure mostly driven by '+
-         'an anchor that admits no exceedance probability is a figure resting on one observation.'+
-         '</div>'):'')+
       /* The anchor-slot declaration: a beta-PERT needs a floor, a mode and a ceiling,
          and what occupies each slot is not always that thing. Stated on the item's
          face for the same reason as the mixed-range note below it. */
@@ -447,6 +449,31 @@
       '<div class="tblwrap"><table class="grid params">'+
         '<thead><tr><th>Parameter</th><th class="num">Value</th><th>Source</th><th>Status</th></tr></thead>'+
         '<tbody>'+prows+'</tbody></table></div>'+
+      /* The simulation, deliberately below the evidence it renders and labelled as a
+         rendering. RiskShard stops at governed evidence with its limits declared; what
+         distribution the evidence belongs in is the reader's decision, not ours
+         (ADR-0010). The engine is kept because it is what finds our own defects — the
+         two notes above this line exist only because something composes these anchors. */
+      '<div class="rendering">'+
+        '<div class="renderhead">Reference rendering — not the product</div>'+
+        '<div class="lossline"><div class="avg tnum">'+esc(s.avg||'—')+'</div>'+
+          '<div class="pcts">P95 bad year <b class="tnum">'+esc(s.p95||'—')+'</b> · P99 severe <b class="tnum">'+esc(s.p99||'—')+'</b></div></div>'+
+        '<div class="methline">Modeled avg / yr, seeded beta-PERT over the anchors above · see Note 1</div>'+
+        '<div class="renderfoot">One way of composing this evidence, shown so the anchors can be '+
+          'inspected through it and so the declarations above have something to be true of. '+
+          'Whether these anchors belong in your model, and in what shape, is your call.</div>'+
+        /* ADR-0008 commitment 2: how much of the figure above comes from the maximum.
+           Analytic, not sampled — the beta-PERT mean is a weighted sum of the three
+           anchors, so the maximum's share of it is exact. Stays with the loss figure
+           because it is the caveat on that figure. */
+        ((s.leverage!=null && s.leverage>=0.5)?
+          ('<div class="mixnote"><b>'+Math.round(s.leverage*100)+'% of this figure comes from '+
+           'the maximum alone</b> — the modeled average is a weighted blend of the three impact '+
+           'anchors, and this item\'s maximum carries most of that weight. Read it with the '+
+           'maximum\'s <span class="lbl">exceedance</span> line above: a figure mostly driven by '+
+           'an anchor that admits no exceedance probability is a figure resting on one observation.'+
+           '</div>'):'')+
+      '</div>'+
       '</section>';
   }).join('');
   document.getElementById('items').innerHTML=itemsHTML;
