@@ -110,9 +110,17 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
 
 ## Restart point
 
-**Session closed 2026-08-14 (late 08-13). Tree clean, main == origin/main at `ecf8be2`, no open
-PRs, 291 tests, all four gates green, doctor fully green including the ledger check. Data pack
-`22db117f2bec`, released as `2026.08.13-v0.7.0` and tagged.** Seven PRs (#127–#133) merged.
+**Session closed 2026-08-14. Tree clean, `main` == `origin/main` at `1dfd5dc`, 307 tests, evidence
+and preflight clean. Data pack `fe0d0ffab227`.** Eight PRs merged (#127–#134); **#135 is open** and
+carries the registry.
+
+⚠️ **Two things to know before starting.** The strength ledger reads `needs_review` because the pack
+fingerprint moved when the registry landed (`22db117f2bec` → `fe0d0ffab227`) — that is correct and
+clears at the next release, not a fault. And **#135 is unmerged**, so `main` does not yet contain
+`loss_events/`.
+
+*Prior close, same arc:* **v0.7.0 cut and tagged** at `ecf8be2` with 291 tests and every gate green
+including the ledger — the front door repositioned, the mode slot declared, the findings published.
 
 **⚠️ The whole queue below this line is older than this session and has not been re-verified
 against it. Read this restart point first.**
@@ -131,21 +139,37 @@ carries them is cut:
 - Plus **`docs/FINDINGS.md`** (#131), the **EDGAR census** (#127), and **ADR-0011 + ADR-0012
   accepted** (#128, #132), with ADR-0005 superseded.
 
-**THERE IS NO ACTIVE OBJECTIVE AND NO TOP BLOCKER.** Nothing external is outstanding. Two
-objectives are **authorized but unstarted**, both by ADRs the owner accepted on 2026-08-13 — pick
-one:
+**ACTIVE OBJECTIVE: the registry trial (owner chose it 2026-08-14, "registry first").** The first
+slice is **built** — `loss_events/` holds 36 events with 48 typed amounts, its own schema, its own
+doctor gate, and 16 tests. **Two candidates the census had accepted were rejected on closer
+reading** (SolarWinds' `$15M` is a policy *limit*, not a loss — the same error SIFCO was caught for;
+Coinbase's `$345M` is a multi-event expense *category*), so the census's 38 is **36** here. That is
+the higher registry standard doing its job, and it is recorded rather than quietly reconciled.
+
+**The citation question is answered, and the answer is no — measured, not assumed.**
+`citation_candidates()` tests every shard's maximum against the corpus: **0 of 11 cite an entry and
+0 *could*.** Ten have no country-and-threat match (the corpus is US/GB/IE, the shards are
+AU·CA·DE·FR·GB·JP·SG·US, and there are **no BEC events** in it at all). The eleventh,
+`us_finance_data_breach_midmarket`, has four genuine matches and is still blocked: its maximum
+carries `observed_rank`, and a registry entry carries no exceedance by rule, so swapping would
+trade an exceedance statement for provenance — a regression under ADR-0008.
+
+**So the trial is still running, not failing.** Zero citations means *nothing fits yet*, not
+*nobody bothered*, and only the second is grounds to retire it. That distinction is now computed
+and printed by the doctor every run rather than argued about later.
+
+**What would move it:** a non-US slice, BEC events, or a shard whose maximum declares `none_known`
+and finds a country-and-threat match. Seven maxima declare `none_known` and **none of them is US** —
+which makes expansion beyond the US slice the thing the trial is actually waiting on. That
+expansion is **not authorized** by ADR-0012 and needs its own decision.
+
+The other authorized objective remains **unstarted**:
 
 - **ADR-0011 consequence — make fit target-relative.** `population_match` is computed against *our*
   shard cell and then stored as though it were a property of the record, so a consumer learns how
   it fits our target and almost nothing about theirs. `applicability` is the target-independent
   fact, is required on every record, and is the *less* visible of the two. This is a **surfacing
   and relabelling** job on fields that already exist — no new axis, no new data. Smaller of the two.
-- **ADR-0012 consequence — the bounded registry trial.** Extract the ~33 verified issuers from
-  [`edgar_corpus_census.md`](edgar_corpus_census.md) as governed loss-event records. **Every amount
-  typed** (cost · impact · recovery · delta · settlement · fine), **verification-assisted never
-  automatic** (12 of 50 machine candidates were wrong in six distinct ways), **no exceedance claims
-  drawn from them**, and a **kill criterion at two release cycles**: if no shard cites an entry and
-  no outsider contributes one, retire it. Larger, and the one with a defined way to fail.
 
 *Historical note, kept because the fix rests on it:* the mode-slot count was published as 7 of 11
 and corrected to 8 on 2026-08-12 by resolving every anchor mechanically instead of by eye.
@@ -1573,3 +1597,35 @@ governance/regulatory loss).
 
   Closed with 291 tests, all gates green, doctor fully green **including the ledger check** —
   fingerprint `613292b257a4` → `22db117f2bec`, released and tagged `v0.7.0`.
+
+- 2026-08-14 — **The registry trial built, and its first result is a measured no.** PR #135 (open at
+  close). `loss_events/` holds **36 documented events with 48 typed amounts**, its own schema, its
+  own doctor gate and 16 tests — the first thing in this repo that is new data rather than
+  governance over someone else's aggregate.
+
+  **The typing is not decoration: 12 of 48 amounts are not event costs.** Ten insurance recoveries,
+  a class-action settlement, a year-over-year delta. Tenet and TTEC disclose a recovery and never
+  the gross loss, so a consumer asking for event costs gets nothing from them rather than a recovery
+  standing in for a loss.
+
+  **Two candidates the census accepted were rejected here**, because a registry record is held to a
+  higher standard than a census candidate: SolarWinds' `$15M` is *insurance coverage the company
+  maintains* — a policy limit, the same error SIFCO was caught for — and Coinbase's `$345M` is a
+  multi-event expense category. The census's 38 is **36**.
+
+  **Then the question that mattered: can any shard actually cite one? No — 0 of 11 cite and 0
+  could.** Ten have no country-and-threat match (corpus is US/GB/IE, shards are AU·CA·DE·FR·GB·JP·SG·US,
+  and there are **no BEC events** in it at all). The eleventh, `us_finance_data_breach_midmarket`,
+  matches four events and is still blocked: its maximum carries `observed_rank`, a registry entry
+  carries no exceedance by rule, so swapping would trade an exceedance statement for provenance —
+  a regression under ADR-0008.
+
+  **That distinction is the finding.** Zero citations means *nothing fits yet*, not *nobody
+  bothered*, and only the second is grounds to retire. It is computed by `citation_candidates()` and
+  printed by the doctor every run, so it survives to the review rather than being reconstructed.
+  **What the trial is waiting on is a non-US slice** — seven maxima declare `none_known` and none is
+  US — and that expansion is **not authorized** by ADR-0012.
+
+  Deliberately not done: pointing a shard at an entry to make the metric move. The only real match
+  would have made a published number worse, and manufacturing the trial's own success metric is what
+  the kill criterion exists to prevent.

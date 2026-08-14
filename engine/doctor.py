@@ -34,6 +34,7 @@ def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
         readiness_check(root),
         package_check(root),
         data_pack_check(root),
+        loss_event_check(root),
         ledger_check(root),
         tests_check(root, run_tests=run_tests),
     ]
@@ -41,6 +42,51 @@ def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
         "status": "pass" if all(item["status"] == "pass" for item in checks) else "needs_review",
         "checks": checks,
     }
+
+
+def loss_event_check(root):
+    """ADR-0012: the registry is a bounded trial, so its state is reported every run.
+
+    The two trial numbers are surfaced deliberately. The kill criterion is that if no
+    shard cites an entry and nobody outside contributes one within two release cycles,
+    the registry is retired rather than carried — and a criterion nobody can see is a
+    criterion nobody applies.
+    """
+    from engine.loss_events import (
+        citation_candidates,
+        registry_summary,
+        trial_metrics,
+        validate_loss_events,
+    )
+
+    errors = validate_loss_events(root)
+    summary = registry_summary(root)
+    if not summary["events"]:
+        return {
+            "name": "loss events",
+            "status": "pass",
+            "detail": "registry empty (ADR-0012 trial not started)",
+        }
+    trial = trial_metrics(root)
+    # "0 shards cite an entry" is only a retirement signal if some shard COULD. Report
+    # both, so nobody reads "nothing fits yet" as "nobody bothered".
+    candidates = citation_candidates(root)
+    citable = sum(1 for c in candidates if c["citable"])
+    blocked = sum(1 for c in candidates if c["blocked_by_exceedance_loss"])
+    detail = (
+        f"{summary['events']} events, {summary['amounts']} typed amounts "
+        f"({summary['non_loss_amounts']} are recoveries/settlements/deltas, not event costs); "
+        f"trial: {trial['shards_citing_a_registry_entry']} of {len(candidates)} shards cite an "
+        f"entry, {citable} could"
+        + (f" ({blocked} blocked: swapping would lose an exceedance statement)" if blocked else "")
+    )
+    if errors:
+        return {
+            "name": "loss events",
+            "status": "fail",
+            "detail": f"{len(errors)} error(s): {errors[0]}",
+        }
+    return {"name": "loss events", "status": "pass", "detail": detail}
 
 
 def environment_check(root):
