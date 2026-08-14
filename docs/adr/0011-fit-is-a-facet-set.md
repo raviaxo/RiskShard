@@ -1,8 +1,8 @@
 # ADR-0011 — Fit is a facet set, not a score
 
-- **Status:** Proposed (2026-08-13)
+- **Status:** Accepted (2026-08-13)
 - **Date:** 2026-08-13
-- **Deciders:** repo owner (pending)
+- **Deciders:** repo owner
 - **Prompted by:** John Flack (GRC Engineering Club `#labs_demos`, 2026-08-12), answering the
   question put to him on 2026-08-11 — the last open question on
   [ADR-0010](0010-where-riskshard-stops.md).
