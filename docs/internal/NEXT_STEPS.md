@@ -131,21 +131,27 @@ carries them is cut:
 - Plus **`docs/FINDINGS.md`** (#131), the **EDGAR census** (#127), and **ADR-0011 + ADR-0012
   accepted** (#128, #132), with ADR-0005 superseded.
 
-**THERE IS NO ACTIVE OBJECTIVE AND NO TOP BLOCKER.** Nothing external is outstanding. Two
-objectives are **authorized but unstarted**, both by ADRs the owner accepted on 2026-08-13 — pick
-one:
+**ACTIVE OBJECTIVE: the registry trial (owner chose it 2026-08-14, "registry first").** The first
+slice is **built** — `loss_events/` holds 36 events with 48 typed amounts, its own schema, its own
+doctor gate, and 14 tests. **Two candidates the census had accepted were rejected on closer
+reading** (SolarWinds' `$15M` is a policy *limit*, not a loss — the same error SIFCO was caught for;
+Coinbase's `$345M` is a multi-event expense *category*), so the census's 38 is **36** here. That is
+the higher registry standard doing its job, and it is recorded rather than quietly reconciled.
+
+**What remains on this objective:** no shard cites an entry yet, which is one half of ADR-0012's
+kill criterion. The natural next step is to see whether any of the five hand-researched
+`single_documented_event_loss` maxima — Arup, AFP, Latitude, SPF, Coalition — should instead cite a
+registry entry, and to record the answer either way. **Do not force it:** the corpus is US-listed
+and those anchors are AU/SG/GB, so the honest outcome may be that none of them can, which is itself
+the trial returning a result.
+
+The other authorized objective remains **unstarted**:
 
 - **ADR-0011 consequence — make fit target-relative.** `population_match` is computed against *our*
   shard cell and then stored as though it were a property of the record, so a consumer learns how
   it fits our target and almost nothing about theirs. `applicability` is the target-independent
   fact, is required on every record, and is the *less* visible of the two. This is a **surfacing
   and relabelling** job on fields that already exist — no new axis, no new data. Smaller of the two.
-- **ADR-0012 consequence — the bounded registry trial.** Extract the ~33 verified issuers from
-  [`edgar_corpus_census.md`](edgar_corpus_census.md) as governed loss-event records. **Every amount
-  typed** (cost · impact · recovery · delta · settlement · fine), **verification-assisted never
-  automatic** (12 of 50 machine candidates were wrong in six distinct ways), **no exceedance claims
-  drawn from them**, and a **kill criterion at two release cycles**: if no shard cites an entry and
-  no outsider contributes one, retire it. Larger, and the one with a defined way to fail.
 
 *Historical note, kept because the fix rests on it:* the mode-slot count was published as 7 of 11
 and corrected to 8 on 2026-08-12 by resolving every anchor mechanically instead of by eye.

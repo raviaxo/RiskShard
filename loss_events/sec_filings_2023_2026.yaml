@@ -1,0 +1,1218 @@
+# Loss-event registry — SEC filings, 2023-2026
+#
+# Governed by schemas/loss_event_schema.json (ADR-0012, superseding ADR-0005).
+# Generated from docs/internal/research/loss_event_extraction.py, whose hand-verified
+# table is the verification ADR-0012 requires. Do not hand-edit this file: change the
+# table and regenerate, so the record and its verification never drift apart.
+#
+# These are documented events. They are tail and defensibility evidence only: never
+# aggregate them into a central tendency, and never read an exceedance probability
+# out of them.
+
+events:
+  - id: sec_23andme_2023_credential_stuffing
+    entity:
+      name: "23andMe Holding Co."
+      cik: "0001804591"
+      country: "US"
+      industry: "biotechnology"
+      listed: true
+    event:
+      description: "Credential-stuffing incident affecting customer profile data; settled by class action."
+      threat: data_breach
+      date: "2023-10"
+      date_precision: month
+    amounts:
+      - type: legal_settlement
+        value: 30000000
+        currency: USD
+        basis: gross
+        period: "settlement term sheet 2024-07-29"
+        status: provisional
+        cited_line: "The parties executed a confidential settlement term sheet on July 29, 2024, which contemplated an aggregate cash payment by the Company of $ 30.0 million to settle all claims brought on behalf of all persons in the United States whose personal information was impacted"
+      - type: direct_cost
+        value: 19800000
+        currency: USD
+        basis: net_of_insurance
+        period: "nine months ended 2024-12-31"
+        status: provisional
+        cited_line: "During the nine months ended December 31, 2024, the Company recognized $ 19.8 million in net expenses related to the Cyber Incident primarily consisting of $ 42.0 million in legal fees incurred and estimated loss contingencies, partially offset by probable insurance rec"
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1804591/000180459125000012/me-20241231.htm"
+      filing_date: "2025-02-06"
+      filer_name: "23andMe Holding Co."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "The settlement and the expense line overlap; they are separate typed amounts and must not be summed. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_americold_2023_cyber_incident
+    entity:
+      name: "AMERICOLD REALTY TRUST"
+      cik: "0001455863"
+      country: "US"
+      industry: "logistics"
+      listed: true
+    event:
+      description: "Cyber incident requiring remediation and response effort across warehouse operations."
+      threat: unspecified_cyber_incident
+      date: "2023-04"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 24400000
+        currency: USD
+        basis: gross
+        period: "nine months ended 2023-09-30"
+        status: provisional
+        cited_line: "Incremental charges recorded in conjunction with remediation and response efforts associated with the Cyber Incident were $ 5.4 million and $ 24.4 million during the three and nine months ended September 30, 2023, respectively"
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1455863/000162828023036379/art-20230930.htm"
+      filing_date: "2023-11-02"
+      filer_name: "AMERICOLD REALTY TRUST"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_ardent_health_2023_ransomware
+    entity:
+      name: "Ardent Health Partners, Inc."
+      cik: "0001756655"
+      country: "US"
+      industry: "healthcare"
+      listed: true
+    event:
+      description: "Ransomware incident affecting hospital operations over the 2023 Thanksgiving period."
+      threat: ransomware
+      date: "2023-11"
+      date_precision: month
+    amounts:
+      - type: total_event_impact
+        value: 74000000
+        currency: USD
+        basis: gross
+        period: "year ended 2023-12-31"
+        status: final
+        cited_line: "We estimate the Cybersecurity Incident had an adverse pre-tax impact of approximately $74 million during the year ended December 31, 2023."
+      - type: insurance_recovery
+        value: 2900000
+        currency: USD
+        basis: gross
+        period: "three months ended 2024-09-30"
+        status: final
+        cited_line: "The increase in other non-operating gains was primarily due to the recognition of insurance recovery proceeds of $2.9 million during the three months ended September 30, 2024 related to the Cybersecurity Incident."
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1756655/000175665524000017/ardt-20240930.htm"
+      filing_date: "2024-11-07"
+      filer_name: "Ardent Health Partners, Inc."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_avidxchange_2023_cyber_incident
+    entity:
+      name: "AvidXchange Holdings, Inc."
+      cik: "0001858257"
+      country: "US"
+      industry: "financial_services"
+      listed: true
+    event:
+      description: "Cyber incident at an accounts-payable automation provider; response costs across two fiscal years."
+      threat: unspecified_cyber_incident
+      date: "2023"
+      date_precision: year
+    amounts:
+      - type: direct_cost
+        value: 5400000
+        currency: USD
+        basis: gross
+        period: "year ended 2023-12-31"
+        status: final
+        cited_line: "During the years ended December 31, 2024 and 2023, we incurred $0.3 million and $5.4 million, respectively, in response costs related to the incident, including professional services and legal fees, and recorded insurance recoveries of $2.1 million and $1.7 million, res"
+      - type: insurance_recovery
+        value: 1700000
+        currency: USD
+        basis: gross
+        period: "year ended 2023-12-31"
+        status: final
+        cited_line: "recorded insurance recoveries of $2.1 million and $1.7 million, respectively"
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/1858257/000095017025029974/avdx-20241231.htm"
+      filing_date: "2025-02-28"
+      filer_name: "AvidXchange Holdings, Inc."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "A separate sentence in the same filing states the 2024 figure as '$ 302', denominated in thousands; the million-form is used here to avoid a 1000x misread. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_bancorp34_2023_cyber_incidents
+    entity:
+      name: "Bancorp 34, Inc."
+      cik: "0001668340"
+      country: "US"
+      industry: "financial_services"
+      listed: true
+    event:
+      description: "Cybersecurity incidents disclosed by a small bank holding company."
+      threat: unspecified_cyber_incident
+      date: "2023"
+      date_precision: year
+    amounts:
+      - type: direct_cost
+        value: 25000
+        currency: USD
+        basis: not_stated
+        period: "to date at 2024-03-08"
+        status: provisional
+        units_resolved_from: "figure stated in whole dollars in the filing text"
+        cited_line: "To date, we have incurred expenses of approximately $25,000 related to the cybersecurity incidents."
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/1668340/000155278124000084/e24045_bctf-10k.htm"
+      filing_date: "2024-03-08"
+      filer_name: "Bancorp 34, Inc."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "Among the smallest documented figures in the corpus; useful as evidence that disclosure reaches small issuers, not as a typical value. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_bassett_furniture_2024_cyber_incident
+    entity:
+      name: "BASSETT FURNITURE INDUSTRIES INC"
+      cik: "0000010329"
+      country: "US"
+      industry: "manufacturing"
+      listed: true
+    event:
+      description: "Cybersecurity incident causing a production shutdown and work stoppage."
+      threat: unspecified_cyber_incident
+      date: "2024-07"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 98000
+        currency: USD
+        basis: not_stated
+        period: "third quarter fiscal 2024"
+        status: provisional
+        units_resolved_from: "consolidated statements denominated in thousands"
+        cited_line: "During the third quarter of 2024, we also incurred legal and remediation costs related to the incident of approximately $98 which are included in selling, general and administrative expenses."
+      - type: revenue_impact
+        value: 1500000
+        currency: USD
+        basis: not_stated
+        period: "fiscal 2024"
+        status: provisional
+        units_resolved_from: "consolidated statements denominated in thousands; filing states a $1,000-$2,000 range"
+        cited_line: "we estimate that between $1,000 and $2,000 of sales were lost due to the shutdown during the cybersecurity incident"
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/10329/000143774924031014/bset20240831d_10q.htm"
+      filing_date: "2024-10-10"
+      filer_name: "BASSETT FURNITURE INDUSTRIES INC"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "The revenue-impact figure is the midpoint of a range the filing gives as $1,000-$2,000 thousand; the filing states a range, not a point. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_campbells_2023_cyber_incident
+    entity:
+      name: "CAMPBELL'S Co"
+      cik: "0000016732"
+      country: "US"
+      industry: "manufacturing"
+      listed: true
+    event:
+      description: "Cybersecurity incident identified in the fourth quarter of fiscal 2023."
+      threat: unspecified_cyber_incident
+      date: "2023-Q4"
+      date_precision: quarter
+    amounts:
+      - type: direct_cost
+        value: 3000000
+        currency: USD
+        basis: gross
+        period: "three months ended 2023-10-29"
+        status: final
+        cited_line: "Insurance recoveries of $ 1 million and costs of $ 3 million related to a cybersecurity incident were included in the three-month periods ended October 27, 2024 and October 29, 2023, respectively."
+      - type: insurance_recovery
+        value: 1000000
+        currency: USD
+        basis: gross
+        period: "three months ended 2024-10-27"
+        status: final
+        cited_line: "In the first quarter of 2025, we recognized insurance recoveries in Administrative expenses of $1 million ($1 million after tax) related to a cybersecurity incident that was identified in the fourth quarter of 2023."
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/16732/000001673224000201/cpb-20241027.htm"
+      filing_date: "2024-12-04"
+      filer_name: "CAMPBELL'S Co"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_conduent_2025_cyber_incident
+    entity:
+      name: "CONDUENT Inc"
+      cik: "0001677703"
+      country: "US"
+      industry: "business_services"
+      listed: true
+    event:
+      description: "January 2025 cyber incident at a business-process services provider."
+      threat: unspecified_cyber_incident
+      date: "2025-01"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 25000000
+        currency: USD
+        basis: gross
+        period: "three months ended 2025-03-31"
+        status: provisional
+        cited_line: "Included in the 2025 period are $ 25 million of Direct response costs related to the January 2025 Cyber Incident and a $ 9 million insurance recovery related to the 2019 Texas Matter."
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1677703/000167770325000076/cndt-20250331.htm"
+      filing_date: "2025-05-07"
+      filer_name: "CONDUENT Inc"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "The $9 million insurance recovery in the same sentence relates to a different, earlier matter and is deliberately not recorded against this event. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_data_io_2025_ransomware
+    entity:
+      name: "DATA I/O CORP"
+      cik: "0000351998"
+      country: "US"
+      industry: "manufacturing"
+      listed: true
+    event:
+      description: "Ransomware incident shutting down most global operating systems and delaying shipments."
+      threat: ransomware
+      date: "2025-08"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 388000
+        currency: USD
+        basis: not_stated
+        period: "fiscal 2025"
+        status: provisional
+        units_resolved_from: "figure stated in whole dollars in the filing text"
+        cited_line: "In August 2025, the Company experienced a ransomware incident that resulted in the shutdown of most global operating systems, business disruptions including the inability to timely process certain shipments, and significant remediation costs of approximately $388,000"
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/351998/000165495426003625/daio_10k.htm"
+      filing_date: "2026-04-16"
+      filer_name: "DATA I/O CORP"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_davita_2025_ransomware
+    entity:
+      name: "DAVITA INC."
+      cik: "0000927066"
+      country: "US"
+      industry: "healthcare"
+      listed: true
+    event:
+      description: "Ransomware incident affecting dialysis operations; remediation with third-party assistance."
+      threat: ransomware
+      date: "2025-04"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 25200000
+        currency: USD
+        basis: gross
+        period: "nine months ended 2025-09-30"
+        status: provisional
+        cited_line: "During the nine months ended September 30, 2025, we incurred patient care costs of approximately $1.0 million and general and administrative expenses of approximately $24.2 million related to the incident."
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/927066/000092706625000165/dva-20250930.htm"
+      filing_date: "2025-10-29"
+      filer_name: "DAVITA INC."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "The recorded amount sums two components the filing states separately ($1.0M patient care + $24.2M G&A) for the same period; the filing does not print the total. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_f5_2025_cyber_incident
+    entity:
+      name: "F5, INC."
+      cik: "0001048695"
+      country: "US"
+      industry: "technology"
+      listed: true
+    event:
+      description: "Cyber incident disclosed by a network security and application delivery vendor."
+      threat: unspecified_cyber_incident
+      date: "2025-10"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 26500000
+        currency: USD
+        basis: gross
+        period: "nine months ended 2026-06-30"
+        status: provisional
+        cited_line: "The Company incurred $ 3.0 million and $ 26.5 million of costs in response to the Cyber Incident for the three and nine months ended June 30, 2026, respectively."
+      - type: insurance_recovery
+        value: 5300000
+        currency: USD
+        basis: gross
+        period: "nine months ended 2026-06-30"
+        status: provisional
+        cited_line: "The Company received $ 5.3 million in insurance recoveries for claims related to the Cyber Incident for the three and nine months ended June 30, 2026, respectively."
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1048695/000104869526000067/ffiv-20260630.htm"
+      filing_date: "2026-08-06"
+      filer_name: "F5, INC."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_fidelity_national_financial_2023_cyber_incident
+    entity:
+      name: "Fidelity National Financial, Inc."
+      cik: "0001331875"
+      country: "US"
+      industry: "financial_services"
+      listed: true
+    event:
+      description: "November 2023 cybersecurity incident at a title insurance and settlement services group."
+      threat: unspecified_cyber_incident
+      date: "2023-11"
+      date_precision: month
+    amounts:
+      - type: period_delta
+        value: 10000000
+        currency: USD
+        basis: not_stated
+        period: "FY2024 vs FY2023"
+        status: final
+        cited_line: "The decrease in the year ended December 31, 2024 as compared to 2023 is primarily attributable to a $10 million reduction in expenses related to the 2023 cybersecurity incident"
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/1331875/000133187525000013/fnf-20241231.htm"
+      filing_date: "2025-02-28"
+      filer_name: "Fidelity National Financial, Inc."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "This is a year-over-year REDUCTION in incident expense, not the cost of the event. It bounds nothing about the event total and must never be read as one. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_first_american_2023_cyber_incident
+    entity:
+      name: "First American Financial Corp"
+      cik: "0001472787"
+      country: "US"
+      industry: "financial_services"
+      listed: true
+    event:
+      description: "December 2023 cybersecurity incident causing a systems shutdown at a title insurer."
+      threat: unspecified_cyber_incident
+      date: "2023-12"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 11000000
+        currency: USD
+        basis: gross
+        period: "year ended 2023-12-31"
+        status: provisional
+        cited_line: "Included in this 36 cent shortfall was $11 million of direct expenses related to the incident in our corporate segment including our $5 million insurance retention."
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/1472787/000095017024017418/faf-20231231.htm"
+      filing_date: "2024-02-21"
+      filer_name: "First American Financial Corp"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_hanesbrands_2022_ransomware
+    entity:
+      name: "Hanesbrands Inc."
+      cik: "0001359841"
+      country: "US"
+      industry: "manufacturing"
+      listed: true
+    event:
+      description: "Ransomware attack disrupting order fulfilment at an apparel manufacturer."
+      threat: ransomware
+      date: "2022-05"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 15509000
+        currency: USD
+        basis: net_of_insurance
+        period: "six months ended 2022-07-02"
+        status: final
+        units_resolved_from: "consolidated statements denominated in thousands; a later filing states the same figure as '$15 million'"
+        cited_line: "During the quarter and six months ended July 2, 2022, the Company incurred costs of $ 15,509 , net of expected insurance recoveries, related to the ransomware attack."
+      - type: insurance_recovery
+        value: 5562000
+        currency: USD
+        basis: gross
+        period: "six months ended 2023-07-01"
+        status: final
+        units_resolved_from: "consolidated statements denominated in thousands"
+        cited_line: "During the quarter and six months ended July 1, 2023, the Company received business interruption insurance proceeds of $ 5,562"
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1359841/000135984123000041/hbi-20230701.htm"
+      filing_date: "2023-08-10"
+      filer_name: "Hanesbrands Inc."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_henry_schein_2023_cyber_incident
+    entity:
+      name: "HENRY SCHEIN INC"
+      cik: "0001000228"
+      country: "US"
+      industry: "healthcare"
+      listed: true
+    event:
+      description: "October 2023 cybersecurity incident at a healthcare products distributor."
+      threat: unspecified_cyber_incident
+      date: "2023-10"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 11000000
+        currency: USD
+        basis: gross
+        period: "year ended 2023-12-30"
+        status: provisional
+        cited_line: "During the year ended December 30, 2023, we incurred $ 11 million of expenses directly related to the cybersecurity incident, mostly consisting of professional fees."
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/1000228/000100022824000011/form10k20231230.htm"
+      filing_date: "2024-02-28"
+      filer_name: "HENRY SCHEIN INC"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "The same filing states a $60 million insurance policy after a $5 million retention. That is coverage, not loss, and is deliberately not recorded as an amount. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_hillman_2023_cyber_incident
+    entity:
+      name: "Hillman Solutions Corp."
+      cik: "0001822492"
+      country: "US"
+      industry: "manufacturing"
+      listed: true
+    event:
+      description: "Cybersecurity incident at a hardware and fastener distributor."
+      threat: unspecified_cyber_incident
+      date: "2023"
+      date_precision: year
+    amounts:
+      - type: direct_cost
+        value: 1000000
+        currency: USD
+        basis: net_of_insurance
+        period: "fiscal 2023"
+        status: final
+        cited_line: "In 2023, the Cybersecurity Incident related costs net of an expected insurance receivable totaled $1.0 million."
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/1822492/000182249225000050/hlmn-20241228.htm"
+      filing_date: "2025-02-20"
+      filer_name: "Hillman Solutions Corp."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_irhythm_2026_cyber_incident
+    entity:
+      name: "iRhythm Holdings, Inc."
+      cik: "0001388658"
+      country: "US"
+      industry: "healthcare"
+      listed: true
+    event:
+      description: "Cybersecurity incident at a cardiac monitoring company."
+      threat: unspecified_cyber_incident
+      date: "2026"
+      date_precision: year
+    amounts:
+      - type: direct_cost
+        value: 700000
+        currency: USD
+        basis: not_stated
+        period: "six months ended 2026-06-30"
+        status: provisional
+        cited_line: "For the three and six months ended June 30, 2026, we incurred $0.7 million related to the Cybersecurity Incident."
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1388658/000138865826000072/irtc-20260630.htm"
+      filing_date: "2026-08-06"
+      filer_name: "iRhythm Holdings, Inc."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_johnson_controls_2023_ransomware
+    entity:
+      name: "Johnson Controls International plc"
+      cik: "0000833444"
+      country: "IE"
+      industry: "manufacturing"
+      listed: true
+    event:
+      description: "Ransomware incident disrupting order entry and billing at a building-systems manufacturer."
+      threat: ransomware
+      date: "2023-09"
+      date_precision: month
+    amounts:
+      - type: total_event_impact
+        value: 30000000
+        currency: USD
+        basis: gross
+        period: "fiscal 2023"
+        status: provisional
+        cited_line: "Lost and deferred revenues and expenses related to the cybersecurity incident adversely impacted fiscal 2023 net income by approximately $30 million, or approximately $0.04 per diluted share."
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/833444/000083344423000048/jci-20230930.htm"
+      filing_date: "2023-12-14"
+      filer_name: "Johnson Controls International plc"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "A net-income impact combining lost revenue and expense, not a direct-cost figure. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_key_tronic_2024_cyber_incident
+    entity:
+      name: "KEY TRONIC CORP"
+      cik: "0000719733"
+      country: "US"
+      industry: "manufacturing"
+      listed: true
+    event:
+      description: "Cybersecurity incident late in fiscal 2024 at a contract electronics manufacturer."
+      threat: unspecified_cyber_incident
+      date: "2024-05"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 2300000
+        currency: USD
+        basis: not_stated
+        period: "fiscal year 2024"
+        status: final
+        cited_line: "During fiscal year 2024, we incurred expenses related to a cybersecurity incident late in the year of approximately $2.3 million."
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/719733/000071973324000113/ktcc-20240629.htm"
+      filing_date: "2024-10-15"
+      filer_name: "KEY TRONIC CORP"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_krispy_kreme_2024_cyber_incident
+    entity:
+      name: "Krispy Kreme, Inc."
+      cik: "0001857154"
+      country: "US"
+      industry: "food_and_beverage"
+      listed: true
+    event:
+      description: "November 2024 cybersecurity incident disrupting online ordering."
+      threat: unspecified_cyber_incident
+      date: "2024-11"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 3100000
+        currency: USD
+        basis: gross
+        period: "fiscal 2024"
+        status: provisional
+        cited_line: "Fiscal 2024 consists primarily of $3.1 million in costs related to remediation of the 2024 Cybersecurity Incident, including fees for cybersecurity experts and other advisors."
+      - type: revenue_impact
+        value: 11000000
+        currency: USD
+        basis: gross
+        period: "fiscal 2024"
+        status: provisional
+        cited_line: "segment in an amount of $11 million related to the incident with a corresponding estimated $10 million impact on Adjusted EBITDA"
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/1857154/000185715425000013/dnut-20241229.htm"
+      filing_date: "2025-02-27"
+      filer_name: "Krispy Kreme, Inc."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_lee_enterprises_2025_cyber_incident
+    entity:
+      name: "LEE ENTERPRISES, Inc"
+      cik: "0000058361"
+      country: "US"
+      industry: "media"
+      listed: true
+    event:
+      description: "February 2025 cyber incident disrupting publishing and distribution operations."
+      threat: unspecified_cyber_incident
+      date: "2025-02"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 3100000
+        currency: USD
+        basis: gross
+        period: "nine months ended 2025-06-29"
+        status: provisional
+        cited_line: "During the nine months ended June 29, 2025, the Company incurred $ 3.1 million of expenses related to the Cyber Incident."
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/58361/000162828025039251/lee-20250629.htm"
+      filing_date: "2025-08-08"
+      filer_name: "LEE ENTERPRISES, Inc"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_livanova_2023_cyber_incident
+    entity:
+      name: "LivaNova PLC"
+      cik: "0001639691"
+      country: "GB"
+      industry: "healthcare"
+      listed: true
+    event:
+      description: "Cybersecurity incident at a medical device manufacturer."
+      threat: unspecified_cyber_incident
+      date: "2023-11"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 10800000
+        currency: USD
+        basis: gross
+        period: "through 2024-09-30"
+        status: provisional
+        cited_line: "Through September 30, 2024, LivaNova incurred direct costs totaling $ 10.8 million in connection with this cybersecurity incident, including $ 2.5 million and $ 8.2 million during the three and nine months ended September 30, 2024, respectively."
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1639691/000163969124000134/livn-20240930.htm"
+      filing_date: "2024-10-31"
+      filer_name: "LivaNova PLC"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_loandepot_2024_cyber_incident
+    entity:
+      name: "loanDepot, Inc."
+      cik: "0001831631"
+      country: "US"
+      industry: "financial_services"
+      listed: true
+    event:
+      description: "January 2024 cybersecurity incident at a mortgage lender, followed by class-action litigation."
+      threat: data_breach
+      date: "2024-01"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 22800000
+        currency: USD
+        basis: net_of_insurance
+        period: "nine months ended 2024-09-30"
+        status: provisional
+        cited_line: "During the nine months ended September 30, 2024, the Company recognized $ 22.8 million of expenses related to the Cybersecurity Incident, net of insurance recoveries, which includes an accrual of $ 25.0 million in connection with class action litigation related to the C"
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1831631/000183163124000285/ldi-20240930.htm"
+      filing_date: "2024-11-12"
+      filer_name: "loanDepot, Inc."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "Net of insurance and inclusive of a $25.0 million litigation accrual, so the gross direct cost is not recoverable from this figure. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_masimo_2025_cyber_incident
+    entity:
+      name: "MASIMO CORP"
+      cik: "0000937556"
+      country: "US"
+      industry: "healthcare"
+      listed: true
+    event:
+      description: "Cybersecurity incident affecting manufacturing and order processing at a medical device maker."
+      threat: unspecified_cyber_incident
+      date: "2025-04"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 5500000
+        currency: USD
+        basis: gross
+        period: "nine months ended 2025-09-27"
+        status: provisional
+        cited_line: "For the nine months ended September 27, 2025, we incurred approximately $5.5 million, in selling, general and administrative expenses, related to the cybersecurity incident, offset by an insurance reimbursement of approximately $4.3 million."
+      - type: insurance_recovery
+        value: 4300000
+        currency: USD
+        basis: gross
+        period: "nine months ended 2025-09-27"
+        status: provisional
+        cited_line: "offset by an insurance reimbursement of approximately $4.3 million"
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/937556/000093755625000161/masi-20250927.htm"
+      filing_date: "2025-11-04"
+      filer_name: "MASIMO CORP"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_maximus_2023_moveit
+    entity:
+      name: "MAXIMUS, INC."
+      cik: "0001032220"
+      country: "US"
+      industry: "business_services"
+      listed: true
+    event:
+      description: "Data breach via a third-party file transfer product, affecting government programme participants."
+      threat: data_breach
+      date: "2023-05"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 29300000
+        currency: USD
+        basis: gross
+        period: "fiscal year 2023"
+        status: provisional
+        cited_line: "Our costs for the year ended September 30, 2023, include a $29.3 million expense incurred in the second half of the year for our best estimate of the investigation and remediation costs of a previously disclosed cybersecurity incident."
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/1032220/000103222023000096/mms-20230930.htm"
+      filing_date: "2023-11-16"
+      filer_name: "MAXIMUS, INC."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_mueller_water_2023_cyber_incident
+    entity:
+      name: "Mueller Water Products, Inc."
+      cik: "0001350593"
+      country: "US"
+      industry: "manufacturing"
+      listed: true
+    event:
+      description: "Cybersecurity incident affecting manufacturing operations at a water infrastructure maker."
+      threat: unspecified_cyber_incident
+      date: "2023-10"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 1500000
+        currency: USD
+        basis: not_stated
+        period: "fiscal 2024"
+        status: final
+        cited_line: "In fiscal 2024, we incurred approximately $1.5 million of expenses related to the cybersecurity incidents."
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/1350593/000135059324000079/mwa-20240930.htm"
+      filing_date: "2024-11-20"
+      filer_name: "Mueller Water Products, Inc."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_prog_holdings_2023_cyber_incident
+    entity:
+      name: "PROG Holdings, Inc."
+      cik: "0001808834"
+      country: "US"
+      industry: "financial_services"
+      listed: true
+    event:
+      description: "Cybersecurity incident at a lease-to-own financial technology group."
+      threat: data_breach
+      date: "2023-09"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 2900000
+        currency: USD
+        basis: gross
+        period: "aggregate since the incident, to 2024-03-31"
+        status: provisional
+        cited_line: "During the three months ended March 31, 2024, the Company incurred $ 0.1 million for costs related to the cybersecurity incident, resulting in aggregate expenses of $ 2.9 million since the incident occurred."
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1808834/000180883424000064/prg-20240331.htm"
+      filing_date: "2024-04-24"
+      filer_name: "PROG Holdings, Inc."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_sinclair_2021_ransomware
+    entity:
+      name: "SINCLAIR BROADCAST GROUP INC"
+      cik: "0000912752"
+      country: "US"
+      industry: "media"
+      listed: true
+    event:
+      description: "Ransomware incident disrupting broadcast operations and advertising delivery."
+      threat: ransomware
+      date: "2021-10-17"
+      date_precision: day
+    amounts:
+      - type: revenue_impact
+        value: 63000000
+        currency: USD
+        basis: gross
+        period: "fourth quarter 2021"
+        status: final
+        cited_line: "The cybersecurity incident identified on October 17, 2021 resulted in the loss in the fourth quarter of 2021 of approximately $63 million of advertising revenue, primarily related to our broadcast segment"
+      - type: total_event_impact
+        value: 20000000
+        currency: USD
+        basis: net_of_insurance
+        period: "through the date of filing"
+        status: final
+        cited_line: "the Company estimates that the cyber incident has resulted in approximately $20 million of unrecoverable net loss through the"
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/912752/000091275223000010/sbgi-20221231.htm"
+      filing_date: "2023-03-01"
+      filer_name: "SINCLAIR BROADCAST GROUP INC"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "The $63M revenue loss and the $20M unrecoverable net loss are different constructs and must not be summed. Pre-dates the SEC cyber disclosure rule. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_sonic_automotive_2024_cdk_outage
+    entity:
+      name: "SONIC AUTOMOTIVE INC"
+      cik: "0001043509"
+      country: "US"
+      industry: "retail"
+      listed: true
+    event:
+      description: "Business disruption from the CDK Global outage, a third-party dealer management system."
+      threat: third_party_outage
+      date: "2024-06"
+      date_precision: month
+    amounts:
+      - type: total_event_impact
+        value: 30000000
+        currency: USD
+        basis: gross
+        period: "quarter ended 2024-06-30"
+        status: provisional
+        cited_line: "We estimate the disruption from the CDK outage negatively impacted reported income before taxes by approximately $30.0 million during the quarter ended June 30, 2024, which includes approximately $11.6 million in additional compensation expenses incurred as a result of"
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1043509/000104350924000065/sah-20240630.htm"
+      filing_date: "2024-08-08"
+      filer_name: "SONIC AUTOMOTIVE INC"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "The incident occurred at a third party; the loss is the filer's. Useful precisely because third-party outage loss is rarely quantified per-company. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_southstate_2024_cyber_incident
+    entity:
+      name: "SouthState Corp"
+      cik: "0000764038"
+      country: "US"
+      industry: "financial_services"
+      listed: true
+    event:
+      description: "Cybersecurity incident described by the filer as an isolated event."
+      threat: unspecified_cyber_incident
+      date: "2024"
+      date_precision: year
+    amounts:
+      - type: direct_cost
+        value: 3500000
+        currency: USD
+        basis: not_stated
+        period: "2024 to 2024-06-30"
+        status: provisional
+        cited_line: "Of the $4.0 million in 2024, approximately $3.5 million pertains to one-time costs associated with the cybersecurity incident, which was identified as an isolated event as previously disclosed by the Company."
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/764038/000155837024010655/ssb-20240630x10q.htm"
+      filing_date: "2024-08-02"
+      filer_name: "SouthState Corp"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "A separate sentence in the same filing cites approximately $7.9 million of one-time incident costs for a different period; the periods are not reconciled in the filing, so only the explicitly-scoped figure is recorded. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_surmodics_2025_cyber_incident
+    entity:
+      name: "SURMODICS INC"
+      cik: "0000924717"
+      country: "US"
+      industry: "healthcare"
+      listed: true
+    event:
+      description: "Cyber incident at a medical device coatings company."
+      threat: unspecified_cyber_incident
+      date: "2025"
+      date_precision: year
+    amounts:
+      - type: direct_cost
+        value: 1900000
+        currency: USD
+        basis: gross
+        period: "nine months ended 2025-06-30"
+        status: provisional
+        cited_line: "During the three and nine months ended June 30, 2025, the Company incurred $ 1.9 million of Cyber Incident response costs of which $ 1.7 million is expected to be recovered under its cyber insurance policy."
+      - type: insurance_recovery
+        value: 1700000
+        currency: USD
+        basis: gross
+        period: "expected, at 2025-06-30"
+        status: provisional
+        cited_line: "of which $ 1.7 million is expected to be recovered under its cyber insurance policy"
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/924717/000095017025105477/srdx-20250630.htm"
+      filing_date: "2025-08-08"
+      filer_name: "SURMODICS INC"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "The insurance recovery is expected, not received. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_tempur_sealy_2023_cyber_incident
+    entity:
+      name: "TEMPUR SEALY INTERNATIONAL, INC."
+      cik: "0001206264"
+      country: "US"
+      industry: "manufacturing"
+      listed: true
+    event:
+      description: "Cybersecurity incident causing a temporary shutdown of operations at a bedding manufacturer."
+      threat: unspecified_cyber_incident
+      date: "2023-07-23"
+      date_precision: day
+    amounts:
+      - type: direct_cost
+        value: 14300000
+        currency: USD
+        basis: gross
+        period: "year ended 2023-12-31"
+        status: final
+        cited_line: "As a result of the cybersecurity incident, we incurred $14.3 million of costs in connection with this event."
+    source:
+      filing_type: 10-K
+      url: "https://www.sec.gov/Archives/edgar/data/1206264/000120626424000050/tpx-20231231.htm"
+      filing_date: "2024-02-16"
+      filer_name: "TEMPUR SEALY INTERNATIONAL, INC."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "Incident pre-dates the SEC cyber disclosure rule's December 2023 effective date; no Item 1.05 filing exists for it. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_tenet_healthcare_2022_cyber_incident
+    entity:
+      name: "TENET HEALTHCARE CORP"
+      cik: "0000070318"
+      country: "US"
+      industry: "healthcare"
+      listed: true
+    event:
+      description: "Cybersecurity incident disrupting hospital operations."
+      threat: unspecified_cyber_incident
+      date: "2022-04"
+      date_precision: month
+    amounts:
+      - type: insurance_recovery
+        value: 31000000
+        currency: USD
+        basis: gross
+        period: "six months ended 2023-06-30"
+        status: final
+        cited_line: "We received $ 31 million of insurance recoveries related to the Cybersecurity Incident during the six months ended June 30, 2023;"
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/70318/000007031823000041/thc-20230630.htm"
+      filing_date: "2023-07-31"
+      filer_name: "TENET HEALTHCARE CORP"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "A recovery only. The filing does not state the gross loss, so this record says nothing about event cost. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_ttec_2022_cyber_incident
+    entity:
+      name: "TTEC Holdings, Inc."
+      cik: "0001013880"
+      country: "US"
+      industry: "business_services"
+      listed: true
+    event:
+      description: "Cybersecurity incident at a customer-experience outsourcing provider."
+      threat: ransomware
+      date: "2021-09"
+      date_precision: month
+    amounts:
+      - type: insurance_recovery
+        value: 5100000
+        currency: USD
+        basis: gross
+        period: "three months ended 2023-03-31"
+        status: final
+        cited_line: "The operating income increased primarily due to increased revenue and a net reimbursement from insurance of $5.1 million from the cybersecurity incident."
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1013880/000155837023008307/ttec-20230331x10q.htm"
+      filing_date: "2023-05-05"
+      filer_name: "TTEC Holdings, Inc."
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "A net insurance reimbursement, not a loss. The filing does not state the gross cost. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_united_natural_foods_2025_cyber_incident
+    entity:
+      name: "UNITED NATURAL FOODS INC"
+      cik: "0001020859"
+      country: "US"
+      industry: "wholesale"
+      listed: true
+    event:
+      description: "Cybersecurity incident disrupting distribution and order fulfilment at a grocery wholesaler."
+      threat: unspecified_cyber_incident
+      date: "2025-06"
+      date_precision: month
+    amounts:
+      - type: direct_cost
+        value: 14000000
+        currency: USD
+        basis: gross
+        period: "first quarter fiscal 2026"
+        status: provisional
+        cited_line: "During the first quarter of fiscal 2026, the Company recognized $ 14 million of incremental costs and charges related to the Cybersecurity Incident, of which $ 13 million is included in Gross profit and $ 1 million is included in Operating expenses"
+      - type: insurance_recovery
+        value: 10000000
+        currency: USD
+        basis: gross
+        period: "first quarter fiscal 2026"
+        status: provisional
+        cited_line: "In the first quarter of fiscal 2026, the Company received $ 10 million in cybersecurity insurance proceeds related to the Cybersecurity Incident the Company experienced in the fourth quarter of fiscal 2025"
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/1020859/000102085925000065/unfi-20251101.htm"
+      filing_date: "2025-12-02"
+      filer_name: "UNITED NATURAL FOODS INC"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "A prior-period filing reported approximately $26 million of incremental costs for the fourth quarter of fiscal 2025; this record covers the following quarter only. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+  - id: sec_west_pharmaceutical_2026_cyber_incident
+    entity:
+      name: "WEST PHARMACEUTICAL SERVICES INC"
+      cik: "0000105770"
+      country: "US"
+      industry: "manufacturing"
+      listed: true
+    event:
+      description: "May 2026 cyber incident causing production downtime at a drug packaging manufacturer."
+      threat: unspecified_cyber_incident
+      date: "2026-05"
+      date_precision: month
+    amounts:
+      - type: revenue_impact
+        value: 7000000
+        currency: USD
+        basis: gross
+        period: "three months ended 2026-06-30"
+        status: provisional
+        cited_line: "our revenue growth being negatively impacted by approximately $7 million from production downtime associated with the Company's May 2026 cyber incident"
+    source:
+      filing_type: 10-Q
+      url: "https://www.sec.gov/Archives/edgar/data/105770/000010577026000099/wst-20260630.htm"
+      filing_date: "2026-07-23"
+      filer_name: "WEST PHARMACEUTICAL SERVICES INC"
+    extraction_date: "2026-08-14"
+    verification:
+      method: machine_candidate_human_confirmed
+      verified_by: "raviaxo"
+      candidate_source: "edgar_corpus_census.py lane C/A"
+    limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
