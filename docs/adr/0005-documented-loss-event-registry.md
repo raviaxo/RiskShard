@@ -10,6 +10,12 @@
   indefinite upkeep for one person. The research is kept intact rather than discarded.
 - **Revisit when:** the 2026 DORA edition lands (~June 2027, with automated cost-field
   validation), or a second maintainer exists.
+- **Being revisited (2026-08-13):** [ADR-0012](0012-loss-event-registry-bounded-trial.md)
+  proposes a bounded trial with a kill criterion, against a full census of the corpus
+  ([`../internal/edgar_corpus_census.md`](../internal/edgar_corpus_census.md)). Note the
+  second-maintainer condition above is **still unmet** — Adrian Sanabria named the same
+  three sources independently but declined to maintain. The status here stays *Deferred*
+  unless ADR-0012 is accepted.
 - **Related:** [`0004-citable-parameter-identifiers.md`](0004-citable-parameter-identifiers.md),
   [`0003-shared-impact-bridges.md`](0003-shared-impact-bridges.md),
   [`../internal/canonical_reference_thesis.md`](../internal/canonical_reference_thesis.md)
