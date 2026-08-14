@@ -15,11 +15,11 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0002](0002-portable-scenario-seed.md) | Portable scenario seeds (machine-independent simulation) | Accepted |
 | [0003](0003-shared-impact-bridges.md) | Shared, named impact bridges | Accepted (parts 1–2) |
 | [0004](0004-citable-parameter-identifiers.md) | Citable parameter identifiers | Accepted |
-| [0005](0005-documented-loss-event-registry.md) | Documented loss-event registry | Deferred |
+| [0005](0005-documented-loss-event-registry.md) | Documented loss-event registry | Superseded by 0012 |
 | [0006](0006-depth-over-breadth.md) | Depth over breadth | Accepted |
 | [0007](0007-construct-coherence.md) | Declared measurement basis and range coherence | Proposed |
 | [0008](0008-the-governed-tail.md) | The governed tail: a maximum must say what it bounds | Accepted |
 | [0009](0009-what-riskshard-is-and-is-not.md) | What RiskShard is, and what it is not (scope) | Accepted |
 | [0010](0010-where-riskshard-stops.md) | Where RiskShard stops: the evidence object is the product | Accepted |
-| [0011](0011-fit-is-a-facet-set.md) | Fit is a facet set, not a score | Proposed |
-| [0012](0012-loss-event-registry-bounded-trial.md) | The loss-event registry, as a bounded trial | Proposed |
+| [0011](0011-fit-is-a-facet-set.md) | Fit is a facet set, not a score | Accepted |
+| [0012](0012-loss-event-registry-bounded-trial.md) | The loss-event registry, as a bounded trial | Accepted |

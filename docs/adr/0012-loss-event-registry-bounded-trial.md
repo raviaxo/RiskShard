@@ -1,10 +1,10 @@
 # ADR-0012 — The loss-event registry, as a bounded trial
 
-- **Status:** Proposed (2026-08-13)
+- **Status:** Accepted (2026-08-13)
 - **Date:** 2026-08-13
-- **Deciders:** repo owner (pending)
-- **Revisits:** [`0005-documented-loss-event-registry.md`](0005-documented-loss-event-registry.md)
-  (Deferred 2026-07-31). ADR-0005 is not superseded unless this is accepted.
+- **Deciders:** repo owner
+- **Supersedes:** [`0005-documented-loss-event-registry.md`](0005-documented-loss-event-registry.md)
+  (Deferred 2026-07-31).
 - **Related:** [`0008-the-governed-tail.md`](0008-the-governed-tail.md) (the defect this would
   serve), [`0009-what-riskshard-is-and-is-not.md`](0009-what-riskshard-is-and-is-not.md) (the
   scope gate it must clear), [`0010-where-riskshard-stops.md`](0010-where-riskshard-stops.md)
@@ -94,9 +94,9 @@ It makes existing numbers more correct — governed, reusable, typed tail anchor
 one-off hand research — and introduces **no new measurement axis** and no new methodology. It
 clears the gate. Note it does so **narrowly**: the claim is better anchors, not better statistics.
 
-## Decision proposed
+## Decision
 
-**Adopt as a bounded trial, not as a curation commitment.**
+**Adopted as a bounded trial, not as a curation commitment.**
 
 The failure ADR-0005 correctly feared is an open-ended registry that goes stale and implies a
 currency it does not have. The way to avoid it is not to defer forever but to bound the thing and
@@ -119,7 +119,7 @@ give it a kill criterion.
    rather than carry it.** A retired experiment is a result; a stale registry is a liability.
 
 Expansion beyond this slice — other jurisdictions, PACER, regulator penalty registers — is **not**
-proposed and needs its own decision once the maintenance path is proven.
+authorized here and needs its own decision once the maintenance path is proven.
 
 ## Alternatives considered
 
@@ -144,5 +144,6 @@ proposed and needs its own decision once the maintenance path is proven.
    losses, and ADR-0005 left this open. The census found both.
 3. **Are non-cyber operational events in scope** (a grid failure, a payment-system outage)? Also
    left open by ADR-0005.
-4. **Is the trial worth the labour at all**, given the second maintainer did not materialise? This
-   is the real question, and it is why this ADR is Proposed rather than Accepted.
+4. **Is the trial worth the labour at all**, given the second maintainer did not materialise? The
+   owner accepted it on 2026-08-13 knowing that, which is what the kill criterion in decision 5 is
+   for: the question is answered by the trial, not before it.
