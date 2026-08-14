@@ -45,11 +45,15 @@ ours, each derived mechanically and re-runnable, and each published before anyon
   different quantities, each validly sourced, none a reading of the same thing.
 - **7 of 11 impact maxima carry no exceedance probability.** They say a loss this size
   happened, not how often a loss is worse.
-- **Two published claims retracted** after measurement contradicted them, including one
-  asserted in writing to a dataset maintainer before it was checked.
+- **Two published figures retracted** because they appear in no primary source, and **two
+  claims withdrawn** after measurement contradicted them — including one asserted in
+  writing to a dataset maintainer before it was checked.
 
 None of this says the sources are wrong, and none of it says the outputs are too high or
 too low — a shard describes a *cell*, not a company, so "too high" has no referent.
+
+**[Read the findings in full →](docs/FINDINGS.md)** — each one derived mechanically by a
+named tool, re-runnable, with the corrections at the same volume as the results.
 
 ## The question RiskShard answers
 
