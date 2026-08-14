@@ -5,6 +5,71 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.7.0 — 2026-08-13
+
+**The evidence object takes the front door, and the mode slot says what is in it.**
+No published number moves in this release. Every AVG/P95/P99 is byte-identical to
+v0.6.0 — the work is labelling, repositioning, and measurement.
+
+Data-pack release: `data_pack_releases/2026.08.13-v0.7.0.json`.
+Ledger tick since v0.6.0: **the anchor-slot axis is newly measured** — 11 of 11
+`impact.likely` anchors are not a calibrated mode, 8 of those carry a published mean
+or median, and 7 shards use a central tendency as the floor. Every other count is
+unchanged (cell-matched 31, cross-country 15, 4 coherent / 18 mixed, 2 of 11 maxima
+with an exceedance statement). **Four axes at four consecutive releases**, each
+recorded as *newly measured* on arrival rather than as a fabricated improvement.
+
+### The mode slot, declared rather than invented
+- A beta-PERT's second parameter is a **mode**, and nothing here supplies one.
+  `engine/slot_roles.py` derives the declaration from the same cards ADR-0007 and
+  ADR-0008 already read, so the wording cannot drift from the data.
+- The dead end is structural, not per-shard: **no value in the 18-entry
+  `measurement_basis` vocabulary denotes a mode**, so the schema could not express one
+  if a source published it. `MODAL_BASES` is an empty frozenset by inspection, and a
+  test fails if the vocabulary ever gains a modal entry while the declaration stands.
+- Checked directly for this release: NetDiligence 2025 publishes averages and Verizon
+  DBIR 2026 carries no loss median in prose. Neither yields a mode — a documented
+  negative, recorded as one.
+- The 15 affected anchors carry the declaration in their calibration `rationale`, and
+  both reader-facing surfaces render it. **No value changed**, which is the test a
+  declaration-only fix has to pass.
+
+### The simulation comes off the front door ([ADR-0010](docs/adr/0010-where-riskshard-stops.md))
+- Honours a commitment made publicly on 2026-08-08 and restated on 2026-08-11. Each
+  explorer item now opens with its declarations, then its evidence table; the
+  simulation sits at the foot in a block headed *"reference rendering — not the
+  product"*, at roughly half its former type size.
+- The README front matter is rewritten around the evidence object, and **both live
+  "Metasploit" references are gone** — that analogy was retired publicly on 2026-08-11
+  and the repo was still shipping it as its own one-line pitch.
+
+### Findings published ([docs/FINDINGS.md](docs/FINDINGS.md))
+- The measured negatives move out of `docs/internal/`: the mode-slot counts, 4 of 22
+  coherent families (**0 of 11 impact families**), 7 of 11 maxima bounding nothing,
+  35 of 66 parameters bridged, and what two external datasets do and do not contain.
+- Corrections are carried at the same volume as results — two retracted **figures**
+  (2026-08-01, values appearing in no primary source) and two withdrawn **claims**
+  (direction-of-error, and the denominator premise). `tests/test_findings.py`
+  re-derives every count and fails if the page drifts from the repository.
+
+### Decisions recorded
+- **[ADR-0011](docs/adr/0011-fit-is-a-facet-set.md)** — fit is a facet set, never a
+  score, and distance exists only relative to a target. Checking our own schema showed
+  `population_match` already *is* a facet list; what is wrong is that it is computed
+  against our cell and stored as a property of the record.
+- **[ADR-0012](docs/adr/0012-loss-event-registry-bounded-trial.md)** — the loss-event
+  registry, adopted as a **bounded trial with a kill criterion**, superseding ADR-0005.
+  Backed by a full census of the EDGAR corpus: ~33 verified issuers, dozens not
+  hundreds, and a discovery method that reaches three times what ADR-0005's did.
+
+### Fixed at the cut
+- The strength ledger had **two** `record_snapshot` call sites, and the fourth axis was
+  wired into one of them — so the release recorded an entry with the new axis silently
+  absent. Caught before shipping. `build_axis_totals()` now builds every axis in one
+  place and both callers use it, so an axis is added once. This is the same class of
+  bug as the v0.6.0 inferred denominator, and the likely-anchor count is recorded as
+  its own key rather than inferred from the buckets beside it.
+
 ## v0.6.0 — 2026-08-08
 
 The tail, declared and measured. v0.5.0 carried the ADR-0008 *decision*; this

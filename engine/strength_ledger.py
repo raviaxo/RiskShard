@@ -67,6 +67,10 @@ METRIC_KEYS = (
     "maxima_quantified",
     "maxima_none_known",
     "shards_tail_driven",
+    "likely_anchors",
+    "likely_not_a_mode",
+    "likely_central_tendency",
+    "floor_central_tendency",
 )
 
 # The ADR-0003 population-split subset of METRIC_KEYS: present only in entries
@@ -96,11 +100,23 @@ TAIL_KEYS = (
     "shards_tail_driven",
 )
 
+# The anchor-slot subset of METRIC_KEYS: present only in entries recorded with
+# slot-role totals (v0.7.0 onward). Same rule a fourth time -- compute_delta drops
+# a key absent from either side, so the first entry reads "newly measured" rather
+# than inventing an improvement over a release that never measured it.
+SLOT_KEYS = (
+    "likely_anchors",
+    "likely_not_a_mode",
+    "likely_central_tendency",
+    "floor_central_tendency",
+)
+
 LEDGER_RELPATH = Path("docs/internal/strength_ledger.json")
 
 
 def capture_snapshot(
-    dashboard, population_totals=None, coherence_totals=None, tail_totals=None
+    dashboard, population_totals=None, coherence_totals=None, tail_totals=None,
+    slot_totals=None,
 ):
     """Reduce a readiness dashboard to the strength snapshot we track over time.
 
@@ -159,6 +175,16 @@ def capture_snapshot(
         metrics["shards_tail_driven"] = int(
             tail_totals.get("shards_majority_driven_by_max", 0)
         )
+    if slot_totals is not None:
+        # The count of likely anchors is recorded explicitly rather than inferred
+        # from the categories named beside it. Inferring a denominator from the
+        # buckets you happened to list is the bug caught at the v0.6.0 cut.
+        metrics["likely_anchors"] = int(slot_totals.get("shards", 0))
+        metrics["likely_not_a_mode"] = int(slot_totals.get("mode_slot_declarations", 0))
+        metrics["likely_central_tendency"] = int(
+            slot_totals.get("shards_mode_slot_central_tendency", 0)
+        )
+        metrics["floor_central_tendency"] = int(slot_totals.get("shards_floor_slot", 0))
     return {
         "data_pack_version": data_pack.get("pack_version", ""),
         "fingerprint": data_pack.get("fingerprint", ""),
@@ -211,6 +237,35 @@ def compute_delta(prev_metrics, curr_metrics):
     }
 
 
+def build_axis_totals(root):
+    """Every declared axis's totals, in one place, for the ledger to record.
+
+    There are two `record_snapshot` call sites — the release cut
+    (`scripts/data_pack_manifest.py`) and the standalone recorder
+    (`scripts/strength_ledger.py`). Each axis added since v0.2.0 had to be wired into
+    both, and at the v0.7.0 cut one of them was missed: the release recorded an entry
+    with the fourth axis silently absent. Building the totals here means an axis is
+    added once and both callers get it.
+
+    Imported locally so this module keeps its no-heavy-imports property.
+    """
+    from engine.coherence import build_portfolio_coherence
+    from engine.provenance import build_portfolio_provenance
+    from engine.slot_roles import build_portfolio_slot_roles
+    from engine.tail_sensitivity import build_tail_totals
+
+    return {
+        # ADR-0003: the split lives in the provenance layer, not the readiness matrix.
+        "population_totals": build_portfolio_provenance(root)["totals"],
+        # ADR-0007: construct is measured by the coherence layer only.
+        "coherence_totals": build_portfolio_coherence(root)["totals"],
+        # ADR-0008: the tail axis spans two modules; build_tail_totals merges them.
+        "tail_totals": build_tail_totals(root),
+        # The anchor-slot declaration: what role each anchor plays vs. what its slot needs.
+        "slot_totals": build_portfolio_slot_roles(root)["totals"],
+    }
+
+
 def record_snapshot(
     ledger_path,
     dashboard,
@@ -219,6 +274,7 @@ def record_snapshot(
     population_totals=None,
     coherence_totals=None,
     tail_totals=None,
+    slot_totals=None,
 ):
     """Append the current snapshot to the ledger — for a named release only.
 
@@ -243,6 +299,7 @@ def record_snapshot(
         population_totals=population_totals,
         coherence_totals=coherence_totals,
         tail_totals=tail_totals,
+        slot_totals=slot_totals,
     )
     prev = entries[-1] if entries else None
     prev_metrics = prev["metrics"] if prev else None

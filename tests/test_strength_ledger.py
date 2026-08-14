@@ -156,6 +156,83 @@ class PopulationSplitTests(unittest.TestCase):
         self.assertEqual(moved["maxima_none_known"], -3)
         self.assertEqual(moved["shards_tail_driven"], -2)
 
+    def test_slot_split_records_and_never_fabricates_a_delta(self):
+        """The anchor-slot axis, folded in at v0.7.0 — fourth axis, same rule again.
+
+        Four splits at four consecutive releases. The guard is the point: an entry
+        recorded before an axis existed must never receive a delta on it, because a
+        delta against a release that never measured the thing is a fabricated
+        improvement.
+        """
+        coh = {"coherent": 4, "mixed": 18}
+        tail = {"quantified": 2, "none_known": 7, "shards_majority_driven_by_max": 7}
+        slots = {
+            "shards": 11,
+            "mode_slot_declarations": 11,
+            "shards_mode_slot_central_tendency": 8,
+            "shards_floor_slot": 7,
+        }
+        curr = capture_snapshot(
+            _dashboard(IMPROVED_MATRIX, "def"),
+            population_totals=POP_TOTALS,
+            coherence_totals=coh,
+            tail_totals=tail,
+            slot_totals=slots,
+        )["metrics"]
+        self.assertEqual(curr["likely_anchors"], 11)
+        self.assertEqual(curr["likely_not_a_mode"], 11)
+        self.assertEqual(curr["likely_central_tendency"], 8)
+        self.assertEqual(curr["floor_central_tendency"], 7)
+
+        pre_slot = capture_snapshot(
+            _dashboard(IMPROVED_MATRIX, "abc"),
+            population_totals=POP_TOTALS,
+            coherence_totals=coh,
+            tail_totals=tail,
+        )
+        self.assertNotIn("likely_not_a_mode", pre_slot["metrics"])
+        delta = compute_delta(pre_slot["metrics"], curr)
+        self.assertIn("maxima_quantified", delta)        # the v0.6.0 axis compares
+        self.assertNotIn("likely_not_a_mode", delta)     # the v0.7.0 axis is newly measured
+        self.assertNotIn("likely_central_tendency", delta)
+        self.assertNotIn("floor_central_tendency", delta)
+
+        later = capture_snapshot(
+            _dashboard(IMPROVED_MATRIX, "ghi"),
+            population_totals=POP_TOTALS,
+            coherence_totals=coh,
+            tail_totals=tail,
+            slot_totals={**slots, "shards_mode_slot_central_tendency": 6,
+                         "shards_floor_slot": 5},
+        )["metrics"]
+        moved = compute_delta(curr, later)
+        self.assertEqual(moved["likely_central_tendency"], -2)
+        self.assertEqual(moved["floor_central_tendency"], -2)
+        self.assertEqual(moved["likely_not_a_mode"], 0)
+
+    def test_the_likely_denominator_is_recorded_not_inferred(self):
+        """The v0.6.0 cut shipped a line reading '2 of 9' because the denominator was
+        inferred from the categories that happened to be named. The count of likely
+        anchors is its own recorded key for exactly that reason."""
+        from engine.strength_ledger import SLOT_KEYS
+
+        self.assertIn("likely_anchors", SLOT_KEYS)
+        metrics = capture_snapshot(
+            _dashboard(IMPROVED_MATRIX, "def"),
+            slot_totals={
+                "shards": 11,
+                "mode_slot_declarations": 11,
+                "shards_mode_slot_central_tendency": 8,
+                "shards_floor_slot": 7,
+            },
+        )["metrics"]
+        self.assertEqual(metrics["likely_anchors"], 11)
+        self.assertNotEqual(
+            metrics["likely_anchors"],
+            metrics["likely_central_tendency"] + metrics["floor_central_tendency"],
+            "the denominator must not coincide with a sum of the buckets beside it",
+        )
+
     def test_markdown_shows_a_dash_for_pre_split_entries(self):
         tmp = tempfile.TemporaryDirectory()
         try:
