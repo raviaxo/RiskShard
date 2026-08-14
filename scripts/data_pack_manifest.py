@@ -28,7 +28,11 @@ from engine.coherence import build_portfolio_coherence  # noqa: E402
 from engine.tail_sensitivity import build_tail_totals  # noqa: E402
 from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.readiness import build_readiness_dashboard  # noqa: E402
-from engine.strength_ledger import LEDGER_RELPATH, record_snapshot  # noqa: E402
+from engine.strength_ledger import (  # noqa: E402
+    LEDGER_RELPATH,
+    build_axis_totals,
+    record_snapshot,
+)
 
 
 def parse_args(argv=None):
@@ -61,18 +65,14 @@ def main(argv=None):
             # Cutting a release is exactly when the strength trend should tick.
             # record_snapshot is a no-op if this pack's fingerprint is already logged.
             dashboard = build_readiness_dashboard(ROOT)
-            # ADR-0003: the split lives in the provenance layer, not the readiness matrix.
-            population_totals = build_portfolio_provenance(ROOT)["totals"]
-            # ADR-0007: construct is measured by the coherence layer only.
-            coherence_totals = build_portfolio_coherence(ROOT)["totals"]
+            # Every declared axis, built in one place so a new one cannot reach this
+            # call site and miss the other (it did, at this cut).
             entry, appended, _ = record_snapshot(
                 ROOT / LEDGER_RELPATH,
                 dashboard,
                 datetime.date.today().isoformat(),
                 args.release,
-                population_totals=population_totals,
-                coherence_totals=coherence_totals,
-                tail_totals=build_tail_totals(ROOT),
+                **build_axis_totals(ROOT),
             )
             ledger_msg = (
                 f"Strength ledger: recorded {entry['data_pack_version']}."

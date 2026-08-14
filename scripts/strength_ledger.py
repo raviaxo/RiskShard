@@ -30,6 +30,7 @@ if str(ROOT) not in sys.path:
 from engine.coherence import build_portfolio_coherence  # noqa: E402
 from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.tail_sensitivity import build_tail_totals  # noqa: E402
+from engine.slot_roles import build_portfolio_slot_roles  # noqa: E402
 from engine.readiness import build_readiness_dashboard  # noqa: E402
 from engine.strength_ledger import (  # noqa: E402
     LEDGER_RELPATH,
@@ -86,6 +87,15 @@ def _format_metrics_line(metrics, delta):
             f"\n  coherent families    : {cell_if_measured('families_coherent')}"
             f" of {families}\n"
             f"  mixed families       : {cell_if_measured('families_mixed')}"
+        )
+    if "likely_not_a_mode" in metrics:
+        # The denominator is read from its own recorded key, never inferred from the
+        # categories beside it -- the bug caught at the v0.6.0 cut.
+        lines += (
+            f"\n  likely not a mode    : {cell_if_measured('likely_not_a_mode')}"
+            f" of {metrics.get('likely_anchors', 0)}\n"
+            f"  ..of which mean/med  : {cell_if_measured('likely_central_tendency')}\n"
+            f"  floor is central tend: {cell_if_measured('floor_central_tendency')}"
         )
     return lines
 
@@ -164,21 +174,12 @@ def main(argv=None):
     if args.cmd == "record":
         date = args.date or datetime.date.today().isoformat()
         dashboard = build_readiness_dashboard(ROOT)
-        # ADR-0003: the split lives in the provenance layer, not the readiness matrix.
-        population_totals = build_portfolio_provenance(ROOT)["totals"]
-        # ADR-0007: construct lives in the coherence layer, measured by neither of
-        # the other two. Folded in at the v0.5.0 cut, per the ADR-0003 precedent.
-        coherence_totals = build_portfolio_coherence(ROOT)["totals"]
-        # ADR-0008: the tail axis spans two modules; build_tail_totals merges them.
-        tail_totals = build_tail_totals(ROOT)
         entry, appended, delta = record_snapshot(
             ledger_path,
             dashboard,
             date,
             args.release,
-            population_totals=population_totals,
-            coherence_totals=coherence_totals,
-            tail_totals=tail_totals,
+            **build_axis_totals(ROOT),
         )
         if args.json:
             print(json.dumps({"appended": appended, "entry": entry, "delta": delta}, indent=2, sort_keys=True))
