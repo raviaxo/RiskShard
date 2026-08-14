@@ -11,6 +11,7 @@ from pathlib import Path
 from engine.loss_events import (
     GROSS_EVENT_TYPES,
     NON_LOSS_TYPES,
+    citation_candidates,
     gross_event_amounts,
     load_loss_events,
     registry_summary,
@@ -117,6 +118,36 @@ class BoundedTrialTests(unittest.TestCase):
     def test_external_contributions_is_unmeasured_not_zero(self):
         """None means nobody has recorded it. Reporting 0 would assert a fact we lack."""
         self.assertIsNone(trial_metrics(ROOT)["external_contributions"])
+
+    def test_zero_citations_is_explained_not_just_counted(self):
+        """"No shard cites an entry" only argues for retirement if some shard could.
+
+        Right now none can, and the reasons are structural rather than neglect: the
+        corpus is US/GB/IE while most shards are AU/CA/DE/FR/JP/SG, and it holds no
+        business-email-compromise events at all. Recording that distinction is the
+        difference between a trial that failed and a trial still running.
+        """
+        candidates = citation_candidates(ROOT)
+        self.assertEqual(len(candidates), 11)
+        no_match = [c for c in candidates if not c["candidates"]]
+        self.assertGreater(
+            len(no_match), 0,
+            "expected shards with no country+threat match against a US-listed corpus",
+        )
+
+    def test_a_candidate_is_blocked_when_it_would_lose_an_exceedance_statement(self):
+        """ADR-0008: a maximum that says how often it is exceeded outranks one that does not.
+
+        us_finance_data_breach_midmarket has genuine country+threat matches, and its
+        current maximum carries observed_rank. Swapping it for a registry entry — which
+        carries no exceedance by rule — would trade information for provenance.
+        """
+        blocked = [c for c in citation_candidates(ROOT) if c["blocked_by_exceedance_loss"]]
+        self.assertTrue(blocked, "expected at least one match blocked on exceedance grounds")
+        for candidate in blocked:
+            self.assertTrue(candidate["candidates"])
+            self.assertFalse(candidate["citable"])
+            self.assertIn(candidate["current_exceedance"], ("observed_rank", "modeled_quantile"))
 
     def test_no_aggregate_is_exposed(self):
         """ADR-0012 forbids a central tendency over this corpus, so none is computed."""

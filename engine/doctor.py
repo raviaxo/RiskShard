@@ -52,7 +52,12 @@ def loss_event_check(root):
     the registry is retired rather than carried — and a criterion nobody can see is a
     criterion nobody applies.
     """
-    from engine.loss_events import registry_summary, trial_metrics, validate_loss_events
+    from engine.loss_events import (
+        citation_candidates,
+        registry_summary,
+        trial_metrics,
+        validate_loss_events,
+    )
 
     errors = validate_loss_events(root)
     summary = registry_summary(root)
@@ -63,10 +68,17 @@ def loss_event_check(root):
             "detail": "registry empty (ADR-0012 trial not started)",
         }
     trial = trial_metrics(root)
+    # "0 shards cite an entry" is only a retirement signal if some shard COULD. Report
+    # both, so nobody reads "nothing fits yet" as "nobody bothered".
+    candidates = citation_candidates(root)
+    citable = sum(1 for c in candidates if c["citable"])
+    blocked = sum(1 for c in candidates if c["blocked_by_exceedance_loss"])
     detail = (
         f"{summary['events']} events, {summary['amounts']} typed amounts "
         f"({summary['non_loss_amounts']} are recoveries/settlements/deltas, not event costs); "
-        f"trial: {trial['shards_citing_a_registry_entry']} shard(s) cite an entry"
+        f"trial: {trial['shards_citing_a_registry_entry']} of {len(candidates)} shards cite an "
+        f"entry, {citable} could"
+        + (f" ({blocked} blocked: swapping would lose an exceedance statement)" if blocked else "")
     )
     if errors:
         return {

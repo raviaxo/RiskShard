@@ -84,5 +84,25 @@ ADR-0012 adopted the registry **with a retirement test**, measured at two releas
 than none, because it implies a currency it does not have. `trial_metrics()` computes both numbers
 and the doctor prints them every run, so the criterion is visible rather than remembered.
 
+### First reading: 0 shards cite an entry, and **0 could**
+
+That second number is the one that matters, and it is why `citation_candidates()` exists. *"Nobody
+cited an entry"* argues for retirement only if somebody **could** have. Measured across all 11
+shards:
+
+- **10 of 11 have no country-and-threat match at all.** The corpus is US/GB/IE; the shards are
+  AU · CA · DE · FR · GB · JP · SG · US. And the registry holds **no business-email-compromise
+  events**, so the three BEC shards cannot match on any corpus of this shape.
+- **1 shard has genuine matches and is still blocked.** `us_finance_data_breach_midmarket` matches
+  four events on country and threat, two of them on industry as well. But its current `impact.max`
+  carries `observed_rank` — one of only two informative exceedance statements in the portfolio —
+  and a registry entry carries none by rule. **Swapping would trade an exceedance statement for
+  provenance**, which is a regression under [ADR-0008](../docs/adr/0008-the-governed-tail.md).
+
+So the trial is **still running, not failing**. Zero citations here means *nothing fits yet*, not
+*nobody bothered*, and the two are different results with different consequences. What would change
+it: a non-US slice, BEC events, or a shard whose maximum currently declares `none_known` and finds
+a country-and-threat match. Seven maxima do declare `none_known` — none of them is US.
+
 Expansion beyond this slice — other jurisdictions, PACER, regulator penalty registers — is not
 authorized and needs its own decision once the maintenance path is proven.

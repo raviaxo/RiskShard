@@ -138,12 +138,22 @@ reading** (SolarWinds' `$15M` is a policy *limit*, not a loss — the same error
 Coinbase's `$345M` is a multi-event expense *category*), so the census's 38 is **36** here. That is
 the higher registry standard doing its job, and it is recorded rather than quietly reconciled.
 
-**What remains on this objective:** no shard cites an entry yet, which is one half of ADR-0012's
-kill criterion. The natural next step is to see whether any of the five hand-researched
-`single_documented_event_loss` maxima — Arup, AFP, Latitude, SPF, Coalition — should instead cite a
-registry entry, and to record the answer either way. **Do not force it:** the corpus is US-listed
-and those anchors are AU/SG/GB, so the honest outcome may be that none of them can, which is itself
-the trial returning a result.
+**The citation question is answered, and the answer is no — measured, not assumed.**
+`citation_candidates()` tests every shard's maximum against the corpus: **0 of 11 cite an entry and
+0 *could*.** Ten have no country-and-threat match (the corpus is US/GB/IE, the shards are
+AU·CA·DE·FR·GB·JP·SG·US, and there are **no BEC events** in it at all). The eleventh,
+`us_finance_data_breach_midmarket`, has four genuine matches and is still blocked: its maximum
+carries `observed_rank`, and a registry entry carries no exceedance by rule, so swapping would
+trade an exceedance statement for provenance — a regression under ADR-0008.
+
+**So the trial is still running, not failing.** Zero citations means *nothing fits yet*, not
+*nobody bothered*, and only the second is grounds to retire it. That distinction is now computed
+and printed by the doctor every run rather than argued about later.
+
+**What would move it:** a non-US slice, BEC events, or a shard whose maximum declares `none_known`
+and finds a country-and-threat match. Seven maxima declare `none_known` and **none of them is US** —
+which makes expansion beyond the US slice the thing the trial is actually waiting on. That
+expansion is **not authorized** by ADR-0012 and needs its own decision.
 
 The other authorized objective remains **unstarted**:
 

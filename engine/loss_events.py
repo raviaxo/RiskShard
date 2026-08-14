@@ -161,3 +161,64 @@ def trial_metrics(root):
         "citing_shards": sorted(citing),
         "external_contributions": None,
     }
+
+#: Exceedance bases that say something about being exceeded. A registry entry carries
+#: none of these by rule, so replacing an anchor that has one is a regression.
+INFORMATIVE_EXCEEDANCE = frozenset({"observed_rank", "modeled_quantile"})
+
+
+def citation_candidates(root):
+    """Could any shard's `impact.max` legitimately cite a registry entry?
+
+    The other half of ADR-0012's kill criterion is "no shard cites an entry", and that
+    number is worthless without knowing whether any shard *could*. Zero citations
+    because nothing fits is a different result from zero citations because nobody
+    bothered, and only the second is a reason to retire the registry.
+
+    A candidate must match the shard's country **and** threat and carry a gross amount.
+    Even then it is `blocked` when the shard's current maximum already carries an
+    informative exceedance basis: swapping a maximum that says how often it is exceeded
+    for one that says nothing would lose information, which ADR-0008 exists to prevent.
+    """
+    import yaml
+
+    root = Path(root)
+    records = {}
+    for path in sorted((root / "evidence").glob("*.yaml")):
+        payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        for record in payload.get("records", []):
+            records[record["id"]] = record
+
+    events = load_loss_events(root)
+    out = []
+    for path in sorted((root / "risk_modules").glob("*.yaml")):
+        module = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        calibration_path = (module.get("artifacts") or {}).get("calibration")
+        if not calibration_path:
+            continue
+        profile = yaml.safe_load((root / calibration_path).read_text(encoding="utf-8")) or {}
+        maximum = ((profile.get("parameters") or {}).get("impact") or {}).get("max") or {}
+        anchor = records.get(maximum.get("evidence_id"), {})
+        context = module.get("context") or {}
+        matches = [
+            event for event in events
+            if (event.get("entity") or {}).get("country") == context.get("country")
+            and (event.get("event") or {}).get("threat") == module.get("threat")
+            and gross_event_amounts(event)
+        ]
+        exceedance = anchor.get("exceedance_basis")
+        blocked = bool(matches) and exceedance in INFORMATIVE_EXCEEDANCE
+        out.append({
+            "shard": module.get("id"),
+            "country": context.get("country"),
+            "threat": module.get("threat"),
+            "current_exceedance": exceedance,
+            "candidates": [event["id"] for event in matches],
+            "industry_matched": [
+                event["id"] for event in matches
+                if (event.get("entity") or {}).get("industry") == context.get("industry")
+            ],
+            "blocked_by_exceedance_loss": blocked,
+            "citable": bool(matches) and not blocked,
+        })
+    return out
