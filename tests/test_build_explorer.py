@@ -68,6 +68,25 @@ class RenderTests(unittest.TestCase):
         self.assertIn("Why these figures changed", html)
         self.assertIn(revisions[0]["title"], html)
 
+    def test_the_front_door_discloses_that_its_headline_count_moved(self):
+        """A count that halves on unchanged evidence must say so where it is read.
+
+        The cell-matched headline went 31 -> 7 on 2026-08-15 with no parameter,
+        source, value or caveat touched, because fit stopped being an authored field
+        and became a computed one (ADR-0013). The README and the evidence report both
+        carry that correction; this page is the one most people actually see, so a
+        reader arriving at "7 cell-matched" must be able to learn why here rather
+        than by opening the changelog.
+
+        Pins the disclosure, deliberately not the digits — the live counts are
+        rendered from DATA.totals and will move again.
+        """
+        html = render(SAMPLE)
+        for phrase in ("2026-08-15", "45 of 66", "No published figure moved"):
+            self.assertIn(phrase, html, f"front door no longer discloses: {phrase}")
+        # the consequence a reader needs while reading the rows themselves
+        self.assertIn("statutory penalty cap", html)
+
     def test_citations_pin_to_an_immutable_release(self):
         """ADR-0004: a cited figure must still resolve to the value that was cited."""
         from scripts.build_explorer import latest_release
