@@ -129,10 +129,20 @@ value, unit and status. 317 tests, evidence and preflight clean. Data pack `3b94
 ⚠️ **The strength ledger will read `needs_review` again** — the pack fingerprint moved a third
 time. Same as before: correct, and it clears when a release is cut, not a fault.
 
-**Worth considering next:** cutting **v0.8.0**. Three fingerprint moves are now unrecorded in the
-ledger, and the front door carries a materially different (and worse) headline than the last tagged
-release — anything published about finding 6 or ADR-0013 currently resolves against v0.7.0, which
-does not contain them.
+✅ **v0.8.0 is cut** (2026-08-15, owner authorized). Data-pack release
+`2026.08.15-v0.8.0` (91 files, `ed6348d12ab0`), immutable explorer archive at
+`docs/r/2026.08.15-v0.8.0/`, ledger caught up, **doctor fully green** — the `needs_review` that
+had stood across three fingerprint moves is cleared. Anything published about finding 6 or
+ADR-0013 now resolves against a release that contains them.
+
+**Ledger tick: the first negative one.** `cell-matched 7 (-24)`, `population-bridged 59 (+24)`,
+every other axis 0. The README carries a note beneath the table saying why a falling number here is
+the measurement getting honest rather than the evidence getting worse — without it the Progress
+table reads as a collapse in data strength, which is the opposite of what happened.
+
+**This also starts the ADR-0012 clock.** The registry trial's kill criterion is measured at two
+release cycles; this is the first. At the second, count shards whose `impact.max` cites a registry
+entry and whether anyone outside the project has contributed one — if neither has moved, retire it.
 
 **⚠️ The whole queue below this line is older than these sessions and has not been re-verified
 against them. Read this restart point first.**

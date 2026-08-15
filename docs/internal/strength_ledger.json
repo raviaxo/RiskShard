@@ -181,6 +181,37 @@
         "shards_tail_driven": 7
       },
       "release_version": "2026.08.13-v0.7.0"
+    },
+    {
+      "data_pack_version": "2026.08.15",
+      "date": "2026-08-15",
+      "fingerprint": "ed6348d12ab02a0a9582ba23ffa199527014f3ea0bec821e3cd6577ddd4267b7",
+      "grades": {
+        "benchmark_review_candidate": 6,
+        "governed_starter": 5
+      },
+      "metrics": {
+        "families_coherent": 4,
+        "families_mixed": 18,
+        "floor_central_tendency": 7,
+        "likely_anchors": 11,
+        "likely_central_tendency": 8,
+        "likely_not_a_mode": 11,
+        "maxima": 11,
+        "maxima_none_known": 7,
+        "maxima_quantified": 2,
+        "params_bridged": 0,
+        "params_cell_matched": 7,
+        "params_cross_cell": 59,
+        "params_cross_country": 15,
+        "params_missing": 0,
+        "params_source_backed": 66,
+        "params_total": 66,
+        "shards": 11,
+        "shards_fully_sourced": 11,
+        "shards_tail_driven": 7
+      },
+      "release_version": "2026.08.15-v0.8.0"
     }
   ]
 }

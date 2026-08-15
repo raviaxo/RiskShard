@@ -5,7 +5,14 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
-## Unreleased
+## v0.8.0 — 2026-08-15
+
+**The release where a published count got worse on purpose.** No loss figure moves; the
+headline number does, in the direction a correction should move it. Cell-matched
+parameters go **31 → 7 of 66** because the field that recorded fit was measured against
+the declarations it claimed to summarise and disagreed with them on two cards in three.
+
+Data-pack release: `data_pack_releases/2026.08.15-v0.8.0.json`.
 
 **Fit stopped being a field and became a computation.** `population_match` is retired
 from the schema and from all 141 evidence records; how far a record sits from a shard —
