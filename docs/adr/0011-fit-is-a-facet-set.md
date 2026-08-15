@@ -220,8 +220,18 @@ here and **not made**. See open question 3.
    declared field. It is arguably a fit facet (a 2019 measurement is distant from a 2026 target)
    and is not addressed here.
 
-3. **Should `population_match` carry its target, be computed per consumer, or be relabelled as an
-   authored judgement about our cell?** Raised 2026-08-14 by the repair above: it is a stored
-   target-relative value, which Decision part 1 forbids, and the dilution/borrowing distinction it
-   encodes cannot be derived mechanically. A schema decision — needs its own ADR before any code
-   moves.
+3. ✅ **CLOSED 2026-08-15 by [ADR-0013](0013-fit-is-derived-not-stored.md) — it is computed, and
+   the stored field is retired.** *(Original entry:)* **Should `population_match` carry its target,
+   be computed per consumer, or be relabelled as an authored judgement about our cell?** Raised
+   2026-08-14 by the repair above: it is a stored target-relative value, which Decision part 1
+   forbids, and the dilution/borrowing distinction it encodes cannot be derived mechanically. A
+   schema decision — needs its own ADR before any code moves.
+
+   **The premise in that last sentence was wrong, and measuring it is what decided the question.**
+   The dilution/borrowing call is real but is not being made consistently: stored fit equals the fit
+   derivable from the record's own declaration on only **21 of 66** cards, and a wildcard
+   declaration that fails to name our cell's value is recorded as a bridge **28** times and left
+   unrecorded **72** times — twice within one file, on records whose prose says the same thing.
+   The containment-aware derivation that would have preserved the distinction was measured too and
+   publishes **7** facet claims against the **43** the repository publishes today, which is quieter
+   rather than louder. Published as [finding 6](../FINDINGS.md).

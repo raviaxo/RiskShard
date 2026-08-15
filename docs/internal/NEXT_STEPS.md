@@ -119,26 +119,54 @@ fingerprint moved twice (`22db117f2bec` → `fe0d0ffab227` with the registry, �
 the declaration reconciliation) — correct, and it clears at the next release rather than being a
 fault.
 
-**ACTIVE OBJECTIVE: none. The ADR-0011 consequence is fully discharged** (#136, #137). Pick from
-"What needs a decision" below or from the queue.
+**ACTIVE OBJECTIVE: implement ADR-0013 — derive fit, retire the stored field.** Both decisions
+that were pending on the owner were taken on 2026-08-15 and are recorded below; the first left a
+code objective, which is now the queue head. The second is closed with no work.
 
 **⚠️ The whole queue below this line is older than these sessions and has not been re-verified
 against them. Read this restart point first.**
 
-### What needs a decision (both are decisions, not work)
+### What needed a decision — both decided 2026-08-15
 
-1. **ADR-0011 open question 3 — `population_match` is a stored target-relative value.** Raised by
-   the #137 repair and recorded in [ADR-0011](../adr/0011-fit-is-a-facet-set.md) → Correction. Once
-   declarations name the measured population, every stored `bridged_on` reads as *the declared
-   population does not name this cell's value* — a fit computed against the authoring shard and
-   frozen onto the record, which Decision part 1 forbids. It cannot be derived away: an `all`
-   declaration is deliberately dilution rather than borrowing (ADR-0003), and a naive derivation
-   flags 45 of 66 cards against the 35 recorded. Options are to store the target alongside the fit,
-   compute fit per consumer, or relabel the field as an authored judgement about our own cell.
-   **Schema change → Change Control → needs its own ADR before any code moves.**
-2. **The registry trial's non-US expansion.** Unchanged from the prior close and still the thing
-   the trial waits on: seven maxima declare `none_known` and none is US. **Not authorized by
-   ADR-0012**; needs a decision, not a branch.
+1. ✅ **DECIDED — derive it. [ADR-0013](../adr/0013-fit-is-derived-not-stored.md) is accepted and
+   the stored field is retired.** The premise that blocked this — *"it cannot be derived away,
+   because an `all` declaration is deliberately dilution and only the author can make that call"* —
+   was measured on 2026-08-15 and does not hold. The call is real but is not being made
+   consistently: stored fit equals derivable fit on **21 of 66** cards, and a wildcard that fails to
+   name our cell's value is recorded as a bridge **28** times and left unrecorded **72** times,
+   twice inside `evidence/au_finance_bec.yaml` on records whose prose says the same thing. The
+   containment-aware derivation that would have preserved the distinction publishes **7** facet
+   claims against the **43** published today — quieter, which is the disallowed direction. Country
+   already derives strictly, which is why it is the one facet where stored and derived agree.
+   Published as [finding 6](../FINDINGS.md).
+
+   **→ This leaves a code objective, not a decision.** Implement the derivation, remove
+   `population_match` from the schema and all 141 records, and update the surfaces. Expect
+   `params_cell_matched` **31 → 7** and `params_cross_cell` **35 → 59** on the front door and in
+   `docs/index.html`; `params_cross_country` stays **15**; no loss figure moves. Finding 4's
+   published counts and finding 6's move together, and `tests/test_findings.py` fails until the page
+   is re-derived. Five cards lose ADR-0003's "matched by method" exemption — say so, don't absorb it.
+
+2. ✅ **DECIDED — declined, and the axis was wrong.** No expansion is authorized. The trial runs to
+   its own kill criterion, which ADR-0012 measures **at two release cycles** and which has had
+   **zero** — the ADR was accepted 2026-08-13, the same day v0.7.0 was cut.
+
+   ⚠️ **Two errors corrected in the framing this item carried.** *(Original entry: "The registry
+   trial's non-US expansion … seven maxima declare `none_known` and none is US.")*
+
+   - **One of the seven IS US** — `us_finance_bec_midmarket` at `impact.max`
+     (`coalition_2023_us_ftf_largest_loss_impact_stress`). The seven are AU·BEC, AU·ransomware,
+     DE·mfg·ransomware, GB·FS·data_breach, JP·mfg·ransomware, SG·BEC, **US·FS·BEC**.
+   - **Country is not the binding constraint — threat is.** The registry's 36 events are US 34 /
+     IE 1 / GB 1, and by threat: 24 `unspecified_cyber_incident`, 7 ransomware, 4 data_breach,
+     1 third_party_outage, **0 BEC**. **Three of the seven are BEC**, and a non-US expansion serves
+     none of them — including the one that already has a country match. ADR-0012 justified the trial
+     on governing five ungoverned one-off tail anchors; **four are in this list and three of those
+     are BEC**, so the first slice contains zero events for the majority of the payoff it was
+     accepted for.
+
+   **If anything is expanded later it should be BEC, not a jurisdiction.** That needs its own ADR
+   amendment and should wait for one release cycle so the kill criterion has something to measure.
 
 ### What shipped 2026-08-14/15 (this arc)
 
@@ -193,9 +221,14 @@ trade an exceedance statement for provenance — a regression under ADR-0008.
 and printed by the doctor every run rather than argued about later.
 
 **What would move it:** a non-US slice, BEC events, or a shard whose maximum declares `none_known`
-and finds a country-and-threat match. Seven maxima declare `none_known` and **none of them is US** —
-which makes expansion beyond the US slice the thing the trial is actually waiting on. That
-expansion is **not authorized** by ADR-0012 and needs its own decision.
+and finds a country-and-threat match. ~~Seven maxima declare `none_known` and none of them is US —
+which makes expansion beyond the US slice the thing the trial is actually waiting on.~~
+**CORRECTED 2026-08-15 — both halves of that sentence were wrong.** One of the seven *is* US
+(`us_finance_bec_midmarket`), and the binding constraint is **threat, not country**: three of the
+seven are BEC and the registry holds **0 BEC events**, so a non-US slice serves none of them. The
+expansion worth considering is BEC. It is **not authorized** by ADR-0012, was **declined**
+2026-08-15, and should wait one release cycle so the kill criterion has something to measure. See
+"What needed a decision" above.
 
 ✅ **The other authorized objective is DONE (2026-08-14/15, #136 + #137).**
 

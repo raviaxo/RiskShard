@@ -13,7 +13,7 @@ recommendation; only the repo owner moves it to `Accepted`.
 |---|---|---|
 | [0001](0001-loss-chain-scenario-modeling.md) | Loss-chain scenario modeling | Accepted |
 | [0002](0002-portable-scenario-seed.md) | Portable scenario seeds (machine-independent simulation) | Accepted |
-| [0003](0003-shared-impact-bridges.md) | Shared, named impact bridges | Accepted (parts 1–2) |
+| [0003](0003-shared-impact-bridges.md) | Shared, named impact bridges | Accepted (parts 1–2); stored `population_match` superseded by 0013 |
 | [0004](0004-citable-parameter-identifiers.md) | Citable parameter identifiers | Accepted |
 | [0005](0005-documented-loss-event-registry.md) | Documented loss-event registry | Superseded by 0012 |
 | [0006](0006-depth-over-breadth.md) | Depth over breadth | Accepted |
@@ -23,3 +23,4 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0010](0010-where-riskshard-stops.md) | Where RiskShard stops: the evidence object is the product | Accepted |
 | [0011](0011-fit-is-a-facet-set.md) | Fit is a facet set, not a score | Accepted (corrected 2026-08-14) |
 | [0012](0012-loss-event-registry-bounded-trial.md) | The loss-event registry, as a bounded trial | Accepted |
+| [0013](0013-fit-is-derived-not-stored.md) | Fit is derived against a target, not stored on the record | Accepted |
