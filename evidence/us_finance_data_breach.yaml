@@ -17,9 +17,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: bridged
-      bridged_on: [country]
     applicability:
       industries: [all]
       countries: [GB]
@@ -44,9 +41,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: bridged
-      bridged_on: [country]
     applicability:
       industries: [all]
       countries: [GB]
@@ -71,9 +65,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: bridged
-      bridged_on: [country]
     applicability:
       industries: [all]
       countries: [GB]
@@ -99,8 +90,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: cost_component
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [US]
@@ -126,8 +115,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [US]
@@ -159,8 +146,6 @@ records:
       sample is 1/579 (~0.17% of claims). That is a WITHIN-SAMPLE rate on insured claims, not a population
       exceedance: the sample is censored by policy limits and excludes uninsured and unreported losses, so
       the true rate of losses above USD 11.5M is higher than 1/579, not lower.
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [US]

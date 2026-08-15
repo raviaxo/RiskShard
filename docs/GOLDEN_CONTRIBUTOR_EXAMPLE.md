@@ -85,14 +85,24 @@ primary source used all-sector for a mid-market shard is `medium`, not `high`.
 **`applicability` declares the population the source measured — not the shard you are
 writing for.** The example below declares `industries: [all]` and
 `company_size_bands: [all]` deliberately, because that is what IBM measured, even though
-the shard is financial-services mid-market. Narrowing it to the shard and recording the
-gap only in `population_match.bridged_on` is the mistake: it reads as a claim the source
-never made, and the prose in `limitations` is not what a machine reads.
+the shard is financial-services mid-market. Narrowing it to the shard is the mistake: it
+reads as a claim the source never made, and the prose in `limitations` is not what a
+machine reads.
 
-This is enforced, not merely advised. A record **earns** a bridge on a facet by declaring
-a population that does not name the consuming cell's value; claiming one while declaring
-that value fails `tests/test_provenance.py`. Twenty-one records took the wrong route and
-were corrected on 2026-08-14 — see [finding 5](FINDINGS.md) and
+**This is the only fit-related field you author.** How far the record sits from any given
+shard — the country, sector, size and threat it was borrowed across — is *computed* from
+this declaration against that shard's cell, and stored nowhere
+([ADR-0013](adr/0013-fit-is-derived-not-stored.md)). Declaring the measured population
+honestly is the whole job; get it right and the fit follows for our cells and for a
+reader's. There used to be a `population_match` field to hand-maintain alongside it; it
+disagreed with the declarations on 45 of 66 cards and was retired on 2026-08-15
+([finding 6](FINDINGS.md)). **The schema now refuses it**, so an older example that
+includes it will fail validation — delete the block.
+
+The declaration itself is enforced, not merely advised. A record **earns** a bridge on a
+facet by declaring a population that does not name the consuming cell's value; claiming
+one while declaring that value fails `tests/test_provenance.py`. Twenty-one records took
+the wrong route and were corrected on 2026-08-14 — see [finding 5](FINDINGS.md) and
 [ADR-0011](adr/0011-fit-is-a-facet-set.md) → Correction. Two shapes to avoid: restating
 the cell exactly (`[financial_services]` for a finance shard), and hiding it beside a
 wildcard (`[all, data_breach]`, or `[SG, global]` on a US survey).

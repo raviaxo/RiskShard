@@ -17,8 +17,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -43,8 +41,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -69,8 +65,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: org_prevalence_loss_event
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -96,9 +90,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: median_total_event_cost
-    population_match:
-      status: bridged
-      bridged_on: [threat]
     applicability:
       industries: [all]
       countries: [global]
@@ -124,8 +115,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -152,8 +141,6 @@ records:
     evidence_type: source_backed
     measurement_basis: single_documented_event_loss
     exceedance_basis: none_known
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]

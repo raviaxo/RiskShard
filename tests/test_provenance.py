@@ -126,28 +126,65 @@ class PortfolioProvenanceTests(unittest.TestCase):
 class PopulationMatchTests(unittest.TestCase):
     """ADR-0003: the headline splits cell-matched from bridged, and the split is honest."""
 
-    def test_card_population_is_country_strict(self):
+    def test_card_population_is_strict_on_every_facet(self):
+        """ADR-0013: one rule, all four facets, computed against the passed cell.
+
+        Rewritten 2026-08-15. It previously asserted the two-layer behaviour — a
+        stored `population_match` for sector/size/threat plus a country-strict
+        consumption check — and its third case pinned the exact shape ADR-0013
+        retired: a stored bridge surviving into the card on a record whose own
+        declaration was never consulted.
+        """
         from engine.provenance import _card_population
 
-        # A record that names the shard's country and is population-matched: cell-matched.
-        record = {"population_match": {"status": "matched"},
-                  "applicability": {"countries": ["GB"]}}
-        self.assertEqual(_card_population(record, "GB")["status"], "matched")
+        cell = {"country": "GB", "industry": "financial_services",
+                "company_size": "mid_market", "threat": "data_breach"}
 
-        # A global survey consumed by a concrete cell is bridged on country,
-        # whatever it honestly declared.
-        record = {"population_match": {"status": "matched"},
-                  "applicability": {"countries": ["global"]}}
-        pop = _card_population(record, "AU")
-        self.assertEqual(pop["status"], "bridged")
-        self.assertIn("country", pop["bridged_on"])
+        # A declaration naming every one of the cell's values: nothing borrowed.
+        record = {"applicability": {"countries": ["GB"], "industries": ["financial_services"],
+                                    "company_size_bands": ["mid_market"],
+                                    "threats": ["data_breach"]}}
+        self.assertEqual(_card_population(record, cell)["status"], "matched")
 
-        # Stored over-claims survive into the card even when the country matches.
-        record = {"population_match": {"status": "bridged", "bridged_on": ["sector", "size"]},
-                  "applicability": {"countries": ["US"]}}
-        pop = _card_population(record, "US")
+        # A global survey consumed by a concrete cell is bridged on country.
+        record = {"applicability": {"countries": ["global"], "industries": ["financial_services"],
+                                    "company_size_bands": ["mid_market"],
+                                    "threats": ["data_breach"]}}
+        pop = _card_population(record, cell)
         self.assertEqual(pop["status"], "bridged")
+        self.assertEqual(pop["bridged_on"], ["country"])
+
+        # A wildcard earns a bridge on the facet it wildcards — the 2026-08-15
+        # change of behaviour, and the one that moved the published counts.
+        record = {"applicability": {"countries": ["GB"], "industries": ["all"],
+                                    "company_size_bands": ["all"],
+                                    "threats": ["data_breach"]}}
+        pop = _card_population(record, cell)
         self.assertEqual(pop["bridged_on"], ["sector", "size"])
+
+        # Nothing is read from a stored fit, so a stale one cannot reach the card.
+        record = {"population_match": {"status": "bridged", "bridged_on": ["threat"]},
+                  "applicability": {"countries": ["GB"], "industries": ["financial_services"],
+                                    "company_size_bands": ["mid_market"],
+                                    "threats": ["data_breach"]}}
+        self.assertEqual(_card_population(record, cell)["status"], "matched")
+
+    def test_no_record_carries_the_retired_stored_fit(self):
+        """ADR-0013: `population_match` is refused, not ignored.
+
+        The schema rejects it, and this states the same thing over the corpus so a
+        record that slipped in through a hand-edited pack fails here too.
+        """
+        import yaml
+
+        from engine.provenance import legacy_population_match
+
+        offenders = []
+        for path in sorted((ROOT / "evidence").glob("*.yaml")):
+            records = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("records", [])
+            offenders += [f"{path.name}/{r.get('id')}" for r in records
+                          if legacy_population_match(r)]
+        self.assertEqual(offenders, [], "\n".join(offenders))
 
     def test_cards_display_the_record_the_calibration_selects(self):
         # The invariant behind the challenge affordance: the record a card shows

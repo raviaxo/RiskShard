@@ -18,8 +18,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -44,8 +42,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -71,8 +67,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -97,8 +91,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [AU]
@@ -123,8 +115,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [AU]
@@ -150,8 +140,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [AU]
@@ -177,8 +165,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [AU]
@@ -204,8 +190,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [AU]
@@ -230,8 +214,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [AU]
@@ -259,8 +241,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: reported_case_rate
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [AU]
@@ -293,8 +273,6 @@ records:
     evidence_type: source_backed
     measurement_basis: single_documented_event_loss
     exceedance_basis: none_known
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [AU]
@@ -341,9 +319,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: bridged
-      bridged_on: [sector, size, threat]
     applicability:
       industries: [all]
       countries: [AU]
@@ -368,9 +343,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: bridged
-      bridged_on: [threat]
     applicability:
       industries: [financial_services]
       countries: [AU]

@@ -129,9 +129,8 @@ def build_example_pack(pack):
             f"{'mean_total_event_cost' if unit == 'currency' else 'org_prevalence_incident'}\n"
             # ADR-0008: the schema requires an exceedance declaration on any maximum.
             + ("    exceedance_basis: none_known\n" if parameter == "impact.max" else "")
-            + f"    population_match:\n"
-            f"      status: matched\n"
-            f"    applicability:\n"
+            # ADR-0013: fit is derived from `applicability`, never authored.
+            + f"    applicability:\n"
             f"      industries: [financial_services]\n"
             f"      countries: [CA]\n"
             f"      company_size_bands: [mid_market]\n"

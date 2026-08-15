@@ -17,8 +17,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [GB]
@@ -43,8 +41,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [GB]
@@ -69,8 +65,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [GB]
@@ -96,8 +90,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: perceived_cost_self_reported
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [GB]
@@ -123,8 +115,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [GB]
@@ -149,8 +139,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [GB]
@@ -177,8 +165,6 @@ records:
     evidence_type: source_backed
     measurement_basis: regulatory_penalty_issued
     exceedance_basis: none_known
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [GB]

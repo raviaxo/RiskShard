@@ -74,34 +74,32 @@ def _declared_for(record):
     }
 
 
-def _card_population(record, cell_country):
-    """ADR-0003: is this card's evidence drawn from the shard's own cell?
+def _card_population(record, cell):
+    """ADR-0013: is this card's evidence drawn from the target cell?
 
-    Combines two layers: the record's stored `population_match` (specific declared
-    applicability beyond the source's measured population) and a country-strict
-    consumption check — a record whose applicability does not name the shard's own
-    country (a global survey, or a foreign declaration reached via direct
-    calibration reference) is bridged on country for this shard, whatever it
-    honestly declared. Sector/size/threat come from the stored layer only:
-    honest wildcard declarations are dilution, carried by the caveat, not borrowing.
+    One layer, computed. A record is bridged on a facet when its declared
+    `applicability` does not name that facet's value for the cell being computed
+    against — the same strict rule on all four facets, with no wildcard exemption.
+    Nothing is read from the record beyond its declaration, so pointing this at a
+    consumer's cell instead of ours is a matter of passing a different `cell`.
 
-    ADR-0011: the result is a computation against *our* cell, not an attribute of
-    the record. Every renderer must name the target it was computed against — see
-    `format_fit`.
+    This replaces a two-layer version that combined a stored `population_match` with
+    a country-strict consumption check. The stored layer disagreed with the
+    declarations on 45 of 66 cards and treated the same wildcard as dilution 72 times
+    and as borrowing 28 — [finding 6](../docs/FINDINGS.md). The country layer was
+    always this rule, and is why country was the one facet the two agreed on.
 
-    Since the 2026-08-14 reconciliation both layers are target-relative: every stored
-    bridge is now explicable as *the declared population does not name this cell's
-    value*, verified over all 66 cards. That is a cleaner state and an unresolved one
-    — a target-relative value stored on the record is the shape ADR-0011 forbids, and
-    it cannot simply be derived away, because an `all` declaration is deliberately
-    dilution rather than borrowing (ADR-0003) and only the author can make that call.
-    Recorded as an open question, not fixed here: it is a schema decision.
+    What is deliberately *not* encoded here, per ADR-0013 Decision part 2: dilution
+    (an all-sector average that contains our sector) is not distinguished from
+    borrowing (a UK measure that excludes the US). Both read as bridged. The
+    distinction is real and is carried by `limitations`, per record, in prose. The
+    containment-aware alternative was measured and publishes a third of the caveat
+    this rule does, which is the wrong direction under caveats-get-louder.
+
+    ADR-0011: the result is a computation against a target, not an attribute of the
+    record, and every renderer must name the target — see `format_fit`.
     """
-    pm = record.get("population_match") or {}
-    dims = set(pm.get("bridged_on") or [])
-    countries = (record.get("applicability") or {}).get("countries") or []
-    if cell_country and cell_country not in countries:
-        dims.add("country")
+    dims = derivable_bridges({"declared_for": _declared_for(record)}, cell)
     return {"status": "bridged" if dims else "matched", "bridged_on": sorted(dims)}
 
 
@@ -138,9 +136,10 @@ def derivable_bridges(card, cell):
     alternative and it is **quieter** than what the repository publishes today
     (7 facet-instances against 43), which is the wrong direction under the
     caveats-get-louder rule. The country layer of `_card_population` has always
-    worked this way, and it is why country is the one facet the two agree on.
+    worked this way, and it is why country was the one facet the two agreed on.
 
-    This is the measurement instrument for [finding 6], not yet the rendered value.
+    This is what `_card_population` renders. It was written first as the measurement
+    instrument for [finding 6] and adopted as the value in the same arc.
     """
     declared = card.get("declared_for") or {}
     return sorted(
@@ -154,23 +153,36 @@ def derivable_bridges(card, cell):
 def unexplained_bridges(card, cell):
     """Facets a card claims as bridged that its own declaration says match the cell.
 
-    The defect detector, in its general form. A record earns a bridge on a facet by
-    declaring a population that does **not** name this cell's value; claiming one
-    while declaring the cell itself means the declaration is the target it was
-    borrowed *for*, not the population it came *from*.
+    Finding 5's detector, kept and now structurally satisfied. A record earns a
+    bridge on a facet by declaring a population that does **not** name this cell's
+    value; claiming one while declaring the cell itself means the declaration is the
+    target it was borrowed *for*, not the population it came *from*. Measured
+    2026-08-14: 16 cards across 21 records, all reconciled the same day.
 
-    Measured 2026-08-14 over `origin/main`: 16 cards across 21 records. All were
-    reconciled and this returns empty everywhere — a test holds it there. Both
-    shapes it catches: an exact restatement of the cell (`[financial_services]` for
-    a finance shard) and one hidden beside a wildcard (`[all, data_breach]`,
-    `[SG, global]` on a US survey).
+    **Since ADR-0013 this cannot return anything.** The rendered set *is*
+    `derivable_bridges`, so the difference is empty by construction rather than by
+    discipline — which is the point of deriving it. It is kept because it states the
+    invariant in the place a reader looks for it, and it still guards the one way the
+    defect could return: a caller passing a hand-built card.
 
-    Stated against `derivable_bridges`: the stored set must be a subset of the
-    derivable one. The converse gap — derivable but not stored — is not a defect
-    under ADR-0003 and is what finding 6 measures.
+    The live check moved to `legacy_population_match()`, which catches a record
+    re-introducing the retired stored field. That is the shape a contributor working
+    from an old example would actually produce.
     """
     stored = set(((card.get("population") or {}).get("bridged_on")) or [])
     return sorted(stored - set(derivable_bridges(card, cell)))
+
+
+def legacy_population_match(record):
+    """True when a record still carries the `population_match` field ADR-0013 retired.
+
+    Fit is computed against a target now, so a stored fit is not merely redundant —
+    it is a target-relative value frozen at authoring time, the shape ADR-0011
+    Decision part 1 forbids and the one finding 6 measured going wrong. A
+    contributor copying an old record is the realistic way it comes back, so the
+    check is on the record rather than on the rendered card.
+    """
+    return "population_match" in (record or {})
 
 
 def format_declared_for(declared_for):
@@ -255,7 +267,6 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
     pack = build_evidence_pack(module, root, feeds_by_id=feeds_by_id)
     records_by_id = {r["id"]: r for r in load_module_evidence_records(module, root)}
     cell = module_cell(module)
-    cell_country = cell["country"]
     calibration_selected = _calibration_selected_evidence(module, root)
 
     cards = []
@@ -306,7 +317,7 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
                     # population, which is true for everyone, then our fit against
                     # it, which is only meaningful beside the `cell` below.
                     "declared_for": _declared_for(record),
-                    "population": _card_population(record, cell_country),
+                    "population": _card_population(record, cell),
                     "measurement_basis": record.get("measurement_basis"),
                     # ADR-0008: only ever set on an impact maximum, by schema rule.
                     "exceedance_basis": record.get("exceedance_basis"),
@@ -455,24 +466,30 @@ def format_portfolio_markdown(portfolio):
         "source-backed by evidence not drawn from the shard's own cell (ADR-0003); "
         "the dimension borrowed across is named per row.",
         "",
-        "**Fit is relative to a target, and the target here is ours (ADR-0011).** Two columns, "
-        "and the difference between them is the whole point. *Declared for* is the population the "
-        "source measured — countries, industries, size bands, threats — and it is a property of "
-        "the record, true for every reader. *Fit vs this cell* compares that population against "
-        "**this shard's cell**, named above each table; it tells you how the record sits relative "
-        "to *our* target and almost nothing about yours. Recompute it from the *Declared for* "
-        "column and nothing else in the row moves.",
+        "**Fit is relative to a target, and the target here is ours (ADR-0011, ADR-0013).** Two "
+        "columns, and the difference between them is the whole point. *Declared for* is the "
+        "population the source measured — countries, industries, size bands, threats — and it is a "
+        "property of the record, true for every reader. *Fit vs this cell* is **computed** from "
+        "that population against **this shard's cell**, named above each table; it tells you how "
+        "the record sits relative to *our* target and almost nothing about yours. It is stored "
+        "nowhere: recompute it against your own cell from the *Declared for* column and nothing "
+        "else in the row moves.",
         "",
-        "**A correction this reporting produced, and the repair.** ADR-0011 asserted that "
+        "**Two corrections this reporting produced, and their repairs.** ADR-0011 asserted that "
         "`applicability` already carried the measured population. On 2026-08-14 that was measured "
         "false: **21 records declared the cell they were borrowed *for* rather than the "
         "population measured** — the IC3/Census BEC floor declaring financial-services mid-market "
         "over an economy-wide numerator and denominator, three US data-breach frequencies "
         "declaring `US` over a UK survey, two Singapore anchors declaring `SG` over US data. All "
         "21 were corrected, every published figure held byte-identical, and a test now fails the "
-        f"build if another appears — it counts **{unexplained}** today. Each bridge below is "
-        "therefore *earned*: the declared population does not name this cell's value. **No column "
-        "is ever summarised into a score, grade or percentage**, because compressing these facets "
+        f"build if another appears — it counts **{unexplained}** today. Then on 2026-08-15 fit "
+        "itself was measured against those honest declarations, and the **stored** field disagreed "
+        "with them on 45 of 66 cards — treating the same wildcard declaration as borrowing 28 "
+        "times and as dilution 72. It was retired (ADR-0013): fit is now derived on one strict "
+        "rule across all four facets, cell-matched parameters fell **31 → 7**, and no loss figure "
+        "moved. A statutory cap or a documented single event therefore reads as bridged here; what "
+        "it is is stated by its *measurement basis*. **No column is ever summarised into a score, "
+        "grade or percentage**, because compressing these facets "
         "would assert that a geography mismatch and a size mismatch trade off against each other "
         "in a way we cannot know for your scenario. A geography mismatch is fatal to one analysis "
         "and irrelevant to the next, and only you know which.",

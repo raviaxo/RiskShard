@@ -17,8 +17,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -43,8 +41,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -70,9 +66,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: median_total_event_cost
-    population_match:
-      status: bridged
-      bridged_on: [threat]
     applicability:
       industries: [all]
       countries: [global]
@@ -131,8 +124,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: event_rate_per_entity
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [EU]
@@ -157,8 +148,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: attribution_share
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [EU]
