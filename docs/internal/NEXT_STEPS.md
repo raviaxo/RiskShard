@@ -117,7 +117,25 @@ branches. Data pack `ed6348d12ab0`. Released as [v0.8.0](https://github.com/ravi
 
 **ACTIVE OBJECTIVE: none.** Both decisions that were pending on the owner are discharged, the code
 consequence of the first is implemented, released, and swept through every surface that publishes
-it.
+it — and the capability that whole arc paid for is now cashed.
+
+**#146 — the reader supplies the target ([ADR-0014](../adr/0014-the-reader-supplies-the-target.md),
+closing ADR-0011 open question 1).** A visitor names their own country/sector/size/threat and all 66
+fit lines recompute in their browser by the engine's rule. It cost almost nothing because
+`declared_for` was already on the page and ADR-0013 had already made fit a pure function of
+(declaration, target) — nothing is fetched, sent, stored, or added to the schema. Verified against
+`derivable_bridges()` over 66 cards × 6 targets (**0 mismatches**) and against the published fit
+for the untouched page (**0 differences**).
+
+**The refusals are the substance, and they are the maintenance burden.** No fit score, grade,
+ranking, reordering by fit, or "recommended for you" — pinned by two tests against the rendered
+surface. The natural next asks ("sort by best fit", "show only what matches", "score my coverage")
+are all refused by ADR-0014 part 3. Anyone implementing one in good faith is undoing ADR-0011
+part 2 and re-importing the portability claim ADR-0010 retired.
+
+**What it changed about the argument:** the page now *demonstrates* the ADR-0010 thesis instead of
+asserting it. On identical evidence, our cells give 7 of 66, `US` gives 11, and `GB · ransomware`
+gives **0 of 66**.
 
 ### What this arc did
 
@@ -1770,3 +1788,14 @@ governance/regulatory loss).
   the weekly digest — the only surface that goes *out* — would have sent `-24` to subscribers with
   no reason attached. Both fixed. Tests 315 → 324; doctor fully green for the first time in three
   fingerprint moves. **Owed next:** the ADR-0012 kill-criterion call at v0.9.0.
+- 2026-08-15 (continued) — **ADR-0014: the reader supplies the target** (#146). The consumer-target
+  capability ADR-0011 left open and ADR-0013 paid for, cashed for almost nothing: the explorer
+  already shipped `declared_for`, so a reader's cell is answered client-side with nothing fetched or
+  stored. Cross-checked against the engine on 66 cards × 6 targets (0 mismatches) and against the
+  published fit for the default state (0 differences). The refusals — no score, grade, ranking,
+  reordering or recommendation — are pinned by tests, because a target selector is exactly where a
+  contributor would add one in good faith and undo ADR-0011 part 2. 324 → 327 tests.
+  **This is the first thing the project offers a reader to *do* rather than read**, and the strategic
+  reason it was chosen: adoption is measured at zero (2 stars, 0 forks, 0 outside contributors,
+  0 registry citations) while engineering quality is far ahead of it. Distribution is the next
+  constraint, not correctness.
