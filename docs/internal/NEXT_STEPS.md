@@ -110,24 +110,38 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
 
 ## Restart point
 
-**Session closed 2026-08-15. Tree clean, `main` == `origin/main` at `4bee973`, 315 tests, evidence
-and preflight clean, 0 open PRs, 0 unmerged branches. Data pack `3b9409a44c6b`.** #135, #136 and
-#137 are all merged; `loss_events/` is on `main`.
+**Session closed 2026-08-15 (second session that day). Tree clean, `main` == `origin/main` at
+`4a6cf14`, 324 tests, evidence and preflight clean, doctor FULLY GREEN, 0 open PRs, 0 unmerged
+branches. Data pack `ed6348d12ab0`. Released as [v0.8.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.8.0).**
+#139–#144 all merged.
 
-⚠️ **One thing to know before starting.** The strength ledger reads `needs_review` because the pack
-fingerprint moved twice (`22db117f2bec` → `fe0d0ffab227` with the registry, → `3b9409a44c6b` with
-the declaration reconciliation) — correct, and it clears at the next release rather than being a
-fault.
+**ACTIVE OBJECTIVE: none.** Both decisions that were pending on the owner are discharged, the code
+consequence of the first is implemented, released, and swept through every surface that publishes
+it.
 
-**ACTIVE OBJECTIVE: none. ADR-0013 is implemented and both pending decisions are discharged.**
-Fit is derived, `population_match` is gone from the schema and all 141 records, and the two counts
-moved as predicted (cell-matched **31 → 7**, bridged **35 → 59**, cross-country **15** unchanged)
-with **no published value moving** — all 66 parameter rows of the evidence report are identical on
-value, unit and status. 317 tests, evidence and preflight clean. Data pack `3b9409a44c6b` →
-**`ed6348d12ab0`**.
+### What this arc did
 
-⚠️ **The strength ledger will read `needs_review` again** — the pack fingerprint moved a third
-time. Same as before: correct, and it clears when a release is cut, not a fault.
+- **#139 — the two decisions.** ADR-0013 accepted (derive fit); the registry expansion declined
+  with its framing corrected. Finding 6 published.
+- **#140 — ADR-0013 implemented.** `population_match` gone from the schema and all 141 records.
+  Cell-matched **31 → 7**, bridged **35 → 59**, cross-country **15** unchanged; **no published
+  value moved** — all 66 evidence-report rows identical on value, unit and status.
+- **#141 — v0.8.0 cut.** First negative ledger tick. Doctor's `strength ledger: needs_review`,
+  which had stood across three fingerprint moves, cleared.
+- **#142 — the ledger's `note` field was being discarded.** It had existed since July with an entry
+  written on 2026-07-24 that no reader ever saw, because the emitter only rendered metrics.
+- **#143, #144 — the sweep.** Explorer and weekly digest now carry the correction too.
+
+**The sweep is the part worth remembering.** A count that halves on unchanged evidence is a claim
+about our own data, so every surface that publishes it has to say why: README, `EVIDENCE_REPORT.md`,
+the explorer's Note 1, and Shard Notes. `docs/r/2026.08.15-v0.8.0/` deliberately does **not** —
+an archive is a snapshot of what was published, not a document that improves later (ADR-0004).
+Anyone citing v0.8.0 gets the number without the explanation, which is the correct trade and worth
+knowing.
+
+⚠️ **One thing to know before starting.** The ledger is caught up and the doctor is green, so the
+next pack edit will move the fingerprint and put `strength ledger: needs_review` back. That is
+normal and clears at the next release; it is not a fault and does not need investigating.
 
 ✅ **v0.8.0 is cut** (2026-08-15, owner authorized). Data-pack release
 `2026.08.15-v0.8.0` (91 files, `ed6348d12ab0`), immutable explorer archive at
@@ -136,13 +150,17 @@ had stood across three fingerprint moves is cleared. Anything published about fi
 ADR-0013 now resolves against a release that contains them.
 
 **Ledger tick: the first negative one.** `cell-matched 7 (-24)`, `population-bridged 59 (+24)`,
-every other axis 0. The README carries a note beneath the table saying why a falling number here is
-the measurement getting honest rather than the evidence getting worse — without it the Progress
-table reads as a collapse in data strength, which is the opposite of what happened.
+every other axis 0. The note explaining it is recorded **on the ledger entry** and rendered by the
+emitter into the README table, the weekly digest and (as prose) the explorer — see #142/#144.
+Without it the Progress table reads as a collapse in data strength, which is the opposite of what
+happened.
 
-**This also starts the ADR-0012 clock.** The registry trial's kill criterion is measured at two
-release cycles; this is the first. At the second, count shards whose `impact.max` cites a registry
-entry and whether anyone outside the project has contributed one — if neither has moved, retire it.
+**🕐 THE ADR-0012 CLOCK IS RUNNING — v0.8.0 IS CYCLE 1 OF 2.** The registry trial's kill criterion
+is measured at two release cycles. **At the next release**, count (a) shards whose `impact.max`
+cites a registry entry and (b) whether anyone outside the project has contributed an entry. Both
+read **0** today. *If neither has moved, ADR-0012 decision 5 says retire the registry rather than
+carry it* — "a retired experiment is a result; a stale registry is a liability." That is a decision
+owed at v0.9.0, not a thing to drift past. The doctor already prints both counts every run.
 
 **⚠️ The whole queue below this line is older than these sessions and has not been re-verified
 against them. Read this restart point first.**
@@ -1740,3 +1758,15 @@ governance/regulatory loss).
   written into ADR-0011 rather than done quietly. Tests 307 → 315; gates green. **Surfaced and
   stopped:** `population_match` is a stored target-relative value (ADR-0011 open question 3) —
   a schema decision, so no code moved on it.
+- 2026-08-15 (second session) — **Both owner decisions taken, ADR-0013 implemented, v0.8.0 cut, and
+  the consequence swept through every publishing surface** (#139–#144, all merged). The decision
+  that mattered was overturned by measuring it: ADR-0011 had left `population_match` open on the
+  premise that only an author could judge dilution from borrowing, and the stored field turned out
+  to disagree with the records' own declarations on **45 of 66** cards — the same wildcard counted
+  as borrowed 28 times and matched 72, twice inside one file. So fit became a computation and the
+  field was retired. **Cell-matched 31 → 7, bridged 35 → 59, and no published value moved** — all
+  66 evidence-report rows byte-identical on value, unit and status. Two things were found while
+  sweeping: the strength ledger had carried a `note` field since July that nothing rendered, and
+  the weekly digest — the only surface that goes *out* — would have sent `-24` to subscribers with
+  no reason attached. Both fixed. Tests 315 → 324; doctor fully green for the first time in three
+  fingerprint moves. **Owed next:** the ADR-0012 kill-criterion call at v0.9.0.
