@@ -53,12 +53,12 @@ and a source-level claim counts only when a human has read the stored artifact:
 
 | | |
 | --- | --- |
-| registered sources **read** so far | **6 of 61** |
-| …publishing a **mode** | **0 of 6** |
-| …publishing a **distribution** over loss or frequency | **4 of 6** |
-| …publishing an **exceedance** statement | **2 of 6** |
-| …from which the measured **population** can be named | **6 of 6** |
-| sources held only as a landing page or summary — **unanswerable** until obtained | **8** |
+| registered sources **read** so far | **14 of 61** |
+| …publishing a **mode** | **0 of 14** |
+| …publishing a **distribution** over loss or frequency | **6 of 14** |
+| …publishing an **exceedance** statement | **4 of 14** |
+| …from which the measured **population** can be named | **14 of 14** |
+| sources held only as a landing page or summary — **unanswerable** until obtained | **10** |
 
 Until this arc that sentence read *"no source consulted does"*, resting on two reads and carrying no
 denominator. **Unread is not evidence of absence**, and the audit publishes the gap beside the claim
@@ -77,8 +77,16 @@ that public sources offer only point statistics. It does not:
   that **13%** of paid ransoms exceeded $5M.
 - **Verizon DBIR 2025 and 2026 both publish loss distributions** — quantile dot plots of loss due to
   ransom payment (n=351 and n=1,494), with the 2024 median ransom stated at $115,000.
+- **Singapore Police Force's 2025 brief states one in a single sentence** — *"about 67.1% suffered
+  less than $5,000 in losses, while 5.2% of scam cases suffered at least $100,000"* — and **Sophos
+  2023** reports that 40% of paying organisations paid $1M or more.
 - **FBI IC3 2025 and NetDiligence 2025 publish point statistics only** — an average loss, a maximum,
-  and categorical breakdowns of a total.
+  and categorical breakdowns of a total. So do the ACCC, OPC, Bitkom, Asterès and ABS releases.
+
+**The one that publishes nothing is not the one you would guess.** IC3, the ACCC and the OPC are
+government reporting bodies sitting on the largest loss datasets in their jurisdictions, and they
+publish totals and averages. The exceedance statements come from a UK government survey, a
+Singapore police brief and two vendor ransomware surveys.
 
 So the defensible claim is narrower and considerably more interesting than the one we set out to
 check: **the shape of the evidence is not the constraint everyone assumes.** Distributions exist,

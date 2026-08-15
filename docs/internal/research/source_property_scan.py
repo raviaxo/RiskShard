@@ -28,11 +28,25 @@ ROOT = Path(__file__).resolve().parents[3]
 # Patterns per property. Deliberately wide: a miss costs a wrong answer, a false hit
 # costs a few seconds of reading. `mode` is narrow because "mode" is a common English
 # word ("spectator mode") — the modal-value senses are what matter.
+#
+# Multilingual because the corpus is. An English-only pass scored Bitkom's German
+# Wirtschaftsschutz report **zero on every property**, which read as "publishes
+# nothing" and is exactly the false negative this audit cannot afford — the report
+# has 4 "Durchschnitt", 2 "Verteilung" and 27 "Schaden". German and French terms are
+# included because the corpus holds German (Bitkom), French (Asterès, CESIN, CNIL)
+# and Japanese sources. **A source in a language not covered here must not be
+# answered from a null result.**
 PATTERNS = {
-    "mode": r"\bmodal\b|most likely (?:value|loss|cost|outcome)|\bthe mode\b|most common (?:loss|cost|value)",
-    "distribution": r"\bdistribution\b|\bquantile\b|\bpercentile\b|\bdecile\b|\bquartile\b|\bhistogram\b|cumulative density|\bCCDF\b|interquartile",
-    "exceedance": r"\bexceed|\bexceedance\b|probability of a loss|\bworse than\b|\btail\b|return period|\b9[05]th\b",
-    "population": r"\bn\s*=\s*[\d,]+|\bsample\b|respondents|\bsurveyed\b|\bpopulation\b|\bmethodolog",
+    "mode": (r"\bmodal(?:wert)?\b|most likely (?:value|loss|cost|outcome)|\bthe mode\b"
+             r"|most common (?:loss|cost|value)|\bmode\b(?=\s+(?:de|des|du)\b)"),
+    "distribution": (r"\bdistribution\b|\bquantile\b|\bpercentile\b|\bdecile\b|\bquartile\b"
+                     r"|\bhistogram\b|cumulative density|\bCCDF\b|interquartile"
+                     r"|\bVerteilung\b|\bPerzentil\b|\bQuantil\b|\brépartition\b|\bcentile\b"),
+    "exceedance": (r"\bexceed|\bexceedance\b|probability of a loss|\bworse than\b|\btail\b"
+                   r"|return period|\b9[05]th\b|\büberschreit|\bdépass"),
+    "population": (r"\bn\s*=\s*[\d,.]+|\bsample\b|respondents|\bsurveyed\b|\bpopulation\b"
+                   r"|\bmethodolog|\bBasis:|\bBefragte|\bStichprobe\b|\béchantillon\b"
+                   r"|\brépondants\b|\bméthodolog"),
 }
 
 CONTEXT = 220
