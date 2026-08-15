@@ -117,25 +117,22 @@ model parameters trace to a reviewed public source over time.
 | 2026.08.01 | 2026-08-01 | 66 / 66 | 28 | 11 / 11 | 0 |
 | 2026.07.24 | 2026-07-24 | 66 / 66 (+2) | — | 11 / 11 (+1) | 0 (-2) |
 | 2026.07.24 | 2026-07-24 | 64 / 66 | — | 10 / 11 | 2 |
+
+**2026.08.15-v0.8.0 —** the fall in *cell-matched* is the measurement getting honest, not the evidence getting worse. Not one parameter, source, value or caveat changed in this release. *Cell-matched* stopped being a field an author maintained by hand and became a value computed from each record's declared population against the shard's cell. The old field disagreed with those declarations on 45 of 66 cards, counting the same wildcard declaration as borrowed 28 times and as matched 72. **7 is what the number always was**; 31 was the count of a field that was not being kept. See [finding 6](docs/FINDINGS.md) and [ADR-0013](docs/adr/0013-fit-is-derived-not-stored.md).
+
+**2026.07.24 (2026-07-24) —** Records a real strength change (JP shard closed: 64->66 source-backed params, 10->11 shards at 6/6) for which no data-pack release was cut. Kept because the improvement is real; it predates the release-version rule.
 <!-- strength-ledger:end -->
 
 A parameter moves from *bridged/estimated* to *source-backed* only through a
 recorded evidence decision — so a rising source-backed count is real strengthening,
 not relabeling.
 
-**Read the `-24` at 2026.08.15 as the measurement getting honest, not the evidence
-getting worse.** Not one parameter, source, value or caveat changed in that release.
-What changed is that *cell-matched* stopped being a field an author maintained by hand
-and became a value computed from each record's declared population against the shard's
-cell. The old field disagreed with those declarations on 45 of 66 cards, counting the
-same wildcard declaration as borrowed 28 times and as matched 72. **7 is what the
-number always was**; 31 was the count of a field that was not being kept.
-See [finding 6](docs/FINDINGS.md) and
-[ADR-0013](docs/adr/0013-fit-is-derived-not-stored.md).
-
-A falling count on this table is therefore not automatically bad news, and a rising one
-is not automatically good. What each column measures, and whether the measurement itself
-changed, is recorded per release in the [changelog](CHANGELOG.md).
+**A count here can move for two different reasons, and the table cannot tell them
+apart on its own: the evidence changed, or the way we measure it changed.** So a
+falling number is not automatically bad news and a rising one is not automatically
+good. Releases where the measurement itself changed carry a note above, recorded with
+the entry rather than written beside it — 2026.08.15 is one, and it is the reason
+*cell-matched* reads 7 where the prior release read 31.
 
 ## See the proof
 

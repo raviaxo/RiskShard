@@ -47,6 +47,12 @@ def parse_args(argv=None):
     )
     parser.add_argument("--notes", help="Optional release notes stored in the release artifact.")
     parser.add_argument(
+        "--ledger-note",
+        help="Optional prose recorded with the strength-ledger entry and rendered "
+        "beneath the public Progress table. Use it whenever a count moves because "
+        "the measurement changed rather than the evidence.",
+    )
+    parser.add_argument(
         "--no-ledger",
         action="store_true",
         help="Skip appending a strength-ledger entry when cutting a release.",
@@ -72,6 +78,7 @@ def main(argv=None):
                 dashboard,
                 datetime.date.today().isoformat(),
                 args.release,
+                note=args.ledger_note,
                 **build_axis_totals(ROOT),
             )
             ledger_msg = (

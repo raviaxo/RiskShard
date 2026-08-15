@@ -211,6 +211,7 @@
         "shards_fully_sourced": 11,
         "shards_tail_driven": 7
       },
+      "note": "the fall in *cell-matched* is the measurement getting honest, not the evidence getting worse. Not one parameter, source, value or caveat changed in this release. *Cell-matched* stopped being a field an author maintained by hand and became a value computed from each record's declared population against the shard's cell. The old field disagreed with those declarations on 45 of 66 cards, counting the same wildcard declaration as borrowed 28 times and as matched 72. **7 is what the number always was**; 31 was the count of a field that was not being kept. See [finding 6](docs/FINDINGS.md) and [ADR-0013](docs/adr/0013-fit-is-derived-not-stored.md).",
       "release_version": "2026.08.15-v0.8.0"
     }
   ]
