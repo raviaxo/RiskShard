@@ -159,6 +159,47 @@ that any context dimension must be evidence-backed or it does not ship.
 - **Add `control_environment` to the evidence schema now.** Rejected: no source publishes it, so
   the field would be empty or invented.
 
+## Correction — 2026-08-14, found while implementing this ADR
+
+**One premise above is wrong and the decision survives it.** This ADR states that `applicability`
+is *"the observed population"* (Decision part 1, and the Context section before it). It is not. It
+is the cell a record declares itself **usable in**, which is often narrower than what the source
+measured.
+
+Measured across the corpus: **17 of 141 records declare a narrow value on a facet their own
+`population_match.bridged_on` says the source did not measure.** The US BEC frequency floor
+declares `industries: [financial_services]`, `company_size_bands: [mid_market]` while its IC3
+numerator and Census SUSB denominator are both economy-wide — which the record's own
+`bridged_on: [sector, size]` records correctly. Surfacing that declaration under a *measured on*
+label, as this ADR's Decision part 1 literally instructs, would have retired one mislabel by
+publishing another on those 17 records.
+
+**No record states the observed population, and none can be made to** — no consulted source
+publishes it as a field, and manufacturing it is the invented-responsiveness failure ADR-0009 and
+ADR-0010 both refuse. It is recoverable only as the *gap* between the declaration and
+`population_match`, so that gap is published as its own facet rather than computed away.
+
+What shipped, therefore, is three labels where the ADR envisaged two:
+
+| Rendered as | Field | Depends on a target? |
+| --- | --- | --- |
+| **declared for** | `applicability` | No — a property of the record |
+| **not measured on** | stored `population_match.bridged_on` | No — a property of the record |
+| **fit vs this cell** | the country-strict consumption check | **Yes** — recompute against yours |
+
+That third row is the second thing implementation corrected. The merged `population` this repo
+renders is two layers, and only the country layer moves with the target; the stored layer is
+intrinsic. Presenting the whole merge as *"fit vs our cell"* — the natural reading of Decision
+part 1 — would have been this ADR's own error pointed the other way, labelling a record property
+as target-relative.
+
+**Everything above this section stands**: fit is computed against a stated target, it is exposed
+as a facet set, there is no composite score, and the target is named wherever fit is rendered. The
+underlying `population_match` merge is untouched, so no published count moved — all 66 values,
+statuses, bases, exceedance statements, sources and caveats are byte-identical, and all 35 bridged
+rows keep every facet. Published as [finding 5](../FINDINGS.md) and pinned by
+`tests/test_findings.py`, which fails the build if the 17 ever silently becomes something else.
+
 ## Open questions
 
 1. **Does the target need to be a declared object?** Fit is relative to a target, and our target

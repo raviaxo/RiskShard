@@ -21,5 +21,5 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0008](0008-the-governed-tail.md) | The governed tail: a maximum must say what it bounds | Accepted |
 | [0009](0009-what-riskshard-is-and-is-not.md) | What RiskShard is, and what it is not (scope) | Accepted |
 | [0010](0010-where-riskshard-stops.md) | Where RiskShard stops: the evidence object is the product | Accepted |
-| [0011](0011-fit-is-a-facet-set.md) | Fit is a facet set, not a score | Accepted |
+| [0011](0011-fit-is-a-facet-set.md) | Fit is a facet set, not a score | Accepted (corrected 2026-08-14) |
 | [0012](0012-loss-event-registry-bounded-trial.md) | The loss-event registry, as a bounded trial | Accepted |

@@ -17,8 +17,10 @@ of magnitude on dimensions the shard does not model. *"Too high"* has no referen
 against. That claim was made once on this project and withdrawn — see
 [Withdrawn claim 1](#withdrawn-claim-1--the-numbers-are-inflated-2026-08-08).
 
-*Last derived 2026-08-13 against data pack `22db117f2bec`. Counts move as evidence changes; the
-tools are the authority, not this page.*
+*Findings 1–4 and 6–7 derived 2026-08-13 against data pack `22db117f2bec`; finding 5 derived
+2026-08-14 against data pack `fe0d0ffab227`. Counts move as evidence changes; the tools are the
+authority, not this page, and [`tests/test_findings.py`](../tests/test_findings.py) fails the build
+if any count on it drifts.*
 
 ---
 
@@ -94,7 +96,7 @@ the modeled average. **A figure mostly driven by an anchor that admits no exceed
 a figure resting on one observation.**
 
 The missing thing is a denominator: how often a loss of size X is exceeded, across a known
-population. We have not found one, publicly, anywhere — see finding 5.
+population. We have not found one, publicly, anywhere — see finding 6.
 
 ### 4 — Half our parameters are borrowed from a population we are not modelling
 
@@ -111,11 +113,57 @@ population. We have not found one, publicly, anywhere — see finding 5.
 "100% source-backed" was true and was doing too much work, which is why the headline was split on
 2026-08-01. Cell-matched and bridged are different claims and only one of them is strong.
 
+### 5 — No record states the population that was actually measured
+
+*Measured 2026-08-14 · derived by [`engine/provenance.py`](../engine/provenance.py) ·
+pinned by [`tests/test_provenance.py`](../tests/test_provenance.py) ·
+[ADR-0011](adr/0011-fit-is-a-facet-set.md)*
+
+| | |
+| --- | --- |
+| records declaring `applicability` | **141 of 141** (required by schema) |
+| …that declare a **narrow** value on a facet their own `population_match` says was not measured | **17 of 141** |
+| records stating the observed population as a field | **0 of 141** |
+| parameters labelled **bridged** on the published surfaces | **35 of 66** |
+| …bridged for a reason **intrinsic to the record**, true for every reader | **25 of 35** |
+| …bridged **because of our cell** — the only part that moves with your target | **10 of 35** |
+
+[ADR-0011](adr/0011-fit-is-a-facet-set.md) decided that fit must be computed against a stated
+target, and that `applicability` — *"the observed population"* — should be surfaced as the
+target-independent fact a consumer computes their own distance from. Building that surface is what
+found the problem: **`applicability` is not the observed population.** It is the cell a record is
+*declared usable in*, which is frequently narrower than what the source measured.
+
+The clearest case is the US BEC frequency floor. It declares
+`industries: [financial_services]`, `company_size_bands: [mid_market]` — while its IC3 numerator
+and Census SUSB denominator are both economy-wide, which its own
+`population_match.bridged_on: [sector, size]` correctly records. Publishing that declaration under
+a *measured on* label would have retired one mislabel by shipping another, on 17 records.
+
+So the field is published as **declared for**, the gap gets its own column — **not measured on** —
+and the genuinely target-relative part (does this record name *our* country?) is the only thing
+labelled as fit. What no column can give you is the observed population itself: **no published
+source reports it as a field, and we have not invented one.** It is recoverable only as the gap
+between the two declared lines.
+
+Splitting the label produced a second number that is more useful than the one it came from.
+[Finding 4](#4--half-our-parameters-are-borrowed-from-a-population-we-are-not-modelling) reports 35
+of 66 parameters as *bridged*, and that single flag has been carrying two unlike things. **25 of
+those 35 are bridged for a reason intrinsic to the record** — the source measured a broader
+population than the record declares — which is equally true for you, for us, and for a reader in a
+country none of our shards cover. Only **10 of 35** are bridged because of *our* cell, and those
+are the only ones that change when you substitute your own. The headline count of 35 is unchanged
+and still correct; what it means is now separable.
+
+This finding cost nothing and moved nothing: all 66 published values, statuses, bases, exceedance
+statements, sources and caveats are byte-identical before and after, and all 35 bridged rows keep
+every facet they had. Only the labels changed.
+
 ---
 
 ## About the published data everyone cites
 
-### 5 — A mortality register is not a loss registry
+### 6 — A mortality register is not a loss registry
 
 *Measured 2026-08-12 ·
 [`docs/internal/destroyed_by_breach_extraction.md`](internal/destroyed_by_breach_extraction.md)*
@@ -142,7 +190,7 @@ day, the distinction is unrecoverable.
 exceeded*.** Those are different statistics, and conflating them is the error class this project
 exists to catch. See [Withdrawn claim 2](#withdrawn-claim-2--the-denominator-premise-2026-08-12).
 
-### 6 — The SEC loss corpus is real, reachable, and smaller than it looks
+### 7 — The SEC loss corpus is real, reachable, and smaller than it looks
 
 *Measured 2026-08-13 · [`docs/internal/edgar_corpus_census.md`](internal/edgar_corpus_census.md) ·
 re-runnable via [`edgar_corpus_census.py`](internal/research/edgar_corpus_census.py)*
