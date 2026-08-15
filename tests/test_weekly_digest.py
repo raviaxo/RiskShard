@@ -62,6 +62,50 @@ class FormatTests(unittest.TestCase):
         self.assertIn("quiet week", out)
         self.assertIn("issues are open", out)
 
+    def _digest_with_strength(self, note):
+        digest = self._digest([], [])
+        digest["strength"] = {
+            "metrics": {"params_source_backed": 66, "shards_fully_sourced": 11,
+                        "params_bridged": 0, "params_cell_matched": 7,
+                        "params_cross_cell": 59},
+            "delta": {"params_source_backed": 0, "shards_fully_sourced": 0,
+                      "params_bridged": 0, "params_cell_matched": -24,
+                      "params_cross_cell": 24},
+            "note": note,
+        }
+        return digest
+
+    def test_a_falling_count_goes_out_with_its_reason(self):
+        """This is the one surface that goes *out* rather than waiting to be visited.
+
+        v0.8.0 sent `cell-matched: 31 -> 7 (-24)` on evidence where not one
+        parameter, source, value or caveat had changed. A subscriber reading that
+        without the release's ledger note learns the opposite of what happened.
+        """
+        out = format_weekly_digest(
+            self._digest_with_strength("the measurement changed, not the evidence")
+        )
+        self.assertIn("cell-matched: 31 -> 7 (-24)", out)
+        self.assertIn("why: the measurement changed, not the evidence", out)
+        self.assertLess(out.index("cell-matched: 31"), out.index("why:"))
+
+    def test_a_note_is_flattened_for_a_plain_text_surface(self):
+        """The note is authored in Markdown for the README table; this is not that.
+
+        A relative link is not even resolvable once the digest is pasted into a post
+        or an email, so it becomes its own text rather than shipping as syntax.
+        """
+        out = format_weekly_digest(self._digest_with_strength(
+            "**7** is what *cell-matched* always was — see "
+            "[finding 6](docs/FINDINGS.md)."
+        ))
+        self.assertIn("why: 7 is what cell-matched always was — see finding 6.", out)
+        for syntax in ("**", "](", "docs/FINDINGS.md"):
+            self.assertNotIn(syntax, out)
+
+    def test_a_release_without_a_note_adds_no_why_line(self):
+        self.assertNotIn("why:", format_weekly_digest(self._digest_with_strength(None)))
+
 
 if __name__ == "__main__":
     unittest.main()
