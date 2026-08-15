@@ -86,17 +86,28 @@ class AuditIntegrityTests(unittest.TestCase):
         rows = {r["source_id"] for r in self.audit["sources"]}
         self.assertTrue(audited <= rows)
 
-    def test_every_verified_answer_names_an_artifact_that_exists(self):
-        """A verification nobody can recheck is an assertion."""
-        raw = ROOT / "sources" / "raw"
+    def test_every_verified_answer_pins_the_document_that_was_read(self):
+        """A verification nobody else can recheck is an assertion.
+
+        Anchored to the manifest's sha256, not a path under `sources/raw/` — that
+        directory is gitignored (large third-party PDFs), so on a clean checkout a
+        path proves nothing. CI caught the first version of this test doing exactly
+        that. The hash also pins the edition: a new edition of the same title has a
+        different hash and inherits none of these answers.
+        """
+        from engine.source_audit import manifest_hashes
+
+        hashes = manifest_hashes(ROOT)
+        self.assertTrue(hashes, "expected sources/manifest.json to carry artifact hashes")
         for row in load_audit(ROOT):
             verified = [p for p in PROPERTIES
                         if (row["properties"].get(p) or {}).get("basis") == VERIFIED]
             if not verified:
                 continue
-            self.assertTrue(row.get("artifact"), f"{row['source_id']} verified with no artifact")
-            self.assertTrue((raw / Path(row["artifact"]).name).exists(),
-                            f"{row['source_id']}: {row['artifact']} missing from sources/raw/")
+            digest = row.get("artifact_sha256")
+            self.assertTrue(digest, f"{row['source_id']} verified with no artifact_sha256")
+            self.assertEqual(digest, hashes.get(row["source_id"]),
+                             f"{row['source_id']}: audited a document the manifest does not hold")
 
     def test_coverage_counts_every_slot(self):
         c = self.audit["coverage"]
@@ -141,6 +152,52 @@ class AuditIntegrityTests(unittest.TestCase):
     def test_unread_renders_as_unread(self):
         md = format_audit_markdown(self.audit)
         self.assertIn("is unread. It is not a claim in either direction.", md)
+
+
+class CleanCheckoutTests(unittest.TestCase):
+    """The audit must hold where `sources/raw/` does not exist — i.e. everywhere but here.
+
+    `sources/raw/` is gitignored, so CI, a contributor and a reader all see an audit
+    with no artifacts on disk. The first version of this module treated a missing
+    local file as a defect and failed on a clean checkout, which is the right failure
+    to have had: a verification anchored to a path only I hold is not verifiable.
+    """
+
+    def setUp(self):
+        import shutil
+        import tempfile
+
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self._tmp.name)
+        (self.root / "sources").mkdir()
+        (self.root / "evidence").mkdir()
+        for name in ("registry.yaml", "manifest.json", "audit.yaml"):
+            shutil.copy(ROOT / "sources" / name, self.root / "sources" / name)
+        # deliberately no sources/raw
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def test_no_defects_without_the_artifacts_on_disk(self):
+        self.assertFalse((self.root / "sources" / "raw").exists())
+        self.assertEqual(audit_defects(self.root), [])
+
+    def test_a_hash_that_does_not_match_the_manifest_is_a_defect(self):
+        """The check that replaced the path check has to actually bite."""
+        path = self.root / "sources" / "audit.yaml"
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        data["audit"][0]["artifact_sha256"] = "0" * 64
+        path.write_text(yaml.safe_dump(data), encoding="utf-8")
+        defects = audit_defects(self.root)
+        self.assertTrue(any("does not match sources/manifest.json" in d for d in defects), defects)
+
+    def test_a_verification_with_no_hash_is_a_defect(self):
+        path = self.root / "sources" / "audit.yaml"
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        del data["audit"][0]["artifact_sha256"]
+        path.write_text(yaml.safe_dump(data), encoding="utf-8")
+        defects = audit_defects(self.root)
+        self.assertTrue(any("no artifact_sha256" in d for d in defects), defects)
 
 
 class CoverageMathTests(unittest.TestCase):

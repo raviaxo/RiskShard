@@ -9,12 +9,18 @@
 # queue, it is counted, and `engine/source_audit.py` publishes the denominator beside
 # any finding this supports. Unread is never reported as absence.
 #
+# A verification is pinned to the artifact's sha256 from sources/manifest.json, not to
+# a local path: sources/raw/ holds large third-party PDFs and is not distributed, so a
+# path is only recheckable on the machine that gathered it. The hash also pins the
+# edition -- a new edition has a different hash and inherits nothing from this answer.
+#
 # Verification method, stated because it bounds every answer below: the stored PDF is
 # read as extracted text. Figures rendered as images are not captured, so a property
 # published ONLY inside a chart image can be missed. Where that risk is live it is
 # named in the answer's `detail` rather than left for a reader to discover.
 audit:
   - source_id: verizon_dbir_2026
+    artifact_sha256: 4a2788bc5afb2ecd6dd8dbc8a32ae2b21dcf2517b36f0763560616ea1fc7241b
     artifact: sources/raw/verizon_dbir_2026.pdf
     properties:
       mode:
@@ -60,6 +66,7 @@ audit:
           payments — nameable, and not a general business population.
 
   - source_id: netdiligence_cyber_claims_2025
+    artifact_sha256: 4014f4e7a52c55125e3287b2c61ca788f9ae133a8e49408d7e34ec35ba7166cb
     artifact: sources/raw/netdiligence_cyber_claims_2025.pdf
     properties:
       mode:

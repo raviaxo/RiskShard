@@ -11,6 +11,7 @@ the source view is read from `sources/audit.yaml`, where a claim must carry
 `verified_against_artifact` to count. Coverage — how much of the audit is actually
 read — is computed and published beside every finding it supports.
 """
+import json
 from pathlib import Path
 
 import yaml
@@ -163,15 +164,31 @@ def publishable_claim(rows, prop):
     }
 
 
+def manifest_hashes(root):
+    """source_id -> sha256 of the gathered artifact, from the committed manifest.
+
+    `sources/raw/` is not distributed — the artifacts are large third-party PDFs — so
+    the manifest is what a reader outside this machine actually has. Anchoring a
+    verification to the hash rather than a local path is what makes it recheckable by
+    someone else, and it was a CI failure on a clean checkout that made that obvious.
+    """
+    path = Path(root) / "sources" / "manifest.json"
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return {s.get("id"): s.get("sha256") for s in data.get("sources", []) if s.get("sha256")}
+
+
 def audit_defects(root):
     """Ways the audit can lie, checked rather than trusted. Empty is the passing state.
 
     Every one of these is a shape the schema alone cannot forbid: a source that does
-    not exist, a verification with no artifact to recheck, or an answer that reads as
-    a source-level claim while resting on our own extraction.
+    not exist, a verification pinned to no artifact or to the wrong one, or an answer
+    that reads as a source-level claim while resting on our own extraction.
     """
     root = Path(root)
     registry_ids = {s.get("id") for s in load_registry(root)}
+    hashes = manifest_hashes(root)
     raw = root / "sources" / "raw"
     defects = []
     for row in load_audit(root):
@@ -181,11 +198,19 @@ def audit_defects(root):
         answers = row.get("properties") or {}
         verified = [p for p in PROPERTIES
                     if (answers.get(p) or {}).get("basis") == VERIFIED]
-        if verified and not row.get("artifact"):
+        digest = row.get("artifact_sha256")
+        if verified and not digest:
             defects.append(
-                f"{sid}: {len(verified)} verified answer(s) with no artifact to recheck")
-        elif row.get("artifact") and not (raw / Path(row["artifact"]).name).exists():
-            defects.append(f"{sid}: artifact {row['artifact']} is not in sources/raw/")
+                f"{sid}: {len(verified)} verified answer(s) with no artifact_sha256 — "
+                "nobody else can tell which document was read")
+        elif digest and sid in hashes and digest != hashes[sid]:
+            defects.append(
+                f"{sid}: artifact_sha256 does not match sources/manifest.json — the "
+                "audited document is not the gathered one (a new edition?)")
+        # A local copy is a convenience, not the guarantee: only checked when present.
+        local = row.get("artifact")
+        if local and raw.exists() and list(raw.iterdir()) and not (raw / Path(local).name).exists():
+            defects.append(f"{sid}: artifact {local} is not in a populated sources/raw/")
         for prop in PROPERTIES:
             answer = answers.get(prop) or {}
             if answer.get("basis") != VERIFIED and "publishes" in answer:

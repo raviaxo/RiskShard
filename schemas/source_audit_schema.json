@@ -18,9 +18,14 @@
             "type": "string",
             "description": "Must resolve in sources/registry.yaml."
           },
+          "artifact_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "The sha256 of the artifact read, as recorded in sources/manifest.json. Required on any verified answer. The hash rather than a path because sources/raw/ is not distributed (large, third-party PDFs): a path is only recheckable on the machine that holds the file, while a hash identifies the exact document anyone can re-fetch from the manifest's URL. It also pins the edition — a new edition of the same title has a different hash and does not inherit this answer."
+          },
           "artifact": {
             "type": "string",
-            "description": "Path under sources/raw/ that a verification was read against. Required on any verified answer — a verification with no artifact cannot be rechecked."
+            "description": "Convenience path under sources/raw/, for a reader who has gathered the corpus. Never load-bearing — artifact_sha256 is."
           },
           "properties": {
             "type": "object",
