@@ -68,3 +68,32 @@ class GovernanceTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AdrIndexTests(unittest.TestCase):
+    """Every ADR must appear in the index that claims to list them all.
+
+    `docs/adr/README.md` is how a reader — and every future session — discovers what
+    has been decided. An ADR missing from it is a decision that exists on disk and
+    nowhere anyone looks, which is most of the way to not having recorded it.
+
+    ADR-0015 was written and left out of the index for a day before this test
+    existed, which is the whole argument for it.
+    """
+
+    def test_every_adr_file_is_listed(self):
+        adr_dir = ROOT / "docs" / "adr"
+        index = (adr_dir / "README.md").read_text(encoding="utf-8")
+        missing = [p.name for p in sorted(adr_dir.glob("0*.md"))
+                   if p.name not in index]
+        self.assertEqual(missing, [], f"not linked from docs/adr/README.md: {missing}")
+
+    def test_the_index_lists_no_adr_that_does_not_exist(self):
+        import re
+
+        adr_dir = ROOT / "docs" / "adr"
+        index = (adr_dir / "README.md").read_text(encoding="utf-8")
+        linked = set(re.findall(r"\((0\d{3}-[a-z0-9-]+\.md)\)", index))
+        self.assertTrue(linked, "expected the index to link ADRs")
+        for name in sorted(linked):
+            self.assertTrue((adr_dir / name).exists(), f"index links a missing ADR: {name}")
