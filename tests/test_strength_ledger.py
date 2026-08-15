@@ -364,6 +364,55 @@ class TrendAndBaselineTests(unittest.TestCase):
         self.assertLess(md.index("2026-07-31"), md.index("2026-07-24"))
         self.assertIn("66 / 66 (+2)", md)
 
+    def test_a_recorded_note_reaches_the_rendered_table(self):
+        """The field existed and nothing rendered it — that is the defect this pins.
+
+        A `note` sat on the 2026-07-24 entry from the day it was written until
+        2026-08-15 and no reader ever saw it, because `format_progress_markdown`
+        only ever emitted metrics. A note explains why a number moved, so a note
+        that renders nowhere is worse than absent: it reads as recorded.
+        """
+        tmp = tempfile.TemporaryDirectory()
+        try:
+            ledger = Path(tmp.name) / "l.json"
+            record_snapshot(ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24",
+                            "2026-07-24-test")
+            entry, appended, _ = record_snapshot(
+                ledger, _dashboard(IMPROVED_MATRIX, "def"), "2026-07-31", "2026-07-31-test",
+                note="the measurement changed, not the evidence",
+            )
+            self.assertTrue(appended)
+            self.assertEqual(entry["note"], "the measurement changed, not the evidence")
+            md = format_progress_markdown(ledger)
+            self.assertIn("the measurement changed, not the evidence", md)
+            # attributed to its release, and below the table rather than inside it
+            self.assertIn("**2026-07-31-test —**", md)
+            self.assertLess(md.index("| --- |"), md.index("the measurement changed"))
+        finally:
+            tmp.cleanup()
+
+    def test_note_is_labelled_by_release_not_the_repeating_pack_version(self):
+        """`data_pack_version` repeats — the real ledger has two `2026.07.24` rows.
+
+        Labelling a note with it would leave a reader unable to tell which row the
+        explanation belongs to, which is most of a note's value.
+        """
+        tmp = tempfile.TemporaryDirectory()
+        try:
+            ledger = Path(tmp.name) / "l.json"
+            record_snapshot(ledger, _dashboard(BASELINE_MATRIX, "abc"), "2026-07-24",
+                            "2026-07-24-test")
+            record_snapshot(ledger, _dashboard(IMPROVED_MATRIX, "def"), "2026-07-31",
+                            "2026-07-31-test", note="why it moved")
+            versions = {e["data_pack_version"] for e in load_ledger(ledger)}
+            self.assertEqual(len(versions), 1)      # both entries share a pack version
+            self.assertIn("**2026-07-31-test —**", format_progress_markdown(ledger))
+        finally:
+            tmp.cleanup()
+
+    def test_an_entry_without_a_note_adds_nothing(self):
+        self.assertNotIn(" —** ", format_progress_markdown(self.ledger))
+
 
 class ReadmeWriterTests(unittest.TestCase):
     def setUp(self):

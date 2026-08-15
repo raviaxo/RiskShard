@@ -275,8 +275,18 @@ def record_snapshot(
     coherence_totals=None,
     tail_totals=None,
     slot_totals=None,
+    note=None,
 ):
     """Append the current snapshot to the ledger — for a named release only.
+
+    `note` is optional prose recorded *with* the entry and rendered beneath the
+    public table. It exists because a count on this ledger can move for two very
+    different reasons — the evidence changed, or the way we measure it changed —
+    and the table cannot tell them apart. v0.8.0 is the case that forced it:
+    cell-matched fell 31 → 7 with no parameter, source, value or caveat touched,
+    because fit stopped being a hand-maintained field and became a computed one
+    (ADR-0013). Under a heading that reads "strength over time", an unexplained
+    -24 asserts a collapse that did not happen.
 
     `release_version` is required and is the enforcement: the rule was documented as
     "on release only" but implemented as "fingerprint differs", and a fingerprint moves
@@ -310,6 +320,8 @@ def record_snapshot(
         return prev, False, compute_delta(base, prev["metrics"])
 
     entry = {"date": date, "release_version": release_version, **snapshot}
+    if note:
+        entry["note"] = note
     delta = compute_delta(prev_metrics, snapshot["metrics"])
     entries.append(entry)
     save_ledger(ledger_path, entries)
@@ -389,7 +401,13 @@ def _signed(n):
 
 def format_progress_markdown(ledger_path):
     """A compact Markdown table of the strength trend, newest first — for the
-    public README's Progress section. Returns a stable placeholder when empty."""
+    public README's Progress section. Returns a stable placeholder when empty.
+
+    Entries carrying a `note` render it beneath the table, marked against the
+    release it belongs to. A number that moved because the *measurement* changed
+    rather than the evidence must say so where the number is read, not only in a
+    changelog the reader of this table has not opened.
+    """
     entries = load_ledger(ledger_path)
     if not entries:
         return "_No releases recorded yet._\n"
@@ -418,4 +436,16 @@ def format_progress_markdown(ledger_path):
             f"{cell('shards_fully_sourced', 'shards')} | "
             f"{cell('params_bridged')} |"
         )
+    # Labelled by release_version, not the table's Release column: `data_pack_version`
+    # repeats (two entries read 2026.07.24), so it cannot identify which row a note
+    # belongs to. Entries predating the release-version rule fall back to the pack
+    # version plus the date, which separates them.
+    for entry, _ in reversed(rows):
+        note = entry.get("note")
+        if not note:
+            continue
+        label = entry.get("release_version") or (
+            f"{entry.get('data_pack_version', '?')} ({entry.get('date', '?')})"
+        )
+        lines += ["", f"**{label} —** {note}"]
     return "\n".join(lines) + "\n"

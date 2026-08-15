@@ -158,6 +158,13 @@ def main(argv=None):
         default=None,
         help="ISO date to stamp the entry (default: today).",
     )
+    p_record.add_argument(
+        "--note",
+        default=None,
+        help="Optional prose recorded with the entry and rendered beneath the public "
+             "Progress table. Use it whenever a count moves because the measurement "
+             "changed rather than the evidence.",
+    )
     p_record.add_argument("--json", action="store_true")
     sub.add_parser("show", help="Print the latest release and the change since the prior one.")
     sub.add_parser("history", help="Print every recorded release, oldest first.")
@@ -179,6 +186,7 @@ def main(argv=None):
             dashboard,
             date,
             args.release,
+            note=args.note,
             **build_axis_totals(ROOT),
         )
         if args.json:
