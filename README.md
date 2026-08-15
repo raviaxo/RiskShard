@@ -108,6 +108,7 @@ model parameters trace to a reviewed public source over time.
 <!-- strength-ledger:begin (regenerate with: python scripts/strength_ledger.py markdown) -->
 | Release | Date | Source-backed params | Cell-matched | Shards 6/6 | Bridged/est. |
 | --- | --- | --- | --- | --- | --- |
+| 2026.08.15 | 2026-08-15 | 66 / 66 | 7 (-24) | 11 / 11 | 0 |
 | 2026.08.13 | 2026-08-13 | 66 / 66 | 31 | 11 / 11 | 0 |
 | 2026.08.08 | 2026-08-08 | 66 / 66 | 31 | 11 / 11 | 0 |
 | 2026.08.07 | 2026-08-07 | 66 / 66 | 31 | 11 / 11 | 0 |
@@ -121,6 +122,20 @@ model parameters trace to a reviewed public source over time.
 A parameter moves from *bridged/estimated* to *source-backed* only through a
 recorded evidence decision — so a rising source-backed count is real strengthening,
 not relabeling.
+
+**Read the `-24` at 2026.08.15 as the measurement getting honest, not the evidence
+getting worse.** Not one parameter, source, value or caveat changed in that release.
+What changed is that *cell-matched* stopped being a field an author maintained by hand
+and became a value computed from each record's declared population against the shard's
+cell. The old field disagreed with those declarations on 45 of 66 cards, counting the
+same wildcard declaration as borrowed 28 times and as matched 72. **7 is what the
+number always was**; 31 was the count of a field that was not being kept.
+See [finding 6](docs/FINDINGS.md) and
+[ADR-0013](docs/adr/0013-fit-is-derived-not-stored.md).
+
+A falling count on this table is therefore not automatically bad news, and a rising one
+is not automatically good. What each column measures, and whether the measurement itself
+changed, is recorded per release in the [changelog](CHANGELOG.md).
 
 ## See the proof
 
