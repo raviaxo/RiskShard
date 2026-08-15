@@ -325,3 +325,178 @@ audit:
           What we hold is a 1,312-word page, not State of Ransomware 2024 (manufacturing). The report itself is gated.
           Unanswerable until the document is obtained — recorded as blocked rather
           than unread so it cannot be mistaken for a backlog that effort will clear.
+
+  # ── Read 2026-08-15, second batch ────────────────────────────────────────
+  # Consistency rule applied across these, stated so the judgements can be argued
+  # with: a DISTRIBUTION means over a magnitude a model consumes (loss size, or
+  # events per organisation), not a categorical breakdown by vector or industry.
+  # An EXCEEDANCE means the source *states* how often a magnitude is passed — an
+  # open-ended top band with a percentage does state it ("13% paid $5M or more");
+  # a dot plot of individual observations does not, even though a reader could
+  # count it. Deriving is not stating, which is the whole of ADR-0008.
+
+  - source_id: verizon_dbir_2025
+    artifact_sha256: 6e0affcc35112764b60cb2d24659366d5eb40b634e88e360a0a395da3d7d02f0
+    artifact: sources/raw/verizon_dbir_2025.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value for any loss quantity, consistent with the 2026 edition.
+          Central tendency is reported as medians.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Figure 46, "Distribution of loss due to ransom payment in USD (2022-2024)",
+          a quantile dot plot with n=664/462/351 by year. The accompanying text gives
+          the 2024 median ransom paid as $115,000, down from $150,000.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None stated. Figure 46 plots individual observations, so a reader could
+          count an exceedance off it, but the report states none — the same call as
+          the 2026 edition, and the reason the rule above distinguishes deriving
+          from stating.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Sample sizes per figure and a methodology appendix. The ransom figure carries
+          its own population caveat in the text: "the customers of ransomware
+          negotiation companies tend to be larger enterprises."
+
+  - source_id: uk_dsit_cyber_breaches_2026
+    artifact_sha256: 780128a0e2a5daa27470ce70c5e10fe1a86736d7cc5af7d8e3203481215d1956
+    artifact: sources/raw/uk_dsit_cyber_breaches_2026.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: No modal cost. Central tendency is the median perceived cost.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Cost is reported as quantiles, not a single figure: median perceived cost of
+          the most disruptive breach (£0 for businesses, £30 for medium and large), and
+          "the range of perceived cost where most fell (25th to 75th percentile) was
+          £0 to £200 for businesses and £0 to £80 for charities."
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Yes, and this is the clearest exceedance statement found in the corpus so far:
+          "Looking at the perceived cost for the top 5% of cases (95th percentile) ...
+          organisations can face high costs (£4,000 for all businesses and micro/small
+          businesses, rising to £10,000 for medium/large businesses, and £1,000 for
+          charities)." That is P(cost > £10,000) = 5% for UK medium/large businesses —
+          a stated exceedance over a named population, split by size band.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          An official UK survey with a stated sample, reported separately for businesses
+          and charities and split by size band (micro/small, medium/large).
+
+  - source_id: sophos_state_ransomware_2024
+    artifact_sha256: bd4f07cb2940d3da227160516145ba6eaf2b326332b663650ad056dcecc77833
+    artifact: sources/raw/sophos_state_ransomware_2024.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value. The report leads with averages and medians of ransom payment
+          and recovery cost.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          A full bucketed severity histogram: "Distribution of ransom payments 2022-24"
+          (n=1,097 for 2024), banded from "Less than $1,000" through "$1,000,000 and
+          $4,999,999" to "$5 million or more", with a percentage in every band.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Stated, by construction of the histogram's open top band: 13% of paid ransoms
+          were "$5 million or more" in 2024. An open-ended band with a percentage is a
+          statement that a magnitude was exceeded that often, over a named sample —
+          unlike a dot plot, which a reader would have to count.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Base numbers given per chart (n=965/216/1,097 by year) and the survey's
+          organisation population is described, with an industry breakdown in the
+          appendix.
+
+  - source_id: fbi_ic3_2025_report
+    artifact_sha256: 7d1fe453237654d2edcf89b0dd6b8b4b2e633fc1d5d5cfbd7dad5f7c1604a0a2
+    artifact: sources/raw/fbi_ic3_2025_report.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: No modal loss value anywhere in the report.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Point statistics only. Complaint counts and total losses, an average loss of
+          $20,699, and breakdowns by crime type, age group and state — categorical
+          splits of a total, not a distribution over loss magnitude. No median,
+          percentile or quantile appears.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. The word "exceed" appears only of aggregate totals passing a round
+          number, e.g. losses to investment scams exceeding $8 billion, which is a sum
+          rather than a statement about how often an individual loss is passed.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Nameable and important to name: the population is complaints reported to IC3
+          (1,008,597 in the year, $20.877bn in losses), which is a self-selected
+          reporting population and not a business census.
+
+  - source_id: ibm_cost_data_breach_2025
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: &ibm2025 >-
+          What we hold is a 1,617-word IBM article *about* the 2025 Cost of a Data
+          Breach Report, not the report. It quotes the global average of USD 4.44M and
+          a mean time to identify and contain of 241 days, and nothing else that would
+          answer these questions. Same blocker as the UK and Canada cuts.
+      distribution:
+        basis: no_readable_artifact
+        detail: *ibm2025
+      exceedance:
+        basis: no_readable_artifact
+        detail: *ibm2025
+      population:
+        basis: no_readable_artifact
+        detail: *ibm2025
+

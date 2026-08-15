@@ -53,24 +53,44 @@ and a source-level claim counts only when a human has read the stored artifact:
 
 | | |
 | --- | --- |
-| registered sources read for a published **mode** | **2 of 61** |
-| …of those, publishing one | **0** |
-| sources **not yet read** | **59** |
+| registered sources **read** so far | **6 of 61** |
+| …publishing a **mode** | **0 of 6** |
+| …publishing a **distribution** over loss or frequency | **4 of 6** |
+| …publishing an **exceedance** statement | **2 of 6** |
+| …from which the measured **population** can be named | **6 of 6** |
+| sources held only as a landing page or summary — **unanswerable** until obtained | **8** |
 
-Until this arc that sentence read *"no source consulted does"*, resting on the same two reads and
-carrying no denominator. **59 unread is not evidence of absence**, and the audit publishes the gap
-beside the claim rather than behind it. Derived by
-[`engine/source_audit.py`](../engine/source_audit.py) → `publishable_claim()`.
+Until this arc that sentence read *"no source consulted does"*, resting on two reads and carrying no
+denominator. **Unread is not evidence of absence**, and the audit publishes the gap beside the claim
+rather than behind it. Derived by [`engine/source_audit.py`](../engine/source_audit.py) →
+`publishable_claim()`.
 
-**The first two reads already complicated the picture, which is why the audit exists.** Verizon
-DBIR 2026 publishes **no mode** — but it does publish a *loss distribution*: Figure 45, "Distribution
-of loss due to ransom payment in 2025", a quantile dot plot over n=1,494, and the methodology
-section names quantile dot plots and complementary-cumulative-density charts as how it expresses
-confidence. So the honest statement is narrower and more interesting than "sources publish only
-point statistics": a loss distribution over a stated sample **is** published there — it is simply
-not published as parameters a three-point model can consume. NetDiligence 2025 publishes neither:
-no median, percentile or quantile appears in its text, and its charts titled *"Distribution of
-Crisis Services Costs"* break a claim down by activity type rather than over severity.
+**The mode claim is holding. Everything around it was wrong.** The reading was expected to confirm
+that public sources offer only point statistics. It does not:
+
+- **UK DSIT Cyber Security Breaches Survey 2026 publishes an exceedance statement** — *"the perceived
+  cost for the top 5% of cases (95th percentile) … £4,000 for all businesses and micro/small
+  businesses, rising to £10,000 for medium/large businesses"* — together with a median and a 25th–75th
+  percentile range. That is P(cost > £10,000) = 5% over a named population, split by size band.
+- **Sophos State of Ransomware 2024 publishes a bucketed severity histogram** of ransom payments
+  (n=1,097), banded from *"Less than $1,000"* to *"$5 million or more"*, whose open top band states
+  that **13%** of paid ransoms exceeded $5M.
+- **Verizon DBIR 2025 and 2026 both publish loss distributions** — quantile dot plots of loss due to
+  ransom payment (n=351 and n=1,494), with the 2024 median ransom stated at $115,000.
+- **FBI IC3 2025 and NetDiligence 2025 publish point statistics only** — an average loss, a maximum,
+  and categorical breakdowns of a total.
+
+So the defensible claim is narrower and considerably more interesting than the one we set out to
+check: **the shape of the evidence is not the constraint everyone assumes.** Distributions exist,
+and at least two sources state exceedance outright. What no source read so far publishes is a
+**mode** — the one parameter a beta-PERT actually requires.
+
+⚠️ **And that turns a finding about the field into a finding about us.** Seven of our eleven maxima
+declare `exceedance_basis: none_known` ([finding 3](#3--most-maxima-bound-nothing)), including the
+GB financial-services data-breach shard — while DSIT, a source **already in this corpus**, publishes
+a 95th-percentile cost for UK medium/large businesses. Whether that retires the declaration is a
+separate question with its own evidence work; that it was available and unused is recorded here
+rather than quietly fixed.
 
 Four of the eight pass *a mean at `min` and a different mean at `likely`* — two central tendencies
 ordered by magnitude and then labelled as a floor and a mode.
