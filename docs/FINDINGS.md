@@ -99,20 +99,33 @@ a figure resting on one observation.**
 The missing thing is a denominator: how often a loss of size X is exceeded, across a known
 population. We have not found one, publicly, anywhere — see finding 7.
 
-### 4 — Half our parameters are borrowed from a population we are not modelling
+### 4 — Seven of our sixty-six parameters are drawn from the population they are used for
 
 *Derived by [`engine/provenance.py`](../engine/provenance.py) ·
-[ADR-0003](adr/0003-shared-impact-bridges.md)*
+[ADR-0003](adr/0003-shared-impact-bridges.md) ·
+[ADR-0013](adr/0013-fit-is-derived-not-stored.md)*
 
 | | |
 | --- | --- |
 | parameters traceable to a named public source | **66 of 66** |
-| drawn from the shard's own cell | **31 of 66** |
-| **bridged** — borrowed across country, sector, size or threat | **35 of 66** |
+| drawn from the shard's own cell | **7 of 66** |
+| **bridged** — borrowed across country, sector, size or threat | **59 of 66** |
 | of those, borrowed across **country** | **15** |
 
 "100% source-backed" was true and was doing too much work, which is why the headline was split on
 2026-08-01. Cell-matched and bridged are different claims and only one of them is strong.
+
+**This finding got substantially worse on 2026-08-15, and the earlier number was the wrong one.**
+It read *31 of 66 cell-matched, 35 bridged* — the headline "half our parameters are borrowed" —
+until fit stopped being an authored field and became a value computed against the target cell
+([ADR-0013](adr/0013-fit-is-derived-not-stored.md), on the evidence of finding 6 below). The old
+count rested on a stored field that treated the same wildcard declaration as borrowing 28 times and
+as dilution 72 times.
+
+**Only the count moved; no loss figure did.** The parameters, their sources, values and caveats are
+unchanged — what changed is that a record measured over all industries now says so on the sector
+facet instead of leaving it to the caveat. Read the new number as *this corpus is a set of bridges,
+with seven exceptions*, which is what it always was.
 
 ### 5 — A fifth of the bridges were declared against the wrong population
 
@@ -172,68 +185,84 @@ an `all` declaration is deliberately *dilution* rather than *borrowing*
 the field should carry its target, or be computed per consumer, is a schema decision and is
 recorded as open rather than made quietly.
 
-### 6 — The field that records how far a number is from our cell disagrees with itself
+### 6 — The field that recorded how far a number is from our cell disagreed with itself
 
-*Measured 2026-08-15 · derived by [`engine/provenance.py`](../engine/provenance.py) →
+*Measured and repaired 2026-08-15 · derived by [`engine/provenance.py`](../engine/provenance.py) →
 `derivable_bridges()` · pinned by [`tests/test_findings.py`](../tests/test_findings.py) ·
 [ADR-0013](adr/0013-fit-is-derived-not-stored.md)*
 
 | | |
 | --- | --- |
-| cards whose stored fit equals the fit derivable from their own declaration | **21 of 66** |
-| cards where the two **disagree** | **45 of 66** |
-| cards claiming a bridge their declaration does not support | **0 of 66** |
+| cards whose rendered fit equals the fit derivable from their own declaration | **66 of 66** |
+| cards where the two **disagree** | **0 of 66** |
+| records still carrying the retired stored field | **0 of 141** |
+
+**Before the repair, the first row was 21 of 66.**
 
 Finding 5 repaired `applicability` so that every record declares the population its source
-actually measured. That makes a second field checkable for the first time: `population_match`,
-which records the facets — country, sector, size, threat — on which a record was borrowed across
+actually measured. That made a second field checkable for the first time: `population_match`,
+which recorded the facets — country, sector, size, threat — on which a record was borrowed across
 rather than drawn from the shard's own cell.
 
-**It can now be derived, and the derivation disagrees with what is stored on two cards in three.**
-Counted as individual facet claims rather than cards, the repository stores **43** and the
-declarations support **117**.
+**Derived, it disagreed with what was stored on two cards in three.** Counted as individual facet
+claims rather than cards, the repository stored **43** where the declarations supported **117**.
 
-The disagreement is not a mistake in one direction. Every stored bridge is supported — that is
-finding 5's guarantee, and it holds at 0. The gap is entirely bridges the declarations support and
-the records do not claim, and **almost all of it is one declaration: `[all]`.** A wildcard says the
+The disagreement was not a mistake in one direction. Every stored bridge was supported — finding
+5's guarantee, holding at 0. The gap was entirely bridges the declarations supported and the
+records did not claim, and **almost all of it was one declaration: `[all]`.** A wildcard says the
 measurement was taken over everything, so it does not name our sector or our size. Across the
-corpus that situation arises 100 times. It is **recorded as a bridge 28 times and not recorded 72
+corpus that situation arises 100 times. It was **recorded as a bridge 28 times and not recorded 72
 times** — the same declaration, the same facet, the opposite call.
 
-Two records in one file show it without any interpretation.
+Two records in one file showed it without any interpretation.
 [`evidence/au_finance_bec.yaml`](../evidence/au_finance_bec.yaml) holds
-`accc_abs_au_small_business_scam_loss_report_rate_floor_2025`, which declares `industries: [all]`
-and `company_size_bands: [all]` and stores `status: matched`, and
-`abs_2025_au_business_cyber_incident_prevalence_frequency_likely`, which declares the same two
-fields the same way and stores `bridged_on: [sector, size, threat]`. Both records' `limitations`
+`accc_abs_au_small_business_scam_loss_report_rate_floor_2025`, which declared `industries: [all]`
+and `company_size_bands: [all]` and stored `status: matched`, and
+`abs_2025_au_business_cyber_incident_prevalence_frequency_likely`, which declared the same two
+fields the same way and stored `bridged_on: [sector, size, threat]`. Both records' `limitations`
 say in prose that the measure is not financial-services-specific and not mid-market-specific. One
 put that in the structured field. One did not.
 
-**This is finding 5's defect one field over.** There, the prose said *borrowed* while the
-structured field said *matched*, and the prose is not what a machine reads. Here it is the same
+**This was finding 5's defect one field over.** There, the prose said *borrowed* while the
+structured field said *matched*, and the prose is not what a machine reads. Here it was the same
 contradiction between the same two layers of the same record, in the field
 [ADR-0011](adr/0011-fit-is-a-facet-set.md) named as the one that must be relative to a target.
 Nothing checked it, so it drifted.
 
-**What was previously offered as the reason not to derive this field turns out to be the finding.**
+**What had been offered as the reason not to derive this field turned out to be the finding.**
 ADR-0011 recorded that fit could not simply be computed, because an `all` declaration is
 deliberately *dilution* rather than *borrowing* ([ADR-0003](adr/0003-shared-impact-bridges.md)) and
-only the author can make that call. The call is a real one. It is not being made consistently, and
-the field cannot be read as though it were.
+only the author can make that call. The call is a real one. It was not being made consistently, and
+the field could not be read as though it were.
 
-**Not all of the gap is drift, and the part that is not is the cost of the fix.**
+**The repair.** [ADR-0013](adr/0013-fit-is-derived-not-stored.md) retired the stored field. Fit is
+now computed against a named target from `applicability` alone, on one strict rule across all four
+facets: a record is bridged on a facet when its declared population does not name that facet's
+value for the cell being computed against. `population_match` is gone from the schema and from all
+141 records, and the schema **refuses** it rather than ignoring it, so a contributor working from an
+old example is told rather than left authoring a field nothing reads.
+
+**No published loss figure moved.** All 66 values, sources, caveats, measurement bases and
+exceedance statements are unchanged, every portfolio total is unchanged, and all 11 shards'
+AVG/P95/P99 are identical to the digit. The field reaches the provenance surfaces and the explorer
+and nothing else — not calibration, not coherence, not exceedance, not the simulation.
+
+**Two published counts moved, and they moved louder.** Cards drawn from the shard's own cell went
+**31 → 7 of 66** and bridged cards **35 → 59 of 66**; see finding 4, whose headline changed with
+them. Cards bridged across **country** did not move at all, because that facet had been computed
+this way since ADR-0003 was implemented — which is why it was the one facet where the stored and
+derived values already agreed.
+
+**Not all of the gap was drift, and the part that was not is the cost of the fix.**
 [ADR-0003](adr/0003-shared-impact-bridges.md) holds that statutory caps, documented single-event
 anchors and same-survey adjacent-band anchors are the range-anchoring *method* rather than
-borrowing, and are therefore matched. That is a deliberate rule, and **5 of the 24 cards that would
-flip are exemptions of exactly that kind.** Deriving strictly does not honour it; those five will
-read as bridged, and what they are is left to `measurement_basis` to say.
-
-[ADR-0013](adr/0013-fit-is-derived-not-stored.md) decides what happens next: the value is computed
-against a named target rather than stored. **No published loss figure is affected** — the field
-reaches only the provenance surfaces and the explorer, never calibration, coherence, exceedance or
-the simulation. Two counts on the front door do move, and they move louder: cards drawn from the
-shard's own cell go **31 → 7**, and bridged cards **35 → 59**. The count of cards bridged across
-country does not move at all, because that facet has always been computed this way.
+borrowing, and are therefore matched. That is a deliberate rule, and **5 of the 24 cards that
+flipped are exemptions of exactly that kind** — two statutory penalty caps, one documented
+single-event anchor, and two adjacent-band anchors in the FR shard where a small-business and a
+large-business band of one survey bracket a mid-market cell. Deriving strictly does not honour it.
+Those five now read as bridged on sector and size, and what they actually are is left to
+`measurement_basis` to say. It is a real loss of precision on five cards, taken deliberately so the
+field means one thing.
 
 ---
 

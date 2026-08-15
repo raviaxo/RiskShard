@@ -119,9 +119,20 @@ fingerprint moved twice (`22db117f2bec` → `fe0d0ffab227` with the registry, �
 the declaration reconciliation) — correct, and it clears at the next release rather than being a
 fault.
 
-**ACTIVE OBJECTIVE: implement ADR-0013 — derive fit, retire the stored field.** Both decisions
-that were pending on the owner were taken on 2026-08-15 and are recorded below; the first left a
-code objective, which is now the queue head. The second is closed with no work.
+**ACTIVE OBJECTIVE: none. ADR-0013 is implemented and both pending decisions are discharged.**
+Fit is derived, `population_match` is gone from the schema and all 141 records, and the two counts
+moved as predicted (cell-matched **31 → 7**, bridged **35 → 59**, cross-country **15** unchanged)
+with **no published value moving** — all 66 parameter rows of the evidence report are identical on
+value, unit and status. 317 tests, evidence and preflight clean. Data pack `3b9409a44c6b` →
+**`ed6348d12ab0`**.
+
+⚠️ **The strength ledger will read `needs_review` again** — the pack fingerprint moved a third
+time. Same as before: correct, and it clears when a release is cut, not a fault.
+
+**Worth considering next:** cutting **v0.8.0**. Three fingerprint moves are now unrecorded in the
+ledger, and the front door carries a materially different (and worse) headline than the last tagged
+release — anything published about finding 6 or ADR-0013 currently resolves against v0.7.0, which
+does not contain them.
 
 **⚠️ The whole queue below this line is older than these sessions and has not been re-verified
 against them. Read this restart point first.**
@@ -140,12 +151,15 @@ against them. Read this restart point first.**
    already derives strictly, which is why it is the one facet where stored and derived agree.
    Published as [finding 6](../FINDINGS.md).
 
-   **→ This leaves a code objective, not a decision.** Implement the derivation, remove
-   `population_match` from the schema and all 141 records, and update the surfaces. Expect
-   `params_cell_matched` **31 → 7** and `params_cross_cell` **35 → 59** on the front door and in
-   `docs/index.html`; `params_cross_country` stays **15**; no loss figure moves. Finding 4's
-   published counts and finding 6's move together, and `tests/test_findings.py` fails until the page
-   is re-derived. Five cards lose ADR-0003's "matched by method" exemption — say so, don't absorb it.
+   ✅ **IMPLEMENTED the same day.** `_card_population` derives from `applicability` alone;
+   `population_match` is removed from the schema (refused, not ignored) and from all 141 records in
+   a removal-only diff; `legacy_population_match()` + a corpus test catch a reintroduction. Counts
+   landed exactly as predicted — cell-matched **31 → 7**, bridged **35 → 59**, cross-country **15**.
+   **No published value moved**: all 66 rows of `EVIDENCE_REPORT.md` are identical on value, unit
+   and status. Findings 4 and 6 rewritten to the post-repair state, ADR-0003 marked superseded in
+   part inline, the contributor example rewritten, CHANGELOG entry added under Unreleased. The five
+   cards losing ADR-0003's "matched by method" exemption are named on the findings page and in the
+   ADR rather than absorbed.
 
 2. ✅ **DECIDED — declined, and the axis was wrong.** No expansion is authorized. The trial runs to
    its own kill criterion, which ADR-0012 measures **at two release cycles** and which has had

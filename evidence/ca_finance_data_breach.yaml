@@ -17,8 +17,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [CA]
@@ -43,8 +41,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [CA]
@@ -69,8 +65,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [CA]
@@ -96,9 +90,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
-    population_match:
-      status: bridged
-      bridged_on: [threat]
     applicability:
       industries: [all]
       countries: [CA]
@@ -127,8 +118,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [CA]
@@ -154,9 +143,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
-    population_match:
-      status: bridged
-      bridged_on: [country]
     applicability:
       industries: [all]
       countries: [global, CA]
@@ -182,8 +168,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [CA]
@@ -215,9 +199,6 @@ records:
       1/84 (~1.2% of claims). Within-sample and on a thin cell: 84 claims is a small denominator, the data
       is censored by policy limits, and the record already notes that larger Canadian losses (e.g.
       Desjardins) are invisible to it. The true rate above USD 15M is higher than 1/84.
-    population_match:
-      status: bridged
-      bridged_on: [threat]
     applicability:
       industries: [all]
       countries: [CA]

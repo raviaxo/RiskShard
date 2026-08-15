@@ -170,6 +170,18 @@ only; and what the coverage tools report as the headline once the two categories
 
 ## Implementation decisions (owner-approved 2026-08-01, implemented same day)
 
+> ⚠️ **Superseded in part, 2026-08-15 — see [ADR-0013](0013-fit-is-derived-not-stored.md).** The
+> first bullet below is no longer how this works. `population_match` is retired from the schema and
+> from every record; fit is computed against a target from `applicability` alone, on the strict rule
+> the country layer already used, with **no wildcard exemption**. The "honest wildcard declarations
+> are dilution" clause and the "matched by method" exemption in the second bullet are both retired
+> with it: a statutory cap, a documented single event and an adjacent-band anchor all read as
+> bridged now, and what they are is stated by `measurement_basis` instead. The reason is measured —
+> the stored layer disagreed with the declarations on 45 of 66 cards and treated the same wildcard
+> as borrowing 28 times and as dilution 72 ([finding 6](../FINDINGS.md)). The bridge **vocabulary**
+> below (country · sector · size · threat) survives unchanged and is what the derivation emits.
+> Everything else in this ADR stands.
+
 - **Field on the record**, two layers: `population_match` stores the fact about the record
   (specific declared applicability beyond the source's measured population); the per-shard
   card view combines it with a **country-strict** consumption check — a record whose

@@ -17,8 +17,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -43,8 +41,6 @@ records:
     confidence: high
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -72,8 +68,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: reported_case_rate
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -98,8 +92,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -124,8 +116,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -150,8 +140,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -176,8 +164,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -203,9 +189,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
-    population_match:
-      status: bridged
-      bridged_on: [threat]
     applicability:
       industries: [all]
       countries: [AU]
@@ -232,8 +215,6 @@ records:
     evidence_type: source_backed
     measurement_basis: statutory_penalty_cap
     exceedance_basis: population_ceiling
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [AU]
@@ -259,8 +240,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: median_total_event_cost
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -286,9 +265,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
-    population_match:
-      status: bridged
-      bridged_on: [size]
     applicability:
       industries: [financial_services]
       countries: [AU]
@@ -315,8 +291,6 @@ records:
     evidence_type: source_backed
     measurement_basis: observed_extremum
     exceedance_basis: none_known
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]

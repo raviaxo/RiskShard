@@ -17,8 +17,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_loss_event
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -53,9 +51,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: bridged
-      bridged_on: [sector]
     applicability:
       industries: [all]
       countries: [JP]
@@ -86,9 +81,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: bridged
-      bridged_on: [sector]
     applicability:
       industries: [all]
       countries: [JP]
@@ -114,8 +106,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: median_total_event_cost
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -141,8 +131,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: median_total_event_cost
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -169,8 +157,6 @@ records:
     evidence_type: source_backed
     measurement_basis: observed_extremum
     exceedance_basis: none_known
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [global]
@@ -195,8 +181,6 @@ records:
     confidence: high
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [JP]
@@ -221,8 +205,6 @@ records:
     confidence: high
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [manufacturing]
       countries: [JP]
@@ -247,8 +229,6 @@ records:
     confidence: high
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [manufacturing]
       countries: [JP]
@@ -273,8 +253,6 @@ records:
     confidence: high
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [JP]
@@ -300,8 +278,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: cost_component
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [JP]
@@ -327,8 +303,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: cost_component
-    population_match:
-      status: matched
     applicability:
       industries: [manufacturing]
       countries: [global]
@@ -355,8 +329,6 @@ records:
     evidence_type: source_backed
     measurement_basis: observed_extremum
     exceedance_basis: none_known
-    population_match:
-      status: matched
     applicability:
       industries: [manufacturing]
       countries: [global]

@@ -38,8 +38,7 @@ class EvidenceQualityTests(unittest.TestCase):
                 "    confidence: low\n"
                 "    evidence_type: source_backed\n"
                 "    measurement_basis: org_prevalence_incident\n"
-                "    population_match:\n"
-                "      status: matched\n"
+                # ADR-0013: fit is derived from `applicability`, never authored.
                 "    applicability:\n"
                 "      industries: [all]\n"
                 "      countries: [global]\n"

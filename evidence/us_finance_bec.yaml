@@ -18,8 +18,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [US]
@@ -44,8 +42,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [US]
@@ -71,8 +67,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [US]
@@ -97,8 +91,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic
-    population_match:
-      status: matched
     applicability:
       industries: [all]
       countries: [US]
@@ -126,9 +118,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: reported_case_rate
-    population_match:
-      status: bridged
-      bridged_on: [sector, size]
     applicability:
       industries: [all]
       countries: [US]
@@ -175,9 +164,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: bridged
-      bridged_on: [sector, size]
     applicability:
       industries: [all]
       countries: [US]
@@ -224,9 +210,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_incident
-    population_match:
-      status: bridged
-      bridged_on: [sector, size]
     applicability:
       industries: [all]
       countries: [US]
@@ -274,9 +257,6 @@ records:
     confidence: medium
     evidence_type: source_backed
     measurement_basis: median_total_event_cost
-    population_match:
-      status: bridged
-      bridged_on: [sector, size]
     applicability:
       industries: [all]
       countries: [US]
@@ -326,8 +306,6 @@ records:
     evidence_type: source_backed
     measurement_basis: single_documented_event_loss
     exceedance_basis: none_known
-    population_match:
-      status: matched
     applicability:
       industries: [financial_services]
       countries: [US]

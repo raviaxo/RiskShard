@@ -5,6 +5,38 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## Unreleased
+
+**Fit stopped being a field and became a computation.** `population_match` is retired
+from the schema and from all 141 evidence records; how far a record sits from a shard —
+country, sector, size, threat — is now derived from its declared `applicability` against
+the cell being computed against, on one strict rule with no wildcard exemption. The schema
+**refuses** the retired field rather than ignoring it, so a contributor working from an old
+example is told. [ADR-0013](docs/adr/0013-fit-is-derived-not-stored.md).
+
+Why, measured rather than argued: the stored field disagreed with the records' own
+declarations on **45 of 66** cards, treating the same wildcard declaration as borrowing 28
+times and as dilution 72 — twice inside a single file, on records whose prose said the same
+thing. [ADR-0011](docs/adr/0011-fit-is-a-facet-set.md) had left this open on the premise
+that only an author could make that call; the call is real and was not being made.
+Published as [finding 6](docs/FINDINGS.md).
+
+**No published number moves.** All 66 values, units, statuses, sources, caveats,
+measurement bases and exceedance statements are byte-identical; every portfolio total is
+unchanged; all 11 shards' AVG/P95/P99 are identical to the digit.
+
+**Two published counts move, and they move louder.** Parameters drawn from the shard's own
+cell **31 → 7 of 66**; bridged **35 → 59 of 66**; cross-country unchanged at **15**.
+Finding 4's headline changed with them — *"half our parameters are borrowed"* is now
+*"seven of sixty-six are not."* The cost is stated rather than absorbed: ADR-0003's
+"matched by method" exemption is retired with the field, so two statutory caps, a
+documented single-event anchor and two adjacent-band anchors read as bridged, and what
+they are is left to `measurement_basis` to say.
+
+Also: the registry trial's expansion was **declined** and its framing corrected — one of
+the seven `none_known` maxima is US, and the binding constraint is threat (0 BEC events in
+the registry), not country.
+
 ## v0.7.0 — 2026-08-13
 
 **The evidence object takes the front door, and the mode slot says what is in it.**

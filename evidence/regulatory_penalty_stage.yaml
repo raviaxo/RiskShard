@@ -49,9 +49,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: conditional_probability
-    population_match:
-      status: bridged
-      bridged_on: [sector, size]
     applicability:
       industries: [all]
       countries: [GB]
@@ -123,9 +120,6 @@ records:
     confidence: low
     evidence_type: source_backed
     measurement_basis: regulatory_penalty_issued
-    population_match:
-      status: bridged
-      bridged_on: [sector, size]
     applicability:
       industries: [all]
       countries: [GB]
@@ -152,9 +146,6 @@ records:
     evidence_type: source_backed
     measurement_basis: regulatory_penalty_issued
     exceedance_basis: none_known
-    population_match:
-      status: bridged
-      bridged_on: [sector, size]
     applicability:
       industries: [all]
       countries: [GB]

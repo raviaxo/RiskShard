@@ -76,33 +76,6 @@
             "type": "string",
             "description": "The exceedance statement itself, when one exists — e.g. the percentile and its distribution, or the rank and N. Required when exceedance_basis is modeled_quantile or observed_rank; meaningless for none_known."
           },
-          "population_match": {
-            "type": "object",
-            "properties": {
-              "status": {
-                "type": "string",
-                "enum": ["matched", "bridged"]
-              },
-              "bridged_on": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "enum": ["country", "sector", "size", "threat"]
-                },
-                "minItems": 1
-              }
-            },
-            "required": ["status"],
-            "if": {
-              "properties": { "status": { "const": "bridged" } }
-            },
-            "then": {
-              "required": ["status", "bridged_on"]
-            },
-            "else": {
-              "not": { "required": ["bridged_on"] }
-            }
-          },
           "applicability": {
             "type": "object",
             "properties": {
@@ -151,13 +124,8 @@
         ],
         "allOf": [
           {
-            "if": {
-              "properties": { "evidence_type": { "const": "source_backed" } },
-              "required": ["evidence_type"]
-            },
-            "then": {
-              "required": ["population_match"]
-            }
+            "$comment": "ADR-0013: fit is computed against a target, so it is not stored on the record. `population_match` was required here for source_backed records until 2026-08-15; it is now refused rather than ignored, so a contributor working from an old example is told instead of authoring a field nothing reads. The facets it recorded are derived from `applicability` by engine/provenance.py.",
+            "not": { "required": ["population_match"] }
           },
           {
             "$comment": "ADR-0008: a record anchoring an impact maximum must say what, if anything, is known about being exceeded. Matches `impact.max` and staged forms such as `loss_stage.regulatory_penalty.impact.max`.",
