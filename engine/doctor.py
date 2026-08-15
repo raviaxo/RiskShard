@@ -124,6 +124,8 @@ def source_audit_check(root):
             f"artifact ({coverage['sources_fully_verified']} of {coverage['sources']} sources "
             f"read on all four properties); {coverage['unverified']} unread — a question, "
             "not a finding"
+            + (f"; {coverage['blocked_no_artifact']} blocked (artifact is not the source)"
+               if coverage["blocked_no_artifact"] else "")
         ),
     }
 

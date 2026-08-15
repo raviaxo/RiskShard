@@ -50,8 +50,8 @@
       "properties": {
         "basis": {
           "type": "string",
-          "enum": ["verified_against_artifact", "derived_from_corpus", "unverified"],
-          "description": "verified_against_artifact: a human read the stored artifact — the only basis a source-level claim may rest on. derived_from_corpus: what our extraction shows, a fact about us. unverified: not yet read; the default, and the work queue."
+          "enum": ["verified_against_artifact", "derived_from_corpus", "unverified", "no_readable_artifact"],
+          "description": "verified_against_artifact: a human read the stored artifact — the only basis a source-level claim may rest on. derived_from_corpus: what our extraction shows, a fact about us. unverified: not yet read; the default, and the work queue. no_readable_artifact: the gathered artifact is not the source — a landing page, a news summary, a paywall — so the question cannot be answered until the document itself is obtained. Distinct from unverified on purpose: 'we have not read it' and 'we cannot read it' are different states, and collapsing them would let a permanent gap masquerade as a backlog."
         },
         "publishes": {
           "type": "boolean",

@@ -112,7 +112,8 @@ class AuditIntegrityTests(unittest.TestCase):
     def test_coverage_counts_every_slot(self):
         c = self.audit["coverage"]
         self.assertEqual(c["slots"], c["sources"] * len(PROPERTIES))
-        self.assertEqual(c["verified"] + c["unverified"], c["slots"])
+        self.assertEqual(c["verified"] + c["unverified"] + c["blocked_no_artifact"],
+                         c["slots"])
 
     def test_a_claim_carries_its_denominator(self):
         """`publishable_claim` must not produce a bare statement about the field.
