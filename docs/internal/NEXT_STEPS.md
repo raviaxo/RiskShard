@@ -110,20 +110,51 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
 
 ## Restart point
 
-**Session closed 2026-08-14. Tree clean, `main` == `origin/main` at `1dfd5dc`, 307 tests, evidence
-and preflight clean. Data pack `fe0d0ffab227`.** Eight PRs merged (#127–#134); **#135 is open** and
-carries the registry.
+**Session closed 2026-08-15. Tree clean, `main` == `origin/main` at `4bee973`, 315 tests, evidence
+and preflight clean, 0 open PRs, 0 unmerged branches. Data pack `3b9409a44c6b`.** #135, #136 and
+#137 are all merged; `loss_events/` is on `main`.
 
-⚠️ **Two things to know before starting.** The strength ledger reads `needs_review` because the pack
-fingerprint moved when the registry landed (`22db117f2bec` → `fe0d0ffab227`) — that is correct and
-clears at the next release, not a fault. And **#135 is unmerged**, so `main` does not yet contain
-`loss_events/`.
+⚠️ **One thing to know before starting.** The strength ledger reads `needs_review` because the pack
+fingerprint moved twice (`22db117f2bec` → `fe0d0ffab227` with the registry, → `3b9409a44c6b` with
+the declaration reconciliation) — correct, and it clears at the next release rather than being a
+fault.
 
-*Prior close, same arc:* **v0.7.0 cut and tagged** at `ecf8be2` with 291 tests and every gate green
-including the ledger — the front door repositioned, the mode slot declared, the findings published.
+**ACTIVE OBJECTIVE: none. The ADR-0011 consequence is fully discharged** (#136, #137). Pick from
+"What needs a decision" below or from the queue.
 
-**⚠️ The whole queue below this line is older than this session and has not been re-verified
-against it. Read this restart point first.**
+**⚠️ The whole queue below this line is older than these sessions and has not been re-verified
+against them. Read this restart point first.**
+
+### What needs a decision (both are decisions, not work)
+
+1. **ADR-0011 open question 3 — `population_match` is a stored target-relative value.** Raised by
+   the #137 repair and recorded in [ADR-0011](../adr/0011-fit-is-a-facet-set.md) → Correction. Once
+   declarations name the measured population, every stored `bridged_on` reads as *the declared
+   population does not name this cell's value* — a fit computed against the authoring shard and
+   frozen onto the record, which Decision part 1 forbids. It cannot be derived away: an `all`
+   declaration is deliberately dilution rather than borrowing (ADR-0003), and a naive derivation
+   flags 45 of 66 cards against the 35 recorded. Options are to store the target alongside the fit,
+   compute fit per consumer, or relabel the field as an authored judgement about our own cell.
+   **Schema change → Change Control → needs its own ADR before any code moves.**
+2. **The registry trial's non-US expansion.** Unchanged from the prior close and still the thing
+   the trial waits on: seven maxima declare `none_known` and none is US. **Not authorized by
+   ADR-0012**; needs a decision, not a branch.
+
+### What shipped 2026-08-14/15 (this arc)
+
+- **#136 — fit made target-relative (the ADR-0011 consequence).** Provenance cards carry
+  `declared_for` and the module `cell`; the evidence report and explorer name the target wherever
+  fit is rendered; no composite score, pinned by test. **No published number moved.**
+- **#137 — the declarations reconciled.** 21 records named the shard cell they were borrowed into
+  rather than the population their source measured. All corrected; `unexplained_bridges()` now
+  fails the build if another appears. **No loss figure moved**, but the seeded benchmark blocker
+  count went **19 → 22** — three BEC shards had been passing the industry-relevance gate on a false
+  declaration. Recorded in `revisions/2026-08-14-three-bec-shards-*.yaml` and as
+  [finding 5](../FINDINGS.md).
+- **Retired mid-arc:** #136's three-label rendering (`declared for` / `not measured on` /
+  `fit vs this cell`). It rested on the stored layer being intrinsic to the record, which was an
+  artifact of the mislabelled declarations. #137 restored the two labels ADR-0011 specified. The
+  reversal is recorded in the ADR rather than done quietly.
 
 **What shipped.** The two objectives that were queued are both **done**, and the release that
 carries them is cut:
@@ -139,7 +170,10 @@ carries them is cut:
 - Plus **`docs/FINDINGS.md`** (#131), the **EDGAR census** (#127), and **ADR-0011 + ADR-0012
   accepted** (#128, #132), with ADR-0005 superseded.
 
-**ACTIVE OBJECTIVE: the registry trial (owner chose it 2026-08-14, "registry first").** The first
+**THE REGISTRY TRIAL (owner chose it 2026-08-14, "registry first").** *No longer the active
+objective — its first slice shipped in #135 and what remains is the unauthorized non-US expansion,
+i.e. a decision. Kept below because the trial is still running and this is its state of record.*
+The first
 slice is **built** — `loss_events/` holds 36 events with 48 typed amounts, its own schema, its own
 doctor gate, and 16 tests. **Two candidates the census had accepted were rejected on closer
 reading** (SolarWinds' `$15M` is a policy *limit*, not a loss — the same error SIFCO was caught for;
@@ -163,13 +197,16 @@ and finds a country-and-threat match. Seven maxima declare `none_known` and **no
 which makes expansion beyond the US slice the thing the trial is actually waiting on. That
 expansion is **not authorized** by ADR-0012 and needs its own decision.
 
-The other authorized objective remains **unstarted**:
+✅ **The other authorized objective is DONE (2026-08-14/15, #136 + #137).**
 
-- **ADR-0011 consequence — make fit target-relative.** `population_match` is computed against *our*
-  shard cell and then stored as though it were a property of the record, so a consumer learns how
-  it fits our target and almost nothing about theirs. `applicability` is the target-independent
-  fact, is required on every record, and is the *less* visible of the two. This is a **surfacing
-  and relabelling** job on fields that already exist — no new axis, no new data. Smaller of the two.
+- **ADR-0011 consequence — make fit target-relative.** Shipped. It was scoped as a surfacing and
+  relabelling job, and the surfacing half was: fit is now computed against a named target on every
+  reader-facing surface, with no composite score. But building it found that the premise was false
+  — `applicability` was **not** the target-independent fact, because 21 records declared the shard
+  cell they were borrowed into rather than the population measured. So the objective grew a second
+  half, the data repair (#137), and that half moved one number: seeded benchmark blockers 19 → 22.
+  What remains is not this objective but the schema question it exposed — see **What needs a
+  decision** in the restart point.
 
 *Historical note, kept because the fix rests on it:* the mode-slot count was published as 7 of 11
 and corrected to 8 on 2026-08-12 by resolving every anchor mechanically instead of by eye.
@@ -1629,3 +1666,20 @@ governance/regulatory loss).
   Deliberately not done: pointing a shard at an entry to make the metric move. The only real match
   would have made a published number worse, and manufacturing the trial's own success metric is what
   the kill criterion exists to prevent.
+
+- 2026-08-14/15 — **ADR-0011 consequence shipped in two PRs, and the second one corrected the
+  first.** #136 made fit target-relative on every surface (cards carry `declared_for` and the module
+  `cell`; the target is named wherever fit renders; no composite score, pinned by test) — no
+  published number moved. Building it measured the ADR's own premise false: `applicability` was not
+  the observed population. #137 reconciled all **21** records that declared the shard cell they were
+  borrowed into rather than the population measured (IC3/Census BEC floor over economy-wide
+  denominators; three US frequencies over a **UK** survey; two SG anchors over **US** data), and
+  made the check a build gate — `unexplained_bridges()`, which catches both the exact-restatement
+  shape and the one hidden beside a wildcard, the latter being why the first count of 17 was four
+  too low. No loss figure moved (66/66 values, all totals, all 11 AVG/P95/P99 byte-identical), but
+  seeded benchmark blockers went **19 → 22**: three BEC shards had been passing the
+  industry-relevance gate on a false declaration. Recorded in `revisions/`, published as finding 5.
+  #136's three-label rendering was retired mid-arc once the data made it untrue, with the reversal
+  written into ADR-0011 rather than done quietly. Tests 307 → 315; gates green. **Surfaced and
+  stopped:** `population_match` is a stored target-relative value (ADR-0011 open question 3) —
+  a schema decision, so no code moved on it.
