@@ -500,3 +500,303 @@ audit:
         basis: no_readable_artifact
         detail: *ibm2025
 
+  # ── Read 2026-08-15, third batch ─────────────────────────────────────────
+  - source_id: spf_annual_scam_cybercrime_brief_2025
+    artifact_sha256: 5422fa57299d72ed6a2e802ad713c396ce8cd13d23e7e6e727fa1735b1c96b97
+    artifact: sources/raw/spf_annual_scam_cybercrime_brief_2025.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal loss. Central tendency is the median loss per case.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Banded, with both ends given: "about 67.1%, suffered less than $5,000 in
+          losses, while 5.2% of scam cases suffered at least $100,000 in losses. The median
+          loss per case was $1,644."
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Stated directly: 5.2% of scam cases suffered at least $100,000 in losses.
+          That is P(loss >= S$100,000) = 5.2% over Singapore scam cases reported to the
+          SPF — an exceedance statement in one sentence.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Scam and cybercrime cases reported to the Singapore Police Force in the year —
+          a police reporting population, nameable and not a business census.
+
+  - source_id: sophos_state_ransomware_2023
+    artifact_sha256: 9dfbe90fce1c870b5f9d3a63c525c755368a27bcbdfab59606457774fe5a2bac
+    artifact: sources/raw/sophos_state_ransomware_2023.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the report reports averages and medians of payment and recovery cost.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Described in the text as "a wide distribution of payments", reported in bands:
+          40% of paying organizations reported payments of $1 million or more, and 34% paid
+          less than $100,000.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Stated by the open top band: 40% of ransom payers paid $1 million or more, up
+          from 11% in the prior study. P(payment >= $1M) = 40% over the surveyed payers.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Survey population with base numbers given per chart, including a cyber-insurance split.
+
+  - source_id: accc_targeting_scams_2025
+    artifact_sha256: 9d21086dedca93f099728888b330df7ab0cbb787fc7136cf948c6ce09f4fd671
+    artifact: sources/raw/accc_targeting_scams_2025.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal loss value.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Point statistics only, though better chosen than most: a median loss (falling
+          from $500 in 2024 to $400 in 2025) reported overall and broken out by demographic
+          group. A median by category is not a distribution over magnitude — no percentile,
+          quantile or banding appears.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None stated. The word appears only of aggregate reported-loss totals.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Scamwatch reports to the ACCC, plus partner reporting bodies — a self-selected
+          reporting population, which the report itself discusses.
+
+  - source_id: opc_annual_report_2025_2026
+    artifact_sha256: ff418539aa0aa5046dddf5a048f56fe31db10d54f613000e927cc45adf8f1e54
+    artifact: sources/raw/opc_annual_report_2025_2026.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No loss magnitudes of any kind, so no mode.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Counts and processing times, not loss. Complaints under PIPEDA rose from 1,458 to
+          3,044; files processed within an average of 66 days against a 28-day standard. No
+          median, percentile or distribution over any magnitude a model would consume.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Complaints and breach reports made to the OPC under PIPEDA — a regulator's
+          reporting population, clearly named.
+
+  - source_id: oaic_ndb_jul_dec_2024
+    artifact_sha256: 412c99ad35cd54c5ad2531c7d6c560131c1e43553d67b71d17e8328d00f5b712
+    artifact: sources/raw/oaic_ndb_jul_dec_2024.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Point statistics, but an unusually informative pair: Table 2 gives both the median
+          AND the average number of affected individuals per breach source (cyber incident
+          n=247, median 182, average 15,357). Reporting both exposes the skew, which most
+          sources hide — it is still two point statistics rather than a distribution.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None stated.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Breaches notified to the OAIC under the Notifiable Data Breaches scheme, with
+          notification counts per category.
+
+  - source_id: bitkom_wirtschaftsschutz_2025
+    artifact_sha256: b7e68c140d9e6ddd302f86867a91ab2044057f9ba87fffd9a4dd3fd79a9c5a38
+    artifact: sources/raw/bitkom_wirtschaftsschutz_2025.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No Modalwert. Read with German terms after an English-only pass returned zero on
+          every property — a false negative, since the report carries 4 "Durchschnitt",
+          2 "Verteilung" and 27 "Schaden".
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          The two "Verteilung" figures distribute the estimated IT-security budget share of
+          total IT budget (Abbildung 19), not damage. Damage is reported as aggregate
+          Milliarden-euro totals and averages. No Median or Perzentil anywhere.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No überschreiten-type statement about damage magnitude.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Stated on every figure in the German convention: "Basis: Alle Unternehmen
+          (n=1.002) | Quelle: Bitkom Research 2025"
+
+  - source_id: asteres_cout_cyberattaques_france_2022
+    artifact_sha256: 475980a53f23d349849295f678e16950399ecc40cf7a34dc08da5a52c80efbc2
+    artifact: sources/raw/asteres_cout_cyberattaques_france_2022.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No mode. Read with French terms; zero occurrences of médiane in the study.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Averages only, and the study says so: it estimates "le coût moyen de la
+          résolution de la crise, le coût moyen d'une rançon et les pertes moyennes de
+          productivité". No médiane, no percentile, no répartition of cost.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          French organisations, built from a literature review plus a survey of CRiP
+          members ("une enquête menée auprès des adhérents du CRiP"), with a methodology
+          section — a named and self-selected professional population.
+
+  - source_id: abs_characteristics_australian_business_2025
+    artifact_sha256: b3246fbd7f32a4cb1eb128f798ac94966c6dbf08082dbcf7a23e72f6b2bbe855
+    artifact: sources/raw/abs_characteristics_australian_business_2025.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the release reports proportions of businesses, not loss magnitudes.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Prevalence by category — the share of businesses experiencing a cyber security
+          incident, split by employment size range. A categorical breakdown of a rate, not a
+          distribution over a magnitude.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None; the release carries no loss magnitudes to exceed.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          An official ABS statistical release covering Australian businesses with defined
+          employment size ranges — the strongest population statement in the corpus so far,
+          and the reason this source is used as a denominator.
+
+  - source_id: ponemon_dtex_cost_insider_risks_2023
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,940-word summary page for the Cost of Insider Risks study,
+          not the study. It carries a few headline findings — an average 86 days to
+          contain, 13% of incidents contained in under 31 days — and nothing that would
+          answer these questions about the report's own statistics. Same blocker as the
+          IBM and Sophos summaries.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,940-word summary page for the Cost of Insider Risks study,
+          not the study. It carries a few headline findings — an average 86 days to
+          contain, 13% of incidents contained in under 31 days — and nothing that would
+          answer these questions about the report's own statistics. Same blocker as the
+          IBM and Sophos summaries.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,940-word summary page for the Cost of Insider Risks study,
+          not the study. It carries a few headline findings — an average 86 days to
+          contain, 13% of incidents contained in under 31 days — and nothing that would
+          answer these questions about the report's own statistics. Same blocker as the
+          IBM and Sophos summaries.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,940-word summary page for the Cost of Insider Risks study,
+          not the study. It carries a few headline findings — an average 86 days to
+          contain, 13% of incidents contained in under 31 days — and nothing that would
+          answer these questions about the report's own statistics. Same blocker as the
+          IBM and Sophos summaries.
+
