@@ -209,10 +209,11 @@
     <p><b>Fit is relative to a target, and the target on this page is ours.</b> Each parameter
     prints two lines and the order is deliberate. <span class="lbl">declared for</span> is the
     population the source measured — countries, industries, size bands, threats. That is a
-    property of the record and it is true for every reader. <span class="lbl">fit</span> compares
-    that population against <em>this item's own cell</em>, which the line names; it tells you how
-    the record sits relative to ours and almost nothing about yours. If your cell differs, and it
-    will, that is the one line to recompute, and the line above it does not move.</p>
+    property of the record and it is true for every reader. <span class="lbl">fit</span> is
+    <em>computed</em> from that population against <em>this item's own cell</em>, which the line
+    names; it tells you how the record sits relative to ours and almost nothing about yours. It is
+    stored nowhere. If your cell differs, and it will, that is the one line to recompute, and the
+    line above it does not move.</p>
     <p><b>That the first line means what it says is a repair, not an assumption.</b> On
     2026-08-14, <b>21 records</b> were found declaring the cell they were borrowed <em>for</em>
     rather than the population measured — the US BEC frequency floor declaring financial-services
@@ -221,6 +222,18 @@
     over US data. All 21 were corrected, no published figure moved, and a test now fails the build
     if another appears. Every <span class="lbl">fit</span> line below is therefore <em>earned</em>:
     the population above it genuinely does not name this cell.</p>
+    <p><b>The cell-matched count above got much worse on 2026-08-15, and that is the correction
+    rather than a decline.</b> Fit used to be a second field an author maintained by hand beside
+    the declaration. Measured against those declarations it disagreed on <b>45 of 66</b>
+    parameters, counting the same all-industry declaration as borrowed 28 times and as matched 72.
+    It was retired: fit is now computed on one rule for every facet — bridged when the declared
+    population does not name this cell's value — so cell-matched fell <b>31 → 7</b> and bridged
+    rose <b>35 → 59</b>. <b>No published figure moved</b>; every value, source, caveat and
+    simulated total is unchanged. <b>7 is what the number always was.</b> One consequence is worth
+    knowing while reading: a statutory penalty cap, a documented single-event loss and a
+    same-survey adjacent band are all measured over some other population, so they now read
+    <em>bridged</em> too. The <span class="lbl">measures</span> line is what tells you which of
+    those a parameter is.</p>
     <p>This page publishes no fit score, grade or percentage, and will not. Compressing these
     facets into one number would assert that a geography mismatch and a size mismatch trade off
     against each other in a way we cannot know for your scenario — a geography mismatch is fatal
@@ -441,11 +454,16 @@
          this shard's own cell; the borrowed dimension is named on its face. */
       var pop=p.population||{};
       var st=backed?'source-backed':'estimate';
-      /* The chip is the merged ADR-0003 flag and nothing more — it is what the
-         31-cell-matched / 35-bridged headline counts, so it must not be redefined
+      /* The chip is the merged ADR-0003 flag and nothing more — it is exactly what
+         the cell-matched / bridged headline counts tally, so it must not be redefined
          here. It deliberately names no facets and claims nothing about a target:
          the two lines below decompose it into the part that is a property of the
-         record and the part that moves with the reader's cell (ADR-0011). */
+         record and the part that moves with the reader's cell (ADR-0011). Since
+         ADR-0013 those counts are derived per target and are not stable across
+         releases — 31/35 before 2026-08-15, 7/59 after, on identical evidence — so
+         the live figures are only ever rendered from DATA.totals. The before/after
+         pair quoted in the note above is a dated historical statement about one
+         release, which is a different thing and stays true. */
       if(backed&&pop.status==='bridged') st='bridged';
       return '<tr class="prow" data-param="'+esc(p.parameter)+'" id="'+esc(s.id)+'--'+esc(p.parameter)+'">'+
         '<td>'+esc(p.parameter)+'</td>'+
