@@ -45,8 +45,32 @@ the most probable single value.
 The deeper version is structural: **no value in the 18-entry `measurement_basis` vocabulary denotes
 a mode.** Every one names a mean, median, cost component, prevalence, statutory ceiling, single
 observation or estimate. So this is not a gap in some shards — the schema could not express a mode
-if a source published one, and no source consulted does. NetDiligence 2025 and Verizon DBIR 2026
-were checked directly for this and neither publishes one.
+if a source published one.
+
+**How far that goes beyond our own corpus is now measured rather than implied.**
+[ADR-0015](adr/0015-the-source-audit.md) audits the 61 registered sources on what they publish,
+and a source-level claim counts only when a human has read the stored artifact:
+
+| | |
+| --- | --- |
+| registered sources read for a published **mode** | **2 of 61** |
+| …of those, publishing one | **0** |
+| sources **not yet read** | **59** |
+
+Until this arc that sentence read *"no source consulted does"*, resting on the same two reads and
+carrying no denominator. **59 unread is not evidence of absence**, and the audit publishes the gap
+beside the claim rather than behind it. Derived by
+[`engine/source_audit.py`](../engine/source_audit.py) → `publishable_claim()`.
+
+**The first two reads already complicated the picture, which is why the audit exists.** Verizon
+DBIR 2026 publishes **no mode** — but it does publish a *loss distribution*: Figure 45, "Distribution
+of loss due to ransom payment in 2025", a quantile dot plot over n=1,494, and the methodology
+section names quantile dot plots and complementary-cumulative-density charts as how it expresses
+confidence. So the honest statement is narrower and more interesting than "sources publish only
+point statistics": a loss distribution over a stated sample **is** published there — it is simply
+not published as parameters a three-point model can consume. NetDiligence 2025 publishes neither:
+no median, percentile or quantile appears in its text, and its charts titled *"Distribution of
+Crisis Services Costs"* break a claim down by activity type rather than over severity.
 
 Four of the eight pass *a mean at `min` and a different mean at `likely`* — two central tendencies
 ordered by magnitude and then labelled as a floor and a mode.

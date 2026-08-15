@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://riskshard.dev/schemas/source_audit_schema.json",
+  "title": "RiskShard source audit",
+  "description": "ADR-0015. What each registered source publishes, audited on four properties. The load-bearing rule is structural rather than conventional: a claim about a source may only be published when its basis is verified_against_artifact. `derived_from_corpus` is a fact about our own extraction and is never evidence about the source.",
+  "type": "object",
+  "required": ["audit"],
+  "additionalProperties": false,
+  "properties": {
+    "audit": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "properties"],
+        "additionalProperties": false,
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "description": "Must resolve in sources/registry.yaml."
+          },
+          "artifact": {
+            "type": "string",
+            "description": "Path under sources/raw/ that a verification was read against. Required on any verified answer — a verification with no artifact cannot be rechecked."
+          },
+          "properties": {
+            "type": "object",
+            "required": ["mode", "distribution", "exceedance", "population"],
+            "additionalProperties": false,
+            "properties": {
+              "mode": { "$ref": "#/$defs/answer" },
+              "distribution": { "$ref": "#/$defs/answer" },
+              "exceedance": { "$ref": "#/$defs/answer" },
+              "population": { "$ref": "#/$defs/answer" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "answer": {
+      "type": "object",
+      "required": ["basis"],
+      "additionalProperties": false,
+      "properties": {
+        "basis": {
+          "type": "string",
+          "enum": ["verified_against_artifact", "derived_from_corpus", "unverified"],
+          "description": "verified_against_artifact: a human read the stored artifact — the only basis a source-level claim may rest on. derived_from_corpus: what our extraction shows, a fact about us. unverified: not yet read; the default, and the work queue."
+        },
+        "publishes": {
+          "type": "boolean",
+          "description": "Does the source publish this? Meaningful only when basis is verified_against_artifact; forbidden otherwise, so an unread source cannot carry an answer that reads as read."
+        },
+        "detail": {
+          "type": "string",
+          "description": "What was found, in the source's own terms — the page, table or figure, or the phrase that settles it."
+        },
+        "verified_on": {
+          "type": "string",
+          "description": "ISO date the artifact was read. Required with verified_against_artifact: an edition can change what a source publishes."
+        },
+        "corpus_note": {
+          "type": "string",
+          "description": "For derived_from_corpus only: what our own extraction shows. Never phrased as a statement about the source."
+        }
+      },
+      "allOf": [
+        {
+          "$comment": "ADR-0015 part 2 made structural: only a verified answer may assert what the source publishes, and it must say when it was read.",
+          "if": {
+            "properties": { "basis": { "const": "verified_against_artifact" } },
+            "required": ["basis"]
+          },
+          "then": { "required": ["basis", "publishes", "verified_on"] },
+          "else": { "not": { "required": ["publishes"] } }
+        },
+        {
+          "$comment": "A corpus-derived note is a fact about our extraction; it has no place on a verified or unread answer.",
+          "if": {
+            "properties": { "basis": { "const": "derived_from_corpus" } },
+            "required": ["basis"]
+          },
+          "then": { "required": ["basis", "corpus_note"] },
+          "else": { "not": { "required": ["corpus_note"] } }
+        }
+      ]
+    }
+  }
+}
