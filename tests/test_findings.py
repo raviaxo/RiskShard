@@ -94,6 +94,29 @@ class FindingsPageTests(unittest.TestCase):
         self.assert_row(offenders, cards)
         self.assertEqual(offenders, 0)
 
+    def test_finding_six_counts_match_the_derivation(self):
+        """Finding 6: stored fit against the fit derivable from the declaration.
+
+        Unlike finding 5's row, this one is *expected to move* — ADR-0013 decided the
+        rendered value becomes the derived one, at which point agreement is 66 of 66
+        and this finding becomes a record of what was repaired rather than a live
+        defect. The test exists so the page cannot describe the pre-repair state after
+        the repair lands.
+        """
+        from engine.provenance import derivable_bridges
+
+        cards = agree = 0
+        for module in self.provenance["modules"]:
+            for card in module["cards"]:
+                if not card.get("resolved"):
+                    continue
+                cards += 1
+                stored = set(((card.get("population") or {}).get("bridged_on")) or [])
+                if stored == set(derivable_bridges(card, module["cell"])):
+                    agree += 1
+        self.assert_row(agree, cards)
+        self.assert_row(cards - agree, cards)
+
     def test_the_page_records_what_the_project_got_wrong(self):
         """Corrections are the point of the page, not an appendix to it."""
         for marker in ("Retracted figures", "Withdrawn claim 1", "Withdrawn claim 2",

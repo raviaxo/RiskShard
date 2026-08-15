@@ -122,6 +122,35 @@ FACET_CELL = {"sector": "industry", "size": "company_size",
               "country": "country", "threat": "threat"}
 
 
+def derivable_bridges(card, cell):
+    """Facets on which this card's own declaration does not name the cell's value.
+
+    Fit computed from the declaration alone, against a named target — the shape
+    [ADR-0011](../docs/adr/0011-fit-is-a-facet-set.md) Decision part 1 requires and
+    [ADR-0013](../docs/adr/0013-fit-is-derived-not-stored.md) adopts. It is a pure
+    function of (declaration, target): nothing is read from the stored
+    `population_match`, so re-pointing it at a consumer's cell needs no re-authoring.
+
+    A wildcard earns a bridge here. `industries: [all]` does not name
+    `financial_services`, so an all-industry measure reads as bridged on sector even
+    though the measured population contains our sector — dilution and borrowing are
+    not distinguished. That is deliberate: ADR-0013 measured the containment-aware
+    alternative and it is **quieter** than what the repository publishes today
+    (7 facet-instances against 43), which is the wrong direction under the
+    caveats-get-louder rule. The country layer of `_card_population` has always
+    worked this way, and it is why country is the one facet the two agree on.
+
+    This is the measurement instrument for [finding 6], not yet the rendered value.
+    """
+    declared = card.get("declared_for") or {}
+    return sorted(
+        facet for facet in FACET_FIELD
+        if (declared.get(FACET_FIELD[facet]) or [])
+        and (cell or {}).get(FACET_CELL[facet])
+        and cell[FACET_CELL[facet]] not in set(declared.get(FACET_FIELD[facet]) or [])
+    )
+
+
 def unexplained_bridges(card, cell):
     """Facets a card claims as bridged that its own declaration says match the cell.
 
@@ -135,16 +164,13 @@ def unexplained_bridges(card, cell):
     shapes it catches: an exact restatement of the cell (`[financial_services]` for
     a finance shard) and one hidden beside a wildcard (`[all, data_breach]`,
     `[SG, global]` on a US survey).
+
+    Stated against `derivable_bridges`: the stored set must be a subset of the
+    derivable one. The converse gap — derivable but not stored — is not a defect
+    under ADR-0003 and is what finding 6 measures.
     """
-    declared = card.get("declared_for") or {}
     stored = set(((card.get("population") or {}).get("bridged_on")) or [])
-    earned = {
-        facet for facet in FACET_FIELD
-        if (declared.get(FACET_FIELD[facet]) or [])
-        and (cell or {}).get(FACET_CELL[facet])
-        and cell[FACET_CELL[facet]] not in set(declared.get(FACET_FIELD[facet]) or [])
-    }
-    return sorted(stored - earned)
+    return sorted(stored - set(derivable_bridges(card, cell)))
 
 
 def format_declared_for(declared_for):

@@ -17,8 +17,9 @@ of magnitude on dimensions the shard does not model. *"Too high"* has no referen
 against. That claim was made once on this project and withdrawn — see
 [Withdrawn claim 1](#withdrawn-claim-1--the-numbers-are-inflated-2026-08-08).
 
-*Findings 1–4 and 6–7 derived 2026-08-13 against data pack `22db117f2bec`; finding 5 derived
-2026-08-14 against data pack `fe0d0ffab227`. Counts move as evidence changes; the tools are the
+*Findings 1–4 and 7–8 derived 2026-08-13 against data pack `22db117f2bec`; finding 5 derived
+2026-08-14 against data pack `fe0d0ffab227`; finding 6 derived 2026-08-15 against data pack
+`3b9409a44c6b`. Counts move as evidence changes; the tools are the
 authority, not this page, and [`tests/test_findings.py`](../tests/test_findings.py) fails the build
 if any count on it drifts.*
 
@@ -96,7 +97,7 @@ the modeled average. **A figure mostly driven by an anchor that admits no exceed
 a figure resting on one observation.**
 
 The missing thing is a denominator: how often a loss of size X is exceeded, across a known
-population. We have not found one, publicly, anywhere — see finding 6.
+population. We have not found one, publicly, anywhere — see finding 7.
 
 ### 4 — Half our parameters are borrowed from a population we are not modelling
 
@@ -171,11 +172,74 @@ an `all` declaration is deliberately *dilution* rather than *borrowing*
 the field should carry its target, or be computed per consumer, is a schema decision and is
 recorded as open rather than made quietly.
 
+### 6 — The field that records how far a number is from our cell disagrees with itself
+
+*Measured 2026-08-15 · derived by [`engine/provenance.py`](../engine/provenance.py) →
+`derivable_bridges()` · pinned by [`tests/test_findings.py`](../tests/test_findings.py) ·
+[ADR-0013](adr/0013-fit-is-derived-not-stored.md)*
+
+| | |
+| --- | --- |
+| cards whose stored fit equals the fit derivable from their own declaration | **21 of 66** |
+| cards where the two **disagree** | **45 of 66** |
+| cards claiming a bridge their declaration does not support | **0 of 66** |
+
+Finding 5 repaired `applicability` so that every record declares the population its source
+actually measured. That makes a second field checkable for the first time: `population_match`,
+which records the facets — country, sector, size, threat — on which a record was borrowed across
+rather than drawn from the shard's own cell.
+
+**It can now be derived, and the derivation disagrees with what is stored on two cards in three.**
+Counted as individual facet claims rather than cards, the repository stores **43** and the
+declarations support **117**.
+
+The disagreement is not a mistake in one direction. Every stored bridge is supported — that is
+finding 5's guarantee, and it holds at 0. The gap is entirely bridges the declarations support and
+the records do not claim, and **almost all of it is one declaration: `[all]`.** A wildcard says the
+measurement was taken over everything, so it does not name our sector or our size. Across the
+corpus that situation arises 100 times. It is **recorded as a bridge 28 times and not recorded 72
+times** — the same declaration, the same facet, the opposite call.
+
+Two records in one file show it without any interpretation.
+[`evidence/au_finance_bec.yaml`](../evidence/au_finance_bec.yaml) holds
+`accc_abs_au_small_business_scam_loss_report_rate_floor_2025`, which declares `industries: [all]`
+and `company_size_bands: [all]` and stores `status: matched`, and
+`abs_2025_au_business_cyber_incident_prevalence_frequency_likely`, which declares the same two
+fields the same way and stores `bridged_on: [sector, size, threat]`. Both records' `limitations`
+say in prose that the measure is not financial-services-specific and not mid-market-specific. One
+put that in the structured field. One did not.
+
+**This is finding 5's defect one field over.** There, the prose said *borrowed* while the
+structured field said *matched*, and the prose is not what a machine reads. Here it is the same
+contradiction between the same two layers of the same record, in the field
+[ADR-0011](adr/0011-fit-is-a-facet-set.md) named as the one that must be relative to a target.
+Nothing checked it, so it drifted.
+
+**What was previously offered as the reason not to derive this field turns out to be the finding.**
+ADR-0011 recorded that fit could not simply be computed, because an `all` declaration is
+deliberately *dilution* rather than *borrowing* ([ADR-0003](adr/0003-shared-impact-bridges.md)) and
+only the author can make that call. The call is a real one. It is not being made consistently, and
+the field cannot be read as though it were.
+
+**Not all of the gap is drift, and the part that is not is the cost of the fix.**
+[ADR-0003](adr/0003-shared-impact-bridges.md) holds that statutory caps, documented single-event
+anchors and same-survey adjacent-band anchors are the range-anchoring *method* rather than
+borrowing, and are therefore matched. That is a deliberate rule, and **5 of the 24 cards that would
+flip are exemptions of exactly that kind.** Deriving strictly does not honour it; those five will
+read as bridged, and what they are is left to `measurement_basis` to say.
+
+[ADR-0013](adr/0013-fit-is-derived-not-stored.md) decides what happens next: the value is computed
+against a named target rather than stored. **No published loss figure is affected** — the field
+reaches only the provenance surfaces and the explorer, never calibration, coherence, exceedance or
+the simulation. Two counts on the front door do move, and they move louder: cards drawn from the
+shard's own cell go **31 → 7**, and bridged cards **35 → 59**. The count of cards bridged across
+country does not move at all, because that facet has always been computed this way.
+
 ---
 
 ## About the published data everyone cites
 
-### 6 — A mortality register is not a loss registry
+### 7 — A mortality register is not a loss registry
 
 *Measured 2026-08-12 ·
 [`docs/internal/destroyed_by_breach_extraction.md`](internal/destroyed_by_breach_extraction.md)*
@@ -202,7 +266,7 @@ day, the distinction is unrecoverable.
 exceeded*.** Those are different statistics, and conflating them is the error class this project
 exists to catch. See [Withdrawn claim 2](#withdrawn-claim-2--the-denominator-premise-2026-08-12).
 
-### 7 — The SEC loss corpus is real, reachable, and smaller than it looks
+### 8 — The SEC loss corpus is real, reachable, and smaller than it looks
 
 *Measured 2026-08-13 · [`docs/internal/edgar_corpus_census.md`](internal/edgar_corpus_census.md) ·
 re-runnable via [`edgar_corpus_census.py`](internal/research/edgar_corpus_census.py)*
