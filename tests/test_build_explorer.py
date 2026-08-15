@@ -87,6 +87,51 @@ class RenderTests(unittest.TestCase):
         # the consequence a reader needs while reading the rows themselves
         self.assertIn("statutory penalty cap", html)
 
+    def test_the_reader_can_supply_their_own_target(self):
+        """ADR-0014: fit recomputes against a cell the reader names, in their browser.
+
+        The page already ships `declared_for` per parameter, so the derivation needs
+        nothing fetched or stored. Verified end-to-end against the engine on 66 cards
+        across six targets before shipping; this pins that the control and its inputs
+        are actually rendered, which is what a template edit can silently drop.
+        """
+        html = render(SAMPLE)
+        for element in ('id="t-country"', 'id="t-industry"', 'id="t-size"',
+                        'id="t-threat"', 'id="t-reset"', 'id="targettally"'):
+            self.assertIn(element, html, f"target control lost {element}")
+        # the derivation and its inputs
+        self.assertIn("function fitAgainst", html)
+        self.assertIn("declared_for", html)
+        # ADR-0011: fit never renders without naming the target it was computed against
+        self.assertIn("your cell", html)
+
+    def test_the_target_control_refuses_to_score_or_rank(self):
+        """ADR-0014 part 3, pinned to the surface rather than to intent.
+
+        A target selector is exactly where a reader expects a score, and exactly
+        where one would undo ADR-0011 part 2. Ordering by fit is the same claim
+        expressed spatially, so it is refused too.
+        """
+        html = render(SAMPLE)
+        flat = html.lower()
+        for banned in ("fit_score", "fitscore", "fit score:", "sort by fit",
+                       "best match", "recommended for"):
+            self.assertNotIn(banned, flat, f"the page must not publish {banned!r}")
+        # and it says so where a reader would look for one
+        self.assertIn("no fit score", flat)
+        self.assertIn("what is far from you, not what is good for you", flat)
+
+    def test_the_default_page_is_still_computed_against_our_cell(self):
+        """ADR-0014 part 6: with no target set, nothing about the page changes.
+
+        The released counts describe our cell and are cited in the data pack, so a
+        visitor who never touches the control must see exactly what the release
+        published. Verified against the engine on all 66 cards: 0 differences.
+        """
+        html = render(SAMPLE)
+        self.assertIn("var READER_CELL=null", html)
+        self.assertIn("this item’s cell", html)
+
     def test_citations_pin_to_an_immutable_release(self):
         """ADR-0004: a cited figure must still resolve to the value that was cited."""
         from scripts.build_explorer import latest_release

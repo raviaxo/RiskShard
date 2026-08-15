@@ -212,9 +212,13 @@ here and **not made**. See open question 3.
 
 ## Open questions
 
-1. **Does the target need to be a declared object?** Fit is relative to a target, and our target
-   is currently implicit in the shard cell. Whether a consumer-supplied target profile becomes a
-   first-class artefact is undecided and unscheduled.
+1. ✅ **CLOSED 2026-08-15 by [ADR-0014](0014-the-reader-supplies-the-target.md) — a first-class
+   *input*, not a first-class *artefact*.** A reader supplies their own cell and every fit line
+   recomputes against it, by the same strict rule; nothing is stored, scored, ranked or
+   recommended, and our cell stays the default. *(Original entry:)* **Does the target need to be a
+   declared object?** Fit is relative to a target, and our target is currently implicit in the
+   shard cell. Whether a consumer-supplied target profile becomes a first-class artefact is
+   undecided and unscheduled.
 2. **Does "when" deserve promotion too?** ADR-0010 marked it ⚠️ — `publication_date` and
    `extraction_date` are required, but the *observation period the measurement covers* is not a
    declared field. It is arguably a fit facet (a 2019 measurement is distant from a 2026 target)
