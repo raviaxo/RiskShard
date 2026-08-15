@@ -5,6 +5,7 @@ git, and formats a Shard Notes template. The auto fields (state, shipped,
 contributors) are filled from the repo; the human fills the Lesson and Next lines.
 This module changes nothing.
 """
+import re
 import subprocess
 from pathlib import Path
 
@@ -102,6 +103,7 @@ def _strength(root):
     return {
         "metrics": latest["metrics"],
         "delta": delta,
+        "note": latest.get("note"),
         "since_baseline": base_change,
         "baseline_version": base_entry.get("data_pack_version") if base_entry else None,
     }
@@ -123,9 +125,30 @@ def _signed(n):
     return f"+{n}" if n > 0 else str(n)
 
 
+def _plain(text):
+    """Flatten a Markdown ledger note for a plain-text digest.
+
+    The note is authored for the README's Progress table, so it carries emphasis and
+    links. This surface is pasted into posts and mail where `**7**` and a relative
+    `[finding 6](docs/FINDINGS.md)` both read as noise — the link target is not even
+    resolvable away from the repo. Emphasis is dropped and a link becomes its text.
+    """
+    text = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", text)
+    text = re.sub(r"\*\*([^*]+)\*\*", r"\1", text)
+    text = re.sub(r"\*([^*]+)\*", r"\1", text)
+    return " ".join(text.split())
+
+
 def _format_strength(strength):
     """Render the strength-over-time block: current values, with the release delta
-    shown as `prev -> curr (+/-d)` when there is a prior release to compare."""
+    shown as `prev -> curr (+/-d)` when there is a prior release to compare.
+
+    A release's ledger note is rendered with it. This is the only surface that goes
+    *out* rather than waiting to be visited, so it is the worst place for a number to
+    move without its reason: v0.8.0 would otherwise have sent `cell-matched: 31 -> 7
+    (-24)` to a reader with no way to learn that not one parameter, source, value or
+    caveat had changed (ADR-0013, finding 6).
+    """
     m = strength["metrics"]
     delta = strength["delta"]
     lines = ["Strength (vs last release):"]
@@ -152,6 +175,9 @@ def _format_strength(strength):
             prev = m[key] - d
             tail = f" ({_signed(d)})" if d else " (no change)"
             lines.append(f"  {label}: {prev} -> {m[key]}{tail}")
+    note = strength.get("note")
+    if note:
+        lines.append(f"  why: {_plain(note)}")
     since = strength.get("since_baseline")
     if since is not None:
         base_v = strength.get("baseline_version") or "baseline"
