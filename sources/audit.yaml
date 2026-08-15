@@ -104,3 +104,224 @@ audit:
           Yes, and unusually well: 10,402 incidents over 2020-2024, split SME versus large
           company, with revenue bands and sector breakdowns including average and maximum
           revenue per sector.
+
+  # ── Blocked: we hold a pointer to the document, not the document ─────────
+  # Each of these is a landing page or summary standing in for a gated report.
+  # They are the audit's highest-value fetches: the most cited sources in the
+  # corpus and the most likely to actually publish the properties in question.
+  # See docs/internal/source_artifact_readiness.md.
+  - source_id: cyentia_iris_2022
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 528-word product page, not IRIS 2022. The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 528-word product page, not IRIS 2022. The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 528-word product page, not IRIS 2022. The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 528-word product page, not IRIS 2022. The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+
+  - source_id: cyentia_iris_2025
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 608-word product page, not IRIS 2025. The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 608-word product page, not IRIS 2025. The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 608-word product page, not IRIS 2025. The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 608-word product page, not IRIS 2025. The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+
+  - source_id: cyentia_iris_ransomware
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 530-word product page, not IRIS ransomware study. The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 530-word product page, not IRIS ransomware study. The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 530-word product page, not IRIS ransomware study. The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 530-word product page, not IRIS ransomware study. The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+
+  - source_id: ibm_cost_data_breach_uk_2025
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,267-word summary page, not Cost of a Data Breach 2025 (UK cut). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,267-word summary page, not Cost of a Data Breach 2025 (UK cut). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,267-word summary page, not Cost of a Data Breach 2025 (UK cut). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,267-word summary page, not Cost of a Data Breach 2025 (UK cut). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+
+  - source_id: ibm_canada_cost_data_breach_2025
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 901-word summary page, not Cost of a Data Breach 2025 (Canada cut). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 901-word summary page, not Cost of a Data Breach 2025 (Canada cut). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 901-word summary page, not Cost of a Data Breach 2025 (Canada cut). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 901-word summary page, not Cost of a Data Breach 2025 (Canada cut). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+
+  - source_id: sophos_state_ransomware_australia_2025
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,032-word PDF summary, not State of Ransomware 2025 (Australia). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,032-word PDF summary, not State of Ransomware 2025 (Australia). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,032-word PDF summary, not State of Ransomware 2025 (Australia). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,032-word PDF summary, not State of Ransomware 2025 (Australia). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+
+  - source_id: sophos_state_ransomware_financial_services_2024
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,387-word page, not State of Ransomware 2024 (financial services). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,387-word page, not State of Ransomware 2024 (financial services). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,387-word page, not State of Ransomware 2024 (financial services). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,387-word page, not State of Ransomware 2024 (financial services). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+
+  - source_id: sophos_state_ransomware_manufacturing_2024
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,312-word page, not State of Ransomware 2024 (manufacturing). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,312-word page, not State of Ransomware 2024 (manufacturing). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,312-word page, not State of Ransomware 2024 (manufacturing). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,312-word page, not State of Ransomware 2024 (manufacturing). The report itself is gated.
+          Unanswerable until the document is obtained — recorded as blocked rather
+          than unread so it cannot be mistaken for a backlog that effort will clear.
