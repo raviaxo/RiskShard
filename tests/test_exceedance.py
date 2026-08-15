@@ -139,7 +139,7 @@ class PublishedSurfaceTests(unittest.TestCase):
 
         markdown = report(build_portfolio_provenance(ROOT))
         self.assertIn("**Tail exceedance:**", markdown)
-        self.assertIn("| Parameter | Value | Status | Declared for | Not measured on | Fit vs this cell | Measures | Exceedance | Source | Caveat |", markdown)
+        self.assertIn("| Parameter | Value | Status | Declared for | Fit vs this cell | Measures | Exceedance | Source | Caveat |", markdown)
         self.assertIn("bounds nothing", markdown)
         self.assertIn("`none_known`", markdown)
 

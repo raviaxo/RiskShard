@@ -63,56 +63,36 @@ class FindingsPageTests(unittest.TestCase):
         self.assert_row(t["params_cell_matched"], t["params_total"])
         self.assert_row(t["params_cross_cell"], t["params_total"])
 
-    def test_declared_applicability_counts_match_the_derivation(self):
-        """Finding 5: `applicability` is a declaration, not the measured population.
-
-        Derived from the evidence files rather than from a card, because the claim is
-        about what the records themselves say — a record contradicts its own
-        `population_match` when it declares a narrow value on a facet that field says
-        the source did not measure.
-        """
+    def test_every_record_declares_an_applicability(self):
+        """Finding 5's first row: the field is required, so the count is the corpus."""
         import yaml
 
-        facets = {"sector": "industries", "size": "company_size_bands",
-                  "country": "countries", "threat": "threats"}
-        total = declaring = contradicting = 0
+        total = declaring = 0
         for path in sorted((ROOT / "evidence").glob("*.yaml")):
             records = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("records", [])
             for record in records:
                 total += 1
-                declared = record.get("applicability") or {}
-                declaring += 1 if declared else 0
-                bridged_on = (record.get("population_match") or {}).get("bridged_on") or []
-                narrow = [
-                    dim for dim in bridged_on
-                    if (declared.get(facets[dim]) or [])
-                    and not {"all", "global"} & set(declared.get(facets[dim]) or [])
-                ]
-                contradicting += 1 if narrow else 0
+                declaring += 1 if record.get("applicability") else 0
         self.assert_row(declaring, total)
-        self.assert_row(contradicting, total)
-        # No record states the observed population, and the page says so as a count.
-        self.assert_row(0, total)
 
-    def test_the_bridged_split_matches_the_derivation(self):
-        """Finding 5: how much of the `bridged` flag is actually about our target.
+    def test_the_repaired_defect_stays_at_zero(self):
+        """Finding 5 publishes a repair, so the page must stop being true if it regresses.
 
-        The merged flag is two unlike things, so the page publishes the split. If a
-        future change moves either side, this fails rather than letting the page claim
-        a decomposition the code no longer produces.
+        The claim is *0 of 66 cards still claim a bridge their own declaration says
+        matches*. `tests/test_provenance.py` fails when that stops holding; this makes
+        the published number fail with it rather than quietly outliving the data.
         """
-        from engine.provenance import cell_mismatch
+        from engine.provenance import unexplained_bridges
 
-        bridged = target_relative = 0
+        cards = offenders = 0
         for module in self.provenance["modules"]:
             for card in module["cards"]:
-                if (card.get("population") or {}).get("status") != "bridged":
+                if not card.get("resolved"):
                     continue
-                bridged += 1
-                target_relative += 1 if cell_mismatch(card) else 0
-        self.assert_row(bridged, self.provenance["totals"]["params_total"])
-        self.assert_row(bridged - target_relative, bridged)
-        self.assert_row(target_relative, bridged)
+                cards += 1
+                offenders += 1 if unexplained_bridges(card, module["cell"]) else 0
+        self.assert_row(offenders, cards)
+        self.assertEqual(offenders, 0)
 
     def test_the_page_records_what_the_project_got_wrong(self):
         """Corrections are the point of the page, not an appendix to it."""

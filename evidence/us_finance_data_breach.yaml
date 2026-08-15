@@ -22,7 +22,7 @@ records:
       bridged_on: [country]
     applicability:
       industries: [all]
-      countries: [US]
+      countries: [GB]
       company_size_bands: [all]
       threats: [data_breach]
 
@@ -49,7 +49,7 @@ records:
       bridged_on: [country]
     applicability:
       industries: [all]
-      countries: [US]
+      countries: [GB]
       company_size_bands: [mid_market]
       threats: [data_breach]
 
@@ -76,7 +76,7 @@ records:
       bridged_on: [country]
     applicability:
       industries: [all]
-      countries: [US]
+      countries: [GB]
       company_size_bands: [all]
       threats: [data_breach]
 

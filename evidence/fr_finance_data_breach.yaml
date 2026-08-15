@@ -129,7 +129,7 @@ records:
       industries: [all]
       countries: [FR]
       company_size_bands: [all]
-      threats: [data_breach]
+      threats: [all]
 
   - id: ibm_france_2025_national_average_breach_cost_eur
     title: France national average cost of a data breach (IBM 2025)

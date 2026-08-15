@@ -467,14 +467,19 @@ is the honest headline, and the coverage tools above are the authoritative view.
 **And none of that is a statement about your context.** Fit exists only relative to a
 target ([ADR-0011](docs/adr/0011-fit-is-a-facet-set.md)), and the target on every published
 surface is **our** shard cell, which is named wherever fit is rendered. Each parameter
-therefore prints three separate things: *declared for* (the cell the record declares itself
-usable in), *not measured on* (the facets where the source's own population is broader than
-that declaration), and *fit vs this cell* — of which only the last moves when you swap in
-your own target. There is no fit score, grade or percentage, and there will not be one:
-compressing those facets into a number would assert that a geography mismatch and a size
-mismatch trade off in a way we cannot know for your scenario. **No record states the
-population actually measured** — no source publishes it as a field, so it is recoverable
-only as the gap between the first two, and we have not invented it
+prints two things: *declared for* — the population the source measured, a property of the
+record and true for every reader — and *fit vs this cell*, which compares that population
+against our target and tells you almost nothing about yours. Recompute the second from the
+first; nothing else in the row moves. There is no fit score, grade or percentage, and there
+will not be one: compressing those facets into a number would assert that a geography
+mismatch and a size mismatch trade off in a way we cannot know for your scenario.
+
+That the first line means what it says is a **repair, not an assumption**. On 2026-08-14,
+**21 of 141 records** were found declaring the cell they were borrowed *for* rather than the
+population measured — a US BEC frequency floor declaring financial-services mid-market over
+an economy-wide numerator and denominator, three US frequencies declaring `US` over a UK
+survey, two Singapore anchors declaring `SG` over US data. All 21 were corrected, **no
+published figure moved**, and a test now fails the build if another appears
 ([finding 5](docs/FINDINGS.md)).
 
 **And cell-matched does not mean coherent.** A second, independent axis

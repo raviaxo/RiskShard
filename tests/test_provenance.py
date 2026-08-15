@@ -204,84 +204,61 @@ class TargetRelativeFitTests(unittest.TestCase):
         for key in ("country", "industry", "company_size", "threat"):
             self.assertTrue(cell.get(key), f"cell is missing {key}")
 
-    def test_every_resolved_card_carries_both_declarations(self):
+    def test_every_resolved_card_declares_a_population(self):
         for card in self.prov["cards"]:
             if not card.get("resolved"):
                 continue
             declared = card["declared_for"]
             for facet in ("countries", "industries", "company_size_bands", "threats"):
                 self.assertTrue(declared.get(facet), f"{card['parameter']} declares no {facet}")
-            self.assertIsInstance(card["not_measured_on"], list)
-
-    def test_cell_mismatch_is_only_the_target_relative_half(self):
-        from engine.provenance import cell_mismatch
-
-        # Stored `bridged_on` is a property of the record: the source measured a
-        # broader population than the record declares. It is true for every reader
-        # and must not be reported as a mismatch against our cell.
-        card = {"population": {"status": "bridged", "bridged_on": ["sector", "size"]},
-                "not_measured_on": ["sector", "size"]}
-        self.assertEqual(cell_mismatch(card), [])
-
-        # The country layer is added when consuming the record against a cell whose
-        # country the record does not name — that one genuinely moves with the target.
-        card = {"population": {"status": "bridged", "bridged_on": ["country", "sector"]},
-                "not_measured_on": ["sector"]}
-        self.assertEqual(cell_mismatch(card), ["country"])
 
     def test_fit_never_renders_without_naming_its_target(self):
         from engine.provenance import format_fit
 
         cell = {"country": "GB", "industry": "finance",
                 "company_size": "mid_market", "threat": "data_breach"}
-        bridged = format_fit(
-            {"population": {"status": "bridged", "bridged_on": ["country"]},
-             "not_measured_on": []}, cell)
+        bridged = format_fit({"status": "bridged", "bridged_on": ["country"]}, cell)
         self.assertIn("GB · finance · mid_market · data_breach", bridged)
-        matched = format_fit(
-            {"population": {"status": "matched", "bridged_on": []},
-             "not_measured_on": []}, cell)
+        matched = format_fit({"status": "matched", "bridged_on": []}, cell)
         self.assertIn("GB · finance · mid_market · data_breach", matched)
 
-    def test_declared_for_is_not_labelled_as_the_observed_population(self):
-        # Measured 2026-08-14: 17 of 141 records declare a narrow value on a facet
-        # their own `population_match` says the source did not measure, so
-        # `applicability` is the cell a record is authored for and not the
-        # population observed. ADR-0011 asserted otherwise; publishing this field
-        # as "measured on" would swap one mislabel for another.
+    def test_declared_for_is_published_as_a_declaration(self):
+        # The schema still permits a record to declare the cell it is borrowed for
+        # rather than the population measured, so the guarantee is a governed
+        # convention (held by the test below) and the label stays honest about that.
         markdown = format_portfolio_markdown(build_portfolio_provenance(ROOT))
         self.assertIn("| Declared for |", markdown)
         self.assertNotIn("| Measured on |", markdown)
 
         out = format_provenance(self.prov, parameter="frequency.min")
         self.assertIn("Declared for :", out)
-        self.assertIn("Not measured on :", out)
-        self.assertNotIn("Measured on :", out)
+        self.assertIn("Fit    :", out)
 
-    def test_the_contradiction_is_still_measurable_and_still_reported(self):
-        # If a future evidence pass reconciles every record, this count goes to zero
-        # and the published correction must be revisited rather than left standing.
-        import yaml
+    def test_no_card_claims_a_bridge_its_own_declaration_says_matches(self):
+        """The defect the 2026-08-14 reconciliation cleared, held at zero.
 
-        facets = {"sector": "industries", "size": "company_size_bands",
-                  "country": "countries", "threat": "threats"}
-        contradicting = 0
-        for path in sorted((ROOT / "evidence").glob("*.yaml")):
-            records = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("records", [])
-            for record in records:
-                declared = record.get("applicability") or {}
-                bridged_on = (record.get("population_match") or {}).get("bridged_on") or []
-                narrow = [
-                    dim for dim in bridged_on
-                    if (declared.get(facets[dim]) or [])
-                    and not {"all", "global"} & set(declared.get(facets[dim]) or [])
-                ]
-                contradicting += 1 if narrow else 0
-        self.assertGreater(
-            contradicting, 0,
-            "no record now contradicts its own population_match — the published "
-            "'declared for is not the observed population' correction needs revisiting",
-        )
+        A record earns a bridge by declaring a population that does not name the
+        consuming cell's value. Claiming one while declaring that very value means
+        the declaration is the target it was borrowed *for* — which was true of 21
+        records, in two shapes: an exact restatement of the cell, and one hidden
+        beside a wildcard (`[all, data_breach]`, `[SG, global]` on a US survey).
+        """
+        from engine.provenance import unexplained_bridges
+        from engine.risk_modules import load_risk_modules
+
+        offenders = []
+        for module in load_risk_modules(ROOT):
+            provenance = build_module_provenance(module["id"], ROOT)
+            for card in provenance["cards"]:
+                if not card.get("resolved"):
+                    continue
+                unexplained = unexplained_bridges(card, provenance["cell"])
+                if unexplained:
+                    offenders.append(
+                        f"{module['id']}/{card['parameter']} ({card['evidence_id']}) "
+                        f"claims {unexplained} but declares this cell's own value"
+                    )
+        self.assertEqual(offenders, [], "\n".join(offenders))
 
     def test_no_composite_fit_score_is_published(self):
         # ADR-0011 part 2, pinned to the surface rather than to intent: a scalar

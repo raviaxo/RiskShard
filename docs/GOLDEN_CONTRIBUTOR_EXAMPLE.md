@@ -82,15 +82,20 @@ Add the simulation-ready record to `evidence/ca_finance_data_breach.yaml`. Set
 `applicability`. Confidence reflects **fit to this shard**, not source fame — a
 primary source used all-sector for a mid-market shard is `medium`, not `high`.
 
-Note what `applicability` is for. It declares the cell this record is **usable in**,
-and the example below declares `industries: [all]` and `company_size_bands: [all]`
-deliberately, because that is what IBM measured. **Prefer that**: where the source's
-population is broader, say so here rather than narrowing the declaration to the shard
-and recording the gap only in `population_match.bridged_on`. Both are honest and both
-validate — 17 of 141 records currently take the second route — but only the first makes
-the observed population readable from the field itself. It is published as *declared
-for*, never as *measured on*; see [finding 5](FINDINGS.md) and
-[ADR-0011](adr/0011-fit-is-a-facet-set.md) → Correction.
+**`applicability` declares the population the source measured — not the shard you are
+writing for.** The example below declares `industries: [all]` and
+`company_size_bands: [all]` deliberately, because that is what IBM measured, even though
+the shard is financial-services mid-market. Narrowing it to the shard and recording the
+gap only in `population_match.bridged_on` is the mistake: it reads as a claim the source
+never made, and the prose in `limitations` is not what a machine reads.
+
+This is enforced, not merely advised. A record **earns** a bridge on a facet by declaring
+a population that does not name the consuming cell's value; claiming one while declaring
+that value fails `tests/test_provenance.py`. Twenty-one records took the wrong route and
+were corrected on 2026-08-14 — see [finding 5](FINDINGS.md) and
+[ADR-0011](adr/0011-fit-is-a-facet-set.md) → Correction. Two shapes to avoid: restating
+the cell exactly (`[financial_services]` for a finance shard), and hiding it beside a
+wildcard (`[all, data_breach]`, or `[SG, global]` on a US survey).
 
 ```yaml
 - id: ibm_canada_2025_average_breach_cost_cad

@@ -210,7 +210,7 @@ records:
       industries: [all]
       countries: [AU]
       company_size_bands: [mid_market]
-      threats: [data_breach]
+      threats: [all]
 
   - id: privacy_act_1988_au_body_corporate_serious_privacy_penalty_cap_2026
     title: Australian serious privacy interference body-corporate penalty cap

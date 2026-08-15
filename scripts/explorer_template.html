@@ -200,34 +200,32 @@
     an interpretive value whose limitation is stated on its face; all other parameters cite a
     named public source. A parameter marked <span class="st brg">bridged</span> is source-backed by
     evidence <em>not drawn from this item's own cell</em> — the dimensions borrowed across
-    (country, sector, size, threat) are named on the two lines below it, and that chip is what the
-    cell-matched / bridged counts at the top of this page tally. Bridging is declared, never
-    hidden: a reader counting the source-backed total should not infer more cell-specific evidence
-    than exists. Grades follow the maturity ladder:
+    (country, sector, size, threat) are named on its <span class="lbl">fit</span> line, and that
+    chip is what the cell-matched / bridged counts at the top of this page tally. Bridging is
+    declared, never hidden: a reader counting the source-backed total should not infer more
+    cell-specific evidence than exists. Grades follow the maturity ladder:
     governed_starter → benchmark_review_candidate → benchmark-grade (the last only after a
     recorded human review; no item on this page holds it).</p>
     <p><b>Fit is relative to a target, and the target on this page is ours.</b> Each parameter
-    prints three lines where it used to print one, and the order is deliberate.
-    <span class="lbl">declared for</span> is the cell the record declares itself usable in —
-    countries, industries, size bands, threats. <span class="lbl">not measured on</span> names the
-    facets where the source's own population is <em>broader</em> than that declaration: the
-    US BEC frequency floor is declared for financial-services mid-market firms, but its IC3
-    numerator and Census denominator are both economy-wide, so it reads <b>sector, size</b>. Both
-    of those are properties of the record and are true for every reader. Only
-    <span class="lbl">fit</span> depends on a target, and the target is <em>this item's own
-    cell</em>, which the line names — it tells you how the record sits relative to ours and
-    nothing about yours. If your cell differs, and it will, that is the one line to recompute;
-    the two above it do not move. A parameter can therefore read <span class="st brg">bridged</span>
-    and still show <b>no mismatch</b> on its fit line: it is bridged because the source measured
-    more broadly than the record declares, which is true for you too, and not because our target
-    differs from the record's.</p>
+    prints two lines and the order is deliberate. <span class="lbl">declared for</span> is the
+    population the source measured — countries, industries, size bands, threats. That is a
+    property of the record and it is true for every reader. <span class="lbl">fit</span> compares
+    that population against <em>this item's own cell</em>, which the line names; it tells you how
+    the record sits relative to ours and almost nothing about yours. If your cell differs, and it
+    will, that is the one line to recompute, and the line above it does not move.</p>
+    <p><b>That the first line means what it says is a repair, not an assumption.</b> On
+    2026-08-14, <b>21 records</b> were found declaring the cell they were borrowed <em>for</em>
+    rather than the population measured — the US BEC frequency floor declaring financial-services
+    mid-market over an economy-wide numerator and denominator, three US data-breach frequencies
+    declaring <code>US</code> over a UK survey, two Singapore anchors declaring <code>SG</code>
+    over US data. All 21 were corrected, no published figure moved, and a test now fails the build
+    if another appears. Every <span class="lbl">fit</span> line below is therefore <em>earned</em>:
+    the population above it genuinely does not name this cell.</p>
     <p>This page publishes no fit score, grade or percentage, and will not. Compressing these
     facets into one number would assert that a geography mismatch and a size mismatch trade off
     against each other in a way we cannot know for your scenario — a geography mismatch is fatal
     to one analysis and irrelevant to the next. The facets are listed separately so you decide
-    which ones bite. One thing is genuinely absent rather than withheld: <b>no record states the
-    population the source actually observed</b>. It is recoverable only as the gap between the two
-    declared lines, because no published source reports it as a field and we have not invented one.</p>
+    which ones bite.</p>
     <p>Each parameter also states <em>what quantity it measures</em> on its <span class="lbl">measures</span>
     line. This is independent of the source and of the population: two anchors can both be drawn from
     this item's own cell and still measure different things — an annual breach prevalence against an
@@ -457,25 +455,19 @@
         '</tr>'+
         '<tr class="subrow"><td class="lbl">cited</td><td colspan="3" class="sub quote">'+
           (p.quote?('“'+esc(p.quote)+'”'):'—')+'</td></tr>'+
-        /* ADR-0011: the record's own declarations first — both target-independent
-           and true for every reader — then our fit, which is not. */
+        /* ADR-0011: the measured population first — target-independent and true for
+           every reader — then our fit against it, which is neither. */
         (declaredFor(p.declared_for)?('<tr class="subrow"><td class="lbl">declared for</td><td colspan="3" class="sub">'+
           esc(declaredFor(p.declared_for))+'</td></tr>'):'')+
-        (p.not_measured_on?('<tr class="subrow"><td class="lbl">not measured on</td><td colspan="3" class="sub">'+
-          (p.not_measured_on.length
-            ?('<b>'+esc(p.not_measured_on.map(fmt).join(', '))+'</b> — the source’s own population is '+
-              'broader than the line above on '+(p.not_measured_on.length>1?'these facets':'this facet')+
-              '. A property of the record, not of our target.')
-            :'nothing — the source measured the cell this record is declared for.')+
-          '</td></tr>'):'')+
-        /* ...and our fit, which exists only relative to the cell it names. */
         (pop.status?('<tr class="subrow"><td class="lbl">fit</td><td colspan="3" class="sub">'+
-          ((p.cell_mismatch||[]).length
+          (pop.status==='bridged'
             ?('<b>bridged</b> against this item’s cell ('+esc(cellOf(s))+') — on '+
-              esc((p.cell_mismatch||[]).map(fmt).join(', '))+
-              '. This is the only line that changes when the target does: recompute it against your '+
-              'own cell from the two lines above.')
-            :('<b>no mismatch</b> against this item’s cell ('+esc(cellOf(s))+
+              esc((pop.bridged_on||[]).map(fmt).join(', '))+
+              ', because the population above does not name this cell on '+
+              ((pop.bridged_on||[]).length>1?'those facets':'that facet')+
+              '. This is the only line that changes when the target does: recompute it '+
+              'against your own cell from the line above.')
+            :('<b>matched</b> against this item’s cell ('+esc(cellOf(s))+
               '), which is our target and not yours.'))+
           '</td></tr>'):'')+
         (p.basis?('<tr class="subrow"><td class="lbl">measures</td><td colspan="3" class="sub">'+esc(p.basis.replace(/_/g,' '))+'</td></tr>'):'')+

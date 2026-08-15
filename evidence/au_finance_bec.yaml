@@ -345,10 +345,10 @@ records:
       status: bridged
       bridged_on: [sector, size, threat]
     applicability:
-      industries: [financial_services]
+      industries: [all]
       countries: [AU]
-      company_size_bands: [mid_market]
-      threats: [business_email_compromise]
+      company_size_bands: [all]
+      threats: [all]
 
   - id: myob_2024_au_finance_midsized_cyber_prevalence_frequency_stress
     title: Australian mid-sized finance cyber-attack prevalence used as stress frequency bridge
@@ -375,7 +375,7 @@ records:
       industries: [financial_services]
       countries: [AU]
       company_size_bands: [mid_market]
-      threats: [business_email_compromise]
+      threats: [all]
 
   - id: riskshard_bec_frequency_likely_2026
     title: Estimated BEC likely frequency

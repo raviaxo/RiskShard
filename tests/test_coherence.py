@@ -150,7 +150,7 @@ class PublishedSurfaceTests(unittest.TestCase):
 
         markdown = report(build_portfolio_provenance(ROOT))
         self.assertIn("**Range coherence:**", markdown)
-        self.assertIn("| Parameter | Value | Status | Declared for | Not measured on | Fit vs this cell | Measures | Exceedance | Source | Caveat |", markdown)
+        self.assertIn("| Parameter | Value | Status | Declared for | Fit vs this cell | Measures | Exceedance | Source | Caveat |", markdown)
         self.assertIn("is a mixed range", markdown)
         self.assertIn("`perceived_cost_self_reported`", markdown)
 

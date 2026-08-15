@@ -103,7 +103,7 @@ records:
       industries: [all]
       countries: [CA]
       company_size_bands: [all]
-      threats: [all, data_breach]
+      threats: [all]
 
   - id: itpro_ibm_ca_2025_average_breach_cost_usd
     title: Canada average cost of a data breach from secondary IBM coverage
@@ -222,4 +222,4 @@ records:
       industries: [all]
       countries: [CA]
       company_size_bands: [all]
-      threats: [all, data_breach]
+      threats: [all]

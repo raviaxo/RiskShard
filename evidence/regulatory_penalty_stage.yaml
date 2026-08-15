@@ -53,9 +53,9 @@ records:
       status: bridged
       bridged_on: [sector, size]
     applicability:
-      industries: [financial_services]
+      industries: [all]
       countries: [GB]
-      company_size_bands: [mid_market]
+      company_size_bands: [all]
       threats: [data_breach]
 
   - id: ico_reg_penalty_conditional_probability_max
@@ -127,9 +127,9 @@ records:
       status: bridged
       bridged_on: [sector, size]
     applicability:
-      industries: [financial_services]
+      industries: [all]
       countries: [GB]
-      company_size_bands: [mid_market]
+      company_size_bands: [all]
       threats: [data_breach]
 
   - id: ico_reg_penalty_impact_max_gbp
@@ -156,7 +156,7 @@ records:
       status: bridged
       bridged_on: [sector, size]
     applicability:
-      industries: [financial_services]
+      industries: [all]
       countries: [GB]
-      company_size_bands: [mid_market]
+      company_size_bands: [all]
       threats: [data_breach]

@@ -77,7 +77,7 @@ records:
       industries: [all]
       countries: [global]
       company_size_bands: [all]
-      threats: [third_party_outage]
+      threats: [all]
 
   - id: bci_interos_supply_chain_multi_event_frequency_stress
     title: Multi-event supply-chain exposure used as stress frequency

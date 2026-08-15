@@ -113,51 +113,63 @@ population. We have not found one, publicly, anywhere — see finding 6.
 "100% source-backed" was true and was doing too much work, which is why the headline was split on
 2026-08-01. Cell-matched and bridged are different claims and only one of them is strong.
 
-### 5 — No record states the population that was actually measured
+### 5 — A fifth of the bridges were declared against the wrong population
 
-*Measured 2026-08-14 · derived by [`engine/provenance.py`](../engine/provenance.py) ·
-pinned by [`tests/test_provenance.py`](../tests/test_provenance.py) ·
+*Measured and repaired 2026-08-14 · derived by
+[`engine/provenance.py`](../engine/provenance.py) → `unexplained_bridges()` · pinned by
+[`tests/test_provenance.py`](../tests/test_provenance.py) ·
 [ADR-0011](adr/0011-fit-is-a-facet-set.md)*
 
 | | |
 | --- | --- |
 | records declaring `applicability` | **141 of 141** (required by schema) |
-| …that declare a **narrow** value on a facet their own `population_match` says was not measured | **17 of 141** |
-| records stating the observed population as a field | **0 of 141** |
-| parameters labelled **bridged** on the published surfaces | **35 of 66** |
-| …bridged for a reason **intrinsic to the record**, true for every reader | **25 of 35** |
-| …bridged **because of our cell** — the only part that moves with your target | **10 of 35** |
+| …declaring the cell they were borrowed **for** rather than the population measured | **21 of 141** |
+| published parameter cards affected | **16 of 66** |
+| published figures that moved when all 21 were corrected | **0 of 66** |
+| cards still claiming a bridge their own declaration says matches | **0 of 66** |
 
 [ADR-0011](adr/0011-fit-is-a-facet-set.md) decided that fit must be computed against a stated
 target, and that `applicability` — *"the observed population"* — should be surfaced as the
 target-independent fact a consumer computes their own distance from. Building that surface is what
-found the problem: **`applicability` is not the observed population.** It is the cell a record is
-*declared usable in*, which is frequently narrower than what the source measured.
+found the problem: **`applicability` was not the observed population.** On 21 records it named the
+cell the record was *borrowed for*.
 
-The clearest case is the US BEC frequency floor. It declares
-`industries: [financial_services]`, `company_size_bands: [mid_market]` — while its IC3 numerator
-and Census SUSB denominator are both economy-wide, which its own
-`population_match.bridged_on: [sector, size]` correctly records. Publishing that declaration under
-a *measured on* label would have retired one mislabel by shipping another, on 17 records.
+The clearest case is the US BEC frequency floor, which declared
+`industries: [financial_services]`, `company_size_bands: [mid_market]` while its IC3 numerator and
+Census SUSB denominator are both economy-wide. Three US data-breach frequencies declared
+`countries: [US]` over a **UK** survey. Two Singapore anchors declared `countries: [SG]` over **US**
+data. In each case the record's own `limitations` said so in prose while its structured field said
+otherwise — and the prose is not what a machine reads.
 
-So the field is published as **declared for**, the gap gets its own column — **not measured on** —
-and the genuinely target-relative part (does this record name *our* country?) is the only thing
-labelled as fit. What no column can give you is the observed population itself: **no published
-source reports it as a field, and we have not invented one.** It is recoverable only as the gap
-between the two declared lines.
+**The detector is the finding's durable part.** A record *earns* a bridge on a facet by declaring a
+population that does not name the consuming cell's value; claiming one while declaring that very
+value is a contradiction the repository can check on itself. It catches two shapes — an exact
+restatement of the cell, and one hidden beside a wildcard (`[all, data_breach]`, `[SG, global]`) —
+and the second shape is why the first count of this defect, 17, was too low by four.
 
-Splitting the label produced a second number that is more useful than the one it came from.
-[Finding 4](#4--half-our-parameters-are-borrowed-from-a-population-we-are-not-modelling) reports 35
-of 66 parameters as *bridged*, and that single flag has been carrying two unlike things. **25 of
-those 35 are bridged for a reason intrinsic to the record** — the source measured a broader
-population than the record declares — which is equally true for you, for us, and for a reader in a
-country none of our shards cover. Only **10 of 35** are bridged because of *our* cell, and those
-are the only ones that change when you substitute your own. The headline count of 35 is unchanged
-and still correct; what it means is now separable.
+All 21 were corrected the same day. **No published figure moved**: all 66 values, statuses, bases,
+exceedance statements, sources and caveats are byte-identical, every portfolio total is unchanged,
+and all 11 shards' AVG/P95/P99 are identical to the digit. Calibration profiles name their evidence
+explicitly, so correcting a declaration changes what the record *claims*, not what the simulation
+*uses*.
 
-This finding cost nothing and moved nothing: all 66 published values, statuses, bases, exceedance
-statements, sources and caveats are byte-identical before and after, and all 35 bridged rows keep
-every facet they had. Only the labels changed.
+**One number did move, and it is the one worth reading.** The benchmark program is the only
+consumer that reads `applicability` directly — it counts a parameter as industry-specific when the
+record names the target industry. The seeded sprint's blocker count went **19 → 22**, because
+`au_finance_bec`, `us_finance_bec` and `sg_finance_bec` had all been **passing the
+industry-relevance gate on the false declaration** and now report the gap they always had. A
+readiness bar got harder because the data stopped over-claiming, which is the direction a
+correction should move. Recorded in
+[`revisions/2026-08-14-three-bec-shards-lose-an-industry-relevance-pass-they-had-not-earned.yaml`](../revisions/2026-08-14-three-bec-shards-lose-an-industry-relevance-pass-they-had-not-earned.yaml).
+
+**What the repair exposed is now the open question.** With the declarations honest, every stored
+`population_match.bridged_on` reads as *the declared population does not name this cell's value* —
+a statement about a record **and a target**, frozen onto the record at authoring time. That is the
+shape [ADR-0011](adr/0011-fit-is-a-facet-set.md) forbids. It cannot simply be derived away either:
+an `all` declaration is deliberately *dilution* rather than *borrowing*
+([ADR-0003](adr/0003-shared-impact-bridges.md)), and only the author can make that call. Whether
+the field should carry its target, or be computed per consumer, is a schema decision and is
+recorded as open rather than made quietly.
 
 ---
 

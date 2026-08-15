@@ -50,20 +50,20 @@ def module_cell(module):
 
 
 def _declared_for(record):
-    """ADR-0011: the cells this record is declared usable in, as it declares them.
+    """ADR-0011: the population the source measured, as the record declares it.
 
     Target-independent and required on every record, so it is the raw material a
     consumer needs to compute distance against *their* cell — which is why it is
     surfaced above the derived fit rather than left behind it.
 
-    **It is not the observed population**, and ADR-0011 said it was. Measured
-    2026-08-14: 17 of 141 records declare a narrow value on a facet their own
-    `population_match.bridged_on` says the source did not measure — the IC3/Census
-    BEC floor declares `financial_services` / `mid_market` while the numerator and
-    denominator are both economy-wide. Labelling this field "measured on" would
-    publish a fresh false claim while retiring an old one. What the source actually
-    measured is recoverable only as the gap between this declaration and
-    `not_measured_on` below; no field states it directly.
+    The field carries this reliably only because the corpus was reconciled to it.
+    ADR-0011 asserted it already did; on 2026-08-14 that was measured false — 21
+    records declared the cell they were *borrowed for* rather than the population
+    measured, the IC3/Census BEC floor declaring `financial_services` / `mid_market`
+    over an economy-wide numerator and denominator. All 21 were corrected the same
+    day and `tests/test_provenance.py` fails the build if another appears. It is
+    still rendered as *declared for*, not *measured on*: the schema permits the old
+    shape, so the guarantee is a governed convention rather than a structural fact.
     """
     applicability = record.get("applicability") or {}
     return {
@@ -72,17 +72,6 @@ def _declared_for(record):
         "company_size_bands": list(applicability.get("company_size_bands") or []),
         "threats": list(applicability.get("threats") or []),
     }
-
-
-def _not_measured_on(record):
-    """The facets where the source's population is broader than the declaration.
-
-    This is the record's *stored* `population_match.bridged_on` and nothing else. It
-    is a property of the record — true for every reader, target or no target — and
-    must not be folded into a "fit vs our cell" statement. Doing so would be the same
-    error ADR-0011 corrects, pointed the other way.
-    """
-    return sorted((record.get("population_match") or {}).get("bridged_on") or [])
 
 
 def _card_population(record, cell_country):
@@ -100,10 +89,13 @@ def _card_population(record, cell_country):
     the record. Every renderer must name the target it was computed against — see
     `format_fit`.
 
-    Note that only the country layer is target-relative; the stored layer is
-    intrinsic. `cell_mismatch()` recovers the split. This merge is left exactly as
-    it was: it feeds the published cell-matched / bridged / cross-country counts,
-    and this objective moves labels, not numbers.
+    Since the 2026-08-14 reconciliation both layers are target-relative: every stored
+    bridge is now explicable as *the declared population does not name this cell's
+    value*, verified over all 66 cards. That is a cleaner state and an unresolved one
+    — a target-relative value stored on the record is the shape ADR-0011 forbids, and
+    it cannot simply be derived away, because an `all` declaration is deliberately
+    dilution rather than borrowing (ADR-0003) and only the author can make that call.
+    Recorded as an open question, not fixed here: it is a schema decision.
     """
     pm = record.get("population_match") or {}
     dims = set(pm.get("bridged_on") or [])
@@ -124,15 +116,35 @@ def format_cell(cell):
     return " · ".join(str(v) for v in ordered if v) or "an unstated target"
 
 
-def cell_mismatch(card):
-    """The target-relative half of a card's fit: facets bridged *because of our cell*.
+FACET_FIELD = {"sector": "industries", "size": "company_size_bands",
+               "country": "countries", "threat": "threats"}
+FACET_CELL = {"sector": "industry", "size": "company_size",
+              "country": "country", "threat": "threat"}
 
-    The merged `population` is two layers (see `_card_population`). Subtracting the
-    record-intrinsic layer leaves only what changes when the target changes — which
-    is the only part a reader with a different cell should recompute.
+
+def unexplained_bridges(card, cell):
+    """Facets a card claims as bridged that its own declaration says match the cell.
+
+    The defect detector, in its general form. A record earns a bridge on a facet by
+    declaring a population that does **not** name this cell's value; claiming one
+    while declaring the cell itself means the declaration is the target it was
+    borrowed *for*, not the population it came *from*.
+
+    Measured 2026-08-14 over `origin/main`: 16 cards across 21 records. All were
+    reconciled and this returns empty everywhere — a test holds it there. Both
+    shapes it catches: an exact restatement of the cell (`[financial_services]` for
+    a finance shard) and one hidden beside a wildcard (`[all, data_breach]`,
+    `[SG, global]` on a US survey).
     """
-    merged = set(((card.get("population") or {}).get("bridged_on")) or [])
-    return sorted(merged - set(card.get("not_measured_on") or []))
+    declared = card.get("declared_for") or {}
+    stored = set(((card.get("population") or {}).get("bridged_on")) or [])
+    earned = {
+        facet for facet in FACET_FIELD
+        if (declared.get(FACET_FIELD[facet]) or [])
+        and (cell or {}).get(FACET_CELL[facet])
+        and cell[FACET_CELL[facet]] not in set(declared.get(FACET_FIELD[facet]) or [])
+    }
+    return sorted(stored - earned)
 
 
 def format_declared_for(declared_for):
@@ -157,28 +169,21 @@ def format_declared_for(declared_for):
     return " · ".join(parts) or "—"
 
 
-def format_not_measured_on(not_measured_on):
-    """The record-intrinsic gap: facets the source did not measure specifically."""
-    if not not_measured_on:
-        return "nothing — the source measured the cell it is declared for"
-    return ", ".join(not_measured_on)
-
-
-def format_fit(card, cell):
-    """The target-relative half of the fit, stated against the target it assumes.
+def format_fit(population, cell):
+    """The fit, stated against the target it was computed against.
 
     ADR-0011: fit is a function of two things and we only own one, so it is never
-    rendered without naming the other. Only the facets in `cell_mismatch` belong
-    here — the rest is a property of the record and is rendered separately.
+    rendered without naming the other. Every bridged facet belongs here — since the
+    2026-08-14 reconciliation each one means *the declared population does not name
+    this cell's value*, which is a statement about the pair and not about the record.
     """
-    population = card.get("population")
     if not population:
         return "—"
     target = format_cell(cell)
-    mismatch = cell_mismatch(card)
-    if mismatch:
-        return f"bridged vs {target} — on {', '.join(mismatch)}"
-    return f"no mismatch vs {target} — which is our target, not yours"
+    if population.get("status") == "bridged":
+        facets = ", ".join(population.get("bridged_on") or []) or "an unnamed facet"
+        return f"bridged vs {target} — on {facets}"
+    return f"matched vs {target} — which is our target, not yours"
 
 
 def _calibration_selected_evidence(module, root):
@@ -252,7 +257,6 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
                     "caveat": None,
                     "resolved": False,
                     "declared_for": None,
-                    "not_measured_on": None,
                     "population": None,
                     "measurement_basis": None,
                     "exceedance_basis": None,
@@ -272,11 +276,10 @@ def build_module_provenance(module_id, root, feeds_by_id=None):
                     "cited_line": record.get("citation_detail"),
                     "caveat": record.get("limitations"),
                     "resolved": True,
-                    # ADR-0011, in the order a reader should meet them. The first
-                    # two are properties of the record and true for everyone; only
-                    # the merged `population` depends on the `cell` below.
+                    # ADR-0011, in the order a reader should meet them: the measured
+                    # population, which is true for everyone, then our fit against
+                    # it, which is only meaningful beside the `cell` below.
                     "declared_for": _declared_for(record),
-                    "not_measured_on": _not_measured_on(record),
                     "population": _card_population(record, cell_country),
                     "measurement_basis": record.get("measurement_basis"),
                     # ADR-0008: only ever set on an impact maximum, by schema rule.
@@ -368,14 +371,12 @@ def format_portfolio_markdown(portfolio):
     from engine.coherence import module_coherence  # local: coherence imports this module
 
     t = portfolio["totals"]
-    # ADR-0011: how much of the bridged headline is actually about our target.
-    # Derived here rather than stored, so it cannot disagree with the rows below it.
-    bridged_cards = [
-        c for m in portfolio["modules"] for c in m["cards"]
-        if (c.get("population") or {}).get("status") == "bridged"
-    ]
-    bridged_target_relative = sum(1 for c in bridged_cards if cell_mismatch(c))
-    bridged_intrinsic = len(bridged_cards) - bridged_target_relative
+    # ADR-0011: every bridge must be earned by the declaration, not asserted beside
+    # it. Derived here rather than stored so the claim cannot outlive the data.
+    unexplained = sum(
+        1 for m in portfolio["modules"] for c in m["cards"]
+        if unexplained_bridges(c, m.get("cell"))
+    )
     coherence_by_module = {
         m["module_id"]: module_coherence(m) for m in portfolio["modules"]
     }
@@ -428,32 +429,27 @@ def format_portfolio_markdown(portfolio):
         "source-backed by evidence not drawn from the shard's own cell (ADR-0003); "
         "the dimension borrowed across is named per row.",
         "",
-        "**Fit is relative to a target, and the target here is ours (ADR-0011).** Three columns "
-        "carry what used to be one. *Declared for* is the cell the record declares itself usable "
-        "in. *Not measured on* names the facets where the source's own population is broader than "
-        "that declaration — the IC3/Census BEC floor is declared for financial-services "
-        "mid-market firms, but its numerator and denominator are both economy-wide, so it reads "
-        "`sector, size`. Both are properties of the record and true for every reader. Only *Fit "
-        "vs this cell* depends on a target, and the target is **this shard's cell**, named above "
-        "each table — it is what you would recompute against yours, and nothing else in the row "
-        "changes when you do.",
+        "**Fit is relative to a target, and the target here is ours (ADR-0011).** Two columns, "
+        "and the difference between them is the whole point. *Declared for* is the population the "
+        "source measured — countries, industries, size bands, threats — and it is a property of "
+        "the record, true for every reader. *Fit vs this cell* compares that population against "
+        "**this shard's cell**, named above each table; it tells you how the record sits relative "
+        "to *our* target and almost nothing about yours. Recompute it from the *Declared for* "
+        "column and nothing else in the row moves.",
         "",
-        f"**That split is worth a number.** Of the {len(bridged_cards)} parameters labelled "
-        f"*bridged*, **{bridged_intrinsic} are bridged for a reason intrinsic to the record** — "
-        "the source measured a broader population than the record declares — which is as true for "
-        f"you as for us. Only **{bridged_target_relative}** are bridged because of *our* cell. The "
-        "headline count is unchanged and still correct; what it means is now separable.",
-        "",
-        "**A correction this reporting produced.** ADR-0011 asserted that `applicability` is the "
-        "observed population. It is not: 17 of 141 records declare a narrow value on a facet "
-        "their own `population_match` says the source did not measure. Publishing that field as "
-        "*measured on* would have replaced one mislabel with another, so it is published as "
-        "*declared for* and the gap is given its own column. **No source publishes the observed "
-        "population as a field and we have not invented one.** None of these columns is ever "
-        "summarised into a score, grade or percentage: compressing them would assert that a "
-        "geography mismatch and a size mismatch trade off against each other in a way we cannot "
-        "know for your scenario. A geography mismatch is fatal to one analysis and irrelevant to "
-        "the next, and only you know which.",
+        "**A correction this reporting produced, and the repair.** ADR-0011 asserted that "
+        "`applicability` already carried the measured population. On 2026-08-14 that was measured "
+        "false: **21 records declared the cell they were borrowed *for* rather than the "
+        "population measured** — the IC3/Census BEC floor declaring financial-services mid-market "
+        "over an economy-wide numerator and denominator, three US data-breach frequencies "
+        "declaring `US` over a UK survey, two Singapore anchors declaring `SG` over US data. All "
+        "21 were corrected, every published figure held byte-identical, and a test now fails the "
+        f"build if another appears — it counts **{unexplained}** today. Each bridge below is "
+        "therefore *earned*: the declared population does not name this cell's value. **No column "
+        "is ever summarised into a score, grade or percentage**, because compressing these facets "
+        "would assert that a geography mismatch and a size mismatch trade off against each other "
+        "in a way we cannot know for your scenario. A geography mismatch is fatal to one analysis "
+        "and irrelevant to the next, and only you know which.",
         "",
         f"**Range coherence:** {coherent} coherent · {mixed} mixed of "
         f"{len(all_families)} parameter families. A *mixed* range composes anchors that "
@@ -526,31 +522,30 @@ def format_portfolio_markdown(portfolio):
                 )
                 lines.append("")
         lines.append(
-            "| Parameter | Value | Status | Declared for | Not measured on "
+            "| Parameter | Value | Status | Declared for "
             "| Fit vs this cell | Measures | Exceedance | Source | Caveat |"
         )
-        lines.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
+        lines.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- |")
         for c in m["cards"]:
             source = c.get("source_name") or "—"
             if c.get("publication_date"):
                 source += f" ({c['publication_date']})"
             caveat = (c.get("caveat") or "—").replace("|", "\\|").replace("\n", " ")
             status = c.get("status") or "—"
-            # ADR-0011: three separate columns, so the derived one cannot be read as
-            # intrinsic and the intrinsic ones cannot be read as target-relative.
+            # ADR-0011: the measured population and our fit against it stay separate
+            # columns, so the derived one cannot be read as a property of the record.
             declared_for = format_declared_for(c.get("declared_for"))
-            not_measured = (
-                ", ".join(c["not_measured_on"]) if c.get("not_measured_on")
-                else ("—" if c.get("not_measured_on") is None else "nothing")
+            pop = c.get("population") or {}
+            fit = (
+                ", ".join(pop.get("bridged_on") or []) if pop.get("status") == "bridged"
+                else ("matched" if pop.get("status") else "—")
             )
-            mismatch = cell_mismatch(c) if c.get("population") else []
-            fit = ", ".join(mismatch) if mismatch else ("no mismatch" if c.get("population") else "—")
             basis = c.get("measurement_basis") or "—"
             # ADR-0008: only maxima carry this, so every other row reads "—".
             exceedance = f"`{c['exceedance_basis']}`" if c.get("exceedance_basis") else "—"
             lines.append(
                 f"| `{c['parameter']}` | {_fmt_value(c)} | {status} | {declared_for} "
-                f"| {not_measured} | {fit} | `{basis}` | {exceedance} "
+                f"| {fit} | `{basis}` | {exceedance} "
                 f"| {source.replace('|', chr(92) + '|')} | {caveat} |"
             )
         lines.append("")
@@ -584,13 +579,12 @@ def format_provenance(provenance, parameter=None):
             lines.append(f"  Cite   : {c['source_citation']}")
         if c.get("cited_line"):
             lines.append(f"  Quote  : {c['cited_line']}")
-        # ADR-0011: the record's own declarations first, our fit against them last,
-        # because only the last one changes when the reader's target does.
+        # ADR-0011: the measured population first, our fit against it last, because
+        # only the last one changes when the reader's target does.
         if c.get("declared_for"):
             lines.append(f"  Declared for : {format_declared_for(c['declared_for'])}")
-            lines.append(f"  Not measured on : {format_not_measured_on(c.get('not_measured_on'))}")
         if c.get("population"):
-            lines.append(f"  Fit    : {format_fit(c, cell)}")
+            lines.append(f"  Fit    : {format_fit(c['population'], cell)}")
         if c.get("caveat"):
             lines.append(f"  Caveat : {c['caveat']}")
         lines.append(f"  Challenge it: add --dispute {c['parameter']} to open a pre-filled issue.")

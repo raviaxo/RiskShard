@@ -1,0 +1,36 @@
+date: '2026-08-14'
+title: Three BEC shards lose a benchmark industry-relevance pass they had not earned
+retractions: 0
+effect: 'Twenty-one evidence records were corrected to declare the population their source
+  measured rather than the shard cell they were borrowed for, and the seeded benchmark
+  sprint''s total blocker count moved 19 -> 22. The three added blockers are all
+  industry_relevance_gap, one each on au_finance_bec_midmarket, us_finance_bec_midmarket and
+  sg_finance_bec_midmarket. No loss figure moved: all 66 published values, statuses,
+  measurement bases, exceedance statements, sources and caveats are byte-identical, the
+  portfolio headline stays 66/66 source-backed with 31 cell-matched and 35 bridged (15
+  cross-country), and all 11 shards'' AVG/P95/P99 at seed 42 are identical to the digit,
+  because every calibration profile names its evidence_id explicitly and selection therefore
+  did not re-rank. The benchmark program is the one consumer that reads applicability
+  directly: it counts a parameter as industry-specific when the record names the target
+  industry, so a record that declared financial_services satisfied the gate whether or not
+  the source had measured financial services.'
+reason: 'The gate was being satisfied by a false declaration. Each of the three BEC shards
+  drew its frequency anchors from sources that measure no industry at all - the IC3 complaint
+  count over a Census SUSB denominator is economy-wide on both sides, the AFP Payments Fraud
+  survey covers organizations generally and skews to firms above USD 1B revenue, and the ABS
+  measure is all-industry, all-size and all-cyber. Every one of those records already said so
+  in its limitations prose while its applicability field claimed industries
+  [financial_services], and the benchmark program reads the field, not the prose.
+
+  So 22 is the honest count and 19 was an artifact. This is a readiness bar getting harder
+  because the data stopped over-claiming, which is the direction a correction should move.
+  The three shards are unchanged in every published number; what changed is that they now
+  report the industry-relevance gap they always had.
+
+  Recorded here rather than absorbed silently because it is the one number this repair moved,
+  and a correction that only mentions the numbers which held is not a correction. The same
+  reconciliation is published as finding 5, and the check that found it -
+  provenance.unexplained_bridges() - now fails the build if another record claims a bridge on
+  a facet its own declaration says matches. See ADR-0011 -> Correction for what the repair
+  exposed and did not fix: population_match is still a target-relative value stored on the
+  record, which is a schema decision and is left open.'
