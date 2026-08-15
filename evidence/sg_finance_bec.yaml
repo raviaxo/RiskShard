@@ -51,9 +51,9 @@ records:
       status: bridged
       bridged_on: [country]
     applicability:
-      industries: [financial_services]
-      countries: [SG, global]
-      company_size_bands: [mid_market]
+      industries: [all]
+      countries: [US]
+      company_size_bands: [all]
       threats: [business_email_compromise]
 
   - id: csa_2023_sg_org_cyber_incident_prevalence_stress
@@ -106,9 +106,9 @@ records:
       status: bridged
       bridged_on: [country]
     applicability:
-      industries: [financial_services]
-      countries: [SG, global]
-      company_size_bands: [mid_market]
+      industries: [all]
+      countries: [US]
+      company_size_bands: [all]
       threats: [business_email_compromise]
 
   - id: spf_2024_sg_bec_documented_case_impact_stress

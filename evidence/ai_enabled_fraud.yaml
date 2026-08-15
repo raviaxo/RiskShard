@@ -103,7 +103,7 @@ records:
       industries: [all]
       countries: [global]
       company_size_bands: [all]
-      threats: [ai_enabled_fraud]
+      threats: [business_email_compromise]
 
   - id: regula_2024_average_deepfake_loss_impact_likely
     title: Regula 2024 average business deepfake loss used as likely impact

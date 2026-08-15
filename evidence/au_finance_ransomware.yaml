@@ -105,7 +105,7 @@ records:
       industries: [all]
       countries: [AU]
       company_size_bands: [mid_market]
-      threats: [ransomware]
+      threats: [all]
 
   - id: sophos_au_2025_ransomware_recovery_cost_usd
     title: Australian mean ransomware recovery cost, excluding ransom payments

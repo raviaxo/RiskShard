@@ -30,7 +30,7 @@ if str(ROOT) not in sys.path:
 from engine.coherence import module_coherence  # noqa: E402
 from engine.exceedance import module_exceedance  # noqa: E402
 from engine.tail_sensitivity import LEVERAGE_CONCERN, max_leverage  # noqa: E402
-from engine.provenance import build_portfolio_provenance, cell_mismatch  # noqa: E402
+from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.risk_modules import find_risk_module  # noqa: E402
 from engine.slot_roles import slot_declarations  # noqa: E402
 from engine.web_console import WebConsoleApp  # noqa: E402
@@ -184,16 +184,13 @@ def build_data(root):
                 "source_name": c.get("source_name"), "source_type": c.get("source_type"),
                 "publication_date": c.get("publication_date"), "quote": c.get("cited_line"),
                 "caveat": c.get("caveat"),
-                # ADR-0011: the record's own two declarations. Target-independent,
-                # so they are what a reader computes their own distance from.
+                # ADR-0011: the population the source measured. Target-independent,
+                # so it is what a reader computes their own distance from.
                 "declared_for": c.get("declared_for"),
-                "not_measured_on": c.get("not_measured_on"),
                 # ADR-0003: whether the evidence is drawn from the shard's own cell,
-                # and which dimension it is borrowed across when not. ADR-0011: only
-                # `cell_mismatch` of this is target-relative — the rest is the line
-                # above, and the merged value is kept because it feeds the counts.
+                # and which dimension it is borrowed across when not. ADR-0011: a
+                # computation against *this item's* cell, never a record property.
                 "population": c.get("population"),
-                "cell_mismatch": cell_mismatch(c) if c.get("population") else [],
                 # ADR-0007: what quantity this anchor measures, independent of who
                 # it was measured on.
                 "basis": c.get("measurement_basis"),

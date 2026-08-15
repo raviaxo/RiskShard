@@ -161,44 +161,54 @@ that any context dimension must be evidence-backed or it does not ship.
 
 ## Correction — 2026-08-14, found while implementing this ADR
 
-**One premise above is wrong and the decision survives it.** This ADR states that `applicability`
-is *"the observed population"* (Decision part 1, and the Context section before it). It is not. It
-is the cell a record declares itself **usable in**, which is often narrower than what the source
-measured.
+**One premise above was wrong, the decision survives it, and the data has since been repaired to
+match.** This ADR states that `applicability` is *"the observed population"* (Decision part 1, and
+the Context section before it). At the time of writing it was not: on 21 of 141 records the field
+named the cell the record was **borrowed for** rather than the population measured.
 
-Measured across the corpus: **17 of 141 records declare a narrow value on a facet their own
-`population_match.bridged_on` says the source did not measure.** The US BEC frequency floor
-declares `industries: [financial_services]`, `company_size_bands: [mid_market]` while its IC3
-numerator and Census SUSB denominator are both economy-wide — which the record's own
-`bridged_on: [sector, size]` records correctly. Surfacing that declaration under a *measured on*
-label, as this ADR's Decision part 1 literally instructs, would have retired one mislabel by
-publishing another on those 17 records.
+The US BEC frequency floor declared `industries: [financial_services]`,
+`company_size_bands: [mid_market]` while its IC3 numerator and Census SUSB denominator are both
+economy-wide. Three US data-breach frequencies declared `countries: [US]` over a UK survey; two
+Singapore anchors declared `countries: [SG]` over US data. Each record's `limitations` said so in
+prose while its structured field said otherwise.
 
-**No record states the observed population, and none can be made to** — no consulted source
-publishes it as a field, and manufacturing it is the invented-responsiveness failure ADR-0009 and
-ADR-0010 both refuse. It is recoverable only as the *gap* between the declaration and
-`population_match`, so that gap is published as its own facet rather than computed away.
+**This was fixed rather than labelled around.** All 21 declarations were corrected the same day.
+No published figure moved — all 66 values, statuses, bases, exceedance statements, sources and
+caveats are byte-identical, every portfolio total is unchanged, and all 11 shards' AVG/P95/P99 are
+identical to the digit, because calibration profiles name their evidence explicitly. The check that
+found them, `unexplained_bridges()`, is now a test: a record earns a bridge on a facet by declaring
+a population that does not name the consuming cell's value, and claiming one while declaring that
+value fails the build. Published as [finding 5](../FINDINGS.md).
 
-What shipped, therefore, is three labels where the ADR envisaged two:
+*An intermediate design is recorded because it was published for a day and then retired.* Before
+the data was repaired, the surfaces carried **three** labels — `declared for`, `not measured on`,
+and `fit vs this cell` — on the reasoning that the stored `population_match` layer was intrinsic to
+the record while only the country-strict check was target-relative. That decomposition was an
+artifact of the mislabelled declarations. Once they were corrected it stopped being true, and the
+surfaces went back to the two the Decision above specifies.
 
-| Rendered as | Field | Depends on a target? |
-| --- | --- | --- |
-| **declared for** | `applicability` | No — a property of the record |
-| **not measured on** | stored `population_match.bridged_on` | No — a property of the record |
-| **fit vs this cell** | the country-strict consumption check | **Yes** — recompute against yours |
+**Everything above this section stands**: fit is computed against a stated target, exposed as a
+facet set, never a score, and the target is named wherever fit is rendered.
 
-That third row is the second thing implementation corrected. The merged `population` this repo
-renders is two layers, and only the country layer moves with the target; the stored layer is
-intrinsic. Presenting the whole merge as *"fit vs our cell"* — the natural reading of Decision
-part 1 — would have been this ADR's own error pointed the other way, labelling a record property
-as target-relative.
+### What the repair exposed — a new open question
 
-**Everything above this section stands**: fit is computed against a stated target, it is exposed
-as a facet set, there is no composite score, and the target is named wherever fit is rendered. The
-underlying `population_match` merge is untouched, so no published count moved — all 66 values,
-statuses, bases, exceedance statements, sources and caveats are byte-identical, and all 35 bridged
-rows keep every facet. Published as [finding 5](../FINDINGS.md) and pinned by
-`tests/test_findings.py`, which fails the build if the 17 ever silently becomes something else.
+With the declarations honest, every stored `population_match.bridged_on` now reads as *the declared
+population does not name this cell's value*. That is a statement about a record **and a target**,
+computed at authoring time against the shard the record was written into, and then frozen onto the
+record — **exactly the shape Decision part 1 forbids.** The mislabelled declarations had been
+hiding it.
+
+It cannot simply be derived away. An `all` declaration is deliberately *dilution* rather than
+*borrowing* under [ADR-0003](0003-shared-impact-bridges.md) — an all-sector average includes our
+sector, where a UK-only measure genuinely excludes the US — and only the author can make that call.
+Deriving the field mechanically loses that judgement: a naive derivation flags 45 of 66 cards as
+bridged against the 35 recorded, precisely by collapsing dilution into borrowing.
+
+So the choice is between storing the target alongside the fit, computing fit per consumer from a
+richer declaration, or accepting the field as an authored judgement about our own cell and
+labelling it as such. That is a schema decision under
+[`PUBLISHABLE_REQUIREMENTS.md`](../PUBLISHABLE_REQUIREMENTS.md) → Change Control, so it is recorded
+here and **not made**. See open question 3.
 
 ## Open questions
 
@@ -209,3 +219,9 @@ rows keep every facet. Published as [finding 5](../FINDINGS.md) and pinned by
    `extraction_date` are required, but the *observation period the measurement covers* is not a
    declared field. It is arguably a fit facet (a 2019 measurement is distant from a 2026 target)
    and is not addressed here.
+
+3. **Should `population_match` carry its target, be computed per consumer, or be relabelled as an
+   authored judgement about our cell?** Raised 2026-08-14 by the repair above: it is a stored
+   target-relative value, which Decision part 1 forbids, and the dilution/borrowing distinction it
+   encodes cannot be derived mechanically. A schema decision — needs its own ADR before any code
+   moves.

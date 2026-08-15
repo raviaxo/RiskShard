@@ -106,7 +106,12 @@ class BenchmarkProgramTests(unittest.TestCase):
         self.assertEqual(sprint["sprint"]["title"], "Seeded Evidence Upgrade Sprint A")
         self.assertEqual(sprint["status"], "needs_evidence_work")
         self.assertEqual(sprint["target_count"], 5)
-        self.assertEqual(sprint["total_blocker_count"], 19)
+        # 19 -> 22 on 2026-08-14, when 21 records stopped declaring the cell they were
+        # borrowed for. The three added blockers are industry_relevance_gap on the BEC
+        # shards, which had been passing that gate because their records claimed
+        # industries [financial_services] over sources measuring no industry at all.
+        # A harder bar, not a regression — revisions/2026-08-14-three-bec-shards-*.yaml.
+        self.assertEqual(sprint["total_blocker_count"], 22)
         self.assertIn("frequency.max", sprint["focus_parameters"])
         self.assertIn("impact.max", sprint["focus_parameters"])
         self.assertNotIn("ca_finance_data_breach_midmarket", by_id)
