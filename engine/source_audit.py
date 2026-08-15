@@ -31,6 +31,7 @@ PROPERTY_QUESTION = {
 VERIFIED = "verified_against_artifact"
 DERIVED = "derived_from_corpus"
 UNVERIFIED = "unverified"
+NO_ARTIFACT = "no_readable_artifact"
 
 
 def load_registry(root):
@@ -125,6 +126,11 @@ def audit_coverage(rows):
     slots = len(rows) * len(PROPERTIES)
     verified = sum(1 for r in rows for p in PROPERTIES
                    if r["properties"][p].get("basis") == VERIFIED)
+    # "not read" and "cannot be read" are different states. Reporting them as one
+    # number would let a permanent gap — a source we hold only as a landing page —
+    # look like a backlog that effort will clear.
+    blocked = sum(1 for r in rows for p in PROPERTIES
+                  if r["properties"][p].get("basis") == NO_ARTIFACT)
     by_property = {
         p: sum(1 for r in rows if r["properties"][p].get("basis") == VERIFIED)
         for p in PROPERTIES
@@ -135,7 +141,8 @@ def audit_coverage(rows):
         "sources": len(rows),
         "slots": slots,
         "verified": verified,
-        "unverified": slots - verified,
+        "blocked_no_artifact": blocked,
+        "unverified": slots - verified - blocked,
         "sources_fully_verified": fully,
         "verified_by_property": by_property,
     }
