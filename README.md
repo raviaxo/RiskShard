@@ -464,6 +464,19 @@ status (cell-matched vs bridged, and on which dimension) is on the
 [explorer](https://raviaxo.github.io/RiskShard/) and in the evidence report — that split
 is the honest headline, and the coverage tools above are the authoritative view.
 
+**And none of that is a statement about your context.** Fit exists only relative to a
+target ([ADR-0011](docs/adr/0011-fit-is-a-facet-set.md)), and the target on every published
+surface is **our** shard cell, which is named wherever fit is rendered. Each parameter
+therefore prints three separate things: *declared for* (the cell the record declares itself
+usable in), *not measured on* (the facets where the source's own population is broader than
+that declaration), and *fit vs this cell* — of which only the last moves when you swap in
+your own target. There is no fit score, grade or percentage, and there will not be one:
+compressing those facets into a number would assert that a geography mismatch and a size
+mismatch trade off in a way we cannot know for your scenario. **No record states the
+population actually measured** — no source publishes it as a field, so it is recoverable
+only as the gap between the first two, and we have not invented it
+([finding 5](docs/FINDINGS.md)).
+
 **And cell-matched does not mean coherent.** A second, independent axis
 ([ADR-0007](docs/adr/0007-construct-coherence.md), added 2026-08-07 after a practitioner
 asked the question in the open): every record now declares *what quantity* it measures,

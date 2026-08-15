@@ -187,5 +187,112 @@ class PopulationMatchTests(unittest.TestCase):
         self.assertGreater(totals["params_cross_cell"], 0)
 
 
+class TargetRelativeFitTests(unittest.TestCase):
+    """ADR-0011: fit is computed against a target, and the target is always named.
+
+    The failure these guard against is a derived, target-specific value reading as
+    an intrinsic property of the record — and its mirror image, an intrinsic
+    property reading as target-relative.
+    """
+
+    def setUp(self):
+        self.prov = build_module_provenance(MODULE, ROOT)
+
+    def test_module_provenance_names_the_cell_fit_is_computed_against(self):
+        cell = self.prov["cell"]
+        self.assertEqual(cell["country"], "GB")
+        for key in ("country", "industry", "company_size", "threat"):
+            self.assertTrue(cell.get(key), f"cell is missing {key}")
+
+    def test_every_resolved_card_carries_both_declarations(self):
+        for card in self.prov["cards"]:
+            if not card.get("resolved"):
+                continue
+            declared = card["declared_for"]
+            for facet in ("countries", "industries", "company_size_bands", "threats"):
+                self.assertTrue(declared.get(facet), f"{card['parameter']} declares no {facet}")
+            self.assertIsInstance(card["not_measured_on"], list)
+
+    def test_cell_mismatch_is_only_the_target_relative_half(self):
+        from engine.provenance import cell_mismatch
+
+        # Stored `bridged_on` is a property of the record: the source measured a
+        # broader population than the record declares. It is true for every reader
+        # and must not be reported as a mismatch against our cell.
+        card = {"population": {"status": "bridged", "bridged_on": ["sector", "size"]},
+                "not_measured_on": ["sector", "size"]}
+        self.assertEqual(cell_mismatch(card), [])
+
+        # The country layer is added when consuming the record against a cell whose
+        # country the record does not name — that one genuinely moves with the target.
+        card = {"population": {"status": "bridged", "bridged_on": ["country", "sector"]},
+                "not_measured_on": ["sector"]}
+        self.assertEqual(cell_mismatch(card), ["country"])
+
+    def test_fit_never_renders_without_naming_its_target(self):
+        from engine.provenance import format_fit
+
+        cell = {"country": "GB", "industry": "finance",
+                "company_size": "mid_market", "threat": "data_breach"}
+        bridged = format_fit(
+            {"population": {"status": "bridged", "bridged_on": ["country"]},
+             "not_measured_on": []}, cell)
+        self.assertIn("GB · finance · mid_market · data_breach", bridged)
+        matched = format_fit(
+            {"population": {"status": "matched", "bridged_on": []},
+             "not_measured_on": []}, cell)
+        self.assertIn("GB · finance · mid_market · data_breach", matched)
+
+    def test_declared_for_is_not_labelled_as_the_observed_population(self):
+        # Measured 2026-08-14: 17 of 141 records declare a narrow value on a facet
+        # their own `population_match` says the source did not measure, so
+        # `applicability` is the cell a record is authored for and not the
+        # population observed. ADR-0011 asserted otherwise; publishing this field
+        # as "measured on" would swap one mislabel for another.
+        markdown = format_portfolio_markdown(build_portfolio_provenance(ROOT))
+        self.assertIn("| Declared for |", markdown)
+        self.assertNotIn("| Measured on |", markdown)
+
+        out = format_provenance(self.prov, parameter="frequency.min")
+        self.assertIn("Declared for :", out)
+        self.assertIn("Not measured on :", out)
+        self.assertNotIn("Measured on :", out)
+
+    def test_the_contradiction_is_still_measurable_and_still_reported(self):
+        # If a future evidence pass reconciles every record, this count goes to zero
+        # and the published correction must be revisited rather than left standing.
+        import yaml
+
+        facets = {"sector": "industries", "size": "company_size_bands",
+                  "country": "countries", "threat": "threats"}
+        contradicting = 0
+        for path in sorted((ROOT / "evidence").glob("*.yaml")):
+            records = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("records", [])
+            for record in records:
+                declared = record.get("applicability") or {}
+                bridged_on = (record.get("population_match") or {}).get("bridged_on") or []
+                narrow = [
+                    dim for dim in bridged_on
+                    if (declared.get(facets[dim]) or [])
+                    and not {"all", "global"} & set(declared.get(facets[dim]) or [])
+                ]
+                contradicting += 1 if narrow else 0
+        self.assertGreater(
+            contradicting, 0,
+            "no record now contradicts its own population_match — the published "
+            "'declared for is not the observed population' correction needs revisiting",
+        )
+
+    def test_no_composite_fit_score_is_published(self):
+        # ADR-0011 part 2, pinned to the surface rather than to intent: a scalar
+        # re-imports the portability claim ADR-0010 retired.
+        for card in self.prov["cards"]:
+            self.assertNotIn("fit_score", card)
+            self.assertNotIn("fit_grade", card)
+        markdown = format_portfolio_markdown(build_portfolio_provenance(ROOT))
+        flat = markdown.replace("\n", " ").lower()
+        self.assertIn("summarised into a score, grade or percentage", flat)
+
+
 if __name__ == "__main__":
     unittest.main()

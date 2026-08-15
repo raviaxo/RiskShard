@@ -198,12 +198,36 @@
     <p>Monte Carlo, 10,000 trials, seed 42, machine-independent seeding — a modeled range from
     public evidence, not a prediction. A parameter marked <span class="st est">estimate</span> is
     an interpretive value whose limitation is stated on its face; all other parameters cite a
-    named public source. A parameter marked <span class="st brg">bridged</span> is source-backed
-    by evidence <em>not drawn from this item's own cell</em> — the dimension borrowed across
-    (country, sector, size, threat) is named in its status. Bridging is declared, never hidden:
-    a reader counting the source-backed total should not infer more cell-specific evidence than
-    exists. Grades follow the maturity ladder: governed_starter → benchmark_review_candidate
-    → benchmark-grade (the last only after a recorded human review; no item on this page holds it).</p>
+    named public source. A parameter marked <span class="st brg">bridged</span> is source-backed by
+    evidence <em>not drawn from this item's own cell</em> — the dimensions borrowed across
+    (country, sector, size, threat) are named on the two lines below it, and that chip is what the
+    cell-matched / bridged counts at the top of this page tally. Bridging is declared, never
+    hidden: a reader counting the source-backed total should not infer more cell-specific evidence
+    than exists. Grades follow the maturity ladder:
+    governed_starter → benchmark_review_candidate → benchmark-grade (the last only after a
+    recorded human review; no item on this page holds it).</p>
+    <p><b>Fit is relative to a target, and the target on this page is ours.</b> Each parameter
+    prints three lines where it used to print one, and the order is deliberate.
+    <span class="lbl">declared for</span> is the cell the record declares itself usable in —
+    countries, industries, size bands, threats. <span class="lbl">not measured on</span> names the
+    facets where the source's own population is <em>broader</em> than that declaration: the
+    US BEC frequency floor is declared for financial-services mid-market firms, but its IC3
+    numerator and Census denominator are both economy-wide, so it reads <b>sector, size</b>. Both
+    of those are properties of the record and are true for every reader. Only
+    <span class="lbl">fit</span> depends on a target, and the target is <em>this item's own
+    cell</em>, which the line names — it tells you how the record sits relative to ours and
+    nothing about yours. If your cell differs, and it will, that is the one line to recompute;
+    the two above it do not move. A parameter can therefore read <span class="st brg">bridged</span>
+    and still show <b>no mismatch</b> on its fit line: it is bridged because the source measured
+    more broadly than the record declares, which is true for you too, and not because our target
+    differs from the record's.</p>
+    <p>This page publishes no fit score, grade or percentage, and will not. Compressing these
+    facets into one number would assert that a geography mismatch and a size mismatch trade off
+    against each other in a way we cannot know for your scenario — a geography mismatch is fatal
+    to one analysis and irrelevant to the next. The facets are listed separately so you decide
+    which ones bite. One thing is genuinely absent rather than withheld: <b>no record states the
+    population the source actually observed</b>. It is recoverable only as the gap between the two
+    declared lines, because no published source reports it as a field and we have not invented one.</p>
     <p>Each parameter also states <em>what quantity it measures</em> on its <span class="lbl">measures</span>
     line. This is independent of the source and of the population: two anchors can both be drawn from
     this item's own cell and still measure different things — an annual breach prevalence against an
@@ -266,6 +290,20 @@
   var COUNTRY={AU:'Australia',CA:'Canada',DE:'Germany',FR:'France',GB:'United Kingdom',
     JP:'Japan',SG:'Singapore',US:'United States'};
   var cname=function(cc){return COUNTRY[String(cc||'').toUpperCase()]||cc;};
+  /* ADR-0011: the declared applicability, facet by facet and never as a score. */
+  var declaredFor=function(m){
+    if(!m) return '';
+    return [['countries','countries'],['industries','industries'],
+            ['sizes','company_size_bands'],['threats','threats']]
+      .filter(function(f){return (m[f[1]]||[]).length;})
+      .map(function(f){return f[0]+' '+(m[f[1]]||[]).map(fmt).join(', ');})
+      .join(' · ');
+  };
+  /* The cell a shard's fit is computed against — the target half of the pair. */
+  var cellOf=function(s){
+    return [cname(s.country),fmt(s.industry),fmt(s.size),fmt(s.threat)]
+      .filter(function(v){return v;}).join(' · ');
+  };
   var valText=function(p){return (p.value==null?'—':p.value)+(p.unit?(' '+p.unit):'');};
 
   /* Render money as money: take the currency code from the shard's own run output. */
@@ -405,7 +443,12 @@
          this shard's own cell; the borrowed dimension is named on its face. */
       var pop=p.population||{};
       var st=backed?'source-backed':'estimate';
-      if(backed&&pop.status==='bridged') st='bridged · '+(pop.bridged_on||[]).join(', ');
+      /* The chip is the merged ADR-0003 flag and nothing more — it is what the
+         31-cell-matched / 35-bridged headline counts, so it must not be redefined
+         here. It deliberately names no facets and claims nothing about a target:
+         the two lines below decompose it into the part that is a property of the
+         record and the part that moves with the reader's cell (ADR-0011). */
+      if(backed&&pop.status==='bridged') st='bridged';
       return '<tr class="prow" data-param="'+esc(p.parameter)+'" id="'+esc(s.id)+'--'+esc(p.parameter)+'">'+
         '<td>'+esc(p.parameter)+'</td>'+
         '<td class="val num">'+esc(displayValue(s,p))+'</td>'+
@@ -414,6 +457,27 @@
         '</tr>'+
         '<tr class="subrow"><td class="lbl">cited</td><td colspan="3" class="sub quote">'+
           (p.quote?('“'+esc(p.quote)+'”'):'—')+'</td></tr>'+
+        /* ADR-0011: the record's own declarations first — both target-independent
+           and true for every reader — then our fit, which is not. */
+        (declaredFor(p.declared_for)?('<tr class="subrow"><td class="lbl">declared for</td><td colspan="3" class="sub">'+
+          esc(declaredFor(p.declared_for))+'</td></tr>'):'')+
+        (p.not_measured_on?('<tr class="subrow"><td class="lbl">not measured on</td><td colspan="3" class="sub">'+
+          (p.not_measured_on.length
+            ?('<b>'+esc(p.not_measured_on.map(fmt).join(', '))+'</b> — the source’s own population is '+
+              'broader than the line above on '+(p.not_measured_on.length>1?'these facets':'this facet')+
+              '. A property of the record, not of our target.')
+            :'nothing — the source measured the cell this record is declared for.')+
+          '</td></tr>'):'')+
+        /* ...and our fit, which exists only relative to the cell it names. */
+        (pop.status?('<tr class="subrow"><td class="lbl">fit</td><td colspan="3" class="sub">'+
+          ((p.cell_mismatch||[]).length
+            ?('<b>bridged</b> against this item’s cell ('+esc(cellOf(s))+') — on '+
+              esc((p.cell_mismatch||[]).map(fmt).join(', '))+
+              '. This is the only line that changes when the target does: recompute it against your '+
+              'own cell from the two lines above.')
+            :('<b>no mismatch</b> against this item’s cell ('+esc(cellOf(s))+
+              '), which is our target and not yours.'))+
+          '</td></tr>'):'')+
         (p.basis?('<tr class="subrow"><td class="lbl">measures</td><td colspan="3" class="sub">'+esc(p.basis.replace(/_/g,' '))+'</td></tr>'):'')+
         /* ADR-0008: on a maximum, what is known about it being exceeded. Sits next to
            the number, not in a footnote, because this is the anchor a reader is most
