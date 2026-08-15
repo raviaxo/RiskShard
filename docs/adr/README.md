@@ -24,3 +24,4 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0011](0011-fit-is-a-facet-set.md) | Fit is a facet set, not a score | Accepted (corrected 2026-08-14) |
 | [0012](0012-loss-event-registry-bounded-trial.md) | The loss-event registry, as a bounded trial | Accepted |
 | [0013](0013-fit-is-derived-not-stored.md) | Fit is derived against a target, not stored on the record | Accepted |
+| [0014](0014-the-reader-supplies-the-target.md) | The reader supplies the target | Accepted |
