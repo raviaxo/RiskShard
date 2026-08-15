@@ -35,6 +35,7 @@ def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
         package_check(root),
         data_pack_check(root),
         loss_event_check(root),
+        source_audit_check(root),
         ledger_check(root),
         tests_check(root, run_tests=run_tests),
     ]
@@ -87,6 +88,44 @@ def loss_event_check(root):
             "detail": f"{len(errors)} error(s): {errors[0]}",
         }
     return {"name": "loss events", "status": "pass", "detail": detail}
+
+
+def source_audit_check(root):
+    """ADR-0015: report the audit's coverage every run, not its findings.
+
+    Coverage is the number this audit can least afford to flatter, so the doctor
+    prints it whether or not anyone asks — the same reason the loss-event check
+    prints "0 cite, N could" rather than just "0 cite". A low number here is honest
+    progress, not a failure, so it never fails the run; only a defect does, and a
+    defect is always a way the audit could claim more than it read.
+    """
+    from engine.source_audit import audit_defects, build_source_audit
+
+    defects = audit_defects(root)
+    if defects:
+        return {
+            "name": "source audit",
+            "status": "fail",
+            "detail": f"{len(defects)} defect(s): {defects[0]}",
+        }
+    coverage = build_source_audit(root)["coverage"]
+    if not coverage["verified"]:
+        return {
+            "name": "source audit",
+            "status": "pass",
+            "detail": (f"0 of {coverage['slots']} answers verified "
+                       f"(ADR-0015 audit not started)"),
+        }
+    return {
+        "name": "source audit",
+        "status": "pass",
+        "detail": (
+            f"{coverage['verified']} of {coverage['slots']} answers verified against an "
+            f"artifact ({coverage['sources_fully_verified']} of {coverage['sources']} sources "
+            f"read on all four properties); {coverage['unverified']} unread — a question, "
+            "not a finding"
+        ),
+    }
 
 
 def environment_check(root):

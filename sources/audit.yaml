@@ -1,0 +1,106 @@
+# Source audit — ADR-0015.
+#
+# What each registered source publishes, on four properties. The rule that makes this
+# worth reading: an answer may only say what a SOURCE publishes when its basis is
+# `verified_against_artifact` — a human read the stored artifact in sources/raw/.
+# Anything else is a fact about our own extraction, or an open question.
+#
+# A source absent from this file is UNREAD on all four properties. That is the work
+# queue, it is counted, and `engine/source_audit.py` publishes the denominator beside
+# any finding this supports. Unread is never reported as absence.
+#
+# A verification is pinned to the artifact's sha256 from sources/manifest.json, not to
+# a local path: sources/raw/ holds large third-party PDFs and is not distributed, so a
+# path is only recheckable on the machine that gathered it. The hash also pins the
+# edition -- a new edition has a different hash and inherits nothing from this answer.
+#
+# Verification method, stated because it bounds every answer below: the stored PDF is
+# read as extracted text. Figures rendered as images are not captured, so a property
+# published ONLY inside a chart image can be missed. Where that risk is live it is
+# named in the answer's `detail` rather than left for a reader to discover.
+audit:
+  - source_id: verizon_dbir_2026
+    artifact_sha256: 4a2788bc5afb2ecd6dd8dbc8a32ae2b21dcf2517b36f0763560616ea1fc7241b
+    artifact: sources/raw/verizon_dbir_2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal or most-likely value is offered for any loss quantity. The report's
+          central tendencies are medians and means; the single occurrence of the word
+          "mode" in the text is "spectator mode", unrelated. Nothing in the report is
+          presented as the most probable single value of a loss.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Yes, and this is the finding that complicates the simple version of our claim.
+          Figure 45 is titled "Distribution of loss due to ransom payment in 2025"
+          (n=1,494 for 2025; each dot is 7.47 events) and is a quantile dot plot. The
+          methodology section states the report expresses confidence through
+          "complementary cumulative density (slanted) bar charts, hypothetical outcome
+          plot (spaghetti) line charts and quantile dot plots". So a loss distribution
+          over a stated sample IS published here — it is simply not published as
+          parameters a three-point model can consume.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No exceedance probability is stated for any loss magnitude. Figure 45's
+          quantile dot plot would let a reader derive one for ransom payments over that
+          sample, which is more than most sources offer, but deriving is not stating and
+          the distinction is the whole of ADR-0008. Recorded as not published, with the
+          derivability noted rather than counted.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Sample sizes are given per figure and the contributor base, regions and
+          industries are described. Note the population of the ransom-loss figure is
+          actor-disclosed ransomware victims cross-referenced against known crypto-wallet
+          payments — nameable, and not a general business population.
+
+  - source_id: netdiligence_cyber_claims_2025
+    artifact_sha256: 4014f4e7a52c55125e3287b2c61ca788f9ae133a8e49408d7e34ec35ba7166cb
+    artifact: sources/raw/netdiligence_cyber_claims_2025.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value for any cost. The report is built on averages — the word appears
+          177 times — with maxima and totals per category. The single "most likely" in the
+          text describes an unknown cause being "most likely primary", not a loss value.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Charts titled "Distribution of Crisis Services Costs" (N=4,712 SMEs) break cost
+          down by type of activity — a composition of what a claim is spent on, not a
+          severity distribution over claims. No median, percentile or quantile appears
+          anywhere in the report text. Bounded by the read method: a severity distribution
+          shown only as an unlabelled image would not be captured.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No percentile or quantile language anywhere in the text. Severity is conveyed as
+          an average and a maximum per category — e.g. criminal-cause crisis services at
+          826K average against a 16.0M maximum — which bounds what was observed and says
+          nothing about how often it is exceeded.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Yes, and unusually well: 10,402 incidents over 2020-2024, split SME versus large
+          company, with revenue bands and sector breakdowns including average and maximum
+          revenue per sector.
