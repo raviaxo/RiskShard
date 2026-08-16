@@ -1210,4 +1210,129 @@ sources:
   usage_notes: |
     Sector-specific ransomware survey. Ransom payment figures are medians over responding organizations that paid, not over all organizations attacked - the denominator is the payers.
   url_stability: dated
+- id: sophos_state_ransomware_au_2026
+  title: The State of Ransomware in Australia 2026
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://www.sophos.com/en-us/whitepaper/state-of-ransomware-australia
+  publication_date: '2026-07-01'
+  access_mode: public_pdf
+  intended_use:
+    - Australia ransomware prevalence
+    - country ransom demand and payment levels
+  usage_notes: |
+    Country cut of the global State of Ransomware 2026 survey. Population is organizations
+    with 100-5,000 employees that were HIT by ransomware in the prior 12 months, n=119 for
+    Australia. Ransom figures are medians over that hit population, and outlier ransoms of
+    $40 million or more were removed by Sophos before publication - both caveats travel
+    with any figure drawn from it. All financial data points are in U.S. dollars.
+  url_stability: dated
+
+- id: sophos_state_ransomware_de_2026
+  title: The State of Ransomware in Germany 2026
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://www.sophos.com/en-us/whitepaper/state-of-ransomware-germany
+  publication_date: '2026-07-01'
+  access_mode: public_pdf
+  intended_use:
+    - Germany ransomware prevalence
+    - country ransom demand and payment levels
+  usage_notes: |
+    Country cut of the global State of Ransomware 2026 survey. Population is organizations
+    with 100-5,000 employees that were HIT by ransomware in the prior 12 months, n=139 for
+    Germany. Ransom figures are medians over that hit population, and outlier ransoms of
+    $40 million or more were removed by Sophos before publication - both caveats travel
+    with any figure drawn from it. All financial data points are in U.S. dollars.
+  url_stability: dated
+
+- id: sophos_state_ransomware_fr_2026
+  title: The State of Ransomware in France 2026
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://www.sophos.com/en-us/whitepaper/state-of-ransomware-france
+  publication_date: '2026-07-01'
+  access_mode: public_pdf
+  intended_use:
+    - France ransomware prevalence
+    - country ransom demand and payment levels
+  usage_notes: |
+    Country cut of the global State of Ransomware 2026 survey. Population is organizations
+    with 100-5,000 employees that were HIT by ransomware in the prior 12 months, n=129 for
+    France. Ransom figures are medians over that hit population, and outlier ransoms of
+    $40 million or more were removed by Sophos before publication - both caveats travel
+    with any figure drawn from it. All financial data points are in U.S. dollars.
+  url_stability: dated
+
+- id: sophos_state_ransomware_jp_2026
+  title: The State of Ransomware in Japan 2026
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://www.sophos.com/en-us/whitepaper/state-of-ransomware-japan
+  publication_date: '2026-07-01'
+  access_mode: public_pdf
+  intended_use:
+    - Japan ransomware prevalence
+    - country ransom demand and payment levels
+  usage_notes: |
+    Country cut of the global State of Ransomware 2026 survey. Population is organizations
+    with 100-5,000 employees that were HIT by ransomware in the prior 12 months, n=152 for
+    Japan. Ransom figures are medians over that hit population, and outlier ransoms of
+    $40 million or more were removed by Sophos before publication - both caveats travel
+    with any figure drawn from it. All financial data points are in U.S. dollars.
+  url_stability: dated
+
+- id: sophos_state_ransomware_uk_2026
+  title: The State of Ransomware in United Kingdom 2026
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://www.sophos.com/en-us/whitepaper/state-of-ransomware-uk
+  publication_date: '2026-07-01'
+  access_mode: public_pdf
+  intended_use:
+    - United Kingdom ransomware prevalence
+    - country ransom demand and payment levels
+  usage_notes: |
+    Country cut of the global State of Ransomware 2026 survey. Population is organizations
+    with 100-5,000 employees that were HIT by ransomware in the prior 12 months, n=120 for
+    United Kingdom. Ransom figures are medians over that hit population, and outlier ransoms of
+    $40 million or more were removed by Sophos before publication - both caveats travel
+    with any figure drawn from it. All financial data points are in U.S. dollars.
+  url_stability: dated
+
+- id: sophos_state_ransomware_us_2026
+  title: The State of Ransomware in United States 2026
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://www.sophos.com/en-us/whitepaper/state-of-ransomware-us
+  publication_date: '2026-07-01'
+  access_mode: public_pdf
+  intended_use:
+    - United States ransomware prevalence
+    - country ransom demand and payment levels
+  usage_notes: |
+    Country cut of the global State of Ransomware 2026 survey. Population is organizations
+    with 100-5,000 employees that were HIT by ransomware in the prior 12 months, n=377 for
+    United States. Ransom figures are medians over that hit population, and outlier ransoms of
+    $40 million or more were removed by Sophos before publication - both caveats travel
+    with any figure drawn from it. All financial data points are in U.S. dollars.
+  url_stability: dated
+
+- id: sophos_state_ransomware_sg_2026
+  title: The State of Ransomware in Singapore 2026
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://www.sophos.com/en-us/whitepaper/state-of-ransomware-singapore
+  publication_date: '2026-07-01'
+  access_mode: public_pdf
+  intended_use:
+    - Singapore ransomware prevalence
+    - country ransom demand and payment levels
+  usage_notes: |
+    Country cut of the global State of Ransomware 2026 survey. Population is organizations
+    with 100-5,000 employees that were HIT by ransomware in the prior 12 months, n=33 for
+    Singapore. Ransom figures are medians over that hit population, and outlier ransoms of
+    $40 million or more were removed by Sophos before publication - both caveats travel
+    with any figure drawn from it. All financial data points are in U.S. dollars.
+  url_stability: dated
 
