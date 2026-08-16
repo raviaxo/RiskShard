@@ -53,11 +53,11 @@ and a source-level claim counts only when a human has read the stored artifact:
 
 | | |
 | --- | --- |
-| registered sources **read** | **42 of 61** |
-| …publishing a **mode** | **0 of 42** |
-| …publishing a **distribution** over loss or frequency | **9 of 42** |
-| …publishing an **exceedance** statement | **7 of 42** |
-| …that measure a **population** they name | **29 of 42** |
+| registered sources **read** | **44 of 62** |
+| …publishing a **mode** | **0 of 44** |
+| …publishing a **distribution** over loss or frequency | **11 of 44** |
+| …publishing an **exceedance** statement | **9 of 44** |
+| …that measure a **population** they name | **31 of 44** |
 | held only as a landing page, a press release or no artifact — **unanswerable** | **17** |
 | readable in principle, not yet read | **2** |
 
