@@ -204,7 +204,38 @@ emitter into the README table, the weekly digest and (as prose) the explorer —
 Without it the Progress table reads as a collapse in data strength, which is the opposite of what
 happened.
 
-**🕐 THE ADR-0012 CLOCK IS RUNNING — v0.8.0 IS CYCLE 1 OF 2.** The registry trial's kill criterion
+### 🔴 DECISION OWED — the ADR-0012 kill criterion, measured and deadlocked
+
+**Measured at v0.9.0 (2026-08-16), which is cycle 2 of 2.** Both metrics read exactly what they
+read at cycle 1:
+
+- shards whose `impact.max` cites a registry entry: **0** (and **0 could** — 1 blocked, since
+  swapping would trade an exceedance statement for provenance)
+- entries contributed by anyone outside the project: **0** (contributors are `raviaxo` and
+  dependabot)
+
+**By its letter, ADR-0012 decision 5 fires: "if neither has moved, retire the registry rather
+than carry it."** The criterion was pre-committed precisely so this would not become a fresh
+argument.
+
+⚠️ **By its purpose it has not run at all.** v0.8.0 was cut 2026-08-15 and v0.9.0 on
+2026-08-16 — **one day apart.** "Two release cycles" was written assuming releases are spaced
+enough for adoption to be possible; two tags in twenty-four hours give the trial no chance to
+succeed or fail on its merits. Retiring on that basis would be technically compliant and
+substantively wrong, and it is the kind of move this project exists to refuse.
+
+**So the criterion is reported, not executed, and the call is the owner's.** Three options:
+
+1. **Retire now**, honouring the letter. A retired experiment is a result, and the registry has
+   produced no citation in either cycle.
+2. **Restart the clock on a time condition** — e.g. measure again at the first release after
+   2026-10-01, or after two releases at least four weeks apart. This needs an ADR amendment,
+   because changing a kill criterion after seeing the measurement is exactly the move a
+   pre-commitment exists to prevent, and doing it silently would be worse than either outcome.
+3. **Retire the trial but keep the 36 events** as a published dataset with no claim on the
+   shards, which costs nothing to hold and drops the maintenance commitment.
+
+*(Previous entry, kept for the record:)* **THE ADR-0012 CLOCK IS RUNNING — v0.8.0 IS CYCLE 1 OF 2.** The registry trial's kill criterion
 is measured at two release cycles. **At the next release**, count (a) shards whose `impact.max`
 cites a registry entry and (b) whether anyone outside the project has contributed an entry. Both
 read **0** today. *If neither has moved, ADR-0012 decision 5 says retire the registry rather than
