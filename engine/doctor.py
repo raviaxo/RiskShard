@@ -36,6 +36,7 @@ def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
         data_pack_check(root),
         loss_event_check(root),
         source_audit_check(root),
+        intake_check(root),
         ledger_check(root),
         tests_check(root, run_tests=run_tests),
     ]
@@ -127,6 +128,33 @@ def source_audit_check(root):
             + (f"; {coverage['blocked_no_artifact']} blocked (artifact is not the source)"
                if coverage["blocked_no_artifact"] else "")
         ),
+    }
+
+
+def intake_check(root):
+    """Report the reading queue every run — the backlog is a plan, not a mess.
+
+    Sixty-seven documents arrived at once. Printing how many are queued against how
+    many are parked is what keeps that a triaged pipeline rather than a folder, and
+    it goes stale silently if nobody is shown it.
+    """
+    from engine.intake import build_intake, intake_defects
+
+    defects = intake_defects(root)
+    if defects:
+        return {"name": "intake", "status": "fail",
+                "detail": f"{len(defects)} defect(s): {defects[0]}"}
+    intake = build_intake(root)
+    t = intake["totals"]
+    if not t["candidates"]:
+        return {"name": "intake", "status": "pass", "detail": "no candidates registered"}
+    by = t["by_status"]
+    return {
+        "name": "intake",
+        "status": "pass",
+        "detail": (f"{t['candidates']} candidates: {by.get('queued', 0)} queued for reading, "
+                   f"{by.get('parked', 0)} parked as out-of-cell, "
+                   f"{by.get('duplicate', 0)} duplicate, {by.get('admitted', 0)} admitted"),
     }
 
 
