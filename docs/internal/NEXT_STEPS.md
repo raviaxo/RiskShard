@@ -204,7 +204,30 @@ emitter into the README table, the weekly digest and (as prose) the explorer —
 Without it the Progress table reads as a collapse in data strength, which is the opposite of what
 happened.
 
-### 🔴 DECISION OWED — the ADR-0012 kill criterion, measured and deadlocked
+### ✅ DECIDED 2026-08-16 — the kill criterion gets a clock ([ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md))
+
+Option 2 was taken: the metrics are unchanged, the measurement point becomes **the first release
+cut on or after 2026-11-01**, and ADR-0017 commits that it **does not move again**. If it reads
+zero and zero then, the registry retires whatever is happening at the time.
+
+**The amendment says plainly what it is**: a kill criterion changed after seeing a measurement
+that would have fired it. That is the one move a pre-commitment exists to prevent, and the ADR
+records it in those words rather than as a scheduling change. The justification is narrow — v0.8.0
+and v0.9.0 were cut one day apart, so the clock ran out without starting.
+
+Two things settled in advance so they are not argued on the day:
+
+- **If the project still has no external readership at the date, that is NOT grounds for another
+  extension.** It is grounds for retiring the registry and recording that the trial never got a
+  fair test — an unflattering result this project can publish.
+- **The registry's opportunity is shrinking as the audit succeeds.** v0.9.0 retired two
+  `none_known` maxima by finding an exceedance in a source we already held, and every such
+  retirement removes a slot the registry could have filled. That argues *for* retirement and is
+  recorded in the ADR rather than omitted.
+
+The doctor prints the date on every run.
+
+*(Previous entry:)* **DECISION OWED — the ADR-0012 kill criterion, measured and deadlocked**
 
 **Measured at v0.9.0 (2026-08-16), which is cycle 2 of 2.** Both metrics read exactly what they
 read at cycle 1:

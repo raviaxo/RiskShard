@@ -113,7 +113,13 @@ give it a kill criterion.
    `$179` is $179,000, and SIFCO's `$3,000` is a coverage *limit*.
 4. **No exceedance claims from it.** Entries are documented events. They may not be aggregated into
    an average, and they may not be ranked into an exceedance probability at this corpus size.
-5. **Kill criterion, measured at two release cycles.** ADR-0005 already named the right metric:
+5. ⚠️ **AMENDED 2026-08-16 by [ADR-0017](0017-the-kill-criterion-gets-a-clock.md) — the clock is
+   now a date, not a release count.** This criterion was measured at v0.9.0, the second release
+   cycle, and **fired**: 0 shards cite a registry entry, 0 could, 0 outside contributions. It was
+   not executed. v0.8.0 and v0.9.0 were cut one day apart, so the two cycles elapsed without the
+   adoption the criterion measures having had any chance to occur. It is re-measured at **the first
+   release on or after 2026-11-01**, the metrics are unchanged, and ADR-0017 commits that it does
+   not move a second time. *(Original text:)* **Kill criterion, measured at two release cycles.** ADR-0005 already named the right metric:
    the count of shards whose `impact.max` cites a registry entry rather than a one-off, and whether
    anyone outside the project contributes an entry. **If neither has moved, retire the registry
    rather than carry it.** A retired experiment is a result; a stale registry is a liability.
