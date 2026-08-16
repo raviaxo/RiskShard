@@ -129,3 +129,28 @@ records:
       countries: [global]
       company_size_bands: [all]
       threats: [insider_misuse]
+
+  - id: ponemon_dtex_2026_malicious_insider_per_incident_usd
+    title: Criminal or malicious insider average per-incident cost (insider-specific likely)
+    parameter: impact.likely
+    value: 742125
+    unit: currency
+    currency: USD
+    source_id: dtex_ponemon_cost_insider_risks_2026
+    source_name: 2026 Cost of Insider Risks Global Report
+    source_type: cyber_loss_research
+    source_url_or_citation: https://www.dtexsystems.com/ponemon-cost-of-insider-risks-report/
+    publication_date: "2026-01-01"
+    extraction_date: "2026-08-16"
+    citation_detail: 'Table 2, FY2025 case profiles: criminal or malicious insider, average cost per incident $742,125, 6.3 incidents, annualized cost $4,675,388.'
+    extraction_notes: 'Three-year refresh of the same publisher and the same construct, replacing the 2023 edition figure of $701,500. The report also gives $747,107 for a negligent or mistaken insider and $842,462 for an outsmarted insider, so the malicious figure remains the right selection for a shard modelling deliberate misuse rather than negligence.'
+    normalization_notes: Stored directly in USD as the likely single-event insider-misuse loss. Up 5.8% on the 2023 edition.
+    limitations: 'An activity-based REMEDIATION cost per incident, not a total event loss - the two are different quantities and the shard composes this as an impact anchor, which is the coherence problem finding 2 measures. Not a distribution quantile and not a catastrophic tail; rare insider fraud and IP theft reach tens of millions and are carried by impact.max. Means over a benchmark sample of 354 organizations; no median or percentile is published. Global and cross-industry, so not country- or sector-specific.'
+    confidence: medium
+    evidence_type: source_backed
+    measurement_basis: mean_total_event_cost
+    applicability:
+      industries: [all]
+      countries: [global]
+      company_size_bands: [all]
+      threats: [insider_misuse]

@@ -19,9 +19,18 @@ metadata:
     previous 66%/76% figures were retracted 2026-08-01 as appearing in no
     primary source) - but "insider attacks/incidents" is broad and includes
     negligent and careless insiders, so it OVERSTATES deliberate-misuse
-    frequency. IMPACT rests ENTIRELY on
-    generic cross-cyber Cyentia loss bridges (typical $266k floor, median $3M
-    likely, extreme $32M stress) - NONE insider-misuse-specific. This is a
+    frequency. IMPACT is two-thirds insider-specific and one-third generic, which these
+    notes previously misdescribed: they claimed the impact side rested
+    ENTIRELY on generic cross-cyber Cyentia bridges long after impact.min
+    and impact.likely had been moved onto Ponemon/DTEX insider figures.
+    Corrected 2026-08-16. Today impact.min and impact.likely are insider-
+    specific (Ponemon/DTEX, refreshed to the 2026 edition for likely at USD
+    742,125) and impact.max remains the generic Cyentia IRIS extreme (~$32M)
+    because no insider-specific catastrophic tail has been found. A second
+    limit is worth stating: the 2026 edition's three insider-type averages
+    cluster between $742k and $842k, so it cannot supply a floor below its
+    own likely anchor - the floor therefore stays on the 2023 credential-
+    theft figure rather than inverting the range. This is a
     governed starter, not a human-approved benchmark; revise when
     insider-misuse-specific loss evidence is reviewed (tracked in NEXT_STEPS).
     Kept in USD (the currency of the underlying evidence) as a global top risk.
@@ -51,7 +60,7 @@ parameters:
       round_to: 1000
       rationale: Insider-specific - Ponemon/DTEX 2023 credential-theft average per-incident cost (USD 679,621). Average-by-type, not a true minimum (conservative-high floor).
     likely:
-      evidence_id: ponemon_2023_malicious_insider_per_incident_usd
+      evidence_id: ponemon_dtex_2026_malicious_insider_per_incident_usd
       transform: direct
       target_currency: USD
       round_to: 10000
