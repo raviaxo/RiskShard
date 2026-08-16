@@ -1352,4 +1352,21 @@ sources:
     organizations across 17 industries in 16 countries and regions that experienced a
     breach in the study window; it is a benchmarked cost study rather than a census.
   url_stability: rolling
+- id: dtex_ponemon_cost_insider_risks_2026
+  title: 2026 Cost of Insider Risks Global Report
+  publisher: Ponemon Institute and DTEX Systems
+  source_type: cyber_loss_research
+  url: https://www.dtexsystems.com/ponemon-cost-of-insider-risks-report/
+  publication_date: '2026-01-01'
+  access_mode: public_pdf
+  intended_use:
+    - insider incident cost per incident by insider type
+    - insider incident frequency per organization per year
+  usage_notes: |
+    Insider-specific cost evidence, which the corpus otherwise lacks entirely - the Insider
+    Misuse shard's impact side rests on generic cross-cyber bridges today. Figures are MEANS
+    over a benchmark sample of 354 organizations; no median or percentile is published.
+    Cost per incident is an activity-based remediation cost, not a total event loss, and the
+    per-organization incident counts are annualized averages.
+  url_stability: rolling
 

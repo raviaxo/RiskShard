@@ -1566,25 +1566,6 @@ audit:
         detail: >-
           An 849-word CFOtech news article about the MYOB Business Monitor survey, not the survey.
 
-  - source_id: cybersecurity_insiders_insider_threat_2024
-    properties:
-      mode:
-        basis: no_readable_artifact
-        detail: >-
-          An 857-word archived landing page for the Insider Threat Report, not the report.
-      distribution:
-        basis: no_readable_artifact
-        detail: >-
-          An 857-word archived landing page for the Insider Threat Report, not the report.
-      exceedance:
-        basis: no_readable_artifact
-        detail: >-
-          An 857-word archived landing page for the Insider Threat Report, not the report.
-      population:
-        basis: no_readable_artifact
-        detail: >-
-          An 857-word archived landing page for the Insider Threat Report, not the report.
-
   - source_id: first_epss_data_stats
     properties:
       mode:
@@ -2105,4 +2086,64 @@ audit:
         verified_on: '2026-08-16'
         detail: >-
           The strongest population statement in the corpus and the reason this source matters: every personal-data-breach case reported to the ICO under GDPR/DPA in the quarter, named to the organisation, classified by sector and sub-sector. 24,154 cases across the eight quarters held, of which 5,694 carry ISCyberIncident=Yes. For the cell we model it resolves to 1,970 Finance, insurance and credit cases with 707 flagged cyber - a genuine sector-and-country-specific numerator, over a mandatory-notification population rather than a survey sample.
+
+  # ── Read 2026-08-16: insider risk, the corpus's weakest impact side ──────
+
+  - source_id: dtex_ponemon_cost_insider_risks_2026
+    artifact_sha256: 81752c526a630107d69b8b4a41c951f7f5b5bc2dd8df556756006d5ec8386d58
+    artifact: sources/raw/DTEX_Ponemon_2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value; 50 occurrences of "average" and none of "median".
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          The three "distribution" mentions are categorical: the split of 7,490 analyzed attacks by insider type (53% negligence, 27% malicious, 20% outsmarted) and the industry composition of respondents. Cost is reported as means in Table 2, not distributed.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          None stated.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          A benchmark sample of 354 organizations, with 7,490 reported attacks analyzed and an industry composition given (financial services 14%, industrial 11%). Table 2 gives FY2025 average cost per incident of $747,107 for a negligent or mistaken insider, $742,125 for a criminal or malicious insider and $842,462 for an outsmarted insider, at 13.8, 6.3 and 5.3 incidents per organization per year. Note what the figure is: an activity-based remediation cost, not a total event loss.
+
+  - source_id: cybersecurity_insiders_insider_threat_2024
+    artifact_sha256: 88b71b6bfeb546838324e72e3d91e5dfcf3e08938ac083832f78d7108d3b4c3d
+    artifact: sources/raw/2024-Insider-Threat-Report-Gurucul.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          Respondent percentages by category; no magnitude is distributed.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Stated as a threshold with a share: "the average cost of remediation exceeding $1 million for 29% of respondents". That is P(remediation cost > $1M) = 29% over the surveyed organizations - an exceedance statement, in a report that publishes no other magnitude.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Survey respondents, reported as percentages throughout; the population is self-selected security practitioners rather than a sampled organization frame.
 
