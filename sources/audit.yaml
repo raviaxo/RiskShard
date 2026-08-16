@@ -1586,30 +1586,6 @@ audit:
           Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
 
 
-  - source_id: asd_annual_cyber_threat_report_2024_2025
-    properties:
-      mode:
-        basis: no_readable_artifact
-        detail: >-
-          Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
-      distribution:
-        basis: no_readable_artifact
-        detail: >-
-          Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
-      exceedance:
-        basis: no_readable_artifact
-        detail: >-
-          Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
-      population:
-        basis: no_readable_artifact
-        detail: >-
-          Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
-
-  # ── Recovered 2026-08-15: the document was public all along ──────────────
-  # These four were in the blocked pile because the registry pointed at a landing
-  # page and the gather stored that page. The PDFs were one link away, ungated.
-  # The registry now points at the documents. See FINDINGS finding 1.
-
   - source_id: cyentia_iris_2025
     artifact_sha256: 00706bbbfefcc7b6cc321dcbcc2347b3082af92572cbd55abd2239a901cf8f1c
     artifact: sources/raw/cyentia_iris_2025.pdf
@@ -2146,4 +2122,64 @@ audit:
         verified_on: '2026-08-16'
         detail: >-
           Survey respondents, reported as percentages throughout; the population is self-selected security practitioners rather than a sampled organization frame.
+
+  # ── Read 2026-08-16: ASD and the enterprise size band ────────────────────
+
+  - source_id: asd_annual_cyber_threat_report_2024_2025
+    artifact_sha256: 83a00aaf4390d405dcc7f2a82314a76aa5a7fd8d961a5f718f2a889e77d9324d
+    artifact: sources/raw/Annual Cyber Threat Report 2024-2025 _ Cyber.gov.au.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value; 11 occurrences of "average" and none of "median".
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          Averages broken down by business size, not distributed. Figure 3 gives the average self-reported cost of cybercrime to businesses at $80,850 per report overall, up 50%, with small business at $56,571 in 2024-25 against $49,615 in 2023-24. Size-banded means, no percentile or quantile anywhere.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          None stated.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Reports made to ReportCyber during the financial year - a self-reported, self-selected reporting population rather than a survey sample or a census, which is the caveat that must travel with any figure taken from it. Broken out by business size, which is why it is useful to us: size is bridged 44 of 66 times in the corpus.
+
+  - source_id: sophos_state_ransomware_enterprise_2025
+    artifact_sha256: a6a860ff94795e70739d06190684e6ab5c21097bbfc2651e615cf5f2c121af99
+    artifact: sources/raw/sophos-state-of-ransomware-in-enterprise-2025.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value; "average (median)" again, used for the median.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          The same banded Chart 8 construction as the sector and country cuts. Median ransom demand for enterprise organizations fell 56% to $1.20 million in 2025 from $2.75 million; median paid fell to $1 million from $1.26 million.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          By the open top band, and the movement is reported directly: a 24% decrease in the percentage of ransom demands of $5 million or more, and a 37% decrease in the percentage of payments at $5 million or more.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Enterprise organizations hit by ransomware, the size band ABOVE our mid-market cells. Recorded because a size contrast is evidence about size: the same survey family reports a different level for enterprises than for the 100-5,000 employee band its country cuts cover.
 
