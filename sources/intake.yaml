@@ -583,3 +583,14 @@ intake:
     title: "Case Status,Legislation,ICOCaseRef,Received Date,Received Year,Received FY,Received Qtr,Received FY Month,Comp"
     score: 0.0
     status: parked
+  - file: "sophos_active_adversary_2026.csv"
+    sha256: 5ed326bc4244a9fbc5f9c853f57599334654eb218800b028553f00ea026d4b05
+    bytes: 310770
+    words: 0
+    title: "Sophos Active Adversary Report 2026 — incident-level CSV, github.com/sophoslabs/Active_Adversary_Report"
+    score: 0.0
+    status: parked
+    countries: [AU, CA, DE, GB, SG, US]
+    threats: [ransomware, business_email_compromise, data_breach]
+    quantities: []
+
