@@ -110,87 +110,6 @@ audit:
   # They are the audit's highest-value fetches: the most cited sources in the
   # corpus and the most likely to actually publish the properties in question.
   # See docs/internal/source_artifact_readiness.md.
-  - source_id: cyentia_iris_2022
-    properties:
-      mode:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 528-word product page, not IRIS 2022. The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
-      distribution:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 528-word product page, not IRIS 2022. The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
-      exceedance:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 528-word product page, not IRIS 2022. The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
-      population:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 528-word product page, not IRIS 2022. The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
-
-  - source_id: cyentia_iris_2025
-    properties:
-      mode:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 608-word product page, not IRIS 2025. The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
-      distribution:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 608-word product page, not IRIS 2025. The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
-      exceedance:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 608-word product page, not IRIS 2025. The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
-      population:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 608-word product page, not IRIS 2025. The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
-
-  - source_id: cyentia_iris_ransomware
-    properties:
-      mode:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 530-word product page, not IRIS ransomware study. The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
-      distribution:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 530-word product page, not IRIS ransomware study. The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
-      exceedance:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 530-word product page, not IRIS ransomware study. The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
-      population:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 530-word product page, not IRIS ransomware study. The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
-
   - source_id: ibm_cost_data_breach_uk_2025
     properties:
       mode:
@@ -1705,25 +1624,6 @@ audit:
         detail: >-
           An 857-word archived landing page for the Insider Threat Report, not the report.
 
-  - source_id: interos_global_supply_chain_2022
-    properties:
-      mode:
-        basis: no_readable_artifact
-        detail: >-
-          A 611-word interos.ai product page standing in for the annual supply-chain report.
-      distribution:
-        basis: no_readable_artifact
-        detail: >-
-          A 611-word interos.ai product page standing in for the annual supply-chain report.
-      exceedance:
-        basis: no_readable_artifact
-        detail: >-
-          A 611-word interos.ai product page standing in for the annual supply-chain report.
-      population:
-        basis: no_readable_artifact
-        detail: >-
-          A 611-word interos.ai product page standing in for the annual supply-chain report.
-
   - source_id: first_epss_data_stats
     properties:
       mode:
@@ -1763,3 +1663,123 @@ audit:
         detail: >-
           Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
 
+  # ── Recovered 2026-08-15: the document was public all along ──────────────
+  # These four were in the blocked pile because the registry pointed at a landing
+  # page and the gather stored that page. The PDFs were one link away, ungated.
+  # The registry now points at the documents. See FINDINGS finding 1.
+
+  - source_id: cyentia_iris_2025
+    artifact_sha256: 00706bbbfefcc7b6cc321dcbcc2347b3082af92572cbd55abd2239a901cf8f1c
+    artifact: sources/raw/cyentia_iris_2025.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value — and it is the one source that visibly reasons about the choice: "Prior IRIS used the geometric mean for a typical loss. Since the growing shoulder in lower part of the distribution pulls the geomean down, the median is better central measure." It deliberates over central tendency and still never reaches for a mode.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          The most complete in the corpus. Figure 9 is "Distribution of reported losses for security incidents from 2015 to 2024", plotted on a log scale, with "Loss percentile" used as an axis; the median incident costs about $600K.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Stated: "The typical (median) incident costs about $600K, while more extreme (95th percentile) losses swell to $32 million", and "The top 5% of loss events continue to exceed the annual revenue of affected firms." It also documents where it uses the 90th rather than the 95th percentile and why, which is a care about tail estimation no other source here shows.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          A historical dataset of publicly reported cyber events drawn from Advisen's Cyber Loss Data, with the reporting-lag bias discussed rather than hidden.
+
+  - source_id: cyentia_iris_2022
+    artifact_sha256: 8cf45ef222a4375dba486bd942c5734796e65b93f181e3431e60efed0d491677
+    artifact: sources/raw/cyentia_iris_2022.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; central tendency is a geometric mean and a median.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Loss percentiles throughout, including a 95th-percentile figure by sector (Transportation, $177M) and a largest observed loss of $12B.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Stated in the form a modeller actually needs: "A little over a quarter of incidents fall in the span between 1% and 100% [of revenue], while 6% actually exceed the organization's yearly income." It then advises on use — "If you're looking to convey what a really bad cyber event might cost, we suggest using the 95th percentile value."
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          The most precisely stated population in the corpus: "over 77,000 cyber events experienced by 35,000 organizations over the last decade", drawn from Advisen's Cyber Loss Data.
+
+  - source_id: cyentia_iris_ransomware
+    artifact_sha256: d2bdaa1d7bf2a20ce8971a1fb4baad432b78d2462938ed55eff5ff0a5def7298
+    artifact: sources/raw/cyentia_iris_ransomware.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Loss percentiles reported and compared across incident types, including a 25th-percentile figure for 2023.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Stated as a comparison of tails: "The 95th percentile loss balloons to about $50M, compared with $22M for non-ransomware" — $49.6M against $22.4M in the figures.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          The same Advisen-derived event dataset, filtered to ransomware.
+
+  - source_id: interos_global_supply_chain_2022
+    artifact_sha256: eb2dc14d15d549593f9de695a40e41936cf5443d93eda3b4c3520beb49df5af4
+    artifact: sources/raw/interos_global_supply_chain_2022.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Survey point statistics — averages of reported annual cost of supply-chain disruption. No median, percentile or distribution.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None stated.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          A stated survey respondent population of senior decision-makers.

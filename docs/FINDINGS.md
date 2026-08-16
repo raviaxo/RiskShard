@@ -53,12 +53,12 @@ and a source-level claim counts only when a human has read the stored artifact:
 
 | | |
 | --- | --- |
-| registered sources **read** | **38 of 61** |
-| …publishing a **mode** | **0 of 38** |
-| …publishing a **distribution** over loss or frequency | **6 of 38** |
-| …publishing an **exceedance** statement | **4 of 38** |
-| …that measure a **population** they name | **25 of 38** |
-| held only as a landing page, a press release or no artifact — **unanswerable** | **21** |
+| registered sources **read** | **42 of 61** |
+| …publishing a **mode** | **0 of 42** |
+| …publishing a **distribution** over loss or frequency | **9 of 42** |
+| …publishing an **exceedance** statement | **7 of 42** |
+| …that measure a **population** they name | **29 of 42** |
+| held only as a landing page, a press release or no artifact — **unanswerable** | **17** |
 | readable in principle, not yet read | **2** |
 
 Until this arc that sentence read *"no source consulted does"*, resting on two reads and carrying no
@@ -78,6 +78,14 @@ that public sources offer only point statistics. It does not:
   that **13%** of paid ransoms exceeded $5M.
 - **Verizon DBIR 2025 and 2026 both publish loss distributions** — quantile dot plots of loss due to
   ransom payment (n=351 and n=1,494), with the 2024 median ransom stated at $115,000.
+- **Cyentia's IRIS studies publish everything except the mode.** IRIS 2025 gives a full loss
+  distribution on a log scale with *"Loss percentile"* as an axis, a median incident cost of about
+  $600K, and *"more extreme (95th percentile) losses swell to $32 million"*; IRIS 2022 states that
+  *"6% actually exceed the organization's yearly income"* over **77,000 events at 35,000
+  organizations**, and then advises modellers directly — *"if you're looking to convey what a really
+  bad cyber event might cost, we suggest using the 95th percentile value."* It is also the only
+  source that visibly reasons about which central measure to use, switching from a geometric mean to
+  a median and explaining why — **and it still never publishes a mode.**
 - **Singapore Police Force's 2025 brief states one in a single sentence** — *"about 67.1% suffered
   less than $5,000 in losses, while 5.2% of scam cases suffered at least $100,000"* — and **Sophos
   2023** reports that 40% of paying organisations paid $1M or more.
@@ -97,12 +105,23 @@ to them can support. It is also the structural reason a maximum anchored on one 
 disclosure carries no exceedance ([finding 3](#3--most-maxima-bound-nothing)): there is no
 population for the loss to be exceeded *within*.
 
-**A third of the corpus cannot be audited at all, and that is its own result.** Twenty-one of 61
-registered sources are held only as a landing page, a press release or nothing — including every
-Cyentia IRIS study, every IBM *Cost of a Data Breach* cut, and most Sophos sector reports. **The
-most-cited loss figures in this field are gated**, so what a practitioner actually reads about them
-is a vendor's summary of a vendor's study. That number is published beside the audit rather than
-folded away, and it is the audit's largest open item.
+**⚠️ A claim published on this page earlier the same day was wrong, and the correction is the more
+useful finding.** It read: *"The most-cited loss figures in this field are gated"* — on the evidence
+that 21 of 61 sources were held only as a landing page, every Cyentia IRIS study among them.
+
+**Cyentia IRIS is not gated.** All three studies are a single ungated link from the page we had
+stored, and downloading them took under a minute. The corpus held the landing page because the
+source registry pointed at the landing page and the gather stored what it was pointed at. **That was
+our defect, not the field's**, and it had been sitting in the corpus for months while the shard
+programme cited Cyentia as a bridge source. The registry now points at the documents.
+
+What survives is narrower and still worth knowing: **17 of 61 remain held only as a pointer**,
+concentrated in IBM's *Cost of a Data Breach* cuts and Sophos's sector reports, whose sites refuse
+automated retrieval. Some of the field's most-cited figures are hard to obtain. Not all of the ones
+we could not read were among them.
+
+**And the recovered source changed the result.** Cyentia IRIS is the most complete answer in the
+corpus to every question the audit asks except the mode — see below.
 
 So the defensible claim is narrower and considerably more interesting than the one we set out to
 check: **the shape of the evidence is not the constraint everyone assumes.** Distributions exist,
