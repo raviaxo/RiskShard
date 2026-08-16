@@ -800,3 +800,514 @@ audit:
           answer these questions about the report's own statistics. Same blocker as the
           IBM and Sophos summaries.
 
+
+  # ── Read 2026-08-15, fourth batch — completing the answerable corpus ─────
+  # Population is NOT a free yes here. Half of these are single-case documents,
+  # statutes or guidance: they record an event or set a rule rather than measure a
+  # population, so `population: false` says the question does not apply rather than
+  # that the source hid something. That distinction is most of what these rows are
+  # worth — a tail anchor drawn from one company's disclosure has no population by
+  # construction, which is exactly why its maximum declares none_known (ADR-0008).
+
+  - source_id: gartner_deepfake_attack_survey_2025
+    artifact_sha256: 722032381d23aff935365e995c928b81bd30fa085196296dbdc1d3556ac26ca8
+    artifact: sources/raw/gartner_deepfake_attack_survey_2025.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. Survey of prevalence; percentages of organisations experiencing attack types. No magnitude is distributed.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. Percentages of respondents by attack type are a categorical breakdown, not a distribution over loss or frequency magnitude.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None stated.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          A named survey population of respondent organisations.
+
+  - source_id: apra_cps_230
+    artifact_sha256: 8933f887d9600806691d016a48fac111566e27d9024782205f927ff293d70d58
+    artifact: sources/raw/apra_cps_230.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. A prudential standard. It sets obligations; it measures nothing.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. A regulatory instrument publishes requirements, not statistics.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. The maxima it mentions are tolerance settings an entity must define for itself, not observed magnitudes.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No measured population exists — this is a rule, not a study. Recorded as not published rather than as a gap, since the question does not apply to an instrument.
+
+  - source_id: esas_dora_major_ict_incidents_2025
+    artifact_sha256: aecab17720869aab72fea92937011dba452735861da46dfd0aaa4945861b94bf
+    artifact: sources/raw/esas_dora_major_ict_incidents_2025.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. The Joint-ESA report under DORA Article 22, with its own methodology section.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Counts and shares of major ICT-related incidents reported in the EU, broken down by category. No distribution over a magnitude, and no cost figures to distribute.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None stated.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Financial entities reporting major ICT incidents under DORA, with a stated methodology — a regulatory reporting population, and an unusually well-defined one.
+
+  - source_id: latitude_1h23_results_2023
+    artifact_sha256: 7fd0aeea79b580be7044afae6a08dbae43d95809c4eafe7b2c799b2af313febc
+    artifact: sources/raw/latitude_1h23_results_2023.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. A single company's half-year results, used for one documented incident cost.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. It reports one company's own incurred and expected costs, which is an observation rather than a distribution.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No population. This is one entity's disclosure of one event — the reason a maximum drawn from it carries no exceedance under ADR-0008.
+
+  - source_id: gurucul_insider_risk_report_2026
+    artifact_sha256: ce24d06f198115b32a81a7f7f11a1b1f88207d6abbe6df128206ebce13ba58b3
+    artifact: sources/raw/gurucul_insider_risk_report_2026.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. A vendor survey of insider risk, reporting respondent percentages.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. Prevalence and concern percentages by category only.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None stated.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          A stated survey respondent population.
+
+  - source_id: deepfake_business_impact_2024
+    artifact_sha256: a12249ceb1da4f334a0cefdc02cd29fdf20e3efa4e8e53123d5536356caf2fc6
+    artifact: sources/raw/deepfake_business_impact_2024.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. A Security.org guide that aggregates other parties' statistics.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None of its own.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          It aggregates figures measured by others rather than measuring a population itself, so there is no population belonging to this source. That is the property worth knowing about it.
+
+  - source_id: ico_monetary_penalties_2024
+    artifact_sha256: 1213aed005b8a04d4ef7d5503ffae875ceb2c33fe979b7e113a79aa923a0297f
+    artifact: sources/raw/ico_monetary_penalties_2024.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. The ICO's register of monetary penalties issued.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          A list of penalties issued with amounts — an enumeration of actual decisions, not a distribution fitted or quantiled over them.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None stated. The register would let a reader compute one over issued penalties, which is not the same as the ICO stating it.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Penalties issued by the ICO in the period — a complete enumeration of a regulator's own actions rather than a sample.
+
+  - source_id: privacy_act_1988_latest
+    artifact_sha256: 2993dd4de62fce2086ed5ff956d1e514107b9acb2713f27b2d3532c6aed2eb66
+    artifact: sources/raw/privacy_act_1988_latest.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. The statute itself, used for a statutory penalty ceiling.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. Legislation states a maximum penalty; it distributes nothing.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. A statutory ceiling is a legal bound, not an observed exceedance — precisely the distinction ADR-0008 draws with population_ceiling.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No measured population. The relevant caveat for any figure taken from here is that it is a legal maximum, not a measurement of anyone.
+
+  - source_id: spf_bec_interception_case_2024
+    artifact_sha256: 42681283b597f528711abcf2f23eefb7f109d52ddb5af2e0b5090cfa05e17751
+    artifact: sources/raw/spf_bec_interception_case_2024.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. A single documented BEC case used as a tail anchor.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. One event.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None — and this is why the shard anchored on it declares none_known.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          One documented case; no population.
+
+  - source_id: regula_deepfake_survey_2024
+    artifact_sha256: 4d697df12b66389bb3d5fee48dc192a1853a515bfff548a3476e7e0029d93a26
+    artifact: sources/raw/regula_deepfake_survey_2024.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. A vendor survey with respondent counts.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. Percentages of respondents by experience and concern.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None stated.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          A stated survey respondent population across named countries.
+
+  - source_id: bci_supply_chain_resilience_2024
+    artifact_sha256: 92c9e8bab34b2fb3566aafdbbc010f7b2a6815942f5d88e12b7fde105453a12f
+    artifact: sources/raw/bci_supply_chain_resilience_2024.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. A BCI membership survey of supply-chain disruption.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. Prevalence percentages only.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None stated.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          BCI survey respondents — a self-selected professional membership population, which matters for how its prevalence figures travel.
+
+  - source_id: abs_counts_australian_businesses_2025
+    artifact_sha256: 2a04bc6f38721bc68179f36c5d39bae8360f746c2ab4a7854316e104ac21d003
+    artifact: sources/raw/abs_counts_australian_businesses_2025.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. An official ABS business count, used as a denominator.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Counts of businesses by size and industry — a census breakdown, not a distribution over a loss or frequency magnitude.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None; it carries no loss magnitudes.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          The Australian business count itself. This is a denominator source, and the population is the whole point of it.
+
+  - source_id: business_qld_cyber_secure_guidance_2025
+    artifact_sha256: 861376170008e2506262d7667abe942913a5864db4c53a10731d9b8a221eb626
+    artifact: sources/raw/business_qld_cyber_secure_guidance_2025.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. Queensland government guidance for small business.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. Guidance material citing indicative figures.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Guidance rather than a study; no population is measured. Any figure taken from here is a citation of someone else's measurement.
+
+  - source_id: coalition_ftf_largest_clawback_2023
+    artifact_sha256: c98bd9541a5ddcac027da0a34708f2dcfd7487967aa0e4ec47aae91787438c11
+    artifact: sources/raw/coalition_ftf_largest_clawback_2023.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. An insurer's account of one funds-transfer-fraud recovery.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. One event.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          One documented case; no population.
+
+  - source_id: itpro_ibm_data_breach_regional_costs_2025
+    artifact_sha256: 08a93ff04ee979b64a90afdee155f65f227bbc900b1d7fd028d02d9de57318c7
+    artifact: sources/raw/itpro_ibm_data_breach_regional_costs_2025.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. Trade-press coverage of IBM's regional breach cost figures.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None of its own. It relays averages measured by IBM.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No population of its own — it reports another study's figures, which is what its own limitations note in our records says. The population belongs to IBM, whose report we do not hold.
+
+  - source_id: fca_equifax_cyber_breach_fine_2023
+    artifact_sha256: 4474675d6ff6f5985c4ebfef7a835a4f3708143999a96cd50be01741f3bb1516
+    artifact: sources/raw/fca_equifax_cyber_breach_fine_2023.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value; the document reports no loss magnitude in modal form. The FCA's final notice, used as a regulatory-penalty anchor.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. An enforcement decision about one firm.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. A fine is an imposed amount, not an observed loss with an exceedance.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          One enforcement action against one firm; no population.
+
+  - source_id: ibm_france_cost_data_breach_2025
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 2,593-word IBM press release in French about the 2025 report, not the report. Same blocker as the global, UK and Canada cuts.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 2,593-word IBM press release in French about the 2025 report, not the report. Same blocker as the global, UK and Canada cuts.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 2,593-word IBM press release in French about the 2025 report, not the report. Same blocker as the global, UK and Canada cuts.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 2,593-word IBM press release in French about the 2025 report, not the report. Same blocker as the global, UK and Canada cuts.
+
+  - source_id: sophos_state_ransomware_manufacturing_2025
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,648-word Sophos web page, much of it site navigation, standing in for the 2025 manufacturing sector report. Same blocker as the other Sophos sector summaries.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,648-word Sophos web page, much of it site navigation, standing in for the 2025 manufacturing sector report. Same blocker as the other Sophos sector summaries.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,648-word Sophos web page, much of it site navigation, standing in for the 2025 manufacturing sector report. Same blocker as the other Sophos sector summaries.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          What we hold is a 1,648-word Sophos web page, much of it site navigation, standing in for the 2025 manufacturing sector report. Same blocker as the other Sophos sector summaries.
+
