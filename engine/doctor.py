@@ -88,6 +88,11 @@ def loss_event_check(root):
             "status": "fail",
             "detail": f"{len(errors)} error(s): {errors[0]}",
         }
+    # ADR-0017: the kill criterion is a DATE now, not a release count, because a
+    # release count is under our own control and the last one elapsed in a day. The
+    # doctor carries the date so nobody has to remember it — the same reason it prints
+    # "0 cite, N could" rather than just "0 cite".
+    detail += "; ADR-0017 kill criterion re-measures at the first release on or after 2026-11-01"
     return {"name": "loss events", "status": "pass", "detail": detail}
 
 
