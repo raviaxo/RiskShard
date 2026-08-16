@@ -150,6 +150,39 @@ class FindingsPageTests(unittest.TestCase):
                     f"'{phrase}' appears in a finding rather than in its withdrawal",
                 )
 
+    def test_the_front_door_states_the_exceedance_count_correctly(self):
+        """The README repeats findings counts, and nothing was checking them.
+
+        It said "7 of 11 impact maxima carry no exceedance" for a day after v0.9.0
+        retired two of them. FINDINGS.md was pinned and the front door was not, so the
+        page most readers see was the one that drifted.
+        """
+        import re
+
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        none_known = 0
+        maxima = 0
+        for module in self.provenance["modules"]:
+            for entry in module_exceedance(module):
+                maxima += 1
+                none_known += 1 if entry["exceedance_basis"] == "none_known" else 0
+        m = re.search(r"\*\*(\d+) of (\d+) impact maxima carry no exceedance", readme)
+        self.assertIsNotNone(m, "README no longer states the maxima-without-exceedance count")
+        self.assertEqual((int(m.group(1)), int(m.group(2))), (none_known, maxima),
+                         "README exceedance count has drifted from the derivation")
+
+    def test_the_front_door_carries_the_source_audit(self):
+        """The audit is what the project now leads with publicly (ADR-0016).
+
+        A reader arriving from a post about it must not land on a front door that never
+        mentions it. Pins the disclosure and the denominator, not the exact number.
+        """
+        # collapse wrapping: the README is hard-wrapped and a phrase may straddle lines
+        readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
+        self.assertIn("publish a mode", readme)
+        self.assertIn("held only as a landing page", readme,
+                      "the front door must publish the audit's coverage, not just its result")
+
     def test_the_front_door_links_to_it(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn("docs/FINDINGS.md", readme)
