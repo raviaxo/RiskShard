@@ -1311,3 +1311,455 @@ audit:
         detail: >-
           What we hold is a 1,648-word Sophos web page, much of it site navigation, standing in for the 2025 manufacturing sector report. Same blocker as the other Sophos sector summaries.
 
+
+  # ── Read 2026-08-15, fifth batch — statistical tables and short-form sources ─
+  # The statistical tables (StatCan, Census SUSB, Eurostat, SingStat) are read with
+  # the standard library: an .xlsx is a zip of XML, so no dependency was needed to
+  # stop treating three denominator sources as unreadable.
+  #
+  # Two sources below are left UNREAD on purpose. Answering them from an empty scan
+  # would be the false negative this audit exists to prevent, and the reason each
+  # cannot be read is recorded instead.
+
+  - source_id: statcan_cscsc_incident_types_22100076
+    artifact_sha256: ca161dfcffc55dae2a8c603883ed1525548c49645b862aaf7bb5a0e9ee3c2316
+    artifact: sources/raw/statcan_cscsc_incident_types_22100076.zip
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value. A Statistics Canada data table, not a report. Read with a standard-library zip/CSV reader.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Counts and rates of cyber security incidents by NAICS industry and size of enterprise — a categorical breakdown, not a distribution over a magnitude.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. The table carries incident rates, not loss magnitudes to be exceeded.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Canadian enterprises, classified by NAICS and size of enterprise, with STATUS and quality symbols per cell. This is a population definition, which is why the shard uses it as a denominator.
+
+  - source_id: census_susb_2022
+    artifact_sha256: 246200312e857ffe73ed945a309ac6ce599c99a2b7a29b3906c2f9fd9b7c6a8f
+    artifact: sources/raw/census_susb_2022.xlsx
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value. A US Census Bureau SUSB workbook. Read as xlsx via the standard library.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Establishment and employment counts by enterprise size — a census breakdown, no magnitude distributed.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None; it carries no loss figures.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          US employer businesses by size band. A denominator source, and the population is the entire content.
+
+  - source_id: eurostat_isoc_cisce_ic_2024
+    artifact_sha256: b87bb0fbc7fa8c888d75bda3be99954072ab420e1e5db058811383eba2e8f5c5
+    artifact: sources/raw/eurostat_isoc_cisce_ic_2024.json
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value. A Eurostat JSON-stat query response, not a publication.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Percentages of enterprises experiencing security incidents by size class — prevalence by category, not a distribution over magnitude.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          Titled in the response itself: "Security incidents and consequences by size class of enterprise" (ESTAT). The size classes are the population definition.
+
+  - source_id: singstat_enterprise_landscape_m600981
+    artifact_sha256: 4e2001c88b3abff420333fc757914b92e5e670f11356c40c411142d89477329c
+    artifact: sources/raw/singstat_enterprise_landscape_m600981.json
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value. A SingStat API response, not a publication.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          Enterprise counts by SME and non-SME — a denominator table.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None; no loss magnitudes.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-15'
+        detail: >-
+          "Enterprise Landscape By SMEs And Non-SMEs, Annual", Singapore Department of Statistics — a population count, which is its purpose here.
+
+  - source_id: gdpr_article_83_administrative_fines
+    artifact_sha256: 5185d122837b1a7123c61393181dc11cbe9e476d506e51bef258cd58488eee9b
+    artifact: sources/raw/gdpr_article_83_administrative_fines.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value. The text of GDPR Article 83 as published by CNIL.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. Legislation states penalty ceilings; it distributes nothing.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. A statutory ceiling is a legal bound, not an observed exceedance — the population_ceiling case in ADR-0008.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No measured population. Any figure taken from here is a legal maximum, not a measurement of anyone's losses.
+
+  - source_id: arup_deepfake_case_2024
+    artifact_sha256: ca5bb68c91fe6052430e691eb25bd2912cabd6ebfd0787a5e4c3688cc35cbfe7
+    artifact: sources/raw/arup_deepfake_case_2024.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value. CNN's report of the Hong Kong Police account of a single deepfake fraud.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. One event.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          One documented case reported by a news outlet; no population, and no methodology of its own.
+
+  - source_id: afp_bec_australian_victim_case_2021
+    artifact_sha256: cfa1ec3ef363e31215d3b47e52dbbe26985917e6e9c75b39036e59720defdfa6
+    artifact: sources/raw/afp_bec_australian_victim_case_2021.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value. An Australian Federal Police account of one BEC victim case.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None. One event.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None — which is why the shard anchored on it declares none_known.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          One documented case; no population.
+
+  - source_id: securitybrief_ibm_au_breach_costs_2026
+    artifact_sha256: 36018b189df6db8b2a011afd24e1eba281396fe6f3090614caad5420433f3235
+    artifact: sources/raw/securitybrief_ibm_au_breach_costs_2026.html
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No modal value. Trade-press coverage of IBM's Australian breach-cost figure.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None of its own; it relays an average measured by IBM.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          None.
+      population:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-15'
+        detail: >-
+          No population of its own. The population belongs to IBM's study, which we hold only as a pointer — the record's own limitations already say the citation is secondary coverage rather than the gated primary.
+
+  - source_id: npa_japan_cyber_threats_2025_statistics
+    properties:
+      mode:
+        basis: unverified
+        detail: >-
+          Still unread, and deliberately not answered from a null result. The workbook is the source, but the standard-library reader extracts 461 words and no CJK text from it, so its content has not actually been seen. Under the rule this audit sets for itself — a source in a language or format the reader does not cover must not be answered from an empty scan — it stays a question. Needs a reader that resolves its shared strings.
+      distribution:
+        basis: unverified
+        detail: >-
+          Still unread, and deliberately not answered from a null result. The workbook is the source, but the standard-library reader extracts 461 words and no CJK text from it, so its content has not actually been seen. Under the rule this audit sets for itself — a source in a language or format the reader does not cover must not be answered from an empty scan — it stays a question. Needs a reader that resolves its shared strings.
+      exceedance:
+        basis: unverified
+        detail: >-
+          Still unread, and deliberately not answered from a null result. The workbook is the source, but the standard-library reader extracts 461 words and no CJK text from it, so its content has not actually been seen. Under the rule this audit sets for itself — a source in a language or format the reader does not cover must not be answered from an empty scan — it stays a question. Needs a reader that resolves its shared strings.
+      population:
+        basis: unverified
+        detail: >-
+          Still unread, and deliberately not answered from a null result. The workbook is the source, but the standard-library reader extracts 461 words and no CJK text from it, so its content has not actually been seen. Under the rule this audit sets for itself — a source in a language or format the reader does not cover must not be answered from an empty scan — it stays a question. Needs a reader that resolves its shared strings.
+
+  - source_id: csa_cybersecurity_health_report_2023
+    properties:
+      mode:
+        basis: unverified
+        detail: >-
+          Still unread. The PDF is the report rather than a landing page, but text extraction yields 791 words of headings and section titles, which means its substance is carried in images. The stated limitation of the read method applies exactly here, so it is left as a question rather than answered from what little extracts.
+      distribution:
+        basis: unverified
+        detail: >-
+          Still unread. The PDF is the report rather than a landing page, but text extraction yields 791 words of headings and section titles, which means its substance is carried in images. The stated limitation of the read method applies exactly here, so it is left as a question rather than answered from what little extracts.
+      exceedance:
+        basis: unverified
+        detail: >-
+          Still unread. The PDF is the report rather than a landing page, but text extraction yields 791 words of headings and section titles, which means its substance is carried in images. The stated limitation of the read method applies exactly here, so it is left as a question rather than answered from what little extracts.
+      population:
+        basis: unverified
+        detail: >-
+          Still unread. The PDF is the report rather than a landing page, but text extraction yields 791 words of headings and section titles, which means its substance is carried in images. The stated limitation of the read method applies exactly here, so it is left as a question rather than answered from what little extracts.
+
+  - source_id: ico_self_reported_breach_cases_2024_25
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          A 269-word ICO 'data sets' landing page; the figures are in downloadable files it links to, not in the page.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          A 269-word ICO 'data sets' landing page; the figures are in downloadable files it links to, not in the page.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          A 269-word ICO 'data sets' landing page; the figures are in downloadable files it links to, not in the page.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          A 269-word ICO 'data sets' landing page; the figures are in downloadable files it links to, not in the page.
+
+  - source_id: cesin_barometre_cybersecurite_2025
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          A 1,498-word press release (Communiqué de Presse) announcing the 10th CESIN barometer, not the barometer.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          A 1,498-word press release (Communiqué de Presse) announcing the 10th CESIN barometer, not the barometer.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          A 1,498-word press release (Communiqué de Presse) announcing the 10th CESIN barometer, not the barometer.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          A 1,498-word press release (Communiqué de Presse) announcing the 10th CESIN barometer, not the barometer.
+
+  - source_id: afp_payments_fraud_2025
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          A 1,443-word archived landing page for the AFP Payments Fraud and Control Survey Report, not the report.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          A 1,443-word archived landing page for the AFP Payments Fraud and Control Survey Report, not the report.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          A 1,443-word archived landing page for the AFP Payments Fraud and Control Survey Report, not the report.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          A 1,443-word archived landing page for the AFP Payments Fraud and Control Survey Report, not the report.
+
+  - source_id: afp_payments_fraud_2026
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          A 1,279-word archived landing page for the survey report, not the report.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          A 1,279-word archived landing page for the survey report, not the report.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          A 1,279-word archived landing page for the survey report, not the report.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          A 1,279-word archived landing page for the survey report, not the report.
+
+  - source_id: myob_business_monitor_cyber_2024
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          An 849-word CFOtech news article about the MYOB Business Monitor survey, not the survey.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          An 849-word CFOtech news article about the MYOB Business Monitor survey, not the survey.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          An 849-word CFOtech news article about the MYOB Business Monitor survey, not the survey.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          An 849-word CFOtech news article about the MYOB Business Monitor survey, not the survey.
+
+  - source_id: cybersecurity_insiders_insider_threat_2024
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          An 857-word archived landing page for the Insider Threat Report, not the report.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          An 857-word archived landing page for the Insider Threat Report, not the report.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          An 857-word archived landing page for the Insider Threat Report, not the report.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          An 857-word archived landing page for the Insider Threat Report, not the report.
+
+  - source_id: interos_global_supply_chain_2022
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          A 611-word interos.ai product page standing in for the annual supply-chain report.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          A 611-word interos.ai product page standing in for the annual supply-chain report.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          A 611-word interos.ai product page standing in for the annual supply-chain report.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          A 611-word interos.ai product page standing in for the annual supply-chain report.
+
+  - source_id: first_epss_data_stats
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
+
+
+  - source_id: asd_annual_cyber_threat_report_2024_2025
+    properties:
+      mode:
+        basis: no_readable_artifact
+        detail: >-
+          Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
+      distribution:
+        basis: no_readable_artifact
+        detail: >-
+          Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
+      exceedance:
+        basis: no_readable_artifact
+        detail: >-
+          Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
+      population:
+        basis: no_readable_artifact
+        detail: >-
+          Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
+

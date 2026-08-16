@@ -53,12 +53,13 @@ and a source-level claim counts only when a human has read the stored artifact:
 
 | | |
 | --- | --- |
-| registered sources **read** | **30 of 61** |
-| …publishing a **mode** | **0 of 30** |
-| …publishing a **distribution** over loss or frequency | **6 of 30** |
-| …publishing an **exceedance** statement | **4 of 30** |
-| …that measure a **population** they name | **21 of 30** |
-| sources held only as a landing page or summary — **unanswerable** until obtained | **12** |
+| registered sources **read** | **38 of 61** |
+| …publishing a **mode** | **0 of 38** |
+| …publishing a **distribution** over loss or frequency | **6 of 38** |
+| …publishing an **exceedance** statement | **4 of 38** |
+| …that measure a **population** they name | **25 of 38** |
+| held only as a landing page, a press release or no artifact — **unanswerable** | **21** |
+| readable in principle, not yet read | **2** |
 
 Until this arc that sentence read *"no source consulted does"*, resting on two reads and carrying no
 denominator. **Unread is not evidence of absence**, and the audit publishes the gap beside the claim
@@ -88,13 +89,20 @@ government reporting bodies sitting on the largest loss datasets in their jurisd
 publish totals and averages. The exceedance statements come from a UK government survey, a
 Singapore police brief and two vendor ransomware surveys.
 
-**And a third of what a practitioner cites is not a measurement at all.** Nine of the 30 sources
+**And a third of what a practitioner cites is not a measurement at all.** Thirteen of the 38 sources
 read — statutes, prudential standards, guidance pages, enforcement notices, single-company
-disclosures and a trade-press article — measure no population, because they record an event or set
+disclosures and trade-press articles — measure no population, because they record an event or set
 a rule rather than study anyone. That is not a defect in them; it is a fact about what a citation
 to them can support. It is also the structural reason a maximum anchored on one company's
 disclosure carries no exceedance ([finding 3](#3--most-maxima-bound-nothing)): there is no
 population for the loss to be exceeded *within*.
+
+**A third of the corpus cannot be audited at all, and that is its own result.** Twenty-one of 61
+registered sources are held only as a landing page, a press release or nothing — including every
+Cyentia IRIS study, every IBM *Cost of a Data Breach* cut, and most Sophos sector reports. **The
+most-cited loss figures in this field are gated**, so what a practitioner actually reads about them
+is a vendor's summary of a vendor's study. That number is published beside the audit rather than
+folded away, and it is the audit's largest open item.
 
 So the defensible claim is narrower and considerably more interesting than the one we set out to
 check: **the shape of the evidence is not the constraint everyone assumes.** Distributions exist,
