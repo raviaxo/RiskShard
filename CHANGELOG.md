@@ -5,6 +5,46 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.9.0 — 2026-08-16
+
+**The release where reading the sources we already had moved a published number.**
+No loss figure changes. Two `impact.max` anchors stop saying *nothing is known about
+this being exceeded*, and the exceedance that retired them was in a source the corpus
+had cited since July.
+
+Data-pack release: `data_pack_releases/2026.08.16-v0.9.0.json`.
+
+**ADR-0008's load-bearing claim is withdrawn.** It held that no maximum in this portfolio
+is a modeled quantile. Two landed together: the DE and JP manufacturing maxima both anchor
+on a $5,000,000 ransom threshold, and Sophos's *State of Ransomware in Manufacturing and
+Production 2025* states that **18% of 2025 ransom payments were $5 million or more** —
+placing $5M at the 82nd percentile of a published distribution. The threshold did not move.
+The original extraction had recorded only that "extreme $5M+ cases saw a slight uptick".
+
+- maxima carrying an exceedance statement: **2 → 4 of 11**
+- `none_known`: **7 → 5**
+- `modeled_quantile`: **0 → 2**
+- published parameter rows changed: **0 of 66**
+
+**The source audit reached 58 of 72 sources read, and still nobody publishes a mode.**
+That count has now survived statistics offices, police reporting bodies, national surveys,
+regulators, insurers, vendor studies, an open incident dataset and IBM's *Cost of a Data
+Breach* — which uses "average" 75 times and "median" zero times.
+
+**Insider impact refreshed** to the Ponemon/DTEX 2026 edition (`impact.likely` USD 701,500 →
+742,125). The higher 2026 figure was deliberately not taken as the floor: all three
+type-averages cluster between $742k and $842k with deliberate misuse the lowest, so it would
+have inverted the range.
+
+**One opportunity was declined with arithmetic.** The ICO's finance-sector cyber case count
+is sector- and country-specific and regulator-sourced, and implies a ~0.6% rate against a
+43% sourced floor — a reported incidence, not a prevalence. Recorded as open judgment call 8.
+
+**New this release:** an intake triage layer (67 documents scored against measured gaps, 17
+queued and 45 parked), a source-discovery assessment of which channels actually work, and
+`docs/CROSS_SOURCE.md` — seven countries measured by one instrument, where median ransom
+demand spans six-fold from $400K to $2.5M on identical methodology.
+
 ## v0.8.0 — 2026-08-15
 
 **The release where a published count got worse on purpose.** No loss figure moves; the

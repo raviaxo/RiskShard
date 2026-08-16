@@ -213,6 +213,38 @@
       },
       "note": "the fall in *cell-matched* is the measurement getting honest, not the evidence getting worse. Not one parameter, source, value or caveat changed in this release. *Cell-matched* stopped being a field an author maintained by hand and became a value computed from each record's declared population against the shard's cell. The old field disagreed with those declarations on 45 of 66 cards, counting the same wildcard declaration as borrowed 28 times and as matched 72. **7 is what the number always was**; 31 was the count of a field that was not being kept. See [finding 6](docs/FINDINGS.md) and [ADR-0013](docs/adr/0013-fit-is-derived-not-stored.md).",
       "release_version": "2026.08.15-v0.8.0"
+    },
+    {
+      "data_pack_version": "2026.08.16",
+      "date": "2026-08-16",
+      "fingerprint": "b492e20890b3c614da21b77a159a3837047a15882da19332aa1e34d10d0ea811",
+      "grades": {
+        "benchmark_review_candidate": 6,
+        "governed_starter": 5
+      },
+      "metrics": {
+        "families_coherent": 4,
+        "families_mixed": 18,
+        "floor_central_tendency": 7,
+        "likely_anchors": 11,
+        "likely_central_tendency": 8,
+        "likely_not_a_mode": 11,
+        "maxima": 11,
+        "maxima_none_known": 5,
+        "maxima_quantified": 4,
+        "params_bridged": 0,
+        "params_cell_matched": 7,
+        "params_cross_cell": 59,
+        "params_cross_country": 15,
+        "params_missing": 0,
+        "params_source_backed": 66,
+        "params_total": 66,
+        "shards": 11,
+        "shards_fully_sourced": 11,
+        "shards_tail_driven": 7
+      },
+      "note": "the two new modeled quantiles are the first this portfolio has held, and no value moved to produce them - the DE and JP manufacturing maxima kept their $5,000,000 anchor and gained the share above it that Sophos had published all along. Read a falling none_known count here as reading catching up with the corpus, not as new evidence arriving.",
+      "release_version": "2026.08.16-v0.9.0"
     }
   ]
 }
