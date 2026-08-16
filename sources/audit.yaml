@@ -1846,3 +1846,211 @@ audit:
         detail: >-
           Manufacturing and production organizations responding to the survey; root-cause base n=331 (2025), 375 (2024), 204 (2023). Same payer-denominator caveat as the financial-services cut.
 
+  # ── Read 2026-08-16: the seven on-cell country cuts ─────────────────────
+  # One instrument, one period, one size band (100-5,000 employees), seven
+  # countries — which makes these comparable to each other in a way separately
+  # commissioned national surveys never are.
+
+  - source_id: sophos_state_ransomware_au_2026
+    artifact_sha256: b1e0e7a7eb29c7e889c49c685de219651481a52d1a9ec71b97eeab3618512db2
+    artifact: sources/raw/sophos-state-of-ransomware-in-australia-2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value. Central tendency is reported as a median, and the recovery cost as a mean.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          Point statistics plus one threshold, not a distribution: median Australian ransom demand $1.34 million; median Australian ransom payment $855,000; mean recovery cost excluding ransom $1.66 million. No banding, percentile or quantile.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Stated as a single threshold: "49% of ransom demands were for $1 million or more". That is P(demand >= $1M) = 49% over Australia organizations hit by ransomware. A threshold with a share is an exceedance statement; it is not a distribution, which is why distribution reads false for these country cuts and true for the sector cuts that carry a banded chart.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Unusually precise and unusually useful: organizations with between 100 and 5,000 employees that were HIT by ransomware in the previous 12 months, n=119 for Australia, surveyed January-March 2026, all figures in U.S. dollars. Note two constraints Sophos applies and states: the denominator is the hit population rather than all organizations, and outlier ransoms of $40 million or more were removed before publication.
+
+  - source_id: sophos_state_ransomware_de_2026
+    artifact_sha256: 9bb9b4d4d4a8e0ae11de56201b4364f4e25265508bed1cd5c70d48b85cc0b34f
+    artifact: sources/raw/sophos-state-of-ransomware-in-germany-2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value. Central tendency is reported as a median, and the recovery cost as a mean.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          Point statistics plus one threshold, not a distribution: median German ransom demand $400,000; mean recovery cost excluding ransom $1.42 million. No banding, percentile or quantile.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Stated as a single threshold: "45% of ransom demands were for $1 million or more". That is P(demand >= $1M) = 45% over Germany organizations hit by ransomware. A threshold with a share is an exceedance statement; it is not a distribution, which is why distribution reads false for these country cuts and true for the sector cuts that carry a banded chart.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Unusually precise and unusually useful: organizations with between 100 and 5,000 employees that were HIT by ransomware in the previous 12 months, n=139 for Germany, surveyed January-March 2026, all figures in U.S. dollars. Note two constraints Sophos applies and states: the denominator is the hit population rather than all organizations, and outlier ransoms of $40 million or more were removed before publication.
+
+  - source_id: sophos_state_ransomware_fr_2026
+    artifact_sha256: 37bea34a3480d21774fd9112c9ac57c63d23018209a7086928b584a19076e72c
+    artifact: sources/raw/sophos-state-of-ransomware-in-france-2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value. Central tendency is reported as a median, and the recovery cost as a mean.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          Point statistics plus one threshold, not a distribution: median French ransom demand $500,000; mean recovery cost excluding ransom $2.02 million. No banding, percentile or quantile.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Stated as a single threshold: "39% of ransom demands were for $1 million or more". That is P(demand >= $1M) = 39% over France organizations hit by ransomware. A threshold with a share is an exceedance statement; it is not a distribution, which is why distribution reads false for these country cuts and true for the sector cuts that carry a banded chart.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Unusually precise and unusually useful: organizations with between 100 and 5,000 employees that were HIT by ransomware in the previous 12 months, n=129 for France, surveyed January-March 2026, all figures in U.S. dollars. Note two constraints Sophos applies and states: the denominator is the hit population rather than all organizations, and outlier ransoms of $40 million or more were removed before publication.
+
+  - source_id: sophos_state_ransomware_jp_2026
+    artifact_sha256: 3782bad79f43628246953ed77a5c10c4eda6e3b10cc67c6d2881ce9cdb48196d
+    artifact: sources/raw/sophos-state-of-ransomware-in-japan-2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value. Central tendency is reported as a median, and the recovery cost as a mean.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          Point statistics plus one threshold, not a distribution: median Japanese ransom demand $1.75 million; median Japanese ransom payment $3 million; mean recovery cost excluding ransom $1.88 million. No banding, percentile or quantile.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Stated as a single threshold: "61% of ransom demands were for $1 million or more". That is P(demand >= $1M) = 61% over Japan organizations hit by ransomware. A threshold with a share is an exceedance statement; it is not a distribution, which is why distribution reads false for these country cuts and true for the sector cuts that carry a banded chart.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Unusually precise and unusually useful: organizations with between 100 and 5,000 employees that were HIT by ransomware in the previous 12 months, n=152 for Japan, surveyed January-March 2026, all figures in U.S. dollars. Note two constraints Sophos applies and states: the denominator is the hit population rather than all organizations, and outlier ransoms of $40 million or more were removed before publication.
+
+  - source_id: sophos_state_ransomware_uk_2026
+    artifact_sha256: 329fff7a941e6848b4f60fe52f6449e742c83b1102ea483f4919caf8acf29a2d
+    artifact: sources/raw/sophos-state-of-ransomware-in-uk-2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value. Central tendency is reported as a median, and the recovery cost as a mean.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          Point statistics plus one threshold, not a distribution: median UK ransom demand $2.5 million; mean recovery cost excluding ransom $1.49 million. No banding, percentile or quantile.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Stated as a single threshold: "65% of ransom demands were for $1 million or more". That is P(demand >= $1M) = 65% over United Kingdom organizations hit by ransomware. A threshold with a share is an exceedance statement; it is not a distribution, which is why distribution reads false for these country cuts and true for the sector cuts that carry a banded chart.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Unusually precise and unusually useful: organizations with between 100 and 5,000 employees that were HIT by ransomware in the previous 12 months, n=120 for United Kingdom, surveyed January-March 2026, all figures in U.S. dollars. Note two constraints Sophos applies and states: the denominator is the hit population rather than all organizations, and outlier ransoms of $40 million or more were removed before publication.
+
+  - source_id: sophos_state_ransomware_us_2026
+    artifact_sha256: 0b359dcb8acae726d87ab92646f1de21461d31f5805dcfd2b095ec099e483a49
+    artifact: sources/raw/sophos-state-of-ransomware-in-us-2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value. Central tendency is reported as a median, and the recovery cost as a mean.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          Point statistics plus one threshold, not a distribution: median U.S. ransom payment $1 million; mean recovery cost excluding ransom $2.5 million. No banding, percentile or quantile.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Stated as a single threshold: "55% of ransom demands were for $1 million or more". That is P(demand >= $1M) = 55% over United States organizations hit by ransomware. A threshold with a share is an exceedance statement; it is not a distribution, which is why distribution reads false for these country cuts and true for the sector cuts that carry a banded chart.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Unusually precise and unusually useful: organizations with between 100 and 5,000 employees that were HIT by ransomware in the previous 12 months, n=377 for United States, surveyed January-March 2026, all figures in U.S. dollars. Note two constraints Sophos applies and states: the denominator is the hit population rather than all organizations, and outlier ransoms of $40 million or more were removed before publication.
+
+  - source_id: sophos_state_ransomware_sg_2026
+    artifact_sha256: c05f0be08438abbde85ab003930b4a483d1b2ec4684989723a3da1cfcbdce7d5
+    artifact: sources/raw/sophos-state-of-ransomware-in-singapore-2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value. Central tendency is reported as a median, and the recovery cost as a mean.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          Point statistics plus one threshold, not a distribution: mean recovery cost excluding ransom $1.14 million. No banding, percentile or quantile.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          None. No ransom demand or payment figure is published for Singapore at all, which with n=33 reads as small-sample suppression rather than omission — the report gives Singapore recovery cost and impact percentages but stops before ransom levels.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Unusually precise and unusually useful: organizations with between 100 and 5,000 employees that were HIT by ransomware in the previous 12 months, n=33 for Singapore, surveyed January-March 2026, all figures in U.S. dollars. Note two constraints Sophos applies and states: the denominator is the hit population rather than all organizations, and outlier ransoms of $40 million or more were removed before publication.
+

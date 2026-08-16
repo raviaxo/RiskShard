@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 60,
+  "fetched_count": 67,
   "generated_at": "2026-08-01T21:47:07Z",
   "manifest_version": "1.0",
-  "source_count": 60,
+  "source_count": 67,
   "sources": [
     {
       "access_mode": "public_html",
@@ -1421,6 +1421,167 @@
       "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-financial-services",
       "url_stability": "dated",
       "usage_notes": "Sector-specific ransomware survey. Ransom payment figures are medians over responding organizations that paid, not over all organizations attacked - the denominator is the payers.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 248285,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-australia",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_au_2026",
+      "intended_use": [
+        "Australia ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-australia-2026.pdf",
+      "sha256": "b1e0e7a7eb29c7e889c49c685de219651481a52d1a9ec71b97eeab3618512db2",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in Australia 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-australia",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=119.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 243902,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-germany",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_de_2026",
+      "intended_use": [
+        "Germany ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-germany-2026.pdf",
+      "sha256": "9bb9b4d4d4a8e0ae11de56201b4364f4e25265508bed1cd5c70d48b85cc0b34f",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in Germany 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-germany",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=139.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 247827,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-france",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_fr_2026",
+      "intended_use": [
+        "France ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-france-2026.pdf",
+      "sha256": "37bea34a3480d21774fd9112c9ac57c63d23018209a7086928b584a19076e72c",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in France 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-france",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=129.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 247591,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-japan",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_jp_2026",
+      "intended_use": [
+        "Japan ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-japan-2026.pdf",
+      "sha256": "3782bad79f43628246953ed77a5c10c4eda6e3b10cc67c6d2881ce9cdb48196d",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in Japan 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-japan",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=152.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 247598,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-uk",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_uk_2026",
+      "intended_use": [
+        "United Kingdom ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-uk-2026.pdf",
+      "sha256": "329fff7a941e6848b4f60fe52f6449e742c83b1102ea483f4919caf8acf29a2d",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in United Kingdom 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-uk",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=120.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 246068,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-us",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_us_2026",
+      "intended_use": [
+        "United States ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-us-2026.pdf",
+      "sha256": "0b359dcb8acae726d87ab92646f1de21461d31f5805dcfd2b095ec099e483a49",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in United States 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-us",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=377.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 238009,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-singapore",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_sg_2026",
+      "intended_use": [
+        "Singapore ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-singapore-2026.pdf",
+      "sha256": "c05f0be08438abbde85ab003930b4a483d1b2ec4684989723a3da1cfcbdce7d5",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in Singapore 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-singapore",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=33.\n"
     }
   ]
 }
