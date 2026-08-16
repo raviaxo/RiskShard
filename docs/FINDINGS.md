@@ -53,12 +53,12 @@ and a source-level claim counts only when a human has read the stored artifact:
 
 | | |
 | --- | --- |
-| registered sources **read** so far | **14 of 61** |
-| …publishing a **mode** | **0 of 14** |
-| …publishing a **distribution** over loss or frequency | **6 of 14** |
-| …publishing an **exceedance** statement | **4 of 14** |
-| …from which the measured **population** can be named | **14 of 14** |
-| sources held only as a landing page or summary — **unanswerable** until obtained | **10** |
+| registered sources **read** | **30 of 61** |
+| …publishing a **mode** | **0 of 30** |
+| …publishing a **distribution** over loss or frequency | **6 of 30** |
+| …publishing an **exceedance** statement | **4 of 30** |
+| …that measure a **population** they name | **21 of 30** |
+| sources held only as a landing page or summary — **unanswerable** until obtained | **12** |
 
 Until this arc that sentence read *"no source consulted does"*, resting on two reads and carrying no
 denominator. **Unread is not evidence of absence**, and the audit publishes the gap beside the claim
@@ -87,6 +87,14 @@ that public sources offer only point statistics. It does not:
 government reporting bodies sitting on the largest loss datasets in their jurisdictions, and they
 publish totals and averages. The exceedance statements come from a UK government survey, a
 Singapore police brief and two vendor ransomware surveys.
+
+**And a third of what a practitioner cites is not a measurement at all.** Nine of the 30 sources
+read — statutes, prudential standards, guidance pages, enforcement notices, single-company
+disclosures and a trade-press article — measure no population, because they record an event or set
+a rule rather than study anyone. That is not a defect in them; it is a fact about what a citation
+to them can support. It is also the structural reason a maximum anchored on one company's
+disclosure carries no exceedance ([finding 3](#3--most-maxima-bound-nothing)): there is no
+population for the loss to be exceeded *within*.
 
 So the defensible claim is narrower and considerably more interesting than the one we set out to
 check: **the shape of the evidence is not the constraint everyone assumes.** Distributions exist,
