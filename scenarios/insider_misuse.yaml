@@ -25,5 +25,5 @@ frequency:
 
 impact:
   min: 680000
-  likely: 700000
+  likely: 740000
   max: 32000000

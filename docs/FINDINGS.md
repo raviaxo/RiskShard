@@ -239,8 +239,8 @@ with seven exceptions*, which is what it always was.
 
 | | |
 | --- | --- |
-| records declaring `applicability` | **141 of 141** (required by schema) |
-| …declaring the cell they were borrowed **for** rather than the population measured | **21 of 141** |
+| records declaring `applicability` | **142 of 142** (required by schema) |
+| …declaring the cell they were borrowed **for** rather than the population measured | **21 of 142** |
 | published parameter cards affected | **16 of 66** |
 | published figures that moved when all 21 were corrected | **0 of 66** |
 | cards still claiming a bridge their own declaration says matches | **0 of 66** |
