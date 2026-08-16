@@ -1,0 +1,585 @@
+# Intake register — candidate documents, triaged (ADR-0015 governs what they *publish*)
+#
+# This is the layer BEFORE the source audit. A document lands here when it is obtained,
+# and the only question asked is whether it plausibly speaks to a cell we model and
+# could carry a number. That is a judgement about SCOPE, never about content: a high
+# score means "read this early", not "this source is good".
+#
+# `score` is computed by engine/intake.py against the portfolio's own measured gaps —
+# sector is weighted above country because sector is bridged 49 times and country 15.
+# It is regenerated, not hand-set. `status` is the human decision:
+#   unassessed  - catalogued, not yet triaged by a person
+#   queued      - accepted for reading, in priority order
+#   parked      - out of scope for the current cells; revisit only if the cells change
+#   duplicate   - byte-identical to another file here
+#   admitted    - promoted into sources/registry.yaml (carries source_id)
+intake:
+  - file: "sophos-state-of-ransomware-in-financial-services-2025 (1).pdf"
+    sha256: 92b2154b8f0cd2d56246778fd9fd4f1caf59c23df32756923947871101f3d145
+    bytes: 708866
+    words: 4862
+    title: "THE STATE OF RANSOMWARE IN FINANCIAL SERVICES 2025 Findings from an independent survey of 369 IT and cybersecu"
+    score: 84.6
+    status: queued
+    sectors: [financial_services]
+    threats: [ransomware]
+    quantities: [exceedance, frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-financial-services-2025.pdf"
+    sha256: 92b2154b8f0cd2d56246778fd9fd4f1caf59c23df32756923947871101f3d145
+    bytes: 708866
+    words: 4862
+    title: "THE STATE OF RANSOMWARE IN FINANCIAL SERVICES 2025 Findings from an independent survey of 369 IT and cybersecu"
+    score: 84.6
+    status: duplicate
+    duplicate_of: "sophos-state-of-ransomware-in-financial-services-2025 (1).pdf"
+    sectors: [financial_services]
+    threats: [ransomware]
+    quantities: [exceedance, frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-manufacturing-2025 (1).pdf"
+    sha256: c579c711f3004db660c547e4c73be6b0e4997cb5b76fffacabebacf928f99eae
+    bytes: 7117574
+    words: 4732
+    title: "THE STATE OF RANSOMWARE IN MANUFACTURING AND PRODUCTION 2025 Findings from an independent survey of 332 IT and"
+    score: 59.6
+    status: queued
+    sectors: [manufacturing]
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-manufacturing-2025.pdf"
+    sha256: c579c711f3004db660c547e4c73be6b0e4997cb5b76fffacabebacf928f99eae
+    bytes: 7117574
+    words: 4732
+    title: "THE STATE OF RANSOMWARE IN MANUFACTURING AND PRODUCTION 2025 Findings from an independent survey of 332 IT and"
+    score: 59.6
+    status: duplicate
+    duplicate_of: "sophos-state-of-ransomware-in-manufacturing-2025 (1).pdf"
+    sectors: [manufacturing]
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-enterprise-2025.pdf"
+    sha256: a6a860ff94795e70739d06190684e6ab5c21097bbfc2651e615cf5f2c121af99
+    bytes: 588512
+    words: 4468
+    title: "THE STATE OF RANSOMWARE IN ENTERPRISE 2025 Findings from an independent survey of 1,733 IT and cybersecurity l"
+    score: 42.7
+    status: queued
+    threats: [ransomware]
+    quantities: [exceedance, frequency, loss_magnitude]
+  - file: "Radar_Report_Q3_Q4_2025_3e96381597.pdf"
+    sha256: 0e6efbc871e4862e37979f3600f2ef69a9ba3fc964dbe8f6a63321e01b9c10c6
+    bytes: 12850078
+    words: 3116
+    title: "Gcore Radar Attack Trends Q3–Q4 2025 March 2026 | gcore.com Table of contents Foreword 3 About Gcore Radar 3 Q"
+    score: 35.0
+    status: queued
+    quantities: [exceedance, frequency, loss_magnitude]
+  - file: "cyentia_iris_2022.html"
+    sha256: cb7d2d86a004a46a071a2ebb6e13b908e60da0c8f1143a13594daa796fd6ddac
+    bytes: 178516
+    words: 528
+    title: "IRIS 2022 | Cyentia Institute Skip to content Linkedin YouTube Login Account Home Services Expand Risk Intelli"
+    score: 35.0
+    status: queued
+    quantities: [exceedance, frequency, loss_magnitude]
+  - file: "cyentia_iris_2025.html"
+    sha256: 45f8a74ef79e94bf35e1f6f3a22be1ae1cdd41a4e29da22e7dbe50dce3ac2819
+    bytes: 174325
+    words: 608
+    title: "IRIS 2025 | Cyentia Institute Skip to content Linkedin YouTube Login Account Home Services Expand Risk Intelli"
+    score: 35.0
+    status: queued
+    quantities: [exceedance, frequency, loss_magnitude]
+  - file: "kiteworks-annual-report-2026.pdf"
+    sha256: 0c0b6683a3b6b3c201679009176a7310de2c329d957e955e9af76770372b433f
+    bytes: 10120845
+    words: 17864
+    title: "2026 Data Security and Compliance Risk Report REPORT ANNUAL SURVEY REPORT 2026 Data Security and Compliance Ri"
+    score: 35.0
+    status: queued
+    quantities: [exceedance, frequency, loss_magnitude]
+  - file: "sophos-state-of-identity-security-report-2026 (1).pdf"
+    sha256: eab578ad90a2b287ce655269ec458c8409dd342b60f5044e9f9d8465c7be4a5c
+    bytes: 1811163
+    words: 4499
+    title: "REPORT The State of Identity Security 2026 Insights from 5,000 IT and Cybersecurity Leaders Across 17 Countrie"
+    score: 35.0
+    status: queued
+    quantities: [exceedance, frequency, loss_magnitude]
+  - file: "sophos-state-of-identity-security-report-2026.pdf"
+    sha256: eab578ad90a2b287ce655269ec458c8409dd342b60f5044e9f9d8465c7be4a5c
+    bytes: 1811163
+    words: 4499
+    title: "REPORT The State of Identity Security 2026 Insights from 5,000 IT and Cybersecurity Leaders Across 17 Countrie"
+    score: 35.0
+    status: duplicate
+    duplicate_of: "sophos-state-of-identity-security-report-2026 (1).pdf"
+    quantities: [exceedance, frequency, loss_magnitude]
+  - file: "vcdb.json.zip"
+    sha256: 1a8a8b67c93788b348e657bf75b2d2d0a0fa3248ea82414125dbff28a868b994
+    bytes: 4620636
+    words: 1807470
+    title: "vcdb_1-of-1.json [{'action': {'error': {'variety': ['Loss'], 'vector': ['Unknown']}}, 'actor': {'internal': {'"
+    score: 35.0
+    status: queued
+    quantities: [exceedance, frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-australia-2026.pdf"
+    sha256: b1e0e7a7eb29c7e889c49c685de219651481a52d1a9ec71b97eeab3618512db2
+    bytes: 248285
+    words: 991
+    title: "THE STATE OF RANSOMWARE IN AUSTRALIA 2026 Findings from an independent, vendor-agnostic survey of 119 organiza"
+    score: 30.5
+    status: queued
+    countries: [AU]
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-france-2026.pdf"
+    sha256: 37bea34a3480d21774fd9112c9ac57c63d23018209a7086928b584a19076e72c
+    bytes: 247827
+    words: 1001
+    title: "THE STATE OF RANSOMWARE IN FRANCE 2026 Findings from an independent, vendor-agnostic survey of 129 organizatio"
+    score: 30.5
+    status: queued
+    countries: [FR]
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-germany-2026.pdf"
+    sha256: 9bb9b4d4d4a8e0ae11de56201b4364f4e25265508bed1cd5c70d48b85cc0b34f
+    bytes: 243902
+    words: 976
+    title: "THE STATE OF RANSOMWARE IN GERMANY 2026 Findings from an independent, vendor-agnostic survey of 139 organizati"
+    score: 30.5
+    status: queued
+    countries: [DE]
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-japan-2026.pdf"
+    sha256: 3782bad79f43628246953ed77a5c10c4eda6e3b10cc67c6d2881ce9cdb48196d
+    bytes: 247591
+    words: 996
+    title: "THE STATE OF RANSOMWARE IN JAPAN 2026 Findings from an independent, vendor-agnostic survey of 152 organization"
+    score: 30.5
+    status: queued
+    countries: [JP]
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-singapore-2026.pdf"
+    sha256: c05f0be08438abbde85ab003930b4a483d1b2ec4684989723a3da1cfcbdce7d5
+    bytes: 238009
+    words: 788
+    title: "THE STATE OF RANSOMWARE IN SINGAPORE 2026 Findings from an independent, vendor-agnostic survey of 33 organizat"
+    score: 30.5
+    status: queued
+    countries: [SG]
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-uk-2026.pdf"
+    sha256: 329fff7a941e6848b4f60fe52f6449e742c83b1102ea483f4919caf8acf29a2d
+    bytes: 247598
+    words: 982
+    title: "THE STATE OF RANSOMWARE IN THE UK 2026 Findings from an independent, vendor-agnostic survey of 120 organizatio"
+    score: 30.5
+    status: queued
+    countries: [GB]
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-us-2026.pdf"
+    sha256: 0b359dcb8acae726d87ab92646f1de21461d31f5805dcfd2b095ec099e483a49
+    bytes: 246068
+    words: 1008
+    title: "THE STATE OF RANSOMWARE IN THE U.S. 2026 Findings from an independent, vendor-agnostic survey of 377 organizat"
+    score: 30.5
+    status: queued
+    countries: [US]
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "census_susb_2022.html"
+    sha256: 52f602b8666e4b36e10dfa3923f80343c824b775bea826bb1cc64a9ec79a00d8
+    bytes: 339701
+    words: 1167
+    title: "2022 SUSB Annual Data Tables by Establishment Industry United States Census Bureau | An official website of th"
+    score: 22.8
+    status: queued
+    countries: [US]
+    quantities: [frequency, loss_magnitude]
+  - file: "Cost-of-a-Data-Breach-Report-2026 (1).pdf"
+    sha256: 0c7808f23134ff9e20e2386e4c93608228b04834d0266cd00bbc184edf115600
+    bytes: 8758890
+    words: 12056
+    title: "think report Cost of a Data Breach Report 2026 The AI tipping point 01 04 05 06 Executive summary What’s new i"
+    score: 17.7
+    status: parked
+    threats: [data_breach]
+    quantities: [frequency, loss_magnitude]
+  - file: "Cost-of-a-Data-Breach-Report-2026.pdf"
+    sha256: 0c7808f23134ff9e20e2386e4c93608228b04834d0266cd00bbc184edf115600
+    bytes: 8758890
+    words: 12056
+    title: "think report Cost of a Data Breach Report 2026 The AI tipping point 01 04 05 06 Executive summary What’s new i"
+    score: 17.7
+    status: duplicate
+    duplicate_of: "Cost-of-a-Data-Breach-Report-2026 (1).pdf"
+    threats: [data_breach]
+    quantities: [frequency, loss_magnitude]
+  - file: "cyentia_iris_ransomware.html"
+    sha256: 868976791d0ebb2cc60eb3aaee9a05680a24cde8c35e68a9c031fb311b2f322b
+    bytes: 189020
+    words: 530
+    title: "IRIS Ransomware | Cyentia Institute Skip to content Linkedin YouTube Login Account Home Services Expand Risk I"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "ibm_cost_data_breach_2025_report.pdf"
+    sha256: e60c77ff14afe3d9d0f72dd5b2845329568735cc41567f45aaaf715b7952e910
+    bytes: 1986336
+    words: 11664
+    title: "Cost of a Data Breach Report 2025 The AI Oversight Gap think report Table of contents 01 02 2 04 05 06 Executi"
+    score: 17.7
+    status: parked
+    threats: [data_breach]
+    quantities: [frequency, loss_magnitude]
+  - file: "netdiligence_cyber_claims_study_2025.pdf"
+    sha256: 4014f4e7a52c55125e3287b2c61ca788f9ae133a8e49408d7e34ec35ba7166cb
+    bytes: 9509998
+    words: 16092
+    title: "CYBER CLAIMS STUDY 2025 REPORT RANSOMWARE A ransomware attack has been detected on your network. The affected"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-brazil-2026.pdf"
+    sha256: 6804c3ff99eaa03f08ad45d0e3918fc347ccfe83955ace41a7b9a75f127a6c5e
+    bytes: 242167
+    words: 961
+    title: "THE STATE OF RANSOMWARE IN BRAZIL 2026 Findings from an independent, vendor-agnostic survey of 71 organization"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-chile-2026.pdf"
+    sha256: dc51b59474efdb95d40010a4bb572f5c5476ca439ca44df7e3f58b1d20954aca
+    bytes: 240433
+    words: 820
+    title: "THE STATE OF RANSOMWARE IN CHILE 2026 Findings from an independent, vendor-agnostic survey of 48 organizations"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-colombia-2026.pdf"
+    sha256: dd089ee3290c6b03f5d589d19026520164d0c5d91efe02d067c504c24e51424a
+    bytes: 241749
+    words: 783
+    title: "THE STATE OF RANSOMWARE IN COLOMBIA 2026 Findings from an independent, vendor-agnostic survey of 49 organizati"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-education-2025.pdf"
+    sha256: 1e93261d1c67ebc2b8f7b72095c09d8e7048551bc3e7de670ea2fc607b949ab6
+    bytes: 4145216
+    words: 5797
+    title: "THE STATE OF RANSOMWARE IN EDUCATION 2025 Findings from an independent survey of 441 IT and cybersecurity lead"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-india-2026.pdf"
+    sha256: 0c437de7b2788dddf049623ce756d06a49d2f693847377e69c1c5072d6a7902f
+    bytes: 247614
+    words: 1014
+    title: "THE STATE OF RANSOMWARE IN INDIA 2026 Findings from an independent, vendor-agnostic survey of 240 organization"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-italy-2026.pdf"
+    sha256: a03774041374c948fcb94c15f5d519272f34e52d581dc2f9df591ac5384fe27e
+    bytes: 242603
+    words: 1026
+    title: "THE STATE OF RANSOMWARE IN ITALY 2026 Findings from an independent, vendor-agnostic survey of 171 organization"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-mexico-2026.pdf"
+    sha256: d6d4e5dda0c72046fc9e87249137c93fcfc2caa673662ba79662a8f4a12d8e54
+    bytes: 249241
+    words: 982
+    title: "THE STATE OF RANSOMWARE IN MEXICO 2026 Findings from an independent, vendor-agnostic survey of 84 organization"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-spain-2026.pdf"
+    sha256: 6e16ad8bf8ddd62be1be459768b8fddf0a08ef466f39f4ebc2141432759d86d9
+    bytes: 244318
+    words: 959
+    title: "THE STATE OF RANSOMWARE IN SPAIN 2026 Findings from an independent, vendor-agnostic survey of 164 organization"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-switzerland-2026.pdf"
+    sha256: 231b4cc2a829389925c99be98aab71c22a97a25f9458bd0873b3be9bad904475
+    bytes: 248341
+    words: 985
+    title: "THE STATE OF RANSOMWARE IN SWITZERLAND 2026 Findings from an independent, vendor-agnostic survey of 79 organiz"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-of-ransomware-in-united-arab-emirates-2026.pdf"
+    sha256: c5f37ac9b0af30ddcd1792e995f8d194321b59643710f353e1e29f9439d67c34
+    bytes: 238059
+    words: 801
+    title: "THE STATE OF RANSOMWARE IN THE UNITED ARAB EMIRATES 2026 Findings from an independent, vendor-agnostic survey"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "sophos-state-ransomware-report-2026.pdf"
+    sha256: 678a57d7ab358a1088d561244a499022f0e7a54371756db352eaa68ed5e4af51
+    bytes: 1256138
+    words: 6203
+    title: "REPORT The State of Ransomware 2026 Insights from 2,158 IT and Cybersecurity Leaders Across 17 Countries Intro"
+    score: 17.7
+    status: parked
+    threats: [ransomware]
+    quantities: [frequency, loss_magnitude]
+  - file: "2024-Insider-Threat-Report-Gurucul.pdf"
+    sha256: 88b71b6bfeb546838324e72e3d91e5dfcf3e08938ac083832f78d7108d3b4c3d
+    bytes: 1371894
+    words: 5709
+    title: "2024 REPORT Insider Threat Introduction The landscape of insider risk management continues to evolve rapidly,"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "2025-cybersecurity-threat-and-risk-management-report_0_0.pdf"
+    sha256: 34b74ca7c5443ed347b39d0ef6c7842f4406590605f9268c51624d3263291ff5
+    bytes: 5163741
+    words: 9844
+    title: "2025 Cybersecurity Threat and Risk Management Report Sponsored by Optiv Independently Conducted by Ponemon Ins"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "2026-CheckPoint-Securing-the-AI-Transformation-Report-by-CSI.pdf"
+    sha256: 9682dfbe7b263e10d8a1d13cefe2a3c30c5127921bab26daf24d62707fc5f859
+    bytes: 1504665
+    words: 7663
+    title: "2026 CLOUD SECURITY REPORT Securing the AI Transformation Why traditional network and cloud architectures are"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "2026-Netskope-AI-Security-Report-by-CSI.pdf"
+    sha256: 218ab74e736ffd545f915c909126a29a44905d88d96b0a4e7fc9577d3f32d8a3
+    bytes: 3123409
+    words: 5039
+    title: "2026 AI Risk and Readiness Report Overview For most organizations, this is the year AI becomes infrastructure."
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "2026-Netskope-Unified-Data-Security-by-CSI.pdf"
+    sha256: dc59823fe9b34b4d33224ac2495b78318c29f71ee190bdd5cd406367ca2c3bc9
+    bytes: 7976164
+    words: 5940
+    title: "2026 Unified Data Security Report Closing the AI-Era Data Protection Gap Executive Summary Most security teams"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "2026-Outtake-Digital-Risk-Report-by-CSI.pdf"
+    sha256: aa7963423f7c7642c67a362d55be301f048f7d07b342d3e4390907272c8fc19d
+    bytes: 1065647
+    words: 6297
+    title: "2026 Digital Risk Report Protecting Digital Trust in the AI Era Executive Overview Digital risk has crossed a"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "2026-ciso-report.pdf"
+    sha256: 6008115663c035f99d37e5319a42a8891c985ad72c0ba800bdf87fd599be63b4
+    bytes: 494692
+    words: 4455
+    title: "Q1 2026 | PAGE ONE FOR THE CYBERSECURITY INDUSTRY | CYBERCRIMEMAG.COM 2026 CISO REPORT 35,000 Chief Informatio"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "Annual Cyber Threat Report 2024-2025 _ Cyber.gov.au.pdf"
+    sha256: 83a00aaf4390d405dcc7f2a82314a76aa5a7fd8d961a5f718f2a889e77d9324d
+    bytes: 5806316
+    words: 15600
+    title: "p 8/16/26, 6:58 AM Annual Cyber Threat Report 2024-2025 | Cyber.gov.au 1 1 🇺🇸 Samantha Close Annual Cyber Thre"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "DTEX_PonemonInsiderRiskReport23_US_Web_dtex.ai.pdf"
+    sha256: 1103b630847fa8f308c79033521d8182eeb79f3836aa29fec3c501527d8ebe25
+    bytes: 3990633
+    words: 9852
+    title: "Cost of Insider Risks GLOBAL REPORT 2023 Independently conducted by Table of contents 3-5 Introduction 6-9 Exe"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "DTEX_Ponemon_2026 (1).pdf"
+    sha256: 81752c526a630107d69b8b4a41c951f7f5b5bc2dd8df556756006d5ec8386d58
+    bytes: 5900488
+    words: 9576
+    title: "COST OF INSIDER RISKS 2026 GLOBAL REPORT Independently conducted by Table of contents 3–5 Introduction 6–7 Exe"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "DTEX_Ponemon_2026.pdf"
+    sha256: 81752c526a630107d69b8b4a41c951f7f5b5bc2dd8df556756006d5ec8386d58
+    bytes: 5900488
+    words: 9576
+    title: "COST OF INSIDER RISKS 2026 GLOBAL REPORT Independently conducted by Table of contents 3–5 Introduction 6–7 Exe"
+    score: 10.0
+    status: duplicate
+    duplicate_of: "DTEX_Ponemon_2026 (1).pdf"
+    quantities: [frequency, loss_magnitude]
+  - file: "interos_global_supply_chain_2022.html"
+    sha256: 9c3de382dc8ba2fd6ffa3cea0acaf940ffed6ebef6e3cc5060606f8d40782e58
+    bytes: 80012
+    words: 611
+    title: "Resilience 2022: Interos Annual Global Supply Chain Report | interos.ai Our Software Solutions ▼ — Industries"
+    score: 10.0
+    status: parked
+    quantities: [loss_magnitude]
+  - file: "netdiligence_cyber_claims_2025.html"
+    sha256: b6ebc663ec41a8432dba905a0dd6dde64060bad38031c0fec27aff1eeaf7418c
+    bytes: 85437
+    words: 369
+    title: "2025 Cyber Claims Study | NetDiligence Solutions eRiskHub® Breach Plan Connect® Breach Coach® QuietAudit® Clos"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "pdb-q2-2025-26.csv"
+    sha256: 3e6020e0a6ea6453780f92963d26d3bc2347e589c33d9723bae4491605eefec3
+    bytes: 455078
+    words: 29219
+    title: "CaseStatus,ICOCaseRef,Legislation,Received Date,Received Year,Received FY,Received Qtr,Received FY Month,Compl"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "secureworks-threat-intelligence-report-2023-vol-03.pdf"
+    sha256: 1ebcecc9b5ca3cb620164dfa6c8a3fc5aa3c3a826e03d592714ed250a7983238
+    bytes: 579941
+    words: 1494
+    title: "Global Incident Response Hotline +1-770-870-6343 THREAT INTELLIGENCE EXECUTIVE REPORT Volume 2023, Number 3 Pr"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "secureworks-ti-executive-report-vol-2025-no-2.pdf"
+    sha256: 2501334da2d0fe6fa28ae99ee6f3d03be11a58d36d417ff3aafcb0ebd61528d8
+    bytes: 10672200
+    words: 1450
+    title: "Global Incident Response Hotline +1-770-870 -6343 THREAT INTELLIGENCE EXECUTIVE REPORT Volume 2025, Number 2 P"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "spycloud-2026-phishing-pulse-report.pdf"
+    sha256: 32194d9475977fc9eb77fddd3b29ee95ab2a8d1d70d54cc31a6efc1714b91aa7
+    bytes: 5667048
+    words: 2645
+    title: "CONTENTS What's inside THE STATE OF PLAY THE COST OF DELAY 03 The state of phishing threats › 11 What attacker"
+    score: 10.0
+    status: parked
+    quantities: [frequency, loss_magnitude]
+  - file: "Chinas_Insider_Advantage_Part_2.pdf"
+    sha256: 6c508ac1d18aac7dfe6544c087991cb507f266f2376110e7b0e2a7f074ff1307
+    bytes: 4008648
+    words: 6468
+    title: "Contents Introduction........................................................................................."
+    score: 0.0
+    status: parked
+    quantities: [frequency]
+  - file: "cyber-investigations-202526-q3.csv"
+    sha256: 7089808b7bc67445d5a2f54dc102303b0e6eaef0e96df1f428e0f80fe1825633
+    bytes: 1086
+    words: 52
+    title: "ICE_Case Reference,ICE_Sector,ICE_SubSector,ICE_FunctionType,ICE_Decision,ICE_Legislation,ICE_Received Datetim"
+    score: 0.0
+    status: parked
+  - file: "cyber-investigations-q1-2025-26.csv"
+    sha256: b54e4cd4954d236a59e0582d1b2dee4339cb3c5fd213ff2f251915ed4b8275bc
+    bytes: 574
+    words: 27
+    title: "ICE_Case Reference,ICE_Sector,ICE_SubSector,ICE_Submitted About Account,ICE_CaseStatus,ICE_FunctionType,ICE_De"
+    score: 0.0
+    status: parked
+  - file: "cyber-investigations-q2-2025-26.csv"
+    sha256: 5805db58f0816fc88e66a66e10d6b2b499aea330c92c50e1825643ba36dd40cb
+    bytes: 718
+    words: 30
+    title: "ICE_Case Reference,ICE_Sector,ICE_SubSector,ICE_FunctionType,ICE_Decision,ICE_Legislation,ICE_Completed DateTi"
+    score: 0.0
+    status: parked
+  - file: "cyber-investigations-q3-2024-2025.csv"
+    sha256: fd1f5fa7199e32d9d0cfda51f42ac37682d234d402d20f882ad94a6bf5a90351
+    bytes: 473
+    words: 17
+    title: "ICE_Case Reference,ICE_Sector,ICE_SubSector,ICE_FunctionType,ICE_Decision,ICE_Legislation,ICE_Received Datetim"
+    score: 0.0
+    status: parked
+  - file: "cyber-investigations-q4-2025-26.csv"
+    sha256: 0e817752c64f67c622e00cc59b79d99f63b733b7207522558752f6490c453125
+    bytes: 1256
+    words: 64
+    title: "ICE_Case Reference,ICE_Sector,ICE_SubSector,ICE_FunctionType,ICE_Decision,ICE_Legislation,ICE_Received Date,IC"
+    score: 0.0
+    status: parked
+  - file: "pdb-cases-q4-2025-26.csv"
+    sha256: d8642b570d67d23138004d60bc3a883a13d94a013c9d615830c21b88402a26e1
+    bytes: 1060776
+    words: 69071
+    title: "CaseStatus,ICOCaseRef,Legislation,Received Date,Received Year,Received FY,Received Qtr,Received FY Month,Compl"
+    score: 0.0
+    status: parked
+  - file: "pdb-q1-2025-26-v2.csv"
+    sha256: b38866462bc757b3131be0f4bd0981b0f9ff1a0b8f3772577cead130cbbe8f37
+    bytes: 747318
+    words: 48219
+    title: "﻿CaseStatus,ICOCaseRef,Legislation,Received Date,Received Year,Received FY,Received Qtr,Received FY Month,Comp"
+    score: 0.0
+    status: parked
+  - file: "pdb-q2-2024-2025.csv"
+    sha256: c0efa17fb89c6aa9aff6ff066beec0ccfd9f007f7a4ccd9b66f40cfa0dd8f712
+    bytes: 698285
+    words: 43946
+    title: "Case Status,Legislation,ICOCaseRef,Received Datetime,Received Year,Received FY,Received Qtr,Received FY Month,"
+    score: 0.0
+    status: parked
+  - file: "pdb-q3-2024-2025.csv"
+    sha256: 8858b8c02f658863a462ce13883fe4175f8828e69e2308460b1be2b722ea508f
+    bytes: 784264
+    words: 50650
+    title: "CaseStatus,Legislation,ICOCaseRef,Received Date,Received Year,Received FY,Received Qtr,Received FY Month,Compl"
+    score: 0.0
+    status: parked
+  - file: "pdb-q3-2025-26.csv"
+    sha256: 4b78e5d482cc08e90adbeb25503431026fb943332e82bf83ab6000f39cb31d5b
+    bytes: 887037
+    words: 56773
+    title: "CaseStatus,ICOCaseRef,Legislation,Received Datetime,Received Year,Received FY,Received Qtr,Received FY Month,C"
+    score: 0.0
+    status: parked
+  - file: "q1-2024-2025-datasets-pdb.csv"
+    sha256: 67c84d89f9433737aca2d54680c5978ad5db7f14d20b7e92baa128f5272ffe7d
+    bytes: 691371
+    words: 43985
+    title: "CaseStatus,Legislation,ICOCaseRef,Received Date,Received Year,Received FY,Received Qtr,Received FY Month,Recei"
+    score: 0.0
+    status: parked
+    quantities: [frequency]
+  - file: "q4-2024-2025-cyber-investigations-final.csv"
+    sha256: 8fec602ee7b135d3f2759c3427675f4d32e9e959978a38f8cd0da665e53e3ce7
+    bytes: 337
+    words: 15
+    title: "ICE_Case Reference,ICE_Sector,ICE_SubSector,ICE_FunctionType,ICE_Decision,ICE_Legislation,ICE_Received Datetim"
+    score: 0.0
+    status: parked
+  - file: "q4-dataste-pdb-run-262-final.csv"
+    sha256: 8a6e57e800418582f6dff081a7c77f879375c64d6a3047bdfac2fea8acb7c469
+    bytes: 869101
+    words: 55728
+    title: "Case Status,Legislation,ICOCaseRef,Received Date,Received Year,Received FY,Received Qtr,Received FY Month,Comp"
+    score: 0.0
+    status: parked
