@@ -1369,4 +1369,19 @@ sources:
     Cost per incident is an activity-based remediation cost, not a total event loss, and the
     per-organization incident counts are annualized averages.
   url_stability: rolling
+- id: sophos_state_ransomware_enterprise_2025
+  title: The State of Ransomware in Enterprise 2025
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-enterprise
+  publication_date: '2025-10-01'
+  access_mode: public_pdf
+  intended_use:
+    - enterprise ransom demand and payment levels
+    - size-band contrast against mid-market cells
+  usage_notes: |
+    The ENTERPRISE size band of the same survey family whose sector and country cuts the
+    corpus already holds. Useful mainly as a size contrast: our cells are mid-market, and
+    this is the band above. Same payer-denominator caveat.
+  url_stability: dated
 

@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 69,
+  "fetched_count": 71,
   "generated_at": "2026-08-01T21:47:07Z",
   "manifest_version": "1.0",
-  "source_count": 69,
+  "source_count": 71,
   "sources": [
     {
       "access_mode": "public_html",
@@ -1628,6 +1628,51 @@
       "url": "https://www.dtexsystems.com/ponemon-cost-of-insider-risks-report/",
       "url_stability": "rolling",
       "usage_notes": "Means over a 354-organization benchmark sample; no median published.\n"
+    },
+    {
+      "access_mode": "public_html",
+      "content_length": 5806316,
+      "content_type": "application/pdf",
+      "final_url": "https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "asd_annual_cyber_threat_report_2024_2025",
+      "intended_use": [
+        "Australian cybercrime cost by business size"
+      ],
+      "publication_date": "2025-11-01",
+      "publisher": "Australian Signals Directorate",
+      "raw_path": "sources/raw/Annual Cyber Threat Report 2024-2025 _ Cyber.gov.au.pdf",
+      "sha256": "83a00aaf4390d405dcc7f2a82314a76aa5a7fd8d961a5f718f2a889e77d9324d",
+      "source_type": "government_report",
+      "status": "fetched",
+      "title": "Annual Cyber Threat Report 2024-2025",
+      "url": "https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025",
+      "url_stability": "dated",
+      "usage_notes": "Self-reported costs from reports to ReportCyber.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 588512,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-enterprise",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_enterprise_2025",
+      "intended_use": [
+        "enterprise ransom demand and payment levels",
+        "size-band contrast"
+      ],
+      "publication_date": "2025-10-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-enterprise-2025.pdf",
+      "sha256": "a6a860ff94795e70739d06190684e6ab5c21097bbfc2651e615cf5f2c121af99",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in Enterprise 2025",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-enterprise",
+      "url_stability": "dated",
+      "usage_notes": "Enterprise size band of the State of Ransomware family.\n"
     }
   ]
 }
