@@ -404,7 +404,7 @@ sources:
   title: Interos Annual Global Supply Chain Report (Resilience 2022)
   publisher: Interos
   source_type: industry_survey
-  url: https://www.interos.ai/resources/global-supply-chain-report
+  url: https://cms.interos.ai/wp-content/uploads/2022/05/Resilience-2022_Interos_Annual-Global-Supply-Chain-Report_5_11_2022.pdf
   publication_date: '2022-03-01'
   access_mode: public_html
   intended_use:
@@ -663,7 +663,7 @@ sources:
   title: Information Risk Insights Study 2025
   publisher: Cyentia Institute
   source_type: cyber_loss_research
-  url: https://www.cyentia.com/publication/iris2025/
+  url: https://www.cyentia.com/wp-content/uploads/2026/03/IRIS-2025.pdf
   publication_date: '2025-06-10'
   access_mode: public_html
   intended_use:
@@ -681,7 +681,7 @@ sources:
   title: Information Risk Insights Study 2022
   publisher: Cyentia Institute
   source_type: cyber_loss_research
-  url: https://www.cyentia.com/publication/iris-2022/
+  url: https://www.cyentia.com/wp-content/uploads/2026/03/IRIS-2022_Cyentia.pdf
   publication_date: '2022-01-01'
   access_mode: public_html
   intended_use:
@@ -697,7 +697,7 @@ sources:
   title: IRIS Ransomware
   publisher: Cyentia Institute
   source_type: ransomware_research
-  url: https://www.cyentia.com/publication/iris-ransomware/
+  url: https://www.cyentia.com/wp-content/uploads/2026/03/IRIS_Ransomware.pdf
   publication_date: '2025-04-21'
   access_mode: public_html
   intended_use:
