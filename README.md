@@ -43,11 +43,29 @@ ours, each derived mechanically and re-runnable, and each published before anyon
   **7** use a central tendency as a floor, which is not a lower bound on loss.
 - **4 of 22 parameter families are coherent.** The other 18 compose anchors that measure
   different quantities, each validly sourced, none a reading of the same thing.
-- **7 of 11 impact maxima carry no exceedance probability.** They say a loss this size
-  happened, not how often a loss is worse.
+- **5 of 11 impact maxima carry no exceedance probability.** They say a loss this size
+  happened, not how often a loss is worse. *(Was 7. Two were retired in v0.9.0 by finding
+  the exceedance in a source we had already cited for a year — it was there and we had not
+  read it.)*
 - **Two published figures retracted** because they appear in no primary source, and **two
   claims withdrawn** after measurement contradicted them — including one asserted in
   writing to a dataset maintainer before it was checked.
+
+And one that is not about us:
+
+- **Zero of 58 public cyber-loss sources publish a mode.** Every three-point estimate
+  composes as a beta-PERT whose middle parameter is the mode — the most probable single
+  value, and the number the output is most sensitive to. No source read publishes one: not
+  the national statistics offices, not the police reporting bodies, not the insurers. IBM's
+  *Cost of a Data Breach* uses "average" 75 times and "median" zero times. **The industry
+  standardised on a shape its evidence base does not produce**, and what goes in the slot is
+  a published mean. [The audit →](docs/FINDINGS.md#1--no-anchor-we-hold-is-a-mode-and-the-schema-cannot-express-one)
+
+  The same reading found the opposite of what we expected everywhere else: Cyentia publishes
+  full loss distributions, DSIT states the cost of the top 5% of UK cases, Sophos states what
+  share of ransom payments passed $5M. Every answer is pinned to a document hash with the
+  passage quoted, and **the coverage is published beside the claim — 58 read, 14 held only as
+  a landing page**, because a count without its denominator is how you get quoted wrong.
 
 None of this says the sources are wrong, and none of it says the outputs are too high or
 too low — a shard describes a *cell*, not a company, so "too high" has no referent.
