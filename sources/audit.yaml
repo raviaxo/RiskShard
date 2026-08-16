@@ -1783,3 +1783,66 @@ audit:
         verified_on: '2026-08-15'
         detail: >-
           A stated survey respondent population of senior decision-makers.
+
+  # ── Read 2026-08-16: the two sector cuts, the largest gap in the corpus ──
+  # Sector is bridged 49 of 66 times, so a study of financial services or of
+  # manufacturing specifically is worth more than another national survey.
+
+  - source_id: sophos_state_ransomware_financial_services_2025
+    artifact_sha256: 92b2154b8f0cd2d56246778fd9fd4f1caf59c23df32756923947871101f3d145
+    artifact: sources/raw/sophos-state-of-ransomware-in-financial-services-2025.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value. The report writes "the average (median) ransom demand", using the two words interchangeably for the median, and never offers a most-likely figure.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Chart 8, "Ransom payments in financial services | Distribution banding", n=147 (2025) and 90 (2024), banded from "Less than $1,000" through "Between $1,000,000 and $4,999,999" to "$5 million or more". Sector-specific, which is what makes it valuable here.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          By the open top band of Chart 8 — the same construction as the 2023 and 2024 editions, whose top bands state what share of payments passed $5M. The prose gives the medians rather than the top-band share for this cut, and the chart's percentages do not extract cleanly from the PDF columns, so the share itself is not quoted here: the exceedance is published, and reading its exact value needs the chart rather than the text.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Financial-services providers responding to the survey, n=147 for the 2025 payment question. The denominator is organizations that PAID a ransom, not all attacked — a caveat that travels with any figure taken from it.
+
+  - source_id: sophos_state_ransomware_manufacturing_2025
+    artifact_sha256: c579c711f3004db660c547e4c73be6b0e4997cb5b76fffacabebacf928f99eae
+    artifact: sources/raw/sophos-state-of-ransomware-in-manufacturing-2025.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value; "average (median)" again, used for the median.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Chart 8, "Ransom payments in manufacturing and production | Distribution banding", with the same banding as the financial-services cut. Median ransom paid fell from $1.2M in 2024 to $1M in 2025; median demand from $1.5M to $1.2M.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Stated in prose, unambiguously, and this is the most directly usable exceedance found in the whole corpus: "extreme payments of $5 million or more — accounting for 18% of payments in 2025 — up from 15% last year", alongside "extreme demands of $5 million or more — accounting for a fifth (20%) of demands — up from 15% in 2024". P(payment >= $5M) = 18% over manufacturing and production organizations that paid.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Manufacturing and production organizations responding to the survey; root-cause base n=331 (2025), 375 (2024), 204 (2023). Same payer-denominator caveat as the financial-services cut.
+

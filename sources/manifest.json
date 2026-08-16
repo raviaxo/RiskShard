@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 59,
+  "fetched_count": 60,
   "generated_at": "2026-08-01T21:47:07Z",
   "manifest_version": "1.0",
-  "source_count": 59,
+  "source_count": 60,
   "sources": [
     {
       "access_mode": "public_html",
@@ -1233,10 +1233,10 @@
     },
     {
       "access_mode": "public_html",
-      "content_length": 717056,
-      "content_type": "text/html; charset=utf-8",
-      "final_url": "https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025",
-      "gathered_at": "2026-08-01T21:47:07Z",
+      "content_length": 7117574,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-manufacturing-and-production",
+      "gathered_at": "2026-08-16T00:00:00Z",
       "http_status": 200,
       "id": "sophos_state_ransomware_manufacturing_2025",
       "intended_use": [
@@ -1246,8 +1246,8 @@
       ],
       "publication_date": "2025-12-04",
       "publisher": "Sophos",
-      "raw_path": "sources/raw/sophos_state_ransomware_manufacturing_2025.html",
-      "sha256": "8e7cba8e25803a4ef0477e67e8612def48633515dd0b6f5d963818e7c2040685",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-manufacturing-2025.pdf",
+      "sha256": "c579c711f3004db660c547e4c73be6b0e4997cb5b76fffacabebacf928f99eae",
       "source_type": "industry_survey",
       "status": "fetched",
       "title": "State of Ransomware in Manufacturing and Production 2025",
@@ -1398,6 +1398,29 @@
       "url": "https://www.verizon.com/business/resources/T766/reports/2026-dbir-data-breach-investigations-report.pdf",
       "url_stability": "dated",
       "usage_notes": "Use as a threat-pattern and breach-vector source. DBIR is not a direct actuarial loss table and should not be treated as complete representation of all breaches.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 708866,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-financial-services",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_financial_services_2025",
+      "intended_use": [
+        "financial-services ransomware prevalence",
+        "sector ransom payment distribution"
+      ],
+      "publication_date": "2025-10-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-financial-services-2025.pdf",
+      "sha256": "92b2154b8f0cd2d56246778fd9fd4f1caf59c23df32756923947871101f3d145",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in Financial Services 2025",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-financial-services",
+      "url_stability": "dated",
+      "usage_notes": "Sector-specific ransomware survey. Ransom payment figures are medians over responding organizations that paid, not over all organizations attacked - the denominator is the payers.\n"
     }
   ]
 }

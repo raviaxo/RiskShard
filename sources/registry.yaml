@@ -851,7 +851,7 @@ sources:
   title: State of Ransomware in Manufacturing and Production 2025
   publisher: Sophos
   source_type: industry_survey
-  url: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025
+  url: https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-manufacturing-and-production
   publication_date: '2025-12-04'
   access_mode: public_html
   intended_use:
@@ -1197,3 +1197,17 @@ sources:
 
     '
   url_stability: dated
+- id: sophos_state_ransomware_financial_services_2025
+  title: The State of Ransomware in Financial Services 2025
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-financial-services
+  publication_date: '2025-10-01'
+  access_mode: public_pdf
+  intended_use:
+    - financial-services ransomware prevalence
+    - sector ransom payment distribution
+  usage_notes: |
+    Sector-specific ransomware survey. Ransom payment figures are medians over responding organizations that paid, not over all organizations attacked - the denominator is the payers.
+  url_stability: dated
+
