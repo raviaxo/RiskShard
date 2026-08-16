@@ -106,14 +106,21 @@ class PortfolioExceedanceTests(unittest.TestCase):
         self.assertEqual(sum(t["by_basis"].values()), t["maxima"])
         self.assertEqual(t["quantified"], sum(t["by_basis"][b] for b in QUANTIFIED))
 
-    def test_the_adr_0008_claim_still_holds(self):
-        """No maximum in this portfolio is a modeled quantile.
+    def test_the_first_modeled_quantiles_have_landed(self):
+        """ADR-0008's load-bearing claim was "no maximum is a modeled quantile". It fell.
 
-        This is the load-bearing sentence of ADR-0008 and of the README front door.
-        If a modeled quantile ever lands, that is excellent news and this test should
-        be updated deliberately — not a reason to quietly reword the claim.
+        The previous version of this test asserted zero and said, in its own docstring,
+        that a modeled quantile landing would be excellent news and should be handled
+        deliberately rather than by rewording the claim. On 2026-08-16 two landed: the
+        DE and JP manufacturing maxima, whose $5M threshold Sophos states 18% of 2025
+        ransom payments exceeded, putting it at the 82nd percentile of a published
+        distribution.
+
+        Held at 2 rather than ">= 1" on purpose. A third would mean another maximum
+        gained a quantile, which is a claim about the portfolio that should be read and
+        published, not absorbed by a loose assertion.
         """
-        self.assertEqual(self.portfolio["totals"]["by_basis"]["modeled_quantile"], 0)
+        self.assertEqual(self.portfolio["totals"]["by_basis"]["modeled_quantile"], 2)
 
     def test_a_module_view_matches_the_portfolio(self):
         module = build_module_provenance("us_finance_data_breach_midmarket", ROOT)
