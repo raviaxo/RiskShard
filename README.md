@@ -508,9 +508,9 @@ call. Read the two axes together; neither alone tells you a range is safe to use
 
 **And a maximum here is not a bound.** Measuring the second axis exposed a third
 ([ADR-0008](docs/adr/0008-the-governed-tail.md), accepted 2026-08-07): every `impact.max` now
-declares *what is known about it being exceeded*. Portfolio-wide, **2 of 11 maxima carry an
-exceedance statement — 0 are modeled quantiles, 2 are observed ranks (1 of 579 claims, 1 of
-84), 2 are legal ceilings, and 7 carry nothing at all.** That is not a footnote: in
+declares *what is known about it being exceeded*. Portfolio-wide, **4 of 11 maxima carry an
+exceedance statement — 2 are modeled quantiles, 2 are observed ranks (1 of 579 claims, 1 of
+84), 2 are legal ceilings, and 5 carry nothing at all.** That is not a footnote: in
 [the worked decision](docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md) the per-event mean runs
 **14.8× its own mode** because the maximum drives the distribution rather than bounding it,
 and moving that one anchor swings P(event > AUD 20M) from **0% to 23%** — so the least

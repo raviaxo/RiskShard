@@ -181,11 +181,20 @@ measurement.
 
 | | |
 | --- | --- |
-| `impact.max` anchors carrying an exceedance statement | **2 of 11** |
-| carrying **none** (`none_known`) | **7 of 11** |
+| `impact.max` anchors carrying an exceedance statement | **4 of 11** |
+| carrying **none** (`none_known`) | **5 of 11** |
 | shards taking most of their modeled loss from the maximum alone | **7 of 11** |
 
-Seven maxima say *a loss this size happened*, not *how often a loss is worse*. They are the largest
+**Two of these moved on 2026-08-16, and the mechanism is worth more than the count.** Nothing was
+re-measured and no value changed: the DE and JP manufacturing maxima have anchored on a $5,000,000
+ransom threshold since they were built, and reading the source properly turned up the share above
+it — Sophos states that **18% of 2025 ransom payments were $5 million or more**, placing $5M at the
+82nd percentile of a published distribution. The anchor had carried `none_known` because the
+original extraction recorded only that "extreme $5M+ cases saw a slight uptick". **The exceedance
+was in the source all along; we had not read it.** That is the first time this portfolio has held a
+`modeled_quantile`, and ADR-0008's load-bearing claim that none existed is withdrawn accordingly.
+
+Five maxima still say *a loss this size happened*, not *how often a loss is worse*. They are the largest
 loss found, not the largest loss possible — and in seven of eleven shards that anchor drives most of
 the modeled average. **A figure mostly driven by an anchor that admits no exceedance probability is
 a figure resting on one observation.**

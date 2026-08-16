@@ -208,15 +208,16 @@ records:
     source_type: industry_survey
     source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025
     publication_date: "2025-12-04"
-    extraction_date: "2026-07-14"
-    citation_detail: Ransom demands, payments and attack recovery costs section; extreme USD 5M+ demand and payout cases saw a slight uptick.
-    extraction_notes: Sophos noted that extreme USD 5M+ ransom demand and payout cases increased slightly in manufacturing and production.
+    extraction_date: "2026-08-16"
+    citation_detail: 'Ransoms section: "extreme payments of $5 million or more - accounting for 18% of payments in 2025 - up from 15% last year", alongside extreme demands of $5 million or more accounting for a fifth (20%) of demands.'
+    extraction_notes: 'Read from the report on 2026-08-16, replacing an earlier extraction that recorded only that extreme $5M+ cases had risen slightly. The share is stated in prose, so the threshold now carries a published exceedance rather than none.'
     normalization_notes: Stored as a manufacturing-sector stress threshold, not as a mathematically observed maximum.
-    limitations: Threshold for extreme ransom demands and payouts, not total event loss, not Germany-specific, and not a formal percentile or upper bound.
+    limitations: 'A ransom PAYMENT threshold, not a total event loss - the shard composes it as an impact maximum and those are different quantities. Not Germany-specific: the survey is global manufacturing and production. The 18% exceedance is over organizations that paid a ransom, a narrower and self-selected denominator than all organizations attacked, so it understates nothing about non-payers and says nothing about them either.'
     confidence: medium
     evidence_type: source_backed
     measurement_basis: observed_extremum
-    exceedance_basis: none_known
+    exceedance_basis: modeled_quantile
+    exceedance_detail: '18% of ransom payments made by manufacturing and production organizations were $5 million or more in 2025, up from 15% in 2024 (Sophos, State of Ransomware in Manufacturing and Production 2025, ransom payments section). $5M therefore sits at the 82nd percentile of that published payment distribution. The exceedance is over organizations that PAID a ransom, not over all organizations attacked.'
     applicability:
       industries: [manufacturing]
       countries: [global]

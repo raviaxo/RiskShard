@@ -150,8 +150,19 @@ a **floor, not an estimate**: policy limits censor the sample and uninsured loss
 to it, which means the true rate of losses above those values is *higher* than 1/579 and 1/84, not
 lower. Saying so on the record is the whole point of the axis.
 
-The ADR's load-bearing claim — no maximum is a modeled quantile — is unchanged and is now pinned
-by a test rather than a memo.
+The ADR's load-bearing claim — no maximum is a modeled quantile — **held until 2026-08-16 and no
+longer does.** Two landed together: the DE and JP manufacturing maxima both anchor on a $5,000,000
+ransom threshold, and Sophos's *State of Ransomware in Manufacturing and Production 2025* states
+that **18% of 2025 ransom payments were $5 million or more**, up from 15% — which places $5M at the
+**82nd percentile** of its published payment distribution. The threshold did not move; what changed
+is that a share above it is now published, so `none_known` became `modeled_quantile`.
+
+Two caveats travel with them and are recorded on the records rather than here: the quantity is a
+ransom **payment**, not a total event loss, and the exceedance is over organizations that **paid**,
+a narrower and self-selected denominator than all organizations attacked.
+
+The count is pinned by a test at **2** rather than at "at least one", so a third has to be read and
+published rather than absorbed.
 
 **Built 2026-08-07 (commitment 2).** `engine/tail_sensitivity.py`, `riskshard_modules.py tail`,
 and a line on both surfaces. Two readings, deliberately different in kind:
