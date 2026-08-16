@@ -87,7 +87,40 @@ def extract_text(path):
         return " ".join(parser.parts)
     if suffix in (".json", ".txt", ".csv"):
         return path.read_text(encoding="utf-8", errors="replace")
-    return None  # xlsx, zip — not readable as text here; read by hand
+    if suffix in (".xlsx", ".zip"):
+        return _archive_text(path)
+    return None
+
+
+def _archive_text(path):
+    """Text out of an .xlsx or a .zip, with the standard library only.
+
+    An .xlsx is a zip of XML, so no third-party reader is needed — and AGENTS.md is
+    standard-library-first, which is the right call for a research aid nobody should
+    have to install anything to run. Statistical agencies ship their tables this way
+    (Census SUSB, Japan's NPA, StatCan), and leaving three sources unreadable for
+    want of a dependency would have put them in the blocked pile for no reason.
+
+    Cell values live in xl/sharedStrings.xml and the sheet XML; both are read for
+    tags and numbers, which is enough to see what a table publishes.
+    """
+    import zipfile
+
+    try:
+        with zipfile.ZipFile(path) as zf:
+            names = zf.namelist()
+            wanted = [n for n in names
+                      if n.endswith(("sharedStrings.xml", ".csv", ".txt"))
+                      or "/worksheets/" in n and n.endswith(".xml")]
+            if not wanted:
+                wanted = [n for n in names if n.endswith((".xml", ".json"))][:8]
+            parts = [" ".join(names)]
+            for name in wanted[:12]:
+                raw = zf.read(name).decode("utf-8", errors="replace")
+                parts.append(re.sub(r"<[^>]+>", " ", raw))
+            return " ".join(parts)
+    except (zipfile.BadZipFile, OSError):
+        return None
 
 
 def scan(text, limit=4):
