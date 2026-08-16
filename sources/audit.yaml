@@ -400,26 +400,6 @@ audit:
           (1,008,597 in the year, $20.877bn in losses), which is a self-selected
           reporting population and not a business census.
 
-  - source_id: ibm_cost_data_breach_2025
-    properties:
-      mode:
-        basis: no_readable_artifact
-        detail: &ibm2025 >-
-          What we hold is a 1,617-word IBM article *about* the 2025 Cost of a Data
-          Breach Report, not the report. It quotes the global average of USD 4.44M and
-          a mean time to identify and contain of 241 days, and nothing else that would
-          answer these questions. Same blocker as the UK and Canada cuts.
-      distribution:
-        basis: no_readable_artifact
-        detail: *ibm2025
-      exceedance:
-        basis: no_readable_artifact
-        detail: *ibm2025
-      population:
-        basis: no_readable_artifact
-        detail: *ibm2025
-
-  # ── Read 2026-08-15, third batch ─────────────────────────────────────────
   - source_id: spf_annual_scam_cybercrime_brief_2025
     artifact_sha256: 5422fa57299d72ed6a2e802ad713c396ce8cd13d23e7e6e727fa1735b1c96b97
     artifact: sources/raw/spf_annual_scam_cybercrime_brief_2025.pdf
@@ -1510,25 +1490,6 @@ audit:
         detail: >-
           Still unread. The PDF is the report rather than a landing page, but text extraction yields 791 words of headings and section titles, which means its substance is carried in images. The stated limitation of the read method applies exactly here, so it is left as a question rather than answered from what little extracts.
 
-  - source_id: ico_self_reported_breach_cases_2024_25
-    properties:
-      mode:
-        basis: no_readable_artifact
-        detail: >-
-          A 269-word ICO 'data sets' landing page; the figures are in downloadable files it links to, not in the page.
-      distribution:
-        basis: no_readable_artifact
-        detail: >-
-          A 269-word ICO 'data sets' landing page; the figures are in downloadable files it links to, not in the page.
-      exceedance:
-        basis: no_readable_artifact
-        detail: >-
-          A 269-word ICO 'data sets' landing page; the figures are in downloadable files it links to, not in the page.
-      population:
-        basis: no_readable_artifact
-        detail: >-
-          A 269-word ICO 'data sets' landing page; the figures are in downloadable files it links to, not in the page.
-
   - source_id: cesin_barometre_cybersecurite_2025
     properties:
       mode:
@@ -2053,4 +2014,95 @@ audit:
         verified_on: '2026-08-16'
         detail: >-
           Unusually precise and unusually useful: organizations with between 100 and 5,000 employees that were HIT by ransomware in the previous 12 months, n=33 for Singapore, surveyed January-March 2026, all figures in U.S. dollars. Note two constraints Sophos applies and states: the denominator is the hit population rather than all organizations, and outlier ransoms of $40 million or more were removed before publication.
+
+  # ── Read 2026-08-16: IBM, the most-cited loss figure in the field ────────
+
+  - source_id: ibm_cost_data_breach_2026
+    artifact_sha256: 0c7808f23134ff9e20e2386e4c93608228b04834d0266cd00bbc184edf115600
+    artifact: sources/raw/Cost-of-a-Data-Breach-Report-2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          None, and this is the finding. In 12,056 words about the cost of a data breach the word "average" appears 75 times and "median" does not appear once — nor does percentile, quartile, "50th" or "typical". The one heading containing "Distribution" is "Distribution by sample or region", which is the composition of the sample (ASEAN 4%, Australia 5%, US 10%), not a distribution of cost. The most-cited cyber loss figure in the field is a mean published without dispersion.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          None. With no quantiles published there is nothing from which an exceedance could even be read.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          Stated: organizations across 17 industries in 16 countries and regions that experienced a breach in the study window, with organization, geographic and industry demographics sections. It is a benchmarked cost study over a recruited sample, not a census — and Figure 4 gives average total cost by industry, USD 6.29M for Financial against 5.56M the prior year, which is the sector cut most relevant to our finance cells.
+
+  - source_id: ibm_cost_data_breach_2025
+    artifact_sha256: e60c77ff14afe3d9d0f72dd5b2845329568735cc41567f45aaaf715b7952e910
+    artifact: sources/raw/ibm_cost_data_breach_2025_report.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          Same construction as the 2026 edition: 60 occurrences of "average", zero of "median" or "percentile". Global average cost fell to USD 4.44 million, reported as a mean with no dispersion.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          None.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          The same benchmarked multi-country, multi-industry breached-organization sample as the 2026 edition, with demographics reported.
+
+  # ── Read 2026-08-16: ICO case data — structure without magnitude ─────────
+
+  - source_id: ico_self_reported_breach_cases_2024_25
+    artifact_sha256: d8642b570d67d23138004d60bc3a883a13d94a013c9d615830c21b88402a26e1
+    artifact: sources/raw/pdb-cases-q4-2025-26.csv
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No modal value; the release carries no magnitudes at all.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          No magnitude is distributed because none is recorded. The dataset is case-level regulatory administration: case status, reference, legislation, received and completed dates, sector, sub-sector, the organisation named, the decision taken, and a cyber-incident flag. There is no cost, no record count and no severity field.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-16'
+        detail: >-
+          None, and none is possible from these fields.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-16'
+        detail: >-
+          The strongest population statement in the corpus and the reason this source matters: every personal-data-breach case reported to the ICO under GDPR/DPA in the quarter, named to the organisation, classified by sector and sub-sector. 24,154 cases across the eight quarters held, of which 5,694 carry ISCyberIncident=Yes. For the cell we model it resolves to 1,970 Finance, insurance and credit cases with 707 flagged cyber - a genuine sector-and-country-specific numerator, over a mandatory-notification population rather than a survey sample.
 

@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 67,
+  "fetched_count": 68,
   "generated_at": "2026-08-01T21:47:07Z",
   "manifest_version": "1.0",
-  "source_count": 67,
+  "source_count": 68,
   "sources": [
     {
       "access_mode": "public_html",
@@ -691,10 +691,10 @@
     },
     {
       "access_mode": "public_html",
-      "content_length": 175345,
-      "content_type": "text/html;charset=utf-8",
-      "final_url": "https://www.ibm.com/think/x-force/2025-cost-of-a-data-breach-navigating-ai",
-      "gathered_at": "2026-08-01T21:47:07Z",
+      "content_length": 1986336,
+      "content_type": "application/pdf",
+      "final_url": "https://www.ibm.com/reports/data-breach",
+      "gathered_at": "2026-08-16T00:00:00Z",
       "http_status": 200,
       "id": "ibm_cost_data_breach_2025",
       "intended_use": [
@@ -704,8 +704,8 @@
       ],
       "publication_date": "2025-07-30",
       "publisher": "IBM",
-      "raw_path": "sources/raw/ibm_cost_data_breach_2025.html",
-      "sha256": "10e6c91ede5eb9eb6c5c586305afa178281fe77a96e8a4353a67ba6b09e670f8",
+      "raw_path": "sources/raw/ibm_cost_data_breach_2025_report.pdf",
+      "sha256": "e60c77ff14afe3d9d0f72dd5b2845329568735cc41567f45aaaf715b7952e910",
       "source_type": "data_breach_cost_research",
       "status": "fetched",
       "title": "Cost of a Data Breach Report 2025",
@@ -788,10 +788,10 @@
     },
     {
       "access_mode": "public_html",
-      "content_length": 35512,
-      "content_type": "text/html; charset=utf-8",
+      "content_length": 1060776,
+      "content_type": "text/csv",
       "final_url": "https://ico.org.uk/action-weve-taken/complaints-and-concerns-data-sets/self-reported-personal-data-breach-cases/",
-      "gathered_at": "2026-08-01T21:47:07Z",
+      "gathered_at": "2026-08-16T00:00:00Z",
       "http_status": 200,
       "id": "ico_self_reported_breach_cases_2024_25",
       "intended_use": [
@@ -800,14 +800,14 @@
       ],
       "publication_date": "2025-06-01",
       "publisher": "Information Commissioner's Office",
-      "raw_path": "sources/raw/ico_self_reported_breach_cases_2024_25.html",
-      "sha256": "01db0e854ecc602740834e5c7d1beddd6196c0c1eb6320fbadb3703b8e1cc84a",
+      "raw_path": "sources/raw/pdb-cases-q4-2025-26.csv",
+      "sha256": "d8642b570d67d23138004d60bc3a883a13d94a013c9d615830c21b88402a26e1",
       "source_type": "regulator_statistics",
       "status": "fetched",
       "title": "ICO self-reported personal data breach cases (2024/25)",
       "url": "https://ico.org.uk/action-weve-taken/complaints-and-concerns-data-sets/self-reported-personal-data-breach-cases/",
       "url_stability": "rolling",
-      "usage_notes": "Use as the UK personal-data-breach report count (the ICO received about 12,412 self-reported personal data breach reports in 2024/25, and roughly 85% are resolved through informal action with no fine). Denominator for the conditional probability of an ICO monetary penalty given a breach.\n"
+      "usage_notes": "Case-level personal-data-breach reports to the ICO, published quarterly as CSV. Eight quarters held locally (2024/25 Q1 - 2025/26 Q4), 24,154 rows. The hash pins the 2025/26 Q4 file; the others are siblings of the same release series.\n"
     },
     {
       "access_mode": "public_html",
@@ -1582,6 +1582,29 @@
       "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-singapore",
       "url_stability": "dated",
       "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=33.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 8758890,
+      "content_type": "application/pdf",
+      "final_url": "https://www.ibm.com/reports/data-breach",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "ibm_cost_data_breach_2026",
+      "intended_use": [
+        "data breach total cost by industry",
+        "data breach cost by country and region"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "IBM",
+      "raw_path": "sources/raw/Cost-of-a-Data-Breach-Report-2026.pdf",
+      "sha256": "0c7808f23134ff9e20e2386e4c93608228b04834d0266cd00bbc184edf115600",
+      "source_type": "data_breach_cost_research",
+      "status": "fetched",
+      "title": "Cost of a Data Breach Report 2026",
+      "url": "https://www.ibm.com/reports/data-breach",
+      "url_stability": "rolling",
+      "usage_notes": "Means only; no median or percentile is published.\n"
     }
   ]
 }

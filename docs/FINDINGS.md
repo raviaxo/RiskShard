@@ -53,11 +53,11 @@ and a source-level claim counts only when a human has read the stored artifact:
 
 | | |
 | --- | --- |
-| registered sources **read** | **44 of 62** |
-| …publishing a **mode** | **0 of 44** |
-| …publishing a **distribution** over loss or frequency | **11 of 44** |
-| …publishing an **exceedance** statement | **9 of 44** |
-| …that measure a **population** they name | **31 of 44** |
+| registered sources **read** | **54 of 70** |
+| …publishing a **mode** | **0 of 54** |
+| …publishing a **distribution** over loss or frequency | **11 of 54** |
+| …publishing an **exceedance** statement | **15 of 54** |
+| …that measure a **population** they name | **41 of 54** |
 | held only as a landing page, a press release or no artifact — **unanswerable** | **17** |
 | readable in principle, not yet read | **2** |
 
@@ -86,6 +86,13 @@ that public sources offer only point statistics. It does not:
   bad cyber event might cost, we suggest using the 95th percentile value."* It is also the only
   source that visibly reasons about which central measure to use, switching from a geometric mean to
   a median and explaining why — **and it still never publishes a mode.**
+- **IBM's *Cost of a Data Breach* publishes no median at all.** In 12,056 words about the cost
+  of a breach, the 2026 edition uses "average" 75 times and "median" **zero** times — no
+  percentile, no quartile, no "typical". Its only heading containing *"Distribution"* is
+  *"Distribution by sample or region"*, the composition of the sample rather than of cost. The
+  2025 edition is built the same way. **The most-cited cyber loss figure in the field is a mean
+  published without dispersion**, which is a stronger statement of finding 1's problem than
+  anything in our own corpus.
 - **Singapore Police Force's 2025 brief states one in a single sentence** — *"about 67.1% suffered
   less than $5,000 in losses, while 5.2% of scam cases suffered at least $100,000"* — and **Sophos
   2023** reports that 40% of paying organisations paid $1M or more.

@@ -1335,4 +1335,21 @@ sources:
     $40 million or more were removed by Sophos before publication - both caveats travel
     with any figure drawn from it. All financial data points are in U.S. dollars.
   url_stability: dated
+- id: ibm_cost_data_breach_2026
+  title: Cost of a Data Breach Report 2026
+  publisher: IBM
+  source_type: data_breach_cost_research
+  url: https://www.ibm.com/reports/data-breach
+  publication_date: '2026-07-01'
+  access_mode: public_pdf
+  intended_use:
+    - data breach total cost by industry
+    - data breach cost by country and region
+  usage_notes: |
+    The most-cited cyber loss figure in the field. Reports MEANS only - no median,
+    percentile or quantile appears anywhere in the report - so a figure taken from it
+    is an average over a benchmarked sample and carries no dispersion. Population is
+    organizations across 17 industries in 16 countries and regions that experienced a
+    breach in the study window; it is a benchmarked cost study rather than a census.
+  url_stability: rolling
 
