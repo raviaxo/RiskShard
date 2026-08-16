@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 68,
+  "fetched_count": 69,
   "generated_at": "2026-08-01T21:47:07Z",
   "manifest_version": "1.0",
-  "source_count": 68,
+  "source_count": 69,
   "sources": [
     {
       "access_mode": "public_html",
@@ -383,10 +383,10 @@
     },
     {
       "access_mode": "public_html",
-      "content_length": 240254,
-      "content_type": "text/html; charset=UTF-8",
+      "content_length": 1371894,
+      "content_type": "application/pdf",
       "final_url": "https://web.archive.org/web/20241229032228/https://www.cybersecurity-insiders.com/portfolio/2024-insider-threat-report-gurucul/",
-      "gathered_at": "2026-08-01T21:47:07Z",
+      "gathered_at": "2026-08-16T00:00:00Z",
       "http_status": 200,
       "id": "cybersecurity_insiders_insider_threat_2024",
       "intended_use": [
@@ -395,8 +395,8 @@
       ],
       "publication_date": "2024-06-01",
       "publisher": "Cybersecurity Insiders",
-      "raw_path": "sources/raw/cybersecurity_insiders_insider_threat_2024.html",
-      "sha256": "28261137a84a70bf84e2c3a01f15e915c346997152727c28d1c8844949de9a9c",
+      "raw_path": "sources/raw/2024-Insider-Threat-Report-Gurucul.pdf",
+      "sha256": "88b71b6bfeb546838324e72e3d91e5dfcf3e08938ac083832f78d7108d3b4c3d",
       "source_type": "industry_survey",
       "status": "fetched",
       "title": "Cybersecurity Insiders 2024 Insider Threat Report",
@@ -1605,6 +1605,29 @@
       "url": "https://www.ibm.com/reports/data-breach",
       "url_stability": "rolling",
       "usage_notes": "Means only; no median or percentile is published.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 5900488,
+      "content_type": "application/pdf",
+      "final_url": "https://www.dtexsystems.com/ponemon-cost-of-insider-risks-report/",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "dtex_ponemon_cost_insider_risks_2026",
+      "intended_use": [
+        "insider incident cost per incident by insider type",
+        "insider incident frequency per organization per year"
+      ],
+      "publication_date": "2026-01-01",
+      "publisher": "Ponemon Institute and DTEX Systems",
+      "raw_path": "sources/raw/DTEX_Ponemon_2026.pdf",
+      "sha256": "81752c526a630107d69b8b4a41c951f7f5b5bc2dd8df556756006d5ec8386d58",
+      "source_type": "cyber_loss_research",
+      "status": "fetched",
+      "title": "2026 Cost of Insider Risks Global Report",
+      "url": "https://www.dtexsystems.com/ponemon-cost-of-insider-risks-report/",
+      "url_stability": "rolling",
+      "usage_notes": "Means over a 354-organization benchmark sample; no median published.\n"
     }
   ]
 }
