@@ -181,7 +181,25 @@ publication, and two drafts are written and unsent (below).
 2. `2026-08-16-no-source-publishes-a-mode.md` — the mode finding, GRC EC first then LinkedIn, with
    prepared answers for the four objections.
 
-**Do not build `range`/`accrual` before he answers.** The reply ends on that question deliberately.
+**He answered 2026-08-16, and the reply went out.** His design input is captured in full with the
+measurement against it: [`amount_shape_design_input.md`](amount_shape_design_input.md). Short
+version — **both**, because they are orthogonal: an amount *shape*
+(`point / bounded range / lower bound / upper bound / unquantified`) is how the figure was
+expressed, and *treatment* (`accrued / incurred-realized / estimated-provisional / recovery`) is its
+accounting status. Adding `range` as an amount **type** would have been a category error.
+
+**Still not built, and three things block it.** `recovery` exists in our schema as an amount *type*
+(10 of 48 amounts) and in his design as a *treatment* — it is genuinely both, and he wrote the
+proposal without seeing our schema. His treatment facet also partly duplicates our populated
+`status` field, so it is a refactor of 48 amounts rather than an addition. Only `shape` is clean.
+
+**Next action: ask him the `recovery` question specifically**, then write the ADR against his
+answer rather than a guess.
+
+⚠️ Two standing flags, both easier to fudge now that he has engaged substantively: this is a design
+input and **moves neither ADR-0012 metric**, and improving the registry weeks before a criterion
+that may retire it invites sunk-cost reasoning — *"we just improved it"* is not an argument at the
+measurement point.
 
 ⚠️ **If he engages, it is a design input and still NOT a contributed entry** — the ADR-0012
 criterion must not be quietly read as satisfied by it.
