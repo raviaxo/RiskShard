@@ -141,68 +141,63 @@ on every run** until they are obtained. The reminder is mechanical, not a note. 
 
 ## Restart point
 
-**Session closed 2026-08-15 (second session that day). Tree clean, `main` == `origin/main` at
-`4a6cf14`, 324 tests, evidence and preflight clean, doctor FULLY GREEN, 0 open PRs, 0 unmerged
-branches. Data pack `ed6348d12ab0`. Released as [v0.8.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.8.0).**
-#139–#144 all merged.
+**Session closed 2026-08-16. Tree clean, `main` == `origin/main` at `bc4b6ef`, **356 tests**,
+evidence and preflight clean, **doctor FULLY GREEN**, 0 open PRs, 0 unmerged branches. Data pack
+`b492e20890b3` (92 files). Released as
+[v0.9.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.9.0).** #157–#169 all merged.
 
-**ACTIVE OBJECTIVE: none.** Both decisions that were pending on the owner are discharged, the code
-consequence of the first is implemented, released, and swept through every surface that publishes
-it — and the capability that whole arc paid for is now cashed.
+**ACTIVE OBJECTIVE: none.** Nothing is half-built. The next move is not a code objective — it is
+publication, and two drafts are written and unsent (below).
 
-**#146 — the reader supplies the target ([ADR-0014](../adr/0014-the-reader-supplies-the-target.md),
-closing ADR-0011 open question 1).** A visitor names their own country/sector/size/threat and all 66
-fit lines recompute in their browser by the engine's rule. It cost almost nothing because
-`declared_for` was already on the page and ADR-0013 had already made fit a pure function of
-(declaration, target) — nothing is fetched, sent, stored, or added to the schema. Verified against
-`derivable_bridges()` over 66 cards × 6 targets (**0 mismatches**) and against the published fit
-for the untouched page (**0 differences**).
+### What shipped 2026-08-16
 
-**The refusals are the substance, and they are the maintenance burden.** No fit score, grade,
-ranking, reordering by fit, or "recommended for you" — pinned by two tests against the rendered
-surface. The natural next asks ("sort by best fit", "show only what matches", "score my coverage")
-are all refused by ADR-0014 part 3. Anyone implementing one in good faith is undoing ADR-0011
-part 2 and re-importing the portability claim ADR-0010 retired.
+- **The intake layer** (#157). 67 documents arrived at once and are now triaged against the
+  portfolio's own measured gaps: **17 queued, 46 parked as out-of-cell, 5 duplicate**. Sector is
+  weighted above country because sector is bridged 49 times and country 15, and a test flips the
+  ranking if the data flips. The scorer was wrong twice in opposite directions; both are pinned as
+  regression tests.
+- **The audit went 42 → 58 of 72 sources read** (#158–#163), and **0 publish a mode** survived every
+  class: statistics offices, police bodies, national surveys, regulators, insurers, vendor studies,
+  an open incident dataset, and IBM — 75 "average", 0 "median".
+- **Two `none_known` maxima retired** (#164) and **v0.9.0 cut** (#167). ADR-0008's load-bearing
+  claim withdrawn: `modeled_quantile` 0 → 2, `none_known` 7 → 5, **0 of 66 published values moved**.
+- **Insider impact refreshed** to Ponemon/DTEX 2026 (#165), and a stale calibration note corrected —
+  it had claimed the impact side was entirely generic long after two anchors became insider-specific.
+- **The ICO frequency parameter declined with arithmetic** (#166) — open judgment call 8.
+- **[ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md)** (#168) — the registry kill criterion
+  gets a date instead of a release count.
+- **The front door repaired** (#169) — it did not mention the audit at all, and its exceedance count
+  was a day stale. Both now pinned by tests.
 
-**What it changed about the argument:** the page now *demonstrates* the ADR-0010 thesis instead of
-asserting it. On identical evidence, our cells give 7 of 66, `US` gives 11, and `GB · ransomware`
-gives **0 of 66**.
+### 🔴 PENDING ON THE OWNER — publication
 
-### What this arc did
+**Two drafts are written and unsent**, in `~/business-os/comms/ventures/riskshard/drafts/`:
 
-- **#139 — the two decisions.** ADR-0013 accepted (derive fit); the registry expansion declined
-  with its framing corrected. Finding 6 published.
-- **#140 — ADR-0013 implemented.** `population_match` gone from the schema and all 141 records.
-  Cell-matched **31 → 7**, bridged **35 → 59**, cross-country **15** unchanged; **no published
-  value moved** — all 66 evidence-report rows identical on value, unit and status.
-- **#141 — v0.8.0 cut.** First negative ledger tick. Doctor's `strength ledger: needs_review`,
-  which had stood across three fingerprint moves, cleared.
-- **#142 — the ledger's `note` field was being discarded.** It had existed since July with an entry
-  written on 2026-07-24 that no reader ever saw, because the emitter only rendered metrics.
-- **#143, #144 — the sweep.** Explorer and weekly digest now carry the correction too.
+1. `2026-08-16-flack-reply-disclosure-registry.md` — reply to John Flack in GRC EC. He proposed a
+   litmus test the registry already passes, and renamed the thing correctly: it is a **disclosure
+   registry**, not a loss registry. The reply concedes that and asks about `range` and `accrual`,
+   the two amount types we cannot currently represent. **A filing that says "$10-15M" is stored as
+   a point today.**
+2. `2026-08-16-no-source-publishes-a-mode.md` — the mode finding, GRC EC first then LinkedIn, with
+   prepared answers for the four objections.
 
-**The sweep is the part worth remembering.** A count that halves on unchanged evidence is a claim
-about our own data, so every surface that publishes it has to say why: README, `EVIDENCE_REPORT.md`,
-the explorer's Note 1, and Shard Notes. `docs/r/2026.08.15-v0.8.0/` deliberately does **not** —
-an archive is a snapshot of what was published, not a document that improves later (ADR-0004).
-Anyone citing v0.8.0 gets the number without the explanation, which is the correct trade and worth
-knowing.
+**Do not build `range`/`accrual` before he answers.** The reply ends on that question deliberately.
 
-⚠️ **One thing to know before starting.** The ledger is caught up and the doctor is green, so the
-next pack edit will move the fingerprint and put `strength ledger: needs_review` back. That is
-normal and clears at the next release; it is not a fault and does not need investigating.
+⚠️ **If he engages, it is a design input and still NOT a contributed entry** — the ADR-0012
+criterion must not be quietly read as satisfied by it.
 
-✅ **v0.8.0 is cut** (2026-08-15, owner authorized). Data-pack release
-`2026.08.15-v0.8.0` (91 files, `ed6348d12ab0`), immutable explorer archive at
-`docs/r/2026.08.15-v0.8.0/`, ledger caught up, **doctor fully green** — the `needs_review` that
-had stood across three fingerprint moves is cleared. Anything published about finding 6 or
-ADR-0013 now resolves against a release that contains them.
+### Worth knowing before starting
 
-**Ledger tick: the first negative one.** `cell-matched 7 (-24)`, `population-bridged 59 (+24)`,
-every other axis 0. The note explaining it is recorded **on the ledger entry** and rendered by the
-emitter into the README table, the weekly digest and (as prose) the explorer — see #142/#144.
-Without it the Progress table reads as a collapse in data strength, which is the opposite of what
-happened.
+**The highest-value work all session was re-reading what we already held, not acquiring more.**
+Four sources were stored as landing pages rather than documents (Cyentia, Sophos, IBM, Gurucul);
+one calibration note contradicted its own selections; one front-door count was stale; and the
+exceedance that retired two maxima had been sitting in a report cited since July. Before hunting
+for a source, check what the corpus thinks it has.
+
+**Unfinished, and named:** 14 sources are held only as a pointer and need a person (mostly IBM
+regional cuts and AFP); the doctor prints the count every run. 2 more are readable in principle but
+not yet read — the NPA Japan workbook needs a reader that resolves shared strings, and the CSA
+Singapore PDF is image-based.
 
 ### ✅ DECIDED 2026-08-16 — the kill criterion gets a clock ([ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md))
 
@@ -1884,3 +1879,16 @@ governance/regulatory loss).
   reason it was chosen: adoption is measured at zero (2 stars, 0 forks, 0 outside contributors,
   0 registry citations) while engineering quality is far ahead of it. Distribution is the next
   constraint, not correctness.
+- 2026-08-16 — **The audit became the work, and reading beat acquiring** (#157–#169, all merged,
+  v0.9.0 cut). 67 documents arrived and were triaged rather than read in arrival order: 17 queued,
+  46 parked, ranked against measured gaps. The audit went 42 → 58 of 72 sources and **0 publish a
+  mode** held through every source class, including IBM at 75 "average" and 0 "median". Two
+  `none_known` maxima were retired and **ADR-0008's load-bearing claim withdrawn** — the exceedance
+  was in a source cited since July and nobody had read it. Insider impact refreshed to Ponemon/DTEX
+  2026; a stale calibration note that claimed the impact side was wholly generic corrected; the ICO
+  frequency parameter declined with arithmetic (73× below the sourced floor — a reported incidence,
+  not a prevalence) as open judgment call 8. ADR-0017 gave the registry kill criterion a date after
+  it fired at zero on two releases cut one day apart, and says plainly that it is a pre-commitment
+  changed after an unfavourable measurement. The front door was found to not mention the audit at
+  all and to carry a day-stale count; both now pinned. Tests 354 → 356. **Owed next: publication —
+  two drafts written and unsent.**
