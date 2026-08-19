@@ -164,45 +164,28 @@
   <table class="facts" id="facts"></table>
 
   <div class="preamble">
-    <p>This page is generated from the open repository — nothing on it is hand-written. Each
-    item covers one jurisdiction / industry / threat cell and lists the public evidence found
-    for it: every parameter states its source, the exact line cited, the quantity it measures,
-    the population it was measured on, and its limitation. Any line can be
+    <p>This page is generated from the open repository — nothing on it is hand-written. Each item
+    covers one jurisdiction / industry / threat cell and lists the public evidence found for it:
+    the source, the exact line cited, the quantity it measures, the population it was measured on,
+    and its limitation. Any line can be
     <a id="disputelink" href="#">disputed as a GitHub issue</a>.</p>
-    <p><b>The evidence is the exhibit; the simulation at the foot of each item is a reference
-    rendering of it.</b> It is shown because composing these anchors is what exposes their
-    defects — every declaration on this page exists because there was a distribution to
-    inspect — and not because the output is the thing being offered. Whether this evidence
-    belongs in your model, and in what shape, is your decision to make.</p>
-    <p>Read the maturity honestly: these are governed-starter and review-candidate shards,
-    not human-approved benchmarks. Loss tails (P95/P99) are directional, not precise.</p>
   </div>
 
-  <!-- ADR-0014: the reader supplies the target. Distance is computed here, in the
-       reader's browser, from data already on the page. Nothing is sent anywhere and
-       nothing is stored. It answers where the evidence sits relative to a cell — never
-       whether it suits it. -->
-  <div class="challenge" id="target">
-    <div class="challengehead">Compute this against your own cell</div>
-    <p>Every <span class="lbl">fit</span> line below is computed against <em>our</em> cell,
-    which is a convenience for one reader — us. Name yours and every one of them recomputes,
-    by the same rule, in your browser. Nothing is sent anywhere and nothing is stored.</p>
-    <div class="targetrow">
-      <label>country <select id="t-country"></select></label>
-      <label>sector <select id="t-industry"></select></label>
-      <label>size <select id="t-size"></select></label>
-      <label>threat <select id="t-threat"></select></label>
-      <button type="button" id="t-reset">[reset to ours]</button>
-    </div>
-    <p id="targettally" class="sub"></p>
-    <p class="sub"><b>This tells you what is far from you, not what is good for you.</b>
-    A geography mismatch is fatal to one analysis and irrelevant to the next, and only you
-    know which — so this page publishes no fit score, no grade and no ranking, and it will
-    not reorder anything to suggest one. <em>Matched</em> means the declared population names
-    every facet you set. It does not mean the figure belongs in your model. Leave a facet
-    unset and it is simply not tested. The status column and the counts at the top of this
-    page continue to describe <em>our</em> cell — those are the released figures, cited in
-    the data pack; yours change only what you see.</p>
+  <div class="challenge" id="finding">
+    <div class="challengehead">What reading these sources found</div>
+    <p><b>58 of 72 registered sources have been read end to end and asked four questions. Zero
+    publish a mode.</b> That is the &ldquo;likely&rdquo; in every min / likely / max estimate and
+    the anchor the output moves with most — statistics offices, police reporting bodies, national
+    surveys, regulators, insurers and vendor studies alike. IBM&rsquo;s Cost of a Data Breach says
+    &ldquo;average&rdquo; 75 times and &ldquo;median&rdquo; zero. What goes in that slot instead,
+    here and everywhere, is a published mean treated as a peak.</p>
+    <p>The other three questions went the other way: distributions, exceedance statements and named
+    populations turn up more often than the field assumes. The gap is specifically the mode.</p>
+    <p><a href="https://github.com/raviaxo/RiskShard/blob/main/docs/FINDINGS.md">All eight findings,
+    including what we got wrong</a> — two figures retracted for citing no primary source and two
+    claims withdrawn after measurement contradicted them. Every answer is pinned to a document hash
+    with the passage quoted, in
+    <a href="https://github.com/raviaxo/RiskShard/blob/main/sources/audit.yaml"><code>sources/audit.yaml</code></a>.</p>
   </div>
 
   <div class="challenge" id="challenge">
@@ -217,10 +200,8 @@
     <a href="https://github.com/raviaxo/RiskShard/issues/new?template=request_a_shard.md">request the cell you need</a> (requests decide what gets built next) ·
     <a href="https://github.com/raviaxo/RiskShard/issues/new?template=improve_a_number.md">name a closer source</a> (naming it is a full contribution — extraction is on us) ·
     <a href="https://github.com/raviaxo/RiskShard/blob/main/docs/OPEN_JUDGMENT_CALLS.md">argue with an open judgment call</a> (no source-hunting required).</p>
-    <p>We have already broken several of our own:
-    <a href="https://github.com/raviaxo/RiskShard/blob/main/docs/FINDINGS.md">what governing this evidence turned up</a>
-    — including two figures retracted for citing no primary source and two claims withdrawn after
-    measurement contradicted them.</p>
+    <p>Numbers broken so far are counted above and recorded in
+    <a href="https://github.com/raviaxo/RiskShard/blob/main/docs/FINDINGS.md">Findings</a>.</p>
   </div>
 
   <h2 id="index">Index of items</h2>
@@ -233,81 +214,26 @@
   <div class="note">
     <p>Monte Carlo, 10,000 trials, seed 42, machine-independent seeding — a modeled range from
     public evidence, not a prediction. A parameter marked <span class="st est">estimate</span> is
-    an interpretive value whose limitation is stated on its face; all other parameters cite a
-    named public source. A parameter marked <span class="st brg">bridged</span> is source-backed by
-    evidence <em>not drawn from this item's own cell</em> — the dimensions borrowed across
-    (country, sector, size, threat) are named on its <span class="lbl">fit</span> line, and that
-    chip is what the cell-matched / bridged counts at the top of this page tally. Bridging is
-    declared, never hidden: a reader counting the source-backed total should not infer more
-    cell-specific evidence than exists. Grades follow the maturity ladder:
-    governed_starter → benchmark_review_candidate → benchmark-grade (the last only after a
-    recorded human review; no item on this page holds it).</p>
-    <p><b>Fit is relative to a target, and the target on this page is ours.</b> Each parameter
-    prints two lines and the order is deliberate. <span class="lbl">declared for</span> is the
-    population the source measured — countries, industries, size bands, threats. That is a
-    property of the record and it is true for every reader. <span class="lbl">fit</span> is
-    <em>computed</em> from that population against <em>this item's own cell</em>, which the line
-    names; it tells you how the record sits relative to ours and almost nothing about yours. It is
-    stored nowhere. If your cell differs, and it will, that is the one line to recompute, and the
-    line above it does not move.</p>
-    <p><b>That the first line means what it says is a repair, not an assumption.</b> On
-    2026-08-14, <b>21 records</b> were found declaring the cell they were borrowed <em>for</em>
-    rather than the population measured — the US BEC frequency floor declaring financial-services
-    mid-market over an economy-wide numerator and denominator, three US data-breach frequencies
-    declaring <code>US</code> over a UK survey, two Singapore anchors declaring <code>SG</code>
-    over US data. All 21 were corrected, no published figure moved, and a test now fails the build
-    if another appears. Every <span class="lbl">fit</span> line below is therefore <em>earned</em>:
-    the population above it genuinely does not name this cell.</p>
-    <p><b>The cell-matched count above got much worse on 2026-08-15, and that is the correction
-    rather than a decline.</b> Fit used to be a second field an author maintained by hand beside
-    the declaration. Measured against those declarations it disagreed on <b>45 of 66</b>
-    parameters, counting the same all-industry declaration as borrowed 28 times and as matched 72.
-    It was retired: fit is now computed on one rule for every facet — bridged when the declared
-    population does not name this cell's value — so cell-matched fell <b>31 → 7</b> and bridged
-    rose <b>35 → 59</b>. <b>No published figure moved</b>; every value, source, caveat and
-    simulated total is unchanged. <b>7 is what the number always was.</b> One consequence is worth
-    knowing while reading: a statutory penalty cap, a documented single-event loss and a
-    same-survey adjacent band are all measured over some other population, so they now read
-    <em>bridged</em> too. The <span class="lbl">measures</span> line is what tells you which of
-    those a parameter is.</p>
-    <p>This page publishes no fit score, grade or percentage, and will not. Compressing these
-    facets into one number would assert that a geography mismatch and a size mismatch trade off
-    against each other in a way we cannot know for your scenario — a geography mismatch is fatal
-    to one analysis and irrelevant to the next. The facets are listed separately so you decide
-    which ones bite.</p>
-    <p>Each parameter also states <em>what quantity it measures</em> on its <span class="lbl">measures</span>
-    line. This is independent of the source and of the population: two anchors can both be drawn from
-    this item's own cell and still measure different things — an annual breach prevalence against an
-    event frequency, or a perceived cost against an average total loss against a regulatory penalty.
-    Where a range's minimum, likely and maximum do not share one basis it is marked
-    <b>a mixed range</b> above that item's table, with the differing bases named. A mixed range is
-    <em>not</em> an error and nothing here is hidden because of it — each figure remains separately
-    sourced — but the width between the anchors is then partly a difference of definition rather than
-    of uncertainty, and a reader should not treat it as a spread. This declaration was added after a
-    practitioner asked the question in the open; which mixes are acceptable is not yet settled and is
-    recorded as an open question in the repository, not decided quietly.</p>
-    <p><b>A maximum on this page is not a bound.</b> Each item's <code>impact.max</code> also states
-    <em>what is known about it being exceeded</em>, on its <span class="lbl">exceedance</span> line.
-    Most say <b>none known</b>, and that is the honest answer rather than an omission: published loss
-    distributions carrying tail quantiles are rare and mostly commercial, so nearly every public
-    maximum is one documented event, the largest row in someone's dataset, or a legal ceiling.
-    Read those as <em>the largest loss found</em>, never <em>the largest loss that can happen</em> —
-    a figure with no exceedance statement says a loss that size occurred, not how often a loss is
-    worse. This matters more than it looks: because the model composes minimum, likely and maximum
-    into one distribution, the maximum <em>drives</em> the modeled average rather than capping it, so
-    it is simultaneously the least evidenced anchor and the one the result is most sensitive to.
-    Where an exceedance <em>can</em> be stated the line gives it — and the rate shown is a
-    within-sample rate on insured claims, which is a floor: losses above it are more common than the
-    sample says, not less.</p>
-    <p><b>How much of each figure comes from that maximum is stated on its face.</b> The model
-    composes minimum, likely and maximum into one distribution whose average is a weighted blend of
-    the three, so the maximum's share of the modeled average can be computed exactly — no sampling,
-    no seed, no error term. Where that share exceeds half, the item says so directly under its loss
-    figure. Read it together with that item's <span class="lbl">exceedance</span> line: a figure
-    mostly produced by an anchor that admits no exceedance probability is a figure resting on one
-    observation, however carefully that observation was sourced. Run
-    <code>python scripts/riskshard_modules.py tail</code> for the full table, including what each
-    item's annual average does when only the maximum is moved.</p>
+    an interpretive value whose limitation is stated on its face; all others cite a named public
+    source. A parameter marked <span class="st brg">bridged</span> is source-backed by evidence not
+    drawn from this item&rsquo;s own cell, and the dimensions borrowed across are named on its
+    <span class="lbl">fit</span> line. Grades follow the maturity ladder: governed_starter →
+    benchmark_review_candidate → benchmark-grade; no item here holds the last.</p>
+    <p><b>Two things to carry while reading.</b> A maximum on this page is not a bound — most
+    <code>impact.max</code> values carry no exceedance statement, so read them as <em>the largest
+    loss found</em>, never <em>the largest that can happen</em>. And because the model composes
+    minimum, likely and maximum into one distribution, the maximum drives the modeled average
+    rather than capping it: it is simultaneously the least evidenced anchor and the one the result
+    is most sensitive to. Where its share exceeds half, the item says so under its loss figure.</p>
+    <p><b>The cell-matched count above fell 31 → 7 on 2026-08-15, and that is the correction rather
+    than a decline.</b> Fit used to be a field an author kept by hand; measured against the
+    declarations it was supposed to describe, it disagreed on <b>45 of 66</b> parameters. It was
+    retired for a computed rule. <b>No published figure moved</b> — every value, source, caveat and
+    simulated total is unchanged, and 7 is what the number always was. One consequence while
+    reading: a statutory penalty cap, a documented single-event loss and a same-survey adjacent
+    band are all measured over some other population, so they read <em>bridged</em> too.</p>
+    <p>The full basis — how fit is computed, what a mixed range is, and how exceedance is read — is
+    in <a href="https://github.com/raviaxo/RiskShard/blob/main/docs/BASIS_OF_PREPARATION.md">docs/BASIS_OF_PREPARATION.md</a>.</p>
   </div>
 
   <h2>Note 2 — The correction record</h2>
@@ -352,70 +278,23 @@
       .filter(function(v){return v;}).join(' · ');
   };
 
-  /* ── ADR-0014: the reader supplies the target ───────────────────────────────
-     Fit is a pure function of (declaration, target) since ADR-0013, and this page
-     already ships `declared_for` on every parameter — so the reader's own cell can
-     be answered here, with nothing fetched, stored or sent anywhere.
-
-     READER_CELL is null until they choose. Null means "use each item's own cell",
-     which is what the page has always done and what the released counts describe.
-
-     This computes DISTANCE and refuses to judge it: no score, no grade, no ranking,
-     no ordering by fit, no "suitable for you". A geography mismatch is fatal to one
-     analysis and irrelevant to the next, and only the reader knows which — see
-     ADR-0014 part 3, which exists precisely because a target selector is where
-     someone would reasonably expect a score. */
-  var FACETS=[['country','countries'],['industry','industries'],
-              ['size','company_size_bands'],['threat','threats']];
-  var FACET_LABEL={country:'country',industry:'sector',size:'size',threat:'threat'};
-  var READER_CELL=null;
-
-  /* The engine's rule, unchanged: bridged on a facet when the declared population
-     does not name that facet's value for the target. A facet the target leaves
-     unset is not tested — the same as a shard cell carrying no value there. */
-  function fitAgainst(declared,cell){
-    var on=[];
-    if(!declared||!cell) return {status:'matched',bridged_on:on};
-    FACETS.forEach(function(f){
-      var want=cell[f[0]];
-      var declaredVals=declared[f[1]]||[];
-      if(!want||!declaredVals.length) return;
-      if(declaredVals.indexOf(want)===-1) on.push(FACET_LABEL[f[0]]);
-    });
-    return {status:on.length?'bridged':'matched',bridged_on:on};
-  }
-
-  function cellText(c){
-    if(!c) return '';
-    return [c.country?cname(c.country):'',fmt(c.industry),fmt(c.size),fmt(c.threat)]
-      .filter(function(v){return v;}).join(' · ') || 'an unconstrained target';
-  }
-
-  /* The target in force for one item: the reader's if they set one, else its own. */
-  function targetFor(s){
-    return READER_CELL||{country:s.country,industry:s.industry,size:s.size,threat:s.threat};
-  }
-
-  /* ADR-0011: fit never renders without naming the target it was computed against.
-     That requirement is why the reader's own cell is safe to offer — the sentence
-     says whose cell produced the answer, so a screenshot cannot lose it. */
+  /* ADR-0018 retired the reader-supplied target selector: 138 of its 215 selectable
+     combinations answered "0 of 66", so the control mostly told readers this corpus
+     held nothing for them. Fit is computed against each item's own cell, and the line
+     still names the cell it was computed against so a screenshot cannot lose it
+     (ADR-0011). No score, no grade, no ranking, no ordering by fit. */
   function fitText(s,p){
-    var mine=!!READER_CELL;
-    var cell=targetFor(s);
-    var f=mine?fitAgainst(p.declared_for,cell):(p.population||{});
-    var whose=mine?('<b>your cell</b> ('+esc(cellText(cell))+')')
-                  :('this item’s cell ('+esc(cellOf(s))+')');
+    var f=p.population||{};
+    var whose='this item’s cell ('+esc(cellOf(s))+')';
     if(f.status==='bridged'){
       var on=(f.bridged_on||[]).map(fmt);
       return '<b>bridged</b> against '+whose+' — on '+esc(on.join(', '))+
         ', because the population above does not name that cell on '+
-        (on.length>1?'those facets':'that facet')+'. '+
-        (mine?'Whether that matters is your call, not ours.'
-             :'This is the only line that changes when the target does: set your own cell above.');
+        (on.length>1?'those facets':'that facet')+'.';
     }
     return '<b>matched</b> against '+whose+
-      (mine?'. Matched is not the same as suitable — it means the declared population names every facet of your cell, nothing more.'
-           :', which is our target and not yours.');
+      ', which is our target and not yours. Matched means the declared population names '+
+      'every facet of this cell — not that the figure belongs in your model.';
   }
   var valText=function(p){return (p.value==null?'—':p.value)+(p.unit?(' '+p.unit):'');};
 
@@ -649,83 +528,6 @@
       '</section>';
   }).join('');
   document.getElementById('items').innerHTML=itemsHTML;
-
-  /* ── ADR-0014 wiring ────────────────────────────────────────────────────────
-     Options come from the evidence itself — every value any record declares, plus
-     every value our own cells take. Offering a value nothing was measured on would
-     invite a reader to ask a question this corpus cannot answer. */
-  (function(){
-    var boxes={country:document.getElementById('t-country'),
-               industry:document.getElementById('t-industry'),
-               size:document.getElementById('t-size'),
-               threat:document.getElementById('t-threat')};
-    if(!boxes.country) return;
-    var WILD={all:1,global:1,any:1};
-    var vals={country:{},industry:{},size:{},threat:{}};
-    DATA.shards.forEach(function(s){
-      if(s.country) vals.country[s.country]=1;
-      if(s.industry) vals.industry[s.industry]=1;
-      if(s.size) vals.size[s.size]=1;
-      if(s.threat) vals.threat[s.threat]=1;
-      (s.params||[]).forEach(function(p){
-        FACETS.forEach(function(f){
-          (((p.declared_for||{})[f[1]])||[]).forEach(function(v){
-            if(!WILD[v]) vals[f[0]][v]=1;
-          });
-        });
-      });
-    });
-    Object.keys(boxes).forEach(function(k){
-      var opts=['<option value="">(not set)</option>'];
-      Object.keys(vals[k]).sort().forEach(function(v){
-        opts.push('<option value="'+esc(v)+'">'+esc(k==='country'?cname(v):fmt(v))+'</option>');
-      });
-      boxes[k].innerHTML=opts.join('');
-    });
-
-    var tally=document.getElementById('targettally');
-    function readCell(){
-      var c={},any=false;
-      Object.keys(boxes).forEach(function(k){
-        var v=boxes[k].value;
-        if(v){c[k]=v;any=true;}
-      });
-      return any?c:null;
-    }
-    function repaint(){
-      READER_CELL=readCell();
-      var rows=document.querySelectorAll('.fitrow');
-      var matched=0,total=0;
-      Array.prototype.forEach.call(rows,function(tr){
-        var s=DATA.shards[byId[tr.getAttribute('data-shard')]];
-        if(!s) return;
-        var p=null;
-        (s.params||[]).forEach(function(q){
-          if(q.parameter===tr.getAttribute('data-param')) p=q;
-        });
-        if(!p) return;
-        tr.cells[1].innerHTML=fitText(s,p);
-        total++;
-        var f=READER_CELL?fitAgainst(p.declared_for,targetFor(s)):(p.population||{});
-        if(f.status!=='bridged') matched++;
-      });
-      /* ADR-0014 part 5: a count against the reader's cell is theirs and is labelled
-         as theirs. It never replaces the released figure at the top of the page. */
-      tally.innerHTML=READER_CELL
-        ? ('Against <b>your cell</b> ('+esc(cellText(READER_CELL))+'): <b>'+matched+
-           ' of '+total+'</b> parameters are drawn from a population that names every '+
-           'facet you set; the other '+(total-matched)+' are bridged. This is your number, '+
-           'computed in your browser — the released figure above is ours.')
-        : '';
-    }
-    Object.keys(boxes).forEach(function(k){
-      boxes[k].addEventListener('change',repaint);
-    });
-    document.getElementById('t-reset').addEventListener('click',function(){
-      Object.keys(boxes).forEach(function(k){boxes[k].value='';});
-      repaint();
-    });
-  })();
 
   function wireCopy(selector,attr,doneLabel){
     Array.prototype.forEach.call(document.querySelectorAll(selector),function(btn){

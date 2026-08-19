@@ -141,13 +141,60 @@ on every run** until they are obtained. The reminder is mechanical, not a note. 
 
 ## Restart point
 
-**Session closed 2026-08-16. Tree clean, `main` == `origin/main` at `bc4b6ef`, **356 tests**,
-evidence and preflight clean, **doctor FULLY GREEN**, 0 open PRs, 0 unmerged branches. Data pack
-`b492e20890b3` (92 files). Released as
-[v0.9.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.9.0).** #157–#169 all merged.
+**Session 2026-08-19 in flight on branch `shard/front-door-density`.** The objective is a
+front-door density cut plus the retirement of the reader-target selector (ADR-0018), taken after
+the owner read the live explorer and the repo and said both were too dense and that the project
+had lost focus.
 
-**ACTIVE OBJECTIVE: none.** Nothing is half-built. The next move is not a code objective — it is
-publication, and two drafts are written and unsent (below).
+**ACTIVE OBJECTIVE: cut the front door's density and lead with the audit finding.**
+
+### What this session changed
+
+- **The explorer front page: 1,676 → 706 words** of prose before the first item renders. The
+  three overlapping "the simulation is not the product" paragraphs became one; the basis of
+  preparation moved to [`docs/BASIS_OF_PREPARATION.md`](../BASIS_OF_PREPARATION.md); the
+  retraction record stopped being stated twice.
+- **The page now leads with the finding**, not the machinery: *58 of 72 sources read, zero publish
+  a mode*, with the correction record linked beside it. That is
+  [ADR-0016](../adr/0016-the-audit-is-the-product.md) finally reaching the front door.
+- **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md) — the reader-target selector
+  is retired**, measured rather than argued: **138 of its 215 selectable combinations answered
+  "0 of 66"**, every `manufacturing` combination answered 0, and `size` offered one value that
+  changed nothing. Constraining the dropdowns to non-empty combinations was refused — it would
+  hide the coverage gap. `declared_for` stays; a control was retired, not a field.
+- **README: 599 → 218 lines, 4,761 → 2,045 words, 26 sections → 8.** The operational manual moved
+  to [`docs/REFERENCE.md`](../REFERENCE.md).
+- **Two stale front-door facts found while moving them.** The README's "Product thesis" still
+  promised *"a library of defensible, benchmarked risk parameters"* — the module-library framing
+  [ADR-0010](../adr/0010-where-riskshard-stops.md) retired on 2026-08-11, still live on the front
+  door three months later. Deleted. And Repository Layout documented `library/benchmarks/`, a
+  directory that does not exist. Removed.
+- **The disclosure was kept loud, not moved behind a link.** The 31 → 7 cell-matched correction,
+  "45 of 66", and "no published figure moved" stay on the page itself; only the long-form basis
+  moved. A test pins it.
+
+### ⚠️ Open on this branch
+
+- Full `unittest discover` had not reported green at the time of writing. The explorer suite (13),
+  the README-touching suites (63), `validate_evidence.py` and the doctor are all green.
+- Not yet done: PR, and a decision on whether this warrants a release cut.
+
+### 🔴 PENDING ON THE OWNER — the `recovery` question has no route
+
+**GRC EC publishing was paused 2026-08-19** (owner's call: the channel is saturated, everyone
+publishes and nobody responds). LinkedIn is now the only publishing venue; recorded in
+`~/business-os/comms/ventures/riskshard/venues.yaml`.
+
+**The cost is specific.** The open question for John Flack — *does an insurance recovery stay a
+distinct quantity, or become a treatment of one?* — has no other route to him. It is the single
+place his amount-shape design meets our existing 48 amounts. Ask it 1:1 in GRC EC (talking there is
+still fine; publishing is what stopped), or the ADR gets written against a guess. Background:
+[`amount_shape_design_input.md`](amount_shape_design_input.md).
+
+**The mode post is rewritten and ready**, LinkedIn only, in
+`~/business-os/comms/ventures/riskshard/drafts/2026-08-16-no-source-publishes-a-mode.md`. It is
+~110 words against the previous ~500, built from the owner's own draft after he called the earlier
+version AI-smelling.
 
 ### What shipped 2026-08-16
 
