@@ -8,6 +8,8 @@ New here? Read these first, in order:
 
 ## Proof
 
+- [FINDINGS.md](FINDINGS.md) — **start here.** What governing this evidence turned up, about the
+  published sources and about our own numbers, including what we got wrong and retracted.
 - [BACKTEST_VALIDATION.md](BACKTEST_VALIDATION.md) — RiskShard checking its own frequency numbers against open incident data, and reporting what held and what didn't.
 
 ## Engineering
@@ -20,10 +22,20 @@ New here? Read these first, in order:
 
 ## Direction
 
-- [ROADMAP.md](ROADMAP.md) — emergent risk scenarios (AI-as-liability, correlated/systemic loss, governance/regulatory loss) and the loss-chain schema direction.
+- [ROADMAP.md](ROADMAP.md) — what the project is finishing: five milestones, four countable, and a registry decision date already committed. The previous emergent-scenarios roadmap is archived as declined.
+
+## Reading a figure
+
+- [BASIS_OF_PREPARATION.md](BASIS_OF_PREPARATION.md) — how to read a number here: what
+  *declared for* and *fit* each mean, what a mixed range is, why a maximum is not a bound, and
+  why the cell-matched count fell 31 → 7 without a published figure moving.
+- [CITING.md](CITING.md) — citing a parameter so it carries its caveat and still resolves later.
 
 ## Using and contributing
 
+- [REFERENCE.md](REFERENCE.md) — commands, file formats, repository layout, and how to run the
+  engine. (Split out of the README on 2026-08-19; the README answers *what and why*, this answers
+  *how*.)
 - [CONSOLE_EXPERIENCE.md](CONSOLE_EXPERIENCE.md) — the interactive console workflow and scope guardrails.
 - [GOLDEN_CONTRIBUTOR_EXAMPLE.md](GOLDEN_CONTRIBUTOR_EXAMPLE.md) — a public source taken end-to-end (source → extraction → evidence → calibration → passing preflight).
 - [BENCHMARK_CONTRIBUTOR_WORKFLOW.md](BENCHMARK_CONTRIBUTOR_WORKFLOW.md) — the content-pack, preflight, and evidence-pack workflow for contributors.

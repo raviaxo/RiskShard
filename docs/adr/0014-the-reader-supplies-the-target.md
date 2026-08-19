@@ -1,6 +1,10 @@
 # ADR-0014 — The reader supplies the target
 
-- **Status:** Accepted (2026-08-15)
+- **Status:** Accepted (2026-08-15); **parts 1, 4 and 5 superseded 2026-08-19 by
+  [ADR-0018](0018-the-target-selector-failed-measurement.md)** — the target control was
+  measured across the corpus it had to answer over, answered nothing on 456 of its 539 targets,
+  and was retired. The principle below, **that fit is meaningless without a stated target**, is
+  unchanged and still binding. What failed was the control, not the idea.
 - **Date:** 2026-08-15
 - **Deciders:** repo owner
 - **Closes:** [ADR-0011](0011-fit-is-a-facet-set.md) open question 1

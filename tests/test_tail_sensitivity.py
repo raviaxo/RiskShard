@@ -147,7 +147,28 @@ class PublishedSurfaceTests(unittest.TestCase):
         # Indentation moved when the note was nested inside the reference-rendering
         # block: it is a caveat on the loss figure, so it travels with it.
         self.assertIn("comes from '+\n           'the maximum alone", template)
-        self.assertIn("How much of each figure comes from that maximum", template)
+        # The long-form basis moved to docs/BASIS_OF_PREPARATION.md in the 2026-08-19
+        # density cut. The caveat itself did NOT move: the front page must still say,
+        # in its own words, that the maximum drives the average rather than capping
+        # it, and that a figure past the halfway share says so on its face.
+        # "Caveats get louder, not quieter" is a rule about the page a reader lands
+        # on, so moving this behind a link would have been a real loss.
+        self.assertIn("drives the modeled average\n    rather than capping it", template)
+        self.assertIn("Where its share exceeds half, the item says so", template)
+
+    def test_the_long_form_tail_caveat_survives_the_move(self):
+        """The compressed front-page version must still have a full version to reach.
+
+        A caveat cut down to one sentence with nowhere to expand is a caveat that
+        quietly lost its reasoning, so the destination is pinned too.
+        """
+        basis = (ROOT / "docs" / "BASIS_OF_PREPARATION.md").read_text(encoding="utf-8")
+        self.assertIn("The maximum drives the average rather than capping it", basis)
+        self.assertIn("resting on one observation", basis)
+        self.assertIn("the largest loss found", basis)
+        # and the front page has to link to it, or the move stranded the reader
+        template = (ROOT / "scripts" / "explorer_template.html").read_text(encoding="utf-8")
+        self.assertIn("docs/BASIS_OF_PREPARATION.md", template)
 
 
 if __name__ == "__main__":

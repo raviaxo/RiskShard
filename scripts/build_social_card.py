@@ -46,10 +46,14 @@ SITE_URL = "raviaxo.github.io/RiskShard"
 
 # Editorial defaults. The numbers are always generated; these only pick which
 # true row to put on the card and how to frame it.
-DEFAULT_HEADLINE = "Tell your CEO what it <em>costs.</em>"
+# Rewritten 2026-08-19. The previous card led with "Tell your CEO what it costs" and
+# framed the product as a defensible dollar range, which is the simulation-as-product
+# framing ADR-0010 retired and ADR-0016 replaced. The card is the first thing a reader
+# sees on a shared link, so it was contradicting the page it linked to.
+DEFAULT_HEADLINE = "No public source publishes a <em>mode.</em>"
 DEFAULT_OUTCOME = (
-    "Cyber risk as a defensible dollar range instead of another red square — and "
-    "<b>every input traces to a named public source</b>, down to the line it came from."
+    "Every risk estimate needs a most-likely loss. We read 58 of 72 public cyber-loss "
+    "sources and <b>not one publishes it</b>, so what goes in the slot is a published mean."
 )
 DEFAULT_SHARD = "us_finance_bec_midmarket"
 DEFAULT_PARAM = "impact.likely"

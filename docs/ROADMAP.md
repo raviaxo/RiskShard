@@ -1,91 +1,102 @@
-# ROADMAP — emergent risk scenarios
+# Roadmap
 
-*Proposed 2026-07-20. This is a strategic direction doc (see
-[`PUBLISHABLE_REQUIREMENTS.md`](PUBLISHABLE_REQUIREMENTS.md) → Change Control). It records
-intent and sequencing; each item becomes a scoped objective in
-[`NEXT_STEPS.md`](internal/NEXT_STEPS.md) when picked up.*
+*Rewritten 2026-08-19. The previous roadmap planned new shard families and is archived as
+[declined](internal/declined_emergent_risk_scenarios.md) — it failed the
+[ADR-0009](adr/0009-what-riskshard-is-and-is-not.md) test. This one has an end. Every milestone
+is a number you can check without asking us, and the last one has a date that
+[ADR-0017](adr/0017-the-kill-criterion-gets-a-clock.md) already committed to in writing.*
 
-## Thesis
+## What this project is finishing
 
-The library now covers the **commoditized** cyber threats (BEC, data breach, ransomware,
-insider misuse, third-party outage). Every risk tool models those. The differentiation for
-an evidence-governed, AI-native risk library is to quantify what point-tools structurally
-**cannot**: **AI-as-liability, correlated/systemic loss, and governance/regulatory loss.**
+**The audit.** Reading every public cyber-loss source we cite, one at a time, and recording what
+each one actually publishes. Not more sources — *these* sources, finished.
+[ADR-0016](adr/0016-the-audit-is-the-product.md) makes it the only growth surface.
 
-Emergent threats have thinner data — but RiskShard's maturity discipline is *built* for that.
-An honest `governed_starter` emergent scenario, with anchors and loud caveats, beats a
-competitor that either fakes precision or stays silent. Emergent scenarios ship
-governed-starter by design and graduate as evidence matures.
+---
 
-## The three families
+## M1 — Finish the audit · 58 → **72 of 72** · target 2026-09-15
 
-### Family A — AI as liability (not just AI as attacker)
-The obvious framing is "attackers use AI." The differentiating framing is "**your own AI
-creates loss**" — and several forms already have documented, quantifiable anchors.
+Every registered source read on all four properties: does it publish a **mode**, a
+**distribution**, an **exceedance statement**, and can you **name the population** it measured.
 
-| Scenario | Why it matters | Impact anchors (documented) | Data gap | Model fit |
-|---|---|---|---|---|
-| **AI / deepfake-enabled fraud** | Extends BEC into the AI era | Arup Hong Kong ~USD 25.6M (2024); Singapore ~USD 4.9M deepfake case; Deloitte GenAI-fraud forecasts | frequency (incidence surveys, thin) | freq + single-event impact tail — **fits current schema** |
-| **AI output / decision liability** | New litigable loss form as orgs deploy customer-facing AI | *Air Canada* chatbot liability ruling (2024); NYT v. OpenAI-class training-data suits | frequency of adverse rulings | freq + litigation-cost impact |
-| **Agentic-AI compromise** | AI agents with tool access → unauthorized actions (payments, exfiltration) | early/thin — 2026-27 frontier | both freq and impact thin | freq + impact; honest scaffold |
-| **EU AI Act penalty exposure** | Legislatively-defined penalty up to €35M / 7% turnover (higher than GDPR); AI-native; owned by nobody | AI Act penalty tiers (statutory); early enforcement | frequency = enforcement probability | freq + statutory-cap impact — **fits current schema** |
+| | |
+| --- | ---: |
+| sources read on all four properties | **58 of 72** |
+| answers verified against a stored artifact | **232 of 288** |
+| sources held only as a pointer, needing a person | **14** |
 
-### Family B — correlated / systemic loss (what makes cyber actuarially different)
-Cyber's defining property is **correlation**: one event hits thousands of orgs at once.
-Point-tools model single-org loss and miss it. RiskShard already does portfolio aggregation,
-so it can model cyber-**catastrophe** honestly.
+**14 sources is the whole of M1**, and it is the one milestone an agent cannot finish alone —
+these are registration-gated documents someone has to request. Three carry most of the value:
+Cyentia IRIS 2025 (likeliest in the corpus to publish an actual distribution *and* exceedance),
+IBM Cost of a Data Breach 2025 regional cuts (the most-cited cyber loss figure in the world, and
+we hold only coverage *about* it), and Sophos State of Ransomware 2025 global (three shards lean
+on it; we have never read the full report).
 
-| Scenario | Why it matters | Impact anchors | Data gap | Model fit |
-|---|---|---|---|---|
-| **Correlated single-vendor outage** | CrowdStrike Jul-2024 = the board example of concentration risk | Parametrix ~USD 5.4B Fortune-500 direct-loss estimate; insured-loss figures | per-org allocation of systemic loss | low freq × extreme impact — **fits current schema (tail scenario)** |
-| **Identity-provider cascade** | One IdP breach → downstream access everywhere | Okta 2023 breach (documented) | per-org impact | freq + cascade impact |
-| **Cyber insurability / risk-transfer failure** | The *meta-risk*: coverage evaporates (war exclusions, systemic-event exclusions) | Merck/NotPetya ~USD 1.4B war-exclusion litigation | frequency of denial | scenario over the mitigation itself |
-| **Real-time-payment irreversibility** | Instant rails (FedNow) remove the clawback tail — re-shapes BEC impact | SG case: USD 6.66M sent, >USD 5M recovered → recovery → 0 on instant rails | — | **re-shapes existing BEC impact curve, not a new threat** |
+**Done means:** `riskshard_doctor.py` prints 72 of 72, and the phrase *"the audit is complete"*
+becomes true and publishable. It is a headline exactly once.
 
-### Family C — governance / regulatory loss (the GRC-native gap)
-Cyber tools stop at the technical breach. A GRC product should own the downstream
-governance loss the breach triggers.
+## M2 — Publish the audit as its own artifact · target 2026-09-30
 
-| Scenario | Why it matters | Impact anchors | Data gap | Model fit |
-|---|---|---|---|---|
-| **Regulatory enforcement** (DORA / SEC cyber / NIS2 / privacy) | Almost no cyber tool models regulatory loss as its own scenario | GDPR enforcement tracker; SEC actions (SolarWinds); DORA in force Jan-2025 | frequency = enforcement probability | freq + fine-distribution impact — **fits current schema** |
-| **Securities / disclosure liability** | Post-SEC 4-day rule: mishandled disclosure → stock drop + shareholder suits | SolarWinds SEC action | frequency | freq + litigation/market-cap impact |
-| **Officer personal liability (D&O for cyber)** | CISOs/directors personally exposed | Uber CISO (Sullivan) criminal conviction | frequency | governance-risk scenario |
+The audit currently lives in `sources/audit.yaml`, a machine file. **The finding is public and the
+evidence for it is not readable**, which is the gap between having done the work and having
+published it.
 
-## The bigger strategic question (needs an ADR before it drives a build)
+**Done means:** a citable page — 72 sources × 4 questions, each answer carrying the quoted passage
+and the document hash — that a stranger can link to, cite, and dispute row by row without cloning
+the repo.
 
-The sharpest differentiation may be modeling **loss *chains*, not threats**: one initiating
-event → regulatory penalty → disclosure liability → insurability gap → personal liability.
-That chain is what a board loses sleep over, and a threat-label library cannot express it.
+## M3 — Write the labelling standard as a spec · target 2026-10-31
 
-RiskShard's engine already does distributions and aggregation, so this is a **schema/scenario
-evolution, not a rewrite** — but it *is* a schema decision and must go through Change Control
-(an ADR) before any loss-chain scenario is built. Until then, build only schema-compatible
-scenarios (single threat → frequency × impact distributions).
+The four questions, formalised so a third party can apply them to sources we have never read. This
+is what turns *our audit* into *a standard*, and it is the only path off depending on one person's
+reading.
 
-This is now written up as **[ADR-0001 — Loss-chain scenario modeling](adr/0001-loss-chain-scenario-modeling.md)**
-(status: Proposed). It recommends a *bounded, optional, backward-compatible* staged
-conditional loss-chain (not a full DAG or correlation engine), proven first on one link
-(breach → regulatory penalty), with the evidence rule that no stage ships without a sourced
-or labeled conditional probability. Awaiting owner acceptance before any schema work begins.
+Includes the amount **shape** / **treatment** split
+([`amount_shape_design_input.md`](internal/amount_shape_design_input.md)) — the first externally
+contributed design input this project has had, and still blocked on one question to its author.
 
-## Proposed sequencing
+**Done means:** someone outside the project can label a source they found themselves and the label
+means the same thing ours does.
 
-**Schema-compatible now (no ADR needed):**
-1. **AI / deepfake-enabled fraud** — sharpest differentiator, documented impact tails, extends BEC. *First build.*
-2. **Correlated single-vendor outage** — extends third-party outage into a cyber-cat tail; strong data.
-3. **EU AI Act penalty exposure** — AI-native, statutory impact, owned by nobody.
-4. **Regulatory enforcement** — GRC-native; strong fines-based impact data.
+## M4 — The registry decision · **2026-11-01, fixed**
 
-**Needs the loss-chain ADR first:** insurability failure, securities/disclosure liability,
-officer personal liability, and any multi-hop chain.
+[ADR-0017](adr/0017-the-kill-criterion-gets-a-clock.md) pre-committed this date and states in
+writing that **it does not move again**. At the first release on or after 2026-11-01, count:
 
-**Roadmap-far (data too thin today):** agentic-AI compromise, post-quantum "harvest now,
-decrypt later." Track; do not build until loss data exists.
+1. shards whose `impact.max` cites a registry entry — **0 today**
+2. entries contributed by anyone outside the project — **0 today**
 
-## Proposed taxonomy additions
+If neither has moved, the registry retires. **No external readership at the date is not grounds
+for another extension** — it is grounds for retiring it and publishing that the trial never got a
+fair test. The doctor prints the date on every run.
 
-New `taxonomies/threats.yaml` ids to introduce as their scenarios are built (do not add an id
-without at least one evidence record): `ai_enabled_fraud`, `systemic_vendor_outage`,
-`regulatory_enforcement`, `ai_governance_penalty`. (`cloud_compromise` already exists as an
-unused placeholder.)
+## M5 — The adoption test · measured at M4
+
+Whether any of this is used, stated as numbers rather than impressions:
+
+- has anyone **cited** a parameter or the audit?
+- has anyone **disputed** a row?
+- has anyone **applied the standard** to a source we did not read?
+
+All three read zero today. Published either way.
+
+---
+
+## What this roadmap declines
+
+Recorded rather than left implicit, because every one of these is a good idea and good ideas are
+how this project loses focus. [ADR-0009](adr/0009-what-riskshard-is-and-is-not.md): *a new declared
+axis may only be born from a defect measured in our own data, never from a good idea about
+measurement.*
+
+- **More shards, countries, or threat families.** Coverage is not the constraint; the audit is.
+- **New emergent scenario families** — AI-as-liability, systemic loss, regulatory loss.
+  [Archived here](internal/declined_emergent_risk_scenarios.md) with the reasoning intact.
+- **A better engine, or engine features.** It exists to expose defects in the anchors, and it does
+  that already.
+- **A CRQ methodology.** ADR-0009 settled it.
+- **Bringing back the reader-target selector.** [ADR-0018](adr/0018-the-target-selector-failed-measurement.md)
+  retired it on a measurement and set two conditions for reconsidering, both false today. No two
+  facet values may each answer alone and answer nothing together (60 pairs do). And a majority of
+  targets must answer something (83 of 539 do, which is 15%). Coverage has to move first, and
+  coverage is not what this roadmap is buying.
