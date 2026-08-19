@@ -20,20 +20,27 @@ and the page already carried `declared_for` on every parameter, so answering the
 question cost almost nothing.
 
 **It was never measured against the corpus it had to answer over.** On 2026-08-19 it was, by
-replaying the page's own `fitAgainst` function across every combination the control offers:
+replaying the engine's own fit rule across every target the control offers:
 
 | | |
 | --- | ---: |
-| selectable non-empty combinations | **215** |
-| combinations returning **0 of 66** parameters | **138 (64%)** |
-| combinations containing `manufacturing` returning 0 | **all of them** |
-| distinct `size` options offered | **1** (`mid_market`, matches all 66, changes nothing) |
+| selectable non-empty combinations | **539** |
+| combinations answering **nothing** | **456 (84.6%)** |
+| combinations answering at least one parameter | **83** |
+| **trap pairs** — two values that each answer alone and nothing together | **60** |
 
-Country × sector, financial services, with size and threat unset: AU 4, US 3, CA 3, GB 2, SG 1, and
-**DE, FR, JP each 0**.
+A trap pair is the shape a reader meets one dropdown at a time. `AU` answers 14 parameters and
+`manufacturing` answers 4; `AU + manufacturing` answers nothing. The owner hit that exact pair on
+the second thing he tried and read the page as broken rather than as honest.
 
-So the control's modal answer is *"0 of 66 — nothing here for you."* The owner hit it on the second
-thing he tried (Australia · manufacturing) and read the page as broken rather than as honest.
+**The first attempt at this measurement was wrong, and the correction is recorded rather than
+quietly applied.** An ad-hoc script read the size facet under the key `sizes` where the payload
+says `company_size_bands`, so size was never tested: the grid came out 215 combinations with 138
+empty (64%) instead of 539 with 456 empty (84.6%), and the claim *"every combination containing
+`manufacturing` returns 0"* was false — `manufacturing` answers 4 on its own. **The decision
+survived the correction and the case for it got stronger.** The numbers did not survive, which is
+why they now live in [`engine/cell_coverage.py`](../../engine/cell_coverage.py) with
+`tests/test_cell_coverage.py` checking this document against them on every run.
 
 ## Decision
 
@@ -45,9 +52,9 @@ cannot lose the target ([ADR-0011](0011-fit-is-a-facet-set.md) is unaffected).
 measured — a property of the record, true for every reader, and the thing that made the derivation
 possible in the first place. Nothing about the data changes; this retires a control, not a field.
 
-**3. The alternative — restricting the dropdowns to combinations that return ≥ 1 — is refused.**
-It would have removed the dead ends by hiding the coverage gap, which is the opposite of what this
-project is for. A reader is entitled to discover that the corpus has nothing for Germany.
+**3. Restricting the dropdowns to combinations that answer something is refused.** That removes
+the dead ends by hiding the coverage gap, which is the opposite of what this project is for. A
+reader is entitled to find out that the corpus has nothing for Germany.
 
 **4. The coverage gap is published instead of being made interactive.** What the selector was
 groping at is a real question — *is there evidence for my cell?* — and it deserves a plain answer
@@ -69,10 +76,10 @@ teaches readers to leave**, and no amount of correctness in its computation chan
   reopens, now with a measurement attached to it. **Two conditions must both hold before it is
   attempted again**, and both are false today:
 
-  1. **No offered facet value is a dead end in every combination.** `manufacturing` currently
-     returns 0 against every country, so offering it is offering a trap.
-  2. **A majority of selectable combinations return at least one parameter.** 77 of 215 do
-     today — 36%.
+  1. **No trap pairs.** No two facet values may each answer alone and answer nothing together.
+     There are 60 such pairs today.
+  2. **A majority of selectable combinations answer at least one parameter.** 83 of 539 do
+     today, which is 15%.
 
   These are coverage preconditions, not design ones. **The control was never the problem; the
   corpus behind it was**, and rebuilding the control without moving those two numbers would

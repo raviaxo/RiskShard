@@ -174,13 +174,13 @@
   <div class="challenge" id="finding">
     <div class="challengehead">What reading these sources found</div>
     <p><b>58 of 72 registered sources have been read end to end and asked four questions. Zero
-    publish a mode.</b> That is the &ldquo;likely&rdquo; in every min / likely / max estimate and
-    the anchor the output moves with most — statistics offices, police reporting bodies, national
-    surveys, regulators, insurers and vendor studies alike. IBM&rsquo;s Cost of a Data Breach says
-    &ldquo;average&rdquo; 75 times and &ldquo;median&rdquo; zero. What goes in that slot instead,
-    here and everywhere, is a published mean treated as a peak.</p>
-    <p>The other three questions went the other way: distributions, exceedance statements and named
-    populations turn up more often than the field assumes. The gap is specifically the mode.</p>
+    publish a mode.</b> That is the &ldquo;likely&rdquo; in every min / likely / max estimate, and
+    the anchor the output moves with most. Not the statistics offices, not the police reporting
+    bodies, not the national surveys, not the regulators, not the insurers, not the vendor studies.
+    IBM&rsquo;s Cost of a Data Breach says &ldquo;average&rdquo; 75 times and &ldquo;median&rdquo;
+    zero. What goes in the slot instead, here and everywhere, is a published mean.</p>
+    <p>The other three questions went the other way. Distributions, exceedance statements and named
+    populations turn up more often than the field assumes. The gap is the mode.</p>
     <p><a href="https://github.com/raviaxo/RiskShard/blob/main/docs/FINDINGS.md">All eight findings,
     including what we got wrong</a> — two figures retracted for citing no primary source and two
     claims withdrawn after measurement contradicted them. Every answer is pinned to a document hash
@@ -190,25 +190,25 @@
 
   <div class="challenge" id="why">
     <div class="challengehead">Why a label matters more than a number</div>
-    <p>A cyber loss figure travels a long way from the report that produced it, and by the time it
-    reaches a board deck it has usually lost the three things that decide whether it belongs there:
-    <b>what it measured, who it measured, and what it cannot bear.</b> Nobody re-attaches them,
-    because doing so means reading the source. So the labels go missing quietly and the gap gets
-    filled by the nearest available number.</p>
+    <p>A cyber loss figure travels a long way from the report that produced it. By the time it
+    lands in a board deck it has usually lost <b>what it measured, who it measured, and what it
+    cannot bear.</b> Nobody puts those back, because that means reading the source. So the gap gets
+    filled with the nearest available number.</p>
     <ol>
-      <li><b>Before you cite one.</b> Whether &ldquo;average breach cost&rdquo; is an average of
-      your kind of company, and whether it bounds anything — recorded here, with the sentence
-      quoted, including when the answer is <em>the source does not say</em>.</li>
-      <li><b>When you are challenged on one.</b> Every figure has a stable identifier pinned to an
-      immutable release, and the citation carries <em>the caveat</em> with it.</li>
-      <li><b>When you buy or build risk tooling.</b> It will ask for min / likely / max and compose
-      them as a beta-PERT, where &ldquo;likely&rdquo; is the mode. No public source publishes one.
-      Worth asking any vendor where theirs came from.</li>
+      <li><b>Before you cite one.</b> Is &ldquo;average breach cost&rdquo; an average of your kind
+      of company, and does it bound anything? Written down here with the sentence quoted, including
+      when the answer is that the source does not say.</li>
+      <li><b>When you have to defend one.</b> Every figure has an identifier pinned to a fixed
+      release, and the citation carries the caveat, so the limitation turns up in the room at the
+      same time as the number.</li>
+      <li><b>When you buy or build risk tooling.</b> It will ask for min, likely and max, and
+      compose them as a beta-PERT where &ldquo;likely&rdquo; is the mode. No public source
+      publishes a mode. Worth asking any vendor where theirs came from.</li>
       <li><b>When you publish loss figures yourself.</b> The four questions are a labelling
-      standard: a figure that answers them is usable in someone else&rsquo;s model, and a figure
-      that does not is merely quotable.</li>
+      standard. Answer them and your figure can be used in someone else&rsquo;s model. Do not, and
+      it can only be quoted.</li>
     </ol>
-    <p>Not a prediction, not a benchmark to adopt unread, not a methodology — an item describes a
+    <p>Not a prediction, not a benchmark to adopt unread, not a methodology. An item describes a
     <em>cell</em>, never a company.
     <a href="https://github.com/raviaxo/RiskShard/blob/main/docs/ROADMAP.md">Where this is going</a>.</p>
   </div>
@@ -304,11 +304,11 @@
       .filter(function(v){return v;}).join(' · ');
   };
 
-  /* ADR-0018 retired the reader-supplied target selector: 138 of its 215 selectable
-     combinations answered "0 of 66", so the control mostly told readers this corpus
-     held nothing for them. Fit is computed against each item's own cell, and the line
-     still names the cell it was computed against so a screenshot cannot lose it
-     (ADR-0011). No score, no grade, no ranking, no ordering by fit. */
+  /* ADR-0018 retired the reader-supplied target selector. It offered 539 targets and
+     456 of them answered nothing, so its usual reply was that this corpus held nothing
+     for the reader. Fit is computed against each item's own cell, and the line names
+     the cell it was computed against so a screenshot cannot lose it (ADR-0011).
+     No score, no grade, no ranking, no ordering by fit. */
   function fitText(s,p){
     var f=p.population||{};
     var whose='this item’s cell ('+esc(cellOf(s))+')';

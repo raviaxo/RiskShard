@@ -96,7 +96,7 @@ measurement.*
   that already.
 - **A CRQ methodology.** ADR-0009 settled it.
 - **Bringing back the reader-target selector.** [ADR-0018](adr/0018-the-target-selector-failed-measurement.md)
-  retired it on measurement and set two coverage preconditions, both false today: no offered facet
-  value may be a dead end in every combination (`manufacturing` is), and a majority of combinations
-  must return at least one parameter (77 of 215 do — 36%). **Coverage first, control second** — and
+  retired it on a measurement and set two conditions for reconsidering, both false today. No two
+  facet values may each answer alone and answer nothing together (60 pairs do). And a majority of
+  targets must answer something (83 of 539 do, which is 15%). Coverage has to move first, and
   coverage is not what this roadmap is buying.

@@ -90,11 +90,11 @@ class RenderTests(unittest.TestCase):
     def test_the_target_selector_stays_retired(self):
         """ADR-0018: the reader-supplied target control was measured and failed.
 
-        138 of the 215 combinations it offered answered "0 of 66", so its modal
-        output told readers the corpus held nothing for them. It is removed. This
+        456 of the 539 targets it offered answered nothing, so its most common
+        reply was that the corpus held nothing for the reader. It is removed. This
         pins the removal rather than trusting it, because the control was cheap to
-        build and will look cheap to rebuild — the precondition for trying again is
-        coverage, not effort (ADR-0018 consequences).
+        build and will look cheap to rebuild. What has to change first is coverage,
+        not effort, and tests/test_cell_coverage.py measures that.
         """
         html = render(SAMPLE)
         for element in ('id="t-country"', 'id="t-industry"', 'id="t-size"',

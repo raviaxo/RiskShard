@@ -158,10 +158,17 @@ had lost focus.
   a mode*, with the correction record linked beside it. That is
   [ADR-0016](../adr/0016-the-audit-is-the-product.md) finally reaching the front door.
 - **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md) — the reader-target selector
-  is retired**, measured rather than argued: **138 of its 215 selectable combinations answered
-  "0 of 66"**, every `manufacturing` combination answered 0, and `size` offered one value that
-  changed nothing. Constraining the dropdowns to non-empty combinations was refused — it would
-  hide the coverage gap. `declared_for` stays; a control was retired, not a field.
+  is retired**, measured rather than argued: it offered 539 targets and **456 of them answered
+  nothing (84.6%)**, with **60 trap pairs** where two values each answer alone and answer nothing
+  together. `AU + manufacturing` is one, and it is what the owner hit. Restricting the dropdowns to
+  answerable combinations was refused, because that hides the coverage gap. `declared_for` stays; a
+  control was retired, not a field.
+
+  ⚠️ **The first measurement of this was wrong and the correction is recorded in the ADR.** An
+  ad-hoc script read the size facet under `sizes` instead of `company_size_bands`, so size was
+  never tested and the grid came out 215/138 rather than 539/456. The decision held; the numbers
+  did not, so they now live in `engine/cell_coverage.py` with a test that checks the ADR against
+  them.
 - **README: 599 → 218 lines, 4,761 → 2,045 words, 26 sections → 8.** The operational manual moved
   to [`docs/REFERENCE.md`](../REFERENCE.md).
 - **Two stale front-door facts found while moving them.** The README's "Product thesis" still
