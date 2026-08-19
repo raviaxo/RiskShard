@@ -66,9 +66,17 @@ teaches readers to leave**, and no amount of correctness in its computation chan
 - **No published figure moves.** The released cell-matched (7) and bridged (59) counts describe our
   cell and always did; they are unchanged.
 - ADR-0011's open question 1 — *should a consumer-supplied target become a first-class artefact?* —
-  reopens, now with a measurement attached to it. **It should not be attempted again until the
-  corpus can answer more than a third of the cells a reader can name.** That is a coverage
-  precondition, and it is the thing to fix first.
+  reopens, now with a measurement attached to it. **Two conditions must both hold before it is
+  attempted again**, and both are false today:
+
+  1. **No offered facet value is a dead end in every combination.** `manufacturing` currently
+     returns 0 against every country, so offering it is offering a trap.
+  2. **A majority of selectable combinations return at least one parameter.** 77 of 215 do
+     today — 36%.
+
+  These are coverage preconditions, not design ones. **The control was never the problem; the
+  corpus behind it was**, and rebuilding the control without moving those two numbers would
+  reproduce this ADR exactly.
 - The removal is part of a wider front-door density cut on the same date: the page carried 1,676
   words of prose before the first item rendered, and now carries 706. The basis of preparation moved
   to [`docs/BASIS_OF_PREPARATION.md`](../BASIS_OF_PREPARATION.md).

@@ -1,13 +1,54 @@
 # 🔷 RiskShard
 
-**A governed commons of public cyber-loss evidence, labelled well enough to tell you
-when not to use it.**
+> **Every cyber risk estimate needs a most-likely loss. No public source publishes one.**
+>
+> RiskShard reads the public cyber-loss sources the industry quotes — one at a time, end to end —
+> and records what each one actually publishes: the quantity it measures, the population it
+> measured it on, whether it states a distribution, and whether it says how often a loss is
+> exceeded. **58 of 72 read. Zero publish a mode.** Every answer is pinned to a document hash with
+> the passage quoted, so you can check us instead of trusting us.
 
-### ▶ [Read the evidence live in your browser](https://raviaxo.github.io/RiskShard/) — no install
+### ▶ [Read it live in your browser](https://raviaxo.github.io/RiskShard/) — no install
 
-Open any number and read the exact public source it came from, what quantity it
-actually measures, whose population it was measured on, what it cannot support — and
-dispute it in one click. Prefer the terminal? [Jump to the one-command demo](#try-it-in-one-command).
+## Why this matters
+
+A cyber loss figure travels a long way from the report that produced it. By the time it reaches a
+board deck it has usually lost the three things that decide whether it belongs there: **what it
+measured, who it measured, and what it cannot bear.** Nobody re-attaches them, because doing so
+means reading the source, and reading the source is slow and unglamorous work.
+
+So the labels go missing quietly, and the gap gets filled by the nearest available number.
+
+**Four places that costs you something:**
+
+**1 · You are about to cite a figure.** A risk register row, a board slide, an insurance
+submission. You need to know whether "$4.9M average breach cost" is an average of *your* kind of
+company, and whether it bounds anything at all. Today the only way to find out is to read the
+report yourself. Here the answer is already recorded, with the sentence quoted and the document
+hashed — including when the answer is *the source does not say*.
+
+**2 · You have to defend a number under challenge.** An auditor, a regulator, a skeptical CFO, or
+opposing counsel asks where it came from. Every parameter here has a stable identifier pinned to an
+immutable release, and the citation carries **the caveat** with it — so the limitation arrives in
+the room at the same time as the figure, rather than after it.
+
+**3 · You are buying or building quantitative risk tooling.** Every such tool asks for min /
+likely / max and composes them as a beta-PERT, where "likely" is the mode. **No public source
+publishes a mode.** That makes one procurement question worth asking any vendor: *where did your
+most-likely number come from?* It is a fair question with a real answer, and until this audit
+nobody was in a position to ask it.
+
+**4 · You publish loss figures yourself** — vendor, researcher, statistics body, dataset
+maintainer. The four questions are a labelling standard. A figure that answers them is usable by
+someone else's model; a figure that does not is merely quotable. This is the part that outlives the
+project, and it is what [the roadmap](docs/ROADMAP.md) is pointed at.
+
+**What this is not:** it is not a prediction, not a benchmark you can adopt unread, and not a
+methodology. A shard describes a *cell*, not a company. The simulation on each item exists because
+composing anchors is what exposes their defects — never because the output is the offer.
+
+**[Where this is going →](docs/ROADMAP.md)** — five milestones, four of them countable, and a
+decision date already committed in writing.
 
 ## What RiskShard is — and isn't
 

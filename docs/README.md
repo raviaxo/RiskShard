@@ -22,7 +22,7 @@ New here? Read these first, in order:
 
 ## Direction
 
-- [ROADMAP.md](ROADMAP.md) — emergent risk scenarios (AI-as-liability, correlated/systemic loss, governance/regulatory loss) and the loss-chain schema direction.
+- [ROADMAP.md](ROADMAP.md) — what the project is finishing: five milestones, four countable, and a registry decision date already committed. The previous emergent-scenarios roadmap is archived as declined.
 
 ## Reading a figure
 
