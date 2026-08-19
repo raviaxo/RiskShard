@@ -22,14 +22,14 @@ answers "what is this and why should I care"; this page answers "how do I run it
 - Reviewed source-to-extraction-to-evidence-to-calibration workflow
 - Governed starter vs demo fixture labels in scenario metadata, CLI output, readiness, and console search
 - Vetted YAML taxonomies and evidence matching for industry, country, company size, and threat context
-- Conditional loss-chain modeling ([ADR-0001](docs/adr/0001-loss-chain-scenario-modeling.md)): a scenario can compose up to three downstream conditional loss stages, each gated by its own source-backed conditional probability, so an initiating event can carry — for example — a rare regulatory-penalty tail that a single-threat scenario cannot express
+- Conditional loss-chain modeling ([ADR-0001](adr/0001-loss-chain-scenario-modeling.md)): a scenario can compose up to three downstream conditional loss stages, each gated by its own source-backed conditional probability, so an initiating event can carry — for example — a rare regulatory-penalty tail that a single-threat scenario cannot express
 - Runnable top-risk threats beyond the country shards — insider misuse, third-party outage, and AI-enabled (deepfake) fraud now calibrate and simulate (five clean; third-party outage with one honestly-labeled frequency estimate), each governed-starter with source-backed frequency and loudly-caveated impact bridges
 
 ## In Progress
 
 The decision engine is partially sketched but not fully integrated. The repository includes early control objects for frequency and impact reduction, a comparator, and orchestration notes. These pieces need cleanup before they should be treated as production-ready.
 
-Emergent risk scenarios (AI-as-liability, correlated/systemic loss, governance/regulatory loss) are being built out per [docs/ROADMAP.md](docs/ROADMAP.md), starting governed-starter and maturing as evidence deepens.
+Emergent risk scenarios (AI-as-liability, correlated/systemic loss, governance/regulatory loss) are being built out per [docs/ROADMAP.md](ROADMAP.md), starting governed-starter and maturing as evidence deepens.
 
 ## Repository Layout
 
@@ -63,7 +63,7 @@ Beyond the guided `demo` above, you can run every scenario at once:
 python scripts/fair_calc.py scenarios --trials 10000 --dist pert --seed 42 --export
 ```
 
-The command above runs every YAML scenario in `scenarios/`, prints portfolio statistics, saves a Loss Exceedance Curve to `results/`, and writes a JSON report when `--export` is included. The scenario folder mixes calibrated-workflow starters with older demo fixtures; see [scenarios/README.md](scenarios/README.md) before treating portfolio output as decision-ready.
+The command above runs every YAML scenario in `scenarios/`, prints portfolio statistics, saves a Loss Exceedance Curve to `results/`, and writes a JSON report when `--export` is included. The scenario folder mixes calibrated-workflow starters with older demo fixtures; see [scenarios/README.md](../scenarios/README.md) before treating portfolio output as decision-ready.
 
 When a folder mixes scenario currencies or has fixtures without currency
 metadata, the CLI prints a mixed-currency warning. Portfolio totals are then an
@@ -115,7 +115,7 @@ the modeled loss range in plain language, a confidence rating, the source-backed
 trust boundary, honest caveats, and the accept/mitigate/gather-evidence/localize
 decision options. It is decision support, not assurance.
 
-The console keeps all artifacts local and reviewable in `results/`. See [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md).
+The console keeps all artifacts local and reviewable in `results/`. See [docs/CONSOLE_EXPERIENCE.md](CONSOLE_EXPERIENCE.md).
 
 The browser console groups the workflow into four lanes: run a shard, improve
 evidence, govern data, and contribute country. After a module is selected, the
@@ -141,7 +141,7 @@ python scripts/calibrate_scenario.py scenarios/au_finance_ransomware_midmarket.y
 The report shows the bottom line, confidence, what changed, selected vs. excluded
 evidence, normalization and FX assumptions, and the generated ranges. FX
 assumptions live in `calibrations/fx_rates.yaml` (each rate sourced and dated; see
-[docs/FX_RATE_REFRESH.md](docs/FX_RATE_REFRESH.md)).
+[docs/FX_RATE_REFRESH.md](FX_RATE_REFRESH.md)).
 
 Other governance and inspection commands (each also reachable from the console):
 
@@ -155,8 +155,8 @@ python scripts/riskshard_modules.py coverage   # data-strength grade per shard
 python scripts/contributor_preflight.py path/to/proposed_pack  # before a PR
 ```
 
-See [docs/CONSOLE_EXPERIENCE.md](docs/CONSOLE_EXPERIENCE.md) for the guided
-workflow and [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution path.
+See [docs/CONSOLE_EXPERIENCE.md](CONSOLE_EXPERIENCE.md) for the guided
+workflow and [CONTRIBUTING.md](../CONTRIBUTING.md) for the contribution path.
 ## Installable Commands
 
 RiskShard can still be run directly from `scripts/`, but `pyproject.toml` also declares console entry points for packaging:
@@ -227,7 +227,7 @@ Organization profiles live in `org_profiles/` and include:
 
 Organization profiles are used for evidence matching to find the most relevant evidence records for a specific organization context.
 
-RiskShard does not currently apply heuristic contextual multipliers. To model a specific organization, generate an explicit calibrated scenario from reviewed evidence and simulate that scenario with the standard CLI. See [docs/org_specific_scenarios.md](docs/org_specific_scenarios.md).
+RiskShard does not currently apply heuristic contextual multipliers. To model a specific organization, generate an explicit calibrated scenario from reviewed evidence and simulate that scenario with the standard CLI. See [docs/org_specific_scenarios.md](org_specific_scenarios.md).
 
 Control profiles live in `control_profiles/` and remain transformations over the scenario, not embedded scenario properties.
 
@@ -265,7 +265,7 @@ status (cell-matched vs bridged, and on which dimension) is on the
 is the honest headline, and the coverage tools above are the authoritative view.
 
 **And none of that is a statement about your context.** Fit exists only relative to a
-target ([ADR-0011](docs/adr/0011-fit-is-a-facet-set.md)), and the target on every published
+target ([ADR-0011](adr/0011-fit-is-a-facet-set.md)), and the target on every published
 surface is **our** shard cell, which is named wherever fit is rendered. Each parameter
 prints two things: *declared for* — the population the source measured, a property of the
 record and true for every reader — and *fit vs this cell*, which compares that population
@@ -280,10 +280,10 @@ population measured — a US BEC frequency floor declaring financial-services mi
 an economy-wide numerator and denominator, three US frequencies declaring `US` over a UK
 survey, two Singapore anchors declaring `SG` over US data. All 21 were corrected, **no
 published figure moved**, and a test now fails the build if another appears
-([finding 5](docs/FINDINGS.md)).
+([finding 5](FINDINGS.md)).
 
 **And cell-matched does not mean coherent.** A second, independent axis
-([ADR-0007](docs/adr/0007-construct-coherence.md), added 2026-08-07 after a practitioner
+([ADR-0007](adr/0007-construct-coherence.md), added 2026-08-07 after a practitioner
 asked the question in the open): every record now declares *what quantity* it measures,
 and a range is `mixed` when its `min`/`likely`/`max` do not share one basis. Portfolio-wide
 that is **4 coherent · 18 mixed of 22 parameter families — every shard carries at least one
@@ -295,11 +295,11 @@ hidden, and which mixes are acceptable is an open question in the ADR rather tha
 call. Read the two axes together; neither alone tells you a range is safe to use.
 
 **And a maximum here is not a bound.** Measuring the second axis exposed a third
-([ADR-0008](docs/adr/0008-the-governed-tail.md), accepted 2026-08-07): every `impact.max` now
+([ADR-0008](adr/0008-the-governed-tail.md), accepted 2026-08-07): every `impact.max` now
 declares *what is known about it being exceeded*. Portfolio-wide, **4 of 11 maxima carry an
 exceedance statement — 2 are modeled quantiles, 2 are observed ranks (1 of 579 claims, 1 of
 84), 2 are legal ceilings, and 5 carry nothing at all.** That is not a footnote: in
-[the worked decision](docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md) the per-event mean runs
+[the worked decision](WORKED_DECISION_AU_RANSOMWARE_LIMIT.md) the per-event mean runs
 **14.8× its own mode** because the maximum drives the distribution rather than bounding it,
 and moving that one anchor swings P(event > AUD 20M) from **0% to 23%** — so the least
 evidenced anchor is the one the answer is most sensitive to. Unless a row says otherwise,

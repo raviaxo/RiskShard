@@ -34,7 +34,7 @@ CESIN barometre, and the two registered with **no artifact at all** —
 are typically email- or registration-gated rather than paid.
 
 **You do not need to remember this.** All 8 blocked sources are marked `no_readable_artifact` in
-`sources/audit.yaml`, so **`riskshard_doctor.py` prints `32 blocked (artifact is not the source)`
+`sources/audit.yaml`, so **`riskshard_doctor.py` prints its `blocked (artifact is not the source)` count
 on every run** until they are obtained. The reminder is mechanical, not a note. Background:
 [`source_artifact_readiness.md`](source_artifact_readiness.md).
 
