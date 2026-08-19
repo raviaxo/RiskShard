@@ -8,8 +8,11 @@ New here? Read these first, in order:
 
 ## Proof
 
-- [FINDINGS.md](FINDINGS.md) — **start here.** What governing this evidence turned up, about the
-  published sources and about our own numbers, including what we got wrong and retracted.
+- [The source audit](https://raviaxo.github.io/RiskShard/audit.html) — **start here.** All 72
+  sources, four questions each, every answer pinned to a document hash. Built by
+  `scripts/build_audit_page.py` from [`sources/audit.yaml`](../sources/audit.yaml).
+- [FINDINGS.md](FINDINGS.md) — what it turned up, about the published sources and about our
+  own numbers, including what we got wrong and retracted.
 - [BACKTEST_VALIDATION.md](BACKTEST_VALIDATION.md) — RiskShard checking its own frequency numbers against open incident data, and reporting what held and what didn't.
 
 ## Engineering

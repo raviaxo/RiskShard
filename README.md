@@ -11,7 +11,7 @@
 > Every answer is pinned to a document hash with the passage quoted, so you can check us rather
 > than trust us.
 
-### ▶ [Read it live in your browser](https://raviaxo.github.io/RiskShard/) — no install
+### ▶ [Read the audit](https://raviaxo.github.io/RiskShard/audit.html) · [Read the evidence](https://raviaxo.github.io/RiskShard/) — no install
 
 ## Why this matters
 

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The RiskShard source audit: what each public cyber-loss source actually publishes, on four properties, with every answer pinned to a document hash and the passage quoted.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Crect%20x=%228%22%20y=%228%22%20width=%2284%22%20height=%2284%22%20fill=%22%23111%22/%3E%3Cpath%20d=%22M50%2020%20L50%2080%20L26%2050%20Z%22%20fill=%22%23fff%22/%3E%3C/svg%3E">
+<title>The source audit — RiskShard</title>
+<link rel="canonical" href="__RS_SITE__audit.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RiskShard">
+<meta property="og:url" content="__RS_SITE__audit.html">
+<meta property="og:title" content="What public cyber-loss sources actually publish">
+<meta property="og:description" content="Every registered source read on four properties, each answer pinned to a document hash with the passage quoted. Read the answers, and dispute any of them.">
+<style>
+  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-400.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-500.woff2") format("woff2");font-weight:500;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-600.woff2") format("woff2");font-weight:600;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("fonts/plex-mono-700.woff2") format("woff2");font-weight:700;font-display:swap}
+
+  /* Same sheet as the explorer. A filing is printed on white; it does not have a mood. */
+  :root{
+    --ink:#111111; --grey:#555555; --faint:#8a8a8a;
+    --rule:#111111; --hair:#cfcfcf;
+    --link:#0b31a5; --flag:#a11212;
+    --mono:"Plex Mono",ui-monospace,"Courier New",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{background:#fff;color:var(--ink);font-family:var(--mono);font-size:13px;line-height:1.55;
+    -webkit-font-smoothing:antialiased}
+  .doc{max-width:900px;margin:0 auto;padding:34px 20px 70px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:2px}
+  .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  .cover-rule{border-top:2px solid var(--rule)}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;
+    padding:8px 0 6px;font-size:12px;color:var(--grey)}
+  .masthead .co{color:var(--ink);font-weight:700;letter-spacing:.04em}
+  .titleblock{border-top:1px solid var(--rule);border-bottom:3px double var(--rule);padding:26px 0 24px;text-align:center}
+  .titleblock h1{font-size:clamp(19px,3.2vw,27px);font-weight:700;letter-spacing:.015em;text-transform:uppercase;line-height:1.3}
+  .titleblock .sub{margin-top:8px;font-size:12.5px;color:var(--grey)}
+  .facts{width:100%;border-collapse:collapse;margin:16px 0 6px;font-size:12.5px}
+  .facts td{padding:5px 8px 5px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+  .facts td:first-child{color:var(--grey);width:17em;white-space:nowrap}
+  .facts b{font-weight:600}
+  .preamble{margin:18px 0 4px;max-width:76ch}
+  .preamble p{margin:0 0 10px}
+
+  h2{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+    border-top:1px solid var(--rule);padding-top:9px;margin:30px 0 4px}
+  .h2sub{color:var(--grey);font-size:12.5px;margin-bottom:12px;max-width:76ch}
+
+  .note{border:1px solid var(--hair);padding:13px 15px;margin:12px 0;max-width:80ch}
+  .note p{margin:0 0 9px} .note p:last-child{margin:0}
+  .note ol{margin:0 0 9px 1.3em} .note li{margin:0 0 5px}
+  .notehead{font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:12px;margin-bottom:8px}
+
+  /* the questions */
+  .qtable{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0 4px}
+  .qtable th{text-align:left;font-weight:600;text-transform:uppercase;letter-spacing:.04em;
+    font-size:11px;color:var(--grey);border-bottom:1px solid var(--rule);padding:5px 8px 5px 0}
+  .qtable td{padding:7px 8px 7px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+  .qtable .k{font-weight:600;white-space:nowrap;width:8em}
+  .qtable .n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;width:8em}
+
+  /* the matrix */
+  .tblwrap{overflow-x:auto;margin:8px 0 4px}
+  .grid{width:100%;border-collapse:collapse;font-size:12px;min-width:640px}
+  .grid th{text-align:left;font-weight:600;text-transform:uppercase;letter-spacing:.04em;
+    font-size:10.5px;color:var(--grey);border-bottom:1px solid var(--rule);padding:5px 6px 5px 0}
+  .grid td{padding:5px 6px 5px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+  .grid th.c,.grid td.c{text-align:center;width:5.5em}
+  .grid tr:hover td{background:#f7f7f7}
+  .src a{text-decoration:none}
+  .src a:hover{text-decoration:underline}
+  .pub{color:var(--grey);font-size:11px}
+
+  /* answers, deliberately flat: a yes and a no are the same weight */
+  .a{font-weight:600;letter-spacing:.03em}
+  .a-yes{color:var(--ink)}
+  .a-no{color:var(--ink)}
+  .a-blocked{color:var(--faint);font-weight:400}
+  .a-unread{color:var(--flag);font-weight:400}
+
+  /* per-source records */
+  .rec{border-top:1px solid var(--rule);padding:14px 0 4px;margin-top:20px}
+  .rechead{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:baseline}
+  .rechead h3{font-size:13px;font-weight:700;letter-spacing:.01em}
+  .recmeta{color:var(--grey);font-size:11.5px;margin-top:3px;word-break:break-all}
+  .prop{border-top:1px solid var(--hair);padding:9px 0}
+  .propq{color:var(--grey);font-size:11.5px}
+  .propa{margin:3px 0 4px}
+  .detail{color:var(--ink);max-width:82ch}
+  .stamp{color:var(--faint);font-size:11px;margin-top:4px}
+  .acts{margin-top:8px;font-size:11.5px}
+  .acts a{margin-right:14px}
+
+  .foot{border-top:2px solid var(--rule);margin-top:34px;padding-top:10px;color:var(--grey);font-size:11.5px}
+  @media print{.acts{display:none}a{color:var(--ink);text-decoration:none}}
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="cover-rule"></div>
+  <div class="masthead">
+    <span class="co">RISKSHARD</span>
+    <span>__RS_STAMP__</span>
+  </div>
+
+  <div class="titleblock">
+    <h1>The source audit</h1>
+    <div class="sub">What each public cyber-loss source actually publishes, asked one source at a time</div>
+  </div>
+
+  <table class="facts">
+    <tr><td>sources registered</td><td><b>__RS_SOURCES__</b></td></tr>
+    <tr><td>read on all four properties</td><td><b>__RS_FULLY__</b></td></tr>
+    <tr><td>answers verified against an artifact</td><td><b>__RS_VERIFIED__</b> of __RS_SLOTS__</td></tr>
+    <tr><td>answers blocked</td><td><b>__RS_BLOCKED__</b> — the artifact we hold is not the source</td></tr>
+    <tr><td>answers unread</td><td><b>__RS_UNREAD__</b> — a question, never counted as an absence</td></tr>
+  </table>
+
+  <div class="preamble">
+    <p>Every source this project cites, read end to end and asked the same four questions. An answer
+    may only say what a source publishes when a person read the stored document, and each one is
+    pinned to that document&rsquo;s SHA-256 rather than to a file path. A new edition has a
+    different hash and inherits nothing.</p>
+    <p><b>The counts above are published beside every claim drawn from this page.</b> A source not
+    yet read is unread and is counted as unread. It is never reported as a source that publishes
+    nothing.</p>
+  </div>
+
+  <h2>The four questions</h2>
+  <p class="h2sub">Asked of every source in the same words, so the answers can be compared.</p>
+  <table class="qtable">
+    <thead><tr><th>Property</th><th>Question</th><th class="n">Publishes</th></tr></thead>
+    <tbody>__RS_QUESTIONS__</tbody>
+  </table>
+
+  <div class="note">
+    <div class="notehead">What bounds every answer below</div>
+    <p>Stored PDFs are read as extracted text, so a property published <em>only</em>
+    inside a chart image can be missed. Where that risk is live it is named in the answer rather
+    than left for a reader to find. This is the audit&rsquo;s own limitation, stated here rather
+    than in a footnote.</p>
+    <p><b>Blocked is not unread.</b> __RS_BLOCKED__ answers are blocked because what we hold is a
+    landing page or a summary rather than the document. Effort does not clear those; obtaining the
+    document does.</p>
+  </div>
+
+  <div class="note">
+    <div class="notehead">How to break one</div>
+    <ol>
+      <li>Pick any answer below. Each states the source, the document hash, and what was read.</li>
+      <li>Read the same document. If the answer is wrong, use the dispute link on that record.</li>
+      <li>State what the source publishes and where, and the answer changes with the correction recorded.</li>
+    </ol>
+    <p>A source that publishes a mode is the single most valuable thing anyone can bring here. It
+    would move the finding this audit exists to support, and it is worth more to us than being right.</p>
+  </div>
+
+  <h2>The matrix</h2>
+  <p class="h2sub">One row per registered source. <b>yes</b> and <b>no</b> are answers a person verified
+  against the document; <b>blocked</b> means the artifact we hold is not the source; <b>unread</b>
+  means the question has not been put yet.</p>
+  <div class="tblwrap">
+    <table class="grid">
+      <thead><tr><th>Source</th><th class="c">Mode</th><th class="c">Distribution</th><th class="c">Exceedance</th><th class="c">Population</th></tr></thead>
+      <tbody>__RS_MATRIX__</tbody>
+    </table>
+  </div>
+
+  <h2>The records</h2>
+  <p class="h2sub">Every answer in full, with what was read and the date it was read.</p>
+  __RS_RECORDS__
+
+  <div class="foot">
+    Generated from <a href="__RS_REPO__">raviaxo/RiskShard</a> — nothing on this page is hand-written.
+    The machine-readable form is <a href="__RS_REPO__/blob/main/sources/audit.yaml"><code>sources/audit.yaml</code></a>;
+    the decision that created it is <a href="__RS_REPO__/blob/main/docs/adr/0015-the-source-audit.md">ADR-0015</a>.
+  </div>
+
+</div>
+</body>
+</html>
