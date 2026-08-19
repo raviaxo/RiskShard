@@ -237,3 +237,4 @@ secrets.yml
 # The immutable per-release archives under docs/r/ ARE committed - they are what
 # pinned citations resolve to (ADR-0004).
 docs/index.html
+docs/audit.html

@@ -35,15 +35,26 @@ on it; we have never read the full report).
 **Done means:** `riskshard_doctor.py` prints 72 of 72, and the phrase *"the audit is complete"*
 becomes true and publishable. It is a headline exactly once.
 
-## M2 — Publish the audit as its own artifact · target 2026-09-30
+## M2 — Publish the audit as its own artifact · ✅ **done 2026-08-19**, ahead of target
 
-The audit currently lives in `sources/audit.yaml`, a machine file. **The finding is public and the
-evidence for it is not readable**, which is the gap between having done the work and having
-published it.
+[**raviaxo.github.io/RiskShard/audit.html**](https://raviaxo.github.io/RiskShard/audit.html)
 
-**Done means:** a citable page — 72 sources × 4 questions, each answer carrying the quoted passage
-and the document hash — that a stranger can link to, cite, and dispute row by row without cloning
-the repo.
+All 72 registered sources, four questions each. Every answer states what it was checked against,
+carries the document's SHA-256 and the date it was read, and can be disputed from its own row.
+
+The four-questions table is the finding in one place, counted against what has actually been read:
+
+| property | publishes | of sources read |
+| --- | ---: | ---: |
+| mode | **0** | 58 |
+| distribution | 12 | 58 |
+| exceedance | 17 | 58 |
+| population | 45 | 58 |
+
+Built by `scripts/build_audit_page.py` from `sources/audit.yaml` and deployed with the explorer.
+Nothing on it is hand-written. Nine tests pin the things a table quietly gets wrong: a count
+without its denominator, an unread source rendered as a source that publishes nothing, and a
+blocked answer rendered as a backlog item.
 
 ## M3 — Write the labelling standard as a spec · target 2026-10-31
 
