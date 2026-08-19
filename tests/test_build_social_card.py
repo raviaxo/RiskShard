@@ -1,10 +1,11 @@
 import unittest
 
-from scripts.build_social_card import _month_year, main, money, render
+from scripts.build_social_card import (DEFAULT_HEADLINE, DEFAULT_OUTCOME, _month_year,
+                                       main, money, render)
 
 
 FIELDS = {
-    "__RS_HEADLINE__": "Tell your CEO what it <em>costs.</em>",
+    "__RS_HEADLINE__": "A headline with <em>emphasis.</em>",
     "__RS_OUTCOME__": "An outcome line.",
     "__RS_SPEC__": "US · FINANCIAL SERVICES · MID-MARKET · BUSINESS EMAIL COMPROMISE",
     "__RS_PARAM__": "impact.likely",
@@ -45,3 +46,28 @@ class DriftTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CardCarriesTheCurrentMessageTests(unittest.TestCase):
+    """The card is the first thing a reader sees on a shared link.
+
+    It shipped from 2026-08-07 to 2026-08-19 reading "Tell your CEO what it costs"
+    over "cyber risk as a defensible dollar range", which is the simulation-as-product
+    framing ADR-0010 retired and ADR-0016 replaced. Nothing caught it, because nothing
+    was looking: the card had tests for its rendering and none for its claim. So it
+    contradicted the page it linked to for twelve days.
+    """
+
+    RETIRED = ("tell your ceo", "defensible dollar range", "instead of another red square",
+               "library of defensible", "benchmarked risk parameters")
+
+    def test_the_default_card_does_not_carry_a_retired_framing(self):
+        text = (DEFAULT_HEADLINE + " " + DEFAULT_OUTCOME).lower()
+        for phrase in self.RETIRED:
+            self.assertNotIn(phrase, text, f"the card is selling a retired framing: {phrase!r}")
+
+    def test_the_default_card_leads_with_the_audit(self):
+        text = (DEFAULT_HEADLINE + " " + DEFAULT_OUTCOME).lower()
+        self.assertIn("mode", text)
+        self.assertIn("58 of 72", text)
+
