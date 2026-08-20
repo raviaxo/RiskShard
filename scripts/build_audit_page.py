@@ -41,6 +41,7 @@ if str(ROOT) not in sys.path:
 
 from engine.source_audit import (  # noqa: E402
     PROPERTIES,
+    PROPERTY_PLAIN,
     PROPERTY_QUESTION,
     build_source_audit,
     manifest_hashes,
@@ -81,7 +82,13 @@ def dispute_url(source_id, prop_name):
 
 
 def render_questions(audit):
-    """The four questions, each with how many sources answered yes."""
+    """The four questions, plain wording first, with how many sources answered yes.
+
+    Plain leads because the technical phrasing is a door with a lock on it, and the
+    first barrier to anyone joining in is not disagreement, it is not being able to
+    tell what is being asked. The precise wording stays underneath, because it is
+    what makes two people's answers comparable.
+    """
     rows = []
     for prop in PROPERTIES:
         yes = sum(
@@ -91,7 +98,9 @@ def render_questions(audit):
         )
         read = audit["coverage"]["verified_by_property"].get(prop, 0)
         rows.append(
-            f'<tr><td class="k">{esc(prop)}</td><td>{esc(PROPERTY_QUESTION[prop])}</td>'
+            f'<tr><td class="k">{esc(prop)}</td>'
+            f'<td><b>{esc(PROPERTY_PLAIN[prop])}</b>'
+            f'<div class="pub">{esc(PROPERTY_QUESTION[prop])}</div></td>'
             f'<td class="n"><b>{yes}</b> of {read} read</td></tr>'
         )
     return "\n".join(rows)
@@ -132,7 +141,7 @@ def render_records(audit, hashes):
             stamp = record.get("verified_on")
             props.append(
                 f'<div class="prop">'
-                f'<div class="propq">{esc(PROPERTY_QUESTION[prop])}</div>'
+                f'<div class="propq">{esc(PROPERTY_PLAIN[prop])}</div>'
                 f'<div class="propa"><span class="{klass}">{label}</span></div>'
                 f'<div class="detail">{esc(record.get("detail") or "Not yet asked.")}</div>'
                 + (f'<div class="stamp">read {esc(stamp)}</div>' if stamp else "")

@@ -56,18 +56,46 @@ Nothing on it is hand-written. Nine tests pin the things a table quietly gets wr
 without its denominator, an unread source rendered as a source that publishes nothing, and a
 blocked answer rendered as a backlog item.
 
-## M3 — Write the labelling standard as a spec · target 2026-10-31
+## M3 — Make it possible to join in · **started 2026-08-20**
 
-The four questions, formalised so a third party can apply them to sources we have never read. This
-is what turns *our audit* into *a standard*, and it is the only path off depending on one person's
-reading.
+The four questions, in words someone who has never met this project can answer, and a route to
+answer them in. [ADR-0016](adr/0016-the-audit-is-the-product.md) decided the ask a week ago — *read
+one source, answer four questions, twenty minutes* — and nobody had been given a way to do it.
 
-Includes the amount **shape** / **treatment** split
-([`amount_shape_design_input.md`](internal/amount_shape_design_input.md)) — the first externally
-contributed design input this project has had, and still blocked on one question to its author.
+**Why this comes before the spec, and it is a correction to how this milestone was first written.**
+The obvious reading of zero contributors is zero demand, and that reading is wrong. The questions
+existed only in beta-PERT vocabulary, the front door ran one piece of jargon every 25 words, and
+there was no form to answer anything in. **Nobody declined; nobody could tell what was being
+asked.** A spec written before that is fixed is a second unread document, which is the way
+[ADR-0012](adr/0012-loss-event-registry-bounded-trial.md)'s registry trial already failed once.
 
-**Done means:** someone outside the project can label a source they found themselves and the label
-means the same thing ours does.
+Shipped so far:
+
+- **The four questions in plain words**, leading on every surface, with the precise wording kept
+  underneath because that is what makes two people's answers comparable.
+- **A form that is the four questions and nothing else**
+  ([`read_a_source.md`](https://github.com/raviaxo/RiskShard/issues/new?template=read_a_source.md)),
+  which says out loud that *"I could not tell"* is a real answer and that a question may be badly
+  framed.
+- **A name for the job**, because it has no category and a reader needs somewhere to file it:
+  *cyber loss figures get quoted far past what they can support, and nobody checks.*
+
+**Still to do:** ask three named people directly. A route nobody is pointed at is the same as no
+route, and that is the mistake this milestone exists to not repeat.
+
+**Done means:** one person outside the project produces one audit row. Then the spec gets written
+from what confused them, rather than from what we imagine would.
+
+## M3b — Amount shape and treatment · **blocked, and split out 2026-08-20**
+
+Split from M3 because it is a different specification of a different object: the four questions
+audit **sources**, this labels **loss records**. Bundling them made the whole milestone wait on one
+question with no route to its author.
+
+Blocked on the `recovery` question for John Flack — does an insurance recovery stay a distinct
+quantity, or become a treatment of one? Background:
+[`amount_shape_design_input.md`](internal/amount_shape_design_input.md). GRC EC publishing is
+paused; talking there is not, so this is a direct message rather than a post.
 
 ## M4 — The registry decision · **2026-11-01, fixed**
 

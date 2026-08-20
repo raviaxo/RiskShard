@@ -2,9 +2,9 @@
 
 > **Every cyber risk estimate needs a most-likely loss. No public source publishes one.**
 >
-> RiskShard reads the public cyber-loss sources the industry quotes, one at a time, and writes down
-> what each one actually publishes. What quantity it measures. Whose population. Whether it gives a
-> distribution. Whether it says how often a loss is exceeded.
+> Cyber loss figures get quoted far past what they can support, and nobody checks. There is no name
+> for that job and no one doing it, so this is us doing it: reading the public reports everyone
+> cites, one at a time, and writing down what each one actually publishes.
 >
 > **58 of 72 read. Zero publish a mode.**
 >
@@ -12,6 +12,23 @@
 > than trust us.
 
 ### ▶ [Read the audit](https://raviaxo.github.io/RiskShard/audit.html) · [Read the evidence](https://raviaxo.github.io/RiskShard/) — no install
+
+## The four questions
+
+Asked of every source, in the same words, so two people's answers can be compared.
+
+| | plain | what we call it |
+| --- | --- | --- |
+| **1** | Does it tell you the **most likely** loss — not the average, the most likely? | mode |
+| **2** | Does it show the **spread** of losses, or only one number? | distribution |
+| **3** | Does it say **how often losses go bigger** than a given size? | exceedance |
+| **4** | Can you tell **who was measured** — which countries, industries, sizes? | population |
+
+Read on 58 sources so far, the answers are **0**, 12, 17 and 45. The first one is the finding.
+
+**[Read the audit →](https://raviaxo.github.io/RiskShard/audit.html)** · or
+**[read one source and send back four answers](https://github.com/raviaxo/RiskShard/issues/new?template=read_a_source.md)**
+— about twenty minutes, nothing to install, and *"I could not tell"* is a real answer.
 
 ## Why this matters
 

@@ -28,6 +28,19 @@ PROPERTY_QUESTION = {
     "population": "Can the measured population be named from the source itself?",
 }
 
+# The same four questions in the words a reader who has never met this project would
+# use. Added 2026-08-20 after the front door was measured at one piece of jargon every
+# 25 words, which is the first barrier to anyone joining in: the technical phrasing is
+# precise and it is also a door with a lock on it. Plain leads, technical follows —
+# never the reverse, and never plain instead of technical, because the precise wording
+# is what makes two people's answers comparable.
+PROPERTY_PLAIN = {
+    "mode": "Does it tell you the most likely loss — not the average, the most likely?",
+    "distribution": "Does it show the spread of losses, or only one number?",
+    "exceedance": "Does it say how often losses go bigger than a given size?",
+    "population": "Can you tell who was measured — which countries, industries, sizes?",
+}
+
 VERIFIED = "verified_against_artifact"
 DERIVED = "derived_from_corpus"
 UNVERIFIED = "unverified"
