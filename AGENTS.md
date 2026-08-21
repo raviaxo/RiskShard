@@ -67,6 +67,13 @@ real run of the affected path succeeds.** For a content/evidence change also run
 - Commit only when asked. Sign off every commit for the DCO: `git commit -s`.
 - Default to a scoped feature branch (e.g. `shard/<area>`), not `main`. Do not push
   unless explicitly asked.
+- **Docs-only changes may go straight to `main`** (owner's call, 2026-08-21). Docs-only
+  means prose: `*.md`, ADRs, internal notes. It does **not** cover `evidence/`,
+  `sources/`, `calibrations/`, `schemas/`, templates, or anything a generated page or a
+  test reads — those keep the PR. Note what prose can still break: the README sold a
+  framing ADR-0010 had retired for three months, and the social card carried a retired
+  headline for twelve days. Speed here is a convenience, not a lower bar, so the gates
+  still run and a stale claim is still a defect.
 - Keep diffs scoped and coherent; standard-library-first; `scripts/` thin, logic in
   `engine/`.
 
