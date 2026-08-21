@@ -134,7 +134,14 @@ preflight clean, doctor GREEN ON EVERY CHECK, 0 open PRs, 0 unmerged branches. D
 `0ff2f12a5f6c` (92 files). Released as
 [v0.10.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.10.0).** #172–#177 all merged.
 
-**ACTIVE OBJECTIVE: none. Nothing is half-built.** Every remaining roadmap item is waiting on a
+**NEXT OBJECTIVE (W1, from 2026-08-22): the backlog corrections C1–C7** in
+[`execution_plan.md`](execution_plan.md). Seven places where the repo currently contradicts itself,
+the largest being that [ADR-0006](../adr/0006-depth-over-breadth.md) says depth while nine releases
+show zero parameter movement and fourteen commits went to the audit. **Corrections land before
+features**, at the owner's instruction, so the composition direction
+([`composition_direction.md`](composition_direction.md)) does not get built on a contradiction.
+
+**ACTIVE OBJECTIVE: none in flight. Nothing is half-built.** Every remaining roadmap item is waiting on a
 person, and that is the honest state rather than a gap to fill with invented work.
 
 ### What the 2026-08-19/21 arc did

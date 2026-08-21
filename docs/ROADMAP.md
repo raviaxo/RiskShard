@@ -6,6 +6,12 @@
 is a number you can check without asking us, and the last one has a date that
 [ADR-0017](adr/0017-the-kill-criterion-gets-a-clock.md) already committed to in writing.*
 
+> **Planning note, 2026-08-21.** A second axis is under discussion — always returning a labelled
+> number instead of a dead end — captured in
+> [`composition_direction.md`](internal/composition_direction.md). **Nothing about it is decided.**
+> It collides with four ADRs, and [`execution_plan.md`](internal/execution_plan.md) sequences the
+> corrections that come first. The milestones below are unchanged and remain the audit track.
+
 ## What this project is finishing
 
 **The audit.** Reading every public cyber-loss source we cite, one at a time, and recording what
