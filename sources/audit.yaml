@@ -2260,6 +2260,13 @@ audit:
           12 months, with prior-edition sizes given for comparison (n=3,400 in 2025, n=2,974
           in 2024, n=1,974 in 2023). Sub-question denominators are stated where they differ,
           for example n=836 for the payment bands and n=1,022 for the attack-vector question.
+          One gap is worth naming because it is unusual: printed page 11 carries the caption
+          "Data split: In the last year, has your organization been hit by ransomware? n=5,000",
+          and the answer appears nowhere in the report. The chart above that caption is three
+          overlapping circles with no percentages and no counts. So a prevalence denominator of
+          5,000 was collected, the question is published in its own words, and the rate is not.
+          Recorded here rather than only in FINDINGS because it changes what a reader may take
+          from this source: it carries no attack rate, and not because one could not be measured.
 
   - source_id: csa_singapore_cyber_landscape_2024_2025
     artifact_sha256: 6e58fcc4d59c26a9b31361c14a285a1558b60cb14762f617c793f44c9817cd3c

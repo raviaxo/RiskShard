@@ -29,6 +29,14 @@ records:
     value: 0.51
     unit: annual_probability
     source_id: sophos_state_ransomware_2024
+    refresh_checked: '2026-08-21'
+    refresh_note: >-
+      Not refreshed to Sophos 2026, and the reason is a property of the source rather
+      than a backlog. The 2026 edition surveys organizations already hit, so it carries
+      no attack rate; it also asked the prevalence question over n=5,000 and published
+      no answer, only an unlabelled Venn diagram. See FINDINGS finding 9. This anchor
+      stays on the older edition because that edition published the number and the
+      current one does not.
     source_name: Sophos The State of Ransomware 2024 (archived snapshot)
     source_type: industry_survey
     source_url_or_citation: https://web.archive.org/web/20240430145048if_/https://assets.sophos.com/X24WTUEQ/at/9brgj5n44hqvgsp5f5bqcps/sophos-state-of-ransomware-2024-wp.pdf
@@ -63,6 +71,14 @@ records:
     value: 0.58
     unit: annual_probability
     source_id: sophos_state_ransomware_2023
+    refresh_checked: '2026-08-21'
+    refresh_note: >-
+      Not refreshed to Sophos 2026, and the reason is a property of the source rather
+      than a backlog. The 2026 edition surveys organizations already hit, so it carries
+      no attack rate; it also asked the prevalence question over n=5,000 and published
+      no answer, only an unlabelled Venn diagram. See FINDINGS finding 9. This anchor
+      stays on the older edition because that edition published the number and the
+      current one does not.
     source_name: Sophos The State of Ransomware 2023 (archived snapshot)
     source_type: industry_survey
     source_url_or_citation: https://web.archive.org/web/20230511013336if_/https://assets.sophos.com/X24WTUEQ/at/c949g7693gsnjh9rb9gr8/sophos-state-of-ransomware-2023-wp.pdf
