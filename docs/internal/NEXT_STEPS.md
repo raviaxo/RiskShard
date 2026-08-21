@@ -1971,3 +1971,25 @@ governance/regulatory loss).
   changed after an unfavourable measurement. The front door was found to not mention the audit at
   all and to carry a day-stale count; both now pinned. Tests 354 → 356. **Owed next: publication —
   two drafts written and unsent.**
+- 2026-08-19/21 — **The arc where the front door started with the finding, and the audit became
+  something a stranger can read** (#172–#177 merged, v0.10.0 cut and tagged). Started because the
+  owner read the live explorer and the repo cold and said both were too dense and the project had
+  lost focus. Three of his points were measurable and all three were worse than assumed: 1,676
+  words of prose before the first item, a README of 599 lines across 26 sections, and a target
+  selector whose 539 combinations answered nothing 456 times. The selector was retired on that
+  measurement ([ADR-0018](../adr/0018-the-target-selector-failed-measurement.md)) — **and the first
+  measurement of it was wrong**, read under the wrong facet key, so the correction sits in the ADR
+  and the numbers moved into `engine/cell_coverage.py` with a test that fails if a precondition
+  becomes true. The audit was published as its own page (**roadmap M2, six weeks early**) and moved
+  **58 of 72 → 62 of 75**: the Japan NPA workbook turned out to be unread rather than unreadable
+  and publishes a banded cost distribution plus a stated exceedance, and Sophos 2026 produced
+  **[finding 9](../FINDINGS.md)** — a survey that asked 5,000 organisations the prevalence question
+  and printed a chart with no numbers on it. Four of seven documents supplied were already held.
+  **Three retired framings were still shipping publicly** (README thesis, roadmap, social card):
+  rendering was covered by tests and meaning was not, and that gap is now closed. Gated sources got
+  a route into the manifest for the first time. The ask ADR-0016 decided on 2026-08-15 became
+  answerable — plain-language questions plus a form that is the four questions and nothing else.
+  Tests 358 → 380; doctor green on every check. **Closed by planning rather than building:**
+  `composition_direction.md` captures a second axis under discussion and `execution_plan.md`
+  sequences seven backlog corrections that come first, at the owner's instruction not to mutate the
+  project without consistency.
