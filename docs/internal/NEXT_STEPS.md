@@ -11,32 +11,20 @@ entry was stale, corrected 2026-08-07) and the correction post ran on 2026-08-04
 
 ---
 
-### 🔴 OPEN — fetch three gated reports (added 2026-08-15, owner asked to be reminded)
+### ✅ CLOSED 2026-08-21 — the three gated reports, and two of them were never blocked
 
-**This is the ADR-0015 audit's single biggest blocker, and it is the only part of it an agent
-cannot do.** These are registered sources where what we hold is a landing page or a summary, not
-the document. All three are simultaneously the most-cited sources in the corpus and the most
-likely to actually publish the properties the audit asks about, so they are worth more than any
-other fetch available.
+**Cyentia IRIS 2025 had already been read in full** while this entry called it "the audit's single
+biggest blocker". **Sophos** was obtained 2026-08-20 as the 2026 global edition and read the same
+day. Only the **IBM regional cuts** remain, and they are now one of 13 rather than a headline.
 
-| priority | source | what we hold | why it matters most |
-| --- | --- | --- | --- |
-| **1** | **Cyentia IRIS 2025** (also IRIS 2022, IRIS ransomware) | 528–608-word product pages | Built on the Advisen event set — the likeliest source in the corpus to publish an actual loss **distribution** and **exceedance** curve. If it does, it reshapes the audit's central claim. |
-| **2** | **IBM Cost of a Data Breach 2025** (UK and Canada cuts) | 901–1,267-word summary pages | The most-cited cyber loss figure in the world, and we hold only coverage *about* it. |
-| **3** | **Sophos State of Ransomware 2025** (full global report) | 1,032-word Australia summary PDF | Three shards lean on Sophos prevalence; we have never read the full report. |
+What this entry got wrong is worth keeping. It ranked by *how gated the document felt* rather than
+by what the corpus already held, and two of its three items needed no fetch at all. The reminder it
+promised was mechanical — the doctor prints the blocked count every run — so the ranking was the
+only thing it added, and the ranking was wrong.
 
-Second tier, only if trivial: CSA Singapore Cybersecurity Health Report (we hold 791 words),
-CESIN barometre, and the two registered with **no artifact at all** —
-`asd_annual_cyber_threat_report_2024_2025` and `first_epss_data_stats`.
-
-**How to close it:** drop the PDFs in `sources/raw/` under the filenames
-`sources/manifest.json` expects, then any agent can re-hash, re-scan and adjudicate. All three
-are typically email- or registration-gated rather than paid.
-
-**You do not need to remember this.** All 8 blocked sources are marked `no_readable_artifact` in
-`sources/audit.yaml`, so **`riskshard_doctor.py` prints its `blocked (artifact is not the source)` count
-on every run** until they are obtained. The reminder is mechanical, not a note. Background:
-[`source_artifact_readiness.md`](source_artifact_readiness.md).
+The remaining 13 are listed by the doctor and now have a supported route:
+`access_mode: manual_download` plus `scripts/record_manual_artifacts.py`. Drop the file in
+`sources/raw/` under the manifest filename and run it.
 
 ---
 
@@ -141,50 +129,62 @@ on every run** until they are obtained. The reminder is mechanical, not a note. 
 
 ## Restart point
 
-**Session 2026-08-19 in flight on branch `shard/front-door-density`.** The objective is a
-front-door density cut plus the retirement of the reader-target selector (ADR-0018), taken after
-the owner read the live explorer and the repo and said both were too dense and that the project
-had lost focus.
+**Session closed 2026-08-21. Tree clean, `main` == `origin/main`, 380 tests, evidence and
+preflight clean, doctor GREEN ON EVERY CHECK, 0 open PRs, 0 unmerged branches. Data pack
+`0ff2f12a5f6c` (92 files). Released as
+[v0.10.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.10.0).** #172–#177 all merged.
 
-**ACTIVE OBJECTIVE: cut the front door's density and lead with the audit finding.**
+**ACTIVE OBJECTIVE: none. Nothing is half-built.** Every remaining roadmap item is waiting on a
+person, and that is the honest state rather than a gap to fill with invented work.
 
-### What this session changed
+### What the 2026-08-19/21 arc did
 
-- **The explorer front page: 1,676 → 706 words** of prose before the first item renders. The
-  three overlapping "the simulation is not the product" paragraphs became one; the basis of
-  preparation moved to [`docs/BASIS_OF_PREPARATION.md`](../BASIS_OF_PREPARATION.md); the
-  retraction record stopped being stated twice.
-- **The page now leads with the finding**, not the machinery: *58 of 72 sources read, zero publish
-  a mode*, with the correction record linked beside it. That is
-  [ADR-0016](../adr/0016-the-audit-is-the-product.md) finally reaching the front door.
-- **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md) — the reader-target selector
-  is retired**, measured rather than argued: it offered 539 targets and **456 of them answered
-  nothing (84.6%)**, with **60 trap pairs** where two values each answer alone and answer nothing
-  together. `AU + manufacturing` is one, and it is what the owner hit. Restricting the dropdowns to
-  answerable combinations was refused, because that hides the coverage gap. `declared_for` stays; a
-  control was retired, not a field.
+Started because the owner read the live explorer and the repo cold and said both were too dense
+and the project had lost focus. Three of his points were measurable; all three were worse than
+assumed.
 
-  ⚠️ **The first measurement of this was wrong and the correction is recorded in the ADR.** An
-  ad-hoc script read the size facet under `sizes` instead of `company_size_bands`, so size was
-  never tested and the grid came out 215/138 rather than 539/456. The decision held; the numbers
-  did not, so they now live in `engine/cell_coverage.py` with a test that checks the ADR against
-  them.
-- **README: 599 → 218 lines, 4,761 → 2,045 words, 26 sections → 8.** The operational manual moved
-  to [`docs/REFERENCE.md`](../REFERENCE.md).
-- **Two stale front-door facts found while moving them.** The README's "Product thesis" still
-  promised *"a library of defensible, benchmarked risk parameters"* — the module-library framing
-  [ADR-0010](../adr/0010-where-riskshard-stops.md) retired on 2026-08-11, still live on the front
-  door three months later. Deleted. And Repository Layout documented `library/benchmarks/`, a
-  directory that does not exist. Removed.
-- **The disclosure was kept loud, not moved behind a link.** The 31 → 7 cell-matched correction,
-  "45 of 66", and "no published figure moved" stay on the page itself; only the long-form basis
-  moved. A test pins it.
+- **The front door.** Prose before the first item 1,676 → ~1,000 words, now leading with the
+  finding. Basis of preparation → [`BASIS_OF_PREPARATION.md`](../BASIS_OF_PREPARATION.md), manual
+  → [`REFERENCE.md`](../REFERENCE.md), README 599 → ~260 lines. Disclosures stayed **on** the page.
+- **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md)** retired the reader-target
+  selector: 539 targets, 456 answering nothing, 60 trap pairs. **The first measurement was wrong**
+  (size read under the wrong key) and the correction is recorded in the ADR. The numbers moved
+  into `engine/cell_coverage.py` with a test that fails if a precondition becomes true.
+- **The audit is published** — [audit.html](https://raviaxo.github.io/RiskShard/audit.html).
+  Roadmap **M2, done six weeks early.**
+- **The audit moved 58 of 72 → 62 of 75.** Japan NPA was never unreadable, only unread, and
+  publishes a banded cost distribution plus a stated exceedance. Sophos 2026 answers all four.
+- **[Finding 9](../FINDINGS.md)** — Sophos asked 5,000 organisations the prevalence question and
+  printed a chart with no numbers. A publishing decision about a number the publisher holds, which
+  is a different and sharper gap than finding 1.
+- **Three retired framings were still shipping** and are gone (README thesis, roadmap, social
+  card). Rendering was covered by tests and meaning was not.
+- **`access_mode: manual_download`** gives gated sources a route into the manifest — the first
+  time the 13 still owed have had one.
+- **Roadmap M3 started**: the four questions in plain words on every surface plus
+  `read_a_source.md`. ADR-0016 decided this ask on 2026-08-15 and no route existed until now.
 
-### ⚠️ Open on this branch
+### Worth knowing before starting
 
-- Full `unittest discover` had not reported green at the time of writing. The explorer suite (13),
-  the README-touching suites (63), `validate_evidence.py` and the doctor are all green.
-- Not yet done: PR, and a decision on whether this warrants a release cut.
+**Four of the seven documents supplied on 2026-08-20 were byte-identical to artifacts already
+held**, and Cyentia IRIS had already been read in full despite a stale note calling it the biggest
+blocker. Third time this pattern has paid: check what the corpus thinks it has before hunting.
+
+**Three hand-written numbers went stale in one week** — the card's coverage line (twice), the
+ADR's grid counts, and a roadmap figure. All are generated now. **Assume any number typed into
+public text will go stale; generate it or test it.**
+
+### 🔴 PENDING ON THE OWNER — three things, and only three
+
+1. **The mode post is written and unsent** —
+   `~/business-os/comms/ventures/riskshard/drafts/POST-linkedin.txt`, with its first comment and a
+   rebuilt social card. Everything shipped this arc exists to catch the readers that post would
+   send. It is the only lever that could move an ADR-0012 metric off zero.
+2. **13 sources still need a person** (IBM regional cuts, CESIN, MYOB, older Sophos sector cuts;
+   AFP declined 2026-08-21). Drop them in `sources/raw/` under the manifest filename and run
+   `scripts/record_manual_artifacts.py`.
+3. **Ask Tony Martin-Vegue for one audit row** at the meeting. That is roadmap M3's definition of
+   done, and he has never been asked.
 
 ### 🔴 PENDING ON THE OWNER — the `recovery` question has no route
 
