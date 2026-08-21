@@ -201,7 +201,7 @@ intake:
     status: queued
     countries: [US]
     quantities: [frequency, loss_magnitude]
-  - file: "Cost-of-a-Data-Breach-Report-2026 (1).pdf"
+  - file: "Cost-of-a-Data-Breach-Report-2026.pdf"
     sha256: 0c7808f23134ff9e20e2386e4c93608228b04834d0266cd00bbc184edf115600
     bytes: 8758890
     words: 12056
@@ -210,16 +210,10 @@ intake:
     status: parked
     threats: [data_breach]
     quantities: [frequency, loss_magnitude]
-  - file: "Cost-of-a-Data-Breach-Report-2026.pdf"
-    sha256: 0c7808f23134ff9e20e2386e4c93608228b04834d0266cd00bbc184edf115600
-    bytes: 8758890
-    words: 12056
-    title: "think report Cost of a Data Breach Report 2026 The AI tipping point 01 04 05 06 Executive summary What’s new i"
-    score: 17.7
-    status: duplicate
-    duplicate_of: "Cost-of-a-Data-Breach-Report-2026 (1).pdf"
-    threats: [data_breach]
-    quantities: [frequency, loss_magnitude]
+    note: >-
+      Two byte-identical copies with download-suffixed names were removed 2026-08-21 and
+      the surviving file carries the row. Already registered and fully read as
+      ibm_cost_data_breach_2026.
   - file: "cyentia_iris_ransomware.html"
     sha256: 868976791d0ebb2cc60eb3aaee9a05680a24cde8c35e68a9c031fb311b2f322b
     bytes: 189020
@@ -337,15 +331,21 @@ intake:
     status: parked
     threats: [ransomware]
     quantities: [frequency, loss_magnitude]
-  - file: "sophos-state-ransomware-report-2026.pdf"
+  - file: "sophos_state_ransomware_2026.pdf"
     sha256: 678a57d7ab358a1088d561244a499022f0e7a54371756db352eaa68ed5e4af51
     bytes: 1256138
     words: 6203
     title: "REPORT The State of Ransomware 2026 Insights from 2,158 IT and Cybersecurity Leaders Across 17 Countries Intro"
     score: 17.7
-    status: parked
+    status: admitted
+    source_id: sophos_state_ransomware_2026
     threats: [ransomware]
     quantities: [frequency, loss_magnitude]
+    note: >-
+      Admitted 2026-08-21 as sophos_state_ransomware_2026 and read on all four audit
+      properties. Renamed from its download name. The scorer had parked it as out-of-cell
+      on a global-vs-country reading; it answers the audit rather than a cell, which is
+      the axis the scorer does not weigh.
   - file: "2024-Insider-Threat-Report-Gurucul.pdf"
     sha256: 88b71b6bfeb546838324e72e3d91e5dfcf3e08938ac083832f78d7108d3b4c3d
     bytes: 1371894

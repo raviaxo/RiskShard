@@ -126,7 +126,9 @@ def render_records(audit, hashes):
     out = []
     for source in audit["sources"]:
         sid = source["source_id"]
-        digest = hashes.get(sid)
+        # Prefer the hash the answer was pinned to over the manifest's latest fetch:
+        # they differ exactly when it matters, and the audited one is the checkable claim.
+        digest = source.get("artifact_sha256") or hashes.get(sid)
         meta = [f"<code>{esc(sid)}</code>"]
         if source.get("artifact"):
             meta.append(esc(source["artifact"]))

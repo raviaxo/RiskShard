@@ -1384,4 +1384,54 @@ sources:
     corpus already holds. Useful mainly as a size contrast: our cells are mid-market, and
     this is the band above. Same payer-denominator caveat.
   url_stability: dated
-
+- id: sophos_state_ransomware_2026
+  title: The State of Ransomware 2026 (global report)
+  publisher: Sophos
+  source_type: industry_survey
+  url: https://www.sophos.com/en-us/content/state-of-ransomware
+  publication_date: '2026-06-01'
+  access_mode: manual_download
+  intended_use:
+    - global ransom demand and payment medians and bands
+    - mean recovery cost excluding ransom
+  usage_notes: |
+    The full global edition, obtained 2026-08-20 after three earlier audit rows sat blocked
+    on holding only country cuts or blog summaries. n=2,158 organizations surveyed
+    January-March 2026 on the previous 12 months; prior editions n=3,400 (2025), n=2,974
+    (2024), n=1,974 (2023). Median ransom demand USD 698,000, down from USD 1.3M; median
+    ransom payment USD 769,000; mean recovery cost excluding any ransom USD 1,700,200, up
+    11% from USD 1,525,716. Publishes a banded payment distribution (n=836 payers) and
+    states that 48% of payments were USD 1M or more, down from 52%. Sophos states outright
+    that the widening mean-median gap signals a heavily skewed distribution - rare, and
+    worth preserving whenever a mean from this family is cited.
+  url_stability: rolling
+- id: csa_singapore_cyber_landscape_2024_2025
+  title: Singapore Cyber Landscape 2024/2025
+  publisher: Cyber Security Agency of Singapore
+  source_type: official_statistics
+  url: https://www.csa.gov.sg/resources/publications/singapore-cyber-landscape-2024
+  publication_date: '2025-07-01'
+  access_mode: manual_download
+  intended_use:
+    - Singapore national scam and cybercrime loss totals, as context only
+  usage_notes: |
+    National annual statistics. Supersedes the CSA Cybersecurity Health Report 2023 for
+    Singapore context, which the corpus holds only as an image-based PDF. Every figure is a
+    national AGGREGATE - total scam losses, incident counts - never a per-event or
+    per-organization loss. Do not use as an impact anchor: there is no denominator of
+    affected organizations to divide by.
+  url_stability: rolling
+- id: csa_singapore_cyber_landscape_2025_2026
+  title: Singapore Cyber Landscape 2025/2026
+  publisher: Cyber Security Agency of Singapore
+  source_type: official_statistics
+  url: https://www.csa.gov.sg/resources/publications/singapore-cyber-landscape-2025
+  publication_date: '2026-07-01'
+  access_mode: manual_download
+  intended_use:
+    - Singapore national scam and cybercrime loss totals, as context only
+  usage_notes: |
+    The current edition, obtained 2026-08-20. Scam losses fell 17.9% from S$1.1 billion to
+    S$913.1 million against 2024. Same aggregate caveat as the prior edition: national
+    totals with no per-organization denominator, so not an impact anchor.
+  url_stability: rolling

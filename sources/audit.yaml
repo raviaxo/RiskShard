@@ -1453,23 +1453,56 @@ audit:
           No population of its own. The population belongs to IBM's study, which we hold only as a pointer — the record's own limitations already say the citation is secondary coverage rather than the gated primary.
 
   - source_id: npa_japan_cyber_threats_2025_statistics
+    artifact_sha256: ca8c90022d470b94cbb23191dc6180bbe812e21fee2f25180addeaa399068f13
+    artifact: sources/raw/npa_japan_cyber_threats_2025_statistics.xlsx
     properties:
       mode:
-        basis: unverified
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-21'
         detail: >-
-          Still unread, and deliberately not answered from a null result. The workbook is the source, but the standard-library reader extracts 461 words and no CJK text from it, so its content has not actually been seen. Under the rule this audit sets for itself — a source in a language or format the reader does not cover must not be answered from an empty scan — it stays a question. Needs a reader that resolves its shared strings.
+          No modal or most-likely value is stated for any loss quantity, and the workbook
+          contains no occurrence of 中央値 (median), 平均 (mean) or 最頻 (mode) in any of its 88
+          sheets. It does, however, come closer than any other source read so far: sheet
+          統計編P126 gives investigation cost as counts across six bands, and the heaviest
+          band — ¥10M to ¥50M with 32 of 89 cases — is a modal CLASS a reader can identify.
+          Recorded as not published, on the ADR-0008 rule that deriving is not stating, and
+          flagged here because a modal class is the nearest thing this corpus has found to a
+          published mode. Previously unread: the earlier reader extracted 461 words and no
+          CJK text, so the workbook had never actually been seen.
       distribution:
-        basis: unverified
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-21'
         detail: >-
-          Still unread, and deliberately not answered from a null result. The workbook is the source, but the standard-library reader extracts 461 words and no CJK text from it, so its content has not actually been seen. Under the rule this audit sets for itself — a source in a language or format the reader does not cover must not be answered from an empty scan — it stays a question. Needs a reader that resolves its shared strings.
+          Yes. Sheet 統計編P126 (調査費用の総額, total investigation cost) publishes a full banded
+          distribution with counts, n=89: under ¥1M, 16; ¥1M–5M, 18; ¥5M–10M, 9; ¥10M–50M, 32;
+          ¥50M–100M, 9; ¥100M and above, 5. Sheets 図表９ and 統計編P127 cross-tabulate the same
+          cost bands against recovery duration as proportions. Note the measurement basis: this
+          is investigation cost (調査費用), not total event loss, so it is not interchangeable
+          with the total-breach-cost figures elsewhere in this corpus.
       exceedance:
-        basis: unverified
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-21'
         detail: >-
-          Still unread, and deliberately not answered from a null result. The workbook is the source, but the standard-library reader extracts 461 words and no CJK text from it, so its content has not actually been seen. Under the rule this audit sets for itself — a source in a language or format the reader does not cover must not be answered from an empty scan — it stays a question. Needs a reader that resolves its shared strings.
+          Yes, and it is stated rather than derived: the top band of 統計編P126 is open-ended at
+          ¥100M and above, holding 5 of 89 cases, so 5.6% of reported investigations exceeded
+          ¥100 million. The ¥50M threshold is exceeded by 14 of 89, or 15.7%. This is a
+          within-sample rate over organizations that reported to the NPA, which is a floor
+          rather than a population rate — non-reporting is not measured.
       population:
-        basis: unverified
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-21'
         detail: >-
-          Still unread, and deliberately not answered from a null result. The workbook is the source, but the standard-library reader extracts 461 words and no CJK text from it, so its content has not actually been seen. Under the rule this audit sets for itself — a source in a language or format the reader does not cover must not be answered from an empty scan — it stays a question. Needs a reader that resolves its shared strings.
+          Yes, and in unusual detail. Sheet 統計編P120 gives 226 ransomware damage reports
+          received in R7; 統計編P122 splits them by organization size (large 64, SME 143, other
+          bodies 19) and 統計編P123 by industry (manufacturing 91, wholesale/retail 34, services
+          24, IT 24, construction 18, education 11, other 24). The denominators differ by
+          question and the source says so: the cost table is n=89 and the recovery-duration
+          table n=107, both subsets of the 226. The population is organizations that reported
+          to the National Police Agency, never all Japanese organizations.
 
   - source_id: csa_cybersecurity_health_report_2023
     properties:
@@ -2182,4 +2215,124 @@ audit:
         verified_on: '2026-08-16'
         detail: >-
           Enterprise organizations hit by ransomware, the size band ABOVE our mid-market cells. Recorded because a size contrast is evidence about size: the same survey family reports a different level for enterprises than for the 100-5,000 employee band its country cuts cover.
+
+  - source_id: sophos_state_ransomware_2026
+    artifact_sha256: 678a57d7ab358a1088d561244a499022f0e7a54371756db352eaa68ed5e4af51
+    artifact: sources/raw/sophos_state_ransomware_2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-21'
+        detail: >-
+          No modal or most-likely value is offered for any loss quantity. The word "mode"
+          appears three times and every occurrence is unrelated ("modest", "AI models").
+          Central tendencies are medians and means: median ransom demand USD 698,000, median
+          ransom payment USD 769,000, mean recovery cost excluding ransom USD 1,700,200. The
+          report goes further than most in naming the problem — it states that the widening
+          gap between mean and median demands "signals a heavily skewed distribution" — and
+          still publishes no most-likely value.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-21'
+        detail: >-
+          Yes. A "Ransomware payment bands" chart gives the share of payers in each band
+          (n=836), and the narrative reads the whole shape: the two highest bands, USD 1M–5M
+          and USD 5M+, both declined while USD 20,000–99,999 and USD 500,000–999,999 grew.
+          The bands are percentages of payers, so the denominator is organizations that paid,
+          never organizations attacked.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-21'
+        detail: >-
+          Yes, stated rather than derived: "Just under half (48%) of payments were $1 million
+          or more, down from 52% in the previous year." A year-on-year exceedance rate at a
+          named threshold over a named sample. Same payer denominator as the bands — it is
+          the share of PAYMENTS above USD 1M, not the share of incidents.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-21'
+        detail: >-
+          Yes. n=2,158 organizations surveyed January to March 2026 reporting on the previous
+          12 months, with prior-edition sizes given for comparison (n=3,400 in 2025, n=2,974
+          in 2024, n=1,974 in 2023). Sub-question denominators are stated where they differ,
+          for example n=836 for the payment bands and n=1,022 for the attack-vector question.
+
+  - source_id: csa_singapore_cyber_landscape_2024_2025
+    artifact_sha256: 6e58fcc4d59c26a9b31361c14a285a1558b60cb14762f617c793f44c9817cd3c
+    artifact: sources/raw/csa_singapore_cyber_landscape_2024_2025.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-21'
+        detail: >-
+          No. The word "median" does not appear at all, and every occurrence of "mode" is
+          "models" or "modern" rather than the statistic. Central tendencies where given are
+          averages of operational counts — attacks blocked per hour, attack duration — not of
+          loss.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-21'
+        detail: >-
+          No loss distribution, quantiles or bands. Monetary figures are national aggregates
+          such as total scam losses, reported as single totals with year-on-year change.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-21'
+        detail: >-
+          No. Nothing states how often a loss of a given size is exceeded. The report deals in
+          national totals, which cannot yield an exceedance rate without a per-event
+          denominator it does not publish.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-21'
+        detail: >-
+          Yes at national level — Singapore, for the reporting year, via CSA and police
+          reporting channels. But the population that matters for a loss figure is absent:
+          the aggregates carry no count of affected organizations, so no per-organization
+          quantity can be recovered from them. Nameable, and not usable as an impact anchor.
+      
+  - source_id: csa_singapore_cyber_landscape_2025_2026
+    artifact_sha256: 1ad9d4c1e12803d692c3f84ff23d832a7991a8098ce4cdf35326a50d2345f204
+    artifact: sources/raw/csa_singapore_cyber_landscape_2025_2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-21'
+        detail: >-
+          No. "median" does not appear; all 53 occurrences of "mode" are "models" or "modern".
+          The same pattern as the prior edition.
+      distribution:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-21'
+        detail: >-
+          No loss distribution or bands. Scam losses are given as a national total, S$913.1
+          million, down 17.9% from S$1.1 billion in 2024 — a single figure with a change rate,
+          not a spread.
+      exceedance:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-21'
+        detail: >-
+          No. Individual case values appear (an operation "exceeding S$3.1 million", S$28.2
+          million seized) but these are instances, not statements about how often a loss of a
+          given size is exceeded over a population.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-21'
+        detail: >-
+          Yes at national level, and with the same limitation as the prior edition: no count of
+          affected organizations accompanies the loss totals, so the figures cannot be reduced
+          to a per-event or per-organization quantity. This supersedes the CSA Cybersecurity
+          Health Report 2023 as the current Singapore statistics source.
 

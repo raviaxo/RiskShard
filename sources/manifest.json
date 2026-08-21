@@ -1,9 +1,9 @@
 {
   "error_count": 0,
-  "fetched_count": 71,
+  "fetched_count": 74,
   "generated_at": "2026-08-01T21:47:07Z",
   "manifest_version": "1.0",
-  "source_count": 71,
+  "source_count": 74,
   "sources": [
     {
       "access_mode": "public_html",
@@ -195,6 +195,28 @@
       "usage_notes": "Use as a documented deepfake-fraud single-event loss. A finance employee at engineering firm Arup made 15 transfers totaling about USD 25.6M after a video call in which a deepfake impersonated the CFO and colleagues (Hong Kong, early 2024); the funds remain unrecovered. One documented extreme case, not a mid-market average or a loss percentile.\n"
     },
     {
+      "access_mode": "public_html",
+      "content_length": 5806316,
+      "content_type": "application/pdf",
+      "final_url": "https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "asd_annual_cyber_threat_report_2024_2025",
+      "intended_use": [
+        "Australian cybercrime cost by business size"
+      ],
+      "publication_date": "2025-11-01",
+      "publisher": "Australian Signals Directorate",
+      "raw_path": "sources/raw/Annual Cyber Threat Report 2024-2025 _ Cyber.gov.au.pdf",
+      "sha256": "83a00aaf4390d405dcc7f2a82314a76aa5a7fd8d961a5f718f2a889e77d9324d",
+      "source_type": "government_report",
+      "status": "fetched",
+      "title": "Annual Cyber Threat Report 2024-2025",
+      "url": "https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025",
+      "url_stability": "dated",
+      "usage_notes": "Self-reported costs from reports to ReportCyber.\n"
+    },
+    {
       "access_mode": "public_pdf",
       "content_length": 365623,
       "content_type": "application/pdf",
@@ -382,6 +404,52 @@
       "usage_notes": "First CSA Cybersecurity Health Report: survey of 2,036 Singapore organisations (businesses and non-profits, various sizes and sectors), fielded May-August 2023. Key figure: \"OVER 8 IN 10 organisations have encountered a cybersecurity incident in a year\", with about half encountering incidents several times a year; top incident categories ransomware and social engineering. The prevalence is ALL-CYBER, not BEC- or threat-specific, and the report publishes no per-incident-type organisation prevalence - any threat-specific use is a threat bridge and must say so. \"Over 8 in 10\" is taken conservatively as 0.80. The gov.sg CDN rejects some default user agents but serves the gatherer's UA.\n"
     },
     {
+      "access_mode": "manual_download",
+      "acquisition": "manual_download",
+      "content_length": 9784561,
+      "content_type": "application/pdf",
+      "final_url": null,
+      "gathered_at": "2026-08-21T13:11:12Z",
+      "http_status": null,
+      "id": "csa_singapore_cyber_landscape_2024_2025",
+      "intended_use": [
+        "Singapore national scam and cybercrime loss totals, as context only"
+      ],
+      "publication_date": "2025-07-01",
+      "publisher": "Cyber Security Agency of Singapore",
+      "raw_path": "sources/raw/csa_singapore_cyber_landscape_2024_2025.pdf",
+      "sha256": "6e58fcc4d59c26a9b31361c14a285a1558b60cb14762f617c793f44c9817cd3c",
+      "source_type": "official_statistics",
+      "status": "fetched",
+      "title": "Singapore Cyber Landscape 2024/2025",
+      "url": "https://www.csa.gov.sg/resources/publications/singapore-cyber-landscape-2024",
+      "url_stability": "rolling",
+      "usage_notes": "National annual statistics. Supersedes the CSA Cybersecurity Health Report 2023 for\nSingapore context, which the corpus holds only as an image-based PDF. Every figure is a\nnational AGGREGATE - total scam losses, incident counts - never a per-event or\nper-organization loss. Do not use as an impact anchor: there is no denominator of\naffected organizations to divide by.\n"
+    },
+    {
+      "access_mode": "manual_download",
+      "acquisition": "manual_download",
+      "content_length": 7831420,
+      "content_type": "application/pdf",
+      "final_url": null,
+      "gathered_at": "2026-08-21T13:11:12Z",
+      "http_status": null,
+      "id": "csa_singapore_cyber_landscape_2025_2026",
+      "intended_use": [
+        "Singapore national scam and cybercrime loss totals, as context only"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Cyber Security Agency of Singapore",
+      "raw_path": "sources/raw/csa_singapore_cyber_landscape_2025_2026.pdf",
+      "sha256": "1ad9d4c1e12803d692c3f84ff23d832a7991a8098ce4cdf35326a50d2345f204",
+      "source_type": "official_statistics",
+      "status": "fetched",
+      "title": "Singapore Cyber Landscape 2025/2026",
+      "url": "https://www.csa.gov.sg/resources/publications/singapore-cyber-landscape-2025",
+      "url_stability": "rolling",
+      "usage_notes": "The current edition, obtained 2026-08-20. Scam losses fell 17.9% from S$1.1 billion to\nS$913.1 million against 2024. Same aggregate caveat as the prior edition: national\ntotals with no per-organization denominator, so not an impact anchor.\n"
+    },
+    {
       "access_mode": "public_html",
       "content_length": 1371894,
       "content_type": "application/pdf",
@@ -500,6 +568,29 @@
       "url": "https://www.security.org/resources/deepfake-statistics/",
       "url_stability": "rolling",
       "usage_notes": "Use as a compiled 2024 deepfake business-fraud statistics source for the prevalence floor only (more than 10% of companies experienced deepfake fraud attempts in 2024 - verified in the artifact). Secondary compilation of vendor survey data, lower trust; volatile and fast-rising. Preserve these limitations. Record review 2026-08-01: the USD 500,000 / 603,000 loss figures previously described here are absent from this page both today and in the snapshot taken on the extraction date; the loss record was reattributed to regula_deepfake_survey_2024, whose artifact states the figure it cites (~USD 450,000 average). This source now backs only the attempt-prevalence floor.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 5900488,
+      "content_type": "application/pdf",
+      "final_url": "https://www.dtexsystems.com/ponemon-cost-of-insider-risks-report/",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "dtex_ponemon_cost_insider_risks_2026",
+      "intended_use": [
+        "insider incident cost per incident by insider type",
+        "insider incident frequency per organization per year"
+      ],
+      "publication_date": "2026-01-01",
+      "publisher": "Ponemon Institute and DTEX Systems",
+      "raw_path": "sources/raw/DTEX_Ponemon_2026.pdf",
+      "sha256": "81752c526a630107d69b8b4a41c951f7f5b5bc2dd8df556756006d5ec8386d58",
+      "source_type": "cyber_loss_research",
+      "status": "fetched",
+      "title": "2026 Cost of Insider Risks Global Report",
+      "url": "https://www.dtexsystems.com/ponemon-cost-of-insider-risks-report/",
+      "url_stability": "rolling",
+      "usage_notes": "Means over a 354-organization benchmark sample; no median published.\n"
     },
     {
       "access_mode": "public_pdf",
@@ -712,6 +803,29 @@
       "url": "https://www.ibm.com/think/x-force/2025-cost-of-a-data-breach-navigating-ai",
       "url_stability": "dated",
       "usage_notes": "IBM's 2025 Cost of a Data Breach Report, global figures.\nPINNED to an edition-specific URL on 2026-07-30. The previous URL was ibm.com/reports/data-breach, a living page that always serves the current edition: by July 2026 it served the 2026 report (global average USD 4.99M) while this record cited the 2025 figure, so the citation could no longer be verified against its own gathered artifact. The content-type guard could not catch that - HTML was still HTML. Any source whose URL is undated should be assumed to roll.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 8758890,
+      "content_type": "application/pdf",
+      "final_url": "https://www.ibm.com/reports/data-breach",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "ibm_cost_data_breach_2026",
+      "intended_use": [
+        "data breach total cost by industry",
+        "data breach cost by country and region"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "IBM",
+      "raw_path": "sources/raw/Cost-of-a-Data-Breach-Report-2026.pdf",
+      "sha256": "0c7808f23134ff9e20e2386e4c93608228b04834d0266cd00bbc184edf115600",
+      "source_type": "data_breach_cost_research",
+      "status": "fetched",
+      "title": "Cost of a Data Breach Report 2026",
+      "url": "https://www.ibm.com/reports/data-breach",
+      "url_stability": "rolling",
+      "usage_notes": "Means only; no median or percentile is published.\n"
     },
     {
       "access_mode": "public_html",
@@ -1161,6 +1275,53 @@
       "usage_notes": "Immutable Internet Archive snapshot (2024-04-30) of the full 2024 whitepaper PDF. The snapshot is the canonical URL on purpose: the original assets.sophos.com URL (kept in this note, not as a fallback) was observed on 2026-08-02 serving the June 2025 edition under the 2024 filename - a silent edition roll that would invalidate citations, the same failure mode recorded for ibm_cost_data_breach_2025. Original URL: https://assets.sophos.com/X24WTUEQ/at/9brgj5n44hqvgsp5f5bqcps/sophos-state-of-ransomware-2024-wp.pdf. Australia readings: prose (printed page 3) \"the lowest reported attack rates were by respondents in Brazil (44%), Japan (51%), and Australia (54%)\"; the by-country chart (n=330 for Australia) carries the same 54% with the 2023 comparator. Survey: 5,000 IT/cybersecurity leaders, 14 countries, organizations with 100-5,000 employees, January-February 2024, by Vanson Bourne. Attack prevalence, not loss-event frequency.\n"
     },
     {
+      "access_mode": "manual_download",
+      "acquisition": "manual_download",
+      "content_length": 1256138,
+      "content_type": "application/pdf",
+      "final_url": null,
+      "gathered_at": "2026-08-21T13:11:12Z",
+      "http_status": null,
+      "id": "sophos_state_ransomware_2026",
+      "intended_use": [
+        "global ransom demand and payment medians and bands",
+        "mean recovery cost excluding ransom"
+      ],
+      "publication_date": "2026-06-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos_state_ransomware_2026.pdf",
+      "sha256": "678a57d7ab358a1088d561244a499022f0e7a54371756db352eaa68ed5e4af51",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware 2026 (global report)",
+      "url": "https://www.sophos.com/en-us/content/state-of-ransomware",
+      "url_stability": "rolling",
+      "usage_notes": "The full global edition, obtained 2026-08-20 after three earlier audit rows sat blocked\non holding only country cuts or blog summaries. n=2,158 organizations surveyed\nJanuary-March 2026 on the previous 12 months; prior editions n=3,400 (2025), n=2,974\n(2024), n=1,974 (2023). Median ransom demand USD 698,000, down from USD 1.3M; median\nransom payment USD 769,000; mean recovery cost excluding any ransom USD 1,700,200, up\n11% from USD 1,525,716. Publishes a banded payment distribution (n=836 payers) and\nstates that 48% of payments were USD 1M or more, down from 52%. Sophos states outright\nthat the widening mean-median gap signals a heavily skewed distribution - rare, and\nworth preserving whenever a mean from this family is cited.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 248285,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-australia",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_au_2026",
+      "intended_use": [
+        "Australia ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-australia-2026.pdf",
+      "sha256": "b1e0e7a7eb29c7e889c49c685de219651481a52d1a9ec71b97eeab3618512db2",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in Australia 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-australia",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=119.\n"
+    },
+    {
       "access_mode": "public_pdf",
       "content_length": 219115,
       "content_type": "application/pdf",
@@ -1182,6 +1343,52 @@
       "url": "https://assets.sophos.com/X24WTUEQ/at/k5krqsjhn4zbvj84448rhh/sophos-state-of-ransomware-in-australia-2025.pdf",
       "url_stability": "dated",
       "usage_notes": "Australia country cut of the 2025 State of Ransomware survey: 191 Australian IT/cybersecurity leaders in organizations of 100-5,000 employees that were hit by ransomware in the last year, surveyed January-March 2025, all financial figures USD. Key figures: mean recovery cost USD 0.65M excluding any ransom payments (down from USD 2.37M reported by Australian respondents in 2024); median ransom demand USD 217,000; median ransom payment USD 350,000 (n=26 payers); 41% paid. Because the whole sample was hit, this edition carries NO attack-prevalence rate - do not cite it for frequency. The filename is edition-specific, but Sophos has been observed rolling asset URLs across editions; re-verify the sha256 against the cited figures before reusing after a new edition ships.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 243902,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-germany",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_de_2026",
+      "intended_use": [
+        "Germany ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-germany-2026.pdf",
+      "sha256": "9bb9b4d4d4a8e0ae11de56201b4364f4e25265508bed1cd5c70d48b85cc0b34f",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in Germany 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-germany",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=139.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 588512,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-enterprise",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_enterprise_2025",
+      "intended_use": [
+        "enterprise ransom demand and payment levels",
+        "size-band contrast"
+      ],
+      "publication_date": "2025-10-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-enterprise-2025.pdf",
+      "sha256": "a6a860ff94795e70739d06190684e6ab5c21097bbfc2651e615cf5f2c121af99",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in Enterprise 2025",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-enterprise",
+      "url_stability": "dated",
+      "usage_notes": "Enterprise size band of the State of Ransomware family.\n"
     },
     {
       "access_mode": "public_html",
@@ -1206,6 +1413,75 @@
       "url": "https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-financial-services-2024",
       "url_stability": "dated",
       "usage_notes": "Use as a survey-based ransomware benchmark. Preserve survey-bias and geography limitations in evidence records.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 708866,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-financial-services",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_financial_services_2025",
+      "intended_use": [
+        "financial-services ransomware prevalence",
+        "sector ransom payment distribution"
+      ],
+      "publication_date": "2025-10-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-financial-services-2025.pdf",
+      "sha256": "92b2154b8f0cd2d56246778fd9fd4f1caf59c23df32756923947871101f3d145",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in Financial Services 2025",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-financial-services",
+      "url_stability": "dated",
+      "usage_notes": "Sector-specific ransomware survey. Ransom payment figures are medians over responding organizations that paid, not over all organizations attacked - the denominator is the payers.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 247827,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-france",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_fr_2026",
+      "intended_use": [
+        "France ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-france-2026.pdf",
+      "sha256": "37bea34a3480d21774fd9112c9ac57c63d23018209a7086928b584a19076e72c",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in France 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-france",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=129.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 247591,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-japan",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_jp_2026",
+      "intended_use": [
+        "Japan ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-japan-2026.pdf",
+      "sha256": "3782bad79f43628246953ed77a5c10c4eda6e3b10cc67c6d2881ce9cdb48196d",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in Japan 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-japan",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=152.\n"
     },
     {
       "access_mode": "public_html",
@@ -1254,6 +1530,75 @@
       "url": "https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025",
       "url_stability": "dated",
       "usage_notes": "Use as a manufacturing-sector ransomware benchmark for organizations with 100 to 5,000 employees. Preserve limitations that the public page is global, survey-based, conditional on organizations hit by ransomware, and not Germany-specific.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 238009,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-singapore",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_sg_2026",
+      "intended_use": [
+        "Singapore ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-singapore-2026.pdf",
+      "sha256": "c05f0be08438abbde85ab003930b4a483d1b2ec4684989723a3da1cfcbdce7d5",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in Singapore 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-singapore",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=33.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 247598,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-uk",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_uk_2026",
+      "intended_use": [
+        "United Kingdom ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-uk-2026.pdf",
+      "sha256": "329fff7a941e6848b4f60fe52f6449e742c83b1102ea483f4919caf8acf29a2d",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in United Kingdom 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-uk",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=120.\n"
+    },
+    {
+      "access_mode": "public_pdf",
+      "content_length": 246068,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-us",
+      "gathered_at": "2026-08-16T00:00:00Z",
+      "http_status": 200,
+      "id": "sophos_state_ransomware_us_2026",
+      "intended_use": [
+        "United States ransomware prevalence",
+        "country ransom demand and payment levels"
+      ],
+      "publication_date": "2026-07-01",
+      "publisher": "Sophos",
+      "raw_path": "sources/raw/sophos-state-of-ransomware-in-us-2026.pdf",
+      "sha256": "0b359dcb8acae726d87ab92646f1de21461d31f5805dcfd2b095ec099e483a49",
+      "source_type": "industry_survey",
+      "status": "fetched",
+      "title": "The State of Ransomware in United States 2026",
+      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-us",
+      "url_stability": "dated",
+      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=377.\n"
     },
     {
       "access_mode": "public_pdf",
@@ -1398,281 +1743,6 @@
       "url": "https://www.verizon.com/business/resources/T766/reports/2026-dbir-data-breach-investigations-report.pdf",
       "url_stability": "dated",
       "usage_notes": "Use as a threat-pattern and breach-vector source. DBIR is not a direct actuarial loss table and should not be treated as complete representation of all breaches.\n"
-    },
-    {
-      "access_mode": "public_pdf",
-      "content_length": 708866,
-      "content_type": "application/pdf",
-      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-financial-services",
-      "gathered_at": "2026-08-16T00:00:00Z",
-      "http_status": 200,
-      "id": "sophos_state_ransomware_financial_services_2025",
-      "intended_use": [
-        "financial-services ransomware prevalence",
-        "sector ransom payment distribution"
-      ],
-      "publication_date": "2025-10-01",
-      "publisher": "Sophos",
-      "raw_path": "sources/raw/sophos-state-of-ransomware-in-financial-services-2025.pdf",
-      "sha256": "92b2154b8f0cd2d56246778fd9fd4f1caf59c23df32756923947871101f3d145",
-      "source_type": "industry_survey",
-      "status": "fetched",
-      "title": "The State of Ransomware in Financial Services 2025",
-      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-financial-services",
-      "url_stability": "dated",
-      "usage_notes": "Sector-specific ransomware survey. Ransom payment figures are medians over responding organizations that paid, not over all organizations attacked - the denominator is the payers.\n"
-    },
-    {
-      "access_mode": "public_pdf",
-      "content_length": 248285,
-      "content_type": "application/pdf",
-      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-australia",
-      "gathered_at": "2026-08-16T00:00:00Z",
-      "http_status": 200,
-      "id": "sophos_state_ransomware_au_2026",
-      "intended_use": [
-        "Australia ransomware prevalence",
-        "country ransom demand and payment levels"
-      ],
-      "publication_date": "2026-07-01",
-      "publisher": "Sophos",
-      "raw_path": "sources/raw/sophos-state-of-ransomware-in-australia-2026.pdf",
-      "sha256": "b1e0e7a7eb29c7e889c49c685de219651481a52d1a9ec71b97eeab3618512db2",
-      "source_type": "industry_survey",
-      "status": "fetched",
-      "title": "The State of Ransomware in Australia 2026",
-      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-australia",
-      "url_stability": "dated",
-      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=119.\n"
-    },
-    {
-      "access_mode": "public_pdf",
-      "content_length": 243902,
-      "content_type": "application/pdf",
-      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-germany",
-      "gathered_at": "2026-08-16T00:00:00Z",
-      "http_status": 200,
-      "id": "sophos_state_ransomware_de_2026",
-      "intended_use": [
-        "Germany ransomware prevalence",
-        "country ransom demand and payment levels"
-      ],
-      "publication_date": "2026-07-01",
-      "publisher": "Sophos",
-      "raw_path": "sources/raw/sophos-state-of-ransomware-in-germany-2026.pdf",
-      "sha256": "9bb9b4d4d4a8e0ae11de56201b4364f4e25265508bed1cd5c70d48b85cc0b34f",
-      "source_type": "industry_survey",
-      "status": "fetched",
-      "title": "The State of Ransomware in Germany 2026",
-      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-germany",
-      "url_stability": "dated",
-      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=139.\n"
-    },
-    {
-      "access_mode": "public_pdf",
-      "content_length": 247827,
-      "content_type": "application/pdf",
-      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-france",
-      "gathered_at": "2026-08-16T00:00:00Z",
-      "http_status": 200,
-      "id": "sophos_state_ransomware_fr_2026",
-      "intended_use": [
-        "France ransomware prevalence",
-        "country ransom demand and payment levels"
-      ],
-      "publication_date": "2026-07-01",
-      "publisher": "Sophos",
-      "raw_path": "sources/raw/sophos-state-of-ransomware-in-france-2026.pdf",
-      "sha256": "37bea34a3480d21774fd9112c9ac57c63d23018209a7086928b584a19076e72c",
-      "source_type": "industry_survey",
-      "status": "fetched",
-      "title": "The State of Ransomware in France 2026",
-      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-france",
-      "url_stability": "dated",
-      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=129.\n"
-    },
-    {
-      "access_mode": "public_pdf",
-      "content_length": 247591,
-      "content_type": "application/pdf",
-      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-japan",
-      "gathered_at": "2026-08-16T00:00:00Z",
-      "http_status": 200,
-      "id": "sophos_state_ransomware_jp_2026",
-      "intended_use": [
-        "Japan ransomware prevalence",
-        "country ransom demand and payment levels"
-      ],
-      "publication_date": "2026-07-01",
-      "publisher": "Sophos",
-      "raw_path": "sources/raw/sophos-state-of-ransomware-in-japan-2026.pdf",
-      "sha256": "3782bad79f43628246953ed77a5c10c4eda6e3b10cc67c6d2881ce9cdb48196d",
-      "source_type": "industry_survey",
-      "status": "fetched",
-      "title": "The State of Ransomware in Japan 2026",
-      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-japan",
-      "url_stability": "dated",
-      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=152.\n"
-    },
-    {
-      "access_mode": "public_pdf",
-      "content_length": 247598,
-      "content_type": "application/pdf",
-      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-uk",
-      "gathered_at": "2026-08-16T00:00:00Z",
-      "http_status": 200,
-      "id": "sophos_state_ransomware_uk_2026",
-      "intended_use": [
-        "United Kingdom ransomware prevalence",
-        "country ransom demand and payment levels"
-      ],
-      "publication_date": "2026-07-01",
-      "publisher": "Sophos",
-      "raw_path": "sources/raw/sophos-state-of-ransomware-in-uk-2026.pdf",
-      "sha256": "329fff7a941e6848b4f60fe52f6449e742c83b1102ea483f4919caf8acf29a2d",
-      "source_type": "industry_survey",
-      "status": "fetched",
-      "title": "The State of Ransomware in United Kingdom 2026",
-      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-uk",
-      "url_stability": "dated",
-      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=120.\n"
-    },
-    {
-      "access_mode": "public_pdf",
-      "content_length": 246068,
-      "content_type": "application/pdf",
-      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-us",
-      "gathered_at": "2026-08-16T00:00:00Z",
-      "http_status": 200,
-      "id": "sophos_state_ransomware_us_2026",
-      "intended_use": [
-        "United States ransomware prevalence",
-        "country ransom demand and payment levels"
-      ],
-      "publication_date": "2026-07-01",
-      "publisher": "Sophos",
-      "raw_path": "sources/raw/sophos-state-of-ransomware-in-us-2026.pdf",
-      "sha256": "0b359dcb8acae726d87ab92646f1de21461d31f5805dcfd2b095ec099e483a49",
-      "source_type": "industry_survey",
-      "status": "fetched",
-      "title": "The State of Ransomware in United States 2026",
-      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-us",
-      "url_stability": "dated",
-      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=377.\n"
-    },
-    {
-      "access_mode": "public_pdf",
-      "content_length": 238009,
-      "content_type": "application/pdf",
-      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-singapore",
-      "gathered_at": "2026-08-16T00:00:00Z",
-      "http_status": 200,
-      "id": "sophos_state_ransomware_sg_2026",
-      "intended_use": [
-        "Singapore ransomware prevalence",
-        "country ransom demand and payment levels"
-      ],
-      "publication_date": "2026-07-01",
-      "publisher": "Sophos",
-      "raw_path": "sources/raw/sophos-state-of-ransomware-in-singapore-2026.pdf",
-      "sha256": "c05f0be08438abbde85ab003930b4a483d1b2ec4684989723a3da1cfcbdce7d5",
-      "source_type": "industry_survey",
-      "status": "fetched",
-      "title": "The State of Ransomware in Singapore 2026",
-      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-singapore",
-      "url_stability": "dated",
-      "usage_notes": "Country cut of the global State of Ransomware 2026 survey; n=33.\n"
-    },
-    {
-      "access_mode": "public_pdf",
-      "content_length": 8758890,
-      "content_type": "application/pdf",
-      "final_url": "https://www.ibm.com/reports/data-breach",
-      "gathered_at": "2026-08-16T00:00:00Z",
-      "http_status": 200,
-      "id": "ibm_cost_data_breach_2026",
-      "intended_use": [
-        "data breach total cost by industry",
-        "data breach cost by country and region"
-      ],
-      "publication_date": "2026-07-01",
-      "publisher": "IBM",
-      "raw_path": "sources/raw/Cost-of-a-Data-Breach-Report-2026.pdf",
-      "sha256": "0c7808f23134ff9e20e2386e4c93608228b04834d0266cd00bbc184edf115600",
-      "source_type": "data_breach_cost_research",
-      "status": "fetched",
-      "title": "Cost of a Data Breach Report 2026",
-      "url": "https://www.ibm.com/reports/data-breach",
-      "url_stability": "rolling",
-      "usage_notes": "Means only; no median or percentile is published.\n"
-    },
-    {
-      "access_mode": "public_pdf",
-      "content_length": 5900488,
-      "content_type": "application/pdf",
-      "final_url": "https://www.dtexsystems.com/ponemon-cost-of-insider-risks-report/",
-      "gathered_at": "2026-08-16T00:00:00Z",
-      "http_status": 200,
-      "id": "dtex_ponemon_cost_insider_risks_2026",
-      "intended_use": [
-        "insider incident cost per incident by insider type",
-        "insider incident frequency per organization per year"
-      ],
-      "publication_date": "2026-01-01",
-      "publisher": "Ponemon Institute and DTEX Systems",
-      "raw_path": "sources/raw/DTEX_Ponemon_2026.pdf",
-      "sha256": "81752c526a630107d69b8b4a41c951f7f5b5bc2dd8df556756006d5ec8386d58",
-      "source_type": "cyber_loss_research",
-      "status": "fetched",
-      "title": "2026 Cost of Insider Risks Global Report",
-      "url": "https://www.dtexsystems.com/ponemon-cost-of-insider-risks-report/",
-      "url_stability": "rolling",
-      "usage_notes": "Means over a 354-organization benchmark sample; no median published.\n"
-    },
-    {
-      "access_mode": "public_html",
-      "content_length": 5806316,
-      "content_type": "application/pdf",
-      "final_url": "https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025",
-      "gathered_at": "2026-08-16T00:00:00Z",
-      "http_status": 200,
-      "id": "asd_annual_cyber_threat_report_2024_2025",
-      "intended_use": [
-        "Australian cybercrime cost by business size"
-      ],
-      "publication_date": "2025-11-01",
-      "publisher": "Australian Signals Directorate",
-      "raw_path": "sources/raw/Annual Cyber Threat Report 2024-2025 _ Cyber.gov.au.pdf",
-      "sha256": "83a00aaf4390d405dcc7f2a82314a76aa5a7fd8d961a5f718f2a889e77d9324d",
-      "source_type": "government_report",
-      "status": "fetched",
-      "title": "Annual Cyber Threat Report 2024-2025",
-      "url": "https://www.cyber.gov.au/about-us/view-all-content/reports-and-statistics/annual-cyber-threat-report-2024-2025",
-      "url_stability": "dated",
-      "usage_notes": "Self-reported costs from reports to ReportCyber.\n"
-    },
-    {
-      "access_mode": "public_pdf",
-      "content_length": 588512,
-      "content_type": "application/pdf",
-      "final_url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-enterprise",
-      "gathered_at": "2026-08-16T00:00:00Z",
-      "http_status": 200,
-      "id": "sophos_state_ransomware_enterprise_2025",
-      "intended_use": [
-        "enterprise ransom demand and payment levels",
-        "size-band contrast"
-      ],
-      "publication_date": "2025-10-01",
-      "publisher": "Sophos",
-      "raw_path": "sources/raw/sophos-state-of-ransomware-in-enterprise-2025.pdf",
-      "sha256": "a6a860ff94795e70739d06190684e6ab5c21097bbfc2651e615cf5f2c121af99",
-      "source_type": "industry_survey",
-      "status": "fetched",
-      "title": "The State of Ransomware in Enterprise 2025",
-      "url": "https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-enterprise",
-      "url_stability": "dated",
-      "usage_notes": "Enterprise size band of the State of Ransomware family.\n"
     }
   ]
 }

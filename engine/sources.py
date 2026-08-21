@@ -186,6 +186,70 @@ def build_success_record(source, *, gathered_at, final_url, http_status, headers
     }
 
 
+MANUAL_ACCESS_MODES = frozenset({"manual_download"})
+
+
+def build_manual_record(source, *, gathered_at, raw_path, payload):
+    """An artifact a person obtained, recorded so anyone else can recheck it.
+
+    13 of the sources still owed to the audit sit behind a registration wall, a
+    click-through, or a form. The gatherer cannot reach them, and re-running it
+    against their landing page is worse than not running it at all: the page returns
+    HTTP 200, the manifest records a new sha256, and the real document is silently
+    replaced. That is the NetDiligence failure described at the top of this module.
+
+    So a source declared `access_mode: manual_download` is never fetched. Its record
+    is built from the file already on disk, carries the same sha256 discipline as a
+    gathered one, and says plainly how it was acquired rather than claiming a fetch
+    that did not happen.
+    """
+    return {
+        **base_manifest_fields(source, gathered_at),
+        "status": "fetched",
+        "acquisition": "manual_download",
+        "final_url": None,
+        "http_status": None,
+        "content_type": content_type_for_path(raw_path),
+        "content_length": len(payload),
+        "sha256": hashlib.sha256(payload).hexdigest(),
+        "raw_path": manifest_path(raw_path),
+    }
+
+
+def build_missing_manual_record(source, *, gathered_at, expected_path):
+    """Declared as hand-obtained, and the file is not there.
+
+    Reported as an error rather than skipped: a source whose artifact is absent must
+    not read as one nobody has got round to.
+    """
+    return {
+        **base_manifest_fields(source, gathered_at),
+        "status": "error",
+        "acquisition": "manual_download",
+        "final_url": None,
+        "http_status": None,
+        "content_type": None,
+        "content_length": 0,
+        "sha256": None,
+        "raw_path": None,
+        "error": (f"declared access_mode: manual_download but no artifact at "
+                  f"{manifest_path(expected_path)} — obtain it and place it there"),
+        "attempted_urls": source_urls(source),
+    }
+
+
+def content_type_for_path(path):
+    suffix = Path(path).suffix.lower()
+    return {".pdf": "application/pdf",
+            ".html": "text/html",
+            ".htm": "text/html",
+            ".json": "application/json",
+            ".csv": "text/csv",
+            ".zip": "application/zip",
+            ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            }.get(suffix, "application/octet-stream")
+
+
 def build_error_record(source, *, gathered_at, error):
     return {
         **base_manifest_fields(source, gathered_at),
@@ -258,6 +322,16 @@ def fetch_url(url, *, timeout):
 def fetch_source(source, raw_dir, *, gathered_at=None, timeout=30, retries=1):
     gathered_at = gathered_at or utc_now_iso()
     raw_dir = Path(raw_dir)
+
+    # Gated sources are never fetched: see build_manual_record.
+    if source.get("access_mode") in MANUAL_ACCESS_MODES:
+        expected = raw_dir / f"{source['id']}{Path(source.get('artifact_suffix') or '.pdf').suffix}"
+        if expected.exists():
+            return build_manual_record(source, gathered_at=gathered_at,
+                                       raw_path=expected, payload=expected.read_bytes())
+        return build_missing_manual_record(source, gathered_at=gathered_at,
+                                           expected_path=expected)
+
     errors = []
 
     fetched = None

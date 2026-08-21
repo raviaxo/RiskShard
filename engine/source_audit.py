@@ -119,6 +119,11 @@ def build_source_audit(root):
             "title": source.get("title"),
             "publisher": source.get("publisher"),
             "artifact": entry.get("artifact"),
+            # The hash the ANSWER is pinned to, which is the one that matters. The
+            # manifest records what was last fetched from a URL; an artifact supplied
+            # by hand never appears there, and a manifest re-fetch can move to a new
+            # edition while this answer still describes the document that was read.
+            "artifact_sha256": entry.get("artifact_sha256"),
             "corpus": corpus.get(sid, {"records": 0, "measurement_bases": [],
                                        "exceedance_bases": [], "named_populations": 0}),
             "properties": {

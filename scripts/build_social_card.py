@@ -51,10 +51,25 @@ SITE_URL = "raviaxo.github.io/RiskShard"
 # framing ADR-0010 retired and ADR-0016 replaced. The card is the first thing a reader
 # sees on a shared link, so it was contradicting the page it linked to.
 DEFAULT_HEADLINE = "No public source publishes a <em>mode.</em>"
-DEFAULT_OUTCOME = (
-    "Every risk estimate needs a most-likely loss. We read 58 of 72 public cyber-loss "
-    "sources and <b>not one publishes it</b>, so what goes in the slot is a published mean."
-)
+
+def default_outcome(root=None):
+    """The card's own coverage, generated rather than typed.
+
+    This line was hand-written and went stale twice inside three days as the audit
+    moved. Every other number on the card is generated from repo data; there was no
+    reason this one was not, and a stale denominator on a shared link is the exact
+    failure this project exists to argue against.
+    """
+    from engine.source_audit import build_source_audit
+    coverage = build_source_audit(root or ROOT)["coverage"]
+    return (
+        f"Every risk estimate needs a most-likely loss. We read "
+        f"{coverage['sources_fully_verified']} of {coverage['sources']} public cyber-loss "
+        f"sources and <b>not one publishes it</b>, so what goes in the slot is a published mean."
+    )
+
+
+DEFAULT_OUTCOME = None  # resolved at build time by default_outcome()
 DEFAULT_SHARD = "us_finance_bec_midmarket"
 DEFAULT_PARAM = "impact.likely"
 
@@ -198,7 +213,7 @@ def main(argv=None):
     parser.add_argument("--feature-shard", default=DEFAULT_SHARD)
     parser.add_argument("--feature-param", default=DEFAULT_PARAM)
     parser.add_argument("--headline", default=DEFAULT_HEADLINE)
-    parser.add_argument("--outcome", default=DEFAULT_OUTCOME)
+    parser.add_argument("--outcome", default=None)
     parser.add_argument("--output", type=Path, default=ROOT / "docs" / "social-card.html")
     parser.add_argument("--png", type=Path, default=ROOT / "docs" / "social-card.png")
     parser.add_argument("--check", action="store_true",
@@ -208,7 +223,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     fields = build_fields(ROOT, args.feature_shard, args.feature_param,
-                          args.headline, args.outcome)
+                          args.headline, args.outcome or default_outcome(ROOT))
     markup = render(fields)
 
     if args.check:
