@@ -14,23 +14,35 @@ each one actually publishes. Not more sources — *these* sources, finished.
 
 ---
 
-## M1 — Finish the audit · 58 → **72 of 72** · target 2026-09-15
+## M1 — Finish the audit · **62 of 75** · target 2026-09-15
 
 Every registered source read on all four properties: does it publish a **mode**, a
 **distribution**, an **exceedance statement**, and can you **name the population** it measured.
 
 | | |
 | --- | ---: |
-| sources read on all four properties | **58 of 72** |
-| answers verified against a stored artifact | **232 of 288** |
-| sources held only as a pointer, needing a person | **14** |
+| sources read on all four properties | **62 of 75** |
+| answers verified against a stored artifact | **248 of 300** |
+| sources held only as a pointer, needing a person | **13** |
 
-**14 sources is the whole of M1**, and it is the one milestone an agent cannot finish alone —
-these are registration-gated documents someone has to request. Three carry most of the value:
-Cyentia IRIS 2025 (likeliest in the corpus to publish an actual distribution *and* exceedance),
-IBM Cost of a Data Breach 2025 regional cuts (the most-cited cyber loss figure in the world, and
-we hold only coverage *about* it), and Sophos State of Ransomware 2025 global (three shards lean
-on it; we have never read the full report).
+**13 sources is the rest of M1.** Progress on 2026-08-20/21 came from three places at once, and
+only one of them was a fetch:
+
+- **The Japan workbook was never unreadable, only unread.** Its 88 sheets resolve fine with a
+  library that handles shared strings, and it turns out to publish a **banded cost distribution**
+  (n=89) and a **stated exceedance** — 5 of 89 investigations above ¥100M. It had been sitting as
+  `unverified` because the first reader returned 461 words and no CJK text.
+- **Sophos State of Ransomware 2026 global** arrived and answers all four: no mode, a banded
+  payment distribution, an exceedance at USD 1M, and a named population of n=2,158.
+- **Two Singapore Cyber Landscape editions** registered, which supersede the CSA Health Report
+  2023 the corpus had been stuck on.
+
+**Four of the seven documents supplied were already held** — the same lesson as the v0.9.0 arc.
+Before hunting for a source, check what the corpus thinks it has.
+
+What remains needs a person: IBM regional cuts, AFP (**declined 2026-08-21**), CESIN, MYOB, and
+the older Sophos sector cuts. **Cyentia IRIS was already fully read** — an earlier version of this
+list said otherwise and was wrong.
 
 **Done means:** `riskshard_doctor.py` prints 72 of 72, and the phrase *"the audit is complete"*
 becomes true and publishable. It is a headline exactly once.

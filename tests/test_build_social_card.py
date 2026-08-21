@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.build_social_card import (DEFAULT_HEADLINE, DEFAULT_OUTCOME, _month_year,
+from scripts.build_social_card import (DEFAULT_HEADLINE, _month_year, default_outcome,
                                        main, money, render)
 
 
@@ -62,12 +62,27 @@ class CardCarriesTheCurrentMessageTests(unittest.TestCase):
                "library of defensible", "benchmarked risk parameters")
 
     def test_the_default_card_does_not_carry_a_retired_framing(self):
-        text = (DEFAULT_HEADLINE + " " + DEFAULT_OUTCOME).lower()
+        text = (DEFAULT_HEADLINE + " " + default_outcome()).lower()
         for phrase in self.RETIRED:
             self.assertNotIn(phrase, text, f"the card is selling a retired framing: {phrase!r}")
 
     def test_the_default_card_leads_with_the_audit(self):
-        text = (DEFAULT_HEADLINE + " " + DEFAULT_OUTCOME).lower()
+        text = (DEFAULT_HEADLINE + " " + default_outcome()).lower()
         self.assertIn("mode", text)
-        self.assertIn("58 of 72", text)
+
+    def test_the_cards_coverage_is_generated_not_typed(self):
+        """It was typed, and went stale twice in three days as the audit moved.
+
+        A stale denominator on the image attached to a shared link is the exact
+        failure this project argues against, so the assertion is against the engine
+        rather than against a literal a future edit would have to remember.
+        """
+        from engine.source_audit import build_source_audit
+        from engine.project_paths import find_project_root
+
+        coverage = build_source_audit(find_project_root())["coverage"]
+        self.assertIn(
+            f"{coverage['sources_fully_verified']} of {coverage['sources']}",
+            default_outcome(),
+        )
 
