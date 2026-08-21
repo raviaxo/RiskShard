@@ -5,6 +5,81 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.10.0 — 2026-08-21
+
+**The release where the audit became something a stranger can read, and the front door
+started with the finding instead of the machinery.** No published parameter value moves.
+The portfolio numbers are identical to v0.9.0; what changed is what the project says it is
+and how much of it can be checked without cloning the repo.
+
+Data-pack release: `data_pack_releases/2026.08.21-v0.10.0.json`.
+
+**The audit is published.** [`audit.html`](https://raviaxo.github.io/RiskShard/audit.html) —
+all 75 registered sources, four questions each, every answer carrying what it was checked
+against, the document SHA-256, and the date it was read. Any row is disputable from the row.
+The four-question table is the finding in one place: **mode 0**, distribution 14, exceedance
+19, population 49, of 62 sources read. Roadmap M2, six weeks ahead of its target.
+
+**The audit moved 58 of 72 to 62 of 75.**
+
+- **The Japan NPA workbook was never unreadable, only unread.** Its 88 sheets resolve with a
+  reader that handles shared strings. It publishes a banded investigation-cost distribution
+  (n=89) and a stated exceedance — 5 of 89 cases above ¥100M. It had been recorded as
+  `unverified` rather than answered from a scan that returned no Japanese text, and that
+  restraint is the only reason it was recoverable.
+- **Sophos State of Ransomware 2026** answers all four, and **finding 9** comes out of it: the
+  report prints the caption *"In the last year, has your organization been hit by ransomware?
+  n=5,000"* under a chart carrying no percentages and no counts. The denominator was
+  collected, the question is published in its own words, and the rate is not. That is a
+  different gap from finding 1 — a publishing decision about a number the publisher holds,
+  rather than a fact about what the field measures.
+- **Two Singapore Cyber Landscape editions** registered, superseding the CSA Health Report
+  2023 the corpus was stuck on. Both are national aggregates with no per-organisation
+  denominator, and the registry says so rather than leaving it to be discovered.
+
+**Two frequency anchors were checked for refresh and deliberately not refreshed.** Sophos 2023
+and 2024 published prevalence; 2026 does not. `refresh_checked` and `refresh_note` sit beside
+each anchor so a reader can see the newer source was checked rather than missed.
+
+**The front door.** Prose before the first item fell from 1,676 words to about 1,000, and it
+now opens with the finding rather than the simulation. The basis of preparation moved to
+[`BASIS_OF_PREPARATION.md`](docs/BASIS_OF_PREPARATION.md) and the operational manual to
+[`REFERENCE.md`](docs/REFERENCE.md); the README went 599 lines to about 260. The disclosures
+did not move behind links: the 31 → 7 cell-matched correction, "45 of 66" and "no published
+figure moved" are still on the page, pinned by tests.
+
+**[ADR-0018](docs/adr/0018-the-target-selector-failed-measurement.md) — the reader-target
+selector is retired on a measurement.** It offered 539 targets and 456 answered nothing, with
+60 trap pairs where two values each answer alone and answer nothing together. Restricting the
+dropdowns was refused: that hides the coverage gap. **The first measurement of this was wrong**
+— a script read the size facet under the wrong key — and the correction is recorded in the ADR
+rather than quietly applied. The numbers now live in `engine/cell_coverage.py` with a test that
+checks the ADR against live data and fails if a precondition becomes true.
+
+**Three retired framings were still shipping and are gone.** The README promised *"a library
+of defensible, benchmarked risk parameters"*, the roadmap planned new shard families, and the
+social card read *"Tell your CEO what it costs"* — all positions ADR-0009, ADR-0010 and
+ADR-0016 had retired. Rendering was covered by tests and meaning was not; two tests now pin
+the card's claim, and the card generates its own coverage count after that line went stale
+twice in three days.
+
+**Gated sources have a route.** 13 of the sources the audit still owes sit behind a
+registration wall. The gatherer rebuilds from scratch, so a hand-obtained artifact was wiped
+on the next run, and pointing it at a landing page returns HTTP 200 and silently replaces the
+real document. Sources now declare `access_mode: manual_download`, are never fetched, and are
+recorded from the file on disk with the same hash discipline plus an `acquisition` field.
+
+**The ask is answerable.** The four questions now lead in plain words on every surface, with
+the precise wording kept underneath, and
+[`read_a_source.md`](https://github.com/raviaxo/RiskShard/issues/new?template=read_a_source.md)
+is a form that is the four questions and nothing else. It says out loud that *"I could not
+tell"* is a real answer. ADR-0016 decided this ask on 2026-08-15; until now there was no way
+to act on it.
+
+**Still zero.** No entry has been contributed from outside the project and no shard cites one.
+[ADR-0017](docs/adr/0017-the-kill-criterion-gets-a-clock.md) measures again at the first
+release on or after 2026-11-01.
+
 ## v0.9.0 — 2026-08-16
 
 **The release where reading the sources we already had moved a published number.**
