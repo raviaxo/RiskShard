@@ -180,6 +180,7 @@ model parameters trace to a reviewed public source over time.
 <!-- strength-ledger:begin (regenerate with: python scripts/strength_ledger.py markdown) -->
 | Release | Date | Source-backed params | Cell-matched | Shards 6/6 | Bridged/est. |
 | --- | --- | --- | --- | --- | --- |
+| 2026.08.21 | 2026-08-21 | 66 / 66 | 7 | 11 / 11 | 0 |
 | 2026.08.16 | 2026-08-16 | 66 / 66 | 7 | 11 / 11 | 0 |
 | 2026.08.15 | 2026-08-15 | 66 / 66 | 7 (-24) | 11 / 11 | 0 |
 | 2026.08.13 | 2026-08-13 | 66 / 66 | 31 | 11 / 11 | 0 |
@@ -190,6 +191,8 @@ model parameters trace to a reviewed public source over time.
 | 2026.08.01 | 2026-08-01 | 66 / 66 | 28 | 11 / 11 | 0 |
 | 2026.07.24 | 2026-07-24 | 66 / 66 (+2) | — | 11 / 11 (+1) | 0 (-2) |
 | 2026.07.24 | 2026-07-24 | 64 / 66 | — | 10 / 11 | 2 |
+
+**2026.08.21-v0.10.0 —** Cell-matched and bridged are unchanged. What moved is the audit: 58 of 72 sources read becomes 62 of 75, after the Japan NPA workbook turned out to be unread rather than unreadable and Sophos 2026 arrived. No published parameter value moved in this release.
 
 **2026.08.16-v0.9.0 —** the two new modeled quantiles are the first this portfolio has held, and no value moved to produce them - the DE and JP manufacturing maxima kept their $5,000,000 anchor and gained the share above it that Sophos had published all along. Read a falling none_known count here as reading catching up with the corpus, not as new evidence arriving.
 
