@@ -434,6 +434,41 @@ trackers extracts or types the amounts.** The gap is openness and provenance, no
 
 ---
 
+### 9 — A survey asked 5,000 organisations the prevalence question and published a Venn diagram
+
+*Measured 2026-08-21 · `sources/raw/sophos_state_ransomware_2026.pdf`, printed page 11*
+
+Sophos *State of Ransomware 2026* is built on 2,158 interviews with organisations **that had
+already been hit**, so it carries no attack rate — the same shape as the country cuts, and not a
+criticism.
+
+But this edition also ran a screening question over a **much larger sample**, and prints the
+wording under its own chart:
+
+> *"Data split: In the last year, has your organization been hit by ransomware? n=5,000."*
+
+**The answer does not appear anywhere in the report.** The chart above that caption is three
+overlapping circles labelled *Experienced ransomware attack*, *Most significant identity breach led
+to ransomware*, and *Experienced identity attack*, carrying **no percentages and no counts**. The
+only figure in the section is 67%, and its denominator is the ransomware victims, not the 5,000.
+
+| | |
+| --- | --- |
+| organisations asked whether they were hit by ransomware | **5,000** |
+| the resulting prevalence rate, as published | **not stated** |
+| figures published from that sample | **none** |
+
+**This is a different gap from the one in finding 1, and a sharper one.** No source publishing a
+mode is a fact about what the field measures. Here the denominator was collected, the question was
+asked in the published words, and the rate was not printed. That is a publishing decision, not a
+measurement limit — and it is the kind of gap a reader can actually ask a publisher to close.
+
+**It also has a direct cost to this repository.** Two shards take `frequency.likely` and
+`frequency.max` from Sophos 2023 and 2024, which did publish prevalence. The 2026 edition holds a
+larger and better-denominated version of exactly that number and does not release it, so those
+parameters **cannot be refreshed** and stay on the older editions with this recorded as the reason.
+Checked before assuming: the refresh was the objective, and the finding is why it did not happen.
+
 ## What we got wrong
 
 A project that publishes its reasoning has to publish its corrections at the same volume. These are
