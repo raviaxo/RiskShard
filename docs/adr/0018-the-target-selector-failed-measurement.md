@@ -1,6 +1,7 @@
 # ADR-0018 — The reader-supplied target selector failed measurement, and is retired
 
-- **Status:** Accepted (2026-08-19)
+- **Status:** Accepted (2026-08-19); **preconditions scoped 2026-08-22** to the control this ADR
+  retired — they are neither met nor inherited by a differently-shaped design (see *Amendment*)
 - **Date:** 2026-08-19
 - **Deciders:** repo owner
 - **Supersedes:** [ADR-0014](0014-the-reader-supplies-the-target.md) parts 1, 4 and 5 (the UI
@@ -84,6 +85,44 @@ teaches readers to leave**, and no amount of correctness in its computation chan
   These are coverage preconditions, not design ones. **The control was never the problem; the
   corpus behind it was**, and rebuilding the control without moving those two numbers would
   reproduce this ADR exactly.
+
+  **Scoped 2026-08-22:** these two conditions gate *this control* — a selector whose answer to a
+  reader may be empty. They are not a general bar on reader-supplied targets. See *Amendment*.
 - The removal is part of a wider front-door density cut on the same date: the page carried 1,676
   words of prose before the first item rendered, and now carries 706. The basis of preparation moved
   to [`docs/BASIS_OF_PREPARATION.md`](../BASIS_OF_PREPARATION.md).
+
+## Amendment — 2026-08-22: what these preconditions do and do not gate
+
+A design is now under consideration in which a named cell **always** returns a number, labelled by
+what it rests on. That design makes the two conditions above ambiguous, and the ambiguity is worth
+closing explicitly because both available readings are wrong.
+
+**They are not met.** Composition would make every combination return something, which looks like
+precondition 2 being satisfied — 539 of 539 rather than 83. It is not. Precondition 2 counts
+combinations answering **at least one parameter measured on the reader's cell**, and borrowing an
+anchor from an adjacent shard does not create such a parameter. Both conditions read exactly as
+they did on 2026-08-19: 60 trap pairs, 83 of 539. Nothing in this arc moved them, and declaring
+them met by redefining the answer is the move [ADR-0017](0017-the-kill-criterion-gets-a-clock.md)
+exists as a standing warning about.
+
+**They are also not a blanket bar.** A design whose output is never empty is a different artifact
+from the one retired here, and it does not inherit these conditions — because they were written to
+protect a reader from a dead end, and a design with no dead end cannot produce the harm they guard
+against. Reading them as a general prohibition on reader-supplied targets would freeze the corpus
+into permanently owing a coverage bar for a control nobody intends to rebuild.
+
+**What a differently-shaped design owes instead is its own failure condition, stated before it
+ships.** This ADR's finding was not "the counts are low"; it was:
+
+> A feature whose most common output is *"nothing here"* is a feature that teaches readers to leave.
+
+The composition analogue is direct and should be assumed true until measured: **a feature whose
+most common output is "this figure is entirely borrowed" may teach readers to distrust.** That is
+not obviously better than teaching them to leave, and it is the same 456 of 539 cells wearing a
+different label — every one of them would be composed wholly from anchors measured somewhere else,
+which is a floor of **84.6%**, before counting the partly-borrowed remainder of the 83.
+
+So: composition is not gated on the two conditions above, and it is not excused from measurement by
+escaping them. It is gated on stating, and then measuring, what its own version of *"nothing here"*
+looks like to a reader — **before** it reaches the page, which is the one thing ADR-0014 did not do.

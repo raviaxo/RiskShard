@@ -10,7 +10,7 @@ it means the corpus grew into the feature and ADR-0018 is owed a revisit.
 """
 import unittest
 
-from engine.cell_coverage import (cell_coverage, matched_count, offered_values,
+from engine.cell_coverage import (answered_split, cell_coverage, matched_count, offered_values,
                                   shard_self_coverage, specificity_profile, _parameters)
 from engine.project_paths import find_project_root
 from scripts.build_explorer import build_data
@@ -171,6 +171,59 @@ class ShardSelfCoverageTests(unittest.TestCase):
             self.assertGreaterEqual(row["bridged_share"], 0.5, row["id"])
             self.assertLessEqual(row["bridged_share"], 1.0, row["id"])
             self.assertEqual(row["bridged"] + row["matched"], row["parameters"], row["id"])
+
+
+class DocumentFiguresTests(unittest.TestCase):
+    """AGENTS.md: any number in public text is generated or pinned by a test.
+
+    These figures were written into four documents on 2026-08-22 and every one of
+    them is derived from the corpus, so every one of them can go stale silently. The
+    rule was added in the same commit that introduced them; this is the rule being
+    obeyed rather than merely stated.
+
+    A failure here does not mean a document is wrong — it means the corpus moved and
+    the prose did not. Fix the prose.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        shards = build_data(ROOT)["shards"]
+        coverage = cell_coverage(shards)
+        selves = shard_self_coverage(shards)
+        split = answered_split(shards)
+        matched = sum(row["matched"] for row in selves["shards"])
+        total = sum(row["parameters"] for row in selves["shards"])
+        cls.figures = {
+            "cell_matched": f"{matched} of {total}",
+            "answered": f"{split['answered']} of {coverage['combinations']}",
+            "unpublished": f"{split['unpublished_cells']} of the {split['answered']}",
+            "empty": str(coverage["empty"]),
+            "traps": str(len(coverage["trap_pairs"])),
+            "empty_share": f"{coverage['empty_share']:.1%}",
+            "answering_own_cell": str(selves["answering_own_cell"]),
+            "fully_bridged": str(selves["fully_bridged"]),
+        }
+
+    def _assert_states(self, relative, *keys):
+        text = (ROOT / relative).read_text(encoding="utf-8")
+        for key in keys:
+            self.assertIn(self.figures[key], text,
+                          f"{relative} no longer states {key}={self.figures[key]!r}")
+
+    def test_adr_0006_states_the_depth_measure_it_adopted(self):
+        self._assert_states("docs/adr/0006-depth-over-breadth.md", "cell_matched")
+
+    def test_adr_0016_states_the_boundary_figures(self):
+        self._assert_states("docs/adr/0016-the-audit-is-the-product.md",
+                            "cell_matched", "unpublished")
+
+    def test_adr_0018_amendment_states_the_borrowed_floor(self):
+        self._assert_states("docs/adr/0018-the-target-selector-failed-measurement.md",
+                            "empty", "traps", "empty_share")
+
+    def test_the_roadmap_states_what_both_tracks_rest_on(self):
+        self._assert_states("docs/ROADMAP.md",
+                            "cell_matched", "empty", "empty_share", "answered")
 
 
 if __name__ == "__main__":

@@ -49,6 +49,13 @@ real run of the affected path succeeds.** For a content/evidence change also run
   labeled as an estimate/bridge.
 - **Claim discipline.** "Automated benchmark-ready" is never "human-approved
   benchmark-grade." Preserve the maturity ladder everywhere results appear.
+- **Any number in public text is generated or pinned by a test.** Not "kept current" —
+  *generated*, or asserted against live data by something that fails. Three hand-written
+  figures went stale inside one week (the social card's coverage line, twice; ADR-0018's grid
+  counts; a roadmap figure), and the pattern is not carelessness: a number typed into prose has
+  no owner and nothing watching it. If a figure cannot be generated, write the test that reads
+  the document and checks it — `tests/test_cell_coverage.py` does exactly this for ADR-0018.
+  **A rounded or narrated number counts.** "About a fifth" goes stale the same way.
 - **Nothing public that couldn't be shown to a CISO tomorrow.** See
   [`docs/PUBLISHABLE_REQUIREMENTS.md`](docs/PUBLISHABLE_REQUIREMENTS.md).
 - **One objective per session.** New important items go to `docs/internal/NEXT_STEPS.md`,

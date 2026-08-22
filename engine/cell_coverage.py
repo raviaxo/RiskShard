@@ -232,3 +232,41 @@ def shard_self_coverage(shards):
         "any_shard_complete_on_own_cell": any(
             row["matched"] == row["parameters"] and row["parameters"] for row in rows),
     }
+
+
+def answered_split(shards):
+    """Of the cells that answer something, how many are cells we actually publish?
+
+    "83 of 539 answer" invites the reading that the corpus is thin but pointed at our
+    own eleven cells. It is not pointed there at all. Seven of the eleven shard cells
+    answer nothing, so only four appear in the 83, and the other 79 are combinations
+    we have never published a figure for — `financial_services + mid_market +
+    data_breach` with no country named answers five parameters and is not a shard.
+
+    This matters for scope rather than for coverage: ADR-0016's 2026-08-22 amendment
+    draws the correctness boundary at the published cell, and the 83 is not a proxy
+    for it. Being answerable is not the same as being published.
+    """
+    parameters = _parameters(shards)
+    values = offered_values(shards)
+    facets = [facet for facet, _ in FACETS]
+    published = {
+        tuple(sorted((facet, shard[facet]) for facet, _ in FACETS if shard.get(facet)))
+        for shard in shards
+    }
+
+    answered = shard_cells = 0
+    for choice in product(*[[None] + values[facet] for facet in facets]):
+        cell = {facet: value for facet, value in zip(facets, choice) if value}
+        if not cell or not matched_count(parameters, cell):
+            continue
+        answered += 1
+        if tuple(sorted(cell.items())) in published:
+            shard_cells += 1
+
+    return {
+        "answered": answered,
+        "published_cells": shard_cells,
+        "unpublished_cells": answered - shard_cells,
+        "shards": len(published),
+    }

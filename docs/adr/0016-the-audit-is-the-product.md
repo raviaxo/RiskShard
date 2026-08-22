@@ -1,6 +1,8 @@
 # ADR-0016 — The source audit is the product; the shards are the demonstration
 
-- **Status:** Accepted (2026-08-15)
+- **Status:** Accepted (2026-08-15); **part 3 clarified 2026-08-22** — a per-shard bridging
+  disclosure is correctness and needs no amendment; producing a figure for a cell we have never
+  published is not (see *Amendment*)
 - **Date:** 2026-08-15
 - **Deciders:** repo owner
 - **Extends:** [`0006-depth-over-breadth.md`](0006-depth-over-breadth.md) (depth over breadth, now
@@ -126,3 +128,50 @@ measured as **citations by people who are not us**, not as stars.
    disallows — but the decision belongs to the criterion already recorded, not to this ADR.
 2. **Do the shards eventually retire entirely?** Not decided. They currently earn their place as
    the demonstration; whether that stays true once the audit is complete is a question for then.
+
+## Amendment — 2026-08-22: where the freeze in part 3 falls
+
+Part 3 freezes the engine to *"bug fixes and correctness only"*, and a proposal to compose and label
+what each published figure rests on needed classifying **before** it was built rather than after.
+The classification turns on one measurement, and it splits the proposal in two.
+
+### The measurement
+
+`scripts/explorer_template.html` renders a per-shard bridging split from `t.params_cell_matched`,
+behind a null guard. `engine/provenance.py` sets that field only on `totals`. So the guard is false
+on **every shard on every build**, and the split renders as an empty string. The page has always
+intended to tell a reader how much of *this* shard is bridged, and has never once done it. The
+corpus total (7 of 66) is published; the distribution is not, and it is concentrated rather than
+spread — four shards hold all seven, seven hold none
+(`engine.cell_coverage.shard_self_coverage`).
+
+### 1. Disclosing what the eleven published figures rest on is correctness
+
+No published value moves. What changes is that a figure already on the page states its own
+composition, per shard, instead of silently rendering nothing where the template says it should.
+**A disclosure that degrades to empty is worse than one never attempted**, because the page reads
+as complete. Repairing it is the plainest available reading of "correctness", and it is squarely
+inside [ADR-0009](0009-what-riskshard-is-and-is-not.md)'s first category — it makes an existing
+published number more correct *about itself*.
+
+This does not lift the freeze and must not be cited as having lifted it.
+
+### 2. Producing a figure for a cell we have never published is not correctness
+
+It is a new surface, and part 1's test applies to it: *does this add a row to a finite table, or a
+parameter to an infinite one?* Composing an answer for an arbitrary reader-named cell is the second
+shape, and it needs an ADR of its own with an ADR-0009 amendment, not this clarification.
+
+**The boundary is the published cell, not the cell count.** Our eleven shard cells are inside it.
+The other 528 selectable combinations are outside it — including **79 of the 83** "answered" cells,
+which are not shard cells at all: `financial_services + mid_market + data_breach` with no country
+named answers 5 parameters and is not a figure we publish. Only **4** of the 83 are shard cells,
+because the other seven shards answer nothing on their own cell. Matching a parameter is not the
+same as having published an answer. **Being in the 83 is not a warrant, and the 83 and the eleven
+barely overlap.**
+
+### Why this is drawn tightly
+
+The tempting move is to classify the whole proposal as correctness on the strength of part 1, and
+it would not survive contact with part 1's own test. Recording the line here means a later
+extension has to argue for itself rather than inherit a clearance granted for a template bug.
