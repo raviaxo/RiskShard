@@ -69,9 +69,9 @@ preflight clean, doctor GREEN ON EVERY CHECK, 0 open PRs, 0 unmerged branches. D
 
 **ACTIVE OBJECTIVE (2026-08-22, in flight on `shard/composition-disclosure`): W1 — the backlog
 corrections C1–C7, then say what each published figure rests on.** All seven corrections are
-written. The engine work is the repair ADR-0016 part 3 classifies as correctness: the explorer
-renders a per-shard bridging split behind a null guard that `provenance.py` never populates, so it
-has shown an empty string on every shard on every build.
+written. The engine work is what ADR-0016 part 3 classifies as correctness: the page publishes a
+cell-matched *count* that treats an anchor carrying 0.1% of a figure and one carrying 95.4% as
+equals ([finding 10](../FINDINGS.md)), so the number beside it is misdescribed.
 
 **Three of the seven corrections had premises that did not survive contact with the files**, and the
 amendments record what was actually wrong rather than what `execution_plan.md` predicted:
@@ -82,10 +82,13 @@ amendments record what was actually wrong rather than what `execution_plan.md` p
   was chosen with **no live measure**: `params_source_backed` hit 66/66 on 2026-07-24, a week before
   the ADR was accepted, and has read 66/66 in all nine releases since. That is a saturated metric,
   not stalled work.
-- **C4** was reclassified from *needs an amendment* to *correctness*, on the dead render path above.
-  The boundary is drawn at the **published cell**: repairing a disclosure the page already attempts
-  is correctness; producing a figure for a cell we have never published is not, and needs its own
-  ADR.
+- **C4** was reclassified from *needs an amendment* to *correctness* — but the measurement first
+  offered for it was **wrong**. I claimed the explorer had a dead per-shard render path; the guard
+  in question reads `DATA.totals`, which is populated, and no such path exists. The withdrawal is
+  recorded in ADR-0016 rather than edited away. The classification survives on narrower ground:
+  the published count misdescribes the composition of the figure beside it (finding 10). The
+  boundary is the **published cell** — producing a figure for a cell we have never published is
+  not correctness and needs its own ADR.
 - **C3** holds, with a guard the plan did not name: composition does **not** satisfy ADR-0018's two
   preconditions and must not be read as having met them by redefining what an answer is.
 

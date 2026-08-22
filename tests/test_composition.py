@@ -133,5 +133,63 @@ class PortfolioWeightingTests(unittest.TestCase):
         self.assertGreaterEqual(sum(1 for w in weighted if w > 0.85), 3)
 
 
+class PublishedPayloadTests(unittest.TestCase):
+    """The composition has to survive the trip to the page.
+
+    Written because of a mistake made while building this: a claim that the explorer
+    had a per-shard disclosure rendering behind a guard that was always false. It did
+    not — but it is exactly the failure a payload field can have, silently, forever.
+    These tests fail loudly instead.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        import json
+        import re
+        from scripts.build_explorer import build_data
+        cls.shards = build_data(ROOT)["shards"]
+        cls.template = (ROOT / "scripts" / "explorer_template.html").read_text(encoding="utf-8")
+        page = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
+        cls.published = json.loads(re.search(r'id="rs-data">(.*?)</script>', page, re.S).group(1))
+
+    def test_every_shard_carries_a_complete_composition(self):
+        for shard in self.shards:
+            families = (shard.get("composition") or {}).get("families") or {}
+            self.assertEqual(sorted(families), ["frequency", "impact"], shard["id"])
+            for name, data in families.items():
+                where = f"{shard['id']}.{name}"
+                self.assertAlmostEqual(sum(a["share"] for a in data["anchors"]), 1.0, places=9,
+                                       msg=where)
+                self.assertAlmostEqual(data["measured_share"] + data["bridged_share"], 1.0,
+                                       places=9, msg=where)
+                self.assertGreaterEqual(data["elsewhere_share"], 0.0, where)
+                self.assertLessEqual(data["elsewhere_share"], data["bridged_share"] + 1e-9, where)
+
+    def test_the_per_shard_cell_matched_count_is_populated_on_every_shard(self):
+        """Null on any shard means the page silently says nothing about it."""
+        for shard in self.shards:
+            self.assertIsNotNone(shard.get("params_cell_matched"), shard["id"])
+            self.assertEqual(shard["params_cell_matched"] + shard["params_cross_cell"],
+                             len(shard["params"]), shard["id"])
+
+    def test_the_published_page_carries_what_the_build_produced(self):
+        """Guards the build step itself: docs/index.html is committed, so it can drift
+        from the code that generates it until something compares them."""
+        published = {s["id"]: s for s in self.published["shards"]}
+        self.assertEqual(sorted(published), sorted(s["id"] for s in self.shards))
+        for shard in self.shards:
+            live = (shard["composition"]["families"]["impact"]["measured_share"])
+            page = (published[shard["id"]].get("composition") or {}).get("families", {})
+            self.assertIn("impact", page, f"{shard['id']} has no composition on the page")
+            self.assertAlmostEqual(page["impact"]["measured_share"], live, places=9,
+                                   msg=shard["id"])
+
+    def test_the_template_still_renders_the_composition(self):
+        """A payload nothing reads is not a disclosure."""
+        self.assertIn("compositionNote(s)", self.template)
+        self.assertIn("s.composition", self.template)
+        self.assertIn("What this figure rests on", self.template)
+
+
 if __name__ == "__main__":
     unittest.main()

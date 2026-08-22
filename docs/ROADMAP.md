@@ -151,11 +151,14 @@ Every shard is partly bridged and the page does not say by how much. The corpus 
 not, and it is concentrated rather than spread: **four shards hold all seven and seven hold none.**
 No shard is complete on the cell it is named after.
 
-The explorer already tries to say this. `scripts/explorer_template.html` renders a per-shard split
-behind a null guard that `engine/provenance.py` never populates, so it renders as an empty string on
-every shard on every build. **This is a repair, not a feature** —
-[ADR-0016 part 3](adr/0016-the-audit-is-the-product.md) classifies it as correctness and it needs no
-amendment.
+The page publishes each parameter's bridge flag, and — for impact only, and only above 50% — the
+maximum's share of the figure. **Nothing joins the two.** So a reader cannot learn how much of a
+figure rests on anchors measured somewhere other than their cell, and the frequency side carries no
+weighting at all. That join is [finding 10](FINDINGS.md): no shard is well anchored on both
+families, and the strong sides never coincide.
+[ADR-0016 part 3](adr/0016-the-audit-is-the-product.md) classifies correcting it as correctness, on
+the narrow ground that a published count misdescribing the figure beside it is an inaccuracy in
+something already shipped rather than a new surface.
 
 **Done means:** each of the eleven items states its own composition, and a test fails if the field
 goes null again.

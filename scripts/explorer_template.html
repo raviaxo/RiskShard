@@ -463,6 +463,40 @@
     next+': a confirmed break is retracted publicly and credited by handle in the changelog.';
 
   /* Items 01..NN — the full record, printed. A document does not hide its notes. */
+  /* What a published figure rests on, weighted by how much each anchor contributes.
+     Shares come from engine/composition.py, which partitions the beta-PERT mean by the
+     identity (min + 4*likely + max) / 6 — exact, not sampled. */
+  function familyLine(name,f){
+    if(!f) return '';
+    var meas=Math.round(f.measured_share*100),
+        elsew=Math.round(f.elsewhere_share*100),
+        dom=f.dominant||{},
+        domName=String(dom.parameter||'').replace(/^[a-z]+\./,''),
+        domPct=Math.round((dom.share||0)*100),
+        rest;
+    if(meas>=99){rest='<b>'+meas+'% measured on this cell</b>';}
+    else if(meas<=0&&elsew>=50){rest='<b>0% measured on this cell</b>, and '+elsew+
+      '% of it on a different one';}
+    else if(meas<=0){rest='<b>0% measured on this cell</b> \u2014 every anchor was measured '+
+      'across a broader population that contains it';}
+    else {rest='<b>'+meas+'% measured on this cell</b>'+(elsew>0?(', '+elsew+
+      '% on a different one'):'');}
+    return '<div class="sub"><span class="lbl">'+name+'</span> \u2014 '+rest+
+      '. Most of it ('+domPct+'%) is <b>'+esc(domName)+'</b>.</div>';
+  }
+
+  function compositionNote(s){
+    var c=s.composition&&s.composition.families;
+    if(!c||!c.frequency||!c.impact) return '';
+    return '<div class="mixnote"><b>What this figure rests on</b> \u2014 a modeled annual loss '+
+      'is a frequency mean times an impact mean, and the two are anchored differently. '+
+      'Stated separately because one percentage would be false of one of them.'+
+      familyLine('frequency',c.frequency)+familyLine('impact',c.impact)+
+      '<div class="sub">The annual figure is the product of both, so it inherits the weaker '+
+      'side. \u201cOn a different one\u201d means the source named a population that '+
+      'excludes this cell, not merely a broader one.</div></div>';
+  }
+
   var itemsHTML=DATA.shards.map(function(s,i){
     var prows=s.params.map(function(p){
       var backed=p.status==='source_backed';
@@ -559,6 +593,14 @@
            'maximum\'s <span class="lbl">exceedance</span> line above: a figure mostly driven by '+
            'an anchor that admits no exceedance probability is a figure resting on one observation.'+
            '</div>'):'')+
+        /* ADR-0016 part 3 amendment (2026-08-22): weight joined to population. The
+           page already carried each anchor's bridge flag and, above, the maximum's
+           share of the impact figure. Neither says how much of a figure rests on
+           evidence measured somewhere other than this cell, and the frequency side
+           carried no weighting at all. Per family and never blended: the annual
+           figure is the product of two means, so one percentage would be false of
+           one of them. See finding 10. */
+        compositionNote(s)+
       '</div>'+
       '</section>';
   }).join('');

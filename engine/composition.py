@@ -137,12 +137,20 @@ def compose_family(values, cards, cell, family):
     }
 
 
-def compose_module(root, module_id):
-    """Both families for one shard, with the annual figure deliberately left unsplit."""
-    module = find_risk_module(module_id, root)
-    scenario_path = root / (module.get("artifacts") or {})["scenario"]
-    config = load_and_validate(scenario_path, load_schema(SCHEMA_PATH))
-    provenance = build_module_provenance(module_id, root)
+def compose_module(root, module_id, provenance=None, config=None):
+    """Both families for one shard, with the annual figure deliberately left unsplit.
+
+    `provenance` and `config` are accepted so a caller already holding them — the
+    explorer build holds both for every shard — does not pay to re-derive them. They
+    are the same objects this function would load, and passing something else is a way
+    to publish a breakdown of a figure the engine does not run.
+    """
+    if config is None:
+        module = find_risk_module(module_id, root)
+        scenario_path = root / (module.get("artifacts") or {})["scenario"]
+        config = load_and_validate(scenario_path, load_schema(SCHEMA_PATH))
+    if provenance is None:
+        provenance = build_module_provenance(module_id, root)
     cards = {card["parameter"]: card for card in provenance["cards"]}
     cell = provenance["cell"]
 
@@ -162,3 +170,31 @@ def compose_module(root, module_id):
         "annual_mean": (families["frequency"]["mean"] * families["impact"]["mean"]
                         if len(families) == len(FAMILIES) else None),
     }
+
+
+def payload(composed):
+    """The compact form the explorer embeds — shares only, no duplicated card data.
+
+    The page already carries every anchor's source, quote, caveat and declaration on
+    the item. Re-embedding them here would create a second copy that can disagree with
+    the first, so this carries the one thing the page cannot currently derive: how much
+    of each family's mean rests on what.
+    """
+    families = {}
+    for family, data in (composed.get("families") or {}).items():
+        families[family] = {
+            "measured_share": data["measured_share"],
+            "bridged_share": data["bridged_share"],
+            "elsewhere_share": sum(a["share"] for a in data["anchors"] if a["elsewhere_on"]),
+            "bridged_by_facet": data["bridged_by_facet"],
+            "dominant": {"parameter": data["dominant"]["parameter"],
+                         "share": data["dominant"]["share"]},
+            "anchors": [{
+                "parameter": a["parameter"],
+                "share": a["share"],
+                "measured_here": a["measured_here"],
+                "broader_on": a["broader_on"],
+                "elsewhere_on": a["elsewhere_on"],
+            } for a in data["anchors"]],
+        }
+    return {"families": families, "annual_mean": composed.get("annual_mean")}

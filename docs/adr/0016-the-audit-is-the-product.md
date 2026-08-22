@@ -137,22 +137,55 @@ The classification turns on one measurement, and it splits the proposal in two.
 
 ### The measurement
 
-`scripts/explorer_template.html` renders a per-shard bridging split from `t.params_cell_matched`,
-behind a null guard. `engine/provenance.py` sets that field only on `totals`. So the guard is false
-on **every shard on every build**, and the split renders as an empty string. The page has always
-intended to tell a reader how much of *this* shard is bridged, and has never once done it. The
-corpus total (7 of 66) is published; the distribution is not, and it is concentrated rather than
-spread — four shards hold all seven, seven hold none
-(`engine.cell_coverage.shard_self_coverage`).
+**Corrected 2026-08-22, before this amendment was acted on.** The first version of this section
+claimed the explorer renders a per-shard bridging split behind a null guard that `provenance.py`
+never populates, and therefore always renders empty. **That was wrong and is withdrawn.** The
+guard at `scripts/explorer_template.html:357` reads `t.params_cell_matched` where `t` is
+`DATA.totals`, not a shard, and totals *is* populated — the split renders correctly at corpus
+level. There is no dead render path. The error was reading a variable name without reading its
+declaration, and it is recorded here rather than quietly edited because the classification below
+was originally argued from it.
+
+What the page actually publishes today:
+
+| | published? |
+| --- | --- |
+| the corpus total — 7 of 66 parameters cell-matched | **yes** |
+| each parameter's own population status and the facets it is bridged on | **yes**, on every item |
+| the impact maximum's share of the figure, when it exceeds 50% | **yes** — ADR-0008 commitment 2 |
+| any per-shard aggregate of the population status | no |
+| the same weighting for the **frequency** side | no |
+| **weight joined to population — how much of a figure rests on anchors measured elsewhere** | **no** |
+
+Both ingredients of the last row have been on the page for months and nothing has joined them. The
+result is a count that misweights: the engine composes each family as a beta-PERT whose mean is
+`(min + 4*likely + max) / 6`, so `au_finance_ransomware_midmarket`'s `impact.min` contributes
+**0.1%** of its impact mean and `impact.max` contributes **95.4%**, and the published count treats
+them as one parameter each.
+
+**What the join makes visible could not be read off either ingredient alone.** No shard in the
+portfolio is well anchored on both families, and the strong sides never coincide:
+`us_finance_data_breach_midmarket` is 98.8% measured on its own cell on impact and takes **100% of
+its frequency mean from a UK survey**. The annual figure is the product of the two means, so it
+inherits the weaker side. See [finding 10](../FINDINGS.md).
 
 ### 1. Disclosing what the eleven published figures rest on is correctness
 
-No published value moves. What changes is that a figure already on the page states its own
-composition, per shard, instead of silently rendering nothing where the template says it should.
-**A disclosure that degrades to empty is worse than one never attempted**, because the page reads
-as complete. Repairing it is the plainest available reading of "correctness", and it is squarely
-inside [ADR-0009](0009-what-riskshard-is-and-is-not.md)'s first category — it makes an existing
-published number more correct *about itself*.
+No published value moves. What changes is that a figure already on the page states what its own
+number rests on, weighted by how much each anchor actually contributes, instead of publishing a
+count that implies three anchors carry a third of the answer each.
+
+**A published number that misdescribes its own composition is not a missing feature, it is an
+inaccuracy in something already shipped** — and correcting an inaccuracy is the plainest available
+reading of part 3's "correctness". It is squarely inside
+[ADR-0009](0009-what-riskshard-is-and-is-not.md)'s first category: it makes an existing published
+number more correct *about itself*.
+
+**This ground is narrower than the withdrawn version and it is worth saying why it still holds.**
+"Repair a broken render path" would have made this uncontroversial maintenance. It is not that. It
+is a new statement the page has never made, justified by the count already on the page being
+misleading about the figure beside it. If that argument had failed, the honest outcome was an
+amendment, not a re-labelling.
 
 This does not lift the freeze and must not be cited as having lifted it.
 

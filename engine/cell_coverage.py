@@ -188,12 +188,15 @@ def shard_self_coverage(shards):
     is where those 7 sit. This does, and they are not spread thinly across eleven
     shards — four shards hold all of them and seven hold none.
 
-    That distribution is the disclosure the explorer already tries to make and never
-    has. `scripts/explorer_template.html` renders a per-shard split from
-    `t.params_cell_matched`, guarded by a null check; `provenance.py` sets that field
-    only on `totals`. So the guard is false on every shard on every build and the
-    split silently renders as an empty string. A disclosure that degrades to nothing
-    is worse than one that was never attempted, because the page reads as complete.
+    The page publishes the corpus total and, on every item, each parameter's own
+    population status. What it does not publish is the shard-level aggregate — so a
+    reader looking at one item cannot tell whether it is one of the four carrying the
+    corpus's cell-matched parameters or one of the seven carrying none.
+
+    A count is also the wrong instrument for the question a reader is asking, and
+    `engine.composition` is the answer to that: parameters do not contribute equally
+    to the figure they compose. This function answers "how much of this evidence base
+    is cell-specific?"; it does not answer "how much of this number is?".
 
     A parameter counts as measured on the shard's own cell only when its declared
     population names every facet that cell sets, under the same rule the rest of this
