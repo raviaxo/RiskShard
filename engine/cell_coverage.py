@@ -12,7 +12,7 @@ and the grid was undercounted 539 -> 215. The finding survived the correction an
 got stronger; the numbers did not. That is precisely why this lives in the engine
 with a test on it instead of in a document.
 
-Two readings, and they answer different questions:
+Four readings, and they answer different questions:
 
 **Empty share** is how often the whole grid answers nothing. It is the headline.
 
@@ -21,6 +21,18 @@ on their own and answer nothing together. A reader who picks one, sees evidence,
 adds the second and watches it go to zero has been walked into a dead end by the
 control. `AU` answers 14 and `manufacturing` answers 4; `AU + manufacturing` answers
 nothing.
+
+**Specificity profile** splits the grid by how much the reader said. The empty share
+averages over readers who named one facet and readers who named four, and those are
+not the same question. Split apart, the corpus answers the first every time and the
+last almost never: supplying context makes the answer worse.
+
+**Shard self-coverage** turns the same rule on ourselves, per shard. The corpus total
+is already published (`params_cell_matched`, 7 of 66); how those 7 distribute is not,
+and they are not spread thinly across eleven shards but concentrated in four. Seven
+shards match none of their own parameters and none is complete on its own cell. That
+is a disclosure owed on numbers already published, not a finding about a feature we
+might build.
 
 The rule replicated here is the engine's own: a parameter is bridged on a facet when
 the population it declares does not name the target's value for that facet, and a
@@ -119,4 +131,104 @@ def cell_coverage(shards):
         # ADR-0018's preconditions for reconsidering the retired control.
         "no_traps": not dead_ends and not traps,
         "majority_answered": total > 0 and answered * 2 > total,
+    }
+
+
+def specificity_profile(shards):
+    """Does answering a reader get better or worse as they say more about themselves?
+
+    The empty share is a single number over a grid that mixes a reader who named
+    only a country with one who named country, industry, size and threat. Those are
+    not the same question, and averaging them hides the finding.
+
+    Split by how many facets the reader set and the corpus answers a reader who says
+    nothing about themselves every time, and a reader who describes themselves
+    precisely almost never. **Supplying context makes the answer worse**, which is
+    the exact inverse of what a target selector promises. That is a different defect
+    from a thin corpus: reading more sources raises the totals, but it does not by
+    itself reverse the direction.
+
+    `best_matched` is the ceiling at each level: the most parameters any single cell
+    of that specificity matches. A shard needs all six to run, so a level whose
+    ceiling is below six cannot produce a complete answer from matched anchors alone
+    however many cells it answers.
+    """
+    parameters = _parameters(shards)
+    values = offered_values(shards)
+    facets = [facet for facet, _ in FACETS]
+
+    levels = {}
+    for choice in product(*[[None] + values[facet] for facet in facets]):
+        cell = {facet: value for facet, value in zip(facets, choice) if value}
+        if not cell:
+            continue
+        level = levels.setdefault(len(cell), {"cells": 0, "answered": 0, "best_matched": 0})
+        matched = matched_count(parameters, cell)
+        level["cells"] += 1
+        level["answered"] += 1 if matched else 0
+        level["best_matched"] = max(level["best_matched"], matched)
+
+    for level in levels.values():
+        level["empty"] = level["cells"] - level["answered"]
+        level["answered_share"] = level["answered"] / level["cells"] if level["cells"] else 0.0
+
+    shares = [levels[n]["answered_share"] for n in sorted(levels)]
+    return {
+        "levels": levels,
+        # True when every extra facet a reader sets lowers their chance of an answer.
+        "inverted": all(a > b for a, b in zip(shares, shares[1:])),
+    }
+
+
+def shard_self_coverage(shards):
+    """Can a shard answer the cell it is named after?
+
+    `engine/provenance.py` already answers this for the corpus: `params_cell_matched`
+    is 7 of 66, and ADR-0013 corrected it from a hand-kept 31. What it does not answer
+    is where those 7 sit. This does, and they are not spread thinly across eleven
+    shards — four shards hold all of them and seven hold none.
+
+    That distribution is the disclosure the explorer already tries to make and never
+    has. `scripts/explorer_template.html` renders a per-shard split from
+    `t.params_cell_matched`, guarded by a null check; `provenance.py` sets that field
+    only on `totals`. So the guard is false on every shard on every build and the
+    split silently renders as an empty string. A disclosure that degrades to nothing
+    is worse than one that was never attempted, because the page reads as complete.
+
+    A parameter counts as measured on the shard's own cell only when its declared
+    population names every facet that cell sets, under the same rule the rest of this
+    module uses. A wildcard (`all`, `global`) is not a name: a figure declared for
+    every country was not measured on Australia, it was measured across a population
+    that includes it. That is ADR-0003's definition of bridged, reproduced here
+    rather than imported so this measurement cannot silently inherit a redefinition.
+
+    Reported per shard because the answer varies from half to none, and the corpus
+    average conceals exactly the shards that are worst off.
+    """
+    rows = []
+    for shard in shards:
+        cell = {facet: shard[facet] for facet, _ in FACETS if shard.get(facet)}
+        own = list(shard.get("params") or [])
+        matched = matched_count(own, cell) if cell else 0
+        rows.append({
+            "id": shard.get("id"),
+            "cell": cell,
+            "facets_set": len(cell),
+            "parameters": len(own),
+            "matched": matched,
+            "bridged": len(own) - matched,
+            "bridged_share": (len(own) - matched) / len(own) if own else 0.0,
+        })
+
+    rows.sort(key=lambda row: (row["matched"], row["id"] or ""))
+    answering = [row for row in rows if row["matched"]]
+    return {
+        "shards": rows,
+        "answering_own_cell": len(answering),
+        "fully_bridged": sum(1 for row in rows if not row["matched"]),
+        "best_matched": max((row["matched"] for row in rows), default=0),
+        # No shard reaching six cannot be read as "some shards are fine": it means
+        # every published figure rests partly on a population that is not its own.
+        "any_shard_complete_on_own_cell": any(
+            row["matched"] == row["parameters"] and row["parameters"] for row in rows),
     }
