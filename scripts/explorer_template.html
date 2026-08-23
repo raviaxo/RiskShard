@@ -139,6 +139,11 @@
   .acts a,.acts button{font-family:var(--mono);font-size:12px;color:var(--link);background:none;border:0;
     padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
   .acts .done{color:var(--ink);text-decoration:none}
+  /* Cites the figure rather than an anchor. Sits on the method line, in the same
+     register as it — a citation control, not a call to action. */
+  .citefig{font-family:var(--mono);font-size:11.5px;color:var(--link);background:none;
+    border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+  .citefig.done{color:var(--ink);text-decoration:none}
 
   footer{margin-top:46px;border-top:3px double var(--rule);padding-top:12px;font-size:12px;color:var(--grey)}
   footer p{margin:0 0 6px}
@@ -404,7 +409,7 @@
   function citeURL(shardId,parameter){
     var base=DATA.site||'';
     if(RELEASE) base+='r/'+RELEASE+'/';
-    return base+'#'+shardId+'/'+parameter;
+    return base+'#'+shardId+(parameter?('/'+parameter):'');
   }
   function citation(s,p){
     var src=p.source_name||'source not recorded';
@@ -413,6 +418,40 @@
     return 'RiskShard '+paramID(s.id,p.parameter)+' — '+p.parameter+' = '+moneyValue(s,p)+
       ' ('+src+').'+caveat+' '+citeURL(s.id,p.parameter);
   }
+  /* Citing the FIGURE, not a parameter. Every anchor already has [cite]; the modeled
+     average did not, so the one number most likely to reach a slide was the only one
+     that travelled without its qualifications. composition_direction.md's second
+     decision is that the unbacked portion is stated and never blended — a copy path
+     that drops it breaks that decision as surely as blending would.
+
+     This returns null rather than a bare number when the composition is missing, so
+     the figure has no citable form at all unless the disclosure goes with it. That is
+     the guarantee; tests/test_composition.py holds it. */
+  function figureLine(name,f){
+    if(!f) return null;
+    var meas=Math.round(f.measured_share*100),
+        elsew=Math.round(f.elsewhere_share*100),
+        dom=f.dominant||{},
+        domName=String(dom.parameter||'').replace(/^[a-z]+\./,''),
+        domPct=Math.round((dom.share||0)*100),
+        where=(meas>=99)?(meas+'% measured on this cell')
+             :(elsew>0)?(meas+'% measured on this cell, '+elsew+'% on a different one')
+             :(meas+'% measured on this cell');
+    return '  ' + name + ' — ' + where + '; most of it (' + domPct + '%) is ' + domName;
+  }
+
+  function figureCitation(s){
+    var c=s.composition&&s.composition.families;
+    if(!c) return null;
+    var freq=figureLine('frequency',c.frequency), imp=figureLine('impact',c.impact);
+    if(!freq||!imp) return null;
+    return 'RiskShard '+s.id+(RELEASE?(' @'+RELEASE):'')+'\n'+
+      'Modeled avg / yr '+(s.avg||'—')+' — a reference rendering, not a benchmark-grade figure.\n'+
+      'What it rests on:\n'+freq+'\n'+imp+'\n'+
+      'The annual figure is the product of both means, so it inherits the weaker side.\n'+
+      citeURL(s.id);
+  }
+
   function pageURL(shardId,param){
     return location.origin+location.pathname+'#'+shardId+(param?('/'+param):'');
   }
@@ -578,7 +617,10 @@
         '<div class="renderhead">Reference rendering — not the product</div>'+
         '<div class="lossline"><div class="avg tnum">'+esc(s.avg||'—')+'</div>'+
           '<div class="pcts">P95 bad year <b class="tnum">'+esc(s.p95||'—')+'</b> · P99 severe <b class="tnum">'+esc(s.p99||'—')+'</b></div></div>'+
-        '<div class="methline">Modeled avg / yr, seeded beta-PERT over the anchors above · see Note 1</div>'+
+        '<div class="methline">Modeled avg / yr, seeded beta-PERT over the anchors above · see Note 1'+
+          (figureCitation(s)?(' <button type="button" class="citefig" data-cite="'+
+            esc(figureCitation(s))+'" title="cite this figure with what it rests on">[cite figure]</button>'):'')+
+          '</div>'+
         '<div class="renderfoot">One way of composing this evidence, shown so the anchors can be '+
           'inspected through it and so the declarations above have something to be true of. '+
           'Whether these anchors belong in your model, and in what shape, is your call.</div>'+
@@ -621,6 +663,7 @@
   }
   wireCopy('.copy','data-link','[copied]');   /* copy link to this layer */
   wireCopy('.cite','data-cite','[copied]');   /* cite this number */
+  wireCopy('.citefig','data-cite','[copied]'); /* cite the figure, with its composition */
 
   /* Deep links: #<shard-id> addresses an item, #<shard-id>/<parameter> a single
      line — so a number under discussion can be linked to directly. */
