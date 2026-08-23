@@ -84,8 +84,9 @@ releases since.
 
 **That is a saturated metric, not stalled work**, and the distinction matters because the flat line
 has already been misread once as evidence that this ADR stopped being followed. Over the same
-window 10 commits touched `scenarios/` and 11 touched `calibrations/`. The depth work happened.
-There was no instrument pointed at it.
+window **10 commits touched `scenarios/` and 11 touched `calibrations/`** *(counted 2026-08-22 over
+2026-07-31 → 2026-08-22; git history, so this is a dated measurement rather than a live figure)*.
+The depth work happened. There was no instrument pointed at it.
 
 **The measure it should have had is cell-matched**: how many parameters are drawn from the
 population they are used for. It reads **7 of 66** ([finding 4](../FINDINGS.md)), it has 59 units of

@@ -6,7 +6,7 @@
 > for that job and no one doing it, so this is us doing it: reading the public reports everyone
 > cites, one at a time, and writing down what each one actually publishes.
 >
-> **62 of 75 read. Zero publish a mode.**
+> **63 of 75 read. Zero publish a mode.**
 >
 > Every answer is pinned to a document hash with the passage quoted, so you can check us rather
 > than trust us.

@@ -56,6 +56,10 @@ real run of the affected path succeeds.** For a content/evidence change also run
   no owner and nothing watching it. If a figure cannot be generated, write the test that reads
   the document and checks it — `tests/test_cell_coverage.py` does exactly this for ADR-0018.
   **A rounded or narrated number counts.** "About a fifth" goes stale the same way.
+  **A number that cannot be generated carries the date it was measured**, which converts a claim
+  that rots into a fact that keeps. Git-history counts are the usual case: "14 commits went to the
+  audit" was written on 2026-08-21 and was wrong by 2026-08-22, because writing it produced a
+  fifteenth.
 - **Nothing public that couldn't be shown to a CISO tomorrow.** See
   [`docs/PUBLISHABLE_REQUIREMENTS.md`](docs/PUBLISHABLE_REQUIREMENTS.md).
 - **One objective per session.** New important items go to `docs/internal/NEXT_STEPS.md`,
