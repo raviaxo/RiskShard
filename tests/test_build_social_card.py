@@ -1,7 +1,12 @@
 import unittest
 
+import os
+import stat
+import tempfile
+from pathlib import Path
+
 from scripts.build_social_card import (DEFAULT_HEADLINE, _month_year, default_outcome,
-                                       main, money, render)
+                                       main, money, rasterise, render)
 
 
 FIELDS = {
@@ -42,6 +47,49 @@ class DriftTests(unittest.TestCase):
     def test_committed_card_matches_live_repo_data(self):
         """The card is what people see when a link is shared — it must not go stale."""
         self.assertEqual(main(["--check"]), 0)
+
+
+class RasteriseTests(unittest.TestCase):
+    """Success is whether the file was written, not what Chrome's exit status said.
+
+    On the maintainer's machine a normal Chrome of the same channel is usually already
+    open, and headless Chrome then writes the screenshot and exits non-zero anyway. The
+    earlier version read that as failure and printed "Headless Chrome did not produce a
+    PNG" over a card it had just correctly regenerated. A build step that cries wolf
+    about a stale public asset trains everyone to ignore it, and the next staleness is
+    real — this is the same card whose coverage line has already gone stale twice.
+    """
+
+    def _fake_chrome(self, directory, script):
+        path = Path(directory) / "fake-chrome"
+        path.write_text("#!/bin/sh\n" + script, encoding="utf-8")
+        path.chmod(path.stat().st_mode | stat.S_IEXEC)
+        return str(path)
+
+    def test_a_written_png_counts_even_when_chrome_exits_non_zero(self):
+        with tempfile.TemporaryDirectory() as d:
+            png = Path(d) / "card.png"
+            html = Path(d) / "card.html"
+            html.write_text("<p>card</p>", encoding="utf-8")
+            png.write_bytes(b"stale")
+            os.utime(png, (1, 1))
+            chrome = self._fake_chrome(d, 'printf new > "$(echo "$@" | sed -n '
+                                          '"s/.*--screenshot=\\([^ ]*\\).*/\\1/p")"\nexit 1\n')
+            self.assertTrue(rasterise(html, png, chrome, timeout=30))
+            self.assertEqual(png.read_bytes(), b"new")
+
+    def test_an_untouched_png_is_still_a_failure(self):
+        """The fix must not turn every failure into a success: if Chrome writes
+        nothing, a stale card on disk is exactly what we need to hear about."""
+        with tempfile.TemporaryDirectory() as d:
+            png = Path(d) / "card.png"
+            html = Path(d) / "card.html"
+            html.write_text("<p>card</p>", encoding="utf-8")
+            png.write_bytes(b"stale")
+            os.utime(png, (1, 1))
+            chrome = self._fake_chrome(d, "exit 1\n")
+            self.assertFalse(rasterise(html, png, chrome, timeout=30))
+            self.assertEqual(png.read_bytes(), b"stale")
 
 
 if __name__ == "__main__":

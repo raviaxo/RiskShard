@@ -186,7 +186,22 @@ def rasterise(html_path, png_path, chrome, timeout=60):
     Returns True on success. Headless Chrome can hang when a normal instance of
     the same channel is already running, so failure is reported rather than
     raised — the HTML is the generated artifact, the PNG is a convenience.
+
+    **Success is judged by whether the file was written, not by the exit status.**
+    When another Chrome of the same channel is already open — the normal state on the
+    maintainer's machine — Chrome writes the screenshot and *then* exits non-zero. The
+    earlier version returned False on that, printed "Headless Chrome did not produce a
+    PNG", and left a correctly regenerated card looking like a failed one. A build step
+    that cries wolf about a stale public asset is worse than one that is merely quiet,
+    because the next real staleness reads as the same known noise.
     """
+    def stamp():
+        try:
+            return png_path.stat().st_mtime_ns
+        except OSError:
+            return None
+
+    before = stamp()
     with tempfile.TemporaryDirectory() as profile:
         try:
             subprocess.run(
@@ -198,7 +213,8 @@ def rasterise(html_path, png_path, chrome, timeout=60):
                 check=True, capture_output=True, timeout=timeout,
             )
         except (subprocess.TimeoutExpired, subprocess.CalledProcessError, OSError):
-            return False
+            # Chrome may still have written the screenshot before failing.
+            return stamp() not in (None, before)
     return png_path.exists()
 
 

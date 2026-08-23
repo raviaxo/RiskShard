@@ -49,6 +49,28 @@ waiting on you.***
    composed answers may ever assemble anchors across the corpus rather than borrow a shard's set
    whole. A restriction is recorded in ADR-0007 so nothing is blocked meanwhile.
 
+8. **One parameter is anchored two editions behind, and the successor is already read.**
+   *(Found 2026-08-22.)* `au_finance_ransomware_midmarket.impact.likely` is the Sophos
+   **Australia 2025** mean recovery cost, USD 650,000 → AUD 900,000. The **Australia 2026**
+   country cut is registered, held and verified, and states the same quantity — mean recovery
+   cost excluding ransom, same publisher, same country, same construct — at **USD 1.66 million**,
+   *"a significant increase from the $0.65 million mean in the 2025 report."*
+
+   [`docs/CROSS_SOURCE.md`](../CROSS_SOURCE.md) already publishes the 2026 figure, and says in its
+   own words that *"a figure's vintage matters at least as much as its geography."* **The repo
+   states the rule and breaks it on the same data in the same release.**
+
+   Not changed, because changing it is parameter movement and
+   [ADR-0016](../adr/0016-the-audit-is-the-product.md) part 2 maintains shards for correctness
+   only. Note what it would do: `impact.likely` carries 4.5% of that shard's impact mean, so a
+   2.55× rise moves the modelled figure very little — the maximum carries 95.4%. **The reason to
+   do it is that the anchor is wrong, not that the answer would change.**
+
+   `engine/editions.py` now checks the whole portfolio and the doctor prints the count. Eight
+   other anchors cite superseded editions and **all eight have a recorded reason** — a stress
+   bound deliberately wants a prior-year reading, and two successors are registered but
+   unreadable. This is the only unexplained one.
+
 ### Standing — no action unless you overrule
 
 6. **Seven anchor judgments are on record**, each with its documented alternative: AU-ransomware

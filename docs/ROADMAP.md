@@ -25,18 +25,35 @@ reading, the ordering is wrong.
 
 ---
 
-## Track A · M1 — Finish the audit · **62 of 75** · target 2026-09-15
+## Track A · M1 — Finish the audit · **63 of 75** · target 2026-09-15
 
 Every registered source read on all four properties: does it publish a **mode**, a
 **distribution**, an **exceedance statement**, and can you **name the population** it measured.
 
 | | |
 | --- | ---: |
-| sources read on all four properties | **62 of 75** |
-| answers verified against a stored artifact | **248 of 300** |
-| sources held only as a pointer, needing a person | **13** |
+| sources read on all four properties | **63 of 75** |
+| answers verified against a stored artifact | **252 of 300** |
+| sources held only as a pointer, needing a person | **12** |
+| sources unread but readable | **0** |
 
-**13 sources is the rest of M1.** Progress on 2026-08-20/21 came from three places at once, and
+**Updated 2026-08-22 — the last readable source was read, and one of the 13 was never blocked.**
+
+- **CSA Singapore Cybersecurity Health Report 2023** was the only row left as `unverified`: an
+  image-based PDF whose text extraction returned 791 words of headings. Read by rendering all ten
+  pages and reading them. It publishes **no monetary loss figure at all** — business impact is
+  reported entirely as the incidence of impact *types* (48% business disruption, 31% financial
+  loss), never magnitude — so mode, distribution and exceedance are all *no*, and population is
+  *yes* and unusually specific. **The unread category is now empty**: every remaining gap is a
+  document nobody holds.
+- **The 2025 manufacturing sector report had two audit rows that contradicted each other.** One
+  said the report was gated and we held a 1,648-word web page; the other recorded the 7.1 MB PDF
+  read on 2026-08-16, from which comes *"extreme demands of $5 million or more — accounting for a
+  fifth (20%) of demands"* — the most directly usable exceedance in the corpus. The stale row is
+  removed and `audit_defects` now fails on a duplicate `source_id`, which nothing checked. **This
+  is the sixth time a source recorded as owed turned out to be held.**
+
+**12 sources are the rest of M1.** Progress on 2026-08-20/21 came from three places at once, and
 only one of them was a fetch:
 
 - **The Japan workbook was never unreadable, only unread.** Its 88 sheets resolve fine with a
