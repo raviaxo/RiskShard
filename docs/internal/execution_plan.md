@@ -50,7 +50,7 @@ Ordered by how much damage each does if left. None is large; together they are a
 | releases since ADR-0006 | **9** |
 | of those showing any parameter movement | **0** |
 | `source-backed` across all of them | 66/66, flat |
-| commits to `sources/audit.yaml` in the same window | **14** |
+| commits to `sources/audit.yaml` in the same window | **14** *(as of 2026-08-21; 15 by 2026-08-22)* |
 
 The effort went to the audit — breadth of **sources** — and [ADR-0016](../adr/0016-the-audit-is-the-product.md)
 blessed that three weeks later without revisiting ADR-0006. **An Accepted ADR is describing a

@@ -254,6 +254,19 @@ class RoadmapFiguresTests(unittest.TestCase):
         self.assertEqual(self.coverage["unverified"], 0)
         self.assertIn("sources unread but readable | **0**", self.roadmap)
 
+    def test_the_front_door_banner_states_the_live_audit_count(self):
+        """README line 9 is the first claim a visitor reads, and it went stale within
+        an hour of the count moving 62 -> 63 on 2026-08-22.
+
+        The release-note entries further down quote older counts on purpose — those
+        are dated history. This pins only the banner, which is a live claim.
+        """
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        c = self.coverage
+        banner = f"**{c['sources_fully_verified']} of {c['sources']} read."
+        self.assertIn(banner, readme,
+                      f"README banner no longer states {c['sources_fully_verified']} of {c['sources']}")
+
     def test_no_source_has_two_audit_rows(self):
         """A duplicate row let the audit call one source both gated and read.
 

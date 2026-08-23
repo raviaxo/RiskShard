@@ -171,6 +171,28 @@ class FindingsPageTests(unittest.TestCase):
         self.assertEqual((int(m.group(1)), int(m.group(2))), (none_known, maxima),
                          "README exceedance count has drifted from the derivation")
 
+    def test_the_front_door_states_the_coherence_count_correctly(self):
+        """The maxima count next to it was pinned; this one was not.
+
+        Found 2026-08-22 by scanning every "N of M" in the public docs rather than
+        trusting that the ones already pinned were the ones that mattered. The README
+        banner was stale in the same sweep, so this is not hypothetical.
+        """
+        import re
+
+        from engine.coherence import module_coherence
+
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        coherent = total = 0
+        for module in self.provenance["modules"]:
+            for family in module_coherence(module):
+                total += 1
+                coherent += 1 if family["status"] == "coherent" else 0
+        m = re.search(r"\*\*(\d+) of (\d+) parameter families are coherent", readme)
+        self.assertIsNotNone(m, "README no longer states the coherence count")
+        self.assertEqual((int(m.group(1)), int(m.group(2))), (coherent, total),
+                         "README coherence count has drifted from the derivation")
+
     def test_the_front_door_carries_the_source_audit(self):
         """The audit is what the project now leads with publicly (ADR-0016).
 
