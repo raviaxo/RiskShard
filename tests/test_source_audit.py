@@ -267,6 +267,27 @@ class RoadmapFiguresTests(unittest.TestCase):
         self.assertIn(banner, readme,
                       f"README banner no longer states {c['sources_fully_verified']} of {c['sources']}")
 
+    def test_the_front_door_states_the_four_answers(self):
+        """README line 27 quotes the four per-property counts.
+
+        It read "62 sources ... 0, 14, 19 and 49" on 2026-08-23, one source and one
+        population answer out of date, found by reading the file rather than by any
+        test. This is that test.
+        """
+        from engine.source_audit import PROPERTIES, VERIFIED, load_audit
+        rows = load_audit(ROOT)
+        counts = {}
+        for prop in PROPERTIES:
+            counts[prop] = sum(
+                1 for r in rows
+                if (r["properties"].get(prop) or {}).get("basis") == VERIFIED
+                and (r["properties"][prop].get("publishes") is True))
+        read = self.coverage["sources_fully_verified"]
+        sentence = (f"Read on {read} sources so far, the answers are **{counts['mode']}**, "
+                    f"{counts['distribution']}, {counts['exceedance']} and {counts['population']}.")
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn(sentence, readme, f"README no longer states: {sentence}")
+
     def test_no_source_has_two_audit_rows(self):
         """A duplicate row let the audit call one source both gated and read.
 

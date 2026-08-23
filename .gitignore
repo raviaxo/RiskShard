@@ -237,4 +237,8 @@ secrets.yml
 # The immutable per-release archives under docs/r/ ARE committed - they are what
 # pinned citations resolve to (ADR-0004).
 docs/index.html
+# Generated at deploy, same as index.html: one page per shard
+# from engine/executive_report.py. Committing them would let a published
+# board summary drift from the evidence it summarises.
+docs/reports/
 docs/audit.html

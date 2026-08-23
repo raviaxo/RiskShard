@@ -17,6 +17,9 @@ on:
       - "sources/**"
       - "scripts/build_explorer.py"
       - "scripts/explorer_template.html"
+      - "scripts/build_reports.py"
+      - "scripts/report_template.html"
+      - "scripts/report_index_template.html"
       - "docs/social-card.png"
       - ".github/workflows/pages.yml"
       # The page is generated from more than the evidence. Without these, a change that
@@ -58,6 +61,8 @@ jobs:
         run: python scripts/build_explorer.py
       - name: Regenerate the source-audit page from repo data
         run: python scripts/build_audit_page.py
+      - name: Regenerate the per-shard executive summaries
+        run: python scripts/build_reports.py
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
