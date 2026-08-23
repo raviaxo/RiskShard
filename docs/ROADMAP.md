@@ -25,17 +25,38 @@ reading, the ordering is wrong.
 
 ---
 
-## Track A · M1 — Finish the audit · **64 of 75** · target 2026-09-15
+## Track A · M1 — Finish the audit · **65 of 75** · target 2026-09-15
 
 Every registered source read on all four properties: does it publish a **mode**, a
 **distribution**, an **exceedance statement**, and can you **name the population** it measured.
 
 | | |
 | --- | ---: |
-| sources read on all four properties | **64 of 75** |
-| answers verified against a stored artifact | **256 of 300** |
-| sources held only as a pointer, needing a person | **11** |
+| sources read on all four properties | **65 of 75** |
+| answers verified against a stored artifact | **260 of 300** |
+| sources held only as a pointer, needing a person | **10** |
 | sources unread but readable | **0** |
+
+**Updated 2026-08-23 (second pass) — "needs a person" was tested, and it was largely wrong.**
+Every remaining URL was re-fetched rather than assumed. What came back:
+
+- **The Australia 2025 country cut is not gated and never was.** The registered URL returns a file
+  byte-identical to the one held, and there is no longer document — **the whitepaper *is* the
+  country cut**, exactly as its 2026 sibling is. It is now read (**64 → 65**), and it publishes an
+  exceedance: *"47% of ransom demands were for $250,000 or more."* It sat recorded as owed for three
+  weeks on an assumption nobody had tested by trying.
+- **The 2024 Sophos sector cuts are not gated either — they are withdrawn.** Both whitepaper pages
+  serve their asset PDF with no registration form, and both have rolled to the 2025 edition this
+  corpus already holds. **No person can obtain the 2024 editions. They never clear.**
+- **CESIN** returns a file byte-identical to the press release held. The barometer is not published
+  openly at that address.
+- **EPSS returns HTTP 404.** The page moved. That is a URL correction, and it is the only one of the
+  ten a person could actually fix.
+
+**So the honest count is not "10 sources need a person."** It is: one needs a URL fix, several are
+press releases that are all the publisher issues, and several are withdrawn editions that no effort
+will recover. **`riskshard_doctor.py` printing 72 of 72 is therefore not reachable**, and M1's
+definition of done below needs rewriting against that — recorded here rather than quietly dropped.
 
 **Updated 2026-08-23 — a seventh source recorded as owed turned out to be held.** The *Cost of
 Insider Risks Global Report 2023* was blocked behind a 1,902-word announcement page. The real
@@ -62,7 +83,7 @@ mode, no distribution of cost, no exceedance, and a population stated to 309 org
   removed and `audit_defects` now fails on a duplicate `source_id`, which nothing checked. **This
   is the sixth time a source recorded as owed turned out to be held.**
 
-**11 sources are the rest of M1.** Progress on 2026-08-20/21 came from three places at once, and
+**10 sources are the rest of M1**, and most of them will never clear. Progress on 2026-08-20/21 came from three places at once, and
 only one of them was a fetch:
 
 - **The Japan workbook was never unreadable, only unread.** Its 88 sheets resolve fine with a
