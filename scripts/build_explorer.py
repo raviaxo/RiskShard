@@ -34,7 +34,7 @@ from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.risk_modules import find_risk_module  # noqa: E402
 from engine.slot_roles import slot_declarations  # noqa: E402
 from engine.web_console import WebConsoleApp  # noqa: E402
-from engine.composition import compose_module, payload as composition_payload
+from engine.composition import compose_module, payload as composition_payload  # noqa: E402
 
 TEMPLATE = Path(__file__).resolve().parent / "explorer_template.html"
 REPO_URL = "https://github.com/raviaxo/RiskShard"

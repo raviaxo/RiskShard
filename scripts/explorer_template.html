@@ -462,7 +462,6 @@
     'Numbers broken so far: '+broken+whose+' (see Note 2, the correction record). '+
     next+': a confirmed break is retracted publicly and credited by handle in the changelog.';
 
-  /* Items 01..NN — the full record, printed. A document does not hide its notes. */
   /* What a published figure rests on, weighted by how much each anchor contributes.
      Shares come from engine/composition.py, which partitions the beta-PERT mean by the
      identity (min + 4*likely + max) / 6 — exact, not sampled. */
@@ -497,6 +496,7 @@
       'excludes this cell, not merely a broader one.</div></div>';
   }
 
+  /* Items 01..NN — the full record, printed. A document does not hide its notes. */
   var itemsHTML=DATA.shards.map(function(s,i){
     var prows=s.params.map(function(p){
       var backed=p.status==='source_backed';

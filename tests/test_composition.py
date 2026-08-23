@@ -146,11 +146,14 @@ class PublishedPayloadTests(unittest.TestCase):
     def setUpClass(cls):
         import json
         import re
-        from scripts.build_explorer import build_data
+        from scripts.build_explorer import build_data, render
         cls.shards = build_data(ROOT)["shards"]
         cls.template = (ROOT / "scripts" / "explorer_template.html").read_text(encoding="utf-8")
-        page = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
-        cls.published = json.loads(re.search(r'id="rs-data">(.*?)</script>', page, re.S).group(1))
+        # Rendered here rather than read from docs/index.html, which is generated at
+        # deploy time and gitignored: a test that reads it passes only on a machine
+        # that has just run the build, and fails on a fresh clone.
+        page = render(build_data(ROOT))
+        cls.rendered = json.loads(re.search(r'id="rs-data">(.*?)</script>', page, re.S).group(1))
 
     def test_every_shard_carries_a_complete_composition(self):
         for shard in self.shards:
@@ -172,14 +175,14 @@ class PublishedPayloadTests(unittest.TestCase):
             self.assertEqual(shard["params_cell_matched"] + shard["params_cross_cell"],
                              len(shard["params"]), shard["id"])
 
-    def test_the_published_page_carries_what_the_build_produced(self):
-        """Guards the build step itself: docs/index.html is committed, so it can drift
-        from the code that generates it until something compares them."""
-        published = {s["id"]: s for s in self.published["shards"]}
-        self.assertEqual(sorted(published), sorted(s["id"] for s in self.shards))
+    def test_the_composition_survives_serialisation_into_the_page(self):
+        """Guards the build step: the payload is embedded as JSON in the page, and a
+        field that does not serialise is a field the reader never sees."""
+        rendered = {s["id"]: s for s in self.rendered["shards"]}
+        self.assertEqual(sorted(rendered), sorted(s["id"] for s in self.shards))
         for shard in self.shards:
-            live = (shard["composition"]["families"]["impact"]["measured_share"])
-            page = (published[shard["id"]].get("composition") or {}).get("families", {})
+            live = shard["composition"]["families"]["impact"]["measured_share"]
+            page = (rendered[shard["id"]].get("composition") or {}).get("families", {})
             self.assertIn("impact", page, f"{shard['id']} has no composition on the page")
             self.assertAlmostEqual(page["impact"]["measured_share"], live, places=9,
                                    msg=shard["id"])
