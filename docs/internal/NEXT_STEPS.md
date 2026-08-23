@@ -42,12 +42,16 @@ waiting on you.***
    criterion that may retire it invites sunk-cost reasoning — *"we just improved it"* is not an
    argument at the measurement point.
 
-5. **Close ADR-0007 open question 1, or say it stays open.** *(Added 2026-08-22.)* It has carried a
-   recommended closure since 2026-08-09 — John's own reframing, that no mix is acceptable or
-   unacceptable in general, that our duty is to label, and that admission is the consumer's call —
-   and it is consistent with ADR-0010. It became load-bearing this week: it is what decides whether
-   composed answers may ever assemble anchors across the corpus rather than borrow a shard's set
-   whole. A restriction is recorded in ADR-0007 so nothing is blocked meanwhile.
+5. ✅ **CLOSED 2026-08-23 — ADR-0007 open question 1**, on the terms recommended since 2026-08-09:
+   no mix is acceptable or unacceptable in general, the duty is to label, admission is the
+   consumer's call. Parts 3 and 4 are dissolved by it rather than answered, ADR-0007 is
+   **Accepted**, and coherence reports rather than gates. **The residue is recorded as owed**: a
+   `mixed` range still owes a plain statement of what the mixing does to the number, and
+   `engine/composition.py` is the first instalment, not the whole debt.
+
+   *Consequence worth knowing:* the borrowing-only restriction on composed answers **survives**,
+   on a different footing. It is now a missing instrument rather than an open policy — coherence
+   runs per shard and a composed cell has none — so it lifts on a build.
 
 8. **One parameter is anchored two editions behind, and the successor is already read.**
    *(Found 2026-08-22.)* `au_finance_ransomware_midmarket.impact.likely` is the Sophos

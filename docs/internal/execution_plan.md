@@ -114,23 +114,62 @@ generated or pinned by a test.** Add it to `AGENTS.md` under the rules that are 
 
 ---
 
-## Part 2 — The weekly sequence
+## Part 2 — The weekly sequence, re-cut 2026-08-23
 
-Each week is one objective. Nothing starts until the prior week's is merged, released or explicitly
-parked. A week that ends with a document out of date with the code has failed, whatever shipped.
+*The original sequence is kept below the line, because how it failed is the useful part. **W1, W2
+and most of W3 all landed on 2026-08-22**, in one arc, against a plan that allowed them three
+weeks.*
+
+### What the compression actually cost
+
+The pacing rule — *one big objective a week, deep not broad* — was written on 2026-08-21 to stop
+work landing faster than the documents describing it. **On that test the arc passed**: most of the
+work *was* documents, and every figure written into a public file is now generated or pinned.
+
+**On accuracy it did not.** Five claims made during the arc did not survive being checked, including
+a fabricated "dead render path" that reached four documents and two commit messages, and a README
+banner that went stale within an hour of the count it quoted moving. Every one was caught by opening
+a file; none by the test suite, which was green throughout.
+
+So the rule stands, and the reason for it is amended: **the risk is not that documents lag code, it
+is that assertions outrun verification.** A week is not the unit — a *check* is. Rewriting the rule
+as "a claim is read back against its source before it is written down" would have caught all five;
+rewriting it as "slow down" would have caught none.
+
+### The sequence from here
+
+| | objective | gate |
+| --- | --- | --- |
+| ✅ **W1** | **The corrections.** C1–C7. | done 2026-08-22 (#179) |
+| ✅ **W2** | **Composition on the 11 shards.** Partition each shard's mean by evidence class. | done 2026-08-22 (#179) — and it went further than planned: the disclosure reached the explorer, the executive report, and finding 10 |
+| 🔵 **W3** | **The portable object.** One click gives the figure, its breakdown and the pinned release. | **built, not landed** — [#180](https://github.com/raviaxo/RiskShard/pull/180) is open, and it **must not merge into a v0.10.0 world**: citations pin to a data-pack release whose frozen snapshot has no composition section, so the breakdown would travel with a link that disproves it |
+| 🔴 **W3a** | **Cut the release that makes W3 honest.** | the data pack is byte-identical to v0.10.0 (`0ff2f12a5f6c`), so a release needs a data change first — the AU anchor (pending item 8) is the obvious and already-staged one |
+| **W4** | **Arbitrary cells by nearest-shard borrowing.** | W3a, plus U2's three gates: an ADR-0009 amendment that does not exist, a stated failure condition, and borrowing-only |
+| **W5** | **Reader context, client-side.** | W4 |
+| **W6+** | **UI**, then reassess. | W5 |
+
+**What changed in the gates.** W4's old gate cited ADR-0007 parts 2 and 3 as open. They closed on
+2026-08-23 and **the restriction survives anyway**, on a better footing: assembly is blocked by a
+missing instrument rather than an undecided policy, because a composed cell has no shard for
+`module_coherence` to run over. **That lifts on a build.** Whoever wants bespoke assembly should
+build composed-cell coherence, which is a smaller and far more tractable task than the debate it
+replaces.
+
+**Still not scheduled, and still deliberately:** contributions back to the ledger (piece E). It gets
+decided with usage data or not at all.
+
+---
+
+### The original sequence, as written 2026-08-21
 
 | week | objective | gate |
 | --- | --- | --- |
-| **W1** (from 2026-08-22) | **The corrections.** C1–C7. Ends with every ADR describing what the project actually does. | none — do it |
-| **W2** | **Composition on the 11 shards you already hold.** Not arbitrary cells. Partition each shard's modeled average by evidence class (measured / bridged / interpolated) using the analytic method already in `engine/tail_sensitivity.py`. Deterministic, checkable by hand. | C1, C4 |
-| **W3** | **The portable object.** One click gives the composed figure, its breakdown, the cell, and the pinned release — reproducible by a stranger who has neither. Extends the existing "cite this number" interaction; no second step. | W2 |
-| **W4** | **Arbitrary cells by nearest-shard borrowing.** Turns 456 empty answers into 456 labelled ones. Borrowing only — bespoke assembly stays shut until C2 closes. | W2, C2, C3 |
-| **W5** | **Reader context, client-side.** Revenue and size sharpen selection and scaling. Nothing sent, nothing stored, exactly as the ADR-0014 control worked. | W4 |
-| **W6+** | **UI**, then reassess. By here there is something worth looking at, and not before. | W5 |
-
-**Not scheduled, and deliberately:** contributions back to the ledger (piece E). It is the only part
-needing a backend, a privacy posture and a breach surface. **It gets decided with usage data or not
-at all.**
+| **W1** (from 2026-08-22) | **The corrections.** C1–C7. | none — do it |
+| **W2** | **Composition on the 11 shards you already hold.** | C1, C4 |
+| **W3** | **The portable object.** | W2 |
+| **W4** | **Arbitrary cells by nearest-shard borrowing.** | W2, C2, C3 |
+| **W5** | **Reader context, client-side.** | W4 |
+| **W6+** | **UI**, then reassess. | W5 |
 
 **Running alongside, not competing:** M1 continues whenever documents arrive — that is reading, not
 building. **2026-11-01 is fixed** ([ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md)) and
