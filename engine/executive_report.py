@@ -6,6 +6,7 @@ structured fields (run stats, module context/notes, evidence-pack trust
 metadata); it never invents numbers or caveats.
 """
 
+from engine.composition import compose_module
 from engine.fair_calc import IMPACT_UNCERTAINTY_NOTE
 
 DECISION_OPTIONS = (
@@ -85,6 +86,7 @@ def build_executive_report(run, module, pack, root=None):
         )
 
     return {
+        "composition": _composition(root, module),
         "title": (module.get("title") if module else None) or scenario_meta.get("name") or "Risk Shard",
         "module_id": module.get("id") if module else scenario_meta.get("name"),
         "threat": (module.get("threat") if module else None) or context.get("threat"),
@@ -108,6 +110,64 @@ def build_executive_report(run, module, pack, root=None):
         "reproduction_command": reproduction_command,
         "fingerprint": scenario_meta.get("fingerprint"),
     }
+
+
+def _composition(root, module):
+    """What the figure rests on, weighted — or an explicit None when it cannot be told.
+
+    "N of M parameters are backed by public sources" reads to a board as a completeness
+    score, and for every shard in this portfolio it reads 6 of 6. It says nothing about
+    whether any of those sources measured the population the board is asking about, and
+    for eight of eleven shards the honest answer is none of them
+    ([finding 10](../docs/FINDINGS.md)).
+
+    Returns None rather than raising when the shard cannot be resolved — a report is
+    still worth producing without this — and the formatter says so on the page instead
+    of quietly dropping the section. A disclosure that degrades to silence is the
+    failure mode this whole line of work exists to fix.
+    """
+    module_id = (module or {}).get("id")
+    if not root or not module_id:
+        return None
+    try:
+        return compose_module(root, module_id)
+    except (KeyError, ValueError, OSError):
+        return None
+
+
+def _composition_lines(report):
+    """The trust section's composition paragraph, per family and never blended."""
+    composed = report.get("composition")
+    if not composed:
+        return ["*What this figure rests on could not be computed for this shard, so it "
+                "is not stated. Do not read its absence as nothing to state.*"]
+    families = composed.get("families") or {}
+    if not {"frequency", "impact"} <= set(families):
+        return ["*What this figure rests on is incomplete for this shard and is "
+                "therefore not summarised.*"]
+    lines = [
+        "**What the figure rests on.** A modeled annual loss is a frequency mean times "
+        "an impact mean, and the two are anchored differently — so this is stated per "
+        "family and never blended into one percentage.",
+        "",
+    ]
+    for name in ("frequency", "impact"):
+        data = families[name]
+        measured = round(data["measured_share"] * 100)
+        elsewhere = round(sum(a["share"] for a in data["anchors"] if a["elsewhere_on"]) * 100)
+        dominant = data["dominant"]
+        slot = str(dominant["parameter"]).split(".")[-1]
+        share = round(dominant["share"] * 100)
+        detail = f"**{measured}% measured on this exact context**"
+        if elsewhere:
+            detail += f", and {elsewhere}% measured on a different one"
+        lines.append(f"- **{name.title()}** — {detail}. Most of it ({share}%) comes from "
+                     f"the `{slot}` anchor alone.")
+    lines.append("")
+    lines.append("The annual figure is the product of both means, so it inherits the "
+                 "weaker side. *\"Backed by public sources\" above says the evidence is "
+                 "published; this says who it was measured on.*")
+    return lines
 
 
 def format_executive_report_markdown(report):
@@ -178,6 +238,8 @@ def format_executive_report_markdown(report):
     else:
         trust += "."
     lines.append(trust)
+    lines.append("")
+    lines.extend(_composition_lines(report))
     if report["sources"]:
         lines.append("")
         for source in report["sources"]:
