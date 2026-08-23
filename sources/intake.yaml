@@ -410,13 +410,14 @@ intake:
     score: 10.0
     status: parked
     quantities: [frequency, loss_magnitude]
-  - file: "DTEX_PonemonInsiderRiskReport23_US_Web_dtex.ai.pdf"
+  - file: "ponemon_dtex_cost_insider_risks_2023.pdf"
     sha256: 1103b630847fa8f308c79033521d8182eeb79f3836aa29fec3c501527d8ebe25
     bytes: 3990633
     words: 9852
     title: "Cost of Insider Risks GLOBAL REPORT 2023 Independently conducted by Table of contents 3-5 Introduction 6-9 Exe"
     score: 10.0
-    status: parked
+    status: admitted
+    source_id: ponemon_dtex_cost_insider_risks_2023
     quantities: [frequency, loss_magnitude]
   - file: "DTEX_Ponemon_2026 (1).pdf"
     sha256: 81752c526a630107d69b8b4a41c951f7f5b5bc2dd8df556756006d5ec8386d58

@@ -309,6 +309,38 @@
       },
       "note": "One parameter moved and it is the first in ten releases. au_finance_ransomware_midmarket.impact.likely was two editions behind the Sophos Australia country cut, found by engine/editions.py while docs/CROSS_SOURCE.md was already publishing the newer figure. Read the 7.4% move in that shard's AVG against a 2.55x move in the anchor as the composition disclosure being right about itself: the anchor was carrying 4.5% of the impact mean. Cell-matched and bridged are unchanged at 7 and 59; the new record declares the same population as the one it replaces.",
       "release_version": "2026.08.23-v0.11.0"
+    },
+    {
+      "data_pack_version": "2026.08.23",
+      "date": "2026-08-23",
+      "fingerprint": "090bee2ae02ae595a1094e15fa0a8cc06e41b425f6612d40ad866beaa0e36aa4",
+      "grades": {
+        "benchmark_review_candidate": 6,
+        "governed_starter": 5
+      },
+      "metrics": {
+        "families_coherent": 4,
+        "families_mixed": 18,
+        "floor_central_tendency": 7,
+        "likely_anchors": 11,
+        "likely_central_tendency": 8,
+        "likely_not_a_mode": 11,
+        "maxima": 11,
+        "maxima_none_known": 5,
+        "maxima_quantified": 4,
+        "params_bridged": 0,
+        "params_cell_matched": 7,
+        "params_cross_cell": 59,
+        "params_cross_country": 15,
+        "params_missing": 0,
+        "params_source_backed": 66,
+        "params_total": 66,
+        "shards": 11,
+        "shards_fully_sourced": 11,
+        "shards_tail_driven": 7
+      },
+      "note": "No parameter, source value or caveat changed. The data pack moved because sources/registry.yaml did: ponemon_dtex_cost_insider_risks_2023 is declared manual_download rather than public_html, because its registered URL is an announcement page and the gatherer could never have reached the report. Read this tick as the audit getting one source further, not as evidence changing.",
+      "release_version": "2026.08.23-v0.11.1"
     }
   ]
 }

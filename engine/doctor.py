@@ -37,6 +37,7 @@ def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
         loss_event_check(root),
         source_audit_check(root),
         edition_check(root),
+        held_source_check(root),
         intake_check(root),
         ledger_check(root),
         tests_check(root, run_tests=run_tests),
@@ -167,6 +168,35 @@ def edition_check(root):
             f"registered edition supersedes; {len(unexplained)} carry no recorded reason. "
             "Candidates, not defects — see engine/editions.py"
         ),
+    }
+
+
+def held_source_check(root):
+    """Is a source the audit cannot read already sitting in the intake register?
+
+    Added 2026-08-23, after the seventh occasion on which a source recorded as owed
+    turned out to be held. That time the real 9,852-word study was in the register
+    marked `parked` while the audit row for the same source read `no_readable_artifact`,
+    because the gatherer had only ever reached its announcement page. Both records were
+    right; nothing compared them.
+
+    Fails, rather than reporting, because unlike the editions check there is no
+    legitimate reason for this to be non-empty: if the document is on disk the audit
+    should be reading it.
+    """
+    from engine.intake import blocked_but_held
+
+    held = blocked_but_held(root)
+    if not held:
+        return {"name": "held sources", "status": "pass",
+                "detail": "no blocked source has a candidate document on disk"}
+    first = held[0]
+    return {
+        "name": "held sources",
+        "status": "fail",
+        "detail": (f"{len(held)} blocked source(s) already have a document in the intake "
+                   f"register — e.g. {first['source_id']} matches {first['file']} "
+                   f"({first['words']} words, {first['status']})"),
     }
 
 

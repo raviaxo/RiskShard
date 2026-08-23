@@ -888,7 +888,11 @@ sources:
   source_type: industry_survey
   url: https://ponemonsullivanreport.com/2023/10/cost-of-insider-risks-global-report-2023/
   publication_date: '2023-10-01'
-  access_mode: public_html
+  # Changed 2026-08-23. The URL above is the announcement page, not the report; the
+  # report is a gated PDF and gather_sources.py can only ever fetch the announcement.
+  # Recording it as public_html is what let a 1,902-word press page stand in for a
+  # 9,852-word study for three weeks, with the audit row correctly reading "blocked".
+  access_mode: manual_download
   intended_use:
   - insider misuse impact
   - insider incident per-incident cost

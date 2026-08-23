@@ -201,3 +201,67 @@ def intake_defects(root):
         if row.get("status") == "admitted" and not row.get("source_id"):
             defects.append(f"{f}: admitted with no source_id to admit it as")
     return sorted(defects)
+
+
+# --- The join that was missing -------------------------------------------
+# The intake register knows what documents are on disk. The source audit knows
+# which sources it cannot read. Nothing compared them, and on 2026-08-23 the
+# consequence surfaced: the real 9,852-word *Cost of Insider Risks Global Report
+# 2023* sat in the register marked `parked`, while the audit row for that exact
+# source read `no_readable_artifact` because the gatherer had only ever reached
+# its announcement page. Both records were correct. Neither could see the other.
+#
+# That was the seventh time a source recorded as owed turned out to be held, so
+# this is the check rather than another note telling a reader to go and look.
+
+_TITLE_STOPWORDS = frozenset({
+    "the", "a", "an", "of", "in", "and", "for", "on", "to",
+    "report", "study", "survey", "annual", "edition", "whitepaper", "global",
+    "release", "rapport", "barometre",
+})
+_TITLE_TOKEN = re.compile(r"[a-z0-9]+")
+
+
+def _title_tokens(title):
+    """A title reduced to the words that identify the document, year kept.
+
+    The year is deliberately significant: dropping it made every Sophos country
+    cut match every other year of itself, which turns a useful check into noise.
+    """
+    return {w for w in _TITLE_TOKEN.findall((title or "").lower())
+            if w not in _TITLE_STOPWORDS and len(w) > 2}
+
+
+def blocked_but_held(root):
+    """Sources the audit cannot read, for which a candidate document is on disk.
+
+    Conservative on purpose: every identifying token of the registered title,
+    the year included, must appear in the candidate's extracted title. A missed
+    match costs one more manual look; a false match sends a reader to the wrong
+    document and teaches them to ignore the check.
+    """
+    from engine.source_audit import NO_ARTIFACT, PROPERTIES, load_audit, load_registry
+
+    registry = {s.get("id"): s for s in load_registry(root)}
+    candidates = load_intake(root)
+    rows = []
+    for entry in load_audit(root):
+        properties = entry.get("properties") or {}
+        if not any((properties.get(p) or {}).get("basis") == NO_ARTIFACT for p in PROPERTIES):
+            continue
+        source = registry.get(entry.get("source_id")) or {}
+        wanted = _title_tokens(source.get("title"))
+        if not wanted:
+            continue
+        for candidate in candidates:
+            if candidate.get("status") == "admitted":
+                continue
+            if wanted <= _title_tokens(candidate.get("title")):
+                rows.append({
+                    "source_id": entry.get("source_id"),
+                    "title": source.get("title"),
+                    "file": candidate.get("file"),
+                    "words": candidate.get("words"),
+                    "status": candidate.get("status"),
+                })
+    return rows

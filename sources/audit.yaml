@@ -665,48 +665,35 @@ audit:
           and the reason this source is used as a denominator.
 
   - source_id: ponemon_dtex_cost_insider_risks_2023
+    artifact_sha256: 1103b630847fa8f308c79033521d8182eeb79f3836aa29fec3c501527d8ebe25
+    artifact: sources/raw/ponemon_dtex_cost_insider_risks_2023.pdf
     properties:
       mode:
-        basis: no_readable_artifact
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-23'
         detail: >-
-          What we hold is a 1,940-word summary page for the Cost of Insider Risks study,
-          not the study. It carries a few headline findings — an average 86 days to
-          contain, 13% of incidents contained in under 31 days — and nothing that would
-          answer these questions about the report's own statistics. Same blocker as the
-          IBM and Sophos summaries.
+          No. Every cost in the report is an average, and the report says so in its own words - 'the average cost per incident, the average number of incidents and the average annualized cost per year'. The total is given as 'the total average cost of activities to resolve insider risks over a 12-month period is $16.2 million'. The phrase 'most likely' appears repeatedly and never about a loss: it qualifies the most likely *cause* ('the most likely cause of insider risk is non-malicious'). No median, mode or most-likely loss value is published for any quantity.
+          
+          Read 2026-08-23 from the report itself, which had been recorded as blocked. See the artifact note below.
       distribution:
-        basis: no_readable_artifact
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-23'
         detail: >-
-          What we hold is a 1,940-word summary page for the Cost of Insider Risks study,
-          not the study. It carries a few headline findings — an average 86 days to
-          contain, 13% of incidents contained in under 31 days — and nothing that would
-          answer these questions about the report's own statistics. Same blocker as the
-          IBM and Sophos summaries.
+          Not of loss, and this is the same shape as the CSA Singapore row: the report publishes real distributions, just not of a loss quantity. Figure 1 gives the 'Frequency of 7,343 incidents for three insider profiles' and Figure 2 the frequency per company; containment time is banded ('Only 13% of incidents were contained in less than 31 days', against an average of 86 days). Cost is then reported as a conditional mean across those bands and across industries - Technology $18.2M, Energy $16.9M - which is an average per stratum, not a spread over loss size. There is no distribution of cost.
       exceedance:
-        basis: no_readable_artifact
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-23'
         detail: >-
-          What we hold is a 1,940-word summary page for the Cost of Insider Risks study,
-          not the study. It carries a few headline findings — an average 86 days to
-          contain, 13% of incidents contained in under 31 days — and nothing that would
-          answer these questions about the report's own statistics. Same blocker as the
-          IBM and Sophos summaries.
+          No. An exceedance statement needs a loss magnitude and a probability of passing it, and no cost figure here carries one. The nearest thing is time, not money: 13% of incidents contained in under 31 days, and organisations taking more than 91 days carrying higher average costs. That is a conditional mean by response time, and reading it as an exceedance probability over loss size would be exactly the error ADR-0008 exists to prevent.
       population:
-        basis: no_readable_artifact
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-23'
         detail: >-
-          What we hold is a 1,940-word summary page for the Cost of Insider Risks study,
-          not the study. It carries a few headline findings — an average 86 days to
-          contain, 13% of incidents contained in under 31 days — and nothing that would
-          answer these questions about the report's own statistics. Same blocker as the
-          IBM and Sophos summaries.
-
-
-  # ── Read 2026-08-15, fourth batch — completing the answerable corpus ─────
-  # Population is NOT a free yes here. Half of these are single-case documents,
-  # statutes or guidance: they record an event or set a rule rather than measure a
-  # population, so `population: false` says the question does not apply rather than
-  # that the source hid something. That distinction is most of what these rows are
-  # worth — a tail anchor drawn from one company's disclosure has no population by
-  # construction, which is exactly why its maximum declares none_known (ADR-0008).
+          Yes, and unusually precisely for a vendor-commissioned study. The benchmark sample is 309 separate organizations with 1,075 interviews, fieldwork concluding May 2023, over insider-related events in the prior 12 months, using an activity-based costing framework whose seven internal cost centres are named. Industry and headcount bands are broken out. The population is global and cross-industry, which is what makes every figure from it a bridge for any single country or sector - and that is a property of the source, stated, not a defect.
 
   - source_id: gartner_deepfake_attack_survey_2025
     artifact_sha256: 722032381d23aff935365e995c928b81bd30fa085196296dbdc1d3556ac26ca8

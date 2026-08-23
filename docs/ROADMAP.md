@@ -25,17 +25,26 @@ reading, the ordering is wrong.
 
 ---
 
-## Track A · M1 — Finish the audit · **63 of 75** · target 2026-09-15
+## Track A · M1 — Finish the audit · **64 of 75** · target 2026-09-15
 
 Every registered source read on all four properties: does it publish a **mode**, a
 **distribution**, an **exceedance statement**, and can you **name the population** it measured.
 
 | | |
 | --- | ---: |
-| sources read on all four properties | **63 of 75** |
-| answers verified against a stored artifact | **252 of 300** |
-| sources held only as a pointer, needing a person | **12** |
+| sources read on all four properties | **64 of 75** |
+| answers verified against a stored artifact | **256 of 300** |
+| sources held only as a pointer, needing a person | **11** |
 | sources unread but readable | **0** |
+
+**Updated 2026-08-23 — a seventh source recorded as owed turned out to be held.** The *Cost of
+Insider Risks Global Report 2023* was blocked behind a 1,902-word announcement page. The real
+9,852-word study was in `sources/raw/` the whole time, under the filename it was downloaded with
+rather than its source id, so nothing connected the two. Found by listing every raw file **not
+attached to any audit row** — a check that now has no remaining candidates. Registered as
+`manual_download`, recorded through `record_manual_artifacts.py`, and read: **all averages, no
+mode, no distribution of cost, no exceedance, and a population stated to 309 organisations and
+1,075 interviews.**
 
 **Updated 2026-08-22 — the last readable source was read, and one of the 13 was never blocked.**
 
@@ -53,7 +62,7 @@ Every registered source read on all four properties: does it publish a **mode**,
   removed and `audit_defects` now fails on a duplicate `source_id`, which nothing checked. **This
   is the sixth time a source recorded as owed turned out to be held.**
 
-**12 sources are the rest of M1.** Progress on 2026-08-20/21 came from three places at once, and
+**11 sources are the rest of M1.** Progress on 2026-08-20/21 came from three places at once, and
 only one of them was a fetch:
 
 - **The Japan workbook was never unreadable, only unread.** Its 88 sheets resolve fine with a
