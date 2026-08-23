@@ -260,5 +260,60 @@ class ExecutiveReportDisclosureTests(unittest.TestCase):
         self.assertIsNone(report["composition"])
 
 
+class FigureCitationTests(unittest.TestCase):
+    """The figure could be copied without its qualifications; the anchors could not.
+
+    Every parameter has had a [cite] since v0.4.0. The modeled average never did, so
+    the one number most likely to reach a slide was the only one that travelled bare.
+    `composition_direction.md`'s second decision — the unbacked portion is stated and
+    never blended — is broken by a copy path that drops it just as surely as blending
+    would break it.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        from scripts.build_explorer import build_data
+        cls.template = (ROOT / "scripts" / "explorer_template.html").read_text(encoding="utf-8")
+        cls.shards = build_data(ROOT)["shards"]
+
+    def test_the_citation_has_no_form_without_its_composition(self):
+        """The guarantee, held structurally because it is a property of the copy path
+        rather than of any one shard: `figureCitation` returns null unless BOTH family
+        lines were produced, so there is no code path that emits the number alone."""
+        self.assertIn("if(!c) return null;", self.template)
+        self.assertIn("if(!freq||!imp) return null;", self.template)
+        # And the control is only rendered when the citation exists.
+        self.assertIn("(figureCitation(s)?(' <button", self.template)
+
+    def test_the_citation_carries_what_makes_it_re_derivable(self):
+        for fragment in ("'RiskShard '+s.id+(RELEASE?(' @'+RELEASE):'')",
+                         "citeURL(s.id)",
+                         "a reference rendering, not a benchmark-grade figure",
+                         "inherits the weaker side"):
+            self.assertIn(fragment, self.template, fragment)
+
+    def test_the_release_pin_survives_a_shard_level_citation(self):
+        """citeURL took a parameter and built '#id/param'. A figure has no parameter,
+        and the pinned release is what makes the figure re-derivable at all, so the
+        shard-level form must keep the r/<release>/ prefix rather than fall back to
+        the live page."""
+        self.assertIn("return base+'#'+shardId+(parameter?('/'+parameter):'');", self.template)
+        self.assertIn("if(RELEASE) base+='r/'+RELEASE+'/';", self.template)
+
+    def test_every_shard_can_produce_one(self):
+        """Structural guards are worth nothing if the data cannot satisfy them."""
+        for shard in self.shards:
+            families = (shard.get("composition") or {}).get("families") or {}
+            self.assertEqual(sorted(families), ["frequency", "impact"], shard["id"])
+            self.assertTrue(shard.get("avg"), shard["id"])
+            for data in families.values():
+                self.assertIsNotNone((data.get("dominant") or {}).get("parameter"), shard["id"])
+
+    def test_the_copy_handler_is_wired(self):
+        """A button with no listener copies nothing and reports success."""
+        self.assertIn("wireCopy('.citefig','data-cite'", self.template)
+        self.assertIn(".citefig{", self.template)
+
+
 if __name__ == "__main__":
     unittest.main()

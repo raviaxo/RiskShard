@@ -85,23 +85,23 @@ waiting on you.***
 
 ## Restart point
 
-**Session closed 2026-08-22. `main` at 433 tests, evidence clean, doctor GREEN ON EVERY CHECK,
-0 unmerged branches, data pack `0ff2f12a5f6c`.** Merged this arc:
+**Session closed 2026-08-23. `main` at 434 tests, evidence clean, doctor GREEN ON EVERY CHECK,
+data pack `a3fdc4b4f89e`, released as
+[v0.11.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.11.0).** Merged across the arc:
 [#179](https://github.com/raviaxo/RiskShard/pull/179) (W1 corrections + the composition),
 [#181](https://github.com/raviaxo/RiskShard/pull/181) (the audit's last readable source),
 [#182](https://github.com/raviaxo/RiskShard/pull/182) (claim re-verification),
-[#183](https://github.com/raviaxo/RiskShard/pull/183) (the board-facing disclosure). Last release is
-still [v0.10.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.10.0) — **nothing has been
-tagged since**, deliberately.
+[#183](https://github.com/raviaxo/RiskShard/pull/183) (the board-facing disclosure),
+[#184](https://github.com/raviaxo/RiskShard/pull/184) (ADR-0007 Accepted, sequence re-cut),
+[#185](https://github.com/raviaxo/RiskShard/pull/185) (the AU anchor refresh and v0.11.0), and
+[#180](https://github.com/raviaxo/RiskShard/pull/180) (the figure citation) landing on top.
 
-**🔴 ONE PR IS OPEN AND IT IS YOURS: [#180](https://github.com/raviaxo/RiskShard/pull/180)** — the
-figure citation. Rebased on `main` and green. Left for you rather than self-merged.
-
-**NEXT OBJECTIVE: not chosen, and the plan needs re-cutting first.**
-[`execution_plan.md`](execution_plan.md) sequences W2 as *composition on the 11 shards you already
-hold*. **That is done and shipped**, in the same arc as the W1 corrections that were supposed to
-gate it. The weekly sequence is now a week ahead of itself and should be reconciled against what
-actually happened rather than followed as written.
+**NEXT OBJECTIVE: not chosen.** [`execution_plan.md`](execution_plan.md) was re-cut on 2026-08-23
+and now runs W3a → W4. **W3a is done** — v0.11.0 is the release that makes the figure citation
+honest, because `docs/r/2026.08.23-v0.11.0/` is the first snapshot carrying the composition.
+**W4 is arbitrary cells by nearest-shard borrowing, and it is gated on three things**, none of them
+started: an ADR-0009 amendment that does not exist, a stated failure condition, and composed-cell
+coherence (the instrument ADR-0007's closure showed is missing).
 
 ### What the 2026-08-22 arc did
 

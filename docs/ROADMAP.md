@@ -161,7 +161,7 @@ All three read zero today. Published either way.
 
 ---
 
-## Track B · U1 — Say what each published figure rests on · **in flight 2026-08-22**
+## Track B · U1 — Say what each published figure rests on · ✅ **done 2026-08-22**
 
 Every shard is partly bridged and the page does not say by how much. The corpus total is published
 (**7 of 66** parameters drawn from the population they are used for) but the per-shard split is
@@ -177,8 +177,21 @@ families, and the strong sides never coincide.
 the narrow ground that a published count misdescribing the figure beside it is an inaccuracy in
 something already shipped rather than a new surface.
 
-**Done means:** each of the eleven items states its own composition, and a test fails if the field
-goes null again.
+**Done:** each of the eleven items states its own composition, per family and never blended, and
+tests fail if the payload goes null, if the template stops reading it, or if it fails to serialise
+into the page.
+
+**And it travels.** Every anchor has had a `[cite]` since v0.4.0; the modeled average never did, so
+the one number most likely to reach a slide was the only one that copied bare. `[cite figure]`
+emits the figure with what it rests on, pinned to the release — and returns nothing at all when the
+composition is missing, so there is no code path that copies the number alone. That is
+`composition_direction.md`'s second decision (the unbacked portion is stated, never blended) applied
+to the copy path, which is where a screenshot's honesty is actually decided.
+
+**Deliberately not built:** an `RS:cell(...)` identifier and resolver. A cell identifier earns its
+keep only when a reader can name a cell we have never published, which is **U2** and is gated. For
+the eleven we do publish, the shard id plus the pinned release already identifies the figure and
+`citeURL` already pins it.
 
 ## Track B · U2 — An answer for a cell we have never published · **gated, not scheduled**
 
