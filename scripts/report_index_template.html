@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="One board-facing summary per RiskShard shard: the modeled annual loss, and how much of it was measured on that exact context rather than somewhere else.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Crect%20x=%228%22%20y=%228%22%20width=%2284%22%20height=%2284%22%20fill=%22%23111%22/%3E%3Cpath%20d=%22M50%2020%20L50%2080%20L26%2050%20Z%22%20fill=%22%23fff%22/%3E%3C/svg%3E">
+<title>Executive summaries — RiskShard</title>
+<link rel="canonical" href="__RS_SITE__reports/index.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RiskShard">
+<meta property="og:title" content="Executive summaries — one page per shard">
+<meta property="og:description" content="The modeled annual loss for each shard, and how much of it was measured on that exact context. Frequency and impact stated separately, because the two are anchored differently.">
+<style>
+  @font-face{font-family:"Plex Mono";src:url("../fonts/plex-mono-400.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("../fonts/plex-mono-600.woff2") format("woff2");font-weight:600;font-display:swap}
+  @font-face{font-family:"Plex Mono";src:url("../fonts/plex-mono-700.woff2") format("woff2");font-weight:700;font-display:swap}
+  :root{--ink:#111;--grey:#555;--faint:#8a8a8a;--rule:#111;--hair:#cfcfcf;--link:#0b31a5;
+    --mono:"Plex Mono",ui-monospace,"Courier New",monospace}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#fff;color:var(--ink);font-family:var(--mono);font-size:13px;line-height:1.55;
+    padding:26px 20px 60px}
+  .wrap{max-width:74ch;margin:0 auto}
+  .filehead{display:flex;justify-content:space-between;gap:12px;align-items:baseline;
+    border-top:2px solid var(--rule);border-bottom:1px solid var(--rule);padding:7px 0;
+    font-size:11px;text-transform:uppercase;letter-spacing:.07em}
+  .filehead b{font-weight:700;letter-spacing:.12em}
+  h1{font-size:clamp(16px,2.2vw,20px);font-weight:700;margin:22px 0 8px}
+  p{margin:9px 0}
+  .tblwrap{overflow-x:auto;margin:16px 0}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th{text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--grey);border-bottom:1px solid var(--rule);padding:5px 8px 5px 0}
+  td{padding:6px 8px 6px 0;border-bottom:1px solid var(--hair)}
+  /* A figure that wraps between its currency and its digits reads as two numbers. */
+  td:nth-child(2),td:nth-child(3),th:nth-child(2),th:nth-child(3){white-space:nowrap}
+  a{color:var(--link)}
+  .note{font-size:11.5px;color:var(--grey);margin:0 0 10px;padding:5px 0 5px 10px;
+    border-left:2px solid #a11212}
+  .note b{color:var(--ink);font-weight:600}
+  .foot{margin-top:34px;padding-top:8px;border-top:2px solid var(--rule);
+    font-size:11px;color:var(--faint);display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="filehead"><b>RISKSHARD</b><span>Executive summaries · __RS_RELEASE__</span></div>
+
+  <h1>One page per shard, for someone who has to decide.</h1>
+
+  <p>__RS_COUNT__ summaries. Each states a modeled annual loss and — the part that is usually
+  missing — <b>how much of that figure was measured on that exact context, and how much was
+  measured somewhere else.</b></p>
+
+  <div class="note"><b>Read the last column first.</b> It is frequency / impact, and they are
+  reported separately because a modeled annual loss is one multiplied by the other and the two are
+  anchored differently. <b>No shard in this portfolio is well anchored on both.</b> A figure whose
+  impact side is 99% measured on its own context can still take its entire frequency from another
+  country, and the annual number inherits the weaker side.</div>
+
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Context</th><th style="text-align:right">Modeled avg / yr</th>
+        <th style="text-align:right">Measured here</th></tr></thead>
+      <tbody>__RS_ROWS__</tbody>
+    </table>
+  </div>
+
+  <p>These are <b>reference renderings, not benchmark-grade figures</b>: no item in this repository
+  has passed a recorded human review. The evidence behind each one is on the
+  <a href="__RS_SITE__">main filing</a>, and what each underlying source actually publishes is in
+  the <a href="__RS_SITE__audit.html">source audit</a>.</p>
+
+  <div class="foot"><span>Generated · not hand-written</span>
+    <span><a href="__RS_SITE__">raviaxo.github.io/RiskShard</a></span></div>
+</div>
+</body>
+</html>

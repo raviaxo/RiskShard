@@ -643,6 +643,13 @@
            figure is the product of two means, so one percentage would be false of
            one of them. See finding 10. */
         compositionNote(s)+
+        /* The same figure and the same disclosure, as one page someone can take
+           into a meeting. Generated from engine/executive_report.py, so it cannot
+           say anything this item does not. Placed under the rendering rather than
+           at the top of the item: the evidence is the product, and this is one way
+           of carrying a summary of it (ADR-0010). */
+        '<div class="methline"><a href="reports/'+esc(s.id)+'.html">'+
+          'One-page summary of this item, with what the figure rests on</a></div>'+
       '</div>'+
       '</section>';
   }).join('');

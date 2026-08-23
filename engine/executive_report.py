@@ -6,6 +6,9 @@ structured fields (run stats, module context/notes, evidence-pack trust
 metadata); it never invents numbers or caveats.
 """
 
+import html as _html
+import re as _re
+
 from engine.composition import compose_module
 from engine.fair_calc import IMPACT_UNCERTAINTY_NOTE
 
@@ -291,3 +294,93 @@ def format_executive_report_markdown(report):
     lines.append("")
 
     return "\n".join(lines)
+
+
+# --- HTML rendering -------------------------------------------------------
+# The report has one content source: format_executive_report_markdown. This
+# converts that output rather than re-authoring it, so a published page and a
+# console-generated .md cannot say different things — the failure this project
+# has already had twice, once in a template and once in a README banner.
+#
+# It handles exactly the constructs the report emits (headings, bold, italic,
+# code, bullets, aligned tables, one rule) and nothing else. That is deliberate:
+# a general Markdown parser would be a dependency and a surface, and this is
+# tested against the actual documents it renders rather than against a spec.
+
+_INLINE = (
+    (_re.compile(r"\*\*(.+?)\*\*"), r"<b>\1</b>"),
+    (_re.compile(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])"), r"<i>\1</i>"),
+    (_re.compile(r"`([^`]+)`"), r"<code>\1</code>"),
+)
+
+
+def _inline(text):
+    out = _html.escape(text)
+    for pattern, repl in _INLINE:
+        out = pattern.sub(repl, out)
+    return out
+
+
+def _cells(line):
+    return [c.strip() for c in line.strip().strip("|").split("|")]
+
+
+def _alignments(separator):
+    out = []
+    for cell in _cells(separator):
+        if cell.endswith(":") and cell.startswith(":"):
+            out.append(' style="text-align:center"')
+        elif cell.endswith(":"):
+            out.append(' style="text-align:right"')
+        else:
+            out.append("")
+    return out
+
+
+def _is_separator(line):
+    cells = _cells(line)
+    return bool(cells) and all(_re.fullmatch(r":?-{3,}:?", c) for c in cells)
+
+
+def format_executive_report_html(report):
+    """The same report as a page body, converted from its own Markdown."""
+    lines = format_executive_report_markdown(report).split("\n")
+    out, i = [], 0
+    while i < len(lines):
+        line = lines[i]
+        stripped = line.strip()
+        if not stripped:
+            i += 1
+        elif stripped == "---":
+            out.append("<hr>")
+            i += 1
+        elif stripped.startswith("## "):
+            out.append(f"<h2>{_inline(stripped[3:])}</h2>")
+            i += 1
+        elif stripped.startswith("# "):
+            out.append(f"<h1>{_inline(stripped[2:])}</h1>")
+            i += 1
+        elif stripped.startswith("|") and i + 1 < len(lines) and _is_separator(lines[i + 1]):
+            head, align = _cells(stripped), _alignments(lines[i + 1])
+            rows = []
+            i += 2
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                rows.append(_cells(lines[i]))
+                i += 1
+            th = "".join(f"<th{align[n] if n < len(align) else ''}>{_inline(c)}</th>"
+                         for n, c in enumerate(head))
+            body = "".join(
+                "<tr>" + "".join(f"<td{align[n] if n < len(align) else ''}>{_inline(c)}</td>"
+                                 for n, c in enumerate(r)) + "</tr>" for r in rows)
+            out.append(f'<div class="tblwrap"><table><thead><tr>{th}</tr></thead>'
+                       f"<tbody>{body}</tbody></table></div>")
+        elif stripped.startswith("- "):
+            items = []
+            while i < len(lines) and lines[i].strip().startswith("- "):
+                items.append(f"<li>{_inline(lines[i].strip()[2:])}</li>")
+                i += 1
+            out.append("<ul>" + "".join(items) + "</ul>")
+        else:
+            out.append(f"<p>{_inline(stripped)}</p>")
+            i += 1
+    return "\n".join(out)

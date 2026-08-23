@@ -11,7 +11,7 @@
 > Every answer is pinned to a document hash with the passage quoted, so you can check us rather
 > than trust us.
 
-### ▶ [Read the audit](https://raviaxo.github.io/RiskShard/audit.html) · [Read the evidence](https://raviaxo.github.io/RiskShard/) — no install
+### ▶ [Read the audit](https://raviaxo.github.io/RiskShard/audit.html) · [Read the evidence](https://raviaxo.github.io/RiskShard/) · [One-page summaries](https://raviaxo.github.io/RiskShard/reports/) — no install
 
 ## The four questions
 
@@ -24,7 +24,7 @@ Asked of every source, in the same words, so two people's answers can be compare
 | **3** | Does it say **how often losses go bigger** than a given size? | exceedance |
 | **4** | Can you tell **who was measured** — which countries, industries, sizes? | population |
 
-Read on 62 sources so far, the answers are **0**, 14, 19 and 49. The first one is the finding.
+Read on 63 sources so far, the answers are **0**, 14, 19 and 50. The first one is the finding.
 
 **[Read the audit →](https://raviaxo.github.io/RiskShard/audit.html)** · or
 **[read one source and send back four answers](https://github.com/raviaxo/RiskShard/issues/new?template=read_a_source.md)**
