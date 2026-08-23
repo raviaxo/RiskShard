@@ -195,8 +195,11 @@ entry** — it is a new surface, not correctness, and three things gate it:
    from anchors measured elsewhere, and a feature whose commonest output is *"this is entirely
    borrowed"* has not obviously improved on one whose commonest output is *"nothing here"*.
 3. **Borrowing only.** [ADR-0007's standing restriction](adr/0007-construct-coherence.md) permits
-   inheriting a shard's anchor set whole and forbids assembling a bespoke one across the corpus
-   while its parts 3 and 4 stay open.
+   inheriting a shard's anchor set whole and forbids assembling a bespoke one across the corpus.
+   **Re-grounded 2026-08-23** when ADR-0007 was Accepted: the blocker is no longer an undecided
+   policy but a missing instrument — the closure requires a composed range to declare what it is,
+   and `module_coherence` runs per shard, so a composed cell is the one range that cannot be
+   labelled. **This lifts on a build, not on a decision.**
 
 **Recorded so nobody has to reconstruct it:** the design input is in
 [`composition_direction.md`](internal/composition_direction.md), and the owner's two decisions

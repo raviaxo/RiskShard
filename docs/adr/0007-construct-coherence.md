@@ -1,9 +1,8 @@
 # ADR-0007 — Declared measurement basis and range coherence
 
-- **Status:** Proposed (2026-08-07) — **still Proposed as of 2026-08-22, deliberately.** Parts 3
-  and 4 remain open and open question 1 carries a standing recommendation awaiting the owner. A
-  restriction on composed answers is recorded below (*Standing restriction*) so that work is not
-  blocked on a decision that is not mine to take.
+- **Status:** **Accepted (2026-08-23)** — open question 1 closed by the owner on the terms
+  recommended since 2026-08-09, which dissolves parts 3 and 4 rather than answering them. See
+  *Closure*, below. Parts 1 and 2 were implemented 2026-08-07 and are unchanged.
 - **Date:** 2026-08-07
 - **Deciders:** repo owner
 - **Scope proposed:** declare a `measurement_basis` on every evidence record (part 1) and
@@ -179,7 +178,54 @@ folded in here.
   ACCC aggregate at `au_finance_bec` `impact.max` is the clearest. Those are corrections, and
   they follow the normal `revisions/` path.
 
-## Standing restriction — 2026-08-22: composed answers borrow, they do not assemble
+## Closure — 2026-08-23: no mix is acceptable in general, so the duty is to label
+
+**Open question 1 is closed on the terms John Flack put twice**, and the closure is a dissolution
+rather than an answer: *no mix is acceptable or unacceptable in general.* On 2026-08-07 he reframed
+the question — the problem is not which mixes are acceptable, it is why a number is allowed to
+occupy a slot at all — and on 2026-08-09 he relocated the decision entirely: **the evidence object
+declares what it is, and the analyst owns whether it belongs in the model, how it is transformed,
+and what structure it goes into.**
+
+That is [ADR-0010](0010-where-riskshard-stops.md) restated on a second axis. ADR-0010 already put
+quantification on the reader's side of the line; this puts *admission* there too.
+
+**What this decides, and what it deliberately does not.**
+
+**Part 3 — which basis mixes are acceptable — is answered by being withdrawn.** There is no list,
+and there will not be one. A range composed of a median floor, a mean mode and a single documented
+event is not thereby wrong; it is thereby **mixed**, and the duty is to say so on the item's face
+in the words a reader can act on.
+
+**Part 4 — does coherence gate? — follows, and the answer is no.** A gate would have to encode an
+acceptability rule, and the closure says no such rule exists. Coherence **reports**, alongside
+ADR-0003 part 2, and never blocks a release. The calibration-drift check still gates, because drift
+is a defect rather than a judgment.
+
+**The residue, and it is not discharged.** A declared `mixed` range still owes its reader a plain
+statement of *what the mixing does to the number* — not that the anchors differ, but what follows
+from their differing. `engine/composition.py` (2026-08-22) is the first instalment: it says how much
+of a figure each anchor carries, so "mixed" stops being a label and starts being a quantity. It is
+not the whole debt. **Recorded as owed rather than quietly counted as paid.**
+
+## Standing restriction — composed answers borrow, they do not assemble
+
+*Recorded 2026-08-22 while parts 3 and 4 were open; **re-grounded 2026-08-23**, because the closure
+above removes the reason first given and does not remove the restriction. What changes is why.*
+
+**It was never really a policy gap. It is a missing instrument.** The original reason was that parts
+3 and 4 were undecided. They are now decided, and assembly is still not permitted — because the
+closure's own terms require that a composed range **declare what it is**, and nothing can currently
+make that declaration for a cell that is not a shard. `module_coherence` runs per shard. A composed
+cell has no shard to run it over, so an assembled range would be admitted by a rule that says
+*label it* while being the one range in the corpus that cannot be labelled.
+
+**The restriction therefore lifts on a build, not on a decision:** run the coherence report over a
+composed cell, and assembly is permitted the moment its output exists. That is a smaller and much
+more tractable blocker than the one it replaces, and it is the honest reading of the closure rather
+than a way of keeping a restriction the owner has just undercut.
+
+
 
 Parts 3 and 4 were left open on 2026-08-07 because nothing depended on them. Something does now: a
 design that composes an answer for a named cell has to decide **where its anchors come from**, and
@@ -204,18 +250,16 @@ This is a restriction, not a decision. It costs the better numbers assembly woul
 lifts the moment parts 3 and 4 close — or the moment a composed cell can be run through the
 coherence report the way a shard is, which is the cheaper of the two routes and is not scheduled.
 
-**Owed to the owner:** open question 1 below has carried a recommended closure since 2026-08-09 —
-John Flack's own reframing, that no mix is acceptable or unacceptable in general, that our duty is
-to label, and that admission is the consumer's call. It is consistent with
-[ADR-0010](0010-where-riskshard-stops.md). Closing it is the owner's call and it has been open for
-two weeks; the residue if it closes on those terms is the labelling duty named there, which this
-ADR has not discharged.
-
 ## Open questions — deliberately not decided here
 
 These are the judgment calls, and they are published rather than resolved quietly:
 
-1. **Which mixes are acceptable?** Is `median_total_event_cost` → `mean_total_event_cost`
+1. ~~**Which mixes are acceptable?**~~ **CLOSED 2026-08-23 (owner) — see *Closure* above. No mix
+   is acceptable or unacceptable in general; the duty is to label and admission is the consumer's
+   call. Parts 3 and 4 are dissolved by it, and the labelling residue is recorded as owed.** The
+   original text is kept below because the reframings are the reasoning.
+
+   Is `median_total_event_cost` → `mean_total_event_cost`
    an acceptable floor-to-mode pairing? ~~Is a `single_documented_event_loss` a legitimate tail
    anchor, or does it need a stated exceedance probability to belong in the range?~~ **The tail
    half is DECIDED 2026-08-07 (owner) in [ADR-0008](0008-the-governed-tail.md): it needs a
