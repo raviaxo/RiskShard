@@ -194,5 +194,65 @@ class PublishedPayloadTests(unittest.TestCase):
         self.assertIn("What this figure rests on", self.template)
 
 
+class ExecutiveReportDisclosureTests(unittest.TestCase):
+    """The board-facing surface, where the omission was worst.
+
+    "How much to trust it" said `N of M model parameters are backed by public sources`
+    and nothing else. For every shard in this portfolio that reads 6 of 6, which a
+    board reads as a completeness score — while for eight of eleven shards **none** of
+    those sources measured the population being asked about.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        from engine.executive_report import build_executive_report, format_executive_report_markdown
+        from engine.risk_modules import find_risk_module
+        run = {"portfolio": {"mean": 1.0, "p50": 1.0, "p95": 2.0, "p99": 3.0},
+               "metadata": {"trials": 10, "distribution": "pert"}}
+        module = find_risk_module("us_finance_data_breach_midmarket", ROOT)
+        cls.report = build_executive_report(run, module=module, pack={}, root=ROOT)
+        cls.markdown = format_executive_report_markdown(cls.report)
+
+    def test_the_report_states_what_the_figure_rests_on(self):
+        self.assertIn("What the figure rests on", self.markdown)
+        self.assertIn("Frequency", self.markdown)
+        self.assertIn("Impact", self.markdown)
+
+    def test_it_distinguishes_measured_elsewhere_from_merely_broader(self):
+        """This shard is the reason the distinction is not academic: its impact side is
+        99% measured on its own cell and its frequency side is 100% measured on another
+        country. One number for both would be false of one of them."""
+        self.assertIn("measured on a different one", self.markdown)
+
+    def test_it_says_what_backed_by_public_sources_does_not(self):
+        self.assertIn("says the evidence is published; this says who it was measured on",
+                      self.markdown)
+
+    def test_the_disclosure_sits_with_the_trust_claim_it_qualifies(self):
+        """Not in a footnote. A caveat a board reaches after the decision section is a
+        caveat that did not happen."""
+        trust = self.markdown.index("## How much to trust it")
+        rests = self.markdown.index("What the figure rests on")
+        decision = self.markdown.index("## Decision the board is being asked to support")
+        self.assertLess(trust, rests)
+        self.assertLess(rests, decision)
+
+    def test_an_uncomputable_composition_says_so_rather_than_vanishing(self):
+        """The failure mode this whole line of work exists to fix: a disclosure that
+        degrades to silence leaves the page reading as complete."""
+        from engine.executive_report import _composition_lines
+        text = "\n".join(_composition_lines({"composition": None}))
+        self.assertIn("could not be computed", text)
+        self.assertIn("Do not read its absence as nothing to state", text)
+
+    def test_a_report_without_a_root_still_builds(self):
+        """The composition is an addition, not a new requirement."""
+        from engine.executive_report import build_executive_report
+        run = {"portfolio": {"mean": 1, "p50": 1, "p95": 2, "p99": 3},
+               "metadata": {"trials": 10, "distribution": "pert"}}
+        report = build_executive_report(run, module={}, pack={})
+        self.assertIsNone(report["composition"])
+
+
 if __name__ == "__main__":
     unittest.main()
