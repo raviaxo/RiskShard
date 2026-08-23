@@ -469,6 +469,74 @@ larger and better-denominated version of exactly that number and does not releas
 parameters **cannot be refreshed** and stay on the older editions with this recorded as the reason.
 Checked before assuming: the refresh was the objective, and the finding is why it did not happen.
 
+### 10 — The shard best anchored on impact takes all of its frequency from another country
+
+*Measured 2026-08-22 · [`engine/composition.py`](../engine/composition.py), data pack `0ff2f12a5f6c`*
+
+Two readings of this corpus disagree about how well anchored it is, and the gap is not a rounding
+difference — they answer different questions.
+
+**By count**, 7 of 66 parameters are drawn from the population they are used for
+([finding 4](#4--seven-of-our-sixty-six-parameters-are-drawn-from-the-population-they-are-used-for)).
+About 11%.
+
+**By weight, that count is the wrong instrument.** The engine composes each family as a beta-PERT
+whose mean is `(min + 4*likely + max) / 6`, so an anchor's contribution to the mean is exactly
+`coefficient * value / (min + 4*likely + max)` — an identity, checkable on paper. The three
+contributions are nowhere near equal:
+
+| `au_finance_ransomware_midmarket` · impact | value (AUD) | share of the mean |
+| --- | ---: | ---: |
+| `impact.min` | 97,000 | 0.1% |
+| `impact.likely` | 900,000 | 4.5% |
+| `impact.max` | 76,000,000 | **95.4%** |
+
+A count treats those three as equals. **In every one of the 11 shards a single anchor carries
+between 51% and 95% of its family's mean**, so "is this number well anchored?" is very nearly "is
+that one anchor well anchored?".
+
+Weighted by contribution, and split by family because the annual figure is their product:
+
+| shard | frequency measured on its own cell | frequency measured **elsewhere** | impact measured on its own cell |
+| --- | ---: | ---: | ---: |
+| `ca_finance_data_breach_midmarket` | **100%** | 0% | 0% |
+| `us_finance_data_breach_midmarket` | 0% | **100%** | **98.8%** |
+| `sg_finance_bec_midmarket` | 0% | 75.9% | **92.1%** |
+| `us_finance_bec_midmarket` | 0% | 0% | **92.4%** |
+| `fr_finance_data_breach_midmarket` | 0% | 37.7% | 0% |
+| the other six | 0% | 0% | 0% |
+
+**Three things follow, and the second is the finding.**
+
+**1. The headline understates three shards.** By weight, SG BEC, US BEC and US data breach are 92%,
+92% and 99% measured on their own cell *on the impact side*, against a corpus headline of 11%. That
+is a materially stronger statement than this project has been able to make, and it was available
+all along.
+
+**2. No shard is well anchored on both sides, and the strong sides do not line up.**
+`us_finance_data_breach_midmarket` is 98.8% measured on impact and takes **100% of its frequency
+mean from the UK *Cyber Security Breaches Survey*, used on a US shard.**
+`sg_finance_bec_midmarket` is 92.1% measured on impact and 75.9% elsewhere on frequency — a US
+payments-fraud survey standing in for Singapore. The one shard whose frequency is fully measured on
+its own cell, `ca_finance_data_breach_midmarket`, is 0% on impact. **The annual figure is the
+product of the two means, so it inherits the weaker side, and in eleven shards being strong on one
+family has not once coincided with being strong on the other.**
+
+This is why the composition is reported as a pair and never blended into one number. A single
+"92% measured" for the US data-breach shard would be true of its impact, false of its frequency, and
+actively misleading about the annual figure both feed.
+
+**3. "Bridged" is two different warnings and only one of them is alarming.** An anchor declared
+`industries: ['all']` was measured over a population that *contains* this cell; the UK survey used
+on a US shard was measured over a different one. Both are bridged under
+[ADR-0003](adr/0003-shared-impact-bridges.md). Of the 66 anchors, **7 are the second kind** — and
+they carry far more weight than their number suggests, including the whole of one shard's frequency
+mean. *(That 7 is a coincidence of arithmetic and not the same 7 as the cell-matched count above.)*
+
+**Why the readings diverge:** a count answers *"how much of this evidence base is cell-specific?"*
+A weighting answers *"how much of this number is?"* A reader deciding whether to use a figure is
+asking the second, and until now the page only answered the first.
+
 ## What we got wrong
 
 A project that publishes its reasoning has to publish its corrections at the same volume. These are

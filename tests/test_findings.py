@@ -190,5 +190,67 @@ class FindingsPageTests(unittest.TestCase):
         self.assertIn("docs/FINDINGS.md", template)
 
 
+class FindingTenTests(unittest.TestCase):
+    """Finding 10's figures, derived rather than trusted.
+
+    This finding exists because a count and a weighting disagree, so its own numbers
+    are exactly the kind that go stale silently when an anchor moves.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        from engine.composition import compose_module
+        from scripts.build_explorer import build_data
+        cls.text = FINDINGS.read_text(encoding="utf-8")
+        ids = sorted(s["id"] for s in build_data(ROOT)["shards"])
+        cls.composed = {i: compose_module(ROOT, i) for i in ids}
+
+    def _share(self, module_id, family, key="measured_share"):
+        return self.composed[module_id]["families"][family][key]
+
+    def _elsewhere(self, module_id, family):
+        anchors = self.composed[module_id]["families"][family]["anchors"]
+        return sum(a["share"] for a in anchors if a["elsewhere_on"])
+
+    def test_the_page_states_the_au_anchor_shares(self):
+        shares = {a["slot"]: a["share"]
+                  for a in self.composed["au_finance_ransomware_midmarket"]["families"]["impact"]["anchors"]}
+        for slot, places in (("max", 1), ("likely", 1), ("min", 1)):
+            self.assertIn(f"{shares[slot]:.{places}%}", self.text,
+                          f"FINDINGS.md no longer states the AU impact.{slot} share")
+
+    def test_the_page_states_the_weighted_shares_it_contrasts(self):
+        for module_id, family, kind in (
+            ("us_finance_data_breach_midmarket", "impact", "measured"),
+            ("sg_finance_bec_midmarket", "impact", "measured"),
+            ("us_finance_bec_midmarket", "impact", "measured"),
+            ("sg_finance_bec_midmarket", "frequency", "elsewhere"),
+            ("fr_finance_data_breach_midmarket", "frequency", "elsewhere"),
+        ):
+            value = (self._share(module_id, family) if kind == "measured"
+                     else self._elsewhere(module_id, family))
+            self.assertIn(f"{value:.1%}", self.text,
+                          f"FINDINGS.md no longer states {module_id} {family} {kind}={value:.1%}")
+
+    def test_the_finding_holds_no_shard_is_strong_on_both_families(self):
+        """The claim itself, not its formatting. A failure means the corpus improved
+        and finding 10's second point needs rewriting rather than re-deriving."""
+        both = [i for i, c in self.composed.items()
+                if c["families"]["frequency"]["measured_share"] > 0.5
+                and c["families"]["impact"]["measured_share"] > 0.5]
+        self.assertEqual(both, [], f"a shard is now well anchored on both families: {both}")
+
+    def test_the_finding_holds_one_anchor_dominates_every_shard(self):
+        for module_id, composed in self.composed.items():
+            for family, data in composed["families"].items():
+                self.assertGreater(data["dominant"]["share"], 0.5, f"{module_id}.{family}")
+
+    def test_the_page_states_how_many_anchors_were_measured_elsewhere(self):
+        elsewhere = sum(1 for c in self.composed.values() for d in c["families"].values()
+                        for a in d["anchors"] if a["elsewhere_on"])
+        self.assertIn(f"**{elsewhere} are the second kind**", self.text,
+                      f"FINDINGS.md no longer states {elsewhere} elsewhere-measured anchors")
+
+
 if __name__ == "__main__":
     unittest.main()

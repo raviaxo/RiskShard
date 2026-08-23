@@ -6,21 +6,26 @@
 is a number you can check without asking us, and the last one has a date that
 [ADR-0017](adr/0017-the-kill-criterion-gets-a-clock.md) already committed to in writing.*
 
-> **Planning note, 2026-08-21.** A second axis is under discussion — always returning a labelled
-> number instead of a dead end — captured in
-> [`composition_direction.md`](internal/composition_direction.md). **Nothing about it is decided.**
-> It collides with four ADRs, and [`execution_plan.md`](internal/execution_plan.md) sequences the
-> corrections that come first. The milestones below are unchanged and remain the audit track.
+## Two tracks, and only one of them is open-ended
 
-## What this project is finishing
+**Track A — the audit.** Reading every public cyber-loss source we cite, one at a time, and
+recording what each one actually publishes. Not more sources — *these* sources, finished.
+[ADR-0016](adr/0016-the-audit-is-the-product.md) makes it the only growth surface, and M1–M5 below
+are unchanged.
 
-**The audit.** Reading every public cyber-loss source we cite, one at a time, and recording what
-each one actually publishes. Not more sources — *these* sources, finished.
-[ADR-0016](adr/0016-the-audit-is-the-product.md) makes it the only growth surface.
+**Track B — usability.** Whether a reader can get anything out of what the audit produces. It
+exists because of a defect measured here, not because it would be nice: **the corpus answers a
+reader who tells it nothing and refuses one who describes themselves**. Track B is deliberately
+short, mostly gated, and it does not compete with Track A — if it starts crowding out source
+reading, the ordering is wrong.
+
+> **The tracks are not equal.** Track A finishes. Track B has no end state and is therefore capped
+> rather than planned: one item at a time, each needing its own decision before it starts. That
+> asymmetry is the point — it is what stops a second axis quietly becoming a second project.
 
 ---
 
-## M1 — Finish the audit · **62 of 75** · target 2026-09-15
+## Track A · M1 — Finish the audit · **62 of 75** · target 2026-09-15
 
 Every registered source read on all four properties: does it publish a **mode**, a
 **distribution**, an **exceedance statement**, and can you **name the population** it measured.
@@ -53,7 +58,7 @@ list said otherwise and was wrong.
 **Done means:** `riskshard_doctor.py` prints 72 of 72, and the phrase *"the audit is complete"*
 becomes true and publishable. It is a headline exactly once.
 
-## M2 — Publish the audit as its own artifact · ✅ **done 2026-08-19**, ahead of target
+## Track A · M2 — Publish the audit as its own artifact · ✅ **done 2026-08-19**, ahead of target
 
 [**raviaxo.github.io/RiskShard/audit.html**](https://raviaxo.github.io/RiskShard/audit.html)
 
@@ -74,7 +79,7 @@ Nothing on it is hand-written. Nine tests pin the things a table quietly gets wr
 without its denominator, an unread source rendered as a source that publishes nothing, and a
 blocked answer rendered as a backlog item.
 
-## M3 — Make it possible to join in · **started 2026-08-20**
+## Track A · M3 — Make it possible to join in · **started 2026-08-20**
 
 The four questions, in words someone who has never met this project can answer, and a route to
 answer them in. [ADR-0016](adr/0016-the-audit-is-the-product.md) decided the ask a week ago — *read
@@ -104,7 +109,7 @@ route, and that is the mistake this milestone exists to not repeat.
 **Done means:** one person outside the project produces one audit row. Then the spec gets written
 from what confused them, rather than from what we imagine would.
 
-## M3b — Amount shape and treatment · **blocked, and split out 2026-08-20**
+## Track A · M3b — Amount shape and treatment · **blocked, and split out 2026-08-20**
 
 Split from M3 because it is a different specification of a different object: the four questions
 audit **sources**, this labels **loss records**. Bundling them made the whole milestone wait on one
@@ -115,7 +120,7 @@ quantity, or become a treatment of one? Background:
 [`amount_shape_design_input.md`](internal/amount_shape_design_input.md). GRC EC publishing is
 paused; talking there is not, so this is a direct message rather than a post.
 
-## M4 — The registry decision · **2026-11-01, fixed**
+## Track A · M4 — The registry decision · **2026-11-01, fixed**
 
 [ADR-0017](adr/0017-the-kill-criterion-gets-a-clock.md) pre-committed this date and states in
 writing that **it does not move again**. At the first release on or after 2026-11-01, count:
@@ -127,7 +132,7 @@ If neither has moved, the registry retires. **No external readership at the date
 for another extension** — it is grounds for retiring it and publishing that the trial never got a
 fair test. The doctor prints the date on every run.
 
-## M5 — The adoption test · measured at M4
+## Track A · M5 — The adoption test · measured at M4
 
 Whether any of this is used, stated as numbers rather than impressions:
 
@@ -138,6 +143,47 @@ Whether any of this is used, stated as numbers rather than impressions:
 All three read zero today. Published either way.
 
 ---
+
+## Track B · U1 — Say what each published figure rests on · **in flight 2026-08-22**
+
+Every shard is partly bridged and the page does not say by how much. The corpus total is published
+(**7 of 66** parameters drawn from the population they are used for) but the per-shard split is
+not, and it is concentrated rather than spread: **four shards hold all seven and seven hold none.**
+No shard is complete on the cell it is named after.
+
+The page publishes each parameter's bridge flag, and — for impact only, and only above 50% — the
+maximum's share of the figure. **Nothing joins the two.** So a reader cannot learn how much of a
+figure rests on anchors measured somewhere other than their cell, and the frequency side carries no
+weighting at all. That join is [finding 10](FINDINGS.md): no shard is well anchored on both
+families, and the strong sides never coincide.
+[ADR-0016 part 3](adr/0016-the-audit-is-the-product.md) classifies correcting it as correctness, on
+the narrow ground that a published count misdescribing the figure beside it is an inaccuracy in
+something already shipped rather than a new surface.
+
+**Done means:** each of the eleven items states its own composition, and a test fails if the field
+goes null again.
+
+## Track B · U2 — An answer for a cell we have never published · **gated, not scheduled**
+
+Turning 456 dead ends into labelled answers. **Not started, and it cannot start on this roadmap
+entry** — it is a new surface, not correctness, and three things gate it:
+
+1. **An ADR that does not exist.** [ADR-0009](adr/0009-what-riskshard-is-and-is-not.md) declines a
+   new axis unless it answers a defect measured in our own data. The specificity inversion is such a
+   defect, so the amendment is available — but it has to be written and accepted, not assumed.
+2. **Its own failure condition, stated first.**
+   [ADR-0018's amendment](adr/0018-the-target-selector-failed-measurement.md) requires it: this
+   project already shipped one reader-facing feature decided on what it *could* compute rather than
+   on what its answers would say. At least **84.6%** of composed answers would be built entirely
+   from anchors measured elsewhere, and a feature whose commonest output is *"this is entirely
+   borrowed"* has not obviously improved on one whose commonest output is *"nothing here"*.
+3. **Borrowing only.** [ADR-0007's standing restriction](adr/0007-construct-coherence.md) permits
+   inheriting a shard's anchor set whole and forbids assembling a bespoke one across the corpus
+   while its parts 3 and 4 stay open.
+
+**Recorded so nobody has to reconstruct it:** the design input is in
+[`composition_direction.md`](internal/composition_direction.md), and the owner's two decisions
+there — a breakdown never a grade, and the unbacked portion stated never blended — stand.
 
 ## What this roadmap declines
 
@@ -150,10 +196,19 @@ measurement.*
 - **New emergent scenario families** — AI-as-liability, systemic loss, regulatory loss.
   [Archived here](internal/declined_emergent_risk_scenarios.md) with the reasoning intact.
 - **A better engine, or engine features.** It exists to expose defects in the anchors, and it does
-  that already.
+  that already. [ADR-0016 part 3](adr/0016-the-audit-is-the-product.md) freezes it to bug fixes and
+  correctness; its 2026-08-22 amendment draws the line at the **published cell** — repairing a
+  disclosure the page already attempts is correctness, producing a figure for a cell we have never
+  published is not.
 - **A CRQ methodology.** ADR-0009 settled it.
 - **Bringing back the reader-target selector.** [ADR-0018](adr/0018-the-target-selector-failed-measurement.md)
-  retired it on a measurement and set two conditions for reconsidering, both false today. No two
-  facet values may each answer alone and answer nothing together (60 pairs do). And a majority of
-  targets must answer something (83 of 539 do, which is 15%). Coverage has to move first, and
-  coverage is not what this roadmap is buying.
+  retired it on a measurement and set two conditions for reconsidering, **both still false**: no two
+  facet values may each answer alone and answer nothing together (60 pairs do), and a majority of
+  targets must answer something (83 of 539 do, which is 15%). Neither moved in this arc.
+
+  **The 2026-08-22 amendment scopes those two conditions to that control** — a selector whose answer
+  can be empty — rather than to reader-supplied targets in general. A design that never returns
+  nothing does not satisfy them (borrowing an anchor does not make a parameter measured on the
+  reader's cell) and does not inherit them either; it owes its own failure condition instead, which
+  is what gates U2 above. **Coverage still has to move for the selector, and coverage is not what
+  this roadmap is buying.**

@@ -1,6 +1,10 @@
 # ADR-0006 — Depth over breadth
 
-- **Status:** Accepted
+- **Status:** Accepted (2026-07-31); **scope narrowed 2026-08-15 by
+  [ADR-0016](0016-the-audit-is-the-product.md) part 2** — shard coverage is frozen at 11 and the
+  *Revisit when* section below no longer reopens breadth; **amended 2026-08-22** to state the axis
+  and supply the measure this decision never had (see *Amendment*, below). The decision itself is
+  unchanged and still binding.
 - **Date:** 2026-07-31
 - **Deciders:** repo owner
 - **Related:** [`../internal/coverage_harvest.md`](../internal/coverage_harvest.md),
@@ -53,6 +57,49 @@ nobody is currently asking, because the constraint is distribution rather than c
   and ADR-0003's cell-matched-vs-bridged split become the measures that matter.
 - Contributor-facing coverage requests (`good first issue`, `docs/REQUESTED_SHARDS.md`) stay
   open: an *outside* request for a country is demand, and demand reopens this.
+
+## Amendment — 2026-08-22: the axis, and the measure depth never had
+
+Two things were left implicit here and have since misled a reader of this file alone.
+
+### 1. The axis is depth on shards, breadth on sources
+
+Nothing in this ADR was reversed. [ADR-0016](0016-the-audit-is-the-product.md) part 2 honoured it
+by freezing shard coverage at 11 — *"depth over breadth was always the rule, and adding cells was
+the drift"* — and ADR-0016 part 1 opened breadth on a **different object**: rows in a finite source
+table, which is not the infinite parameter surface this ADR declined.
+
+**What is withdrawn is this ADR's own trigger.** *Revisit when* below offers "a Discussion or issue
+asking for a specific country or sector" as grounds to reopen. That is now false: ADR-0016 part 1
+declines a new cell however it arrives, and `docs/REQUESTED_SHARDS.md` is no longer a route to one.
+The remaining two triggers — a second maintainer, or genuinely per-cell impact evidence — survive,
+because both change the constraint rather than the demand.
+
+### 2. Depth was chosen without a live measure, and stayed that way for nine releases
+
+The Decision commits effort to *"making existing shards more defensible"* and names no way to tell
+whether it succeeded. The only candidate metric was `params_source_backed`, and it reached **66/66
+on 2026-07-24** — a week before this ADR was accepted. It has read 66/66 in every one of the nine
+releases since.
+
+**That is a saturated metric, not stalled work**, and the distinction matters because the flat line
+has already been misread once as evidence that this ADR stopped being followed. Over the same
+window 10 commits touched `scenarios/` and 11 touched `calibrations/`. The depth work happened.
+There was no instrument pointed at it.
+
+**The measure it should have had is cell-matched**: how many parameters are drawn from the
+population they are used for. It reads **7 of 66** ([finding 4](../FINDINGS.md)), it has 59 units of
+headroom, and it cannot saturate while a single bridge remains.
+`engine.cell_coverage.shard_self_coverage` now reports its distribution, which the corpus total hid:
+**four shards hold all seven and seven shards hold none**, and no shard is complete on the cell it
+is named after.
+
+**This is a measure, not a target — and the difference is load-bearing.** ADR-0016 part 2 freezes
+the shards as a demonstration, maintained for correctness only. Adopting cell-matched as a *goal*
+would quietly reopen the shard investment that ADR-0016 closed, by the familiar route of making a
+number visible and then wanting it to move. It is adopted here so the shards can **state** what
+they rest on, per shard, which is a disclosure obligation. If it moves as a by-product of a source
+correction, good. Work undertaken to move it needs ADR-0016 part 1's test first.
 
 ## Revisit when
 

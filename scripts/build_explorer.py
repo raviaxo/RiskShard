@@ -34,6 +34,7 @@ from engine.provenance import build_portfolio_provenance  # noqa: E402
 from engine.risk_modules import find_risk_module  # noqa: E402
 from engine.slot_roles import slot_declarations  # noqa: E402
 from engine.web_console import WebConsoleApp  # noqa: E402
+from engine.composition import compose_module, payload as composition_payload  # noqa: E402
 
 TEMPLATE = Path(__file__).resolve().parent / "explorer_template.html"
 REPO_URL = "https://github.com/raviaxo/RiskShard"
@@ -156,9 +157,21 @@ def build_data(root):
         leverage = max_leverage(_scenario_impact(root, mid))
         if leverage is not None and leverage >= LEVERAGE_CONCERN:
             shards_tail_driven += 1
+        # ADR-0016 part 3 amendment (2026-08-22): how much of each family's mean rests
+        # on anchors measured on this shard's own cell. The page already carries the
+        # corpus total and each parameter's own bridge flag; what it has never carried
+        # is weight, and a count implies three anchors carry a third of the answer
+        # each when one of them routinely carries over 90%. See finding 10.
+        composed = compose_module(root, mid, provenance=module)
+        cards = module.get("cards") or []
+        cell_matched = sum(1 for c in cards
+                           if (c.get("population") or {}).get("status") == "matched")
         shards.append({
             "id": mid,
             "leverage": leverage,
+            "composition": composition_payload(composed),
+            "params_cell_matched": cell_matched,
+            "params_cross_cell": len(cards) - cell_matched,
             "coherence": [
                 {"family": f["family"], "status": f["status"], "bases": f["bases"]}
                 for f in families

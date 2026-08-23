@@ -1,6 +1,8 @@
 # ADR-0016 — The source audit is the product; the shards are the demonstration
 
-- **Status:** Accepted (2026-08-15)
+- **Status:** Accepted (2026-08-15); **part 3 clarified 2026-08-22** — a per-shard bridging
+  disclosure is correctness and needs no amendment; producing a figure for a cell we have never
+  published is not (see *Amendment*)
 - **Date:** 2026-08-15
 - **Deciders:** repo owner
 - **Extends:** [`0006-depth-over-breadth.md`](0006-depth-over-breadth.md) (depth over breadth, now
@@ -126,3 +128,83 @@ measured as **citations by people who are not us**, not as stars.
    disallows — but the decision belongs to the criterion already recorded, not to this ADR.
 2. **Do the shards eventually retire entirely?** Not decided. They currently earn their place as
    the demonstration; whether that stays true once the audit is complete is a question for then.
+
+## Amendment — 2026-08-22: where the freeze in part 3 falls
+
+Part 3 freezes the engine to *"bug fixes and correctness only"*, and a proposal to compose and label
+what each published figure rests on needed classifying **before** it was built rather than after.
+The classification turns on one measurement, and it splits the proposal in two.
+
+### The measurement
+
+**Corrected 2026-08-22, before this amendment was acted on.** The first version of this section
+claimed the explorer renders a per-shard bridging split behind a null guard that `provenance.py`
+never populates, and therefore always renders empty. **That was wrong and is withdrawn.** The
+guard at `scripts/explorer_template.html:357` reads `t.params_cell_matched` where `t` is
+`DATA.totals`, not a shard, and totals *is* populated — the split renders correctly at corpus
+level. There is no dead render path. The error was reading a variable name without reading its
+declaration, and it is recorded here rather than quietly edited because the classification below
+was originally argued from it.
+
+What the page actually publishes today:
+
+| | published? |
+| --- | --- |
+| the corpus total — 7 of 66 parameters cell-matched | **yes** |
+| each parameter's own population status and the facets it is bridged on | **yes**, on every item |
+| the impact maximum's share of the figure, when it exceeds 50% | **yes** — ADR-0008 commitment 2 |
+| any per-shard aggregate of the population status | no |
+| the same weighting for the **frequency** side | no |
+| **weight joined to population — how much of a figure rests on anchors measured elsewhere** | **no** |
+
+Both ingredients of the last row have been on the page for months and nothing has joined them. The
+result is a count that misweights: the engine composes each family as a beta-PERT whose mean is
+`(min + 4*likely + max) / 6`, so `au_finance_ransomware_midmarket`'s `impact.min` contributes
+**0.1%** of its impact mean and `impact.max` contributes **95.4%**, and the published count treats
+them as one parameter each.
+
+**What the join makes visible could not be read off either ingredient alone.** No shard in the
+portfolio is well anchored on both families, and the strong sides never coincide:
+`us_finance_data_breach_midmarket` is 98.8% measured on its own cell on impact and takes **100% of
+its frequency mean from a UK survey**. The annual figure is the product of the two means, so it
+inherits the weaker side. See [finding 10](../FINDINGS.md).
+
+### 1. Disclosing what the eleven published figures rest on is correctness
+
+No published value moves. What changes is that a figure already on the page states what its own
+number rests on, weighted by how much each anchor actually contributes, instead of publishing a
+count that implies three anchors carry a third of the answer each.
+
+**A published number that misdescribes its own composition is not a missing feature, it is an
+inaccuracy in something already shipped** — and correcting an inaccuracy is the plainest available
+reading of part 3's "correctness". It is squarely inside
+[ADR-0009](0009-what-riskshard-is-and-is-not.md)'s first category: it makes an existing published
+number more correct *about itself*.
+
+**This ground is narrower than the withdrawn version and it is worth saying why it still holds.**
+"Repair a broken render path" would have made this uncontroversial maintenance. It is not that. It
+is a new statement the page has never made, justified by the count already on the page being
+misleading about the figure beside it. If that argument had failed, the honest outcome was an
+amendment, not a re-labelling.
+
+This does not lift the freeze and must not be cited as having lifted it.
+
+### 2. Producing a figure for a cell we have never published is not correctness
+
+It is a new surface, and part 1's test applies to it: *does this add a row to a finite table, or a
+parameter to an infinite one?* Composing an answer for an arbitrary reader-named cell is the second
+shape, and it needs an ADR of its own with an ADR-0009 amendment, not this clarification.
+
+**The boundary is the published cell, not the cell count.** Our eleven shard cells are inside it.
+The other 528 selectable combinations are outside it — including **79 of the 83** "answered" cells,
+which are not shard cells at all: `financial_services + mid_market + data_breach` with no country
+named answers 5 parameters and is not a figure we publish. Only **4** of the 83 are shard cells,
+because the other seven shards answer nothing on their own cell. Matching a parameter is not the
+same as having published an answer. **Being in the 83 is not a warrant, and the 83 and the eleven
+barely overlap.**
+
+### Why this is drawn tightly
+
+The tempting move is to classify the whole proposal as correctness on the strength of part 1, and
+it would not survive contact with part 1's own test. Recording the line here means a later
+extension has to argue for itself rather than inherit a clearance granted for a template bug.

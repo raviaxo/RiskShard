@@ -1,6 +1,9 @@
 # ADR-0007 — Declared measurement basis and range coherence
 
-- **Status:** Proposed (2026-08-07)
+- **Status:** Proposed (2026-08-07) — **still Proposed as of 2026-08-22, deliberately.** Parts 3
+  and 4 remain open and open question 1 carries a standing recommendation awaiting the owner. A
+  restriction on composed answers is recorded below (*Standing restriction*) so that work is not
+  blocked on a decision that is not mine to take.
 - **Date:** 2026-08-07
 - **Deciders:** repo owner
 - **Scope proposed:** declare a `measurement_basis` on every evidence record (part 1) and
@@ -175,6 +178,38 @@ folded in here.
 - Some anchors will be revealed as construct-inappropriate rather than merely mixed — the
   ACCC aggregate at `au_finance_bec` `impact.max` is the clearest. Those are corrections, and
   they follow the normal `revisions/` path.
+
+## Standing restriction — 2026-08-22: composed answers borrow, they do not assemble
+
+Parts 3 and 4 were left open on 2026-08-07 because nothing depended on them. Something does now: a
+design that composes an answer for a named cell has to decide **where its anchors come from**, and
+the two available routes are not equally exposed to this ADR's open questions.
+
+**Nearest-shard borrowing is permitted.** It takes an existing shard's anchor set whole and marks
+what was borrowed. Whatever coherence that set has, this ADR has already measured it — the shard
+appears in the 4-coherent/18-mixed table above, and its mixed families are already declared on the
+item's face. Borrowing moves a *population* boundary, which is ADR-0003's axis and is already
+labelled. It does not create a construct combination that has never been looked at.
+
+**Best-anchor-per-parameter assembly across the corpus is not permitted while parts 3 and 4 are
+open.** Selecting the best-fitting `impact.min` from one shard, `impact.likely` from another and
+`impact.max` from a third builds a range whose three anchors may each measure a different quantity
+over a different population — and unlike a shard, that combination has never been through the
+coherence report, because the report runs per shard and the composed cell is not a shard. The
+measured result above is the reason this is not theoretical: **all 11 shards already carry at least
+one mixed family, and no impact family is coherent in any of them.** Assembly would compound a
+defect that is currently universal rather than avoid it.
+
+This is a restriction, not a decision. It costs the better numbers assembly would produce, and it
+lifts the moment parts 3 and 4 close — or the moment a composed cell can be run through the
+coherence report the way a shard is, which is the cheaper of the two routes and is not scheduled.
+
+**Owed to the owner:** open question 1 below has carried a recommended closure since 2026-08-09 —
+John Flack's own reframing, that no mix is acceptable or unacceptable in general, that our duty is
+to label, and that admission is the consumer's call. It is consistent with
+[ADR-0010](0010-where-riskshard-stops.md). Closing it is the owner's call and it has been open for
+two weeks; the residue if it closes on those terms is the labelling duty named there, which this
+ADR has not discharged.
 
 ## Open questions — deliberately not decided here
 
