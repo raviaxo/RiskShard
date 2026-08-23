@@ -217,5 +217,55 @@ class CoverageMathTests(unittest.TestCase):
         self.assertEqual(c["sources_fully_verified"], 0)
 
 
+class RoadmapFiguresTests(unittest.TestCase):
+    """AGENTS.md: any number in public text is generated or pinned by a test.
+
+    The roadmap's M1 table is four hand-written counts about the audit, and the audit
+    moves whenever a source is read. Its predecessor went stale; this is the check that
+    was missing.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        from engine.source_audit import build_source_audit
+        cls.coverage = build_source_audit(ROOT)["coverage"]
+        cls.roadmap = (ROOT / "docs" / "ROADMAP.md").read_text(encoding="utf-8")
+
+    def test_the_roadmap_states_the_live_coverage(self):
+        c = self.coverage
+        for figure in (f"{c['sources_fully_verified']} of {c['sources']}",
+                       f"{c['verified']} of {c['slots']}"):
+            self.assertIn(figure, self.roadmap,
+                          f"docs/ROADMAP.md no longer states {figure}")
+
+    def test_the_roadmap_states_how_many_sources_still_need_a_person(self):
+        import yaml
+        rows = yaml.safe_load((ROOT / "sources" / "audit.yaml").read_text(encoding="utf-8"))["audit"]
+        blocked = sum(1 for r in rows
+                      if any((p or {}).get("basis") == "no_readable_artifact"
+                             for p in (r.get("properties") or {}).values()))
+        self.assertIn(f"needing a person | **{blocked}**", self.roadmap,
+                      f"docs/ROADMAP.md no longer states {blocked} sources needing a person")
+        self.assertIn(f"**{blocked} sources are the rest of M1.**", self.roadmap)
+
+    def test_the_unread_category_is_empty_and_the_roadmap_says_so(self):
+        """A source that is unread but readable is work; one nobody holds is not.
+        Collapsing the two is how 'the audit is blocked' becomes unfalsifiable."""
+        self.assertEqual(self.coverage["unverified"], 0)
+        self.assertIn("sources unread but readable | **0**", self.roadmap)
+
+    def test_no_source_has_two_audit_rows(self):
+        """A duplicate row let the audit call one source both gated and read.
+
+        `audit_defects` now catches it; this states the property directly so the
+        failure names the cause rather than a count that happens to be wrong.
+        """
+        import yaml
+        from collections import Counter
+        rows = yaml.safe_load((ROOT / "sources" / "audit.yaml").read_text(encoding="utf-8"))["audit"]
+        dupes = {k: v for k, v in Counter(r["source_id"] for r in rows).items() if v > 1}
+        self.assertEqual(dupes, {}, f"duplicate audit rows: {dupes}")
+
+
 if __name__ == "__main__":
     unittest.main()

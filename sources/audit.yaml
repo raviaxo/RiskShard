@@ -1191,35 +1191,6 @@ audit:
         detail: >-
           What we hold is a 2,593-word IBM press release in French about the 2025 report, not the report. Same blocker as the global, UK and Canada cuts.
 
-  - source_id: sophos_state_ransomware_manufacturing_2025
-    properties:
-      mode:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 1,648-word Sophos web page, much of it site navigation, standing in for the 2025 manufacturing sector report. Same blocker as the other Sophos sector summaries.
-      distribution:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 1,648-word Sophos web page, much of it site navigation, standing in for the 2025 manufacturing sector report. Same blocker as the other Sophos sector summaries.
-      exceedance:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 1,648-word Sophos web page, much of it site navigation, standing in for the 2025 manufacturing sector report. Same blocker as the other Sophos sector summaries.
-      population:
-        basis: no_readable_artifact
-        detail: >-
-          What we hold is a 1,648-word Sophos web page, much of it site navigation, standing in for the 2025 manufacturing sector report. Same blocker as the other Sophos sector summaries.
-
-
-  # ── Read 2026-08-15, fifth batch — statistical tables and short-form sources ─
-  # The statistical tables (StatCan, Census SUSB, Eurostat, SingStat) are read with
-  # the standard library: an .xlsx is a zip of XML, so no dependency was needed to
-  # stop treating three denominator sources as unreadable.
-  #
-  # Two sources below are left UNREAD on purpose. Answering them from an empty scan
-  # would be the false negative this audit exists to prevent, and the reason each
-  # cannot be read is recorded instead.
-
   - source_id: statcan_cscsc_incident_types_22100076
     artifact_sha256: ca161dfcffc55dae2a8c603883ed1525548c49645b862aaf7bb5a0e9ee3c2316
     artifact: sources/raw/statcan_cscsc_incident_types_22100076.zip
@@ -1505,23 +1476,33 @@ audit:
           to the National Police Agency, never all Japanese organizations.
 
   - source_id: csa_cybersecurity_health_report_2023
+    artifact_sha256: f9eaf0af1de64d850cc44c0f8871a90ba02cba2cf3b8999a8092688858f8722e
+    artifact: sources/raw/csa_cybersecurity_health_report_2023.pdf
     properties:
       mode:
-        basis: unverified
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-22'
         detail: >-
-          Still unread. The PDF is the report rather than a landing page, but text extraction yields 791 words of headings and section titles, which means its substance is carried in images. The stated limitation of the read method applies exactly here, so it is left as a question rather than answered from what little extracts.
+          No. The report carries no monetary loss figure of any kind, so there is no most-likely loss value to publish. Business impact is reported entirely as the incidence of impact types - 48% business disruption, 46% data loss, 43% reputation damage, 31% financial loss for businesses (p6) - which says how often a kind of harm occurred and never how large it was. Read 2026-08-22 by rendering all 10 pages to images and reading them, after text extraction returned 791 words of headings; the substance is carried in images, and the earlier 'unverified' entry recorded that honestly rather than guessing.
       distribution:
-        basis: unverified
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-22'
         detail: >-
-          Still unread. The PDF is the report rather than a landing page, but text extraction yields 791 words of headings and section titles, which means its substance is carried in images. The stated limitation of the read method applies exactly here, so it is left as a question rather than answered from what little extracts.
+          Not of loss, and the distinction matters here more than usual because the report DOES publish a distribution - just not of a loss quantity. Page 5 gives incident frequency over the surveyed population: once 29%, several times a day 5%, a week 6%, a month 11%, a year 49%, not sure 1% (businesses; non-profits reported separately). That is a genuine spread over how OFTEN organisations were hit, and there is no spread over how MUCH any of it cost. Recorded false against the question as asked - does it show the spread of losses - with the frequency distribution named so it is not lost.
       exceedance:
-        basis: unverified
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-22'
         detail: >-
-          Still unread. The PDF is the report rather than a landing page, but text extraction yields 791 words of headings and section titles, which means its substance is carried in images. The stated limitation of the read method applies exactly here, so it is left as a question rather than answered from what little extracts.
+          No. Exceedance requires a loss magnitude to be exceeded and the report states none, so the question does not arise rather than being answered badly.
       population:
-        basis: unverified
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-22'
         detail: >-
-          Still unread. The PDF is the report rather than a landing page, but text extraction yields 791 words of headings and section titles, which means its substance is carried in images. The stated limitation of the read method applies exactly here, so it is left as a question rather than answered from what little extracts.
+          Yes, and specifically. More than 2,000 organisations across 23 industry sectors and 7 ITM clusters, with representation across small, medium and large organisations; 83% in operation 10 years or more; respondents at C-level, director and lead/manager. Non-profits are surveyed and reported separately (more than 7 charity sectors, 90% in operation 10 years or more). Surveyed May to August 2023 in Singapore. Every figure on the pages above is attributable to a named population, which is what this question asks.
 
   - source_id: cesin_barometre_cybersecurite_2025
     properties:

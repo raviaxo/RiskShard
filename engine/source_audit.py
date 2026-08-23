@@ -215,8 +215,26 @@ def audit_defects(root):
     registry_ids = {s.get("id") for s in load_registry(root)}
     hashes = manifest_hashes(root)
     raw = root / "sources" / "raw"
+    rows = load_audit(root)
     defects = []
-    for row in load_audit(root):
+
+    # Two rows for one source is the quietest way this file can lie. It happened:
+    # the 2025 manufacturing report was obtained on 2026-08-16 and read, and the old
+    # "gated, we hold a 1,648-word web page" row was left behind, so the audit
+    # simultaneously said the source was unreadable and reported the most directly
+    # usable exceedance in the corpus from it. Which answer a reader got depended on
+    # which row they reached, and the blocked count was overstated by one for six days.
+    seen = {}
+    for row in rows:
+        sid = row.get("source_id")
+        seen[sid] = seen.get(sid, 0) + 1
+    for sid, count in sorted(seen.items()):
+        if count > 1:
+            defects.append(
+                f"{sid}: {count} audit rows for one source — the answers a reader gets "
+                "depend on which row is reached, and the coverage counts double-count it")
+
+    for row in rows:
         sid = row.get("source_id")
         if sid not in registry_ids:
             defects.append(f"{sid}: audited but not in sources/registry.yaml")

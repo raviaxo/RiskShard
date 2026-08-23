@@ -36,6 +36,7 @@ def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
         data_pack_check(root),
         loss_event_check(root),
         source_audit_check(root),
+        edition_check(root),
         intake_check(root),
         ledger_check(root),
         tests_check(root, run_tests=run_tests),
@@ -132,6 +133,39 @@ def source_audit_check(root):
             "not a finding"
             + (f"; {coverage['blocked_no_artifact']} blocked (artifact is not the source)"
                if coverage["blocked_no_artifact"] else "")
+        ),
+    }
+
+
+def edition_check(root):
+    """Is a parameter anchored on an edition a newer registered edition supersedes?
+
+    `docs/CROSS_SOURCE.md` says a figure's vintage matters at least as much as its
+    geography, next to a table showing Australia's median ransom demand moving six-fold
+    in a year. Nothing checked our own anchors against that rule until 2026-08-22, and
+    one of them was two editions behind a source the same page quotes.
+
+    Reports candidates and never fails. A newer edition is not automatically a better
+    anchor: a stress bound wants a genuinely different reading, and several successors
+    here are registered but unreadable. Deciding is the owner's, so this prints the
+    count and names the one thing a reader most needs — how many have no recorded
+    reason for citing the older edition.
+    """
+    from engine.editions import superseded_anchors
+
+    rows = superseded_anchors(root)
+    if not rows:
+        return {"name": "editions", "status": "pass",
+                "detail": "no parameter cites a superseded edition"}
+    unexplained = [r for r in rows if not (r.get("rationale") or "").strip()]
+    shards = sorted({r["module_id"] for r in rows})
+    return {
+        "name": "editions",
+        "status": "pass",
+        "detail": (
+            f"{len(rows)} anchor(s) across {len(shards)} shard(s) cite an edition a newer "
+            f"registered edition supersedes; {len(unexplained)} carry no recorded reason. "
+            "Candidates, not defects — see engine/editions.py"
         ),
     }
 
