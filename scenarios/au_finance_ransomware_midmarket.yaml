@@ -1,6 +1,6 @@
 metadata:
   name: Australia Finance Ransomware Midmarket
-  version: "0.3"
+  version: "0.4"
   currency: AUD
   scenario_stage: governed_starter
   benchmark_status: starter_country_resident_anchors_sector_bridged
@@ -9,7 +9,7 @@ metadata:
     organization in Australia. All six direct parameters are source-backed and five
     of six are Australia-resident: frequency likely/max are the 2024/2023 Australian
     readings of the Sophos State of Ransomware surveys, impact likely is the
-    Australian mean recovery cost (Sophos Australia 2025, excluding ransom payments),
+    Australian mean recovery cost (Sophos Australia 2026, excluding ransom payments),
     and impact max is Latitude's ASX-disclosed AUD 76M cyber-incident cost. The
     frequency floor remains a global Cyentia bridge, the Sophos anchors are
     all-sector, and the Latitude stress anchor is a large-company extortion event -
@@ -22,5 +22,5 @@ frequency:
 
 impact:
   min: 97000
-  likely: 900000
+  likely: 2310000
   max: 76000000

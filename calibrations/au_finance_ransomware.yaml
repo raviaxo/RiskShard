@@ -38,11 +38,11 @@ parameters:
       round_to: 1000
       rationale: Locally gathered Australian medium-business cybercrime cost floor from Business Queensland guidance. Slot declaration - this is a published mean, not an observed minimum; the engine composes it as the beta-PERT floor.
     likely:
-      evidence_id: sophos_au_2025_ransomware_recovery_cost_usd
+      evidence_id: sophos_au_2026_ransomware_recovery_cost_usd
       transform: currency_convert
       target_currency: AUD
       round_to: 10000
-      rationale: Australian mean ransomware recovery cost (Sophos Australia 2025 country cut, excluding ransom payments) converted from USD to AUD, replacing the country-bridged global financial-services recovery cost.
+      rationale: Australian mean ransomware recovery cost (Sophos Australia 2026 country cut, excluding ransom payments) converted from USD to AUD. Refreshed 2026-08-23 from the 2025 edition of the same country cut - same publisher, country and construct - after engine/editions.py flagged the anchor as citing a superseded edition while docs/CROSS_SOURCE.md was already publishing the 2026 figure. The level has moved steeply in both directions across three editions (2.37M, 0.65M, 1.66M USD); the record's limitations say so and the anchor is indicative, not a trend.
     max:
       evidence_id: latitude_1h23_au_cyber_incident_cost_aud
       transform: direct

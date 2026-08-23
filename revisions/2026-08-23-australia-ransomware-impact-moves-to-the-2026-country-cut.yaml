@@ -1,0 +1,56 @@
+date: '2026-08-23'
+title: Australia ransomware impact.likely moves to the Sophos 2026 country cut
+retractions: 0
+reason: >-
+  The anchor was two editions of the same publication behind, and this repository was
+  already publishing the newer figure elsewhere. docs/CROSS_SOURCE.md has carried the
+  Sophos Australia 2026 mean recovery cost of USD 1.66M since 2026-08-21, next to its own
+  sentence that "a figure's vintage matters at least as much as its geography" - while
+  au_finance_ransomware_midmarket.impact.likely sat on the 2025 edition's USD 0.65M. The
+  repository stated the rule and broke it on the same data in the same release.
+
+  Found by engine/editions.py (built 2026-08-22), which compares every parameter's cited
+  source against later registered editions of the same series. It flagged nine candidates
+  across four shards; eight are explained by their own calibration rationale - a stress
+  bound deliberately wants a prior-year reading, and two successors are registered but
+  unreadable - and this was the only unexplained one.
+
+  Approved by the owner 2026-08-23. Parameter movement is the owner's call under ADR-0016
+  part 2, which maintains shards for correctness only.
+effect: >-
+  One value changed. au_finance_ransomware_midmarket.impact.likely moves from
+  sophos_au_2025_ransomware_recovery_cost_usd (USD 650,000, converted to AUD 900,000) to
+  sophos_au_2026_ransomware_recovery_cost_usd (USD 1,660,000, converted to AUD 2,310,000)
+  under the same declared currency_convert transform and the same governed RBA FX
+  assumption. Same publisher, same country, same construct - mean recovery cost excluding
+  ransom payments - and the successor edition was already registered, held and verified on
+  all four audit properties.
+
+  The 2025 evidence record is KEPT and unchanged. It remains a true statement about what
+  the 2025 report published, and editing its value would have falsified it; the 2026
+  reading is a new record, and the calibration points at it.
+
+  Published figures for this shard move: AVG AUD 6,590,045.32 -> 7,079,187.68 (+7.4%),
+  P95 17,719,610.85 -> 18,728,958.48, P99 25,010,449.55 -> 25,872,131.16. No other shard
+  moves - all 66 parameters remain source-backed, and the cell-matched/bridged split is
+  unchanged at 7 and 59, because the new record declares the same population as the old.
+
+  The shard becomes slightly LESS tail-driven, which is the interesting part. impact.max
+  leverage falls from 95.4% to 89.1% of the impact mean, because the mode nearly tripled
+  while the maximum did not move. The composition disclosure predicted the size of the
+  move before it was made: impact.likely was carrying 4.5% of the impact mean, so a 2.55x
+  rise in the anchor moved the annual figure by 7.4%. The reason to make the change was
+  that the anchor was wrong, not that the answer would change.
+
+  docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md is re-run end to end and carries a dated
+  note saying so. Its mean-over-mode ratio falls from 14.8x to 6.16x and P(event > AUD
+  20M) rises from 22.93% to 26.21%. THE RECOMMENDATION IS UNCHANGED: AUD 20M still sits
+  where the marginal expected uncovered loss flattens, and that step is still a 42%
+  reduction between 20M and 25M - the same figure as before, because both sides of the
+  ratio rose together.
+
+  Fourteen tests failed on the change and every one was a pin doing its job: the
+  calibration, the benchmark program's reviewed-extraction mapping, the composition
+  partition, the editions detector, the findings page, the front door and the worked
+  decision. A reviewed extraction was added for the new record rather than relaxing the
+  benchmark gate that caught its absence.

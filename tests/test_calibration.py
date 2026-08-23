@@ -29,7 +29,7 @@ class CalibrationTests(unittest.TestCase):
 
         self.assertEqual(scenario["frequency"], {"min": 0.1, "likely": 0.54, "max": 0.7})
         self.assertEqual(scenario["impact"]["min"], 97000)
-        self.assertEqual(scenario["impact"]["likely"], 900000)
+        self.assertEqual(scenario["impact"]["likely"], 2310000)
         self.assertEqual(scenario["impact"]["max"], 76000000)
         self.assertEqual(report["warnings"], [])
         selected_by_id = {
@@ -65,7 +65,7 @@ class CalibrationTests(unittest.TestCase):
         self.assertIn("F11.1 Exchange Rates", report["assumptions"][0]["citation_detail"])
         self.assertEqual(
             report["assumptions"][0]["evidence_id"],
-            "sophos_au_2025_ransomware_recovery_cost_usd",
+            "sophos_au_2026_ransomware_recovery_cost_usd",
         )
 
     def test_calibration_generates_loss_stages_from_profile(self):

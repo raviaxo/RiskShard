@@ -17,7 +17,7 @@ AU = "au_finance_ransomware_midmarket"
 
 
 class HandCheckedPartitionTests(unittest.TestCase):
-    """One shard, checkable on paper: (97,000 + 4*900,000 + 76,000,000) / 6."""
+    """One shard, checkable on paper: (97,000 + 4*2,310,000 + 76,000,000) / 6."""
 
     @classmethod
     def setUpClass(cls):
@@ -25,24 +25,30 @@ class HandCheckedPartitionTests(unittest.TestCase):
         cls.impact = cls.composed["families"]["impact"]
 
     def test_the_mean_is_the_beta_pert_identity(self):
-        self.assertAlmostEqual(self.impact["mean"], 79_697_000 / 6, places=6)
+        self.assertAlmostEqual(self.impact["mean"], 85_337_000 / 6, places=6)
 
-    def test_the_maximum_carries_ninety_five_percent_of_the_mean(self):
-        """76,000,000 / 79,697,000. The published worked decision says the same thing
-        the long way round: a mean of AUD 13.3M against a mode of AUD 900k."""
+    def test_the_maximum_carries_most_of_the_mean(self):
+        """76,000,000 / 85,337,000. The published worked decision says the same thing
+        the long way round: a mean of AUD 14.2M against a mode of AUD 2.31M.
+
+        Was 95.4% against a 900,000 mode until the 2026 anchor landed on 2026-08-23.
+        The maximum still dominates, by less — which is the disclosure describing its
+        own inputs correctly rather than a weakening of the finding.
+        """
         shares = {a["slot"]: a["share"] for a in self.impact["anchors"]}
-        self.assertAlmostEqual(shares["max"], 76_000_000 / 79_697_000, places=9)
-        self.assertAlmostEqual(shares["likely"], 4 * 900_000 / 79_697_000, places=9)
-        self.assertAlmostEqual(shares["min"], 97_000 / 79_697_000, places=9)
+        self.assertAlmostEqual(shares["max"], 76_000_000 / 85_337_000, places=9)
+        self.assertAlmostEqual(shares["likely"], 4 * 2_310_000 / 85_337_000, places=9)
+        self.assertAlmostEqual(shares["min"], 97_000 / 85_337_000, places=9)
         self.assertAlmostEqual(sum(shares.values()), 1.0, places=9)
-        self.assertAlmostEqual(self.impact["mean"] / 900_000, 14.76, places=2)
+        self.assertGreater(shares["max"], 0.85)
+        self.assertAlmostEqual(self.impact["mean"] / 2_310_000, 6.157, places=3)
 
     def test_the_partition_runs_on_the_scenario_not_the_evidence_card(self):
-        """The calibration converts USD 650,000 to AUD 900,000 before the engine sees
-        it. Partitioning the card would break down a figure nobody published."""
+        """The calibration converts USD 1,660,000 to AUD 2,310,000 before the engine
+        sees it. Partitioning the card would break down a figure nobody published."""
         likely = next(a for a in self.impact["anchors"] if a["slot"] == "likely")
-        self.assertEqual(likely["value"], 900_000)
-        self.assertEqual(likely["evidence_value"], 650_000)
+        self.assertEqual(likely["value"], 2_310_000)
+        self.assertEqual(likely["evidence_value"], 1_660_000)
 
     def test_the_analytic_partition_describes_the_figure_that_gets_published(self):
         """The identity needs no seed and no trials, and this is the proof of it.

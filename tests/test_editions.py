@@ -43,20 +43,32 @@ class SupersededAnchorTests(unittest.TestCase):
     def setUpClass(cls):
         cls.rows = superseded_anchors(ROOT)
 
-    def test_the_australia_impact_anchor_is_found(self):
-        """Confirmed by hand before the module existed, so it is the regression case.
+    def test_the_australia_impact_anchor_is_no_longer_behind(self):
+        """The case this module was built to find, and it is now closed.
 
-        `au_finance_ransomware_midmarket.impact.likely` is the Sophos Australia 2025
-        mean recovery cost of USD 650,000. The 2026 country cut is registered, read and
-        verified, and states that figure rose to USD 1.66M. docs/CROSS_SOURCE.md
-        publishes the 2026 number on the same site as the shard built on the 2025 one.
+        `au_finance_ransomware_midmarket.impact.likely` cited the Sophos Australia 2025
+        mean recovery cost while the 2026 country cut sat registered, held and verified,
+        and `docs/CROSS_SOURCE.md` published the 2026 figure. The anchor was refreshed on
+        2026-08-23, so the detector should now report nothing for it.
+
+        Kept as an assertion rather than deleted: a check that found one real case and
+        then silently stopped finding anything is indistinguishable from a check that
+        broke, which is exactly how the first version of this module failed.
         """
         hits = [r for r in self.rows
                 if r["module_id"] == "au_finance_ransomware_midmarket"
                 and r["parameter"] == "impact.likely"]
-        self.assertEqual(len(hits), 1, "the Australia impact anchor stopped being detected")
-        self.assertEqual(hits[0]["cites"], "sophos_state_ransomware_australia_2025")
-        self.assertEqual(hits[0]["superseded_by"], "sophos_state_ransomware_au_2026")
+        self.assertEqual(hits, [], "the Australia impact anchor is behind an edition again")
+
+    def test_the_detector_still_finds_the_candidates_it_should(self):
+        """The guard on the failure above: the check must still be working.
+
+        Several anchors deliberately cite an older edition — a stress bound wants a
+        prior-year reading — so a non-empty result is the healthy state, and an empty
+        one means the resolution path broke rather than that the corpus is current.
+        """
+        self.assertTrue(self.rows, "the detector found nothing at all, which is suspicious")
+        self.assertTrue(any(r["parameter"].endswith(".max") for r in self.rows))
 
     def test_source_identity_comes_from_the_declared_link_not_a_title_match(self):
         """The bug that hid the case above. Evidence records declare `source_id`; the

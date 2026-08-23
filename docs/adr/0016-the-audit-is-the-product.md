@@ -160,7 +160,7 @@ What the page actually publishes today:
 Both ingredients of the last row have been on the page for months and nothing has joined them. The
 result is a count that misweights: the engine composes each family as a beta-PERT whose mean is
 `(min + 4*likely + max) / 6`, so `au_finance_ransomware_midmarket`'s `impact.min` contributes
-**0.1%** of its impact mean and `impact.max` contributes **95.4%**, and the published count treats
+**0.1%** of its impact mean and `impact.max` contributes **89.1%**, and the published count treats
 them as one parameter each.
 
 **What the join makes visible could not be read off either ingredient alone.** No shard in the

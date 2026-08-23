@@ -45,6 +45,31 @@ extractions:
     evidence_record_ids:
       - sophos_au_2025_ransomware_recovery_cost_usd
 
+  - id: sophos_au_2026_recovery_cost
+    source_id: sophos_state_ransomware_au_2026
+    source_name: Sophos The State of Ransomware in Australia 2026
+    source_url_or_citation: https://www.sophos.com/en-us/whitepaper/state-of-ransomware-australia
+    publication_date: '2026-07-01'
+    extraction_date: '2026-08-23'
+    citation_detail: Business impact section (printed page 3); About page USD 1.66M headline tile.
+    fact: >-
+      Sophos reported a USD 1.66 million mean cost for Australian organizations to recover from
+      a ransomware attack, excluding any ransom payments, against USD 0.65 million in the 2025
+      survey and USD 2.37 million in the 2024 survey.
+    value: 1660000
+    unit: currency
+    currency: USD
+    normalization_notes: >-
+      Stored in source currency; calibration converts to AUD with an explicit FX assumption. All
+      financial data points in this report are stated by Sophos to be in U.S. dollars.
+    limitations: >-
+      Excludes ransom payments (median Australian payment USD 855,000 among the 57% who paid and
+      got data back); all-sector sample of 119 Australian organizations of 100-5,000 employees,
+      conditional on being hit. Sophos removed outlier ransoms of USD 40 million or more before
+      publication.
+    evidence_record_ids:
+      - sophos_au_2026_ransomware_recovery_cost_usd
+
   - id: cyentia_global_ransomware_likelihood_2025
     source_id: cyentia_iris_ransomware
     source_name: Cyentia IRIS Ransomware

@@ -53,27 +53,24 @@ waiting on you.***
    on a different footing. It is now a missing instrument rather than an open policy — coherence
    runs per shard and a composed cell has none — so it lifts on a build.
 
-8. **One parameter is anchored two editions behind, and the successor is already read.**
-   *(Found 2026-08-22.)* `au_finance_ransomware_midmarket.impact.likely` is the Sophos
-   **Australia 2025** mean recovery cost, USD 650,000 → AUD 900,000. The **Australia 2026**
-   country cut is registered, held and verified, and states the same quantity — mean recovery
-   cost excluding ransom, same publisher, same country, same construct — at **USD 1.66 million**,
-   *"a significant increase from the $0.65 million mean in the 2025 report."*
+8. ✅ **DONE 2026-08-23 — the AU anchor was two editions behind and is now current.**
+   `au_finance_ransomware_midmarket.impact.likely` moved from the Sophos Australia 2025 mean
+   recovery cost (USD 650,000 → AUD 900,000) to the **2026** country cut (USD 1,660,000 → AUD
+   2,310,000). Same publisher, country and construct; successor edition already registered, held
+   and verified. Found by `engine/editions.py`; `docs/CROSS_SOURCE.md` had been publishing the 2026
+   figure since 2026-08-21 while the shard sat on the 2025 one.
 
-   [`docs/CROSS_SOURCE.md`](../CROSS_SOURCE.md) already publishes the 2026 figure, and says in its
-   own words that *"a figure's vintage matters at least as much as its geography."* **The repo
-   states the rule and breaks it on the same data in the same release.**
+   **What it cost, because it is worth knowing before approving the next one.** The change was one
+   value. Fourteen tests failed, across the calibration, the benchmark program, the composition
+   partition, the editions detector, the findings page and the worked decision — every one of them
+   a pin doing its job. The published worked decision needed re-running end to end: its
+   mean-over-mode ratio fell from 14.8× to 6.16×, P(event > 20M) rose 22.93% → 26.21%, and
+   **the AUD 20M recommendation survived**, because the marginal-exposure curve flattens at the
+   same 42% between 20M and 25M as before.
 
-   Not changed, because changing it is parameter movement and
-   [ADR-0016](../adr/0016-the-audit-is-the-product.md) part 2 maintains shards for correctness
-   only. Note what it would do: `impact.likely` carries 4.5% of that shard's impact mean, so a
-   2.55× rise moves the modelled figure very little — the maximum carries 95.4%. **The reason to
-   do it is that the anchor is wrong, not that the answer would change.**
-
-   `engine/editions.py` now checks the whole portfolio and the doctor prints the count. Eight
-   other anchors cite superseded editions and **all eight have a recorded reason** — a stress
-   bound deliberately wants a prior-year reading, and two successors are registered but
-   unreadable. This is the only unexplained one.
+   **The modelled figure moved 7.4%** (AVG AUD 6,590,045 → 7,079,188) on a **2.55× move in the
+   anchor** — which is the composition disclosure being right about itself: `impact.likely` was
+   carrying 4.5% of the impact mean, and now carries 10.8%.
 
 ### Standing — no action unless you overrule
 

@@ -137,6 +137,59 @@ records:
       company_size_bands: [all]
       threats: [ransomware]
 
+  - id: sophos_au_2026_ransomware_recovery_cost_usd
+    title: Australian mean ransomware recovery cost, excluding ransom payments (2026 edition)
+    parameter: impact.likely
+    value: 1660000
+    unit: currency
+    currency: USD
+    source_id: sophos_state_ransomware_au_2026
+    source_name: Sophos The State of Ransomware in Australia 2026
+    source_type: industry_survey
+    source_url_or_citation: https://www.sophos.com/en-us/whitepaper/state-of-ransomware-australia
+    publication_date: '2026-07-01'
+    extraction_date: '2026-08-23'
+    citation_detail: >-
+      Business impact section (printed page 3): "Excluding any ransom payments, the average
+      (mean) recovery cost for Australian organizations from their ransomware attack was
+      $1.66 million, a significant increase from the $0.65 million mean in the 2025 report.
+      This includes the costs of downtime, people time, device cost, network cost, lost
+      opportunity, etc." Verified in the gathered artifact.
+    extraction_notes: >-
+      Replaces sophos_au_2025_ransomware_recovery_cost_usd, which held the same quantity from
+      the prior edition of the same country cut. Same publisher, same country, same construct
+      (mean recovery cost excluding ransom), successor edition - which is why the swap is a
+      refresh rather than a change of anchor. The 2025 record is kept: it remains a true
+      statement about what the 2025 report published, and editing its value would falsify it.
+      Found by engine/editions.py, which flags a parameter citing an edition a newer registered
+      edition supersedes; docs/CROSS_SOURCE.md had been publishing the 2026 figure since
+      2026-08-21 while this shard was anchored on the 2025 one.
+    normalization_notes: >-
+      Stored in source currency USD; the calibration converts to AUD with the explicit RBA FX
+      assumption. Sophos states that all financial data points in this report are in U.S.
+      dollars. The construct covers downtime, people time, device cost, network cost and lost
+      opportunity.
+    limitations: >-
+      Excludes any ransom payments, and that exclusion bites harder than it did in 2025: 57% of
+      Australian organizations paid the ransom and got data back (up from 41%), at a median
+      Australian payment of USD 855,000 (up from USD 186,000), so the all-in cost of a paid
+      incident is now materially further above this anchor. Mean over 119 Australian
+      organizations of 100-5,000 employees across all sectors, conditional on having been hit;
+      the sector dimension stays bridged for a financial-services shard. n fell from 191 to 119.
+      Sophos removed outlier ransoms of USD 40 million or more before publication, so the
+      published population is truncated at the top. Self-reported and vendor-commissioned. The
+      level has now moved steeply in both directions across three editions - USD 2.37M (2024
+      survey), 0.65M (2025), 1.66M (2026) - which is a 2.55x rise on the back of a 3.6x fall.
+      Treat the level as indicative and volatile, not as a trend.
+    confidence: medium
+    evidence_type: source_backed
+    measurement_basis: cost_component
+    applicability:
+      industries: [all]
+      countries: [AU]
+      company_size_bands: [all]
+      threats: [ransomware]
+
   - id: latitude_1h23_au_cyber_incident_cost_aud
     title: Latitude Financial documented cyber-incident cost (stress anchor)
     parameter: impact.max
