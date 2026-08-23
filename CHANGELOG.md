@@ -5,6 +5,37 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.11.1 — 2026-08-23
+
+**One more source read, and the check that should have found it.** No published parameter value
+moves; the portfolio figures are identical to v0.11.0.
+
+Data-pack release: `data_pack_releases/2026.08.23-v0.11.1.json`.
+
+**The audit moves 63 → 64 of 75.** The *Cost of Insider Risks Global Report 2023* had been recorded
+as blocked, correctly: what the gatherer could reach was a 1,902-word announcement page. **The real
+9,852-word study was on disk the whole time**, under the filename it was downloaded with rather than
+its source id, so nothing connected the two. Read: all costs are averages, no mode, **no
+distribution of cost** (it publishes real distributions — of incidents and of containment time —
+just not of loss magnitude), no exceedance, and a population stated to **309 organisations and
+1,075 interviews**.
+
+**That was the seventh time a source recorded as owed turned out to be held**, so the check now
+exists rather than the lesson. `engine.intake.blocked_but_held` compares every source the audit
+cannot read against the extracted title of every document in the intake register. The doctor
+**fails** on a hit: unlike a superseded edition, there is no legitimate reason for one — if the
+document is on disk, the audit should be reading it.
+
+Two records were right and neither could see the other: the intake register had the study marked
+`parked`, the audit row said `no_readable_artifact`. That is the same shape as
+[finding 10](docs/FINDINGS.md) — two published facts with nothing joining them.
+
+`ponemon_dtex_cost_insider_risks_2023` is now `manual_download` in the registry, because its
+registered URL is an announcement page and `gather_sources.py` could never have reached the report.
+That is the whole of the data-pack change.
+
+**11 sources are the rest of M1**, and every one of them needs a person.
+
 ## v0.11.0 — 2026-08-23
 
 **The release where a published figure starts saying what it rests on.** One parameter value
