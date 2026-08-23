@@ -84,42 +84,62 @@ waiting on you.***
 
 ## Restart point
 
-**Session closed 2026-08-21. Tree clean, `main` == `origin/main`, 380 tests, evidence and
-preflight clean, doctor GREEN ON EVERY CHECK, 0 open PRs, 0 unmerged branches. Data pack
-`0ff2f12a5f6c` (92 files). Released as
-[v0.10.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.10.0).** #172–#177 all merged.
+**Session closed 2026-08-22. `main` at 433 tests, evidence clean, doctor GREEN ON EVERY CHECK,
+0 unmerged branches, data pack `0ff2f12a5f6c`.** Merged this arc:
+[#179](https://github.com/raviaxo/RiskShard/pull/179) (W1 corrections + the composition),
+[#181](https://github.com/raviaxo/RiskShard/pull/181) (the audit's last readable source),
+[#182](https://github.com/raviaxo/RiskShard/pull/182) (claim re-verification),
+[#183](https://github.com/raviaxo/RiskShard/pull/183) (the board-facing disclosure). Last release is
+still [v0.10.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.10.0) — **nothing has been
+tagged since**, deliberately.
 
-**ACTIVE OBJECTIVE (2026-08-22, in flight on `shard/composition-disclosure`): W1 — the backlog
-corrections C1–C7, then say what each published figure rests on.** All seven corrections are
-written. The engine work is what ADR-0016 part 3 classifies as correctness: the page publishes a
-cell-matched *count* that treats an anchor carrying 0.1% of a figure and one carrying 95.4% as
-equals ([finding 10](../FINDINGS.md)), so the number beside it is misdescribed.
+**🔴 ONE PR IS OPEN AND IT IS YOURS: [#180](https://github.com/raviaxo/RiskShard/pull/180)** — the
+figure citation. Rebased on `main` and green. Left for you rather than self-merged.
 
-**Three of the seven corrections had premises that did not survive contact with the files**, and the
-amendments record what was actually wrong rather than what `execution_plan.md` predicted:
+**NEXT OBJECTIVE: not chosen, and the plan needs re-cutting first.**
+[`execution_plan.md`](execution_plan.md) sequences W2 as *composition on the 11 shards you already
+hold*. **That is done and shipped**, in the same arc as the W1 corrections that were supposed to
+gate it. The weekly sequence is now a week ahead of itself and should be reconciled against what
+actually happened rather than followed as written.
 
-- **C1** claimed ADR-0006 described a strategy that stopped. It did not: ADR-0016 part 2 says in
-  terms that it *honours* ADR-0006. What was really broken is that ADR-0006's *Revisit when* still
-  offered a country request as grounds to reopen — which ADR-0016 part 1 declines — and that depth
-  was chosen with **no live measure**: `params_source_backed` hit 66/66 on 2026-07-24, a week before
-  the ADR was accepted, and has read 66/66 in all nine releases since. That is a saturated metric,
-  not stalled work.
-- **C4** was reclassified from *needs an amendment* to *correctness* — but the measurement first
-  offered for it was **wrong**. I claimed the explorer had a dead per-shard render path; the guard
-  in question reads `DATA.totals`, which is populated, and no such path exists. The withdrawal is
-  recorded in ADR-0016 rather than edited away. The classification survives on narrower ground:
-  the published count misdescribes the composition of the figure beside it (finding 10). The
-  boundary is the **published cell** — producing a figure for a cell we have never published is
-  not correctness and needs its own ADR.
-- **C3** holds, with a guard the plan did not name: composition does **not** satisfy ADR-0018's two
-  preconditions and must not be read as having met them by redefining what an answer is.
+### What the 2026-08-22 arc did
 
-**The lesson, and it is the third time:** the plan was written from memory of the ADRs rather than
-from the ADRs. Check what the corpus thinks it has before acting on a note about it.
+Started as *"48 hours to make RiskShard universally more useful — readers bring context, numbers
+vetted or not"*. It became a **disclosure** arc, because the measurement said the useful thing was
+already published and simply unjoined.
 
-**Not started, deliberately:** any answer for a cell we have never published (roadmap **U2**). It is
-gated on an ADR that does not exist, on stating its own failure condition first, and on ADR-0007's
-borrowing-only restriction.
+- **The context defect, measured.** A reader who names one facet is answered 17 of 17; one who names
+  all four is answered **4 of 192**, and the best of those matches 3 of the 6 parameters a shard
+  needs. **Supplying context makes the answer worse** — a different defect from a thin corpus, and
+  the reason composition is the only mechanism by which reader context can exist at all.
+- **W1's seven corrections all landed, and three had premises that did not survive the files.**
+  ADR-0006 was not a strategy that stopped — ADR-0016 part 2 says it *honours* it. The real defects
+  were a stale `Revisit when` and depth chosen with **no live measure**: `params_source_backed`
+  saturated at 66/66 on 2026-07-24, a week *before* the ADR was accepted.
+- **`engine/composition.py`** partitions a figure across its anchors by the beta-PERT mean identity,
+  reproducing `WORKED_DECISION_AU_RANSOMWARE_LIMIT.md`'s hand arithmetic (13,282,833 against
+  13,281,133; 14.76× against 14.8×).
+- **[Finding 10](../FINDINGS.md)** — a count and a weighting disagree about the same corpus, and
+  **no shard is well anchored on both families**. The shard 98.8% measured on impact takes 100% of
+  its frequency from a UK survey. The strong sides have never once coincided.
+- **The audit's unread category is empty** (62 → 63 of 75): everything left is a document nobody
+  holds. A duplicate row was calling one source both gated and read; `audit_defects` now fails on it.
+  **Sixth time a source recorded as owed turned out to be held.**
+- **`engine/editions.py`** — nine anchors cite superseded editions; eight are explained by their own
+  calibration rationale, one is staged for you (pending item 8).
+- **The disclosure reached three surfaces**: the explorer item, the executive report's trust
+  section, and — pending #180 — the figure citation.
+
+### Worth knowing before starting
+
+**Five claims made in this session did not survive being checked, and every one was caught by
+reading a file rather than by re-running tests.** A fabricated "dead render path" reached four
+documents and two commit messages before it was caught; the withdrawal is recorded in ADR-0016
+rather than edited away. The README banner went stale **within an hour** of the audit count moving —
+in the same session that added the rule against exactly that.
+
+**The habit worth keeping: open the file before writing the claim down.** The suite was green
+throughout, and it caught none of them.
 
 ### What the 2026-08-19/21 arc did
 
@@ -389,6 +409,23 @@ shards are now source-backed. This is the Sunday post.
   changed after an unfavourable measurement. The front door was found to not mention the audit at
   all and to carry a day-stale count; both now pinned. Tests 354 → 356. **Owed next: publication —
   two drafts written and unsent.**
+- 2026-08-22 — **The arc where the useful thing turned out to be already published and unjoined.**
+  Asked for 48 hours on reader context and vetted numbers; the measurement redirected it. Supplying
+  context makes the answer *worse* — 17 of 17 cells answered at one facet, 4 of 192 at four — so
+  composition is not an enhancement to reader context, it is the only mechanism by which it can
+  exist. **W1's seven corrections landed and three had premises that did not survive the files**
+  (ADR-0016 part 2 says it *honours* ADR-0006; depth had no live measure because
+  `params_source_backed` saturated a week before the ADR was accepted). `engine/composition.py`
+  partitions a figure by the beta-PERT mean identity and reproduces a hand-worked decision written
+  months earlier to four significant figures. **Finding 10**: a count and a weighting disagree, and
+  no shard is well anchored on both families — the one 98.8% measured on impact takes 100% of its
+  frequency from a UK survey. The audit's **unread category is now empty** and a duplicate row that
+  called one source both gated and read is gone. `engine/editions.py` found nine anchors on
+  superseded editions, eight explained, one staged. Tests 380 → 433, four PRs merged, #180 left for
+  the owner. **Five of this session's own claims did not survive being checked**, including a
+  fabricated dead render path that reached four documents before withdrawal, and a README banner
+  that went stale within an hour of the count moving — recorded in ADR-0016 and here rather than
+  edited away, because the rate is the finding.
 - 2026-08-19/21 — **The arc where the front door started with the finding, and the audit became
   something a stranger can read** (#172–#177 merged, v0.10.0 cut and tagged). Started because the
   owner read the live explorer and the repo cold and said both were too dense and the project had
