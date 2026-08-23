@@ -239,7 +239,7 @@ with seven exceptions*, which is what it always was.
 
 | | |
 | --- | --- |
-| records declaring `applicability` | **142 of 142** (required by schema) |
+| records declaring `applicability` | **143 of 143** (required by schema) |
 | …declaring the cell they were borrowed **for** rather than the population measured | **21 of 142** |
 | published parameter cards affected | **16 of 66** |
 | published figures that moved when all 21 were corrected | **0 of 66** |
@@ -488,11 +488,11 @@ contributions are nowhere near equal:
 | `au_finance_ransomware_midmarket` · impact | value (AUD) | share of the mean |
 | --- | ---: | ---: |
 | `impact.min` | 97,000 | 0.1% |
-| `impact.likely` | 900,000 | 4.5% |
-| `impact.max` | 76,000,000 | **95.4%** |
+| `impact.likely` | 2,310,000 | 10.8% |
+| `impact.max` | 76,000,000 | **89.1%** |
 
 A count treats those three as equals. **In every one of the 11 shards a single anchor carries
-between 51% and 95% of its family's mean**, so "is this number well anchored?" is very nearly "is
+between 51% and 92% of its family's mean**, so "is this number well anchored?" is very nearly "is
 that one anchor well anchored?".
 
 Weighted by contribution, and split by family because the annual figure is their product:

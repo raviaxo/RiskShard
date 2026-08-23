@@ -63,13 +63,18 @@ class WorkedDecisionAgreementTests(unittest.TestCase):
     """This output generalises a hand computation; it must reproduce it.
 
     `docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md` reports the AU ransomware per-event
-    mean at 14.8x its own mode. That number was computed by hand, in a document, before
-    this module existed. If the module disagrees, one of them is wrong.
+    mean as a multiple of its own mode. That number was computed by hand, in a document,
+    before this module existed. If the module disagrees, one of them is wrong.
+
+    It read 14.8x until 2026-08-23, when `impact.likely` was refreshed from the Sophos
+    Australia 2025 country cut to the 2026 one. The mode tripled, the maximum did not
+    move, and the ratio fell to 6.16x. **The document and this test were updated
+    together**, which is the only way this check means anything.
     """
 
-    def test_au_ransomware_mean_over_mode_matches_the_published_14_8x(self):
+    def test_au_ransomware_mean_over_mode_matches_the_published_ratio(self):
         row = module_tail_sensitivity(ROOT, "au_finance_ransomware_midmarket")
-        self.assertAlmostEqual(row["mean_over_mode"], 14.8, delta=0.1)
+        self.assertAlmostEqual(row["mean_over_mode"], 6.16, delta=0.01)
 
 
 class PortfolioTailSensitivityTests(unittest.TestCase):

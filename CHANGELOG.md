@@ -5,6 +5,76 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.11.0 — 2026-08-23
+
+**The release where a published figure starts saying what it rests on.** One parameter value
+moves — the first in ten releases — and the interesting part is how little it moves the answer.
+
+Data-pack release: `data_pack_releases/2026.08.23-v0.11.0.json`.
+
+**Every figure now states its own composition, per family and never blended.**
+[`engine/composition.py`](engine/composition.py) partitions each shard's per-event mean across
+its three anchors using the beta-PERT mean identity the engine already runs on
+(`coefficient × value / (min + 4·likely + max)`) — an identity, so no seed, no trials, no Monte
+Carlo error, and a reader can check it on paper. It reproduces
+[`WORKED_DECISION_AU_RANSOMWARE_LIMIT.md`](docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md), which
+was worked by hand months before the module existed.
+
+It reaches three surfaces: each explorer item, the executive report's *"How much to trust it"*
+section, and the citation — which **refuses to emit the figure without the breakdown**.
+
+**[Finding 10](docs/FINDINGS.md) — a count and a weighting disagree about the same corpus.**
+The headline says 7 of 66 parameters are drawn from the population they are used for, about 11%.
+Weighted by how much of the answer each anchor carries, three shards are 92%, 92% and 98.8%
+measured on their own cell **on the impact side**. A count treats an anchor carrying 0.1% of a
+figure and one carrying 89.1% as equals.
+
+**And no shard is well anchored on both families.** `us_finance_data_breach_midmarket` is 98.8%
+measured on its own cell on impact and takes **100% of its frequency mean from a UK survey**.
+The only shard fully measured on frequency is 0% on impact. The annual figure is the product of
+the two, so it inherits the weaker side, and in eleven shards the strong sides have never once
+coincided. That is why the composition is reported as a pair.
+
+**One parameter moved.** `au_finance_ransomware_midmarket.impact.likely` was two editions behind
+the Sophos Australia country cut — USD 650,000 from the 2025 edition, against USD 1,660,000 in
+the 2026 one, which was already registered, read and verified. `docs/CROSS_SOURCE.md` had been
+publishing the 2026 figure since 2026-08-21 beside its own sentence that *"a figure's vintage
+matters at least as much as its geography."* **The repository stated the rule and broke it on the
+same data in the same release.**
+
+- Found by [`engine/editions.py`](engine/editions.py), new here: it compares every parameter's
+  cited source against later registered editions of the same series. Nine candidates, eight
+  explained by their own calibration rationale — a stress bound deliberately wants a prior-year
+  reading — and this was the only one that was not.
+- **AVG AUD 6,590,045 → 7,079,188 (+7.4%)** on a **2.55× move in the anchor**, because
+  `impact.likely` was carrying 4.5% of the impact mean. The shard becomes *less* tail-driven:
+  `impact.max` leverage falls 95.4% → 89.1%.
+- The worked decision is re-run end to end and says so in a dated note. Mean-over-mode falls
+  14.8× → 6.16×, P(event > AUD 20M) rises 22.93% → 26.21%, and **the AUD 20M recommendation
+  is unchanged** — the marginal-exposure curve still flattens at the same 42% between 20M and 25M.
+- The 2025 evidence record is kept. It remains a true statement about what the 2025 report
+  published; editing its value would have falsified it.
+
+**The audit's unread category is empty — 62 → 63 of 75.** The CSA Singapore Cybersecurity Health
+Report 2023 was the last row that was readable but unread: an image-based PDF, read by rendering
+its ten pages. It publishes **no monetary loss figure at all**. Everything still outstanding is a
+document nobody holds. A duplicate audit row that called one source both gated and read was
+removed, and `audit_defects` now fails on a duplicate `source_id`.
+
+**Seven backlog corrections landed**, and three had premises that did not survive the files.
+ADR-0006 was not a strategy that stopped — ADR-0016 part 2 says it *honours* it; the real defect
+was that depth was chosen with no live measure, `params_source_backed` having saturated at 66/66
+a week before the ADR was accepted. **ADR-0007 is Accepted**: no mix is acceptable or
+unacceptable in general, so coherence reports rather than gates.
+
+**A withdrawn claim, recorded rather than edited away.** The first justification for classifying
+this work as correctness said the explorer had a per-shard disclosure rendering behind a null
+guard that was always false. It does not exist. The withdrawal is in
+[ADR-0016](docs/adr/0016-the-audit-is-the-product.md), along with the narrower ground the
+classification actually rests on.
+
+Tests 380 → 434.
+
 ## v0.10.0 — 2026-08-21
 
 **The release where the audit became something a stranger can read, and the front door
