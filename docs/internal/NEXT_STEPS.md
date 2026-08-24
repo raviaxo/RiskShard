@@ -90,28 +90,36 @@ ON EVERY CHECK, tree clean, `main` == `origin/main`. Data pack `090bee2ae02a`, r
 [v0.11.1](https://github.com/raviaxo/RiskShard/releases/tag/v0.11.1)** (v0.11.0 was cut in the same
 arc). Merged: #179, #180, #181, #182, #183, #184, #185, #186, #187.
 
-**🔴 TWO PRs OPEN AND BOTH ARE YOURS.** Neither was self-merged: one moves a public claim, the other
-proposes closing a roadmap axis.
+**✅ [#189](https://github.com/raviaxo/RiskShard/pull/189) MERGED 2026-08-24 — ADR-0019 accepted, so
+roadmap U2 / execution-plan W4 is declined.** Nearest-shard borrowing would have turned 456
+unanswerable cells into 456 relabelled copies of 11 numbers, with 59% of donors chosen by a tiebreak
+carrying no evidentiary meaning. **Track B now has nothing scheduled in it**, and that is the state
+rather than a gap to fill.
 
-- **[#188](https://github.com/raviaxo/RiskShard/pull/188) — "needs a person" tested on all ten, and
-  largely wrong.** Audit 64 → 65 of 75. Australia 2025 was never gated; the 2024 Sophos sector cuts
-  are *withdrawn* rather than gated and never clear; EPSS returns 404. **It concludes that
-  `riskshard_doctor.py` printing 72 of 72 is not reachable**, which rewrites M1's definition of done.
-- **[#189](https://github.com/raviaxo/RiskShard/pull/189) — ADR-0019, Proposed.** Recommends
-  **declining** roadmap U2 / execution-plan W4, on a measurement: 456 unanswerable cells would
-  become 456 relabelled copies of 11 numbers, and 59% of them have no single nearest shard. Left
-  Proposed because closing an axis is the owner's call.
+**🔴 ONE PR OPEN AND IT IS YOURS: [#188](https://github.com/raviaxo/RiskShard/pull/188)** — "needs a
+person" tested on all ten, and largely wrong. Audit 64 → 65 of 75. Australia 2025 was never gated;
+the 2024 Sophos sector cuts are *withdrawn* rather than gated and never clear; EPSS returns 404.
+**It concludes that `riskshard_doctor.py` printing 72 of 72 is not reachable**, which rewrites M1's
+definition of done. Rebased on `main` 2026-08-24, 464 tests, checks green, no conflicts.
 
-**NEXT OBJECTIVE: not chosen. If #189 is accepted, Track B has nothing in it.**
+**Until #188 lands the front door understates the audit by one**: `main`'s README says 64 of 75 and
+#188 carries the 65. Behind, not wrong.
+
+**NEXT OBJECTIVE: not chosen.**
+
+*Operational note, 2026-08-24: #188 hit merge conflicts because the session-close docs commit
+(`471836e`) landed on `main` after both branches were cut, and all three edit this file and the
+roadmap. Rebased and resolved. Closing a session with branches still open will do this again —
+either rebase them at close, or close before opening them.*
 
 ### This week (drafted 2026-08-24, not started)
 
 | | what | why it is first |
 | --- | --- | --- |
-| **A** | **Merge or reject #188 and #189** | Decisions, not work. Everything else waits on them |
+| **A** | **Merge or reject [#188](https://github.com/raviaxo/RiskShard/pull/188)** | The last decision outstanding. #189 landed 2026-08-24, so B and D below are now live rather than conditional |
 | **B** | **Rewrite M1's definition of done** | #188 shows *72 of 72* is unreachable, so M1 carries a target date against a bar that cannot be met — the same defect class as a stale ADR |
 | **C** | **Fix the EPSS URL** | It returns 404. The only one of the ten a person can actually clear |
-| **D** | **Decide what Track B is now** | If #189 lands, usability has no scheduled item. Either take the depth axis — evidence declared per cell, which is what would make "nearest" meaningful — or say plainly that the audit is the product and Track B was a detour |
+| **D** | **Decide what Track B is now** | #189 has landed, so usability has no scheduled item. Either take the depth axis — evidence declared per cell, which is what would make "nearest" meaningful — or say plainly that the audit is the product and Track B was a detour |
 | **E** | *(standing, unblocked)* | **Ask one named person for one audit row.** M3's definition of done. Parked by you on 2026-08-24 — noted, not forgotten |
 
 **2026-11-01 is unchanged** ([ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md)): the
