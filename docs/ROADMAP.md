@@ -202,30 +202,25 @@ keep only when a reader can name a cell we have never published, which is **U2**
 the eleven we do publish, the shard id plus the pinned release already identifies the figure and
 `citeURL` already pins it.
 
-## Track B · U2 — An answer for a cell we have never published · **gated, not scheduled**
+## Track B · U2 — An answer for a cell we have never published · 🔴 **declined 2026-08-23**
 
-Turning 456 dead ends into labelled answers. **Not started, and it cannot start on this roadmap
-entry** — it is a new surface, not correctness, and three things gate it:
+**Recommended for closure by [ADR-0019](adr/0019-borrowing-cannot-answer-an-unpublished-cell.md),
+on a measurement rather than an argument.** Nearest-shard borrowing would turn **456** unanswerable
+cells into **456 relabelled copies of 11 numbers** — the ceiling is structural, because a borrowed
+answer is some shard's answer and ADR-0016 part 2 freezes the shard count. Worse, **59%** of those
+cells have no single nearest shard, so the figure a reader receives falls to a tiebreak with no
+evidentiary meaning. Sector-weighting makes it worse.
 
-1. **An ADR that does not exist.** [ADR-0009](adr/0009-what-riskshard-is-and-is-not.md) declines a
-   new axis unless it answers a defect measured in our own data. The specificity inversion is such a
-   defect, so the amendment is available — but it has to be written and accepted, not assumed.
-2. **Its own failure condition, stated first.**
-   [ADR-0018's amendment](adr/0018-the-target-selector-failed-measurement.md) requires it: this
-   project already shipped one reader-facing feature decided on what it *could* compute rather than
-   on what its answers would say. At least **84.6%** of composed answers would be built entirely
-   from anchors measured elsewhere, and a feature whose commonest output is *"this is entirely
-   borrowed"* has not obviously improved on one whose commonest output is *"nothing here"*.
-3. **Borrowing only.** [ADR-0007's standing restriction](adr/0007-construct-coherence.md) permits
-   inheriting a shard's anchor set whole and forbids assembling a bespoke one across the corpus.
-   **Re-grounded 2026-08-23** when ADR-0007 was Accepted: the blocker is no longer an undecided
-   policy but a missing instrument — the closure requires a composed range to declare what it is,
-   and `module_coherence` runs per shard, so a composed cell is the one range that cannot be
-   labelled. **This lifts on a build, not on a decision.**
+**It was declined on what the answers would say, not on whether it was permitted.** The ADR-0009
+amendment was available — the specificity inversion is a defect measured in our own data. The
+failure condition ADR-0018's amendment required was stated first, and it fired before a line was
+written. `engine/borrowing.py` keeps the measurement, with tests that fail if the numbers move.
 
-**Recorded so nobody has to reconstruct it:** the design input is in
-[`composition_direction.md`](internal/composition_direction.md), and the owner's two decisions
-there — a breakdown never a grade, and the unbacked portion stated never blended — stand.
+**The defect it would have addressed is still real and now has no scheduled remedy:** a reader who
+names one facet is answered 17 of 17 times, and one who names all four is answered 4 of 192. Of the
+539 nameable cells, **84.6%** answer nothing at all, and that share is unchanged by this decision —
+declining a remedy does not shrink the defect, it just stops pretending one is queued. What
+would change it is in the ADR — more shards, a reader-chosen donor, or evidence declared per cell.
 
 ## What this roadmap declines
 

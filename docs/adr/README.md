@@ -29,3 +29,4 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0016](0016-the-audit-is-the-product.md) | The source audit is the product; the shards are the demonstration | Accepted |
 | [0017](0017-the-kill-criterion-gets-a-clock.md) | The kill criterion gets a clock, and this is the only time it moves | Accepted |
 | [0018](0018-the-target-selector-failed-measurement.md) | The reader-supplied target selector failed measurement, and is retired | Accepted |
+| [0019](0019-borrowing-cannot-answer-an-unpublished-cell.md) | Nearest-shard borrowing cannot answer an unpublished cell, and is declined | **Proposed** (2026-08-23) |
