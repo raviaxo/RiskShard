@@ -85,23 +85,66 @@ waiting on you.***
 
 ## Restart point
 
-**Session closed 2026-08-23. `main` at 434 tests, evidence clean, doctor GREEN ON EVERY CHECK,
-data pack `a3fdc4b4f89e`, released as
-[v0.11.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.11.0).** Merged across the arc:
-[#179](https://github.com/raviaxo/RiskShard/pull/179) (W1 corrections + the composition),
-[#181](https://github.com/raviaxo/RiskShard/pull/181) (the audit's last readable source),
-[#182](https://github.com/raviaxo/RiskShard/pull/182) (claim re-verification),
-[#183](https://github.com/raviaxo/RiskShard/pull/183) (the board-facing disclosure),
-[#184](https://github.com/raviaxo/RiskShard/pull/184) (ADR-0007 Accepted, sequence re-cut),
-[#185](https://github.com/raviaxo/RiskShard/pull/185) (the AU anchor refresh and v0.11.0), and
-[#180](https://github.com/raviaxo/RiskShard/pull/180) (the figure citation) landing on top.
+**Session closed 2026-08-23/24. `main` at 459 tests, evidence clean, preflight clean, doctor GREEN
+ON EVERY CHECK, tree clean, `main` == `origin/main`. Data pack `090bee2ae02a`, released as
+[v0.11.1](https://github.com/raviaxo/RiskShard/releases/tag/v0.11.1)** (v0.11.0 was cut in the same
+arc). Merged: #179, #180, #181, #182, #183, #184, #185, #186, #187.
 
-**NEXT OBJECTIVE: not chosen.** [`execution_plan.md`](execution_plan.md) was re-cut on 2026-08-23
-and now runs W3a → W4. **W3a is done** — v0.11.0 is the release that makes the figure citation
-honest, because `docs/r/2026.08.23-v0.11.0/` is the first snapshot carrying the composition.
-**W4 is arbitrary cells by nearest-shard borrowing, and it is gated on three things**, none of them
-started: an ADR-0009 amendment that does not exist, a stated failure condition, and composed-cell
-coherence (the instrument ADR-0007's closure showed is missing).
+**🔴 TWO PRs OPEN AND BOTH ARE YOURS.** Neither was self-merged: one moves a public claim, the other
+proposes closing a roadmap axis.
+
+- **[#188](https://github.com/raviaxo/RiskShard/pull/188) — "needs a person" tested on all ten, and
+  largely wrong.** Audit 64 → 65 of 75. Australia 2025 was never gated; the 2024 Sophos sector cuts
+  are *withdrawn* rather than gated and never clear; EPSS returns 404. **It concludes that
+  `riskshard_doctor.py` printing 72 of 72 is not reachable**, which rewrites M1's definition of done.
+- **[#189](https://github.com/raviaxo/RiskShard/pull/189) — ADR-0019, Proposed.** Recommends
+  **declining** roadmap U2 / execution-plan W4, on a measurement: 456 unanswerable cells would
+  become 456 relabelled copies of 11 numbers, and 59% of them have no single nearest shard. Left
+  Proposed because closing an axis is the owner's call.
+
+**NEXT OBJECTIVE: not chosen. If #189 is accepted, Track B has nothing in it.**
+
+### This week (drafted 2026-08-24, not started)
+
+| | what | why it is first |
+| --- | --- | --- |
+| **A** | **Merge or reject #188 and #189** | Decisions, not work. Everything else waits on them |
+| **B** | **Rewrite M1's definition of done** | #188 shows *72 of 72* is unreachable, so M1 carries a target date against a bar that cannot be met — the same defect class as a stale ADR |
+| **C** | **Fix the EPSS URL** | It returns 404. The only one of the ten a person can actually clear |
+| **D** | **Decide what Track B is now** | If #189 lands, usability has no scheduled item. Either take the depth axis — evidence declared per cell, which is what would make "nearest" meaningful — or say plainly that the audit is the product and Track B was a detour |
+| **E** | *(standing, unblocked)* | **Ask one named person for one audit row.** M3's definition of done. Parked by you on 2026-08-24 — noted, not forgotten |
+
+**2026-11-01 is unchanged** ([ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md)): the
+registry kill criterion re-measures at the first release on or after that date. Both metrics read
+zero.
+
+### What the 2026-08-23/24 arc did
+
+- **v0.11.0 and v0.11.1 cut.** Tests 380 → 459 across two days.
+- **Every published figure now says what it rests on** — explorer, citation, executive report, and
+  eleven published one-page summaries at `/reports/`, generated at deploy.
+- **[Finding 10](../FINDINGS.md)**: a count and a weighting disagree about the same corpus, and **no
+  shard is well anchored on both families**. The one 98.8% measured on impact takes 100% of its
+  frequency from a UK survey.
+- **The first parameter movement in ten releases.** The AU anchor was two editions behind; the
+  published figure moved 7.4% on a 2.55× move in the anchor, and **the worked decision's
+  recommendation survived** at the same 42% marginal step.
+- **ADR-0007 Accepted**, its borrowing restriction re-grounded as a missing instrument rather than
+  an open policy — so it lifts on a build.
+- **The audit's unread category is empty**, and two further sources read that had been recorded as
+  owed.
+
+### Worth knowing before starting
+
+**Ten claims made in this arc did not survive being checked**, every one caught by opening a file
+rather than by the suite, which was green throughout. A fabricated "dead render path" reached four
+documents; the README banner went stale twice; "needs a person" was wrong about most of the ten it
+described. **The pattern is asserting from a quick read**, and `execution_plan.md` now states the
+rule that would have caught them: *a week is not the unit — a check is.*
+
+**Seven times a source recorded as owed turned out to be held.** `engine.intake.blocked_but_held`
+now fails the doctor on the eighth.
+
 
 ### What the 2026-08-22 arc did
 
@@ -410,6 +453,23 @@ shards are now source-backed. This is the Sunday post.
   changed after an unfavourable measurement. The front door was found to not mention the audit at
   all and to carry a day-stale count; both now pinned. Tests 354 → 356. **Owed next: publication —
   two drafts written and unsent.**
+- 2026-08-23/24 — **The arc where the disclosure reached every surface, and two proposals died on
+  their own measurements.** v0.11.0 and v0.11.1 cut; tests 434 → 459. The composition reached the
+  citation (which refuses to emit a figure without it), the executive report's trust section, and
+  **eleven published one-page summaries** at `/reports/`, whose index makes finding 10 legible at a
+  glance — no shard has both columns high. **The first parameter movement in ten releases**: the AU
+  anchor was two editions behind a source `CROSS_SOURCE.md` was already quoting, and moving it shifted
+  the published figure 7.4% on a 2.55× move because the anchor carried 4.5% of the mean — the
+  disclosure being right about itself. Fourteen tests fired on that one value and the worked decision
+  was re-run end to end; its recommendation survived. **ADR-0007 Accepted** and its borrowing
+  restriction re-grounded as a missing instrument. **The audit's unread category emptied**, and two
+  more sources recorded as owed turned out to be held — the seventh and eighth instances, now caught
+  by `blocked_but_held`. Two proposals were then declined on measurement rather than argument:
+  **"needs a person"** was wrong about most of the ten it described (#188), and **nearest-shard
+  borrowing** would have turned 456 dead ends into 456 copies of 11 numbers with 59% of donors chosen
+  by an arbitrary tiebreak (#189, ADR-0019, Proposed). Both left open for the owner. **Ten of this
+  session's own claims did not survive being checked**, including a fabricated dead render path that
+  reached four documents — every one caught by reading a file, none by the suite.
 - 2026-08-22 — **The arc where the useful thing turned out to be already published and unjoined.**
   Asked for 48 hours on reader context and vetted numbers; the measurement redirected it. Supplying
   context makes the answer *worse* — 17 of 17 cells answered at one facet, 4 of 192 at four — so
