@@ -165,31 +165,35 @@ audit:
           than unread so it cannot be mistaken for a backlog that effort will clear.
 
   - source_id: sophos_state_ransomware_australia_2025
+    artifact_sha256: 457e1469937da7aa01fff58b13afedf88702a20fd9c2c04ae34602e79e3b3b84
+    artifact: sources/raw/sophos_state_ransomware_australia_2025.pdf
     properties:
       mode:
-        basis: no_readable_artifact
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-23'
         detail: >-
-          What we hold is a 1,032-word PDF summary, not State of Ransomware 2025 (Australia). The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
+          No. Medians and means only - 'the median Australian ransom demand in the last year was $217,000' and an 'average (mean) bill incurred by Australian organizations to recover'. No most-likely value for any quantity.
+          
+          **This row was wrong until 2026-08-23 and the correction matters more than the answer.** It read 'What we hold is a 1,032-word PDF summary, not State of Ransomware 2025 (Australia). The report itself is gated.' Re-fetching the registered URL returns a file byte-identical to the one held (sha 457e1469...), and there is no gate and no longer document: **the whitepaper IS the country cut.** Its 2026 sibling was read and verified on 2026-08-21 in exactly this format. The source was recorded as owed for three weeks on an assumption nobody had tested by trying.
       distribution:
-        basis: no_readable_artifact
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-08-23'
         detail: >-
-          What we hold is a 1,032-word PDF summary, not State of Ransomware 2025 (Australia). The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
+          No. The one banded figure is an exceedance rather than a spread (see below), and the payment figures rest on a stated 26 respondents who disclosed an amount. Nothing sets out how loss is distributed across the sample.
       exceedance:
-        basis: no_readable_artifact
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-23'
         detail: >-
-          What we hold is a 1,032-word PDF summary, not State of Ransomware 2025 (Australia). The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
+          Yes, and stated plainly: **'47% of ransom demands were for $250,000 or more.'** A probability attached to a named threshold over a named population, which is what this question asks for and what most sources in this corpus do not provide. Note the quantity is a ransom *demand*, not a loss - a demand is what was asked, not what was paid or what the incident cost.
       population:
-        basis: no_readable_artifact
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-08-23'
         detail: >-
-          What we hold is a 1,032-word PDF summary, not State of Ransomware 2025 (Australia). The report itself is gated.
-          Unanswerable until the document is obtained — recorded as blocked rather
-          than unread so it cannot be mistaken for a backlog that effort will clear.
+          Yes. A survey of 191 organizations in Australia that were hit by ransomware in the last year, commissioned by Sophos and conducted by a third-party specialist, published June 2025. Victim-only by construction, so it carries no attack rate - the same shape as every country cut in this series. Ransom-payment figures narrow further to the 26 Australian respondents who disclosed an amount, and the report says so.
 
   - source_id: sophos_state_ransomware_financial_services_2024
     properties:
@@ -199,24 +203,48 @@ audit:
           What we hold is a 1,387-word page, not State of Ransomware 2024 (financial services). The report itself is gated.
           Unanswerable until the document is obtained — recorded as blocked rather
           than unread so it cannot be mistaken for a backlog that effort will clear.
+
+          Retested 2026-08-23: NOT gated. sophos.com/en-us/whitepaper/state-of-ransomware-in-
+          financial-services serves its asset PDF with no registration form - but the page has rolled
+          to the 2025 edition, which this corpus already holds and has read. The 2024 whitepaper is
+          withdrawn by the publisher, so this never clears and no person can obtain it. Blocked
+          permanently, not pending.
       distribution:
         basis: no_readable_artifact
         detail: >-
           What we hold is a 1,387-word page, not State of Ransomware 2024 (financial services). The report itself is gated.
           Unanswerable until the document is obtained — recorded as blocked rather
           than unread so it cannot be mistaken for a backlog that effort will clear.
+
+          Retested 2026-08-23: NOT gated. sophos.com/en-us/whitepaper/state-of-ransomware-in-
+          financial-services serves its asset PDF with no registration form - but the page has rolled
+          to the 2025 edition, which this corpus already holds and has read. The 2024 whitepaper is
+          withdrawn by the publisher, so this never clears and no person can obtain it. Blocked
+          permanently, not pending.
       exceedance:
         basis: no_readable_artifact
         detail: >-
           What we hold is a 1,387-word page, not State of Ransomware 2024 (financial services). The report itself is gated.
           Unanswerable until the document is obtained — recorded as blocked rather
           than unread so it cannot be mistaken for a backlog that effort will clear.
+
+          Retested 2026-08-23: NOT gated. sophos.com/en-us/whitepaper/state-of-ransomware-in-
+          financial-services serves its asset PDF with no registration form - but the page has rolled
+          to the 2025 edition, which this corpus already holds and has read. The 2024 whitepaper is
+          withdrawn by the publisher, so this never clears and no person can obtain it. Blocked
+          permanently, not pending.
       population:
         basis: no_readable_artifact
         detail: >-
           What we hold is a 1,387-word page, not State of Ransomware 2024 (financial services). The report itself is gated.
           Unanswerable until the document is obtained — recorded as blocked rather
           than unread so it cannot be mistaken for a backlog that effort will clear.
+
+          Retested 2026-08-23: NOT gated. sophos.com/en-us/whitepaper/state-of-ransomware-in-
+          financial-services serves its asset PDF with no registration form - but the page has rolled
+          to the 2025 edition, which this corpus already holds and has read. The 2024 whitepaper is
+          withdrawn by the publisher, so this never clears and no person can obtain it. Blocked
+          permanently, not pending.
 
   - source_id: sophos_state_ransomware_manufacturing_2024
     properties:
@@ -226,24 +254,44 @@ audit:
           What we hold is a 1,312-word page, not State of Ransomware 2024 (manufacturing). The report itself is gated.
           Unanswerable until the document is obtained — recorded as blocked rather
           than unread so it cannot be mistaken for a backlog that effort will clear.
+
+          Retested 2026-08-23: NOT gated. The whitepaper page is now titled 'The State of Ransomware
+          in Manufacturing and Production 2025' - the edition this corpus holds and has read. The 2024
+          edition is withdrawn by the publisher, so this never clears and no person can obtain it.
+          Blocked permanently, not pending.
       distribution:
         basis: no_readable_artifact
         detail: >-
           What we hold is a 1,312-word page, not State of Ransomware 2024 (manufacturing). The report itself is gated.
           Unanswerable until the document is obtained — recorded as blocked rather
           than unread so it cannot be mistaken for a backlog that effort will clear.
+
+          Retested 2026-08-23: NOT gated. The whitepaper page is now titled 'The State of Ransomware
+          in Manufacturing and Production 2025' - the edition this corpus holds and has read. The 2024
+          edition is withdrawn by the publisher, so this never clears and no person can obtain it.
+          Blocked permanently, not pending.
       exceedance:
         basis: no_readable_artifact
         detail: >-
           What we hold is a 1,312-word page, not State of Ransomware 2024 (manufacturing). The report itself is gated.
           Unanswerable until the document is obtained — recorded as blocked rather
           than unread so it cannot be mistaken for a backlog that effort will clear.
+
+          Retested 2026-08-23: NOT gated. The whitepaper page is now titled 'The State of Ransomware
+          in Manufacturing and Production 2025' - the edition this corpus holds and has read. The 2024
+          edition is withdrawn by the publisher, so this never clears and no person can obtain it.
+          Blocked permanently, not pending.
       population:
         basis: no_readable_artifact
         detail: >-
           What we hold is a 1,312-word page, not State of Ransomware 2024 (manufacturing). The report itself is gated.
           Unanswerable until the document is obtained — recorded as blocked rather
           than unread so it cannot be mistaken for a backlog that effort will clear.
+
+          Retested 2026-08-23: NOT gated. The whitepaper page is now titled 'The State of Ransomware
+          in Manufacturing and Production 2025' - the edition this corpus holds and has read. The 2024
+          edition is withdrawn by the publisher, so this never clears and no person can obtain it.
+          Blocked permanently, not pending.
 
   # ── Read 2026-08-15, second batch ────────────────────────────────────────
   # Consistency rule applied across these, stated so the judgements can be argued
@@ -1497,18 +1545,34 @@ audit:
         basis: no_readable_artifact
         detail: >-
           A 1,498-word press release (Communiqué de Presse) announcing the 10th CESIN barometer, not the barometer.
+
+          Retested 2026-08-23: the registered URL returns a file BYTE-IDENTICAL to the one held (sha
+          c8b13e38...). The press release is what CESIN publishes at that address; the barometer
+          itself is not openly available. Not gated in the sense of a form a person can fill in.
       distribution:
         basis: no_readable_artifact
         detail: >-
           A 1,498-word press release (Communiqué de Presse) announcing the 10th CESIN barometer, not the barometer.
+
+          Retested 2026-08-23: the registered URL returns a file BYTE-IDENTICAL to the one held (sha
+          c8b13e38...). The press release is what CESIN publishes at that address; the barometer
+          itself is not openly available. Not gated in the sense of a form a person can fill in.
       exceedance:
         basis: no_readable_artifact
         detail: >-
           A 1,498-word press release (Communiqué de Presse) announcing the 10th CESIN barometer, not the barometer.
+
+          Retested 2026-08-23: the registered URL returns a file BYTE-IDENTICAL to the one held (sha
+          c8b13e38...). The press release is what CESIN publishes at that address; the barometer
+          itself is not openly available. Not gated in the sense of a form a person can fill in.
       population:
         basis: no_readable_artifact
         detail: >-
           A 1,498-word press release (Communiqué de Presse) announcing the 10th CESIN barometer, not the barometer.
+
+          Retested 2026-08-23: the registered URL returns a file BYTE-IDENTICAL to the one held (sha
+          c8b13e38...). The press release is what CESIN publishes at that address; the barometer
+          itself is not openly available. Not gated in the sense of a form a person can fill in.
 
   - source_id: afp_payments_fraud_2025
     properties:
@@ -1573,18 +1637,34 @@ audit:
         basis: no_readable_artifact
         detail: >-
           Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
+
+          Retested 2026-08-23: the registered URL returns HTTP 404. The page has moved and the source
+          needs a URL correction before it can be read at all - which is a different problem from an
+          unobtainable document, and is the only one of these a person could actually fix.
       distribution:
         basis: no_readable_artifact
         detail: >-
           Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
+
+          Retested 2026-08-23: the registered URL returns HTTP 404. The page has moved and the source
+          needs a URL correction before it can be read at all - which is a different problem from an
+          unobtainable document, and is the only one of these a person could actually fix.
       exceedance:
         basis: no_readable_artifact
         detail: >-
           Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
+
+          Retested 2026-08-23: the registered URL returns HTTP 404. The page has moved and the source
+          needs a URL correction before it can be read at all - which is a different problem from an
+          unobtainable document, and is the only one of these a person could actually fix.
       population:
         basis: no_readable_artifact
         detail: >-
           Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
+
+          Retested 2026-08-23: the registered URL returns HTTP 404. The page has moved and the source
+          needs a URL correction before it can be read at all - which is a different problem from an
+          unobtainable document, and is the only one of these a person could actually fix.
 
 
   - source_id: cyentia_iris_2025

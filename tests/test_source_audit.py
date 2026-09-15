@@ -246,7 +246,9 @@ class RoadmapFiguresTests(unittest.TestCase):
                              for p in (r.get("properties") or {}).values()))
         self.assertIn(f"needing a person | **{blocked}**", self.roadmap,
                       f"docs/ROADMAP.md no longer states {blocked} sources needing a person")
-        self.assertIn(f"**{blocked} sources are the rest of M1.**", self.roadmap)
+        # Not the trailing period: the sentence now continues outside the bold to say
+        # that most of them never clear, which is the more important half.
+        self.assertIn(f"**{blocked} sources are the rest of M1**", self.roadmap)
 
     def test_the_unread_category_is_empty_and_the_roadmap_says_so(self):
         """A source that is unread but readable is work; one nobody holds is not.

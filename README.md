@@ -6,7 +6,7 @@
 > for that job and no one doing it, so this is us doing it: reading the public reports everyone
 > cites, one at a time, and writing down what each one actually publishes.
 >
-> **64 of 75 read. Zero publish a mode.**
+> **65 of 75 read. Zero publish a mode.**
 >
 > Every answer is pinned to a document hash with the passage quoted, so you can check us rather
 > than trust us.
@@ -24,7 +24,7 @@ Asked of every source, in the same words, so two people's answers can be compare
 | **3** | Does it say **how often losses go bigger** than a given size? | exceedance |
 | **4** | Can you tell **who was measured** — which countries, industries, sizes? | population |
 
-Read on 64 sources so far, the answers are **0**, 14, 19 and 51. The first one is the finding.
+Read on 65 sources so far, the answers are **0**, 14, 20 and 52. The first one is the finding.
 
 **[Read the audit →](https://raviaxo.github.io/RiskShard/audit.html)** · or
 **[read one source and send back four answers](https://github.com/raviaxo/RiskShard/issues/new?template=read_a_source.md)**
