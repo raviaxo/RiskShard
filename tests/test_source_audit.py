@@ -290,6 +290,61 @@ class RoadmapFiguresTests(unittest.TestCase):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn(sentence, readme, f"README no longer states: {sentence}")
 
+    def test_the_mode_claim_states_the_live_count_wherever_it_is_made(self):
+        """The mode claim is made in four places, and three of them said "58" for a month.
+
+        README line 9 and line 27 were pinned; the same claim further down the README, in
+        Finding 1's table and on the explorer page were not, and were found stale on
+        2026-09-15 by reading them. Dated history (release notes, corrections) is exempt
+        on purpose; these are the live statements.
+        """
+        from engine.source_audit import PROPERTIES, VERIFIED, load_audit
+        rows = load_audit(ROOT)
+        counts = {prop: sum(1 for r in rows
+                            if (r["properties"].get(prop) or {}).get("basis") == VERIFIED
+                            and r["properties"][prop].get("publishes") is True)
+                  for prop in PROPERTIES}
+        self.assertEqual(counts["mode"], 0,
+                         "a source publishes a mode: the claim is now false — rewrite it, "
+                         "do not just bump the count")
+        c = self.coverage
+        read, total, unread = c["sources_fully_verified"], c["sources"], c["unverified"]
+        blocked = sum(1 for r in rows
+                      if any((p or {}).get("basis") == "no_readable_artifact"
+                             for p in (r.get("properties") or {}).values()))
+
+        def text(*parts):
+            # collapse wrapping: these files are hard-wrapped and a phrase may straddle lines
+            return " ".join((ROOT.joinpath(*parts)).read_text(encoding="utf-8").split())
+
+        expected = {
+            ("README.md",): [
+                f"Zero of {read} public cyber-loss sources publish a mode",
+                f"{read} read, {blocked} held only as a pointer",
+            ],
+            ("scripts", "explorer_template.html"): [
+                f"<b>{read} of {total} registered sources have been read",
+                f"Across {read} sources the answers are <b>0</b>, {counts['distribution']}, "
+                f"{counts['exceedance']} and {counts['population']}.",
+                f"all {total} sources, every answer",
+            ],
+            ("docs", "FINDINGS.md"): [
+                f"audits the {total} registered sources",
+                f"| registered sources **read** | **{read} of {total}** |",
+                f"| …publishing a **mode** | **0 of {read}** |",
+                f"| …publishing a **distribution** over loss or frequency | "
+                f"**{counts['distribution']} of {read}** |",
+                f"| …publishing an **exceedance** statement | **{counts['exceedance']} of {read}** |",
+                f"| …that measure a **population** they name | **{counts['population']} of {read}** |",
+                f"— **unanswerable** | **{blocked}** |",
+                f"| readable in principle, not yet read | **{unread}** |",
+            ],
+        }
+        for parts, figures in expected.items():
+            body = text(*parts)
+            for figure in figures:
+                self.assertIn(figure, body, f"{'/'.join(parts)} no longer states: {figure}")
+
     def test_no_source_has_two_audit_rows(self):
         """A duplicate row let the audit call one source both gated and read.
 

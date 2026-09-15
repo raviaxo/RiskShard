@@ -108,7 +108,7 @@ ours, each derived mechanically and re-runnable, and each published before anyon
 
 And one that is not about us:
 
-- **Zero of 58 public cyber-loss sources publish a mode.** Every three-point estimate
+- **Zero of 65 public cyber-loss sources publish a mode.** Every three-point estimate
   composes as a beta-PERT whose middle parameter is the mode — the most probable single
   value, and the number the output is most sensitive to. No source read publishes one: not
   the national statistics offices, not the police reporting bodies, not the insurers. IBM's
@@ -119,8 +119,8 @@ And one that is not about us:
   The same reading found the opposite of what we expected everywhere else: Cyentia publishes
   full loss distributions, DSIT states the cost of the top 5% of UK cases, Sophos states what
   share of ransom payments passed $5M. Every answer is pinned to a document hash with the
-  passage quoted, and **the coverage is published beside the claim — 58 read, 14 held only as
-  a landing page**, because a count without its denominator is how you get quoted wrong.
+  passage quoted, and **the coverage is published beside the claim — 65 read, 10 held only as
+  a pointer**, because a count without its denominator is how you get quoted wrong.
 
 None of this says the sources are wrong, and none of it says the outputs are too high or
 too low — a shard describes a *cell*, not a company, so "too high" has no referent.
