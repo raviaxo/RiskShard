@@ -48,18 +48,18 @@ observation or estimate. So this is not a gap in some shards — the schema coul
 if a source published one.
 
 **How far that goes beyond our own corpus is now measured rather than implied.**
-[ADR-0015](adr/0015-the-source-audit.md) audits the 61 registered sources on what they publish,
+[ADR-0015](adr/0015-the-source-audit.md) audits the 75 registered sources on what they publish,
 and a source-level claim counts only when a human has read the stored artifact:
 
 | | |
 | --- | --- |
-| registered sources **read** | **58 of 72** |
-| …publishing a **mode** | **0 of 58** |
-| …publishing a **distribution** over loss or frequency | **12 of 58** |
-| …publishing an **exceedance** statement | **17 of 58** |
-| …that measure a **population** they name | **45 of 58** |
-| held only as a landing page, a press release or no artifact — **unanswerable** | **17** |
-| readable in principle, not yet read | **2** |
+| registered sources **read** | **65 of 75** |
+| …publishing a **mode** | **0 of 65** |
+| …publishing a **distribution** over loss or frequency | **14 of 65** |
+| …publishing an **exceedance** statement | **20 of 65** |
+| …that measure a **population** they name | **52 of 65** |
+| held only as a landing page, a press release or no artifact — **unanswerable** | **10** |
+| readable in principle, not yet read | **0** |
 
 Until this arc that sentence read *"no source consulted does"*, resting on two reads and carrying no
 denominator. **Unread is not evidence of absence**, and the audit publishes the gap beside the claim
@@ -122,7 +122,8 @@ source registry pointed at the landing page and the gather stored what it was po
 our defect, not the field's**, and it had been sitting in the corpus for months while the shard
 programme cited Cyentia as a bridge source. The registry now points at the documents.
 
-What survives is narrower and still worth knowing: **17 of 61 remain held only as a pointer**,
+What survives is narrower and still worth knowing: **17 of 61 remained held only as a pointer** when
+this was written on 2026-08-15 (the live count is the table above),
 concentrated in IBM's *Cost of a Data Breach* cuts and Sophos's sector reports, whose sites refuse
 automated retrieval. Some of the field's most-cited figures are hard to obtain. Not all of the ones
 we could not read were among them.

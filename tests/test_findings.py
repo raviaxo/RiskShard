@@ -202,7 +202,7 @@ class FindingsPageTests(unittest.TestCase):
         # collapse wrapping: the README is hard-wrapped and a phrase may straddle lines
         readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
         self.assertIn("publish a mode", readme)
-        self.assertIn("held only as a landing page", readme,
+        self.assertIn("held only as a pointer", readme,
                       "the front door must publish the audit's coverage, not just its result")
 
     def test_the_front_door_links_to_it(self):
