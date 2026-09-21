@@ -18,29 +18,39 @@ waiting on you.***
    recorded in `~/business-os/comms/ventures/riskshard/venues.yaml`. The draft is
    `~/business-os/comms/ventures/riskshard/drafts/2026-08-16-no-source-publishes-a-mode.md`,
    ~110 words against the previous ~500, rebuilt from your own draft after you called the earlier
-   version AI-smelling. A social card and first comment are ready.
+   version AI-smelling. A social card and first comment are ready. **Copy figures refreshed
+   2026-09-15**: the body said *58 sources* for a month and now says 65 of 75.
    **It is the only lever that could move an ADR-0012 metric off zero**, and everything shipped in
    the last two arcs exists to catch the readers it would send.
 
-2. **13 sources still need a person.** IBM regional cuts, CESIN, MYOB, the older Sophos sector cuts
-   (AFP declined 2026-08-21). They now have a route: drop the file in `sources/raw/` under the
+2. **10 sources are held only as a pointer, and most of them never clear** (#188, measured
+   2026-08-23). IBM regional cuts, CESIN, MYOB, the *withdrawn* 2024 Sophos sector cuts (AFP
+   declined 2026-08-21). **Only EPSS is fixable by a person** — its registered URL returns 404.
+   The rest have a route only if a human finds a copy: drop the file in `sources/raw/` under the
    manifest filename and run `scripts/record_manual_artifacts.py`. The doctor prints the count on
    every run, so this needs no reminder here — it is listed because it is the whole remainder of M1.
 
-3. **Ask Tony Martin-Vegue for one audit row**, at the meeting. That is roadmap M3's definition of
-   done, and he has never been asked.
+3. **Reply to John Flack — 31 days owed as of 2026-09-21.** He answered the `recovery` question on
+   2026-08-21, the same day it was asked, and nothing went back. His answer: `insurance_recovery`
+   stays the amount type, accounting status becomes a separate facet filled only where the filing
+   states it, `shape` is separate again. **M3b is unblocked**; no record migration.
+   Draft ready: `~/business-os/comms/ventures/riskshard/drafts/MSG-john-flack-recovery-reply.txt` —
+   confirms the decision, asks the one open question (does existing `provisional/final` stay its own
+   axis beside `estimated/accrued/received`), and asks him for an audit row.
+   ⚠️ Unchanged by his engagement: this **moves neither ADR-0012 metric**, and building M3b weeks
+   before the 2026-11-01 measurement invites sunk-cost reasoning.
 
-4. **Ask John Flack the `recovery` question**, 1:1 in GRC EC rather than as a post. *Does an
-   insurance recovery stay a distinct quantity, or become a treatment of one?* It is the single
-   place his amount-shape design meets our existing 48 amounts, and there is no other route to him
-   now that publishing there is paused. Background:
-   [`amount_shape_design_input.md`](amount_shape_design_input.md). Without it the ADR gets written
-   against a guess, and M3b stays blocked.
+4. **Decide M1's definition of done — the target date passed on 2026-09-15.** It said the doctor
+   prints *72 of 72*; #188 measured that as unreachable and the denominator is 75. The proposal in
+   the roadmap: done means every source is read on all four properties **or** classified
+   unobtainable with the reason recorded (65 and 10 as of 2026-09-21). Approve, reject, or replace —
+   until then M1 carries a passed date against a bar nobody can meet.
 
-   ⚠️ Two standing flags, both easier to fudge now that he has engaged substantively: this is a
-   **design input and moves neither ADR-0012 metric**, and improving the registry weeks before a
-   criterion that may retire it invites sunk-cost reasoning — *"we just improved it"* is not an
-   argument at the measurement point.
+5. **`v0.11.0` and `v0.11.1` were never tagged or released.** The data packs
+   (`data_pack_releases/2026.08.23-v0.11.*.json`) and the CHANGELOG entries exist, citations pin to
+   `2026.08.23-v0.11.1`, and GitHub's latest release is still `v0.10.0` — so the release link in the
+   restart point below 404s. Either tag both commits and publish the releases, or correct every
+   place that claims v0.11.1 shipped.
 
 5. ✅ **CLOSED 2026-08-23 — ADR-0007 open question 1**, on the terms recommended since 2026-08-09:
    no mix is acceptable or unacceptable in general, the duty is to label, admission is the
@@ -81,46 +91,62 @@ waiting on you.***
 7. **If a challenger breaks a number:** approve the retraction, credit by handle. The reply posture
    is in the campaign reply-kit.
 
+8. **Tony Martin-Vegue was asked for one audit row on 2026-09-15** and nothing is owed until he
+   answers. He read the audit unprompted, called it *"basically all the information one would need
+   to use any report in a risk analysis"*, and asked how he could help; the ask was one row with the
+   passage quoted, Coalition 2026 suggested. If a row arrives it is **roadmap M3's definition of
+   done** — record it through the `read_a_source` route, credited by handle. Do not add a second ask.
+
+   *He also pointed at `github.com/jacobdjwilson/awesome-annual-security-reports` (1,125 report
+   PDFs, MIT index, AI-written summaries). Checked 2026-09-15: it holds the flagship editions this
+   corpus already audits and **none of the 10 we are blocked on** — no IBM regional cuts, no Sophos
+   sector cuts, no CESIN, AFP, MYOB or EPSS — and no newer edition of anything we anchor on. It is a
+   finder, not a source of record: its PDFs are rehosted vendor copies, so the publisher's own file
+   is still what gets hashed. Auditing its 1,125 reports is declined — a good external idea, not a
+   defect measured in our own data (ADR-0009).*
+
+
 ---
 
 ## Restart point
 
-**Session closed 2026-08-23/24. `main` at 459 tests, evidence clean, preflight clean, doctor GREEN
-ON EVERY CHECK, tree clean, `main` == `origin/main`. Data pack `090bee2ae02a`, released as
-[v0.11.1](https://github.com/raviaxo/RiskShard/releases/tag/v0.11.1)** (v0.11.0 was cut in the same
-arc). Merged: #179, #180, #181, #182, #183, #184, #185, #186, #187.
+**Session 2026-09-15/21 (this one). `main` at `8c640c9`, 466 tests, evidence clean, tree clean,
+`main` == `origin/main`, no PR open.** Audit at **65 of 75** read, 260 of 300 answers verified,
+10 sources held only as a pointer, 0 unread.
 
-**✅ [#189](https://github.com/raviaxo/RiskShard/pull/189) MERGED 2026-08-24 — ADR-0019 accepted, so
-roadmap U2 / execution-plan W4 is declined.** Nearest-shard borrowing would have turned 456
-unanswerable cells into 456 relabelled copies of 11 numbers, with 59% of donors chosen by a tiebreak
-carrying no evidentiary meaning. **Track B now has nothing scheduled in it**, and that is the state
-rather than a gap to fill.
+**Both PRs that were open are merged.** [#188](https://github.com/raviaxo/RiskShard/pull/188)
+(64 to 65, "needs a person" tested and largely wrong) and
+[#190](https://github.com/raviaxo/RiskShard/pull/190) landed 2026-09-15.
 
-**🔴 ONE PR OPEN AND IT IS YOURS: [#188](https://github.com/raviaxo/RiskShard/pull/188)** — "needs a
-person" tested on all ten, and largely wrong. Audit 64 → 65 of 75. Australia 2025 was never gated;
-the 2024 Sophos sector cuts are *withdrawn* rather than gated and never clear; EPSS returns 404.
-**It concludes that `riskshard_doctor.py` printing 72 of 72 is not reachable**, which rewrites M1's
-definition of done. Rebased on `main` 2026-08-24, 464 tests, checks green, no conflicts.
+**The mode claim was stated at a month-old count in three places and is now pinned in all of them.**
+README's findings section, Finding 1's table and the explorer page all said *58 of 72*; the README
+banner and four-answers line were pinned and current, which is exactly why the others drifted
+unnoticed. #190 fixed them and added the test; this session's commit adds the same test for the
+roadmap's M2 table, which said 58 too. **Every public copy of the claim now fails a test if it
+drifts, and fails differently if a source ever publishes a mode.**
 
-**Until #188 lands the front door understates the audit by one**: `main`'s README says 64 of 75 and
-#188 carries the 65. Behind, not wrong.
+**NEXT OBJECTIVE: decide M1's definition of done** (owner item 4). Its target date passed on
+2026-09-15 against a bar #188 measured as unreachable.
 
-**NEXT OBJECTIVE: not chosen.**
+**Also outstanding, and both are the owner's:** the reply owed to John Flack since 2026-08-21
+(owner item 3, draft ready) and the unsent mode post (owner item 1, figures now current).
+**41 days to the 2026-11-01 measurement** as of 2026-09-21, and both ADR-0012 metrics read zero.
 
 *Operational note, 2026-08-24: #188 hit merge conflicts because the session-close docs commit
 (`471836e`) landed on `main` after both branches were cut, and all three edit this file and the
 roadmap. Rebased and resolved. Closing a session with branches still open will do this again —
 either rebase them at close, or close before opening them.*
 
-### This week (drafted 2026-08-24, not started)
+### This week (drafted 2026-09-21)
 
 | | what | why it is first |
 | --- | --- | --- |
-| **A** | **Merge or reject [#188](https://github.com/raviaxo/RiskShard/pull/188)** | The last decision outstanding. #189 landed 2026-08-24, so B and D below are now live rather than conditional |
-| **B** | **Rewrite M1's definition of done** | #188 shows *72 of 72* is unreachable, so M1 carries a target date against a bar that cannot be met — the same defect class as a stale ADR |
-| **C** | **Fix the EPSS URL** | It returns 404. The only one of the ten a person can actually clear |
-| **D** | **Decide what Track B is now** | #189 has landed, so usability has no scheduled item. Either take the depth axis — evidence declared per cell, which is what would make "nearest" meaningful — or say plainly that the audit is the product and Track B was a detour |
-| **E** | *(standing, unblocked)* | **Ask one named person for one audit row.** M3's definition of done. Parked by you on 2026-08-24 — noted, not forgotten |
+| **A** | **Decide M1's definition of done** | The only thing with a date already passed. Everything in Track A reads against it |
+| **B** | **Send the John Flack reply** | Owed 31 days; the draft is written; it also carries the second M3 ask |
+| **C** | **Send the mode post** | The only lever that could move an ADR-0012 metric off zero, and the clock is 41 days out |
+| **D** | **Fix the EPSS URL** | The one blocked source a person can actually clear |
+| **E** | **Decide what Track B is now** | Unchanged since 2026-08-24: take the depth axis, or say the audit is the product and Track B was a detour |
+| **F** | **Tag v0.11.0/v0.11.1, or correct the record** | Owner item 5. Citations pin to a release GitHub has never heard of |
 
 **2026-11-01 is unchanged** ([ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md)): the
 registry kill criterion re-measures at the first release on or after that date. Both metrics read
