@@ -102,24 +102,28 @@ What remains needs a person: IBM regional cuts, AFP (**declined 2026-08-21**), C
 the older Sophos sector cuts. **Cyentia IRIS was already fully read** — an earlier version of this
 list said otherwise and was wrong.
 
-**Done means:** `riskshard_doctor.py` prints 72 of 72, and the phrase *"the audit is complete"*
-becomes true and publishable. It is a headline exactly once.
+**Done means — being rewritten, and the target date has passed.** This said `riskshard_doctor.py`
+prints 72 of 72. #188 measured that as unreachable (most of the ten never clear), and the
+denominator is 75, not 72, so the bar is stale twice over. The milestone's 2026-09-15 target passed
+undecided. The proposal on the owner's desk: done means every source is either read on all four
+properties **or** classified unobtainable with the reason recorded — 65 and 10 as of 2026-09-21 —
+and *"the audit is complete"* becomes publishable on that basis. It is a headline exactly once.
 
 ## Track A · M2 — Publish the audit as its own artifact · ✅ **done 2026-08-19**, ahead of target
 
 [**raviaxo.github.io/RiskShard/audit.html**](https://raviaxo.github.io/RiskShard/audit.html)
 
-All 72 registered sources, four questions each. Every answer states what it was checked against,
+All 75 registered sources, four questions each. Every answer states what it was checked against,
 carries the document's SHA-256 and the date it was read, and can be disputed from its own row.
 
 The four-questions table is the finding in one place, counted against what has actually been read:
 
 | property | publishes | of sources read |
 | --- | ---: | ---: |
-| mode | **0** | 58 |
-| distribution | 12 | 58 |
-| exceedance | 17 | 58 |
-| population | 45 | 58 |
+| mode | **0** | 65 |
+| distribution | 14 | 65 |
+| exceedance | 20 | 65 |
+| population | 52 | 65 |
 
 Built by `scripts/build_audit_page.py` from `sources/audit.yaml` and deployed with the explorer.
 Nothing on it is hand-written. Nine tests pin the things a table quietly gets wrong: a count
@@ -150,22 +154,32 @@ Shipped so far:
 - **A name for the job**, because it has no category and a reader needs somewhere to file it:
   *cyber loss figures get quoted far past what they can support, and nobody checks.*
 
-**Still to do:** ask three named people directly. A route nobody is pointed at is the same as no
-route, and that is the mistake this milestone exists to not repeat.
+**Asked so far (as of 2026-09-21): one.** Tony Martin-Vegue, 2026-09-15 — one row, four questions,
+the passage quoted. He offered help unprompted after reading the audit. A second ask is drafted and
+unsent. A route nobody is pointed at is the same as no route, and that is the mistake this milestone
+exists to not repeat.
 
 **Done means:** one person outside the project produces one audit row. Then the spec gets written
 from what confused them, rather than from what we imagine would.
 
-## Track A · M3b — Amount shape and treatment · **blocked, and split out 2026-08-20**
+## Track A · M3b — Amount shape and treatment · **unblocked 2026-08-21, not started**
 
 Split from M3 because it is a different specification of a different object: the four questions
 audit **sources**, this labels **loss records**. Bundling them made the whole milestone wait on one
 question with no route to its author.
 
-Blocked on the `recovery` question for John Flack — does an insurance recovery stay a distinct
-quantity, or become a treatment of one? Background:
-[`amount_shape_design_input.md`](internal/amount_shape_design_input.md). GRC EC publishing is
-paused; talking there is not, so this is a direct message rather than a post.
+**The `recovery` question was answered on 2026-08-21.** John Flack's answer: `insurance_recovery`
+stays the amount **type**, because the type says what the amount *is*; accounting status is a
+**separate** facet, and it is filled only where the filing states it; `shape` is cleanly separate
+from both. So no record migration, and the 10 `insurance_recovery` amounts keep their type.
+Background: [`amount_shape_design_input.md`](internal/amount_shape_design_input.md).
+
+**One question is open before the ADR can be written:** we already carry
+`provisional | final | not_stated`, and his answer implies that stays its own axis while
+`estimated / accrued / received` is a second one — two fields, not a refactor of one.
+
+**Not started on purpose.** A schema change needs its own ADR (Change Control), and building this
+before the 2026-11-01 measurement invites the sunk-cost reasoning ADR-0017 exists to refuse.
 
 ## Track A · M4 — The registry decision · **2026-11-01, fixed**
 

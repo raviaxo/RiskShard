@@ -290,6 +290,24 @@ class RoadmapFiguresTests(unittest.TestCase):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn(sentence, readme, f"README no longer states: {sentence}")
 
+    def test_the_roadmap_m2_table_counts_against_what_has_been_read(self):
+        """M2's table is the finding in one place, and it read 58 for a month.
+
+        Found stale on 2026-09-21 by reading it, a month after the count moved. Same
+        defect class as the README banner, which has had a test since 2026-08-22.
+        """
+        from engine.source_audit import PROPERTIES, VERIFIED, load_audit
+        rows = load_audit(ROOT)
+        read = self.coverage["sources_fully_verified"]
+        self.assertIn(f"All {self.coverage['sources']} registered sources", self.roadmap)
+        for prop in PROPERTIES:
+            publishes = sum(1 for r in rows
+                            if (r["properties"].get(prop) or {}).get("basis") == VERIFIED
+                            and r["properties"][prop].get("publishes") is True)
+            cell = f"**{publishes}**" if prop == "mode" else f"{publishes}"
+            row = f"| {prop} | {cell} | {read} |"
+            self.assertIn(row, self.roadmap, f"docs/ROADMAP.md M2 table no longer states: {row}")
+
     def test_the_mode_claim_states_the_live_count_wherever_it_is_made(self):
         """The mode claim is made in four places, and three of them said "58" for a month.
 

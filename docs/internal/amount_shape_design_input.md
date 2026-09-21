@@ -1,7 +1,19 @@
 # Amount shape and accounting treatment — design input from John Flack, and what it costs
 
-*Received 2026-08-16 in GRC EC `#labs_demos`. Measured the same day. **Not yet built** — three
-things need resolving first and one of them needs him.*
+*Received 2026-08-16 in GRC EC `#labs_demos`. Measured the same day. **Not yet built.***
+
+> **RESOLVED 2026-08-21 — he answered `recovery` the same day it was asked.** Keep
+> `insurance_recovery` as the amount **type**, because the type says what the amount *is*;
+> **accounting status is a separate facet**, filled only where the filing explicitly supports it;
+> `shape` is cleanly separate; accrual is separate again (a filing can disclose a $10–15M estimated
+> range *and* accrue $12M). So **nothing migrates** — the 10 `insurance_recovery` amounts keep their
+> type, which resolves question 1 below without breaking a record.
+>
+> **Question 2 narrows rather than closes:** he reads `provisional/final` as arguably its own axis
+> apart from `accrued/incurred/received`, which would make it two fields rather than a refactor of
+> the populated one. Asked back on 2026-09-21; the ADR waits on that answer.
+>
+> The ⚠️ flags at the end of this file are unchanged by his engagement.
 
 ## What he proposed
 
