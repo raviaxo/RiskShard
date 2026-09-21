@@ -107,7 +107,7 @@ def source_audit_check(root):
     progress, not a failure, so it never fails the run; only a defect does, and a
     defect is always a way the audit could claim more than it read.
     """
-    from engine.source_audit import audit_defects, build_source_audit
+    from engine.source_audit import audit_defects, build_source_audit, load_exclusions
 
     defects = audit_defects(root)
     if defects:
@@ -117,6 +117,7 @@ def source_audit_check(root):
             "detail": f"{len(defects)} defect(s): {defects[0]}",
         }
     coverage = build_source_audit(root)["coverage"]
+    exclusions = load_exclusions(root)
     if not coverage["verified"]:
         return {
             "name": "source audit",
@@ -134,6 +135,10 @@ def source_audit_check(root):
             "not a finding"
             + (f"; {coverage['blocked_no_artifact']} blocked (artifact is not the source)"
                if coverage["blocked_no_artifact"] else "")
+            # ADR-0020: a declared exclusion is a hole in the enumeration, so it is
+            # printed beside the coverage rather than left for someone to notice.
+            + (f"; {len(exclusions)} publisher(s) declared excluded (ADR-0020)"
+               if exclusions else "")
         ),
     }
 

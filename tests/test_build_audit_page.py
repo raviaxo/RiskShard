@@ -171,4 +171,34 @@ class TheAskIsReachableTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+class DeclaredExclusionPageTests(unittest.TestCase):
+    """ADR-0020: the page publishes the corpus's deliberate holes, not only its answers.
 
+    An exclusion recorded in a data file nobody reads is indistinguishable from a
+    silent omission, so the page is where it has to appear — in the same facts table
+    as the coverage, with its reason and date.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.audit = build_source_audit(ROOT)
+        cls.html = render(cls.audit, manifest_hashes(ROOT))
+
+    def test_the_count_sits_beside_the_coverage(self):
+        count = len(self.audit.get("exclusions") or [])
+        self.assertIn("publishers declared excluded", self.html)
+        self.assertIn(f"<b>{count}</b>", self.html)
+
+    def test_every_exclusion_is_published_with_its_reason_and_date(self):
+        entries = self.audit.get("exclusions") or []
+        for entry in entries:
+            self.assertIn(str(entry["publisher"]), self.html)
+            self.assertIn(str(entry["reason"]), self.html)
+            self.assertIn(str(entry["decided"]), self.html)
+        if not entries:
+            self.assertIn("None declared", self.html)
+
+    def test_the_page_says_the_corpus_is_not_a_census(self):
+        """The exclusion only reads honestly beside the scope claim it narrows."""
+        self.assertIn("never a census", self.html)
+        self.assertIn("0020-declared-exclusions.md", self.html)

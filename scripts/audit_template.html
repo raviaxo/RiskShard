@@ -120,6 +120,7 @@
     <tr><td>answers verified against an artifact</td><td><b>__RS_VERIFIED__</b> of __RS_SLOTS__</td></tr>
     <tr><td>answers blocked</td><td><b>__RS_BLOCKED__</b> — the artifact we hold is not the source</td></tr>
     <tr><td>answers unread</td><td><b>__RS_UNREAD__</b> — a question, never counted as an absence</td></tr>
+    <tr><td>publishers declared excluded</td><td><b>__RS_EXCLUDED__</b> — declared, never silent</td></tr>
   </table>
 
   <div class="preamble">
@@ -150,6 +151,18 @@
     <p><b>Blocked is not unread.</b> __RS_BLOCKED__ answers are blocked because what we hold is a
     landing page or a summary rather than the document. Effort does not clear those; obtaining the
     document does.</p>
+  </div>
+
+  <div class="note">
+    <div class="notehead">What this corpus leaves out on purpose</div>
+    <p>This corpus is an enumeration of the sources a practitioner reaches for, never a census of
+    public cyber-loss evidence, and no claim drawn from it may imply otherwise
+    (<a href="__RS_REPO__/blob/main/docs/adr/0015-the-source-audit.md">ADR-0015</a>). Absence is
+    therefore not a verdict on a publisher. Where a publisher is left out by <em>decision</em>
+    rather than by scope, it is listed here with the reason and the date, so the gap can be seen
+    and counted rather than inferred
+    (<a href="__RS_REPO__/blob/main/docs/adr/0020-declared-exclusions.md">ADR-0020</a>).</p>
+    __RS_EXCLUSIONS__
   </div>
 
   <div class="note">

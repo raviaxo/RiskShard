@@ -162,6 +162,21 @@ def render_records(audit, hashes):
     return "\n".join(out)
 
 
+def render_exclusions(audit):
+    """Declared exclusions, or an explicit statement that there are none (ADR-0020)."""
+    entries = audit.get("exclusions") or []
+    if not entries:
+        return "<p><b>None declared.</b> Every absence from this corpus is absence by scope.</p>"
+    rows = []
+    for entry in entries:
+        scope = entry.get("scope") or "all publications"
+        rows.append(
+            f'<tr><td>{esc(entry.get("publisher") or "")} &mdash; {esc(scope)}</td>'
+            f'<td>{esc(entry.get("reason") or "")} &middot; declared '
+            f'{esc(str(entry.get("decided") or ""))}</td></tr>')
+    return '<table class="facts">' + "".join(rows) + "</table>"
+
+
 def render(audit, hashes, repo_url=REPO_URL, site_url=SITE_URL, stamp=""):
     coverage = audit["coverage"]
     fields = {
@@ -171,6 +186,8 @@ def render(audit, hashes, repo_url=REPO_URL, site_url=SITE_URL, stamp=""):
         "__RS_SLOTS__": str(coverage["slots"]),
         "__RS_BLOCKED__": str(coverage["blocked_no_artifact"]),
         "__RS_UNREAD__": str(coverage["unverified"]),
+        "__RS_EXCLUDED__": str(len(audit.get("exclusions") or [])),
+        "__RS_EXCLUSIONS__": render_exclusions(audit),
         "__RS_QUESTIONS__": render_questions(audit),
         "__RS_MATRIX__": render_matrix(audit),
         "__RS_RECORDS__": render_records(audit, hashes),

@@ -53,6 +53,26 @@ def load_registry(root):
     return data.get("sources") or (data if isinstance(data, list) else [])
 
 
+def load_exclusions(root):
+    """Publishers deliberately not registered, with the reason recorded (ADR-0020).
+
+    Absence by scope needs no entry — the corpus is an enumeration, never a census
+    (ADR-0015 section 5). Absence by *decision* does, because a gap nobody declared
+    is indistinguishable from a gap nobody noticed, and this project's offer is that
+    a reader can check it rather than trust it.
+    """
+    data = yaml.safe_load((Path(root) / REGISTRY_RELPATH).read_text(encoding="utf-8")) or {}
+    if not isinstance(data, dict):
+        return []
+    return data.get("exclusions") or []
+
+
+def excluded_publishers(root):
+    """Lowercased publisher names that must not appear in the registry."""
+    return {str(e.get("publisher") or "").strip().lower()
+            for e in load_exclusions(root) if e.get("publisher")}
+
+
 def load_audit(root):
     """The audit file, or an empty audit when it does not exist yet."""
     path = Path(root) / AUDIT_RELPATH
@@ -131,7 +151,8 @@ def build_source_audit(root):
                 for prop in PROPERTIES
             },
         })
-    return {"sources": rows, "coverage": audit_coverage(rows)}
+    return {"sources": rows, "coverage": audit_coverage(rows),
+            "exclusions": load_exclusions(root)}
 
 
 def audit_coverage(rows):
@@ -214,9 +235,33 @@ def audit_defects(root):
     root = Path(root)
     registry_ids = {s.get("id") for s in load_registry(root)}
     hashes = manifest_hashes(root)
+    defects_exclusions = []
+
+    # ADR-0020: an exclusion is only worth anything if it cannot be half-written, and
+    # if the registry cannot quietly contradict it.
+    excluded = {}
+    for entry in load_exclusions(root):
+        publisher = str(entry.get("publisher") or "").strip()
+        if not publisher:
+            defects_exclusions.append(
+                "sources/registry.yaml exclusions: an entry has no publisher")
+            continue
+        missing = [field for field in ("reason", "decided") if not entry.get(field)]
+        if missing:
+            defects_exclusions.append(
+                f"{publisher}: declared excluded without {' and '.join(missing)} — "
+                "an exclusion with no recorded reason or date is a silent omission "
+                "with extra steps (ADR-0020)")
+        excluded[publisher.lower()] = publisher
+    for source in load_registry(root):
+        publisher = str(source.get("publisher") or "").strip().lower()
+        if publisher in excluded:
+            defects_exclusions.append(
+                f"{source.get('id')}: registered, but {excluded[publisher]} is declared "
+                "excluded (ADR-0020) — remove the source or the exclusion, deliberately")
     raw = root / "sources" / "raw"
     rows = load_audit(root)
-    defects = []
+    defects = list(defects_exclusions)
 
     # Two rows for one source is the quietest way this file can lie. It happened:
     # the 2025 manufacturing report was obtained on 2026-08-16 and read, and the old

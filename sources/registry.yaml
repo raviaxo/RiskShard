@@ -1439,3 +1439,24 @@ sources:
     S$913.1 million against 2024. Same aggregate caveat as the prior edition: national
     totals with no per-organization denominator, so not an impact anchor.
   url_stability: rolling
+
+# ---------------------------------------------------------------------------
+# Declared exclusions — ADR-0020.
+# A publisher listed here is deliberately NOT registered, and the reason is
+# recorded rather than left to inference. The audit page publishes these and the
+# doctor counts them; audit_defects fails if a registered source's publisher is
+# excluded, or if an entry below is missing its publisher, reason or date.
+# ---------------------------------------------------------------------------
+exclusions:
+- publisher: CrowdStrike
+  scope: all publications
+  reason: maintainer conflict of interest
+  decided: 2026-09-21
+  adr: docs/adr/0020-declared-exclusions.md
+  note: >
+    Declared before any CrowdStrike source had been registered or submitted, and before
+    any answer about one had been published. This records who is reading, not a judgement
+    about the publisher or their reports. The corpus is an enumeration of the sources a
+    practitioner reaches for (ADR-0015 section 5), never a census; this is the one place
+    that enumeration is narrowed on purpose, and it is stated so the gap can be counted.
+    If a reader submits a source from this publisher, the answer is this entry, not silence.

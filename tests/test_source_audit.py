@@ -378,3 +378,95 @@ class RoadmapFiguresTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+class DeclaredExclusionTests(unittest.TestCase):
+    """ADR-0020: a publisher left out by decision is declared, and the declaration bites.
+
+    Absence by scope needs nothing — the corpus is an enumeration, never a census
+    (ADR-0015 section 5). Absence by decision is the case these tests cover, because a
+    gap nobody declared cannot be told apart from a gap nobody noticed, and three stale
+    copies of this project's own headline already showed what survives when nothing fails.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        from engine.source_audit import load_exclusions
+        cls.exclusions = load_exclusions(ROOT)
+        cls.adr = (ROOT / "docs" / "adr" / "0020-declared-exclusions.md").read_text(
+            encoding="utf-8")
+
+    def test_every_exclusion_carries_a_publisher_a_reason_and_a_date(self):
+        for entry in self.exclusions:
+            for field in ("publisher", "reason", "decided"):
+                self.assertTrue(entry.get(field),
+                                f"exclusion {entry!r} has no {field} — that is a silent "
+                                "omission with extra steps")
+
+    def test_every_excluded_publisher_is_named_in_the_adr(self):
+        """The data file cannot narrow the corpus on its own.
+
+        An exclusion added to registry.yaml with no decision behind it is exactly what
+        ADR-0020 exists to prevent, so the ADR is the thing that has to name it.
+        """
+        for entry in self.exclusions:
+            self.assertIn(str(entry["publisher"]), self.adr,
+                          f"{entry['publisher']} is excluded in sources/registry.yaml but "
+                          "not named in ADR-0020")
+
+    def test_no_registered_source_comes_from_an_excluded_publisher(self):
+        from engine.source_audit import excluded_publishers, load_registry
+        excluded = excluded_publishers(ROOT)
+        offenders = [s.get("id") for s in load_registry(ROOT)
+                     if str(s.get("publisher") or "").strip().lower() in excluded]
+        self.assertEqual(offenders, [], f"registered from an excluded publisher: {offenders}")
+
+    def test_the_live_registry_reports_no_exclusion_defect(self):
+        self.assertEqual([d for d in audit_defects(ROOT) if "declared excluded" in d], [])
+
+    def test_registering_an_excluded_publisher_is_a_defect(self):
+        """The check has to actually bite, so it is made to fire."""
+        import shutil
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "sources").mkdir()
+            (root / "evidence").mkdir()
+            for name in ("registry.yaml", "manifest.json", "audit.yaml"):
+                shutil.copy(ROOT / "sources" / name, root / "sources" / name)
+            path = root / "sources" / "registry.yaml"
+            data = yaml.safe_load(path.read_text(encoding="utf-8"))
+            excluded = data["exclusions"][0]["publisher"]
+            data["sources"].append({
+                "id": "excluded_publisher_probe",
+                "title": "A report from a publisher we declared excluded",
+                "publisher": excluded,
+                "source_type": "vendor_report",
+                "url": "https://example.test/probe",
+                "publication_date": "2026-09-21",
+                "access_mode": "public_pdf",
+                "intended_use": "context",
+                "usage_notes": "probe only",
+                "url_stability": "rolling",
+            })
+            path.write_text(yaml.safe_dump(data), encoding="utf-8")
+            defects = audit_defects(root)
+            self.assertTrue(
+                any("declared excluded" in d and "excluded_publisher_probe" in d
+                    for d in defects), defects)
+
+    def test_an_exclusion_without_a_reason_is_a_defect(self):
+        import shutil
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "sources").mkdir()
+            (root / "evidence").mkdir()
+            for name in ("registry.yaml", "manifest.json", "audit.yaml"):
+                shutil.copy(ROOT / "sources" / name, root / "sources" / name)
+            path = root / "sources" / "registry.yaml"
+            data = yaml.safe_load(path.read_text(encoding="utf-8"))
+            data["exclusions"][0].pop("reason")
+            path.write_text(yaml.safe_dump(data), encoding="utf-8")
+            self.assertTrue(any("without reason" in d for d in audit_defects(root)),
+                            audit_defects(root))

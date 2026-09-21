@@ -39,6 +39,12 @@ The bar above and other strategic choices (schema direction, maturity definition
 what counts as benchmark-grade, licensing posture) change only through a recorded
 decision with a named owner doc.
 
+**Narrowing the corpus is one of those choices.** A publisher left out of
+`sources/registry.yaml` by decision rather than by scope is declared under `exclusions:` with the
+reason and the date, and named in an ADR — [ADR-0020](adr/0020-declared-exclusions.md). The audit
+page publishes every exclusion and the doctor counts them, because an undeclared narrowing of an
+enumeration is the one defect that discredits the standard rather than a single number.
+
 - If a change to the bar is needed, record the decision and its rationale in the
   owning doc before acting on it.
 - **If a strategic decision is needed and no owner doc records it: surface it and
