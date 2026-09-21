@@ -13,7 +13,11 @@ waiting on you.***
 
 ### Action owed
 
-1. **The mode post is written and unsent.** LinkedIn only — GRC EC publishing was paused
+1. **The mode post is written and PARKED by the owner on 2026-09-21** — held pending a personal
+   clearance check unrelated to the project's content, and not a copy or accuracy issue. Everything
+   below still applies when the hold lifts.
+
+   **The mode post is written and unsent.** LinkedIn only — GRC EC publishing was paused
    2026-08-19 (the channel is saturated; talking there is still fine, publishing is what stopped),
    recorded in `~/business-os/comms/ventures/riskshard/venues.yaml`. The draft is
    `~/business-os/comms/ventures/riskshard/drafts/2026-08-16-no-source-publishes-a-mode.md`,
