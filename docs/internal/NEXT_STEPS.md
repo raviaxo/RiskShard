@@ -30,23 +30,13 @@ waiting on you.***
    manifest filename and run `scripts/record_manual_artifacts.py`. The doctor prints the count on
    every run, so this needs no reminder here — it is listed because it is the whole remainder of M1.
 
-3. **Reply to John Flack — 31 days owed as of 2026-09-21.** He answered the `recovery` question on
-   2026-08-21, the same day it was asked, and nothing went back. His answer: `insurance_recovery`
-   stays the amount type, accounting status becomes a separate facet filled only where the filing
-   states it, `shape` is separate again. **M3b is unblocked**; no record migration.
-   Draft ready: `~/business-os/comms/ventures/riskshard/drafts/MSG-john-flack-recovery-reply.txt` —
-   confirms the decision, asks the one open question (does existing `provisional/final` stay its own
-   axis beside `estimated/accrued/received`), and asks him for an audit row.
-   ⚠️ Unchanged by his engagement: this **moves neither ADR-0012 metric**, and building M3b weeks
-   before the 2026-11-01 measurement invites sunk-cost reasoning.
-
-4. **Decide M1's definition of done — the target date passed on 2026-09-15.** It said the doctor
+3. **Decide M1's definition of done — the target date passed on 2026-09-15.** It said the doctor
    prints *72 of 72*; #188 measured that as unreachable and the denominator is 75. The proposal in
    the roadmap: done means every source is read on all four properties **or** classified
    unobtainable with the reason recorded (65 and 10 as of 2026-09-21). Approve, reject, or replace —
    until then M1 carries a passed date against a bar nobody can meet.
 
-5. **`v0.11.0` and `v0.11.1` were never tagged or released.** The data packs
+4. **`v0.11.0` and `v0.11.1` were never tagged or released.** The data packs
    (`data_pack_releases/2026.08.23-v0.11.*.json`) and the CHANGELOG entries exist, citations pin to
    `2026.08.23-v0.11.1`, and GitHub's latest release is still `v0.10.0` — so the release link in the
    restart point below 404s. Either tag both commits and publish the releases, or correct every
@@ -104,6 +94,14 @@ waiting on you.***
    finder, not a source of record: its PDFs are rehosted vendor copies, so the publisher's own file
    is still what gets hashed. Auditing its 1,125 reports is declined — a good external idea, not a
    defect measured in our own data (ADR-0009).*
+
+9. **John Flack was replied to on 2026-09-21** and two things are with him. The `recovery` question
+   he answered on 2026-08-21 is settled — `insurance_recovery` stays the amount **type**, accounting
+   status is a separate facet filled only where the filing states it, `shape` is separate again, and
+   **nothing migrates**. Still open, and the ADR waits on it: whether `provisional | final |
+   not_stated` stays its own axis beside `estimated / accrued / received`, which would make it two
+   fields rather than a refactor of one. He was also asked for an audit row (roadmap M3) in the same
+   reply. ⚠️ Neither answer moves an ADR-0012 metric, and M3b stays not-started before 2026-11-01.
 
 
 ---
