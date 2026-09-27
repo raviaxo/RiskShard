@@ -276,3 +276,67 @@ class FindingTenTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+class FindingElevenTests(unittest.TestCase):
+    """Finding 11's split is hand-classified, so the test is what keeps it honest.
+
+    The figures were stated publicly on 2026-09-27 before this file existed, which is
+    exactly the condition under which a number goes stale unnoticed. So: every
+    distribution answer must appear in one list or the other, the lists must be
+    disjoint, and the prose must state the counts the audit actually holds.
+    """
+
+    QUANTILES = {
+        "cyentia_iris_2025",
+        "cyentia_iris_2022",
+        "cyentia_iris_ransomware",
+        "verizon_dbir_2026",
+        "verizon_dbir_2025",
+        "uk_dsit_cyber_breaches_2026",
+    }
+    BANDS = {
+        "sophos_state_ransomware_2023",
+        "sophos_state_ransomware_2024",
+        "sophos_state_ransomware_2026",
+        "sophos_state_ransomware_financial_services_2025",
+        "sophos_state_ransomware_manufacturing_2025",
+        "sophos_state_ransomware_enterprise_2025",
+        "npa_japan_cyber_threats_2025_statistics",
+        "spf_annual_scam_cybercrime_brief_2025",
+    }
+
+    @classmethod
+    def setUpClass(cls):
+        from engine.source_audit import VERIFIED, build_source_audit, load_audit
+        cls.findings = (ROOT / "docs" / "FINDINGS.md").read_text(encoding="utf-8")
+        cls.coverage = build_source_audit(ROOT)["coverage"]
+        cls.publishing = {
+            row["source_id"] for row in load_audit(ROOT)
+            if (row["properties"].get("distribution") or {}).get("basis") == VERIFIED
+            and row["properties"]["distribution"].get("publishes") is True
+        }
+
+    def test_the_two_lists_are_disjoint(self):
+        self.assertEqual(self.QUANTILES & self.BANDS, set())
+
+    def test_every_distribution_answer_is_classified(self):
+        """A new source publishing a distribution must be put in a list, not ignored."""
+        self.assertEqual(self.publishing - (self.QUANTILES | self.BANDS), set(),
+                         "publishes a distribution and is classified as neither "
+                         "quantiles nor bands")
+        self.assertEqual((self.QUANTILES | self.BANDS) - self.publishing, set(),
+                         "classified but no longer answers yes on distribution")
+
+    def test_the_finding_states_the_counts_the_audit_holds(self):
+        read = self.coverage["sources_fully_verified"]
+        collapsed = " ".join(self.findings.split())
+        for figure in (f"read, **{len(self.publishing)}** publish a distribution",
+                       f"**{len(self.QUANTILES)}** | Cyentia IRIS 2025",
+                       f"**{len(self.BANDS)}** | Sophos global 2023",
+                       f"**{len(self.QUANTILES)} of {read} sources"):
+            self.assertIn(figure, collapsed,
+                          f"docs/FINDINGS.md finding 11 no longer states: {figure}")
+
+    def test_the_finding_says_the_split_is_not_a_schema_field(self):
+        """The scope claim is load-bearing: a column would need its own ADR."""
+        collapsed = " ".join(self.findings.split())
+        self.assertIn("not a fifth question and not a new field", collapsed)
