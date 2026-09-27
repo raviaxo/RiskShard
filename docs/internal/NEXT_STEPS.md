@@ -36,13 +36,7 @@ waiting on you.***
    manifest filename and run `scripts/record_manual_artifacts.py`. The doctor prints the count on
    every run, so this needs no reminder here — it is listed because it is the whole remainder of M1.
 
-3. **Decide M1's definition of done — the target date passed on 2026-09-15.** It said the doctor
-   prints *72 of 72*; #188 measured that as unreachable and the denominator is 75. The proposal in
-   the roadmap: done means every source is read on all four properties **or** classified
-   unobtainable with the reason recorded (65 and 10 as of 2026-09-21). Approve, reject, or replace —
-   until then M1 carries a passed date against a bar nobody can meet.
-
-4. **`v0.11.0` and `v0.11.1` were never tagged or released.** The data packs
+3. **`v0.11.0` and `v0.11.1` were never tagged or released.** The data packs
    (`data_pack_releases/2026.08.23-v0.11.*.json`) and the CHANGELOG entries exist, citations pin to
    `2026.08.23-v0.11.1`, and GitHub's latest release is still `v0.10.0` — so the release link in the
    restart point below 404s. Either tag both commits and publish the releases, or correct every
@@ -100,6 +94,20 @@ waiting on you.***
    finder, not a source of record: its PDFs are rehosted vendor copies, so the publisher's own file
    is still what gets hashed. Auditing its 1,125 reports is declined — a good external idea, not a
    defect measured in our own data (ADR-0009).*
+
+10. ✅ **DECIDED AND MET 2026-09-27 — M1's definition of done.** Done means every registered source
+    is either read on all four properties or classified unobtainable with the reason recorded;
+    nothing sits outside those two states, and a test fails if anything does. On that definition
+    **M1 is complete** at 65 read and 10 unobtainable. *"The audit is complete, of the obtainable
+    corpus"* is now a true and publishable sentence — **and it is a headline exactly once**, which
+    is worth spending deliberately rather than in a queue note. It is held behind the same clearance
+    as item 1.
+
+11. ✅ **CLOSED 2026-09-27 — Track B**, by [ADR-0021](../adr/0021-track-b-is-closed.md). U1 shipped,
+    U2 was declined on its own measurement, and W4/W5/W6 each depended on the one before it, so the
+    track had nothing scheduled and no end state. The defect it existed for — a reader who names
+    all four facets is answered 4 times in 192 — **is still real and now has no scheduled remedy**,
+    which the roadmap says out loud. Reopening takes a measured defect and its own ADR.
 
 9. **John Flack was replied to on 2026-09-21** and two things are with him. The `recovery` question
    he answered on 2026-08-21 is settled — `insurance_recovery` stays the amount **type**, accounting

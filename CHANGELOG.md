@@ -5,6 +5,43 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.12.0 — 2026-09-27
+
+**M1 closed, Track B closed, and three published claims corrected.** No parameter value moves; the
+portfolio figures are identical to v0.11.1.
+
+**The audit is complete, of the obtainable corpus.** M1's definition of done was decided on
+2026-09-27 — every registered source is either read on all four properties or classified
+unobtainable with the reason recorded — and met the same day at **65 read and 10 unobtainable, 0
+unread**. The old bar (*the doctor prints 72 of 72*) was unreachable and used a denominator that no
+longer existed. A test now fails if any source falls outside those two states.
+
+**EPSS was not a URL to fix.** The registered page returns 404 and the earlier reading said it had
+moved; re-measured on 2026-09-27, it was **retired**, and neither the data page nor the performance
+page publishes the statistics it was registered for. **So none of the ten unobtainable sources
+clears by effort** — the last exception is gone.
+
+**Finding 11: of the sources that publish a distribution, most publish a shape you cannot model
+from.** 14 of the 65 read publish a distribution; **6** publish percentiles you could fit a range
+to, **8** publish bands. Where p5/p50/p95 exist the mode is dispensable, so the audit's second
+question carries more weight than its first — and a bare *yes* was too coarse for a reader to act
+on. The defect is ours; the question came from a reader, publicly.
+
+**Track B is closed** ([ADR-0021](docs/adr/0021-track-b-is-closed.md)). U1 shipped, U2 was declined
+on its own measurement, and every later item depended on U2. The defect it existed for — a reader
+who names all four facets is answered 4 times in 192 — **is still real and now has no scheduled
+remedy**, which the roadmap states rather than implies.
+
+**Declared exclusions** ([ADR-0020](docs/adr/0020-declared-exclusions.md), amended the same week). A
+publisher may be left out of the registry by decision, and every exclusion publishes its scope,
+reason and date. One is declared; its name is withheld, and the ADR records that this makes the
+guard local rather than enforced in CI.
+
+**Housekeeping.** `v0.11.0` and `v0.11.1` were cut as data-pack releases and never tagged; both are
+now tagged at the commits that produced them, so citations pinned to `2026.08.23-v0.11.1` resolve.
+
+Data-pack release: `data_pack_releases/2026.09.27-v0.12.0.json`.
+
 ## v0.11.1 — 2026-08-23
 
 **One more source read, and the check that should have found it.** No published parameter value

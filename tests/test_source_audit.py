@@ -290,6 +290,29 @@ class RoadmapFiguresTests(unittest.TestCase):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn(sentence, readme, f"README no longer states: {sentence}")
 
+    def test_m1_is_complete_under_the_definition_decided_2026_09_27(self):
+        """M1's bar: every source is read on all four, or unobtainable with a reason.
+
+        The old bar (the doctor prints 72 of 72) was unreachable and used the wrong
+        denominator. This one is met, so the test that matters is the invariant behind
+        it: no source may sit in a third state. A source that is neither read nor
+        classified would make "the audit is complete, of the obtainable corpus" false
+        while every published count still looked right.
+        """
+        import yaml
+        rows = yaml.safe_load((ROOT / "sources" / "audit.yaml").read_text(encoding="utf-8"))["audit"]
+        blocked = sum(1 for r in rows
+                      if any((p or {}).get("basis") == "no_readable_artifact"
+                             for p in (r.get("properties") or {}).values()))
+        c = self.coverage
+        self.assertEqual(c["unverified"], 0,
+                         "a source is neither read nor classified unobtainable — M1's "
+                         "definition of done is no longer met")
+        self.assertEqual(c["sources_fully_verified"] + blocked, c["sources"],
+                         "read + unobtainable does not account for every registered source")
+        self.assertIn("done 2026-09-27", self.roadmap,
+                      "docs/ROADMAP.md no longer records M1 as decided and met")
+
     def test_the_roadmap_m2_table_counts_against_what_has_been_read(self):
         """M2's table is the finding in one place, and it read 58 for a month.
 
