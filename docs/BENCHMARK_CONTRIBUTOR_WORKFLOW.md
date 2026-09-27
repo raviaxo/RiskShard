@@ -143,7 +143,7 @@ the caveats are acceptable for a release claim.
 ## 6. Cut A Release (and record the strength trend)
 
 When the pack is ready to ship, cut a named data-pack release. This also appends
-one snapshot to the [progress ledger](../internal/strength_ledger.json), so the
+one snapshot to the [progress ledger](internal/strength_ledger.json), so the
 data-strength trend stays in lockstep with what's released:
 
 ```bash

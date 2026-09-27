@@ -59,9 +59,16 @@ def load_loss_events(root):
 def validate_loss_events(root):
     """Structural + rule errors. Returns a list of strings; empty means clean.
 
-    Schema validation runs when `jsonschema` is importable, but the rules below hold
-    regardless, because they are the ones ADR-0012 actually turns on and a missing
-    optional dependency must not silently disable them.
+    The rules below hold regardless of the schema, because they are the ones ADR-0012
+    actually turns on. The schema is applied on top of them, and **not applying it is
+    reported as an error rather than skipped** — `jsonschema` is a pinned hard
+    requirement (`requirements.txt`, `constraints.txt`), so its absence is a broken
+    environment, not an optional extra.
+
+    This used to `pass` on ImportError, which made the only schema-validated artifact in
+    the repository the only gate that failed open: an unvalidated registry came back
+    clean and the doctor printed pass. Nothing exercised the path either way until
+    2026-09-27.
     """
     root = Path(root)
     errors = []
@@ -72,16 +79,23 @@ def validate_loss_events(root):
     schema_path = root / SCHEMA_RELPATH
     try:
         import jsonschema
-
-        schema = json.loads(schema_path.read_text(encoding="utf-8"))
-        for path in sorted((root / REGISTRY_DIRNAME).glob("*.yaml")):
-            payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-            try:
-                jsonschema.validate(payload, schema)
-            except jsonschema.ValidationError as exc:
-                errors.append(f"{path.name}: schema: {exc.message}")
     except ImportError:
-        pass
+        errors.append(
+            f"schema: jsonschema is not installed, so {SCHEMA_RELPATH} was not "
+            "applied — install the pinned requirements "
+            "(pip install -r requirements.txt -c constraints.txt)")
+    else:
+        try:
+            schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f"schema: {SCHEMA_RELPATH} could not be read ({exc})")
+        else:
+            for path in sorted((root / REGISTRY_DIRNAME).glob("*.yaml")):
+                payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+                try:
+                    jsonschema.validate(payload, schema)
+                except jsonschema.ValidationError as exc:
+                    errors.append(f"{path.name}: schema: {exc.message}")
 
     seen = {}
     for event in events:

@@ -1,6 +1,7 @@
 import unittest
 from pathlib import Path
 
+from engine.data_packs import released_versions
 from engine.readiness import build_readiness_dashboard, format_readiness_dashboard
 
 
@@ -50,8 +51,24 @@ class ReadinessTests(unittest.TestCase):
             "ready_for_local_calibrated_run",
         )
         self.assertEqual(dashboard["feed_governance"]["problem_feeds"], [])
-        self.assertGreaterEqual(len(dashboard["next_actions"]), 2)
-        self.assertNotEqual(dashboard["next_actions"][0]["priority"], "P0")
+        # Not a count. This asserted ">= 2 actions" until 2026-09-27, and it only ever
+        # held because "cut a named data-pack release" was appended unconditionally —
+        # the list was padded by an action that was already done. An empty plate is a
+        # legitimate state for this dashboard to report, so what is checked is that
+        # every action it does report is well formed and ordered.
+        actions = dashboard["next_actions"]
+        self.assertTrue(
+            all({"priority", "area", "title", "detail", "command"} <= set(a)
+                for a in actions),
+            "a next action is missing one of its fields")
+        self.assertTrue(
+            all(a["priority"] in {"P0", "P1", "P2", "P3"} for a in actions),
+            "a next action carries an unknown priority")
+        priorities = [a["priority"] for a in actions]
+        self.assertEqual(priorities, sorted(priorities),
+                         "next actions are not ordered by priority")
+        if actions:
+            self.assertNotEqual(actions[0]["priority"], "P0")
 
     def test_readiness_dashboard_formats_for_console(self):
         dashboard = build_readiness_dashboard(ROOT)
@@ -74,3 +91,40 @@ class ReadinessTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ReleaseAdviceTests(unittest.TestCase):
+    """The dashboard must not advise cutting a release this pack already has.
+
+    It did, on every run, from the day the action was added until 2026-09-27 — including
+    the run minutes after v0.12.0 was tagged from the live fingerprint. Every other
+    action in `next_actions` fires on a condition; this one had none.
+    """
+
+    def test_the_live_pack_is_released_so_the_advice_is_not_offered(self):
+        dashboard = build_readiness_dashboard(ROOT)
+        pack = dashboard["data_pack"]
+        self.assertTrue(
+            pack["released_as"],
+            f"no release records fingerprint {pack['fingerprint'][:12]} — if the pack "
+            "genuinely has no release this test is telling the truth and the advice "
+            "below is correct")
+        titles = [a["title"] for a in dashboard["next_actions"]]
+        self.assertNotIn("Cut a named data-pack release", titles)
+
+    def test_an_unreleased_fingerprint_still_gets_the_advice(self):
+        """The guard must not silence the action, only condition it."""
+        from engine.readiness import next_actions
+
+        dashboard = build_readiness_dashboard(ROOT)
+        dashboard["data_pack"] = dict(dashboard["data_pack"], released_as=[])
+        titles = [a["title"] for a in next_actions(dashboard)]
+        self.assertIn("Cut a named data-pack release", titles)
+
+    def test_a_release_is_matched_on_fingerprint_not_on_filename(self):
+        """A citation pins the fingerprint, so that is what "released" has to mean."""
+        self.assertEqual(
+            [], released_versions("not-a-real-fingerprint",
+                                  ROOT / "data_pack_releases"))
+        self.assertEqual(
+            [], released_versions("anything", ROOT / "no_such_directory"))

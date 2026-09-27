@@ -61,7 +61,7 @@ The remaining 13 are listed by the doctor and now have a supported route:
    **UNGATED 2026-08-11.** This was blocked on one answer from John Flack — what a parameter
    must carry for him to use it without wincing. He answered on 2026-08-09 and went further,
    arguing the project should stop before quantification altogether. Recorded in
-   [ADR-0010](../adr/0010-where-riskshard-stops.md), which also retires the
+   [ADR-0010](../../adr/0010-where-riskshard-stops.md), which also retires the
    module-library framing (his objection to it is correct) and gives the repositioning a field
    list to design against instead of a guess. The owner restated the commitment in
    `#labs_demos` on 2026-08-11: *"the parameter is the product and the simulation is one
@@ -83,7 +83,7 @@ The remaining 13 are listed by the doctor and now have a supported route:
    maintains one of these datasets says the loss figures exist and nobody governs them. That is
    the strongest external validation the commons position has, and it arrived the same day as
    John Flack's, from someone who has never spoken to him — recorded in
-   [ADR-0010](../adr/0010-where-riskshard-stops.md).
+   [ADR-0010](../../adr/0010-where-riskshard-stops.md).
 
    **✅ CLOSED 2026-08-13 — he handed over the whole dataset and we did the work.** Asked for ten
    of his entries; he replied with the public Sheet for all of them. All 37 were run through the
@@ -91,7 +91,7 @@ The remaining 13 are listed by the doctor and now have a supported route:
    observation went out inside that, measured rather than held.
 
    **What the measurement found is bigger than the outreach:
-   [`destroyed_by_breach_extraction.md`](destroyed_by_breach_extraction.md).** 0 of 37 entries
+   [`destroyed_by_breach_extraction.md`](../destroyed_by_breach_extraction.md).** 0 of 37 entries
    carry a figure that is the cost of the breach to the company; 18 of 37 breach dates are a month
    or year coerced into an exact day; 12 of 37 cite no source. **It is a mortality register, not a
    loss registry** — which withdraws the denominator premise recorded further down this file.
@@ -107,7 +107,7 @@ The remaining 13 are listed by the doctor and now have a supported route:
    company-nomination form and there is no other contact route on either property. Subscribe
    to the Substack first. **Answer the question he asked; do not pitch.** This is ADR-0008
    commitment 3 and ADR-0005's missing second maintainer. Brief:
-   [`destroyed_by_breach_scout.md`](destroyed_by_breach_scout.md).
+   [`destroyed_by_breach_scout.md`](../destroyed_by_breach_scout.md).
 3. ✅ **CLOSED 2026-08-08 — v0.6.0 cut** (Ser said do it). Citations pin to
    `2026.08.08-v0.6.0`, so anything published about the tail work now resolves against a
    release that contains it.
@@ -118,7 +118,7 @@ The remaining 13 are listed by the doctor and now have a supported route:
    and put two questions back to him.
    *Entry corrected 2026-08-09 — it had been left standing as "to send" after the reply went out.*
 
-   **✅ ANSWERED 2026-08-09 — and the answer is [ADR-0010](../adr/0010-where-riskshard-stops.md).**
+   **✅ ANSWERED 2026-08-09 — and the answer is [ADR-0010](../../adr/0010-where-riskshard-stops.md).**
    Of the two questions: the 5%-or-40% one he **declined** as the wrong worry (*"I do end up
    worrying less around '5% or 40%' and more where RiskShard stops"*) — it is closed by refusal,
    not outstanding. The parameter-spec one he **answered with a field list**, of which we carry
@@ -167,7 +167,7 @@ publishes and nobody responds). LinkedIn is now the only publishing venue; recor
 distinct quantity, or become a treatment of one?* — has no other route to him. It is the single
 place his amount-shape design meets our existing 48 amounts. Ask it 1:1 in GRC EC (talking there is
 still fine; publishing is what stopped), or the ADR gets written against a guess. Background:
-[`amount_shape_design_input.md`](amount_shape_design_input.md).
+[`amount_shape_design_input.md`](../amount_shape_design_input.md).
 
 **The mode post is rewritten and ready**, LinkedIn only, in
 `~/business-os/comms/ventures/riskshard/drafts/2026-08-16-no-source-publishes-a-mode.md`. It is
@@ -189,7 +189,7 @@ version AI-smelling.
 - **Insider impact refreshed** to Ponemon/DTEX 2026 (#165), and a stale calibration note corrected —
   it had claimed the impact side was entirely generic long after two anchors became insider-specific.
 - **The ICO frequency parameter declined with arithmetic** (#166) — open judgment call 8.
-- **[ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md)** (#168) — the registry kill criterion
+- **[ADR-0017](../../adr/0017-the-kill-criterion-gets-a-clock.md)** (#168) — the registry kill criterion
   gets a date instead of a release count.
 - **The front door repaired** (#169) — it did not mention the audit at all, and its exceedance count
   was a day stale. Both now pinned by tests.
@@ -207,7 +207,7 @@ version AI-smelling.
    prepared answers for the four objections.
 
 **He answered 2026-08-16, and the reply went out.** His design input is captured in full with the
-measurement against it: [`amount_shape_design_input.md`](amount_shape_design_input.md). Short
+measurement against it: [`amount_shape_design_input.md`](../amount_shape_design_input.md). Short
 version — **both**, because they are orthogonal: an amount *shape*
 (`point / bounded range / lower bound / upper bound / unquantified`) is how the figure was
 expressed, and *treatment* (`accrued / incurred-realized / estimated-provisional / recovery`) is its
@@ -242,7 +242,7 @@ regional cuts and AFP); the doctor prints the count every run. 2 more are readab
 not yet read — the NPA Japan workbook needs a reader that resolves shared strings, and the CSA
 Singapore PDF is image-based.
 
-### ✅ DECIDED 2026-08-16 — the kill criterion gets a clock ([ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md))
+### ✅ DECIDED 2026-08-16 — the kill criterion gets a clock ([ADR-0017](../../adr/0017-the-kill-criterion-gets-a-clock.md))
 
 Option 2 was taken: the metrics are unchanged, the measurement point becomes **the first release
 cut on or after 2026-11-01**, and ADR-0017 commits that it **does not move again**. If it reads
@@ -308,7 +308,7 @@ against them. Read this restart point first.**
 
 ### What needed a decision — both decided 2026-08-15
 
-1. ✅ **DECIDED — derive it. [ADR-0013](../adr/0013-fit-is-derived-not-stored.md) is accepted and
+1. ✅ **DECIDED — derive it. [ADR-0013](../../adr/0013-fit-is-derived-not-stored.md) is accepted and
    the stored field is retired.** The premise that blocked this — *"it cannot be derived away,
    because an `all` declaration is deliberately dilution and only the author can make that call"* —
    was measured on 2026-08-15 and does not hold. The call is real but is not being made
@@ -318,7 +318,7 @@ against them. Read this restart point first.**
    containment-aware derivation that would have preserved the distinction publishes **7** facet
    claims against the **43** published today — quieter, which is the disallowed direction. Country
    already derives strictly, which is why it is the one facet where stored and derived agree.
-   Published as [finding 6](../FINDINGS.md).
+   Published as [finding 6](../../FINDINGS.md).
 
    ✅ **IMPLEMENTED the same day.** `_card_population` derives from `applicability` alone;
    `population_match` is removed from the schema (refused, not ignored) and from all 141 records in
@@ -361,7 +361,7 @@ against them. Read this restart point first.**
   fails the build if another appears. **No loss figure moved**, but the seeded benchmark blocker
   count went **19 → 22** — three BEC shards had been passing the industry-relevance gate on a false
   declaration. Recorded in `revisions/2026-08-14-three-bec-shards-*.yaml` and as
-  [finding 5](../FINDINGS.md).
+  [finding 5](../../FINDINGS.md).
 - **Retired mid-arc:** #136's three-label rendering (`declared for` / `not measured on` /
   `fit vs this cell`). It rested on the stored layer being intrinsic to the record, which was an
   artifact of the mislabelled declarations. #137 restored the two labels ADR-0011 specified. The
@@ -435,7 +435,7 @@ honest expected outcome for IBM is a documented negative.
 shipped, then the project's scope and thesis were both written down for the first time, and one of
 them was stated publicly.
 
-**What changed that is bigger than the code.** [ADR-0009](../adr/0009-what-riskshard-is-and-is-not.md)
+**What changed that is bigger than the code.** [ADR-0009](../../adr/0009-what-riskshard-is-and-is-not.md)
 records what RiskShard is — a governed evidence commons, **not** a CRQ methodology project — with
 the test *does this make an existing published number more correct, or the method more
 sophisticated?* and the rule that **a new declared axis may only be born from a defect measured in
@@ -444,7 +444,7 @@ analysis. It's closer to Metasploit for risk — a vetted module library."**~~
 
 ⚠️ **THAT ANALOGY IS RETIRED — 2026-08-11, publicly, by the owner who made it publicly.** Do not
 pick it up from this record and mistake it for the current thesis; see
-[ADR-0010](../adr/0010-where-riskshard-stops.md). John's objection is correct and lands on the
+[ADR-0010](../../adr/0010-where-riskshard-stops.md). John's objection is correct and lands on the
 analogy's only load-bearing claim, portability: *an exploit module is stable once you know the
 target conditions, but for a risk observation the org, controls, threat environment, dependencies
 and time horizon **are** the thing being estimated*, so no residue travels. What survives is
@@ -494,7 +494,7 @@ holds under any thesis. The front-door repositioning (owner list item 1, publicl
 the bigger move but is better done with his answer to the parameter-spec question in hand.
 
 The defect: **our published anchors are mis-specified against the slots they occupy.** Found by John Flack 2026-08-07, verified in our own data 2026-08-08, and in
-scope without argument under [ADR-0009](../adr/0009-what-riskshard-is-and-is-not.md) obligation 1.
+scope without argument under [ADR-0009](../../adr/0009-what-riskshard-is-and-is-not.md) obligation 1.
 
 A beta-PERT's second parameter is the **mode**. Measured across the portfolio:
 
@@ -556,7 +556,7 @@ idiom than manufacturing a mode nobody measured.
 **AND THE ONE THAT DECIDES RELEVANCE: the shard is blind to company context.** Raised by Ser
 2026-08-08; measured the same day. **Externally corroborated 2026-08-09** — it is John Flack's
 *"how far it is from my context"*, one of the two fields on his list we do not carry at all
-([ADR-0010](../adr/0010-where-riskshard-stops.md)). Note it therefore **clears the ADR-0009
+([ADR-0010](../../adr/0010-where-riskshard-stops.md)). Note it therefore **clears the ADR-0009
 gate**: it was born from a defect measured in our own data on 2026-08-08, not from his good idea
 about measurement. Clearing the gate is not scheduling it, and the hard constraint below is
 unchanged. `org_profiles/au_finance_midmarket.yaml` declares
@@ -581,9 +581,9 @@ Ser, not code: it is an outreach move. ~~A documented loss-event registry is pre
 denominator, which is the thing 7 of our 11 maxima lack, and Adrian Sanabria has both the dataset
 (destroyedbybreach.com, 35 organisations, 2002–2026) and the open question ("should there be a
 badly-hurt-by-a-breach list?").~~ ADR-0005 was Deferred for want of a second maintainer; that is
-exactly what has appeared. See [`destroyed_by_breach_scout.md`](destroyed_by_breach_scout.md) for
+exactly what has appeared. See [`destroyed_by_breach_scout.md`](../destroyed_by_breach_scout.md) for
 the recommended approach, and
-[`destroyed_by_breach_extraction.md`](destroyed_by_breach_extraction.md) for what the dataset
+[`destroyed_by_breach_extraction.md`](../destroyed_by_breach_extraction.md) for what the dataset
 actually contains.
 
 ⚠️ **THE DENOMINATOR CLAIM IS WITHDRAWN — measured 2026-08-12.** Adrian Sanabria shared the full
@@ -649,7 +649,7 @@ evidence report Measures column + callouts + headline; README front door correct
    average self-reported BEC loss (a mean cannot anchor a maximum, and ASD stays ungatherable).
    `revisions/2026-08-07-australia-bec-stress-anchor-moves-to-a-documented-event.yaml`.
 4. ✅ **DONE 2026-08-07 — the first worked decision published** (PR #113):
-   [`docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md`](../WORKED_DECISION_AU_RANSOMWARE_LIMIT.md).
+   [`docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md`](../../WORKED_DECISION_AU_RANSOMWARE_LIMIT.md).
    Recommends **AUD 20M as a floor under review** for a synthetic AU mid-market finserv firm.
    Three findings worth carrying forward: (a) the shard's headline AVG/P95/P99 are
    **annualised** and are not limit-setting inputs — a limit is per-occurrence and sized
@@ -677,7 +677,7 @@ evidence report Measures column + callouts + headline; README front door correct
    ADR-0003 rule is preserved and **pinned by a test verified to fail** when the guard is
    removed: pre-split entries never receive a fabricated "+4".
 
-6. **DECIDED 2026-08-07 — [ADR-0008, the governed tail](../adr/0008-the-governed-tail.md),
+6. **DECIDED 2026-08-07 — [ADR-0008, the governed tail](../../adr/0008-the-governed-tail.md),
    Accepted.** The strategic call the owner made after the three external critiques were read
    together. **The unit of value becomes the governed tail.** Measured: `impact.max` is a
    modeled quantile in **0 of 11 shards** (4 single documented events, 4 dataset extrema, 2
@@ -701,7 +701,7 @@ mutation) — it is UI-only, as recorded.
 
 **✅ Assessed 2026-08-07: <https://destroyedbybreach.com/>** — Adrian Sanabria's index of the
 35 organisations known to have died from a cyber incident (2002-2026, 12 countries). Full note:
-[`destroyed_by_breach_scout.md`](destroyed_by_breach_scout.md). **No dollar figures at all**, so
+[`destroyed_by_breach_scout.md`](../destroyed_by_breach_scout.md). **No dollar figures at all**, so
 it does not move the impact wall — but it supplies the half the worked decision just showed is
 missing: a base rate for the extreme tail ("once or twice per year, globally"), where our
 `single_documented_event_loss` maxima carry no exceedance probability. Not a competitor. His open
@@ -717,7 +717,7 @@ Vanta/Drata gap), plus GRC-EC builder-session prep once AJ/Abdie confirm.
 **Corrected 2026-08-07 by ADR-0008:** "the evidence map is FINISHED as far as public data
 allows (2026-08-03)" stands **for severity and residency only**. It was never true for
 *exceedance*, because nothing in the repo was looking for it — see
-[ADR-0008](../adr/0008-the-governed-tail.md) commitment 3. One evidence objective is
+[ADR-0008](../../adr/0008-the-governed-tail.md) commitment 3. One evidence objective is
 therefore open again, and it is base rates, not coverage.
 Ledger note: cleared at the v0.5.0 cut — doctor's ledger check is green again.
 
@@ -745,7 +745,7 @@ that the document is unchanged. One shrank materially (`ibm_cost_data_breach_202
 138,855 bytes), which may mean the page has been edited since the evidence was extracted.
 *(Resolved 2026-08-01: the two never-gathered entries are `active: false` inactive candidates,
 parked deliberately — not gaps. The deliberate sweep ran; see
-[`source_sweep_2026-08-01.md`](source_sweep_2026-08-01.md).)*
+[`source_sweep_2026-08-01.md`](../source_sweep_2026-08-01.md).)*
 
 **✅ Calibration drift — RESOLVED** *(found 2026-07-30, corrected 2026-07-30/31)*: all drifted
 shards were corrected with `revisions/` entries, and CI now **gates** on the calibration-drift
@@ -755,13 +755,13 @@ outside the risk-module gate's coverage) and corrected the same day — extendin
 to top-risk scenarios is an open hardening idea, not a defect.
 
 **Decisions taken 2026-07-31** — recorded in ADRs, not here:
-[**ADR-0006 depth over breadth**](../adr/0006-depth-over-breadth.md) (Accepted: no new shards
-purely because frequency data exists); [**ADR-0003**](../adr/0003-shared-impact-bridges.md)
+[**ADR-0006 depth over breadth**](../../adr/0006-depth-over-breadth.md) (Accepted: no new shards
+purely because frequency data exists); [**ADR-0003**](../../adr/0003-shared-impact-bridges.md)
 Accepted for **parts 1-2 only** (declare the population mismatch, report cell-matched and
 bridged separately) on the strength of the ledger recording a fiftyfold AVG move as a zero
-delta; [**ADR-0005**](../adr/0005-documented-loss-event-registry.md) **Deferred** - the SEC
+delta; [**ADR-0005**](../../adr/0005-documented-loss-event-registry.md) **Deferred** - the SEC
 sampling proved feasibility, not priority, and it does not solve the mid-market impact gap;
-[**ADR-0004**](../adr/0004-citable-parameter-identifiers.md) owner-confirmed.
+[**ADR-0004**](../../adr/0004-citable-parameter-identifiers.md) owner-confirmed.
 
 **Dead-directory sweep, corrected.** The 2026-07-31 triage listed `library/`, `provenance/`
 and `control_profiles/` as unreferenced. That was wrong, and only `library/` was deleted:
@@ -913,7 +913,7 @@ the IBM edition-roll argued for.
    (archive.org snapshots for AFP-2025 / URM-ICO / the real Insiders report page; the SUSB xlsx
    carrying 6,198,713 firms; ABS re-pinned off `/latest-release`), two documented as KNOWN GAPs.
    `url_stability` now 42 dated / 10 rolling, 0 unknown. Full record:
-   [`source_sweep_2026-08-01.md`](source_sweep_2026-08-01.md).
+   [`source_sweep_2026-08-01.md`](../source_sweep_2026-08-01.md).
 2. **✅ Record-level review of 3 evidence records (DONE 2026-08-01, all four anchors owner-approved).**
    The 66%/76% insider pair was **retracted** — it appears in no primary source (the Gurucul
    report says 48% more-frequent / 51% six-or-more; Securonix's 76% is a different construct).
@@ -973,12 +973,12 @@ independently asked for **depth or decisions, never more shards**, which is ADR-
 from outside; treat "more coverage" as the least valuable available move until an inbound number
 moves. The open conversion bets are now: John's answer to ADR-0007 open question 1, the
 GRC-EC builder session (pending Abdie; light touch per Ser), and Adrian Sanabria
-([`destroyed_by_breach_scout.md`](destroyed_by_breach_scout.md)).
+([`destroyed_by_breach_scout.md`](../destroyed_by_breach_scout.md)).
 
 *(Original 2026-07-31 statement kept for context:)* Every product and machinery
 objective on the board is closed; the remaining gap is that nobody is arriving. 14 unique
 visitors in 14 days, 0 external stars, forks, Discussions or contributors, after two LinkedIn
-posts. [ADR-0006](../adr/0006-depth-over-breadth.md) makes this explicit: coverage is not the
+posts. [ADR-0006](../../adr/0006-depth-over-breadth.md) makes this explicit: coverage is not the
 constraint and shard count is no longer a progress metric, so effort has nowhere useful to go
 inside the repo. The correction post (five shards found simulating stale values, corrected,
 with a gate that prevents recurrence) is the strongest opener available and is unwritten.
@@ -992,13 +992,13 @@ and ADR-0005's deferral mean it is no longer the thing to push on.)*
 dead-ended twice in one day: Spanish public bodies publish counts rather than euros, and DORA's
 mandated cost fields are mostly unreported or under EUR 1,000 (the ESAs flag likely mis-reporting).
 Per-cell loss magnitude largely **does not exist publicly**. That finding drove
-[ADR-0003](../adr/0003-shared-impact-bridges.md) (now Accepted, parts 1–2) and
-[ADR-0006](../adr/0006-depth-over-breadth.md), and it is recorded in
-[`coverage_harvest.md`](coverage_harvest.md).
+[ADR-0003](../../adr/0003-shared-impact-bridges.md) (now Accepted, parts 1–2) and
+[ADR-0006](../../adr/0006-depth-over-breadth.md), and it is recorded in
+[`coverage_harvest.md`](../coverage_harvest.md).
 
-Research notes from this pass: [`coverage_harvest.md`](coverage_harvest.md),
-[`dora_prescout.md`](dora_prescout.md), [`es_availability_prescout.md`](es_availability_prescout.md),
-[`impact_sources_scout.md`](impact_sources_scout.md).
+Research notes from this pass: [`coverage_harvest.md`](../coverage_harvest.md),
+[`dora_prescout.md`](../dora_prescout.md), [`es_availability_prescout.md`](../es_availability_prescout.md),
+[`impact_sources_scout.md`](../impact_sources_scout.md).
 
 **Decisions 2026-07-30 (CA/AU impact scout):** Australia is **already correct** — the ASD
 figures were verified at the primary source, and the Business Queensland citation is a
@@ -1009,13 +1009,13 @@ bridge is retired, and ADR-0003 no longer has a sequencing reason to wait. Next 
 targets: **NetDiligence by revenue band** (registered, used only for the US) and
 **Singapore**, the most bridged shard in the portfolio.
 
-**Strategy (2026-07-28):** [`canonical_reference_thesis.md`](canonical_reference_thesis.md) —
+**Strategy (2026-07-28):** [`canonical_reference_thesis.md`](../canonical_reference_thesis.md) —
 the win condition is becoming *the thing people cite*, not the thing they use. RiskShard will
 never hold the best loss data (insurers do, and do not publish it); it can hold the only
 **auditable** data, because a vendor structurally cannot publish its caveats. Falsifiable test:
 does a RiskShard parameter identifier appear in a document someone else wrote? This tilts
 breadth-vs-depth toward **depth, with identifier infrastructure sequenced ahead of shard count**
-([`../adr/0004-citable-parameter-identifiers.md`](../adr/0004-citable-parameter-identifiers.md),
+([`../adr/0004-citable-parameter-identifiers.md`](../../adr/0004-citable-parameter-identifiers.md),
 Proposed).
 
 **Assessed and rejected 2026-07-28:** the DORA figure (0.052 TPP-origin major incidents per
@@ -1040,7 +1040,7 @@ cadence is retention, not acquisition.
 
 Tracked **product** follow-up (unchanged): Third-Party Outage threat-specific impact + a directly
 reported `frequency.max` (Insider Misuse impact done 2026-07-24) — see
-[`insider_tpo_impact_prescout.md`](insider_tpo_impact_prescout.md).
+[`insider_tpo_impact_prescout.md`](../insider_tpo_impact_prescout.md).
 
 
 ---
@@ -1132,7 +1132,7 @@ is a function of where the repo happens to sit on disk. Verified directly: the t
 of one scenario yield seeds `1374150857` / `2961355232` / `4175939838`.
 
 **Why it matters:** this contradicts the stated architectural principle in
-[`../monte-carlo-determinism-architecture.md`](../monte-carlo-determinism-architecture.md) — *"Audit
+[`../monte-carlo-determinism-architecture.md`](../../monte-carlo-determinism-architecture.md) — *"Audit
 trails must support third-party verification **without access to original execution environment**"* —
 and the `reproduction_command` printed to users cannot actually reproduce a published number on
 another machine. Runs remain deterministic *within* one checkout path, so nothing is random; the
@@ -1151,7 +1151,7 @@ will not match.
 
 ## Next cycle — emergent risk scenarios
 
-The P2 cycle is complete. The next objectives come from **[`ROADMAP.md`](../ROADMAP.md)** —
+The P2 cycle is complete. The next objectives come from **[`ROADMAP.md`](../../ROADMAP.md)** —
 emergent, differentiating scenarios (AI-as-liability, correlated/systemic loss,
 governance/regulatory loss).
 
@@ -1656,7 +1656,7 @@ governance/regulatory loss).
 - 2026-08-11/13 — **Both outstanding conversations answered, and two published claims corrected
   against our own data.** John Flack answered the parameter-spec question (2026-08-09) and argued
   the project should stop before quantification; the owner agreed publicly and
-  [ADR-0010](../adr/0010-where-riskshard-stops.md) records it — **the governed evidence object is
+  [ADR-0010](../../adr/0010-where-riskshard-stops.md) records it — **the governed evidence object is
   the product, the simulation is a reference rendering and comes off the front door, the
   "Metasploit for risk" framing is retired.** The engine is demoted, not deleted, because it is
   what finds our own defects. His field list became the label spec and we are audited against it:
@@ -1668,7 +1668,7 @@ governance/regulatory loss).
   published counts reproduced; the third did not. **It was published as 7 of 11 and it is 8 of 11**
   (`gb_data_breach` and `us_data_breach` carry the mean at `likely` only, which is how six "both"
   plus one reads as seven). The defect is one shard worse than published. Inventory and four repair
-  classes in [`anchor_slot_inventory.md`](anchor_slot_inventory.md), which also kills the cheap
+  classes in [`anchor_slot_inventory.md`](../anchor_slot_inventory.md), which also kills the cheap
   repair: **no source we hold offers a mode**, so "declare, don't invent" is now the only option the
   data supports. **Ser's call: no correction to John — the number is right in the repo and the
   point he was making is unchanged.**
@@ -1681,7 +1681,7 @@ governance/regulatory loss).
   breach dates are a month or year coerced into an exact day, and 12 of 37 cite no source. **It is
   a mortality register, not a loss registry** — so the claim that it is our exceedance denominator
   is withdrawn, having been asserted to him in writing before it was measured. Measurement in
-  [`destroyed_by_breach_extraction.md`](destroyed_by_breach_extraction.md).
+  [`destroyed_by_breach_extraction.md`](../destroyed_by_breach_extraction.md).
 
   No product code changed in any of it. 271 tests, all four gates green, fingerprint `613292b257a4`
   unchanged throughout.
@@ -1692,7 +1692,7 @@ governance/regulatory loss).
   the test a declaration-only cycle has to pass.
 
   **The anchor-slot objective shipped** (#129) and the dead end was worse than
-  [`anchor_slot_inventory.md`](anchor_slot_inventory.md) recorded: **no value in the 18-entry
+  [`anchor_slot_inventory.md`](../anchor_slot_inventory.md) recorded: **no value in the 18-entry
   `measurement_basis` vocabulary denotes a mode**, so the schema could not express one if a source
   published it. The statement is therefore structural — **11 of 11** likely anchors are not a mode,
   of which 8 are the published mean/median case. Derived by `engine/slot_roles.py` so the wording

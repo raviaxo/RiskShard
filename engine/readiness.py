@@ -2,7 +2,7 @@ from collections import Counter
 from datetime import date
 from pathlib import Path
 
-from engine.data_packs import build_data_pack_manifest
+from engine.data_packs import build_data_pack_manifest, released_versions
 from engine.evidence import load_evidence_records
 from engine.evidence_packs import build_evidence_pack_registry
 from engine.experience import rank_top_risks
@@ -81,6 +81,8 @@ def build_readiness_dashboard(root=PROJECT_ROOT, org_profile_path=DEFAULT_ORG_PR
             "pack_version": pack["pack_version"],
             "fingerprint": pack["fingerprint"],
             "file_count": pack["file_count"],
+            "released_as": released_versions(
+                pack["fingerprint"], root / "data_pack_releases"),
         },
         "localization": localization_summary(evidence_records, root),
         "contributor": contributor_summary(root),
@@ -369,13 +371,17 @@ def next_actions(dashboard, limit=7):
             "command": "python -m pip install -e .",
         })
 
-    actions.append({
-        "priority": "P3",
-        "area": "release discipline",
-        "title": "Cut a named data-pack release",
-        "detail": "Use the fingerprint as the pin for scenario reviews, demos, and contributor pull requests.",
-        "command": f"python scripts/data_pack_manifest.py --release {date.today().strftime('%Y.%m.%d')}",
-    })
+    # Guarded, unlike its first version: every other action here fires on a condition,
+    # and this one fired always — so it asked for a release that already existed. See
+    # engine.data_packs.released_versions.
+    if not dashboard["data_pack"].get("released_as"):
+        actions.append({
+            "priority": "P3",
+            "area": "release discipline",
+            "title": "Cut a named data-pack release",
+            "detail": "Use the fingerprint as the pin for scenario reviews, demos, and contributor pull requests.",
+            "command": f"python scripts/data_pack_manifest.py --release {date.today().strftime('%Y.%m.%d')}",
+        })
 
     return sorted(actions, key=action_sort_key)[:limit]
 

@@ -5,6 +5,9 @@ and a figure it disclosed. The bar is therefore higher than elsewhere: every amo
 typed, every figure quoted, every record saying what it cannot support — and no path by
 which a consumer can accidentally average across amount types that mean different things.
 """
+import json
+import shutil
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -158,3 +161,95 @@ class BoundedTrialTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SchemaValidationTests(unittest.TestCase):
+    """`schemas/loss_event_schema.json` is applied, and its absence is an error.
+
+    Written 2026-09-27, when this file contained no mention of "schema" at all: the only
+    JSON-Schema-validated artifact in the repository had its validation wrapped in a
+    silent `except ImportError: pass`, and no test had ever asserted that an invalid
+    record is rejected. The schema was, in effect, decorative.
+    """
+
+    def _registry_copy(self, mutate):
+        """A throwaway root holding the schema and one registry file, mutated."""
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp, True)
+        (tmp / "schemas").mkdir()
+        shutil.copy(ROOT / "schemas" / "loss_event_schema.json", tmp / "schemas")
+        (tmp / "loss_events").mkdir()
+        import yaml
+        source = next((ROOT / "loss_events").glob("*.yaml"))
+        payload = yaml.safe_load(source.read_text(encoding="utf-8"))
+        payload["events"] = [dict(payload["events"][0])]
+        mutate(payload["events"][0])
+        (tmp / "loss_events" / source.name).write_text(
+            yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
+        return tmp
+
+    def test_the_live_registry_satisfies_its_own_schema(self):
+        self.assertEqual([], validate_loss_events(ROOT))
+
+    def test_a_record_missing_a_required_field_is_rejected(self):
+        root = self._registry_copy(lambda event: event.pop("verification", None))
+        errors = validate_loss_events(root)
+        self.assertTrue(any("schema" in e for e in errors),
+                        f"a record with no `verification` passed validation: {errors}")
+
+    def test_a_schema_that_cannot_be_read_is_an_error_not_a_pass(self):
+        root = self._registry_copy(lambda event: None)
+        (root / "schemas" / "loss_event_schema.json").write_text("{not json",
+                                                                encoding="utf-8")
+        errors = validate_loss_events(root)
+        self.assertTrue(any("could not be read" in e for e in errors),
+                        f"an unreadable schema reported clean: {errors}")
+
+    def test_a_missing_jsonschema_is_reported_rather_than_skipped(self):
+        """The gate must fail closed. It used to `pass`, reporting clean."""
+        import builtins
+
+        root = self._registry_copy(lambda event: None)
+        real_import = builtins.__import__
+
+        def refuse_jsonschema(name, *args, **kwargs):
+            if name == "jsonschema":
+                raise ImportError("simulated missing dependency")
+            return real_import(name, *args, **kwargs)
+
+        builtins.__import__ = refuse_jsonschema
+        try:
+            errors = validate_loss_events(root)
+        finally:
+            builtins.__import__ = real_import
+        self.assertTrue(any("jsonschema is not installed" in e for e in errors),
+                        f"a missing jsonschema reported clean: {errors}")
+
+
+class KillCriterionPublishedFiguresTests(unittest.TestCase):
+    """ADR-0017's metric 1 is generated, so the roadmap must state what it generates.
+
+    Added 2026-09-27, when M4 published both of its metrics as "0 today" — undated, and
+    neither one pinned. Metric 1 is derivable from the tree and is pinned here. Metric 2
+    is not derivable at all (a loss event records no supplier, so `trial_metrics` returns
+    None rather than 0) and therefore carries a measurement date in the roadmap instead;
+    that gap is recorded in the roadmap as an open decision, not patched over.
+    """
+
+    def test_the_roadmap_states_the_live_value_of_metric_one(self):
+        roadmap = (ROOT / "docs" / "ROADMAP.md").read_text(encoding="utf-8")
+        citing = trial_metrics(ROOT)["shards_citing_a_registry_entry"]
+        shards = len(citation_candidates(ROOT))
+        figure = f"**{citing} of {shards}**"
+        self.assertIn(
+            figure, roadmap,
+            f"docs/ROADMAP.md M4 no longer states metric 1 as {figure}")
+
+    def test_metric_two_is_unmeasured_rather_than_zero(self):
+        """If this ever returns a number, the roadmap's wording is owed a revisit.
+
+        `None` is the honest value while nothing records who supplied an entry. A change
+        that starts returning 0 or more would make the roadmap's "cannot be derived from
+        the tree" false, and that sentence is load-bearing 35 days before the decision.
+        """
+        self.assertIsNone(trial_metrics(ROOT)["external_contributions"])
