@@ -1638,33 +1638,45 @@ audit:
         detail: >-
           Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
 
-          Retested 2026-08-23: the registered URL returns HTTP 404. The page has moved and the source
-          needs a URL correction before it can be read at all - which is a different problem from an
-          unobtainable document, and is the only one of these a person could actually fix.
+          Retested 2026-08-23: the registered URL returns HTTP 404. Re-measured 2026-09-27, and the
+          2026-08-23 reading was wrong: the page did not move, it was RETIRED. `/epss/data` offers the
+          API, the daily CSV and the historical archive - access, not aggregate statistics - and
+          `/epss/why-epss` carries one gain curve and no breakdowns. Nothing publishes the statistics
+          this entry was registered for, so there is no URL to correct and no person can obtain it.
+          This row never clears, which makes it the tenth of ten rather than the one exception.
       distribution:
         basis: no_readable_artifact
         detail: >-
           Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
 
-          Retested 2026-08-23: the registered URL returns HTTP 404. The page has moved and the source
-          needs a URL correction before it can be read at all - which is a different problem from an
-          unobtainable document, and is the only one of these a person could actually fix.
+          Retested 2026-08-23: the registered URL returns HTTP 404. Re-measured 2026-09-27, and the
+          2026-08-23 reading was wrong: the page did not move, it was RETIRED. `/epss/data` offers the
+          API, the daily CSV and the historical archive - access, not aggregate statistics - and
+          `/epss/why-epss` carries one gain curve and no breakdowns. Nothing publishes the statistics
+          this entry was registered for, so there is no URL to correct and no person can obtain it.
+          This row never clears, which makes it the tenth of ten rather than the one exception.
       exceedance:
         basis: no_readable_artifact
         detail: >-
           Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
 
-          Retested 2026-08-23: the registered URL returns HTTP 404. The page has moved and the source
-          needs a URL correction before it can be read at all - which is a different problem from an
-          unobtainable document, and is the only one of these a person could actually fix.
+          Retested 2026-08-23: the registered URL returns HTTP 404. Re-measured 2026-09-27, and the
+          2026-08-23 reading was wrong: the page did not move, it was RETIRED. `/epss/data` offers the
+          API, the daily CSV and the historical archive - access, not aggregate statistics - and
+          `/epss/why-epss` carries one gain curve and no breakdowns. Nothing publishes the statistics
+          this entry was registered for, so there is no URL to correct and no person can obtain it.
+          This row never clears, which makes it the tenth of ten rather than the one exception.
       population:
         basis: no_readable_artifact
         detail: >-
           Registered with no gathered artifact at all — `sources/manifest.json` holds no entry for it, so there is nothing to read. Distinct from the landing-page cases: those hold the wrong document, this holds none.
 
-          Retested 2026-08-23: the registered URL returns HTTP 404. The page has moved and the source
-          needs a URL correction before it can be read at all - which is a different problem from an
-          unobtainable document, and is the only one of these a person could actually fix.
+          Retested 2026-08-23: the registered URL returns HTTP 404. Re-measured 2026-09-27, and the
+          2026-08-23 reading was wrong: the page did not move, it was RETIRED. `/epss/data` offers the
+          API, the daily CSV and the historical archive - access, not aggregate statistics - and
+          `/epss/why-epss` carries one gain curve and no breakdowns. Nothing publishes the statistics
+          this entry was registered for, so there is no URL to correct and no person can obtain it.
+          This row never clears, which makes it the tenth of ten rather than the one exception.
 
 
   - source_id: cyentia_iris_2025

@@ -725,6 +725,13 @@ sources:
     financial-loss evidence. Reactivate when RiskShard adds an exploit-likelihood or vulnerability-driven
     shard that can preserve the EPSS definition and refresh cadence.
 
+    RETIRED AT SOURCE, verified 2026-09-27: the registered URL returns HTTP 404 and the page was not
+    moved. Neither https://www.first.org/epss/data (API, daily CSV and historical archive - access,
+    no aggregate statistics) nor https://www.first.org/epss/why-epss (a single gain curve, no
+    breakdowns) publishes the statistics this entry was registered for. No person can obtain it, so
+    this row never clears - the same state as the withdrawn 2024 Sophos sector cuts, reached for a
+    different reason. Recorded here rather than left as a URL to fix.
+
     '
   url_stability: rolling
 - id: asd_annual_cyber_threat_report_2024_2025
