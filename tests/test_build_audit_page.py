@@ -235,3 +235,45 @@ class LandingPageRoutesTests(unittest.TestCase):
             self.assertNotIn(figure, self.html,
                              f"the audit page restates a finding-11 figure ({figure}) that "
                              "is pinned in docs/FINDINGS.md — link it, do not copy it")
+class DeploymentTests(unittest.TestCase):
+    """A page the deploy builds but does not watch goes stale in silence.
+
+    Found 2026-09-27: `pages.yml` ran `build_audit_page.py` on every deploy and listed
+    neither that script nor its template among the paths that trigger one. So #195
+    changed the audit template, the merge fired CI and no deploy, and the page a reader
+    arrives on stayed a version behind — with nothing failing anywhere. The workflow's
+    own comment had already named this failure mode for `docs/index.html`; the audit
+    page was simply never added to it.
+
+    The generalised assertion is the one that would have caught it, and it catches the
+    next generator someone wires into the deploy too.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.workflow = (ROOT / ".github" / "workflows" / "pages.yml").read_text(encoding="utf-8")
+        cls.ignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
+
+    def test_the_deploy_builds_the_audit_page(self):
+        self.assertIn("python scripts/build_audit_page.py", self.workflow)
+
+    def test_a_change_to_the_audit_page_triggers_a_deploy(self):
+        for path in ("scripts/build_audit_page.py", "scripts/audit_template.html"):
+            self.assertIn(path, self.workflow, f"{path} does not trigger a redeploy")
+
+    def test_every_generator_the_deploy_runs_is_also_a_trigger_path(self):
+        """The general rule behind the specific miss: build it, then watch it."""
+        import re
+
+        triggers = self.workflow.split("jobs:", 1)[0]
+        generators = set(re.findall(r"run: python (scripts/[\w./-]+\.py)", self.workflow))
+        self.assertTrue(generators,
+                        "no generators parsed out of pages.yml — this test is not testing")
+        missing = [g for g in sorted(generators) if g not in triggers]
+        self.assertEqual(missing, [],
+                         "the deploy runs these, but changing them triggers no deploy: "
+                         f"{missing}")
+
+    def test_the_audit_page_is_generated_at_deploy_and_never_committed(self):
+        """Same posture as the explorer: a committed page can drift from its data."""
+        self.assertIn("docs/audit.html", self.ignore)

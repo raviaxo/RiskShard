@@ -17,6 +17,12 @@ on:
       - "sources/**"
       - "scripts/build_explorer.py"
       - "scripts/explorer_template.html"
+      # The audit page is built by this workflow too, and its inputs were missing here
+      # until 2026-09-27: #195 changed the audit template, the merge fired CI and no
+      # deploy, and the page a reader lands on stayed a version behind. A generator
+      # this workflow runs must appear in the paths that trigger it.
+      - "scripts/build_audit_page.py"
+      - "scripts/audit_template.html"
       - "scripts/build_reports.py"
       - "scripts/report_template.html"
       - "scripts/report_index_template.html"
