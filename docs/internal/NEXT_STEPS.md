@@ -45,12 +45,6 @@ waiting on you.***
    manifest filename and run `scripts/record_manual_artifacts.py`. The doctor prints the count on
    every run, so this needs no reminder here — it is listed because it is the whole remainder of M1.
 
-3. **`v0.11.0` and `v0.11.1` were never tagged or released.** The data packs
-   (`data_pack_releases/2026.08.23-v0.11.*.json`) and the CHANGELOG entries exist, citations pin to
-   `2026.08.23-v0.11.1`, and GitHub's latest release is still `v0.10.0` — so the release link in the
-   restart point below 404s. Either tag both commits and publish the releases, or correct every
-   place that claims v0.11.1 shipped.
-
 5. ✅ **CLOSED 2026-08-23 — ADR-0007 open question 1**, on the terms recommended since 2026-08-09:
    no mix is acceptable or unacceptable in general, the duty is to label, admission is the
    consumer's call. Parts 3 and 4 are dissolved by it rather than answered, ADR-0007 is
@@ -118,6 +112,13 @@ waiting on you.***
     all four facets is answered 4 times in 192 — **is still real and now has no scheduled remedy**,
     which the roadmap says out loud. Reopening takes a measured defect and its own ADR.
 
+12. ✅ **DONE 2026-09-27 — the releases exist and the citations resolve.** `v0.11.0` and `v0.11.1`
+    were cut as data packs and never tagged; both are now tagged at the commits that produced them
+    (`6e2a82b`, `561bb5c`) with GitHub releases, so a citation pinned to `2026.08.23-v0.11.1`
+    resolves. **`v0.12.0` is cut, tagged and released** (pack `7dd170a38298`), which also closes
+    execution-plan W3a — open since 2026-08-23 — and clears the strength ledger, the doctor's last
+    non-pass. `pyproject` said 0.9.0 while releases were at v0.11.x; it now says 0.12.0.
+
 9. **John Flack was replied to on 2026-09-21** and two things are with him. The `recovery` question
    he answered on 2026-08-21 is settled — `insurance_recovery` stays the amount **type**, accounting
    status is a separate facet filled only where the filing states it, `shape` is separate again, and
@@ -137,43 +138,52 @@ waiting on you.***
 
 ## Restart point
 
-**Session 2026-09-15/21 (this one). `main` at `8c640c9`, 466 tests, evidence clean, tree clean,
-`main` == `origin/main`, no PR open.** Audit at **65 of 75** read, 260 of 300 answers verified,
-10 sources held only as a pointer, 0 unread.
+**Session 2026-09-27 closed. `main` at `52a86c7`, 488 tests, evidence clean, preflight clean,
+doctor GREEN ON ALL 18 CHECKS, tree clean, `main` == `origin/main`, no branch and no PR open.**
+Audit at **65 of 75** read, 260 of 300 answers verified, 10 held only as a pointer, 0 unread. Data
+pack `7dd170a38298`, released as
+[v0.12.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.12.0).
 
-**Both PRs that were open are merged.** [#188](https://github.com/raviaxo/RiskShard/pull/188)
-(64 to 65, "needs a person" tested and largely wrong) and
-[#190](https://github.com/raviaxo/RiskShard/pull/190) landed 2026-09-15.
+**M1 is done** on a definition that can be met: every source is read on all four properties or
+classified unobtainable with the reason recorded. A test fails if anything lands in a third state.
+*"The audit is complete, of the obtainable corpus"* is true, unspent, and parked behind the
+clearance with the mode post.
 
-**The mode claim was stated at a month-old count in three places and is now pinned in all of them.**
-README's findings section, Finding 1's table and the explorer page all said *58 of 72*; the README
-banner and four-answers line were pinned and current, which is exactly why the others drifted
-unnoticed. #190 fixed them and added the test; this session's commit adds the same test for the
-roadmap's M2 table, which said 58 too. **Every public copy of the claim now fails a test if it
-drifts, and fails differently if a source ever publishes a mode.**
+**Track B is closed** ([ADR-0021](../adr/0021-track-b-is-closed.md)) — and the 84.6% of nameable
+cells that answer nothing is left standing in the open, not quietly dropped.
 
-**NEXT OBJECTIVE: decide M1's definition of done** (owner item 4). Its target date passed on
-2026-09-15 against a bar #188 measured as unreachable.
+**Six merges: #193, #194, #195, #196, #197.** Finding 11 (distribution answers split into
+percentiles and bands, 6 and 8, pinned by a test); ADR-0020 amended so the declared exclusion keeps
+its count, scope, reason and date but not the name; EPSS re-measured — the page was retired, not
+moved, so **none of the ten clears by effort**; and `pages.yml` was building the audit page without
+watching it, so #195's links sat undeployed while every check stayed green.
 
-**Also outstanding, and both are the owner's:** the reply owed to John Flack since 2026-08-21
-(owner item 3, draft ready) and the unsent mode post (owner item 1, figures now current).
-**41 days to the 2026-11-01 measurement** as of 2026-09-21, and both ADR-0012 metrics read zero.
+**🔴 NO ACTIVE OBJECTIVE AND NO BLOCKER IN THE REPO.** Everything left is a person or a date:
+the clearance (~2026-10-11, owner item 1), the **2026-11-01 measurement** (35 days as of
+2026-09-27, both ADR-0012 metrics zero), Tony Martin-Vegue's audit row and his open question on
+whether the percentiles/bands split should be a column (standing 8), John Flack on two-fields-vs-one
+(standing 9), and Charles Nwatu's DM, deliberately held to 2026-10-01.
+
+**Worth knowing before starting.** Four live claims were corrected today and three of them were
+found by opening a file or reading a config, not by a test — the mode claim's fourth copy in the
+roadmap's M2 table, EPSS's "it moved" reading, and a deploy that built a page it did not watch.
+Each now has a test behind it, and the deploy test generalises: every generator `pages.yml` runs
+must appear in the paths that trigger it.
 
 *Operational note, 2026-08-24: #188 hit merge conflicts because the session-close docs commit
 (`471836e`) landed on `main` after both branches were cut, and all three edit this file and the
 roadmap. Rebased and resolved. Closing a session with branches still open will do this again —
 either rebase them at close, or close before opening them.*
 
-### This week (drafted 2026-09-21)
+### This week (drafted 2026-09-27)
 
 | | what | why it is first |
 | --- | --- | --- |
-| **A** | **Decide M1's definition of done** | The only thing with a date already passed. Everything in Track A reads against it |
-| **B** | **Send the John Flack reply** | Owed 31 days; the draft is written; it also carries the second M3 ask |
-| **C** | **Send the mode post** | The only lever that could move an ADR-0012 metric off zero, and the clock is 41 days out |
-| **D** | **Fix the EPSS URL** | The one blocked source a person can actually clear |
-| **E** | **Decide what Track B is now** | Unchanged since 2026-08-24: take the depth axis, or say the audit is the product and Track B was a detour |
-| **F** | **Tag v0.11.0/v0.11.1, or correct the record** | Owner item 5. Citations pin to a release GitHub has never heard of |
+| **A** | **Nothing in the repo** | M1 done, Track B closed, v0.12.0 released, queue empty of owner-blocked build work. Resist inventing an objective |
+| **B** | **The clearance, ~2026-10-11** | It gates two headlines now, not one: the mode post and *"the audit is complete, of the obtainable corpus"* |
+| **C** | **Charles Nwatu DM, 2026-10-01** | M3's third named person, held deliberately so one night's momentum is not over-indexed |
+| **D** | **Watch for a row or a dispute** | Either moves M3 and M5 off zero for the first time. Not forceable, and the only measurable signals are stars, issues and the form |
+| **E** | *(on 2026-11-01)* | **Measure M4 honestly and publish it either way**, whatever the metrics say |
 
 **2026-11-01 is unchanged** ([ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md)): the
 registry kill criterion re-measures at the first release on or after that date. Both metrics read
@@ -570,3 +580,24 @@ shards are now source-backed. This is the Sunday post.
   `composition_direction.md` captures a second axis under discussion and `execution_plan.md`
   sequences seven backlog corrections that come first, at the owner's instruction not to mutate the
   project without consistency.
+
+- 2026-09-27 — **M1 closed, Track B closed, v0.12.0 released, and four live claims corrected.**
+  #193, #194, #195, #196, #197. **M1's bar became one that can be met** — read on all four, or
+  classified unobtainable with the reason — and was met the same day at 65 and 10, with the
+  invariant pinned rather than the count. **Track B closed** ([ADR-0021](../adr/0021-track-b-is-closed.md)),
+  its 84.6% defect left standing in the open. **Finding 11**: of the 14 sources publishing a
+  distribution, 6 publish percentiles and 8 publish bands, so where p5/p50/p95 exist the mode is
+  dispensable and question 2 outranks question 1 — the defect ours, the question a reader's, asked
+  publicly. **EPSS was re-measured and the previous reading was wrong**: the page was retired, not
+  moved, so **not one of the ten clears by effort**. **ADR-0020 amended** — the declared exclusion
+  keeps its count, scope, reason and date and loses the name, with the weaker enforcement stated
+  rather than discovered. **v0.12.0 cut, tagged and released**; v0.11.0/v0.11.1 retro-tagged so
+  their citations resolve; W3a closed after five weeks; the ledger caught up.
+  **And a deploy was building a page it did not watch** — `pages.yml` ran `build_audit_page.py`
+  while listing neither that script nor its template as a trigger, so #195's links sat undeployed
+  with every check green. Fixed, plus a test that fails if any generator the deploy runs is not a
+  trigger path. **Three of the four corrections were found by opening a file, not by the suite**,
+  which is the same pattern the execution plan already names.
+  Outside the repo: Tony Martin-Vegue posted about the project unprompted to his own audience —
+  the first distribution this has ever had — John Flack vouched publicly, Charles Nwatu asked the
+  question that produced finding 11, and the owner replied in-thread and by DM. Tests 483 → 488.
