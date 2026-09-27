@@ -202,3 +202,36 @@ class DeclaredExclusionPageTests(unittest.TestCase):
         """The exclusion only reads honestly beside the scope claim it narrows."""
         self.assertIn("never a census", self.html)
         self.assertIn("0020-declared-exclusions.md", self.html)
+class LandingPageRoutesTests(unittest.TestCase):
+    """The audit page is where readers arrive, and it linked neither of these.
+
+    The explorer and the README both point at the findings; this page did not, so the
+    surface a reader lands on never qualified its own second column and never offered
+    the smaller contribution. Found 2026-09-27 by checking which files carried the
+    links, after an outside post sent readers straight here.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.html = render(build_source_audit(ROOT), manifest_hashes(ROOT))
+
+    def test_the_page_qualifies_its_own_distribution_answer(self):
+        self.assertIn("docs/FINDINGS.md", self.html)
+        self.assertIn("Finding 11", self.html)
+        self.assertIn("percentiles", self.html)
+        self.assertIn("bands", self.html)
+
+    def test_the_page_offers_the_smaller_contribution(self):
+        """Arguing a judgment call needs no source-hunting; reading a source does."""
+        self.assertIn("OPEN_JUDGMENT_CALLS.md", self.html)
+
+    def test_the_page_states_no_count_of_its_own_for_the_split(self):
+        """Finding 11 owns those figures and a test pins them there.
+
+        A second hand-written copy on this page is how the same claim went stale in
+        three places this month, so the page carries the distinction and no numbers.
+        """
+        for figure in ("6 publish", "8 publish", "6 of 65", "one in eleven"):
+            self.assertNotIn(figure, self.html,
+                             f"the audit page restates a finding-11 figure ({figure}) that "
+                             "is pinned in docs/FINDINGS.md — link it, do not copy it")
