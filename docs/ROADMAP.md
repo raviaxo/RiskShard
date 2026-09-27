@@ -6,18 +6,21 @@
 is a number you can check without asking us, and the last one has a date that
 [ADR-0017](adr/0017-the-kill-criterion-gets-a-clock.md) already committed to in writing.*
 
-## Two tracks, and only one of them is open-ended
+## Two tracks, and one of them is now closed
 
 **Track A — the audit.** Reading every public cyber-loss source we cite, one at a time, and
 recording what each one actually publishes. Not more sources — *these* sources, finished.
 [ADR-0016](adr/0016-the-audit-is-the-product.md) makes it the only growth surface, and M1–M5 below
 are unchanged.
 
-**Track B — usability.** Whether a reader can get anything out of what the audit produces. It
-exists because of a defect measured here, not because it would be nice: **the corpus answers a
-reader who tells it nothing and refuses one who describes themselves**. Track B is deliberately
-short, mostly gated, and it does not compete with Track A — if it starts crowding out source
-reading, the ordering is wrong.
+**Track B — usability. 🔴 CLOSED 2026-09-27 by
+[ADR-0021](adr/0021-track-b-is-closed.md).** It existed because of a defect measured here: **the
+corpus answers a reader who tells it nothing and refuses one who describes themselves**. U1 shipped,
+U2 was declined on its own measurement, and every remaining item in the sequence depended on U2 — so
+the track had no scheduled work and no end state. An empty track invites drift back into engine
+work, which [ADR-0016](adr/0016-the-audit-is-the-product.md) froze. **The defect it existed for is
+still real and now has no scheduled remedy, which is stated rather than implied.** Reopening takes a
+defect measured in our own data and its own ADR.
 
 > **The tracks are not equal.** Track A finishes. Track B has no end state and is therefore capped
 > rather than planned: one item at a time, each needing its own decision before it starts. That
@@ -25,7 +28,7 @@ reading, the ordering is wrong.
 
 ---
 
-## Track A · M1 — Finish the audit · **65 of 75** · target 2026-09-15
+## Track A · M1 — Finish the audit · ✅ **done 2026-09-27**, of the obtainable corpus
 
 Every registered source read on all four properties: does it publish a **mode**, a
 **distribution**, an **exceedance statement**, and can you **name the population** it measured.
@@ -108,12 +111,19 @@ What remains needs a person: IBM regional cuts, AFP (**declined 2026-08-21**), C
 the older Sophos sector cuts. **Cyentia IRIS was already fully read** — an earlier version of this
 list said otherwise and was wrong.
 
-**Done means — being rewritten, and the target date has passed.** This said `riskshard_doctor.py`
-prints 72 of 72. #188 measured that as unreachable (most of the ten never clear), and the
-denominator is 75, not 72, so the bar is stale twice over. The milestone's 2026-09-15 target passed
-undecided. The proposal on the owner's desk: done means every source is either read on all four
-properties **or** classified unobtainable with the reason recorded — 65 and 10 as of 2026-09-21 —
-and *"the audit is complete"* becomes publishable on that basis. It is a headline exactly once.
+**Done means — decided 2026-09-27, and met on the same day.** The old bar was
+`riskshard_doctor.py` prints 72 of 72. #188 measured that as unreachable and the denominator is 75,
+so it was stale twice over, and the 2026-09-15 target passed against it.
+
+**The definition: every registered source is either read on all four properties, or classified
+unobtainable with the reason recorded.** Nothing may sit outside those two states. On that
+definition **M1 is complete** — the table above is the proof, and a test fails if any source ever
+falls into a third state.
+
+*"The audit is complete, of the obtainable corpus"* is publishable on that basis, and it is a
+headline exactly once. **What it does not mean:** the ten unobtainable sources are not read, and
+every count on every surface says so beside itself. A complete audit of an obtainable corpus is a
+smaller claim than a complete audit, and the smaller claim is the true one.
 
 ## Track A · M2 — Publish the audit as its own artifact · ✅ **done 2026-08-19**, ahead of target
 

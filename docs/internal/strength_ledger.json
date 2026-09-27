@@ -341,6 +341,37 @@
       },
       "note": "No parameter, source value or caveat changed. The data pack moved because sources/registry.yaml did: ponemon_dtex_cost_insider_risks_2023 is declared manual_download rather than public_html, because its registered URL is an announcement page and the gatherer could never have reached the report. Read this tick as the audit getting one source further, not as evidence changing.",
       "release_version": "2026.08.23-v0.11.1"
+    },
+    {
+      "data_pack_version": "2026.09.27",
+      "date": "2026-09-27",
+      "fingerprint": "7dd170a3829851974bcfabc57b3dbb66ed5d6d8465296e7ba8ea4d04a64bfc9a",
+      "grades": {
+        "benchmark_review_candidate": 6,
+        "governed_starter": 5
+      },
+      "metrics": {
+        "families_coherent": 4,
+        "families_mixed": 18,
+        "floor_central_tendency": 7,
+        "likely_anchors": 11,
+        "likely_central_tendency": 8,
+        "likely_not_a_mode": 11,
+        "maxima": 11,
+        "maxima_none_known": 5,
+        "maxima_quantified": 4,
+        "params_bridged": 0,
+        "params_cell_matched": 7,
+        "params_cross_cell": 59,
+        "params_cross_country": 15,
+        "params_missing": 0,
+        "params_source_backed": 66,
+        "params_total": 66,
+        "shards": 11,
+        "shards_fully_sourced": 11,
+        "shards_tail_driven": 7
+      },
+      "release_version": "2026.09.27-v0.12.0"
     }
   ]
 }
