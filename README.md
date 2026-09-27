@@ -180,6 +180,9 @@ model parameters trace to a reviewed public source over time.
 <!-- strength-ledger:begin (regenerate with: python scripts/strength_ledger.py markdown) -->
 | Release | Date | Source-backed params | Cell-matched | Shards 6/6 | Bridged/est. |
 | --- | --- | --- | --- | --- | --- |
+| 2026.09.27 | 2026-09-27 | 66 / 66 | 7 | 11 / 11 | 0 |
+| 2026.08.23 | 2026-08-23 | 66 / 66 | 7 | 11 / 11 | 0 |
+| 2026.08.23 | 2026-08-23 | 66 / 66 | 7 | 11 / 11 | 0 |
 | 2026.08.21 | 2026-08-21 | 66 / 66 | 7 | 11 / 11 | 0 |
 | 2026.08.16 | 2026-08-16 | 66 / 66 | 7 | 11 / 11 | 0 |
 | 2026.08.15 | 2026-08-15 | 66 / 66 | 7 (-24) | 11 / 11 | 0 |
@@ -191,6 +194,10 @@ model parameters trace to a reviewed public source over time.
 | 2026.08.01 | 2026-08-01 | 66 / 66 | 28 | 11 / 11 | 0 |
 | 2026.07.24 | 2026-07-24 | 66 / 66 (+2) | — | 11 / 11 (+1) | 0 (-2) |
 | 2026.07.24 | 2026-07-24 | 64 / 66 | — | 10 / 11 | 2 |
+
+**2026.08.23-v0.11.1 —** No parameter, source value or caveat changed. The data pack moved because sources/registry.yaml did: ponemon_dtex_cost_insider_risks_2023 is declared manual_download rather than public_html, because its registered URL is an announcement page and the gatherer could never have reached the report. Read this tick as the audit getting one source further, not as evidence changing.
+
+**2026.08.23-v0.11.0 —** One parameter moved and it is the first in ten releases. au_finance_ransomware_midmarket.impact.likely was two editions behind the Sophos Australia country cut, found by engine/editions.py while docs/CROSS_SOURCE.md was already publishing the newer figure. Read the 7.4% move in that shard's AVG against a 2.55x move in the anchor as the composition disclosure being right about itself: the anchor was carrying 4.5% of the impact mean. Cell-matched and bridged are unchanged at 7 and 59; the new record declares the same population as the one it replaces.
 
 **2026.08.21-v0.10.0 —** Cell-matched and bridged are unchanged. What moved is the audit: 58 of 72 sources read becomes 62 of 75, after the Japan NPA workbook turned out to be unread rather than unreadable and Sophos 2026 arrived. No published parameter value moved in this release.
 
