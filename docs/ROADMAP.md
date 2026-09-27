@@ -197,6 +197,12 @@ Background: [`amount_shape_design_input.md`](internal/amount_shape_design_input.
 **Not started on purpose.** A schema change needs its own ADR (Change Control), and building this
 before the 2026-11-01 measurement invites the sunk-cost reasoning ADR-0017 exists to refuse.
 
+**Re-gated 2026-09-27: this waits on M4, not on a reply.** M3b labels **loss records**, and loss
+records live in the registry — so if the registry retires at the 2026-11-01 measurement, M3b retires
+with it and the open question never needs answering. The design input that shaped it is an *input*,
+not a gate; whether its author returns changes nothing about the schedule. Recording that here so
+the milestone stops reading as blocked on a person.
+
 ## Track A · M4 — The registry decision · **2026-11-01, fixed**
 
 [ADR-0017](adr/0017-the-kill-criterion-gets-a-clock.md) pre-committed this date and states in
