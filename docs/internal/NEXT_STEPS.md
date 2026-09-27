@@ -17,6 +17,15 @@ waiting on you.***
    clearance check unrelated to the project's content, and not a copy or accuracy issue. Everything
    below still applies when the hold lifts.
 
+   **Deferred deliberately on 2026-09-27: the owner is leaving the clearance about two weeks, so
+   roughly 2026-10-11.** State the consequence rather than discover it: publishing is the only lever
+   that could move an ADR-0012 metric, so on this trajectory **both metrics read zero at the
+   2026-11-01 measurement and the registry retires as pre-committed**
+   ([ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md)). That is the criterion working, and
+   it is now a chosen outcome rather than a missed one. **A second headline is parked with it:**
+   *"the audit is complete, of the obtainable corpus"* became true on 2026-09-27, and it is
+   available exactly once.
+
    **The mode post is written and unsent.** LinkedIn only — GRC EC publishing was paused
    2026-08-19 (the channel is saturated; talking there is still fine, publishing is what stopped),
    recorded in `~/business-os/comms/ventures/riskshard/venues.yaml`. The draft is
@@ -116,6 +125,12 @@ waiting on you.***
    not_stated` stays its own axis beside `estimated / accrued / received`, which would make it two
    fields rather than a refactor of one. He was also asked for an audit row (roadmap M3) in the same
    reply. ⚠️ Neither answer moves an ADR-0012 metric, and M3b stays not-started before 2026-11-01.
+
+   **Owner's read 2026-09-27: he may never come back**, and nothing now costs anything if he
+   doesn't. M3b is re-gated on the **M4 outcome** rather than on his reply — it labels loss records,
+   which live in the registry, so if the registry retires on 2026-11-01 the open question dissolves
+   with it. Nothing is owed to him and no milestone waits on him. Tony's public post on 2026-09-27
+   named him, so a return is likelier than it was; treat that as a bonus, not a dependency.
 
 
 ---
