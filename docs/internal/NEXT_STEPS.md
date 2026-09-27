@@ -29,7 +29,9 @@ waiting on you.***
 
 2. **10 sources are held only as a pointer, and most of them never clear** (#188, measured
    2026-08-23). IBM regional cuts, CESIN, MYOB, the *withdrawn* 2024 Sophos sector cuts (AFP
-   declined 2026-08-21). **Only EPSS is fixable by a person** — its registered URL returns 404.
+   declined 2026-08-21). **Correction 2026-09-27: not one of the ten is fixable by a
+   person.** EPSS was the recorded exception; its page was not moved but **retired**, and no FIRST
+   page publishes those statistics now.
    The rest have a route only if a human finds a copy: drop the file in `sources/raw/` under the
    manifest filename and run `scripts/record_manual_artifacts.py`. The doctor prints the count on
    every run, so this needs no reminder here — it is listed because it is the whole remainder of M1.

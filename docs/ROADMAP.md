@@ -50,12 +50,18 @@ Every remaining URL was re-fetched rather than assumed. What came back:
   corpus already holds. **No person can obtain the 2024 editions. They never clear.**
 - **CESIN** returns a file byte-identical to the press release held. The barometer is not published
   openly at that address.
-- **EPSS returns HTTP 404.** The page moved. That is a URL correction, and it is the only one of the
-  ten a person could actually fix.
+- **EPSS returns HTTP 404 — and on 2026-09-27 that read was corrected.** The page did not move: the
+  *EPSS Data and Statistics* page was **retired**, and nothing replaces it. `/epss/data` offers the
+  API, the daily CSV and the historical archive — access, not aggregate statistics — and
+  `/epss/why-epss` carries one gain curve and no breakdowns. So this is not a URL a person can fix,
+  and **none of the ten is fixable by a person.** It was recorded as the one fixable case for five
+  weeks on an assumption nobody had tested by looking.
 
-**So the honest count is not "10 sources need a person."** It is: one needs a URL fix, several are
-press releases that are all the publisher issues, and several are withdrawn editions that no effort
-will recover. **`riskshard_doctor.py` printing 72 of 72 is therefore not reachable**, and M1's
+**So the honest count is not "10 sources need a person."** It is: several are press releases that
+are all the publisher issues, several are withdrawn editions that no effort will recover, and the
+last one — EPSS — was retired at source, measured 2026-09-27. **Not one of the ten clears by
+effort.** The table keeps the phrase *needing a person* because that is what the count measures;
+what a person would actually have to find is a document the publisher no longer issues. **`riskshard_doctor.py` printing 72 of 72 is therefore not reachable**, and M1's
 definition of done below needs rewriting against that — recorded here rather than quietly dropped.
 
 **Updated 2026-08-23 — a seventh source recorded as owed turned out to be held.** The *Cost of
