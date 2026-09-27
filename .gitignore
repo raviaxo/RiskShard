@@ -242,3 +242,6 @@ docs/index.html
 # board summary drift from the evidence it summarises.
 docs/reports/
 docs/audit.html
+
+# ADR-0020: the withheld name behind the declared exclusion. Never committed.
+sources/exclusions.local.yaml

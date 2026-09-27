@@ -401,16 +401,49 @@ class DeclaredExclusionTests(unittest.TestCase):
                                 f"exclusion {entry!r} has no {field} — that is a silent "
                                 "omission with extra steps")
 
-    def test_every_excluded_publisher_is_named_in_the_adr(self):
+    def test_the_adr_accounts_for_the_declared_exclusions(self):
         """The data file cannot narrow the corpus on its own.
 
-        An exclusion added to registry.yaml with no decision behind it is exactly what
-        ADR-0020 exists to prevent, so the ADR is the thing that has to name it.
+        ADR-0020 named the publisher until 2026-09-27; the amendment withholds the name,
+        so what the ADR now has to carry is the count and the fact of the withholding.
+        An exclusion added to registry.yaml with no decision behind it is still the thing
+        this test exists to catch.
         """
+        self.assertIn("name is withheld", self.adr)
         for entry in self.exclusions:
             self.assertIn(str(entry["publisher"]), self.adr,
                           f"{entry['publisher']} is excluded in sources/registry.yaml but "
-                          "not named in ADR-0020")
+                          "does not appear in ADR-0020")
+
+    def test_no_withheld_name_appears_in_any_public_file(self):
+        """The failure mode that matters once the name is withheld.
+
+        Not a registration nobody would make — a mention nobody meant. Runs only where
+        the gitignored local file exists, which is the maintainer's working copy; in CI
+        there is no name to check and this skips rather than passing vacuously.
+        """
+        from engine.source_audit import load_local_excluded_names
+        names = load_local_excluded_names(ROOT)
+        if not names:
+            self.skipTest("sources/exclusions.local.yaml absent — no name to check")
+        import subprocess
+        tracked = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True,
+                                 text=True, check=True).stdout.split()
+        skip = ("sources/raw/", "docs/audit.html", "docs/index.html")
+        hits = []
+        for name in names:
+            needle = name.lower()
+            for rel in tracked:
+                if rel.startswith(skip):
+                    continue
+                path = ROOT / rel
+                try:
+                    body = path.read_text(encoding="utf-8", errors="ignore")
+                except (OSError, UnicodeDecodeError):
+                    continue
+                if needle in body.lower():
+                    hits.append(f"{rel} mentions a withheld excluded publisher")
+        self.assertEqual(hits, [], hits)
 
     def test_no_registered_source_comes_from_an_excluded_publisher(self):
         from engine.source_audit import excluded_publishers, load_registry

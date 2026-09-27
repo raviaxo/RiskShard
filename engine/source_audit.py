@@ -67,10 +67,37 @@ def load_exclusions(root):
     return data.get("exclusions") or []
 
 
+#: ADR-0020, amended 2026-09-27. The declared exclusion publishes the count, scope,
+#: reason and date but not the name, because naming the publisher would itself be
+#: publishing something about it. The name lives here, gitignored, so the guard below
+#: still bites locally — and so CI, which does not hold it, degrades to checking that
+#: the declaration is complete rather than that the registry obeys it.
+EXCLUSIONS_LOCAL_RELPATH = Path("sources") / "exclusions.local.yaml"
+
+
+def load_local_excluded_names(root):
+    """Withheld publisher names, when the local file is present. Empty is normal."""
+    path = Path(root) / EXCLUSIONS_LOCAL_RELPATH
+    if not path.exists():
+        return []
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    if not isinstance(data, dict):
+        return []
+    return [str(n) for n in (data.get("excluded_publisher_names") or []) if str(n).strip()]
+
+
 def excluded_publishers(root):
-    """Lowercased publisher names that must not appear in the registry."""
-    return {str(e.get("publisher") or "").strip().lower()
-            for e in load_exclusions(root) if e.get("publisher")}
+    """Publisher names that must not appear in the registry, lowercased.
+
+    The public labels are placeholders like "(withheld)" and match nothing real, so the
+    names that make this guard bite come from the gitignored local file. Where that file
+    is absent — CI, a contributor's checkout, a reader's clone — this returns the
+    placeholders only, and the guard is inert by design rather than by accident.
+    """
+    names = {str(e.get("publisher") or "").strip().lower()
+             for e in load_exclusions(root) if e.get("publisher")}
+    names |= {n.strip().lower() for n in load_local_excluded_names(root)}
+    return names
 
 
 def load_audit(root):
@@ -253,12 +280,16 @@ def audit_defects(root):
                 "an exclusion with no recorded reason or date is a silent omission "
                 "with extra steps (ADR-0020)")
         excluded[publisher.lower()] = publisher
+    # The local names are what actually match a real registry publisher; the public
+    # labels are placeholders. A defect message must not echo a withheld name back into
+    # a log or a CI transcript, so it names the source and points at the decision.
+    local = {n.strip().lower() for n in load_local_excluded_names(root)}
     for source in load_registry(root):
         publisher = str(source.get("publisher") or "").strip().lower()
-        if publisher in excluded:
+        if publisher in excluded or publisher in local:
             defects_exclusions.append(
-                f"{source.get('id')}: registered, but {excluded[publisher]} is declared "
-                "excluded (ADR-0020) — remove the source or the exclusion, deliberately")
+                f"{source.get('id')}: registered, but its publisher is declared excluded "
+                "(ADR-0020) — remove the source or the exclusion, deliberately")
     raw = root / "sources" / "raw"
     rows = load_audit(root)
     defects = list(defects_exclusions)

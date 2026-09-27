@@ -1455,15 +1455,22 @@ sources:
 # excluded, or if an entry below is missing its publisher, reason or date.
 # ---------------------------------------------------------------------------
 exclusions:
-- publisher: CrowdStrike
+- publisher: (withheld)
   scope: all publications
   reason: maintainer conflict of interest
   decided: 2026-09-21
   adr: docs/adr/0020-declared-exclusions.md
   note: >
-    Declared before any CrowdStrike source had been registered or submitted, and before
-    any answer about one had been published. This records who is reading, not a judgement
-    about the publisher or their reports. The corpus is an enumeration of the sources a
-    practitioner reaches for (ADR-0015 section 5), never a census; this is the one place
-    that enumeration is narrowed on purpose, and it is stated so the gap can be counted.
+    Declared before any source from this publisher had been registered or submitted, and
+    before any answer about one had been published. This records who is reading, not a
+    judgement about the publisher or their reports. The corpus is an enumeration of the
+    sources a practitioner reaches for (ADR-0015 section 5), never a census; this is the one
+    place that enumeration is narrowed on purpose, and it is stated so the gap can be counted.
     If a reader submits a source from this publisher, the answer is this entry, not silence.
+    THE NAME IS WITHHELD, amended 2026-09-27 (ADR-0020): naming it would itself be publishing
+    something about the publisher, which is what the conflict requires the maintainer not to do.
+    The count, the scope, the reason and the date are all still published, so the hole in the
+    enumeration remains visible and countable - only the name is absent. The name lives in
+    `sources/exclusions.local.yaml`, which is gitignored, and the registry guard reads it when
+    present. CONSEQUENCE, stated rather than discovered: CI cannot check a name it does not
+    hold, so that guard runs only where the local file exists.
