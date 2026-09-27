@@ -1,6 +1,6 @@
 # ADR-0020 — A publisher left out on purpose is declared, never silent
 
-**Status: Accepted** (2026-09-21)
+**Status: Accepted** (2026-09-21) · **amended 2026-09-27 — the name is withheld**
 
 ## Context
 
@@ -31,12 +31,15 @@ first submission decides it in public, on someone else's schedule.
 ## Decision
 
 **A publisher may be excluded from the registry, and every exclusion is declared in
-`sources/registry.yaml` under `exclusions:`, carrying the publisher, the scope, the reason and the
-date it was decided.** The audit page publishes them and the doctor counts them.
+`sources/registry.yaml` under `exclusions:`, carrying a publisher label, the scope, the reason and
+the date it was decided.** The audit page publishes them and the doctor counts them. Where naming
+the publisher would itself be publishing something about it, the label is `(withheld)` and the name
+is held outside the repo — see the amendment below.
 
-Declared today: **CrowdStrike, all publications, maintainer conflict of interest, 2026-09-21** —
-decided before any CrowdStrike source had been registered or submitted, and before any answer
-about one had been published.
+**Declared: one publisher, all publications, maintainer conflict of interest, 2026-09-21** —
+decided before any source from that publisher had been registered or submitted, and before any
+answer about one had been published. **The name is withheld** (see the amendment below); the
+count, scope, reason and date are published.
 
 **What an exclusion is not.** It is not a judgement about the publisher, their methodology or
 their reports; the audit does not grade accuracy ([ADR-0015](0015-the-source-audit.md)) and this
@@ -44,6 +47,29 @@ records even less than that. It is a statement about **who is reading**, not abo
 
 **The honest answer to a submission is this entry, not silence.** If a reader sends a source from
 an excluded publisher through the read-a-source route, they get pointed here.
+
+## Amended 2026-09-27 — the name is withheld
+
+The first version of this ADR named the publisher, on the reasoning that a gap with no explanation
+invites a worse inference than a gap with one. The owner's standing instruction is to publish
+nothing related to that publisher, and **naming it in the exclusion is itself publishing something
+about it** — the one thing the conflict requires him not to do. So the declaration stays and the
+name goes.
+
+**What survives:** the count, the scope, the reason and the date, on the audit page and in the
+doctor. A reader can still see that the enumeration was narrowed on purpose, when, and why, and can
+still count it. What they cannot see is who.
+
+**What it costs, stated rather than discovered later:** the guard that refuses a registration from
+an excluded publisher matches on a name, and the repo no longer holds one. The name lives in
+`sources/exclusions.local.yaml`, which is gitignored; `audit_defects` reads it when present, so the
+check bites in the maintainer's working copy and **not in CI**. A second check runs from the same
+local file and fails if the name appears in any public file, which is the failure mode that
+matters more now: not a registration nobody would make, but a mention nobody meant.
+
+**This is weaker enforcement than the version it replaces**, and it is the trade the instruction
+requires. If the conflict ever ends, the honest move is to restore the name and the CI guard with
+it, as an amendment here.
 
 ## How it is enforced, rather than remembered
 
@@ -54,8 +80,10 @@ drifted, so this decision ships with its own failure conditions:
   exclusion entry is missing its publisher, reason or date. A defect fails the doctor.
 - **The audit page prints every exclusion** with its reason and date, and the count sits in the
   same facts table as the coverage — so the gap is as visible as the numbers.
-- **A test ties the data to this file**: every declared publisher must be named in this ADR, so an
-  exclusion cannot be added quietly in a data file.
+- **Two tests tie the data to this file**: every declared entry's label — `(withheld)` included —
+  must appear here and this ADR must say the name is withheld, so an exclusion cannot be added
+  quietly in a data file. The second reads the gitignored local file and **fails if a withheld name
+  appears in any tracked file**, which is the leak that is actually plausible.
 
 ## Alternatives considered
 

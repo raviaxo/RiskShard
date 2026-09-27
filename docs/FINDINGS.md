@@ -538,6 +538,37 @@ mean. *(That 7 is a coincidence of arithmetic and not the same 7 as the cell-mat
 A weighting answers *"how much of this number is?"* A reader deciding whether to use a figure is
 asking the second, and until now the page only answered the first.
 
+### 11 — Of the sources that publish a distribution, most publish a shape you cannot model from
+
+*Measured 2026-09-27 · [`sources/audit.yaml`](../sources/audit.yaml), pinned by
+[`tests/test_findings.py`](../tests/test_findings.py)*
+
+The audit's second question asks whether a source publishes a distribution, and records yes or no.
+**That answer conflates two things a practitioner cannot use interchangeably.** Of the **65** sources
+read, **14** publish a distribution at all. Of those:
+
+| | | |
+| --- | ---: | --- |
+| **percentiles you can model a range from** | **6** | Cyentia IRIS 2025, IRIS 2022, IRIS Ransomware; Verizon DBIR 2026 and DBIR 2025 (quantile dot plots); UK DSIT 2026 (cost quantiles) |
+| **bands only** | **8** | Sophos global 2023, 2024 and 2026; Sophos financial services 2025; Sophos manufacturing 2025; Sophos enterprise 2025; Japan NPA 2025; Singapore Police 2025 |
+
+So **6 of 65 sources — roughly one in eleven — publish the spread in a form you could fit a
+distribution to.** A banded chart tells you the shape exists; it does not give you the quantiles,
+and several of the banded ones add a median without the tails.
+
+**Why this matters more than finding 1 does.** If a report publishes p5, p50 and p95, the mode is
+dispensable: you can model the range from the quantiles and never need the most-likely value at all.
+That makes question 2 the load-bearing one, and it means our own page has been answering it too
+coarsely — a reader who took that advice could not tell from a *yes* which sources supported it.
+**The defect is ours; the question came from a reader.** Tony Martin-Vegue put it publicly on
+2026-09-27: losses never land on the same dollar amount in a simulation, so a mode has to be grouped
+or curve-fitted and moves with the method.
+
+**What this is not.** It is not a fifth question and not a new field. The split is classified by hand
+from answers already read, and it is pinned by a test that fails if a new distribution answer is
+left unclassified or if either list changes. Making it a column on the audit page would be a schema
+change and would need its own ADR under Change Control — worth doing only if a reader asks for it.
+
 ## What we got wrong
 
 A project that publishes its reasoning has to publish its corrections at the same volume. These are

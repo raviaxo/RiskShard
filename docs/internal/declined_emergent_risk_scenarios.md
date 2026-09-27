@@ -54,13 +54,18 @@ creates loss**" — and several forms already have documented, quantifiable anch
 | **EU AI Act penalty exposure** | Legislatively-defined penalty up to €35M / 7% turnover (higher than GDPR); AI-native; owned by nobody | AI Act penalty tiers (statutory); early enforcement | frequency = enforcement probability | freq + statutory-cap impact — **fits current schema** |
 
 ### Family B — correlated / systemic loss (what makes cyber actuarially different)
+
+> *Edited 2026-09-27: the worked example and its loss estimate were removed under the
+> [ADR-0020](../adr/0020-declared-exclusions.md) exclusion. The scenario family was declined on
+> 2026-08-19 and that decision is unchanged — only the illustration is gone, and the edit is
+> recorded rather than made quietly.*
 Cyber's defining property is **correlation**: one event hits thousands of orgs at once.
 Point-tools model single-org loss and miss it. RiskShard already does portfolio aggregation,
 so it can model cyber-**catastrophe** honestly.
 
 | Scenario | Why it matters | Impact anchors | Data gap | Model fit |
 |---|---|---|---|---|
-| **Correlated single-vendor outage** | CrowdStrike Jul-2024 = the board example of concentration risk | Parametrix ~USD 5.4B Fortune-500 direct-loss estimate; insured-loss figures | per-org allocation of systemic loss | low freq × extreme impact — **fits current schema (tail scenario)** |
+| **Correlated single-vendor outage** | concentration risk is the board's cyber question | insured-loss aggregates for systemic events | per-org allocation of systemic loss | low freq × extreme impact — **fits current schema (tail scenario)** |
 | **Identity-provider cascade** | One IdP breach → downstream access everywhere | Okta 2023 breach (documented) | per-org impact | freq + cascade impact |
 | **Cyber insurability / risk-transfer failure** | The *meta-risk*: coverage evaporates (war exclusions, systemic-event exclusions) | Merck/NotPetya ~USD 1.4B war-exclusion litigation | frequency of denial | scenario over the mitigation itself |
 | **Real-time-payment irreversibility** | Instant rails (FedNow) remove the clawback tail — re-shapes BEC impact | SG case: USD 6.66M sent, >USD 5M recovered → recovery → 0 on instant rails | — | **re-shapes existing BEC impact curve, not a new threat** |
