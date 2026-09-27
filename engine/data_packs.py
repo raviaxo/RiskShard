@@ -105,6 +105,34 @@ def write_data_pack_release(release, output_dir=DEFAULT_RELEASE_DIR):
     return output_path
 
 
+def released_versions(fingerprint, release_dir=DEFAULT_RELEASE_DIR):
+    """Recorded releases that pin this exact pack fingerprint, newest name last.
+
+    Exists because the readiness dashboard advised "cut a named data-pack release"
+    unconditionally, so it kept asking for a release that had already been cut — on
+    2026-09-27 it printed the advice minutes after v0.12.0 was tagged from this very
+    fingerprint. A next-action list that always contains a finished item teaches the
+    reader to skim past the ones that are real.
+
+    A release is matched on the fingerprint rather than on the version string or the
+    date, because the fingerprint is what a citation pins (ADR-0004): the question the
+    dashboard needs answered is "is *this* pack released", not "does any release exist".
+    """
+    release_dir = Path(release_dir)
+    if not release_dir.is_dir():
+        return []
+    matched = []
+    for path in sorted(release_dir.glob("*.json")):
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            # A release file we cannot read is not evidence that the pack is released.
+            continue
+        if payload.get("fingerprint") == fingerprint:
+            matched.append(payload.get("release_version") or path.stem)
+    return matched
+
+
 def validate_release_version(version):
     if not VERSION_PATTERN.match(str(version)):
         raise ValueError(

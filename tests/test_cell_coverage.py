@@ -86,7 +86,9 @@ class SpecificityTests(unittest.TestCase):
         """The defect behind the composition work, and it is not thinness.
 
         A reader who names one facet is answered every time; one who names all four
-        is answered twice in 192. Reading more sources raises every level without
+        is answered 4 times in 192 (this docstring said "twice" until 2026-09-27, when
+        the live value was 4 — the assertion below is a threshold and did not notice).
+        Reading more sources raises every level without
         necessarily reversing the direction, so this needs its own measurement rather
         than being read off the headline empty share.
 
