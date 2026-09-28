@@ -89,10 +89,6 @@ class ReadinessTests(unittest.TestCase):
         self.assertIn("Installable package: True", output)
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class ReleaseAdviceTests(unittest.TestCase):
     """The dashboard must not advise cutting a release this pack already has.
 
@@ -101,15 +97,38 @@ class ReleaseAdviceTests(unittest.TestCase):
     action in `next_actions` fires on a condition; this one had none.
     """
 
-    def test_the_live_pack_is_released_so_the_advice_is_not_offered(self):
+    def test_the_live_advice_tracks_the_live_release_state(self):
+        """Whether the advice appears has to follow the tree, in both directions.
+
+        This asserted `pack["released_as"]` outright until 2026-09-28, which made it a
+        claim about the repository's release state rather than about the code: the
+        working tree's fingerprint moves the moment any pack content is edited, so the
+        suite went red on every content change until a release was cut, and the only
+        ways to green it were to cut a release for the sake of the gate or to skip the
+        gate. The condition being guarded is the conditioning itself, and that is what
+        this now checks — on whichever branch the live tree is on. Both branches are
+        also pinned deterministically below, so neither depends on today's state.
+        """
         dashboard = build_readiness_dashboard(ROOT)
         pack = dashboard["data_pack"]
-        self.assertTrue(
-            pack["released_as"],
-            f"no release records fingerprint {pack['fingerprint'][:12]} — if the pack "
-            "genuinely has no release this test is telling the truth and the advice "
-            "below is correct")
         titles = [a["title"] for a in dashboard["next_actions"]]
+        if pack["released_as"]:
+            self.assertNotIn("Cut a named data-pack release", titles)
+        else:
+            self.assertIn("Cut a named data-pack release", titles)
+
+    def test_a_released_fingerprint_does_not_get_the_advice(self):
+        """The mirror of the test below, so the "released" branch is always exercised.
+
+        Without it, the advice-absent case was only ever checked against whatever state
+        the working tree happened to be in.
+        """
+        from engine.readiness import next_actions
+
+        dashboard = build_readiness_dashboard(ROOT)
+        dashboard["data_pack"] = dict(
+            dashboard["data_pack"], released_as=["2026.09.27-v0.12.0"])
+        titles = [a["title"] for a in next_actions(dashboard)]
         self.assertNotIn("Cut a named data-pack release", titles)
 
     def test_an_unreleased_fingerprint_still_gets_the_advice(self):
@@ -128,3 +147,7 @@ class ReleaseAdviceTests(unittest.TestCase):
                                   ROOT / "data_pack_releases"))
         self.assertEqual(
             [], released_versions("anything", ROOT / "no_such_directory"))
+
+
+if __name__ == "__main__":
+    unittest.main()
