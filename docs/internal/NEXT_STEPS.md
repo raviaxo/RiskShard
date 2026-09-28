@@ -106,9 +106,12 @@ waiting on you.***
 
 ### Standing — no action unless you overrule
 
-6. **Seven anchor judgments are on record**, each with its documented alternative: AU-ransomware
-   stress 0.70-vs-0.80 · Latitude threat/size · JP stress 0.58-vs-0.61 · CA NetDiligence thin cells
-   · CA C-quality stress cell · AU-DB thin IBM cell · SG country-for-threat ceiling.
+6. **The anchor judgments on record live in [`docs/OPEN_JUDGMENT_CALLS.md`](../OPEN_JUDGMENT_CALLS.md)**,
+   each with its documented alternative and a deep link to the number. *Corrected 2026-09-28: this
+   item used to restate the list here and said **seven**; the published page carries **eight** and
+   has since the GB-breach-frequency-vs-ICO call was added. Nothing was wrong on the page — the
+   copy in this file drifted, which is what a second copy does. The list is not restated here
+   again; the page owns it.*
 
 7. **If a challenger breaks a number:** approve the retraction, credit by handle. The reply posture
    is in the campaign reply-kit.
