@@ -171,15 +171,20 @@ waiting on you.***
 ## Restart point
 
 **2026-09-28 session closed. `main` at `d0513a6`, 523 tests, evidence clean, preflight clean,
-**doctor pass on all 18 checks**, tree clean, `main` == `origin/main`, no branch and no PR open.
+doctor pass on all 18 checks, tree clean, `main` == `origin/main`, no branch and no PR open.
 `v0.13.0` is cut, tagged and released.**
 
-*The eighteenth check is new (`release archives`, added below). The strength ledger is caught
-up at `2026.09.28`, cleared by cutting v0.13.0 at the end of the session — it had read
-`needs_review` — the live pack `9409adc33297` is not
-logged, because the ledger records at tagged release and no release has been cut since the change.
-That is the normal state of any unreleased content change, not a red. It clears at the next
-release.*
+*The count went 17 → 18 this session: `release archives` is the new check. The loss-event check
+gained the second kill-criterion count in its detail line, which is a new **number**, not a new
+check — the distinction matters because the count was miscarried as 18-then-17 once already.
+The strength ledger is **caught up at `2026.09.28` (`9409adc33297`)** —
+it read `needs_review` from the day's first content change until the release cleared it, which is
+the normal state of any unreleased change rather than a red.*
+
+*Corrected while closing, and worth recording because it is the day's own lesson landing on the
+day's own notes: this paragraph was spliced twice and for a few minutes said the ledger was caught
+up and, two lines later, that no release had been cut. A hand-edited note with no owner drifts
+exactly like a hand-edited figure.*
 
 **This session ran five objectives and merged all five,
 [#199](https://github.com/raviaxo/RiskShard/pull/199),
