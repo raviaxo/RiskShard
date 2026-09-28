@@ -170,18 +170,20 @@ waiting on you.***
 
 ## Restart point
 
-**2026-09-28 session closed. `main` at `d2b66b6`, 514 tests, evidence clean, preflight clean,
-doctor 16 of 17 checks pass, tree clean, `main` == `origin/main`, no branch and no PR open.**
+**2026-09-28 session closed. `main` at `a1314bf`, 521 tests, evidence clean, preflight clean,
+doctor 17 of 18 checks pass, tree clean, `main` == `origin/main`, no branch and no PR open.**
 
-*The seventeenth check is `strength ledger: needs_review` — the live pack `9409adc33297` is not
+*The eighteenth check is new (`release archives`, added below) and passes. The one
+`needs_review` is `strength ledger` — the live pack `9409adc33297` is not
 logged, because the ledger records at tagged release and no release has been cut since the change.
 That is the normal state of any unreleased content change, not a red. It clears at the next
 release.*
 
-**This session ran three objectives and merged all three,
+**This session ran four objectives and merged all four,
 [#199](https://github.com/raviaxo/RiskShard/pull/199),
-[#200](https://github.com/raviaxo/RiskShard/pull/200) and
-[#201](https://github.com/raviaxo/RiskShard/pull/201).** The second was opened by the owner's
+[#200](https://github.com/raviaxo/RiskShard/pull/200),
+[#201](https://github.com/raviaxo/RiskShard/pull/201) and
+[#202](https://github.com/raviaxo/RiskShard/pull/202).** The second was opened by the owner's
 decision on ADR-0017's metric 2, taken mid-session. Everything was green before them and is green
 after; what changed is that four more checks can go red, one that *could not pass* during normal
 work now can, and **the repo can now measure both halves of its own kill criterion.**
@@ -245,6 +247,25 @@ one thing left open.
   published number more correct — ADR-0009's test. Its absence from the judgment-calls page is
   correct rather than an omission. *The dashboard will keep printing this P1; it is answered here,
   not ignored.*
+
+- **🔴 A citation pinned to the current release returned 404.** `docs/CITING.md` promises that a
+  pinned citation keeps resolving at `…/RiskShard/r/<release>/`. **v0.12.0 was tagged on 2026-09-27
+  with the `--archive` step skipped**, so `/r/2026.09.27-v0.12.0/` 404'd while `/r/…-v0.11.1/`
+  returned 200 — the broken one being the current release, the one carrying *"the audit is complete,
+  of the obtainable corpus"*. Found by checking the links before handing them over, not by a gate.
+  Cutting a release and archiving it are two steps in the runbook and only the first had a check;
+  the runbook already documented `--archive`, nothing enforced it. **Now fixed and verified live at
+  200.**
+
+  *The archive was built from a worktree at the `v0.12.0` tag, not from HEAD, and this is the part
+  worth remembering:* `build_explorer.py` reads the working tree, and HEAD had moved three merges
+  past the tag, so archiving from HEAD would have produced a file labelled v0.12.0 containing
+  something else. **A wrong archive is worse than a missing one, because the missing one 404s
+  honestly.** `tests/test_release_archives.py` now asserts both directions — every versioned
+  release has an archive, and every archive embeds its own release id — plus a **new doctor check**,
+  because a release is cut on someone's machine and not in CI. Two pre-`v0.1.0` packs are declared
+  rather than archived: never tagged, so their tree cannot be reconstructed, and a *new* unversioned
+  pack fails the test rather than quietly joining them.
 
 **Worth knowing before starting.** A prose-only edit inside a `calibrations/` file **moves the
 data-pack fingerprint** (`7dd170a38298` → `ffeeeda76150`), which is what a citation pins. So
@@ -766,3 +787,16 @@ shards are now source-backed. This is the Sunday post.
   **Declined out loud in the same pass**: the dashboard's standing P1 on Third-Party Outage's
   assumption — the weakest anchors in the dataset, on a shard published nowhere, so fixing it would
   move no published number (ADR-0009). Tests 508 → 514.
+
+- 2026-09-28 (fourth objective) — **A citation pinned to the current release returned 404.** #202.
+  `docs/CITING.md`'s one promise to anyone who quotes a number is that a pinned citation keeps
+  resolving at `…/RiskShard/r/<release>/`. v0.12.0 was tagged on 2026-09-27 with the `--archive`
+  step skipped, so the current release — the one carrying *"the audit is complete"* — resolved to
+  nothing, while v0.11.1 resolved fine. Cutting a release and archiving it are two runbook steps
+  and only the first had a check. Fixed and **verified live at 200**. The archive was built from a
+  worktree at the tag rather than from HEAD, because `build_explorer.py` reads the working tree and
+  HEAD had moved three merges on: **a wrong archive is worse than a missing one, since the missing
+  one 404s honestly.** `tests/test_release_archives.py` asserts every versioned release has an
+  archive *and* every archive embeds its own release id; a doctor check runs the same invariant
+  locally, where releases are actually cut, taking the doctor to 18 checks. Two pre-`v0.1.0` packs
+  are declared rather than backfilled — never tagged, so not reconstructable. Tests 514 → 521.
