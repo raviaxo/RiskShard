@@ -157,75 +157,69 @@ waiting on you.***
 
 ## Restart point
 
-**Second session of 2026-09-27 closed. `main` at `356de0d`, 499 tests, evidence clean, preflight
-clean, doctor pass on all **17** checks, tree clean, `main` == `origin/main`, no branch and no PR
-open.**
+**2026-09-28 session closed. `main` at `cd9244e`, 501 tests, evidence clean, preflight clean,
+doctor 16 of 17 checks pass, tree clean, `main` == `origin/main`, no branch and no PR open.**
 
-*The count was 17, not the 18 this line claimed until now — found by counting the doctor's output
-during the close, which is the same defect class the session spent the day fixing. It is not
-generated anywhere; if it matters again, count it rather than carry it.*
+*The seventeenth check is `strength ledger: needs_review` — the live pack `ffeeeda76150` is not
+logged, because the ledger records at tagged release and no release has been cut since the change.
+That is the normal state of any unreleased content change, not a red. It clears at the next
+release.*
 
-**This session was a QA audit, run in the owner's priority order — roadmap, functionality, code,
-reader path — and its one merge is [#198](https://github.com/raviaxo/RiskShard/pull/198).** Nothing
-was red before it and nothing is red after; what changed is that four checks which *could not*
-fail now can:
+**This session had one objective and one merge,
+[#199](https://github.com/raviaxo/RiskShard/pull/199).** Everything was green before it and is
+green after; what changed is that two more checks can go red, and one that *could not pass* during
+normal work now can.
 
-- **47 broken documentation links, none tested.** 46 were one mechanical event — an internal doc
-  moved into `docs/internal/archive/` and its relative links never re-based — and the 47th sent a
-  contributor from `BENCHMARK_CONTRIBUTOR_WORKFLOW.md` to a path that does not exist. A link is
-  correct relative to where its file sits, so *moving* a file breaks links nobody edited, which is
-  why `tests/test_doc_links.py` exists and why care would not have caught it.
-- **The readiness dashboard advised cutting a release that already existed**, on every run, because
-  that one action had no condition while every other one did. It printed the advice minutes after
-  v0.12.0 was tagged from the live fingerprint. `engine.data_packs.released_versions()` now answers
-  it, matched on fingerprint because that is what a citation pins.
-- **The loss-event registry's schema validation failed open** — `except ImportError: pass` reported
-  an unvalidated registry as clean, in the only place the repo uses JSON Schema, while `jsonschema`
-  is a pinned hard requirement. `tests/test_loss_events.py` had contained no mention of *schema* at
-  all, so nothing had ever asserted that an invalid record is rejected.
-- **Five roadmap figures were undated or wrong.** M3 said *"asked so far: one"* when it was two by
-  the date it carried; M4 and M5 published five numbers as *"today"*. Metric 1 is now generated and
-  pinned; the four that cannot be generated carry the date they were measured.
+- **A calibration summary said it stood on an edition it moved off five weeks ago.** The AU
+  ransomware impact anchor moved to the Sophos Australia 2026 country cut on 2026-08-23 — USD
+  650,000 → 1,660,000, a 2.55× move that shifted the published figure 7.4%. Fourteen tests fired on
+  that value and every per-parameter `rationale` was rewritten; the `metadata.notes` paragraph
+  directly above them was not, and kept naming the **2025** cut through two releases and a QA pass
+  that read the roadmap, the links, the dashboard and the registry. Nothing read it because nothing
+  generated it. `tests/test_calibration_prose.py` now holds that paragraph to the evidence records
+  the calibration binds, keyed on the registry's `publisher` and edition year. Across fifteen
+  profiles it found exactly this one.
+- **Per-parameter `rationale` strings are deliberately out of that check's scope**, and the reason
+  is worth keeping: a rationale is *expected* to name the anchor it replaced, which means naming an
+  edition no longer bound — `sg_finance_bec` frequency.max records that it replaces the US AFP 2026
+  payments-fraud prevalence while binding a CSA Singapore record. That is "caveats get louder, not
+  quieter" working, so a check that fired on it would be a check worth suppressing.
+- **A check in `tests/test_readiness.py` could not pass during normal work.** It asserted that the
+  working tree's pack fingerprint has a release — a claim about repository state, not about the
+  code. A calibration is pack content, so a one-word prose fix turned the suite red, and every
+  content change would, until a release was cut; the only greens available were cutting a release
+  for the gate's sake or skipping the gate. It now asserts the advice tracks the live release state
+  in whichever direction the tree is in, with a new mirror test pinning the released branch.
+  Reintroducing the original unconditional-advice bug was verified to fail the mirror, which it
+  would **not** have done against today's unreleased tree under the old assertion — so the coverage
+  is strictly stronger, not weakened to pass.
+- **And a check in the same file could not fail.** An `if __name__ == "__main__": unittest.main()`
+  block sat *above* `ReleaseAdviceTests`, so running the module directly ran two tests and reported
+  OK while silently skipping all three of the checks added the day before — including, at that
+  moment, one that was failing in the full suite. The guard is now at the end of the file and the
+  module runs six.
 
-**One existing test was passing for the wrong reason** and is worth knowing about: `test_readiness`
-asserted *"≥ 2 next actions"*, which held only because the unconditional release advice padded the
-list. Removing the fake action broke it correctly. An empty plate is a legitimate thing for that
-dashboard to report.
-Audit at **65 of 75** read, 260 of 300 answers verified, 10 held only as a pointer, 0 unread. Data
-pack `7dd170a38298`, released as
-[v0.12.0](https://github.com/raviaxo/RiskShard/releases/tag/v0.12.0).
+**Worth knowing before starting.** A prose-only edit inside a `calibrations/` file **moves the
+data-pack fingerprint** (`7dd170a38298` → `ffeeeda76150`), which is what a citation pins. So
+AGENTS.md's "docs-only may go straight to `main`" never covers `calibrations/`, and this correctly
+took a PR. The same is true of anything else inside the pack.
 
-**M1 is done** on a definition that can be met: every source is read on all four properties or
-classified unobtainable with the reason recorded. A test fails if anything lands in a third state.
-*"The audit is complete, of the obtainable corpus"* is true, unspent, and parked behind the
-clearance with the mode post.
-
-**Track B is closed** ([ADR-0021](../adr/0021-track-b-is-closed.md)) — and the 84.6% of nameable
-cells that answer nothing is left standing in the open, not quietly dropped.
-
-**Six merges: #193, #194, #195, #196, #197.** Finding 11 (distribution answers split into
-percentiles and bands, 6 and 8, pinned by a test); ADR-0020 amended so the declared exclusion keeps
-its count, scope, reason and date but not the name; EPSS re-measured — the page was retired, not
-moved, so **none of the ten clears by effort**; and `pages.yml` was building the audit page without
-watching it, so #195's links sat undeployed while every check stayed green.
+*Also checked and not a defect: `results/` holds ~180 stale run outputs, several carrying superseded
+parameter values, but `results/*` is gitignored by design and only `.gitkeep` and `README.md` are
+tracked. The directory is local scratch, exactly as `results/README.md` says.*
 
 **🔴 NO ACTIVE OBJECTIVE. ONE DECISION OWED IN THE REPO, AND IT HAS A DATE** — ADR-0017's second
 metric has no meter (owner item 3), which has to close before the 2026-11-01 measurement rather than
-at it. Everything else is a person or a date: the clearance (~2026-10-11, owner item 1), the
-**2026-11-01 measurement** (35 days as of 2026-09-27; metric 1 measured zero, metric 2 asserted
-zero — see item 3), Tony Martin-Vegue's audit row and his open question on whether the
-percentiles/bands split should be a column (standing 8), John Flack on two-fields-vs-one
-(standing 9), and Charles Nwatu's DM, deliberately held to 2026-10-01.
+at it. It was put to the owner at the open of this session and deliberately not taken for him.
+Everything else is a person or a date: the clearance (~2026-10-11, owner item 1), the **2026-11-01
+measurement** (34 days as of 2026-09-28; metric 1 measured zero, metric 2 asserted zero — see item
+3), Tony Martin-Vegue's audit row and his open question on whether the percentiles/bands split
+should be a column (standing 8), John Flack on two-fields-vs-one (standing 9), and Charles Nwatu's
+DM, deliberately held to 2026-10-01.
 
-**External engagement was explicitly off the table for the second 2026-09-27 session** (owner's
-call), which is why a QA pass ran instead and why nothing moved on the clearance, the DM, or either
-outstanding ask.
-
-**Worth knowing before starting.** Four live claims were corrected today and three of them were
-found by opening a file or reading a config, not by a test — the mode claim's fourth copy in the
-roadmap's M2 table, EPSS's "it moved" reading, and a deploy that built a page it did not watch.
-Each now has a test behind it, and the deploy test generalises: every generator `pages.yml` runs
-must appear in the paths that trigger it.
+**External engagement was explicitly off the table for this session too** (owner's call, "anything
+but messaging others"), which is why nothing moved on the clearance, the DM, or either outstanding
+ask.
 
 *Operational note, 2026-08-24: #188 hit merge conflicts because the session-close docs commit
 (`471836e`) landed on `main` after both branches were cut, and all three edit this file and the
@@ -658,3 +652,39 @@ shards are now source-backed. This is the Sunday post.
   Outside the repo: Tony Martin-Vegue posted about the project unprompted to his own audience —
   the first distribution this has ever had — John Flack vouched publicly, Charles Nwatu asked the
   question that produced finding 11, and the owner replied in-thread and by DM. Tests 483 → 488.
+
+- 2026-09-27 (second session) — **A QA pass found four checks that could not fail and 47 links
+  nothing read.** #198, the session's only merge, run in the owner's priority order — roadmap,
+  functionality, code, reader path. Nothing was red before it or after; what changed is that four
+  checks can now go red. **47 broken documentation links, none tested**: 46 were one mechanical
+  event (an internal doc moved into `docs/internal/archive/` and its relative links never re-based)
+  and the 47th sent a contributor to a path that does not exist — a link is correct relative to
+  where its file sits, so *moving* a file breaks links nobody edited. **The readiness dashboard
+  advised cutting a release that already existed**, on every run, because that one action had no
+  condition while every other one did; it printed the advice minutes after v0.12.0 was tagged.
+  **The loss-event registry's schema validation failed open** — `except ImportError: pass` reported
+  an unvalidated registry as clean, in the only place the repo uses JSON Schema, while `jsonschema`
+  is a pinned hard requirement. **Five roadmap figures were undated or wrong**; metric 1 is now
+  generated and pinned, and the four that cannot be generated carry the date they were measured.
+  One existing test was passing for the wrong reason (`test_readiness` asserted "≥ 2 next actions",
+  which held only because the unconditional release advice padded the list). **It also surfaced the
+  one decision now owed in the repo** — ADR-0017's second metric has no measurement path. Tests
+  488 → 499. *(Logged 2026-09-28: this session closed without a session-log line, and the restart
+  point was its only narrative home.)*
+
+- 2026-09-28 — **A calibration summary said it stood on an edition it moved off five weeks ago.**
+  #199, the session's only merge. The AU ransomware impact anchor moved to the Sophos Australia
+  **2026** country cut on 2026-08-23; fourteen tests fired on the value and every per-parameter
+  `rationale` was rewritten, but the `metadata.notes` paragraph above them kept naming the **2025**
+  cut — through two releases and a QA pass that read the roadmap, the links, the dashboard and the
+  registry. Nothing read it because nothing generated it. `tests/test_calibration_prose.py` holds
+  that paragraph to the evidence records the calibration binds; across fifteen profiles it found
+  exactly this one, and per-parameter rationales are deliberately excluded because a rationale is
+  *expected* to name the anchor it replaced. **Two defects in the file written the day before to
+  fix checks that could not fail**: one *could not pass* — it asserted the working tree's pack
+  fingerprint has a release, so every content change reddened the suite until a release was cut —
+  and one *could not fail*, an `unittest.main()` guard sitting above `ReleaseAdviceTests` so direct
+  module runs reported OK on two tests while skipping all three new checks. Both fixed, with the
+  stronger coverage verified by reintroducing the original bug. **A prose-only edit inside
+  `calibrations/` moves the data-pack fingerprint**, so "docs-only straight to `main`" never covers
+  the pack. Tests 499 → 501.
