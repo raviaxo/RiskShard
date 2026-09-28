@@ -5,6 +5,54 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.13.0 — 2026-09-28
+
+**The kill criterion can now measure both of its halves, and three generated artifacts that
+nothing regenerated were caught.** No parameter value moves; the portfolio figures are identical
+to v0.12.0.
+
+**ADR-0017's second metric had no meter.** The registry's kill criterion turns on two numbers.
+Metric 1 is generated and pinned. Metric 2 — entries contributed from outside the project —
+could not be derived from the tree at all: a loss event recorded nothing about who supplied it,
+so `trial_metrics` returned `None` while the roadmap published **0**. Retiring the registry on a
+*measured* zero and on an *un-instrumented* one are different acts, and only the first is the
+criterion working. [ADR-0022](docs/adr/0022-the-second-kill-metric-gets-a-meter.md) makes a
+`contribution` block required on every loss-event record — `origin: project | external`, with
+`contributor` and `contributed_date` required for external so the count is attributable and
+datable against 2026-11-01. **Metric 2 now reads 0, measured.** The number did not change; what
+changed is that something generates it. The criterion itself does not move: same two metrics,
+same threshold, same date.
+
+**A citation pinned to the current release returned 404.** `CITING.md` promises that a pinned
+citation keeps resolving at `/RiskShard/r/<release>/`. **v0.12.0 was tagged with the `--archive`
+step skipped**, so the release carrying *"the audit is complete, of the obtainable corpus"*
+resolved to nothing while v0.11.1 resolved fine. Backfilled from a worktree at the tag rather
+than from `HEAD` — the generator reads the working tree, and *a wrong archive is worse than a
+missing one, because the missing one 404s honestly.* Now enforced by a test and a doctor check,
+the latter because a release is cut on someone's machine and not in CI.
+
+**The evidence report was five weeks stale.** `docs/EVIDENCE_REPORT.md`, linked from the README
+as *"every parameter, with its source and caveat"*, still published the Australian ransomware
+`impact.likely` as **650000** against the Sophos Australia **2025** edition. That anchor moved on
+2026-08-23 to 1,660,000, and fourteen tests fired on the value — this report was not one of them.
+Regenerating it also moved a concentration figure from 97% to 92%. It is regenerated here and now
+compared against a fresh render by a test, so it cannot drift again.
+
+**A calibration said it stood on an edition it moved off.** The same 2026-08-23 anchor move
+rewrote every per-parameter `rationale` in `au_finance_ransomware.yaml` and left the
+`metadata.notes` paragraph above them naming the 2025 cut. A test now holds that prose to the
+evidence records the calibration binds, keyed on the source registry's publisher and edition year.
+
+**The dispute path had no test.** `OPEN_JUDGMENT_CALLS.md` is where a reader is sent to argue
+with a number, and nothing read it — while the internal queue's copy of its list said *seven*
+against the page's *eight*. The duplicate is gone and the page's deep links are now checked to
+address shards the explorer actually publishes.
+
+**Also corrected:** ADR-0017's consequences claimed the doctor printed both kill-criterion counts;
+it printed one, from the day that ADR was written. It prints both now, and the claim is left
+standing with the correction attached rather than edited away. Tests 499 → 523; the doctor gains
+an eighteenth check.
+
 ## v0.12.0 — 2026-09-27
 
 **M1 closed, Track B closed, and three published claims corrected.** No parameter value moves; the
