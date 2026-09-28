@@ -118,9 +118,58 @@ class BoundedTrialTests(unittest.TestCase):
         self.assertIn("external_contributions", metrics)
         self.assertGreater(metrics["registry_events"], 0)
 
-    def test_external_contributions_is_unmeasured_not_zero(self):
-        """None means nobody has recorded it. Reporting 0 would assert a fact we lack."""
-        self.assertIsNone(trial_metrics(ROOT)["external_contributions"])
+    def test_external_contributions_is_a_count_not_none(self):
+        """It returned None until ADR-0022 gave every record a `contribution` block.
+
+        None was the honest value while nothing recorded who supplied an entry, and the
+        roadmap published the owner's assertion beside it. Now it is counted, so a
+        regression to None would quietly turn a measured zero back into an asserted one
+        — which is the whole distinction ADR-0022 exists to hold.
+        """
+        metrics = trial_metrics(ROOT)
+        self.assertIsInstance(metrics["external_contributions"], int)
+        self.assertEqual(
+            metrics["external_contributions"], len(metrics["external_contribution_ids"]),
+            "the count and the ids behind it disagree")
+
+    def test_every_record_declares_where_it_came_from(self):
+        """Required, not optional: absent and zero have to stay distinguishable."""
+        for event in load_loss_events(ROOT):
+            origin = (event.get("contribution") or {}).get("origin")
+            self.assertIn(origin, {"project", "external"}, event["id"])
+
+    def test_the_meter_moves_when_an_external_record_arrives(self):
+        """`trial_metrics` itself has to count it, against a registry on disk.
+
+        Without this, `external_contributions` could be hard-wired to 0 and every other
+        assertion in this file would still pass — the registry holds no external record
+        today, so a meter that always reads zero is indistinguishable from a working one.
+        An outside contribution arrives as its own file (ADR-0022), which is the shape
+        built here.
+        """
+        import yaml
+
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp, True)
+        (tmp / "loss_events").mkdir()
+        source = next((ROOT / "loss_events").glob("*.yaml"))
+        payload = yaml.safe_load(source.read_text(encoding="utf-8"))
+        shutil.copy(source, tmp / "loss_events" / source.name)
+
+        donated = dict(payload["events"][0])
+        donated["id"] = "contributed_example_event"
+        donated["contribution"] = {
+            "origin": "external",
+            "contributor": "a-handle",
+            "contributed_date": "2026-10-15",
+        }
+        (tmp / "loss_events" / "contributed.yaml").write_text(
+            yaml.safe_dump({"events": [donated]}, sort_keys=False), encoding="utf-8")
+
+        metrics = trial_metrics(tmp)
+        self.assertEqual(1, metrics["external_contributions"])
+        self.assertEqual(["contributed_example_event"],
+                         metrics["external_contribution_ids"])
 
     def test_zero_citations_is_explained_not_just_counted(self):
         """"No shard cites an entry" only argues for retirement if some shard could.
@@ -197,6 +246,51 @@ class SchemaValidationTests(unittest.TestCase):
         self.assertTrue(any("schema" in e for e in errors),
                         f"a record with no `verification` passed validation: {errors}")
 
+    def test_a_record_with_no_contribution_block_is_rejected(self):
+        """ADR-0022 made it required so that absent cannot be read as zero."""
+        root = self._registry_copy(lambda event: event.pop("contribution", None))
+        errors = validate_loss_events(root)
+        self.assertTrue(any("schema" in e for e in errors),
+                        f"a record with no `contribution` passed validation: {errors}")
+
+    def test_an_unknown_contribution_origin_is_rejected(self):
+        def mutate(event):
+            event["contribution"] = {"origin": "somewhere_else"}
+        errors = validate_loss_events(self._registry_copy(mutate))
+        self.assertTrue(any("schema" in e for e in errors),
+                        f"an unknown origin passed validation: {errors}")
+
+    def test_an_external_contribution_must_name_who_and_when(self):
+        """Attributable rather than self-asserted, and dated against 2026-11-01.
+
+        A contribution that arrives after the measurement date does not count toward it,
+        so a record that cannot say when it arrived cannot be counted either way.
+        """
+        for missing in ("contributor", "contributed_date"):
+            with self.subTest(missing=missing):
+                def mutate(event, missing=missing):
+                    block = {
+                        "origin": "external",
+                        "contributor": "a-handle",
+                        "contributed_date": "2026-10-15",
+                    }
+                    block.pop(missing)
+                    event["contribution"] = block
+                errors = validate_loss_events(self._registry_copy(mutate))
+                self.assertTrue(
+                    any("schema" in e for e in errors),
+                    f"an external record with no {missing} passed validation: {errors}")
+
+    def test_a_complete_external_contribution_is_accepted(self):
+        """The guard must reject what is wrong without blocking the thing it measures."""
+        def mutate(event):
+            event["contribution"] = {
+                "origin": "external",
+                "contributor": "a-handle",
+                "contributed_date": "2026-10-15",
+            }
+        self.assertEqual([], validate_loss_events(self._registry_copy(mutate)))
+
     def test_a_schema_that_cannot_be_read_is_an_error_not_a_pass(self):
         root = self._registry_copy(lambda event: None)
         (root / "schemas" / "loss_event_schema.json").write_text("{not json",
@@ -227,13 +321,17 @@ class SchemaValidationTests(unittest.TestCase):
 
 
 class KillCriterionPublishedFiguresTests(unittest.TestCase):
-    """ADR-0017's metric 1 is generated, so the roadmap must state what it generates.
+    """Both of ADR-0017's metrics are generated, so the roadmap must state what they say.
 
-    Added 2026-09-27, when M4 published both of its metrics as "0 today" — undated, and
-    neither one pinned. Metric 1 is derivable from the tree and is pinned here. Metric 2
-    is not derivable at all (a loss event records no supplier, so `trial_metrics` returns
-    None rather than 0) and therefore carries a measurement date in the roadmap instead;
-    that gap is recorded in the roadmap as an open decision, not patched over.
+    Added 2026-09-27, when M4 published both metrics as "0 today" — undated, and neither
+    pinned. Metric 1 was derivable and was pinned then. Metric 2 was not derivable at all
+    (a loss event recorded no supplier, so `trial_metrics` returned None rather than 0),
+    so it carried a measurement date and an open decision instead of a pin.
+
+    [ADR-0022](../docs/adr/0022-the-second-kill-metric-gets-a-meter.md) closed that on
+    2026-09-28 and metric 2 is pinned here too. The number it publishes did not change;
+    what changed is that something generates it, and that is exactly the kind of claim
+    that goes stale silently — the roadmap said "0" for weeks with nothing behind it.
     """
 
     def test_the_roadmap_states_the_live_value_of_metric_one(self):
@@ -245,11 +343,21 @@ class KillCriterionPublishedFiguresTests(unittest.TestCase):
             figure, roadmap,
             f"docs/ROADMAP.md M4 no longer states metric 1 as {figure}")
 
-    def test_metric_two_is_unmeasured_rather_than_zero(self):
-        """If this ever returns a number, the roadmap's wording is owed a revisit.
+    def test_the_roadmap_states_the_live_value_of_metric_two(self):
+        metrics = trial_metrics(ROOT)
+        figure = f"**{metrics['external_contributions']} of {metrics['registry_events']}**"
+        roadmap = (ROOT / "docs" / "ROADMAP.md").read_text(encoding="utf-8")
+        self.assertIn(
+            figure, roadmap,
+            f"docs/ROADMAP.md M4 no longer states metric 2 as {figure}")
 
-        `None` is the honest value while nothing records who supplied an entry. A change
-        that starts returning 0 or more would make the roadmap's "cannot be derived from
-        the tree" false, and that sentence is load-bearing 35 days before the decision.
+    def test_the_roadmap_no_longer_calls_metric_two_underivable(self):
+        """The sentence ADR-0022 made false must not survive it.
+
+        It read "this one cannot be derived from the tree". It can now, and a claim that
+        the project cannot measure its own kill criterion is the last one that should be
+        left lying around 34 days before the measurement.
         """
-        self.assertIsNone(trial_metrics(ROOT)["external_contributions"])
+        roadmap = (ROOT / "docs" / "ROADMAP.md").read_text(encoding="utf-8")
+        self.assertNotIn("cannot\n   be derived from the tree", roadmap)
+        self.assertNotIn("returns `None`", roadmap)

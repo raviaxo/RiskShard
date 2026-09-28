@@ -83,6 +83,13 @@ def loss_event_check(root):
         f"trial: {trial['shards_citing_a_registry_entry']} of {len(candidates)} shards cite an "
         f"entry, {citable} could"
         + (f" ({blocked} blocked: swapping would lose an exceedance statement)" if blocked else "")
+        # ADR-0017's consequences said "the doctor keeps printing both counts every run".
+        # It printed one, from 2026-08-16 until 2026-09-28, because the second could not be
+        # counted — there was no field to count. ADR-0022 gave it one, so the claim is now
+        # true rather than aspirational.
+        + f"; {trial['external_contributions']} entr"
+        + ("y" if trial["external_contributions"] == 1 else "ies")
+        + " contributed from outside the project"
     )
     if errors:
         return {

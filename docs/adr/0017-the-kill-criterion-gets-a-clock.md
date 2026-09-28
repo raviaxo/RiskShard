@@ -8,6 +8,9 @@
 - **Related:** [`0016-the-audit-is-the-product.md`](0016-the-audit-is-the-product.md) (which
   disallows a second growing surface), [`0008-the-governed-tail.md`](0008-the-governed-tail.md)
   (the exceedance axis the registry was meant to serve)
+- **Instrumented by:** [`0022-the-second-kill-metric-gets-a-meter.md`](0022-the-second-kill-metric-gets-a-meter.md)
+  (2026-09-28), which gave metric 2 a meter. It does **not** amend this ADR: the metrics, the
+  threshold and the date are unchanged, and section 3 still holds.
 
 ## Context
 
@@ -24,7 +27,7 @@ That criterion was measured at v0.9.0, the second release cycle, on 2026-08-16:
 | --- | --- |
 | shards whose `impact.max` cites a registry entry | **0** |
 | shards that *could* cite one | **0** (1 blocked — swapping would trade an exceedance statement for provenance) |
-| entries contributed from outside the project | **0** |
+| entries contributed from outside the project | **0** (asserted; it had no meter until [ADR-0022](0022-the-second-kill-metric-gets-a-meter.md) on 2026-09-28) |
 
 **Neither has moved. By its letter, the registry retires today.**
 
@@ -103,6 +106,14 @@ Deciding that now, before the day, is the point of writing it down.
   overridden rather than quietly reset.
 - **The doctor keeps printing both counts every run**, which is what made this measurable without
   anyone remembering to look.
+
+  ⚠️ **Corrected 2026-09-28: it printed one.** From the day this ADR was written until
+  [ADR-0022](0022-the-second-kill-metric-gets-a-meter.md), the doctor printed metric 1 and not
+  metric 2, because metric 2 had no field to count — `trial_metrics` returned `None` for it. The
+  sentence above was aspirational, not descriptive, and the thing it claimed made the criterion
+  measurable was doing so for half of it. ADR-0022 made it true rather than deleting it, and it is
+  left standing with this correction attached because the failure is the point: a consequence
+  asserted in prose is not a consequence anything checks.
 
 ## Alternatives considered
 

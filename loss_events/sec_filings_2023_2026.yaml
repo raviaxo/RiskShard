@@ -8,6 +8,11 @@
 # These are documented events. They are tail and defensibility evidence only: never
 # aggregate them into a central tendency, and never read an exceedance probability
 # out of them.
+#
+# Every record here carries contribution.origin: project, because every record here
+# was extracted by the project. A record contributed from outside the project goes in
+# its own file in loss_events/ — the loader reads them all — so that ADR-0017's second
+# kill-criterion metric is counted rather than asserted (ADR-0022).
 
 events:
   - id: sec_23andme_2023_credential_stuffing
@@ -48,6 +53,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "The settlement and the expense line overlap; they are separate typed amounts and must not be summed. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_americold_2023_cyber_incident
     entity:
       name: "AMERICOLD REALTY TRUST"
@@ -79,6 +86,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_ardent_health_2023_ransomware
     entity:
       name: "Ardent Health Partners, Inc."
@@ -117,6 +126,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_avidxchange_2023_cyber_incident
     entity:
       name: "AvidXchange Holdings, Inc."
@@ -155,6 +166,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "A separate sentence in the same filing states the 2024 figure as '$ 302', denominated in thousands; the million-form is used here to avoid a 1000x misread. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_bancorp34_2023_cyber_incidents
     entity:
       name: "Bancorp 34, Inc."
@@ -187,6 +200,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "Among the smallest documented figures in the corpus; useful as evidence that disclosure reaches small issuers, not as a typical value. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_bassett_furniture_2024_cyber_incident
     entity:
       name: "BASSETT FURNITURE INDUSTRIES INC"
@@ -227,6 +242,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "The revenue-impact figure is the midpoint of a range the filing gives as $1,000-$2,000 thousand; the filing states a range, not a point. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_campbells_2023_cyber_incident
     entity:
       name: "CAMPBELL'S Co"
@@ -265,6 +282,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_conduent_2025_cyber_incident
     entity:
       name: "CONDUENT Inc"
@@ -296,6 +315,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "The $9 million insurance recovery in the same sentence relates to a different, earlier matter and is deliberately not recorded against this event. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_data_io_2025_ransomware
     entity:
       name: "DATA I/O CORP"
@@ -328,6 +349,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_davita_2025_ransomware
     entity:
       name: "DAVITA INC."
@@ -359,6 +382,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "The recorded amount sums two components the filing states separately ($1.0M patient care + $24.2M G&A) for the same period; the filing does not print the total. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_f5_2025_cyber_incident
     entity:
       name: "F5, INC."
@@ -397,6 +422,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_fidelity_national_financial_2023_cyber_incident
     entity:
       name: "Fidelity National Financial, Inc."
@@ -428,6 +455,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "This is a year-over-year REDUCTION in incident expense, not the cost of the event. It bounds nothing about the event total and must never be read as one. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_first_american_2023_cyber_incident
     entity:
       name: "First American Financial Corp"
@@ -459,6 +488,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_hanesbrands_2022_ransomware
     entity:
       name: "Hanesbrands Inc."
@@ -499,6 +530,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_henry_schein_2023_cyber_incident
     entity:
       name: "HENRY SCHEIN INC"
@@ -530,6 +563,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "The same filing states a $60 million insurance policy after a $5 million retention. That is coverage, not loss, and is deliberately not recorded as an amount. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_hillman_2023_cyber_incident
     entity:
       name: "Hillman Solutions Corp."
@@ -561,6 +596,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_irhythm_2026_cyber_incident
     entity:
       name: "iRhythm Holdings, Inc."
@@ -592,6 +629,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_johnson_controls_2023_ransomware
     entity:
       name: "Johnson Controls International plc"
@@ -623,6 +662,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "A net-income impact combining lost revenue and expense, not a direct-cost figure. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_key_tronic_2024_cyber_incident
     entity:
       name: "KEY TRONIC CORP"
@@ -654,6 +695,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_krispy_kreme_2024_cyber_incident
     entity:
       name: "Krispy Kreme, Inc."
@@ -692,6 +735,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_lee_enterprises_2025_cyber_incident
     entity:
       name: "LEE ENTERPRISES, Inc"
@@ -723,6 +768,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_livanova_2023_cyber_incident
     entity:
       name: "LivaNova PLC"
@@ -754,6 +801,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_loandepot_2024_cyber_incident
     entity:
       name: "loanDepot, Inc."
@@ -785,6 +834,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "Net of insurance and inclusive of a $25.0 million litigation accrual, so the gross direct cost is not recoverable from this figure. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_masimo_2025_cyber_incident
     entity:
       name: "MASIMO CORP"
@@ -823,6 +874,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_maximus_2023_moveit
     entity:
       name: "MAXIMUS, INC."
@@ -854,6 +907,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_mueller_water_2023_cyber_incident
     entity:
       name: "Mueller Water Products, Inc."
@@ -885,6 +940,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_prog_holdings_2023_cyber_incident
     entity:
       name: "PROG Holdings, Inc."
@@ -916,6 +973,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_sinclair_2021_ransomware
     entity:
       name: "SINCLAIR BROADCAST GROUP INC"
@@ -954,6 +1013,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "The $63M revenue loss and the $20M unrecoverable net loss are different constructs and must not be summed. Pre-dates the SEC cyber disclosure rule. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_sonic_automotive_2024_cdk_outage
     entity:
       name: "SONIC AUTOMOTIVE INC"
@@ -985,6 +1046,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "The incident occurred at a third party; the loss is the filer's. Useful precisely because third-party outage loss is rarely quantified per-company. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_southstate_2024_cyber_incident
     entity:
       name: "SouthState Corp"
@@ -1016,6 +1079,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "A separate sentence in the same filing cites approximately $7.9 million of one-time incident costs for a different period; the periods are not reconciled in the filing, so only the explicitly-scoped figure is recorded. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_surmodics_2025_cyber_incident
     entity:
       name: "SURMODICS INC"
@@ -1054,6 +1119,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "The insurance recovery is expected, not received. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_tempur_sealy_2023_cyber_incident
     entity:
       name: "TEMPUR SEALY INTERNATIONAL, INC."
@@ -1085,6 +1152,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "Incident pre-dates the SEC cyber disclosure rule's December 2023 effective date; no Item 1.05 filing exists for it. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_tenet_healthcare_2022_cyber_incident
     entity:
       name: "TENET HEALTHCARE CORP"
@@ -1116,6 +1185,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "A recovery only. The filing does not state the gross loss, so this record says nothing about event cost. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_ttec_2022_cyber_incident
     entity:
       name: "TTEC Holdings, Inc."
@@ -1147,6 +1218,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "A net insurance reimbursement, not a loss. The filing does not state the gross cost. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_united_natural_foods_2025_cyber_incident
     entity:
       name: "UNITED NATURAL FOODS INC"
@@ -1185,6 +1258,8 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "A prior-period filing reported approximately $26 million of incremental costs for the fourth quarter of fiscal 2025; this record covers the following quarter only. One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
   - id: sec_west_pharmaceutical_2026_cyber_incident
     entity:
       name: "WEST PHARMACEUTICAL SERVICES INC"
@@ -1216,3 +1291,5 @@ events:
       verified_by: "raviaxo"
       candidate_source: "edgar_corpus_census.py lane C/A"
     limitations: "One documented event, not a distribution. The corpus is biased toward listed entities, censored at each filer's own materiality threshold, and figures are often provisional and settle in later periods. Usable as a tail or defensibility anchor with those caveats attached; never to be aggregated into an average, and it carries no exceedance probability."
+    contribution:
+      origin: project
