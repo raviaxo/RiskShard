@@ -180,6 +180,7 @@ model parameters trace to a reviewed public source over time.
 <!-- strength-ledger:begin (regenerate with: python scripts/strength_ledger.py markdown) -->
 | Release | Date | Source-backed params | Cell-matched | Shards 6/6 | Bridged/est. |
 | --- | --- | --- | --- | --- | --- |
+| 2026.09.28 | 2026-09-28 | 66 / 66 | 7 | 11 / 11 | 0 |
 | 2026.09.27 | 2026-09-27 | 66 / 66 | 7 | 11 / 11 | 0 |
 | 2026.08.23 | 2026-08-23 | 66 / 66 | 7 | 11 / 11 | 0 |
 | 2026.08.23 | 2026-08-23 | 66 / 66 | 7 | 11 / 11 | 0 |
