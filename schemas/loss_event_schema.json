@@ -3,7 +3,9 @@
   "title": "RiskShard Loss Event Records Schema",
   "description": "Publicly documented cyber loss events with quantified financial impact (ADR-0012, superseding ADR-0005). A record describes ONE organisation's ONE incident, not a cell. Every amount is typed, because the corpus mixes gross losses with insurance proceeds, court settlements and period-over-period deltas, and averaging across those types produces nonsense. These records are tail and defensibility evidence only: they may not be aggregated into a central tendency, and they carry no exceedance probability.",
   "type": "object",
-  "required": ["events"],
+  "required": [
+    "events"
+  ],
   "properties": {
     "events": {
       "type": "array",
@@ -18,7 +20,8 @@
           "source",
           "extraction_date",
           "verification",
-          "limitations"
+          "limitations",
+          "contribution"
         ],
         "properties": {
           "id": {
@@ -29,23 +32,44 @@
           "entity": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["name", "country", "listed"],
+            "required": [
+              "name",
+              "country",
+              "listed"
+            ],
             "properties": {
-              "name": {"type": "string", "minLength": 1},
-              "cik": {"type": "string", "description": "SEC Central Index Key, when the source is an EDGAR filing."},
-              "country": {"type": "string", "minLength": 2},
-              "industry": {"type": "string"},
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "cik": {
+                "type": "string",
+                "description": "SEC Central Index Key, when the source is an EDGAR filing."
+              },
+              "country": {
+                "type": "string",
+                "minLength": 2
+              },
+              "industry": {
+                "type": "string"
+              },
               "company_size_band": {
                 "type": "string",
                 "description": "Declared only when the filing supports it. Absent is honest; guessing is not."
               },
-              "listed": {"type": "boolean"}
+              "listed": {
+                "type": "boolean"
+              }
             }
           },
           "event": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["description", "threat", "date_precision"],
+            "required": [
+              "description",
+              "threat",
+              "date_precision"
+            ],
             "properties": {
               "description": {
                 "type": "string",
@@ -63,10 +87,19 @@
                   "unspecified_cyber_incident"
                 ]
               },
-              "date": {"type": "string", "description": "ISO date or year-month, at the precision the source states."},
+              "date": {
+                "type": "string",
+                "description": "ISO date or year-month, at the precision the source states."
+              },
               "date_precision": {
                 "type": "string",
-                "enum": ["day", "month", "quarter", "year", "not_stated"],
+                "enum": [
+                  "day",
+                  "month",
+                  "quarter",
+                  "year",
+                  "not_stated"
+                ],
                 "description": "Declared, never inferred. The Destroyed by Breach measurement found 18 of 37 dates were a month or year coerced into an exact day; once coerced the distinction is unrecoverable."
               }
             }
@@ -78,7 +111,13 @@
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["type", "value", "currency", "basis", "cited_line"],
+              "required": [
+                "type",
+                "value",
+                "currency",
+                "basis",
+                "cited_line"
+              ],
               "properties": {
                 "type": {
                   "type": "string",
@@ -93,22 +132,40 @@
                   ],
                   "description": "The type is the point. 'insurance_recovery' is money received, not lost; 'period_delta' is a change between periods, not an event total. Mixing them is the failure this field exists to prevent."
                 },
-                "value": {"type": "number", "exclusiveMinimum": 0},
-                "currency": {"type": "string", "minLength": 3, "maxLength": 3},
+                "value": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "currency": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 3
+                },
                 "basis": {
                   "type": "string",
-                  "enum": ["gross", "net_of_insurance", "not_stated"],
-                  "description": "Whether recoveries are already deducted. Filings state both often enough that the confound is visible rather than hidden — but only if it is recorded."
+                  "enum": [
+                    "gross",
+                    "net_of_insurance",
+                    "not_stated"
+                  ],
+                  "description": "Whether recoveries are already deducted. Filings state both often enough that the confound is visible rather than hidden \u2014 but only if it is recorded."
                 },
-                "period": {"type": "string", "description": "The period the amount covers, as the filing states it."},
+                "period": {
+                  "type": "string",
+                  "description": "The period the amount covers, as the filing states it."
+                },
                 "status": {
                   "type": "string",
-                  "enum": ["provisional", "final", "not_stated"],
+                  "enum": [
+                    "provisional",
+                    "final",
+                    "not_stated"
+                  ],
                   "description": "Disclosures routinely report costs incurred to date; final amounts land quarters later."
                 },
                 "units_resolved_from": {
                   "type": "string",
-                  "description": "Where the magnitude was confirmed when the sentence alone was ambiguous — e.g. a statement header reading 'in thousands'. Required by the census hazard: a face-value read of a table figure is wrong by 1000x."
+                  "description": "Where the magnitude was confirmed when the sentence alone was ambiguous \u2014 e.g. a statement header reading 'in thousands'. Required by the census hazard: a face-value read of a table figure is wrong by 1000x."
                 },
                 "cited_line": {
                   "type": "string",
@@ -121,29 +178,57 @@
           "source": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["filing_type", "url", "filing_date"],
+            "required": [
+              "filing_type",
+              "url",
+              "filing_date"
+            ],
             "properties": {
               "filing_type": {
                 "type": "string",
-                "enum": ["10-K", "10-Q", "8-K", "20-F", "6-K", "court_filing", "regulator_notice"]
+                "enum": [
+                  "10-K",
+                  "10-Q",
+                  "8-K",
+                  "20-F",
+                  "6-K",
+                  "court_filing",
+                  "regulator_notice"
+                ]
               },
-              "url": {"type": "string", "pattern": "^https://"},
-              "filing_date": {"type": "string"},
-              "filer_name": {"type": "string"}
+              "url": {
+                "type": "string",
+                "pattern": "^https://"
+              },
+              "filing_date": {
+                "type": "string"
+              },
+              "filer_name": {
+                "type": "string"
+              }
             }
           },
-          "extraction_date": {"type": "string"},
+          "extraction_date": {
+            "type": "string"
+          },
           "verification": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["method", "verified_by"],
+            "required": [
+              "method",
+              "verified_by"
+            ],
             "properties": {
               "method": {
                 "type": "string",
-                "enum": ["machine_candidate_human_confirmed"],
+                "enum": [
+                  "machine_candidate_human_confirmed"
+                ],
                 "description": "ADR-0012 requires verification-assisted extraction and forbids automatic. 12 of 50 machine candidates in the census were wrong, in six distinct ways, so an unconfirmed candidate is not a record. This enum has one value on purpose."
               },
-              "verified_by": {"type": "string"},
+              "verified_by": {
+                "type": "string"
+              },
               "candidate_source": {
                 "type": "string",
                 "description": "The discovery lane that surfaced it, for reproducibility."
@@ -153,7 +238,54 @@
           "limitations": {
             "type": "string",
             "minLength": 1,
-            "description": "What this record cannot support. Never empty: at minimum it carries the corpus-level biases — selection toward listed entities, materiality censoring, and provisional figures."
+            "description": "What this record cannot support. Never empty: at minimum it carries the corpus-level biases \u2014 selection toward listed entities, materiality censoring, and provisional figures."
+          },
+          "contribution": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "origin"
+            ],
+            "description": "Who supplied this record. Required on every record, because ADR-0017's second kill-criterion metric counts entries contributed from outside the project and an absent field cannot be told apart from a zero. Until 2026-09-28 no field existed, so `trial_metrics` returned None and the roadmap published the owner's assertion; ADR-0022 replaced that with a meter.",
+            "properties": {
+              "origin": {
+                "type": "string",
+                "enum": [
+                  "project",
+                  "external"
+                ],
+                "description": "`project` is anyone working on RiskShard; `external` is anyone who is not. The distinction is the metric, so it is declared per record and never inferred from the file a record happens to sit in."
+              },
+              "contributor": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Handle or name, credited as published. Required when origin is external so the count is attributable rather than self-asserted."
+              },
+              "contributed_date": {
+                "type": "string",
+                "description": "ISO date the contribution was accepted. Required when origin is external, because the measurement is taken on a date and a contribution that arrives after it does not count toward it."
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "origin": {
+                      "const": "external"
+                    }
+                  },
+                  "required": [
+                    "origin"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "contributor",
+                    "contributed_date"
+                  ]
+                }
+              }
+            ]
           }
         }
       }

@@ -158,22 +158,43 @@ def trial_metrics(root):
     """The two numbers ADR-0012's kill criterion is decided on.
 
     `shards_citing_a_registry_entry` — how many shards anchor `impact.max` on a registry
-    id rather than a one-off. `external_contributions` cannot be derived from the tree
-    and is None until someone records it; None means unmeasured, not zero.
+    id rather than a one-off.
+
+    `external_contributions` — how many records declare `contribution.origin: external`.
+    **It returned None until 2026-09-28**, because a loss event recorded nothing about
+    who supplied it, so the roadmap published the owner's assertion of zero while this
+    function documented that None meant unmeasured. Retiring the registry on a measured
+    zero and on an un-instrumented one are different acts and only the first is the
+    criterion working, so [ADR-0022](../docs/adr/0022-the-second-kill-metric-gets-a-meter.md)
+    made `contribution` a required block on every record and this a count.
+
+    What the count can and cannot say, because the number is due on 2026-11-01 and will
+    be read by someone who was not here: it counts *accepted records*, so it reads zero
+    while nobody has contributed one **and** while nobody has been asked to. Those are
+    the same number and a different fact. ADR-0017 section 4 settled that case in
+    advance — no external readership at the date is grounds for retiring the registry,
+    not for extending it again — so the meter is here to make the zero honest, not to
+    rescue it.
     """
     root = Path(root)
-    ids = {e["id"] for e in load_loss_events(root)}
+    events = load_loss_events(root)
+    ids = {e["id"] for e in events}
     citing = set()
     if ids:
         for path in sorted((root / "calibrations").glob("*.yaml")):
             text = path.read_text(encoding="utf-8")
             if any(eid in text for eid in ids):
                 citing.add(path.stem)
+    external = [
+        e["id"] for e in events
+        if (e.get("contribution") or {}).get("origin") == "external"
+    ]
     return {
         "registry_events": len(ids),
         "shards_citing_a_registry_entry": len(citing),
         "citing_shards": sorted(citing),
-        "external_contributions": None,
+        "external_contributions": len(external),
+        "external_contribution_ids": sorted(external),
     }
 
 #: Exceedance bases that say something about being exceeded. A registry entry carries

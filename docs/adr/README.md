@@ -32,3 +32,4 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0019](0019-borrowing-cannot-answer-an-unpublished-cell.md) | Nearest-shard borrowing cannot answer an unpublished cell, and is declined | **Proposed** (2026-08-23) |
 | [0020](0020-declared-exclusions.md) | A publisher left out on purpose is declared, never silent | Accepted (2026-09-21) |
 | [0021](0021-track-b-is-closed.md) | Track B is closed, and the defect it existed for is left standing in the open | Accepted (2026-09-27) |
+| [0022](0022-the-second-kill-metric-gets-a-meter.md) | The second kill-criterion metric gets a meter, not a new definition | Accepted (2026-09-28) |

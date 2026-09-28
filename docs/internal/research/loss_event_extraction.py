@@ -364,6 +364,11 @@ def main():
         "# These are documented events. They are tail and defensibility evidence only: never",
         "# aggregate them into a central tendency, and never read an exceedance probability",
         "# out of them.",
+        "#",
+        "# Every record here carries contribution.origin: project, because every record here",
+        "# was extracted by the project. A record contributed from outside the project goes in",
+        "# its own file in loss_events/ — the loader reads them all — so that ADR-0017's second",
+        "# kill-criterion metric is counted rather than asserted (ADR-0022).",
         "",
         "events:",
     ]
@@ -409,6 +414,11 @@ def main():
             f"      verified_by: {q(VERIFIER)}",
             "      candidate_source: \"edgar_corpus_census.py lane C/A\"",
             f"    limitations: {q(limits)}",
+            "    contribution:",
+            # Every record in this file was extracted by the project from EDGAR. An
+            # entry contributed from outside arrives as its own file in loss_events/,
+            # which the loader already reads, and never through this generator.
+            "      origin: project",
         ]
     sys.stdout.write("\n".join(out) + "\n")
 
