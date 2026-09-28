@@ -1,4 +1,5 @@
 import platform
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -40,6 +41,7 @@ def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
         held_source_check(root),
         intake_check(root),
         ledger_check(root),
+        release_archive_check(root),
         tests_check(root, run_tests=run_tests),
     ]
     return {
@@ -502,6 +504,46 @@ def ledger_check(root):
         }
     except Exception as exc:  # never let the nudge crash the doctor
         return {"name": "strength ledger", "status": "needs_review", "detail": str(exc)}
+
+
+def release_archive_check(root):
+    """Flag a released data pack that has no archived explorer copy.
+
+    `docs/CITING.md` promises that a pinned citation keeps resolving at
+    `…/RiskShard/r/<release>/`, and that promise is kept by a committed directory written
+    by `scripts/build_explorer.py --archive`. Cutting a release and archiving it are two
+    steps in the release runbook and only the first had a check: **v0.12.0 was tagged and
+    released on 2026-09-27 with no archive**, so a citation pinned to the current release
+    returned 404 while every gate stayed green.
+
+    This runs here as well as in `tests/test_release_archives.py` because a release is cut
+    on someone's machine, not in CI — the same reason the ledger nudge sits beside it.
+    Unversioned packs predate `v0.1.0`, were never tagged, and are covered by the test.
+    """
+    try:
+        releases = sorted(p.stem for p in (root / "data_pack_releases").glob("*.json"))
+        versioned = [rid for rid in releases if re.search(r"-v\d+\.\d+\.\d+", rid)]
+        missing = [
+            rid for rid in versioned
+            if not (root / "docs" / "r" / rid / "index.html").is_file()
+        ]
+        if missing:
+            return {
+                "name": "release archives",
+                "status": "needs_review",
+                "detail": (
+                    f"{len(missing)} released pack(s) have no archive, so a pinned "
+                    f"citation 404s: {', '.join(missing)} - "
+                    "python scripts/build_explorer.py --archive"
+                ),
+            }
+        return {
+            "name": "release archives",
+            "status": "pass",
+            "detail": f"{len(versioned)} versioned release(s) archived; pinned citations resolve",
+        }
+    except Exception as exc:  # never let the nudge crash the doctor
+        return {"name": "release archives", "status": "needs_review", "detail": str(exc)}
 
 
 def tests_check(root, *, run_tests=False):

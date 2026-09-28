@@ -163,4 +163,7 @@ place.
 
 The ledger entry is a no-op if the pack fingerprint is unchanged, so re-running is
 safe and the trend cannot be padded with vanity ticks. `python scripts/riskshard_doctor.py`
-flags a release whose strength was never recorded.
+flags a release whose strength was never recorded, **and a release whose archive was never
+written** — v0.12.0 was cut on 2026-09-27 with the `--archive` step skipped, so a citation
+pinned to it returned 404 for a day while every gate stayed green. `tests/test_release_archives.py`
+fails on the same thing in CI.
