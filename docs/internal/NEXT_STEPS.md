@@ -170,7 +170,7 @@ waiting on you.***
 
 ## Restart point
 
-**2026-09-28 session closed. `main` at `6060ab1`, 508 tests, evidence clean, preflight clean,
+**2026-09-28 session closed. `main` at `d2b66b6`, 514 tests, evidence clean, preflight clean,
 doctor 16 of 17 checks pass, tree clean, `main` == `origin/main`, no branch and no PR open.**
 
 *The seventeenth check is `strength ledger: needs_review` — the live pack `9409adc33297` is not
@@ -178,9 +178,10 @@ logged, because the ledger records at tagged release and no release has been cut
 That is the normal state of any unreleased content change, not a red. It clears at the next
 release.*
 
-**This session ran two objectives and merged both,
-[#199](https://github.com/raviaxo/RiskShard/pull/199) and
-[#200](https://github.com/raviaxo/RiskShard/pull/200).** The second was opened by the owner's
+**This session ran three objectives and merged all three,
+[#199](https://github.com/raviaxo/RiskShard/pull/199),
+[#200](https://github.com/raviaxo/RiskShard/pull/200) and
+[#201](https://github.com/raviaxo/RiskShard/pull/201).** The second was opened by the owner's
 decision on ADR-0017's metric 2, taken mid-session. Everything was green before them and is green
 after; what changed is that four more checks can go red, one that *could not pass* during normal
 work now can, and **the repo can now measure both halves of its own kill criterion.**
@@ -224,6 +225,26 @@ one thing left open.
   OK while silently skipping all three of the checks added the day before — including, at that
   moment, one that was failing in the full suite. The guard is now at the end of the file and the
   module runs six.
+
+- **The dispute path had no test, and the count of it had already drifted.**
+  `docs/OPEN_JUDGMENT_CALLS.md` is where a reader is sent to argue with a number — linked from the
+  explorer, the audit page and `BASIS_OF_PREPARATION.md`, maintained by hand, and read by nothing.
+  Standing item 6 restated its list and said **seven** while the page carried **eight**; the page
+  was right, and the fix was to stop restating it rather than to correct the digit.
+  `tests/test_open_judgment_calls.py` now checks that every row carries a deep link, that each one
+  addresses a shard the explorer actually publishes and a real parameter slot, that the numbering
+  has no gap, and that the templates still send a reader there. All eight resolve today, so it is
+  preventive — verified against a simulated rename and a dropped link. `test_doc_links.py` does not
+  cover this and says so: it skips anchors on purpose, which is right for prose and wrong for the
+  address of a disputed number.
+- **Declined out loud:** the readiness dashboard's standing P1, *"replace assumptions for
+  Third-Party Outage"*. It is the only top risk reading `calibrated_with_assumptions`, and its
+  anchors are the weakest in the dataset — `frequency.max` interpretive, `frequency.likely` an
+  all-cause supply-chain prevalence standing in for a third-party-only one. **But the shard is
+  published nowhere**, not in the explorer and not in `/reports/`, so fixing it would make no
+  published number more correct — ADR-0009's test. Its absence from the judgment-calls page is
+  correct rather than an omission. *The dashboard will keep printing this P1; it is answered here,
+  not ignored.*
 
 **Worth knowing before starting.** A prose-only edit inside a `calibrations/` file **moves the
 data-pack fingerprint** (`7dd170a38298` → `ffeeeda76150`), which is what a citation pins. So
@@ -733,3 +754,15 @@ shards are now source-backed. This is the Sunday post.
   sentence left standing and corrected rather than edited away. ⚠️ **It also surfaced that the
   contribution route was structurally closed**, not merely undocumented; whether to document and
   offer one before the measurement is left open (ADR-0022 open question 1). Tests 501 → 508.
+
+- 2026-09-28 (third objective) — **The dispute path had no test, and the count of it had already
+  drifted.** #201. `docs/OPEN_JUDGMENT_CALLS.md` is the page a reader is sent to in order to argue
+  with a number, and nothing read it. Standing item 6 restated its list and said *seven* while the
+  page carried *eight* — the page was right, and the duplication was the defect, so item 6 now
+  points at the page instead of restating it. `tests/test_open_judgment_calls.py` pins the rest:
+  every row carries a deep link, each addresses a shard the explorer actually publishes and a real
+  parameter slot, the numbering has no gap or repeat, and the templates still link there. All eight
+  resolve today, so it is preventive, verified against a simulated shard rename and a dropped link.
+  **Declined out loud in the same pass**: the dashboard's standing P1 on Third-Party Outage's
+  assumption — the weakest anchors in the dataset, on a shard published nowhere, so fixing it would
+  move no published number (ADR-0009). Tests 508 → 514.
