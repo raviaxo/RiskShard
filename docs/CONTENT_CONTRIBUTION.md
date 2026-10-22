@@ -2,6 +2,18 @@
 
 RiskShard content should grow through reviewed source, extraction, evidence, and calibration files. Do not add new product surface area to support a content contribution.
 
+> **Shard coverage is frozen at 11 cells.** [ADR-0016](adr/0016-the-audit-is-the-product.md)
+> part 2 — *"No new cells, no new countries, no new threats"* — closed breadth on 2026-08-15, and
+> [ADR-0006](adr/0006-depth-over-breadth.md)'s 2026-08-22 amendment withdrew demand as grounds to
+> reopen it. **A new country pack or risk module will be declined however good it is**, so do not
+> start one expecting a merge.
+>
+> What is still open, and wanted: **strengthening an existing shard's parameters** with a closer
+> public source, and **reading one source for the audit** (twenty minutes — ADR-0016 part 4 made
+> that the ask). The checklists below are correct for the first of those. The sections marked
+> **CLOSED** are the new-cell route and are kept for reference, not as an invitation.
+
+
 ## Source Registry Checklist
 
 - Add public sources to `sources/registry.yaml`.
@@ -40,7 +52,7 @@ RiskShard content should grow through reviewed source, extraction, evidence, and
 - Use `scripts/update_fx_rates.py` when FX rates need refresh.
 - Run calibration with both JSON and Markdown output for review.
 
-## Risk Module Checklist
+## Risk Module Checklist · 🔴 CLOSED (ADR-0016 part 2)
 
 - Add a module descriptor to `risk_modules/` when a scenario is intended to be practitioner-facing.
 - Link the scenario, default org profile, calibration profile, evidence files, reviewed extractions, and any control profiles.
@@ -49,7 +61,7 @@ RiskShard content should grow through reviewed source, extraction, evidence, and
 - Run `python scripts/riskshard_modules.py packs <module-id>` and `python scripts/riskshard_modules.py propose <module-id>`.
 - Run `python scripts/riskshard_modules.py registry` to inspect the machine-readable shard-pack contract and current catalog coverage.
 
-## Country Pack Checklist
+## Country Pack Checklist · 🔴 CLOSED (ADR-0016 part 2)
 
 - Start with `python scripts/riskshard_modules.py countries`.
 - Check the benchmark target queue with `python scripts/benchmark_program.py --sprint seeded`.
@@ -80,7 +92,7 @@ The risk module should reference artifacts by their eventual repo-relative
 paths. Preflight will accept files that already exist in the repo or files that
 exist inside the proposed pack at those paths.
 
-## Scaffold A New Pack
+## Scaffold A New Pack · 🔴 CLOSED (ADR-0016 part 2)
 
 Use the scaffold command to create the correct folder and file layout before
 reviewing sources. The scaffold is intentionally low-confidence and includes

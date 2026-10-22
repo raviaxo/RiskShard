@@ -1,13 +1,23 @@
 ---
 name: Request a shard
-about: Tell us the cell you need — country / industry / size / threat. Requests decide what gets built next.
+about: Tell us the cell you need — country / industry / size / threat. Recorded as demand; coverage is frozen at 11, so it does not currently produce a shard.
 title: "Request: "
 labels: requested-shard
 ---
 
-<!-- This is deliberately the easiest way to contribute. No source needed, no
-     research — just tell us what's missing. Requests are the demand signal that
-     decides which cells get built (the project doesn't add shards nobody asked for). -->
+<!-- The easiest way to contribute: no source needed, no research — just tell us
+     what's missing.
+
+     Be clear on what this does and does not do. Shard coverage is FROZEN at 11
+     cells (ADR-0016 part 2), and ADR-0006's 2026-08-22 amendment withdrew demand
+     as grounds to reopen it — a new cell is declined however it arrives. So this
+     request will be recorded and published in docs/REQUESTED_SHARDS.md as demand,
+     and it will not be built. Two things reopen breadth: a second maintainer, or
+     genuinely per-cell impact evidence. Demand is not one of them.
+
+     Still worth two minutes: a recorded gap is evidence about this corpus, and it
+     keeps whether or not the freeze lifts. If you want a number improved rather
+     than a cell added, use "Improve a number" instead — that route is live. -->
 
 ## The cell you need
 
