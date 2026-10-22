@@ -13,9 +13,16 @@ waiting on you.***
 
 ### Action owed
 
-1. **The mode post is written and PARKED by the owner on 2026-09-21** — held pending a personal
-   clearance check unrelated to the project's content, and not a copy or accuracy issue. Everything
-   below still applies when the hold lifts.
+1. **The mode post is written and was PARKED by the owner on 2026-09-21** — held pending a personal
+   clearance check unrelated to the project's content, and not a copy or accuracy issue.
+
+   ⚠️ **Updated 2026-10-22: the hold is no longer the operative state.** The owner is not formally
+   cleared and has judged there is no conflict. ADR-0020 governs the corpus side (one publisher
+   excluded, name withheld, since 2026-09-21); an outside-activity declaration is a separate
+   question and remains the owner's to make. **What changed more is the steer, not the hold:** the
+   claim is an improvement shipped on a good product, not a self-audit — so the publishing order is
+   now *This week* item C (audit-complete) first, and the two confession-genre candidates are
+   withdrawn. Everything below still applies to this post, which is unaffected by the steer.
 
    **Deferred deliberately on 2026-09-27: the owner is leaving the clearance about two weeks, so
    roughly 2026-10-11.** State the consequence rather than discover it: publishing is the only lever
@@ -170,9 +177,38 @@ waiting on you.***
 
 ## Restart point
 
-**2026-09-28 session closed. `main` at `d0513a6`, 523 tests, evidence clean, preflight clean,
+**2026-10-22 session closed. `main` at `ddcdd40`, 531 tests, evidence clean, preflight clean,
 doctor pass on all 18 checks, tree clean, `main` == `origin/main`, no branch and no PR open.
-`v0.13.0` is cut, tagged and released.**
+`v0.13.0` is the current release; no release is owed (pack fingerprint unchanged at
+`9409adc33297`).**
+
+**🔴 THE 2026-11-01 MEASUREMENT IS 10 DAYS AWAY AND IT IS THE NEXT OBJECTIVE.** ADR-0017
+re-measures the registry kill criterion at the first release on or after that date. Both metrics
+read **measured** zero — metric 2 only because ADR-0022 built the meter on 2026-09-28 — so
+[ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md) section 4 retires the registry.
+**The retirement shape is already pre-specified** in that ADR's alternatives and does not need
+deciding on the day: *"Retire the trial but keep the 36 events as a published dataset with no
+claim on the shards… if the date arrives with both metrics at zero, this is the shape retirement
+should take rather than deleting the work."* ADR-0017 open question 1 is answered by the same
+sentence — the 36 events survive, and the EDGAR census stands on its own as Finding 8 regardless.
+
+*Worth knowing: a 23-day gap sat between 2026-09-29 and this close, with the session's work
+complete and green in an unpushed branch the whole time. The gates still passed on reopening
+(no source rolled an edition, no citation moved), but the work was invisible to `origin` for
+three weeks. Land the branch in the session that writes it.*
+
+**Owner's publishing steer, 2026-10-22 — this changes what gets built next, not just what gets
+said.** The claim is *"we shipped an improvement to a good product"*, *not* a self-audit. The two
+strongest-looking candidates were both confession genre and are **withdrawn as publishing
+material**: the front-door finding below, and the kill criterion firing on schedule. The kill
+criterion still **executes** — it is dated and pre-committed and nothing about the steer touches
+it — but it is no longer the headline. See *This week* for what replaced it.
+
+**The clearance: the owner is not formally cleared and has judged there is no conflict
+(2026-10-22).** Recorded because owner item 1 has said *"PARKED pending a personal clearance
+check"* since 2026-09-21, and that is no longer the operative state. ADR-0020 already governs the
+corpus-side conflict — one publisher excluded, name withheld, since 2026-09-21. An outside-activity
+declaration is a different question from a corpus exclusion and remains the owner's to make.
 
 *The count went 17 → 18 this session: `release archives` is the new check. The loss-event check
 gained the second kill-criterion count in its detail line, which is a new **number**, not a new
@@ -302,6 +338,11 @@ took a PR. The same is true of anything else inside the pack.
 parameter values, but `results/*` is gitignored by design and only `.gitkeep` and `README.md` are
 tracked. The directory is local scratch, exactly as `results/README.md` says.*
 
+**🔴 Superseded 2026-10-22 — there is an active objective again and it carries a date.** The
+2026-11-01 measurement is 10 days out; see the restart point. The sentence below was true on
+2026-09-28 and is kept because the state it describes is the one the kill criterion was written
+for, not because it still holds.
+
 **🔴 NO ACTIVE OBJECTIVE AND, FOR THE FIRST TIME IN THIS QUEUE, NOTHING OWED IN THE REPO.** The
 one decision that carried a date closed on 2026-09-28 (owner item 3). Everything remaining is a
 person or a date: the clearance (~2026-10-11, owner item 1), the **2026-11-01
@@ -319,15 +360,18 @@ ask.
 roadmap. Rebased and resolved. Closing a session with branches still open will do this again —
 either rebase them at close, or close before opening them.*
 
-### This week (drafted 2026-09-27)
+### This week (rewritten 2026-10-22 on the owner's publishing steer)
 
 | | what | why it is first |
 | --- | --- | --- |
-| **A** | ~~Decide ADR-0017's metric 2~~ ✅ **done 2026-09-28** | Decided and instrumented the same day ([ADR-0022](../adr/0022-the-second-kill-metric-gets-a-meter.md), #200). **Nothing in the repo is owed again** — resist inventing something to replace it |
-| **B** | **The clearance, ~2026-10-11** | It gates two headlines now, not one: the mode post and *"the audit is complete, of the obtainable corpus"* |
-| **C** | **Charles Nwatu DM, 2026-10-01** | M3's third named person, held deliberately so one night's momentum is not over-indexed |
-| **D** | **Watch for a row or a dispute** | Either moves M3 and M5 off zero for the first time. Not forceable, and the only measurable signals are stars, issues and the form |
-| **E** | *(on 2026-11-01)* | **Measure M4 honestly and publish it either way**, whatever the metrics say |
+| **A** | **Execute M4 on/after 2026-11-01** | Dated, pre-committed, and the retirement shape is already written (restart point). Cut the release, publish both measured metrics, retire the trial, keep the 36 events as a dataset with no claim on the shards, write the outcome ADR, reconcile ADR-0005/0012/0017/0022 + roadmap M4/M5 + `loss_events/README.md` + the schema's now-vestigial `contribution` block + the doctor line + CHANGELOG. **Execute it; do not publish it** — owner's steer |
+| **B** | **State the failure condition for a reader-chosen donor, then measure it** | The only genuine product improvement left on the table, and the only route to a shipping claim. [ADR-0019](../adr/0019-borrowing-cannot-answer-an-unpublished-cell.md) names three things that would move the specificity inversion: more shards (closed by ADR-0016 part 2), **the reader picks the donor**, and evidence declared per cell (the ADR-0006 depth axis, far heavier). Route 2 is the live one. ⚠️ **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md)'s amendment sets the gate and it is not optional:** such a design is *not* bound by ADR-0018's two coverage preconditions, and *not* excused from measurement either — it is gated on **stating, and then measuring, its own version of "nothing here" before it reaches the page.** The ADR pre-states the hypothesis to beat: *"a feature whose most common output is 'this figure is entirely borrowed' may teach readers to distrust"*, on an 84.6% floor. **This may well be declined on its own measurement, exactly as U2 was** — that is the process working and it is cheap, because the condition is stated before a line is written |
+| **C** | **The audit-complete claim is the publishable one and it is available now** | *"The audit is complete, of the obtainable corpus"* — 65 of 75 read on all four properties, 10 classified unobtainable with the reason recorded, every answer verified against the publisher's own file. A finished product milestone rather than a self-audit, which is what the steer asks for. **Available exactly once**, so spend it deliberately |
+| **D** | **Watch for a row or a dispute** | Either moves M3 and M5 off zero for the first time. Not forceable |
+
+**Withdrawn as publishing material 2026-10-22, both confession genre:** the front-door finding
+(#204) and the kill criterion firing. Both still happened and both are recorded; neither is a
+headline. The mode post is unaffected and still written.
 
 **2026-11-01 is unchanged** ([ADR-0017](../adr/0017-the-kill-criterion-gets-a-clock.md)): the
 registry kill criterion re-measures at the first release on or after that date. Both metrics read
@@ -826,6 +870,38 @@ shards are now source-backed. This is the Sunday post.
   archive *and* every archive embeds its own release id; a doctor check runs the same invariant
   locally, where releases are actually cut, taking the doctor to 18 checks. Two pre-`v0.1.0` packs
   are declared rather than backfilled — never tagged, so not reconstructable. Tests 514 → 521.
+
+- 2026-10-22 — **The front door promised a route ADR-0016 had retired six weeks earlier.** #204.
+  `CONTRIBUTING.md` offered *"Request a shard"* as route 1 — zero research required, the easiest way
+  in — said *"requests decide what gets built next"*, and **cited ADR-0006 as the authority for it**.
+  ADR-0006's 2026-08-22 amendment says the opposite in as many words: *"ADR-0016 part 1 declines a
+  new cell however it arrives, and `docs/REQUESTED_SHARDS.md` is no longer a route to one."*
+  **Six surfaces, 38 to 45 days stale, nothing watching any of them** — both CONTRIBUTING routes,
+  the live explorer CTA, the issue template, `REQUESTED_SHARDS.md`, all of
+  `BENCHMARK_CONTRIBUTOR_WORKFLOW.md`, and three sections of `CONTENT_CONTRIBUTION.md`. All now
+  disclose the freeze and name the two triggers that survive (a second maintainer, or genuinely
+  per-cell impact evidence); requests are still recorded, because the signal was worth keeping and
+  only the promise was not. The two closed route docs are banner-marked rather than deleted — the
+  tooling still runs and the benchmark programme is how the existing 11 targets were chosen.
+  `REQUESTED_SHARDS.md` also told outside contributors to apply the `requested-shard` label
+  themselves, which **needs triage permission that audience does not have** — the same
+  structurally-closed shape ADR-0022 found in the loss-event route. **Worse than the two previous
+  stale-claim defects** (the README's three months, the social card's twelve days) because neither
+  of those was a *promise*, on the route advertised as easiest, to the one reader M5 counts.
+  `tests/test_request_route.py` pins it in 8 tests, reading the freeze off ADR-0016 rather than
+  restating it, so a lifted freeze inverts the assertions instead of holding stale copy — the
+  `test_readiness.py` lesson applied deliberately. Verified by reintroducing all four defects.
+  ⚠️ **The first draft of that test pinned `docs/index.html`, which is gitignored and built at
+  deploy** — a check that could only pass on a machine that had run the build, which is precisely
+  the defect fixed in `test_readiness.py` four weeks earlier, reproduced by the person who had just
+  read it. Repointed to the tracked template and verified against a tree with no built page.
+  **Also closed ADR-0022 open question 1:** no loss-event contribution route before 2026-11-01, on
+  a measurement rather than the calendar — `citation_candidates()` shows the blockage is population,
+  not volume, so a contributed record would be one more event against the same mismatch, and the
+  only route that would help solicits the slice ADR-0012 forbids. Tests 523 → 531.
+
+  *Process note: this work was completed and green on 2026-09-29 and sat in an unpushed branch for
+  23 days. Nothing rotted, but nothing was visible either.*
 
 - 2026-09-28 (fifth objective) — **v0.13.0 cut, tagged and released; the ledger is clear and the
   doctor passes all 18 checks.** #203. Cut to clear the strength ledger, which had read
