@@ -11,9 +11,17 @@ effort, every one of these is a real contribution and gets credited:
 
 1. **[Request a shard](https://github.com/raviaxo/RiskShard/issues/new?template=request_a_shard.md)** —
    name the country/sector/size/threat cell you need and what for. Zero research
-   required. Requests are the demand signal that decides what gets built next
-   (see [ADR-0006](docs/adr/0006-depth-over-breadth.md): no shard is added
-   without demand).
+   required. Every request is recorded and published in
+   [REQUESTED_SHARDS.md](docs/REQUESTED_SHARDS.md) as the project's demand signal.
+   **Read this before you spend the two minutes: shard coverage is frozen at 11
+   cells, so a request does not currently produce a shard.**
+   [ADR-0016](docs/adr/0016-the-audit-is-the-product.md) part 2 froze it and
+   [ADR-0006](docs/adr/0006-depth-over-breadth.md)'s 2026-08-22 amendment
+   withdrew demand as grounds to reopen it — a new cell is declined however it
+   arrives. Asking is still worth doing, because a recorded request is evidence
+   about what this corpus is missing, and two things do reopen breadth: a second
+   maintainer, or genuinely per-cell impact evidence. Demand is not one of them.
+   Treat it as telling us where the gap is, not as a request that gets filled.
 2. **[Improve a number](https://github.com/raviaxo/RiskShard/issues/new?template=improve_a_number.md)** —
    you know a closer or stronger public source for an existing figure. Naming it
    is a complete contribution; we do the extraction and verification, you get
@@ -25,8 +33,10 @@ effort, every one of these is a real contribution and gets credited:
    the standing challenge: follow any figure to its cited line and show the
    value, the source, or the caveat is wrong. Confirmed breaks are retracted
    publicly and credited.
-5. **Bring a full contribution** — a new source, evidence record, or shard
-   through the governed path below.
+5. **Bring a full contribution** — a new source or evidence record that
+   strengthens one of the 11 existing shards, through the governed path below.
+   **Not a new shard:** coverage is frozen (ADR-0016 part 2), so a new cell is
+   declined however complete the pack.
 
 ## License and the DCO
 

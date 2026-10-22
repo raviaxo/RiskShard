@@ -1,6 +1,26 @@
-# Benchmark Contributor Workflow
+# Benchmark Contributor Workflow · 🔴 CLOSED
 
-Last updated: 2026-06-15
+Last updated: 2026-06-15. **Closed 2026-08-15 by
+[ADR-0016](adr/0016-the-audit-is-the-product.md) part 2; this banner added 2026-09-29,
+45 days late.**
+
+> This document is the path for turning a **new** country / industry / company-size /
+> threat idea into an evidence pack, and that route no longer ends in a merge. ADR-0016
+> part 2 froze shard coverage at 11 — *"No new cells, no new countries, no new threats"* —
+> and part 1 explicitly closed *"the benchmark programme's expansion"*.
+> [ADR-0006](adr/0006-depth-over-breadth.md)'s 2026-08-22 amendment then withdrew demand
+> as grounds to reopen it. Two triggers survive — a second maintainer, or genuinely
+> per-cell impact evidence — and neither has fired.
+>
+> **Where to go instead:** [CONTRIBUTING.md](../CONTRIBUTING.md) lists the live routes.
+> The ask ADR-0016 part 4 actually wants is
+> [read one source](https://github.com/raviaxo/RiskShard/issues/new?template=read_a_source.md)
+> — twenty minutes, no research. To strengthen a number in an existing shard, see
+> [GOLDEN_CONTRIBUTOR_EXAMPLE.md](GOLDEN_CONTRIBUTOR_EXAMPLE.md).
+>
+> Kept rather than deleted because the tooling it documents still runs and the benchmark
+> programme is still how targets were chosen for the 11 cells that exist. Read it as
+> history, not as an invitation.
 
 This is the working path for turning a country, industry, company-size, and
 threat idea into a reviewable RiskShard evidence pack.

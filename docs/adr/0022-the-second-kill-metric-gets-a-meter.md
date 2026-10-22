@@ -121,6 +121,40 @@ did either.
 
 ## Open questions
 
-1. **Should a contribution route be documented and offered before 2026-11-01?** The meter can only
-   ever read what a route delivers, and there is no loss-event-specific route today. This ADR does
-   not decide whether to build one — it makes the absence visible, which is what a meter is for.
+1. ~~**Should a contribution route be documented and offered before 2026-11-01?**~~ **Answered
+   no, 2026-09-29.** The meter can only ever read what a route delivers, and there is no
+   loss-event-specific route today. This ADR did not decide whether to build one — it made the
+   absence visible, which is what a meter is for.
+
+   **The reason is a measurement, not the calendar.** "Too late" would have been the weak
+   argument and it invites reopening. `citation_candidates()` was run across all 11 shards on
+   2026-09-29 and the blockage is **population, not volume**:
+
+   - **10 of 11 shards have no country-and-threat match at all.** The corpus is US/GB/IE SEC
+     filings; the grid is AU · CA · DE · FR · GB · JP · SG · US midmarket. It holds **no
+     business-email-compromise events**, so the three BEC shards cannot match a corpus of this
+     shape however many records it gains.
+   - **1 of 11 matches and is correctly blocked.** `us_finance_data_breach_midmarket` matches
+     four events, two on industry as well, but its `impact.max` carries `observed_rank` — one of
+     only two informative exceedance statements in the portfolio — and a registry entry carries
+     none by rule. Citing one would trade an exceedance statement for provenance, a regression
+     under [ADR-0008](0008-the-governed-tail.md).
+
+   So a contributed record would be one more event of the same shape against the same mismatch.
+   **The only route that would help is one soliciting the missing slice** — non-US, and BEC — and
+   `loss_events/README.md` states that expansion beyond this slice is *"not authorized"* by
+   [ADR-0012](0012-loss-event-registry-bounded-trial.md). Offering that route would amend the
+   trial by the back door, 33 days before its kill date, which is exactly the sunk-cost move
+   [ADR-0017](0017-the-kill-criterion-gets-a-clock.md) exists to refuse and the reason roadmap
+   M3b is deliberately not started.
+
+   **What this obliges at the measurement, recorded now rather than discovered on the day.**
+   The criterion will retire the registry, and read literally it reports *nobody cited and nobody
+   contributed*. Both zeros are true and neither is about adoption. The honest statement, which
+   M4 is to publish in these terms: **the registry was built on a corpus that structurally cannot
+   serve the grid it was meant to serve, and was forbidden from growing into a shape that
+   could.** `loss_events/README.md` has said since the first reading that zero citations here
+   means *nothing fits yet*, not *nobody bothered* — that distinction survives to the
+   measurement, and it argues for retirement rather than against it, because a registry that
+   cannot serve the shards is not waiting on readers. Writing this before 2026-11-01 makes it a
+   pre-commitment; writing it after would make it a rationalisation.
