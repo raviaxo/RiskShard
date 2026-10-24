@@ -1,6 +1,6 @@
 # ADR-0023 — The denominator becomes a declared property of an audited source
 
-- **Status:** Proposed (2026-10-24)
+- **Status:** Accepted (2026-10-24)
 - **Date:** 2026-10-24
 - **Deciders:** repo owner
 - **Instruments:** [`0016-the-audit-is-the-product.md`](0016-the-audit-is-the-product.md) part 1,
@@ -58,11 +58,20 @@ the other four. It is read, never parsed out of existing prose.**
 
 ```yaml
 denominator:
-  basis: stated | derivable | ambiguous | not_applicable
-  publishes: <bool>
+  basis: verified_against_artifact            # how we know — the existing enum
+  publishes: <bool>                           # does the source publish any percentage
+  base: stated | derivable | ambiguous | not_applicable   # what the answer is
   verified_on: <ISO date>
   detail: <what the base is, in the report's own words where it names one>
 ```
+
+**`base` is a new field name and that is deliberate.** An earlier draft of this ADR put the four
+values on `basis`, which already exists on all four questions and already means something else —
+*how the answer was verified* (`verified_against_artifact`, `derived_from_corpus`, `unverified`,
+`no_readable_artifact`). Overloading it would have made the fifth property the only one where
+`basis` meant a different thing, which is the kind of quiet inconsistency that costs a reader an
+hour. Caught by reading `schemas/source_audit_schema.json` before writing the field rather than
+after.
 
 - **`stated`** — the report names the base of its own percentage.
 - **`derivable`** — the base is not stated but is recoverable from figures the report prints.

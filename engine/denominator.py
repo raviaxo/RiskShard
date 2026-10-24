@@ -51,7 +51,8 @@ EXISTING_PROPERTIES = ("mode", "distribution", "exceedance", "population")
 #: The property this module reads once ADR-0023 is implemented.
 PROPERTY = "denominator"
 
-#: What a denominator declaration may say. Ordered most to least useful.
+#: What a denominator declaration may say, on the record's `base` field (ADR-0023).
+#: Deliberately NOT `basis`, which already means how the answer was verified.
 BASES = (
     "stated",          # the report names the base of its own percentage
     "derivable",       # the base is recoverable from figures the report prints
