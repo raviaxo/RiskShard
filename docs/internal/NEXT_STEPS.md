@@ -177,10 +177,18 @@ waiting on you.***
 
 ## Restart point
 
-**2026-10-22 session closed. `main` at `ddcdd40`, 531 tests, evidence clean, preflight clean,
-doctor pass on all 18 checks, tree clean, `main` == `origin/main`, no branch and no PR open.
-`v0.13.0` is the current release; no release is owed (pack fingerprint unchanged at
-`9409adc33297`).**
+**2026-10-26. `main` at `91ef890`, 534 tests, evidence clean, preflight clean, tree clean,
+`main` == `origin/main`, no branch and no PR open. `v0.13.0` is the current release.**
+
+⚠️ **The doctor reads `needs_review`, on one line only: the strength ledger, because
+[#205](https://github.com/raviaxo/RiskShard/pull/205)'s schema change moved the pack fingerprint to
+`5d936733f4a6`. That is the documented normal state of an unreleased pack change, not a red, and
+step 5 of the M4 runbook clears it.** Recorded because the previous restart point said "doctor pass
+on all 18" and a reader comparing them would otherwise think something broke.
+
+*This block said `ddcdd40` / 531 tests / no release owed until 2026-10-26, which was true at the
+2026-10-22 close and four days and two merged PRs out of date by the time anyone read it. The queue
+is the canonical owner of this state; when it lags, every other surface that trusts it lags too.*
 
 **🔴 THE 2026-11-01 MEASUREMENT IS 10 DAYS AWAY AND IT IS THE NEXT OBJECTIVE.** ADR-0017
 re-measures the registry kill criterion at the first release on or after that date. Both metrics
@@ -365,9 +373,29 @@ either rebase them at close, or close before opening them.*
 | | what | why it is first |
 | --- | --- | --- |
 | **A** | **Execute M4 on/after 2026-11-01** | Dated, pre-committed, and the retirement shape is already written (restart point). Cut the release, publish both measured metrics, retire the trial, keep the 36 events as a dataset with no claim on the shards, write the outcome ADR, reconcile ADR-0005/0012/0017/0022 + roadmap M4/M5 + `loss_events/README.md` + the schema's now-vestigial `contribution` block + the doctor line + CHANGELOG. **Execute it; do not publish it** — owner's steer |
-| **B** | **State the failure condition for a reader-chosen donor, then measure it** | The only genuine product improvement left on the table, and the only route to a shipping claim. [ADR-0019](../adr/0019-borrowing-cannot-answer-an-unpublished-cell.md) names three things that would move the specificity inversion: more shards (closed by ADR-0016 part 2), **the reader picks the donor**, and evidence declared per cell (the ADR-0006 depth axis, far heavier). Route 2 is the live one. ⚠️ **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md)'s amendment sets the gate and it is not optional:** such a design is *not* bound by ADR-0018's two coverage preconditions, and *not* excused from measurement either — it is gated on **stating, and then measuring, its own version of "nothing here" before it reaches the page.** The ADR pre-states the hypothesis to beat: *"a feature whose most common output is 'this figure is entirely borrowed' may teach readers to distrust"*, on an 84.6% floor. **This may well be declined on its own measurement, exactly as U2 was** — that is the process working and it is cheap, because the condition is stated before a line is written |
+| **B** | **The reader-chosen donor — not started, and now the only product item left** | The only genuine product improvement left on the table, and the only route to a shipping claim. [ADR-0019](../adr/0019-borrowing-cannot-answer-an-unpublished-cell.md) names three things that would move the specificity inversion: more shards (closed by ADR-0016 part 2), **the reader picks the donor**, and evidence declared per cell (the ADR-0006 depth axis, far heavier). Route 2 is the live one. ⚠️ **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md)'s amendment sets the gate and it is not optional:** such a design is *not* bound by ADR-0018's two coverage preconditions, and *not* excused from measurement either — it is gated on **stating, and then measuring, its own version of "nothing here" before it reaches the page.** The ADR pre-states the hypothesis to beat: *"a feature whose most common output is 'this figure is entirely borrowed' may teach readers to distrust"*, on an 84.6% floor. **This may well be declined on its own measurement, exactly as U2 was** — that is the process working and it is cheap, because the condition is stated before a line is written |
 | **C** | **The audit-complete claim is the publishable one and it is available now** | *"The audit is complete, of the obtainable corpus"* — 65 of 75 read on all four properties, 10 classified unobtainable with the reason recorded, every answer verified against the publisher's own file. A finished product milestone rather than a self-audit, which is what the steer asks for. **Available exactly once**, so spend it deliberately |
 | **D** | **Watch for a row or a dispute** | Either moves M3 and M5 off zero for the first time. Not forceable |
+
+**Shipped since this table was written, and it was not on it.** The denominator work
+([#205](https://github.com/raviaxo/RiskShard/pull/205)) came out of the 2026-10-22 steer rather than
+the queue, and it is the week's actual output: [ADR-0023](../adr/0023-the-denominator-is-a-declared-property.md)
+written, accepted, implemented and then **narrowed by its own measurement** on 2026-10-26.
+`stated` held 12 of 15 — 80.0% against a threshold of *more than 85%* fixed before any reading — so
+it cleared by three points and the corpus-wide re-read was dropped. 15 of 65 sources now declare a
+denominator, each recorded with the caveat that it was read by text extraction rather than visually.
+`engine/denominator.py` carries the measurement, the generated batch and the screen (precision 30%,
+recall 100% on 15, so a conservative filter and not a precise one).
+
+Two things rode along. **The fourth generated-artifact gap** — `README.md`'s strength table, found
+exactly where the 2026-09-28 close note said a fourth would be, and **current**, so preventive
+rather than a fix; `tests/test_readme_progress_is_current.py` pins it. And
+**[`m4_runbook.md`](m4_runbook.md)**, which is item A below made executable six days early so that
+nothing about the outcome is decided on the day.
+
+**The denominator post is written, carded and unsent** — `MSG-2026-10-24-denominator-post.txt`.
+It now has measured support it did not have when it was drafted: *publishers state their base, the
+quoted sentence does not carry it* is 12 of 15 with quotes rather than an impression.
 
 **Withdrawn as publishing material 2026-10-22, both confession genre:** the front-door finding
 (#204) and the kill criterion firing. Both still happened and both are recorded; neither is a
