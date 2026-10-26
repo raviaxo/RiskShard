@@ -1,0 +1,142 @@
+DRAFT — LinkedIn, RiskShard, the denominator
+Status: unsent. Supersedes MSG-2026-10-22 (voice rejected by owner).
+
+Every figure is verified against the stored artifact. No number written from
+memory. No colons in the post body, per owner note 2026-10-24.
+
+---------------------------------------------------------------------------
+POST
+---------------------------------------------------------------------------
+
+Japan's National Police Agency, which collects every ransomware case reported
+to Japanese police, published its 2025 numbers. The report has three
+denominators.
+
+226 organizations reported ransomware damage.
+89 of them answered the investigation-cost question.
+107 of them answered the recovery-duration question.
+
+Take "10 to 50 million yen is the most common cyber cost in Japan" into a
+board paper and you have misrepresented two things. That band is 32 of 89
+cases, so you have made it sound almost three times more common than the
+report supports. And it is the cost of investigating the incident, not the
+cost of the incident. You have shown your board a forensics invoice and
+called it the loss.
+
+A denominator is what the number was divided by, and it decides what the
+number means.
+
+"48% of payments were over a million dollars" means 48% of the companies
+that paid a ransom. If 100 companies are attacked and 20 of them pay, that
+sentence describes about 10 companies. Put it in front of your board as an
+attack statistic and it describes 48. Same sentence, five times the
+exposure, and nobody in the room can see which one you meant.
+
+Most publishers are not hiding this. Sophos states that its ransomware
+figures cover organizations that were hit rather than all organizations,
+and states that it removed ransoms of 40 million dollars and above before
+publishing. The National Police Agency labels which table holds which base.
+The qualification is in the report. It is not in the sentence you copy out
+of the report, and the sentence is what travels.
+
+So before a number goes in front of your board, find what it was divided
+by. If you cannot find it in under five minutes, the report has not earned
+a place in that paper.
+
+What I am working on from here is making that findable without reading all
+65 reports yourself. For every headline figure, what it was divided by, and
+whether the publisher stated it or you have to work it out.
+
+Link in the first comment.
+
+---------------------------------------------------------------------------
+FIRST COMMENT
+---------------------------------------------------------------------------
+
+The audit so far. 65 public cyber-loss reports, four questions each, every
+answer checked against the publisher's own file.
+
+raviaxo.github.io/RiskShard
+
+The Japan record is in there under the National Police Agency source, with
+the full banded cost distribution and the within-sample exceedance rates.
+
+---------------------------------------------------------------------------
+WHAT CHANGED FROM THE 10-22 DRAFT, AGAINST THE OWNER'S NOTES
+---------------------------------------------------------------------------
+
+"One report, three different denominators, depending on which table you
+open" -> "The report has three denominators" and then the three are listed.
+The clause was doing literary work instead of telling you the fact.
+
+"and the source says so plainly" -> cut. It was there to sound balanced.
+
+The quote paragraph -> rewritten around what it costs you in the room.
+Names both misrepresentations, and says what the board is actually being
+shown. "Forensics invoice called the loss" is the line that does the work.
+
+"Here is the part that surprised me after reading 65 of these reports" ->
+cut entirely. Signposting a reveal is the tell. The paragraph now opens on
+the fact.
+
+"The denominator is usually stated. It is just never stated in the one
+sentence that gets quoted" -> replaced with a definition and a worked
+example, because the concept was being asserted rather than taught. The
+100-attacked / 20-paid / 10-vs-48 arithmetic is the didactic core and the
+post did not previously have one.
+
+NPA -> spelled out on first use with what it is.
+
+CTA -> no longer an instruction to the reader about what they should worry
+about. It is what the next stretch of the work is. First person, forward.
+
+"risk" -> does not appear. Using "exposure" and "what it costs you".
+
+Colons -> none in the post body.
+
+---------------------------------------------------------------------------
+PROVENANCE
+---------------------------------------------------------------------------
+
+npa_japan_cyber_threats_2025_statistics
+sources/raw/npa_japan_cyber_threats_2025_statistics.xlsx
+sha256 ca8c90022d470b94... verified 2026-08-21
+
+  226 reports ................... sheet 統計編P120
+  n=89 investigation cost ....... sheet 統計編P126
+  n=107 recovery duration ....... population record
+  10-50M yen band, 32 of 89 ..... sheet 統計編P126
+  investigation cost not loss ... measurement-basis note, same record
+  "never all Japanese organizations" — population record, verbatim
+
+sophos_state_ransomware_au_2026 and six other country cuts
+  "the denominator is the hit population rather than all organizations,
+   and outlier ransoms of $40 million or more were removed before
+   publication" — population record, verbatim
+
+sophos_state_ransomware_2026
+  "just under half (48%) of payments were $1 million or more" — exceedance
+  record, verbatim. Payer denominator stated on the same record.
+
+The 100-attacked / 20-paid illustration is arithmetic, not a measured
+payment rate, and is written so a reader can see it is an illustration.
+
+65 read / 10 unobtainable of 75 registered — generated, not typed.
+
+---------------------------------------------------------------------------
+CONFLICT
+---------------------------------------------------------------------------
+
+Ser's employer competes with several vendors whose reports sit in this
+corpus. ADR-0020 excludes one publisher and withholds the name, and that
+name must not appear anywhere in this repo — a draft of this post carried
+it on 2026-10-22 and the exclusion gate caught it before anything was
+pushed.
+
+Lead source is the Japanese police. The only vendor named is a competitor
+of Ser's employer, and it is named to credit its disclosure. No version of
+this reads as a competitive attack.
+
+Held and not used: finding 9, where Sophos ran a 5,000-organization
+prevalence question and did not publish the answer. True and fair in the
+repo. Would not survive a repost with its nuance intact.

@@ -35,7 +35,8 @@
               "mode": { "$ref": "#/$defs/answer" },
               "distribution": { "$ref": "#/$defs/answer" },
               "exceedance": { "$ref": "#/$defs/answer" },
-              "population": { "$ref": "#/$defs/answer" }
+              "population": { "$ref": "#/$defs/answer" },
+              "denominator": { "$ref": "#/$defs/answer" }
             }
           }
         }
@@ -68,6 +69,11 @@
         "corpus_note": {
           "type": "string",
           "description": "For derived_from_corpus only: what our own extraction shows. Never phrased as a statement about the source."
+        },
+        "base": {
+          "type": "string",
+          "enum": ["stated", "derivable", "ambiguous", "not_applicable"],
+          "description": "ADR-0023, and meaningful only on the denominator property: what a published percentage is a percentage OF. Deliberately not folded into basis, which already means how the answer was verified — overloading it would make denominator the one property where basis meant something else. stated = the report names its base; derivable = recoverable from figures it prints, which is the reader's work rather than the publisher's; ambiguous = it prints a percentage and never fixes the base; not_applicable = it publishes no percentage. Named, not named-and-countable — how many were measured is the population property's question (amendment of 2026-10-26)."
         }
       },
       "allOf": [

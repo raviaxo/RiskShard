@@ -1,0 +1,89 @@
+DRAFT — LinkedIn pinned post, RiskShard
+Status: unsent. Evergreen. Replaces whatever is currently pinned.
+
+No colons in the body. No "risk" as a noun where another word works. No
+self-audit framing. Written to be true in six months, so no release numbers
+that move except the ones generated at publish time.
+
+---------------------------------------------------------------------------
+POST
+---------------------------------------------------------------------------
+
+Eighteen years in governance and compliance, and the moment I still see go
+wrong is the same one every time. Someone puts a cyber-loss number in front
+of a board, the board asks where it came from, and the honest answer is a
+vendor report nobody in the room has read.
+
+So I built the thing I wanted to have in that meeting.
+
+RiskShard is an open dataset of cyber-loss figures where every number
+carries the source it came from, the exact line in that source, and what
+the number cannot be used for. Eleven cells across eight countries.
+Sixty-six parameters, every one traced to a public primary source, none of
+them mine.
+
+Three things you can do with it today.
+
+Look up a cell. Country, industry, size, threat. You get a dollar range you
+can defend, with every input showing its source underneath it rather than
+in a footnote nobody opens.
+
+Follow any figure to the line it came from. One click, into the
+publisher's own document. If a number cannot survive that walk, it should
+not be in your board paper, and this is how you find out before the board
+does.
+
+Read the audit. I have read 65 public cyber-loss reports against their own
+archived files and recorded what each one actually publishes. Whether it
+gives you a most-likely value. Whether it shows the spread. Whether it says
+how often losses go bigger. Who was actually measured. Most reports answer
+fewer of those than people assume.
+
+Here is what it will not do. It will not give you a number for a cell it
+has not measured. Eleven cells is a small number and I would rather publish
+eleven I can defend than five hundred I cannot. When a figure gets broken,
+it gets retracted in public with the correction on the record.
+
+Everything is free, open source, and built to be argued with. If you work
+with these numbers and something here is wrong, I would rather hear it from
+you than find it later.
+
+The work from here is making the qualifications travel with the numbers,
+instead of getting left behind in the report.
+
+raviaxo.github.io/RiskShard
+
+---------------------------------------------------------------------------
+NOTES
+---------------------------------------------------------------------------
+
+Opens on the room, not the project. The board-asks-where-it-came-from
+moment is the thing the audience has lived and it needs no setup.
+
+"None of them mine" is load-bearing. It is the whole claim in three words
+and it separates this from every vendor dataset.
+
+The three capabilities are the "ability" ask. Each one is a verb the reader
+can do, not a feature the project has.
+
+The refusal paragraph is the credibility. Eleven defended beats five
+hundred asserted, and saying so out loud is what makes the eleven worth
+something. It also pre-empts the obvious objection rather than waiting for
+it in the comments.
+
+CTA is the journey line, first person, no instruction to the reader.
+
+NUMBERS THAT MOVE AND MUST BE CHECKED AT PUBLISH TIME
+  eleven cells ........ generated, readiness dashboard
+  eight countries ..... AU CA DE FR GB JP SG US
+  sixty-six params .... generated, 66/66 source-backed
+  65 reports read ..... generated, 65 of 75 registered
+
+All four are live figures. Regenerate before posting rather than trusting
+this file, which is exactly the defect that put a retired headline on the
+social card for twelve days.
+
+OPEN
+  "Eighteen years" needs checking against how Ser states it elsewhere on
+  the profile. Used because it matches the operator record, but the
+  headline and About section should agree with it.
