@@ -148,6 +148,53 @@ def coverage(root):
     }
 
 
+def first_batch(root, size=15):
+    """The sources ADR-0023's stop-and-look is measured on, chosen by rule.
+
+    The failure condition — *if any single `base` holds more than 85% of the first
+    15, retire rather than complete* — is only meaningful if the 15 are not chosen
+    by whoever wants the answer. Fifteen industry surveys would almost all read
+    `stated`; fifteen statutes would almost all read `not_applicable`. Either
+    selection fires the condition on the sample rather than on the corpus.
+
+    So the batch is **stratified by `source_type` and proportional to the read
+    corpus**, and within each stratum the sources are taken in alphabetical id
+    order. No judgement is exercised at any point, which is the property that
+    makes the 85% test worth running at all. Largest strata are allocated first,
+    with the remainder going to the largest types, so the 21 industry surveys
+    carry about five seats and the long tail carries one each.
+    """
+    from engine.source_audit import load_registry
+
+    registry = {entry.get("id"): entry for entry in load_registry(root)}
+    read = [record for record in load_audit(root) if _was_read(record)]
+
+    strata = {}
+    for record in read:
+        source_id = record["source_id"]
+        kind = (registry.get(source_id) or {}).get("source_type") or "unknown"
+        strata.setdefault(kind, []).append(source_id)
+    for members in strata.values():
+        members.sort()
+
+    total = len(read)
+    order = sorted(strata, key=lambda k: (-len(strata[k]), k))
+    seats = {kind: (len(strata[kind]) * size) // total for kind in order}
+
+    # Remainder to the largest strata, so rounding never silently empties the tail.
+    while sum(seats.values()) < size:
+        for kind in order:
+            if seats[kind] < len(strata[kind]):
+                seats[kind] += 1
+                if sum(seats.values()) == size:
+                    break
+
+    batch = []
+    for kind in order:
+        batch.extend((kind, source_id) for source_id in strata[kind][: seats[kind]])
+    return batch
+
+
 def summary_line(root):
     """One line for the doctor, so the remedy's progress is visible every run."""
     result = coverage(root)
