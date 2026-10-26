@@ -106,6 +106,34 @@ section 3 was written because that is a real failure. It cleared, but a remedy w
 concentrated in roughly a fifth of the corpus should be sized accordingly — the 50 remaining
 re-reads buy less than the first framing assumed.
 
+## The screen, and what it is worth — measured 2026-10-26
+
+ADR-0023's amendment drops the corpus-wide re-read, which turns the work into a screening problem.
+`engine.denominator.screen` nominates sources by reading **our own audit prose** rather than the
+artifact, on the reasoning that those four answers are already a verified reading by someone who
+opened the document.
+
+Validated against the only ground truth available, these 15:
+
+| | |
+| --- | --- |
+| nominated, and worth reading | 3 |
+| nominated, but already `stated` | 7 |
+| settled, and already `stated` | 5 |
+| settled, but worth reading | **0** |
+| **precision** | **30%** |
+| **recall** | 100%, on 15 sources |
+
+**Read that as a conservative filter, not a precise one.** It cuts 65 sources to 38 with no
+observed miss, which is worth having. It also means roughly two of every three nominated reads will
+confirm what the record already implied. The recall figure rests on fifteen sources and should be
+read as *no miss was observed*, not as *there are none*.
+
+**The false positives show why no prose screen can do much better.** `cyentia_iris_2022` is
+nominated and is the strongest `stated` in the batch — it names a denominator it cannot obtain. Our
+four answers never quoted that part because they were written to answer four other questions. A
+screen over our prose can only measure what our prose happened to mention.
+
 ## Open, and owed to the owner
 
 1. **Is `stated` *named* or *named and countable*?** BCI turns on it, and so will others. Deciding

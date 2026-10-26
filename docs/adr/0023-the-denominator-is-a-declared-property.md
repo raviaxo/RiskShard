@@ -1,6 +1,8 @@
 # ADR-0023 — The denominator becomes a declared property of an audited source
 
-- **Status:** Accepted (2026-10-24)
+- **Status:** Accepted (2026-10-24); **scope narrowed 2026-10-26 by the first batch's own
+  measurement** — the corpus-wide re-read is dropped and the property is kept for the sources
+  where the base is genuinely unclear (see *Amendment*)
 - **Date:** 2026-10-24
 - **Deciders:** repo owner
 - **Instruments:** [`0016-the-audit-is-the-product.md`](0016-the-audit-is-the-product.md) part 1,
@@ -144,6 +146,68 @@ untouched, and the engine is untouched.
   mostly state their base, readers drop it* — is true, publishable, and costs nothing. It is
   **not** rejected; it is the thing to publish first, and section 3's failure condition is the
   circumstance in which it becomes the whole of the result.
+
+## Amendment — 2026-10-26: the measurement that cleared this also shrank it
+
+The stop-and-look ran as section 3 specified. **`stated` held 12 of 15, which is 80.0%**, under the
+85% threshold fixed in advance, so this ADR survived its own test — by three points.
+[`../internal/denominator_first_batch.md`](../internal/denominator_first_batch.md) holds the batch,
+the evidence and the per-source reasoning.
+
+Clearing the bar is not the same as being worth the full programme, and the result says so. A
+column that reads `stated` four times in five is close to the ceremony section 3 exists to catch.
+The value of the property is concentrated in the sources where the base is **not** clear, and
+reading fifty clean reports carefully in order to write `stated` fifty more times buys almost none
+of it.
+
+### 1. The corpus-wide re-read is dropped
+
+**Sections 1 and 2 stand. The 65-source re-read in Consequences does not.** The field is kept, the
+vocabulary is unchanged, and nothing about how a value is obtained is relaxed — a recorded
+denominator is still read from the artifact and still never parsed out of prose.
+
+What changes is which sources get read. A source is read for its denominator when there is reason
+to think its base is unclear, not because it is next in a queue. Finding those is a screening
+problem, and screening is cheap in a way that reading is not.
+
+**This is a narrowing, not a weakening, and the difference matters.** The bar for recording a value
+is identical. Fewer sources are nominated for the work.
+
+### 2. `base` means *named*, not *named and countable*
+
+Open question settled, and settled on the definition rather than on the count — the batch showed
+that `bci_supply_chain_resilience_2024` turns on it and would move the headline figure from 12 of
+15 to 11 of 15, which is exactly the circumstance in which a definition must not be chosen by its
+effect ([ADR-0017](0017-the-kill-criterion-gets-a-clock.md) is the standing warning).
+
+The argument is separation of concerns, and it is the same one that made `base` a separate field
+from `basis` in the first place. **`base` asks what the percentage is over. `population`
+(ADR-0003) already asks how many were measured and who they were.** BCI saying *"17.1% of
+respondents"* without stating how many respondents there are has named its base and has a thin
+`population` answer. Folding countability into `base` would make one field answer two questions
+and leave the corpus unable to express the common case where a base is clear and a sample is not.
+
+So BCI reads `stated` with the gap recorded on `population`, where it belongs.
+
+### 3. What the batch is, and is not
+
+Nothing from it is written to `sources/audit.yaml`. The classifications were produced by targeted
+text search over extracted text, which is strong enough to answer whether the property
+discriminates and too weak to record under a `verified_against_artifact` basis. Recording them
+would have been the false precision section 2 forbids, in the ADR that forbids it. The batch
+answered its question and stopped.
+
+### 4. The finding survives the narrowing, and is the more valuable half
+
+**Publishers mostly state their base.** Cyentia names a denominator it cannot obtain. Verizon puts
+`n=` on the figure and its base is *breaches*, not organizations. Bitkom labels twenty-six charts.
+IBM labels its chart bases rather than leaving them inferred.
+
+So the defect was never that the base is hidden. It is that the base lives in a chart label, a
+footnote or a methodology page, and **the sentence that gets quoted does not carry it.** That is a
+statement about how these reports are read, not about how they are written, and it is publishable
+on its own. It is also why the narrowing costs little: a reader does not need fifty more `stated`
+rows to be told that.
 
 ## Open questions
 

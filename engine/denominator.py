@@ -148,6 +148,79 @@ def coverage(root):
     }
 
 
+#: Signals that OUR OWN verified prose already pins the base hard enough that the
+#: source is unlikely to repay a dedicated read. Deliberately narrower than
+#: `_INCIDENTAL`, which only asks whether a denominator is mentioned at all.
+_PINNED = (
+    re.compile(r"\bn\s*=\s*[\d,]+", re.I),
+    re.compile(r"\bdenominator\b", re.I),
+    re.compile(r"\bbasis\s*:", re.I),
+    re.compile(r"\b(among|of) (those|the organi[sz]ations|respondents|payers|victims)\b", re.I),
+)
+
+
+def screen(root):
+    """Which sources are worth reading for their denominator, and which are not.
+
+    ADR-0023's 2026-10-26 amendment drops the corpus-wide re-read. The property is
+    kept for sources whose base is genuinely unclear, which turns the work from a
+    queue into a screening problem — and screening is cheap in a way that reading
+    is not.
+
+    The screen reads **our own audit prose**, not the artifact. That is the point:
+    those four answers are already a verified reading of the source by someone who
+    opened it. If our own reading never once pins what a percentage is over, the
+    source is a candidate for the fifth question. If it does, a dedicated read
+    would mostly reproduce what the record already says.
+
+    This nominates. It never records — a candidate still gets a real read before a
+    value is written, and the ordering is not a finding.
+
+    **Measured against the 15 sources of the first batch, which is the only ground
+    truth there is: precision 30%, recall 100%.** It nominated 10 of the 15 and 7
+    of those were already `stated`, so most nominations are a wasted read. It
+    settled 5 and every one of them was genuinely `stated`, so nothing worth
+    reading was dropped.
+
+    That shape is the useful one and the numbers should be read as what they are.
+    A conservative filter that cuts 65 sources to 38 with no measured miss is worth
+    having; a precise instrument this is not, and 30% means roughly two in three
+    nominated reads will confirm what the record already implied. The recall figure
+    rests on 15 sources and should not be trusted as 100% — it means *no miss was
+    observed*, over a sample too small to have observed a rare one.
+
+    The false positives are instructive about why no prose screen can do better.
+    `cyentia_iris_2022` is nominated and is the strongest `stated` in the batch —
+    it names a denominator it cannot even obtain. Our four answers simply never
+    quoted that part, because they were written to answer four other questions.
+    The screen reads our prose, so it can only ever measure what our prose happened
+    to mention.
+    """
+    records = [record for record in load_audit(root) if _was_read(record)]
+
+    nominated, settled = [], []
+    for record in records:
+        source_id = record["source_id"]
+        if declares_a_denominator(record):
+            settled.append((source_id, "already declared"))
+            continue
+        prose = _prose(record)
+        if any(pattern.search(prose) for pattern in _PINNED):
+            settled.append((source_id, "base already pinned in our own prose"))
+        elif mentions_a_denominator(record):
+            nominated.append((source_id, "weak", 2))
+        else:
+            nominated.append((source_id, "silent", 1))
+
+    # Silent first: a source our own four answers never touched on is the one most
+    # likely to be hiding an unfixed base.
+    nominated.sort(key=lambda row: (row[2], row[0]))
+    return {
+        "nominated": [(source_id, why) for source_id, why, _ in nominated],
+        "settled": sorted(settled),
+    }
+
+
 def first_batch(root, size=15):
     """The sources ADR-0023's stop-and-look is measured on, chosen by rule.
 
