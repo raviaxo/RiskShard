@@ -1,9 +1,21 @@
 # Source audit — ADR-0015.
 #
-# What each registered source publishes, on four properties. The rule that makes this
-# worth reading: an answer may only say what a SOURCE publishes when its basis is
-# `verified_against_artifact` — a human read the stored artifact in sources/raw/.
-# Anything else is a fact about our own extraction, or an open question.
+# What each registered source publishes, on five properties (ADR-0023 added the fifth,
+# `denominator`, on 2026-10-24). The rule that makes this worth reading: an answer may
+# only say what a SOURCE publishes when its basis is `verified_against_artifact` — the
+# stored artifact in sources/raw/ was read. Anything else is a fact about our own
+# extraction, or an open question.
+#
+# `denominator` is on 15 of 65 read sources, not all of them. ADR-0023's amendment of
+# 2026-10-26 dropped the corpus-wide re-read: the property is kept for sources whose
+# base is genuinely unclear, and `engine.denominator.screen` nominates them. A source
+# with no `denominator` block has not been asked the question — that is unmeasured, not
+# an absent base.
+#
+# Those 15 were read by text extraction from the stored artifact rather than by visual
+# reading of the laid-out page, with every quoted passage verified verbatim. It is a
+# weaker reading than the first four properties got and each record says so. A base
+# printed only inside a chart image would not have been seen.
 #
 # A source absent from this file is UNREAD on all four properties. That is the work
 # queue, it is counted, and `engine/source_audit.py` publishes the denominator beside
@@ -338,6 +350,19 @@ audit:
           Sample sizes per figure and a methodology appendix. The ransom figure carries
           its own population caveat in the text: "the customers of ransomware
           negotiation companies tend to be larger enterprises."
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-26'
+        detail: >-
+          n= is printed on the figures themselves, e.g. "Figure 5. Known initial access vectors
+          in non-Error, non-Misuse breaches (n=9,891)". Note the base is BREACHES, not
+          organizations — the most mistranslated base in this corpus, because a share of
+          breaches reads in a board paper as a share of companies. Read 2026-10-26 by text
+          extraction from the stored artifact (pdftotext / stripped HTML) with the quoted
+          passages verified verbatim, not by visual reading of the laid-out page; a base printed
+          only inside a chart image would not have been seen.
 
   - source_id: uk_dsit_cyber_breaches_2026
     artifact_sha256: 780128a0e2a5daa27470ce70c5e10fe1a86736d7cc5af7d8e3203481215d1956
@@ -645,6 +670,19 @@ audit:
         detail: >-
           Stated on every figure in the German convention: "Basis: Alle Unternehmen
           (n=1.002) | Quelle: Bitkom Research 2025"
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-26'
+        detail: >-
+          Every chart carries an explicit base label in the German survey convention: "Basis:
+          Alle Unternehmen (n=1.002)", with "n=868" on the subset charts, and notes such as
+          "Mehrfachnennungen moeglich" and "Abweichungen von 100 Prozent sind rundungsbedingt".
+          26 Basis labels in the artifact. Exemplary. Read 2026-10-26 by text extraction from
+          the stored artifact (pdftotext / stripped HTML) with the quoted passages verified
+          verbatim, not by visual reading of the laid-out page; a base printed only inside a
+          chart image would not have been seen.
 
   - source_id: asteres_cout_cyberattaques_france_2022
     artifact_sha256: 475980a53f23d349849295f678e16950399ecc40cf7a34dc08da5a52c80efbc2
@@ -711,6 +749,19 @@ audit:
           An official ABS statistical release covering Australian businesses with defined
           employment size ranges — the strongest population statement in the corpus so far,
           and the reason this source is used as a denominator.
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-26'
+        detail: >-
+          Official statistics with the base stated as a note on the proportions: "Proportions
+          are of all businesses in each output category. Businesses could select more than one
+          option." Percentages such as "46% of all businesses reported being innovation-active"
+          carry the base in the sentence. Read 2026-10-26 by text extraction from the stored
+          artifact (pdftotext / stripped HTML) with the quoted passages verified verbatim, not
+          by visual reading of the laid-out page; a base printed only inside a chart image would
+          not have been seen.
 
   - source_id: ponemon_dtex_cost_insider_risks_2023
     artifact_sha256: 1103b630847fa8f308c79033521d8182eeb79f3836aa29fec3c501527d8ebe25
@@ -829,6 +880,19 @@ audit:
         verified_on: '2026-08-15'
         detail: >-
           Financial entities reporting major ICT incidents under DORA, with a stated methodology — a regulatory reporting population, and an unusually well-defined one.
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-26'
+        detail: >-
+          Figures are framed as "Share of major incidents ...", so the base is reported major
+          incidents, and the rate is put against a named denominator: "When compared to the
+          total number of FEs subject to DORA". Base is incidents for the shares and financial
+          entities for the rate; the two are distinct and the report keeps them apart. Read
+          2026-10-26 by text extraction from the stored artifact (pdftotext / stripped HTML)
+          with the quoted passages verified verbatim, not by visual reading of the laid-out
+          page; a base printed only inside a chart image would not have been seen.
 
   - source_id: latitude_1h23_results_2023
     artifact_sha256: 7fd0aeea79b580be7044afae6a08dbae43d95809c4eafe7b2c799b2af313febc
@@ -887,6 +951,20 @@ audit:
         verified_on: '2026-08-15'
         detail: >-
           A stated survey respondent population.
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-26'
+        detail: >-
+          "This report is based on a comprehensive online survey of 725 IT and cybersecurity
+          professionals, conducted in late 2025", with "we surveyed 725 IT and cybersecurity
+          professionals" in the body. Base is surveyed practitioners, not organizations measured
+          — a perception base, so percentages describe what professionals report rather than
+          what was observed. Read 2026-10-26 by text extraction from the stored artifact
+          (pdftotext / stripped HTML) with the quoted passages verified verbatim, not by visual
+          reading of the laid-out page; a base printed only inside a chart image would not have
+          been seen.
 
   - source_id: deepfake_business_impact_2024
     artifact_sha256: a12249ceb1da4f334a0cefdc02cd29fdf20e3efa4e8e53123d5536356caf2fc6
@@ -916,6 +994,21 @@ audit:
         verified_on: '2026-08-15'
         detail: >-
           It aggregates figures measured by others rather than measuring a population itself, so there is no population belonging to this source. That is the property worth knowing about it.
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: ambiguous
+        verified_on: '2026-10-26'
+        detail: >-
+          A compilation article with no methodology and no sample of its own. Every percentage
+          is borrowed and none has a base the document fixes: "According to a McAfee survey, 70
+          percent of people said they aren't confident...", "77 percent of these people lost
+          money from scams", "more than 95 percent of deepfake videos are created with its open-
+          source software" (the claim is the software vendor's own). Bases are gestured at and
+          never established, which is the most misquotable shape there is. Read 2026-10-26 by
+          text extraction from the stored artifact (pdftotext / stripped HTML) with the quoted
+          passages verified verbatim, not by visual reading of the laid-out page; a base printed
+          only inside a chart image would not have been seen.
 
   - source_id: ico_monetary_penalties_2024
     artifact_sha256: 1213aed005b8a04d4ef7d5503ffae875ceb2c33fe979b7e113a79aa923a0297f
@@ -1061,6 +1154,22 @@ audit:
         verified_on: '2026-08-15'
         detail: >-
           BCI survey respondents — a self-selected professional membership population, which matters for how its prevalence figures travel.
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-26'
+        detail: >-
+          Base is named and never counted. Percentages run "of respondents" — "17.1% of
+          respondents now analyse their critical suppliers down to tier 4 and beyond", "20% of
+          respondents now report low or non-existent commitment" — and the stored artifact
+          states no sample size anywhere. Recorded as stated under the ADR-0023 amendment of
+          2026-10-26, which settles base as NAMED rather than named-and-countable; the missing
+          count is a population gap, not a base gap. Weakest stated in the first batch and the
+          source the definition turns on. Read 2026-10-26 by text extraction from the stored
+          artifact (pdftotext / stripped HTML) with the quoted passages verified verbatim, not
+          by visual reading of the laid-out page; a base printed only inside a chart image would
+          not have been seen.
 
   - source_id: abs_counts_australian_businesses_2025
     artifact_sha256: 2a04bc6f38721bc68179f36c5d39bae8360f746c2ab4a7854316e104ac21d003
@@ -1090,6 +1199,20 @@ audit:
         verified_on: '2026-08-15'
         detail: >-
           The Australian business count itself. This is a denominator source, and the population is the whole point of it.
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-26'
+        detail: >-
+          Rates are published next to the counts they are computed from — "2.5% or 66,650
+          increase in the number of businesses", "16.4% entry rate, with 437,150 entries",
+          "13.9% exit rate, with 370,500". The base is the business count, and the count is
+          given, so a reader never has to reconstruct it. This source is itself used as a
+          denominator by two shards. Read 2026-10-26 by text extraction from the stored artifact
+          (pdftotext / stripped HTML) with the quoted passages verified verbatim, not by visual
+          reading of the laid-out page; a base printed only inside a chart image would not have
+          been seen.
 
   - source_id: business_qld_cyber_secure_guidance_2025
     artifact_sha256: 861376170008e2506262d7667abe942913a5864db4c53a10731d9b8a221eb626
@@ -1399,6 +1522,17 @@ audit:
         verified_on: '2026-08-15'
         detail: >-
           One documented case reported by a news outlet; no population, and no methodology of its own.
+      denominator:
+        basis: verified_against_artifact
+        publishes: false
+        base: not_applicable
+        verified_on: '2026-10-26'
+        detail: >-
+          A single-incident news account. Zero percentage expressions in the stored artifact, so
+          there is no base to name. Read 2026-10-26 by text extraction from the stored artifact
+          (pdftotext / stripped HTML) with the quoted passages verified verbatim, not by visual
+          reading of the laid-out page; a base printed only inside a chart image would not have
+          been seen.
 
   - source_id: afp_bec_australian_victim_case_2021
     artifact_sha256: cfa1ec3ef363e31215d3b47e52dbbe26985917e6e9c75b39036e59720defdfa6
@@ -1428,6 +1562,17 @@ audit:
         verified_on: '2026-08-15'
         detail: >-
           One documented case; no population.
+      denominator:
+        basis: verified_against_artifact
+        publishes: false
+        base: not_applicable
+        verified_on: '2026-10-26'
+        detail: >-
+          A single-incident law-enforcement account. Zero percentage expressions in the stored
+          artifact, so there is no base to name. Honest absence rather than a gap. Read
+          2026-10-26 by text extraction from the stored artifact (pdftotext / stripped HTML)
+          with the quoted passages verified verbatim, not by visual reading of the laid-out
+          page; a base printed only inside a chart image would not have been seen.
 
   - source_id: securitybrief_ibm_au_breach_costs_2026
     artifact_sha256: 36018b189df6db8b2a011afd24e1eba281396fe6f3090614caad5420433f3235
@@ -1736,6 +1881,21 @@ audit:
         verified_on: '2026-08-15'
         detail: >-
           The most precisely stated population in the corpus: "over 77,000 cyber events experienced by 35,000 organizations over the last decade", drawn from Advisen's Cyber Loss Data.
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-26'
+        detail: >-
+          States the base and, unusually, states the base it does not have. "78% of impacted
+          firms experienced a single event between 2012-2021" runs over impacted firms, and a
+          footnote to the frequency model says "Since we don't have a reliable count of all
+          active firms around the world, we can't say how many had zero incidents. Only firms
+          with at least one publicly known cyber event are in our dataset." The strongest base
+          disclosure in the first batch. Read 2026-10-26 by text extraction from the stored
+          artifact (pdftotext / stripped HTML) with the quoted passages verified verbatim, not
+          by visual reading of the laid-out page; a base printed only inside a chart image would
+          not have been seen.
 
   - source_id: cyentia_iris_ransomware
     artifact_sha256: d2bdaa1d7bf2a20ce8971a1fb4baad432b78d2462938ed55eff5ff0a5def7298
@@ -1798,6 +1958,18 @@ audit:
   # ── Read 2026-08-16: the two sector cuts, the largest gap in the corpus ──
   # Sector is bridged 49 of 66 times, so a study of financial services or of
   # manufacturing specifically is worth more than another national survey.
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-26'
+        detail: >-
+          "Interos surveyed 1,500 global decision makers across multiple industries", with
+          n=1,500 printed on the figures and n=84 on at least one subset. Base is surveyed
+          decision makers. Read 2026-10-26 by text extraction from the stored artifact
+          (pdftotext / stripped HTML) with the quoted passages verified verbatim, not by visual
+          reading of the laid-out page; a base printed only inside a chart image would not have
+          been seen.
 
   - source_id: sophos_state_ransomware_financial_services_2025
     artifact_sha256: 92b2154b8f0cd2d56246778fd9fd4f1caf59c23df32756923947871101f3d145
@@ -2126,6 +2298,20 @@ audit:
           The same benchmarked multi-country, multi-industry breached-organization sample as the 2026 edition, with demographics reported.
 
   # ── Read 2026-08-16: ICO case data — structure without magnitude ─────────
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-26'
+        detail: >-
+          Chart bases are labelled rather than left to inference: "Among the organizations that
+          had fully recovered", "From organizations that reported fully recovering from a data
+          breach", "Among those organizations that experienced fines". The study base is a
+          recruited benchmark sample of breached organizations, not a census, so no percentage
+          here is a rate over all organizations. Read 2026-10-26 by text extraction from the
+          stored artifact (pdftotext / stripped HTML) with the quoted passages verified
+          verbatim, not by visual reading of the laid-out page; a base printed only inside a
+          chart image would not have been seen.
 
   - source_id: ico_self_reported_breach_cases_2024_25
     artifact_sha256: d8642b570d67d23138004d60bc3a883a13d94a013c9d615830c21b88402a26e1
@@ -2217,6 +2403,18 @@ audit:
           Survey respondents, reported as percentages throughout; the population is self-selected security practitioners rather than a sampled organization frame.
 
   # ── Read 2026-08-16: ASD and the enterprise size band ────────────────────
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-26'
+        detail: >-
+          "This 2024 Insider Threat Report is based on a comprehensive online survey of 413
+          cybersecurity professionals, conducted in August 2024". Base is surveyed
+          practitioners, so the same perception caveat as the 2026 Gurucul edition applies. Read
+          2026-10-26 by text extraction from the stored artifact (pdftotext / stripped HTML)
+          with the quoted passages verified verbatim, not by visual reading of the laid-out
+          page; a base printed only inside a chart image would not have been seen.
 
   - source_id: asd_annual_cyber_threat_report_2024_2025
     artifact_sha256: 83a00aaf4390d405dcc7f2a82314a76aa5a7fd8d961a5f718f2a889e77d9324d
@@ -2246,6 +2444,20 @@ audit:
         verified_on: '2026-08-16'
         detail: >-
           Reports made to ReportCyber during the financial year - a self-reported, self-selected reporting population rather than a survey sample or a census, which is the caveat that must travel with any figure taken from it. Broken out by business size, which is why it is useful to us: size is bridged 44 of 66 times in the corpus.
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-26'
+        detail: >-
+          Two denominators, kept distinct and both counted. "Received over 84,700 cybercrime
+          reports to ReportCyber" is one; "Responded to over 1,200 cyber security incidents" is
+          the other, and the percentages name which they run over — "11% of all incidents
+          responded to included ransomware", "8% of all incidents being categorised C3". A share
+          of incidents responded to is not a share of reports received and the report does not
+          let them blur. Read 2026-10-26 by text extraction from the stored artifact (pdftotext
+          / stripped HTML) with the quoted passages verified verbatim, not by visual reading of
+          the laid-out page; a base printed only inside a chart image would not have been seen.
 
   - source_id: sophos_state_ransomware_enterprise_2025
     artifact_sha256: a6a860ff94795e70739d06190684e6ab5c21097bbfc2651e615cf5f2c121af99
