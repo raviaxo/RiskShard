@@ -61,7 +61,11 @@ offered a real choice rather than a coin flip with a label on it. The design wou
 owe its own disclosure and its own second measurement before it reached a page.
 """
 
+import re
+
 from engine.borrowing import FACETS
+from engine.currency import (CurrencyConversionError, convert_currency,
+                             load_fx_rates)
 
 
 def _shard_facets(shard):
@@ -89,31 +93,55 @@ def _matched_set(shard_facets, cell):
     )
 
 
-def _impact(shard):
-    """One comparable figure per donor, for the value-spread test.
+_AVG = re.compile(r"^\s*([A-Z]{3})\s*([\d,]+(?:\.\d+)?)\s*$")
 
-    The composed impact mean where the explorer publishes one; falls back to the
-    `impact.likely` anchor. Returns None when neither is available, and a cell whose
-    donors have no comparable figure is excluded from the spread test rather than
-    counted as agreeing.
+
+def _impact(shard, fx_rates=None):
+    """One comparable figure per donor, in a single currency, for the spread test.
+
+    The explorer publishes `avg` as a formatted string carrying its own currency —
+    "AUD 154,814.52". The eleven shards do not share one, so comparing the raw numbers
+    would compare a currency difference and call it a disagreement about loss. Every
+    figure is converted to USD through the governed FX table before any spread is taken.
+
+    Returns None when the figure cannot be parsed or converted. A cell whose donors have
+    no comparable figure is **excluded** from the spread test, never counted as agreeing
+    — the first draft of this module let an unparsed figure fall through to zero
+    comparable cells and still report `declines_on_values: false`, which is a test that
+    did not run reporting as a test that passed.
     """
-    for key in ("impact_mean", "avg_annual_loss", "mean"):
-        value = shard.get(key)
-        if isinstance(value, (int, float)) and value > 0:
-            return float(value)
-    params = shard.get("parameters") or {}
-    likely = (params.get("impact.likely") or {}) if isinstance(params, dict) else {}
-    value = likely.get("value") if isinstance(likely, dict) else None
-    return float(value) if isinstance(value, (int, float)) and value > 0 else None
+    raw = shard.get("avg")
+    if not isinstance(raw, str):
+        return None
+    match = _AVG.match(raw)
+    if not match:
+        return None
+    currency, amount = match.group(1), float(match.group(2).replace(",", ""))
+    if currency == "USD":
+        return amount
+    if fx_rates is None:
+        return None
+    try:
+        # convert_currency returns a provenance record, not a bare number.
+        return float(convert_currency(amount, currency, "USD", fx_rates)["value"])
+    except CurrencyConversionError:
+        return None
 
 
-def measure(shards, cells):
+def measure(shards, cells, fx_rates=None):
     """Run the condition above over every tied cell. Computes nothing it does not report.
 
     `cells` is the empty-cell list from `engine.borrowing.empty_cells`.
     """
+    if fx_rates is None:
+        fx_rates = load_fx_rates()
     facets_by_shard = {s["id"]: _shard_facets(s) for s in shards}
-    impact_by_shard = {s["id"]: _impact(s) for s in shards}
+    impact_by_shard = {s["id"]: _impact(s, fx_rates) for s in shards}
+    if not any(impact_by_shard.values()):
+        raise ValueError(
+            "no donor figure could be parsed, so the value-spread half of the condition "
+            "cannot run — refusing to return a verdict that rests on an unmeasured test"
+        )
 
     tied_cells = 0
     single_facet_set = 0
