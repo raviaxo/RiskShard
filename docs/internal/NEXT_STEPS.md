@@ -177,7 +177,7 @@ waiting on you.***
 
 ## Restart point
 
-**2026-10-26. `main` at `91ef890`, 534 tests, evidence clean, preflight clean, tree clean,
+**2026-10-26. `main` at `b60270a`, 542 tests, evidence clean, preflight clean, tree clean,
 `main` == `origin/main`, no branch and no PR open. `v0.13.0` is the current release.**
 
 ⚠️ **The doctor reads `needs_review`, on one line only: the strength ledger, because
@@ -373,9 +373,28 @@ either rebase them at close, or close before opening them.*
 | | what | why it is first |
 | --- | --- | --- |
 | **A** | **Execute M4 on/after 2026-11-01** | Dated, pre-committed, and the retirement shape is already written (restart point). Cut the release, publish both measured metrics, retire the trial, keep the 36 events as a dataset with no claim on the shards, write the outcome ADR, reconcile ADR-0005/0012/0017/0022 + roadmap M4/M5 + `loss_events/README.md` + the schema's now-vestigial `contribution` block + the doctor line + CHANGELOG. **Execute it; do not publish it** — owner's steer |
-| **B** | **The reader-chosen donor — not started, and now the only product item left** | The only genuine product improvement left on the table, and the only route to a shipping claim. [ADR-0019](../adr/0019-borrowing-cannot-answer-an-unpublished-cell.md) names three things that would move the specificity inversion: more shards (closed by ADR-0016 part 2), **the reader picks the donor**, and evidence declared per cell (the ADR-0006 depth axis, far heavier). Route 2 is the live one. ⚠️ **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md)'s amendment sets the gate and it is not optional:** such a design is *not* bound by ADR-0018's two coverage preconditions, and *not* excused from measurement either — it is gated on **stating, and then measuring, its own version of "nothing here" before it reaches the page.** The ADR pre-states the hypothesis to beat: *"a feature whose most common output is 'this figure is entirely borrowed' may teach readers to distrust"*, on an 84.6% floor. **This may well be declined on its own measurement, exactly as U2 was** — that is the process working and it is cheap, because the condition is stated before a line is written |
+| **B** | ✅ **GATE PASSED 2026-10-26, and the build is not approved by it** | The only genuine product improvement left on the table, and the only route to a shipping claim. [ADR-0019](../adr/0019-borrowing-cannot-answer-an-unpublished-cell.md) names three things that would move the specificity inversion: more shards (closed by ADR-0016 part 2), **the reader picks the donor**, and evidence declared per cell (the ADR-0006 depth axis, far heavier). Route 2 is the live one. ⚠️ **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md)'s amendment sets the gate and it is not optional:** such a design is *not* bound by ADR-0018's two coverage preconditions, and *not* excused from measurement either — it is gated on **stating, and then measuring, its own version of "nothing here" before it reaches the page.** The ADR pre-states the hypothesis to beat: *"a feature whose most common output is 'this figure is entirely borrowed' may teach readers to distrust"*, on an 84.6% floor. **This may well be declined on its own measurement, exactly as U2 was** — that is the process working and it is cheap, because the condition is stated before a line is written |
 | **C** | **The audit-complete claim is the publishable one and it is available now** | *"The audit is complete, of the obtainable corpus"* — 65 of 75 read on all four properties, 10 classified unobtainable with the reason recorded, every answer verified against the publisher's own file. A finished product milestone rather than a self-audit, which is what the steer asks for. **Available exactly once**, so spend it deliberately |
 | **D** | **Watch for a row or a dispute** | Either moves M3 and M5 off zero for the first time. Not forceable |
+
+**Item B has a result, 2026-10-26.** The reader-chosen donor passed the gate ADR-0019 said it
+would need. Condition and both thresholds were committed *before* the run (two commits, in that
+order): decline if more than 50% of tied cells offer one matched-facet set, or more than 50% have a
+donor spread under 25%. Measured **28.0%** and **1.8%** across **271** tied cells — both clear, and
+neither narrowly. [`donor_choice_measurement.md`](donor_choice_measurement.md) holds it.
+
+⚠️ **Passing is not approval to build, and the run surfaced the reason.** The median spread between
+tied donors is **8.83×** — two equally-near donors hand over figures differing by nearly an order of
+magnitude, so a reader who picks on a facet that does not drive loss is wrong by that much and
+believes it more, not less, because they chose it. Recorded as owed rather than used to decline,
+because retrofitting a third condition after seeing the distribution is the move ADR-0017 stands as
+a warning against.
+
+**The design owes a second measurement before any of it reaches a page:** does a reader choosing on
+the facet they say matters land closer than one choosing at random? That cannot be answered from
+this corpus — it needs a cell whose true value is known and 11 shards cannot hold one out. Which may
+mean the route is measurable only against per-cell evidence, the third and heavier thing ADR-0019
+named. **Owner's call, and the standing recommendation is to leave it until after M4.**
 
 **Shipped since this table was written, and it was not on it.** The denominator work
 ([#205](https://github.com/raviaxo/RiskShard/pull/205)) came out of the 2026-10-22 steer rather than
