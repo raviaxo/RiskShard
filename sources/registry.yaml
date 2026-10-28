@@ -677,6 +677,39 @@ sources:
 
     '
   url_stability: dated
+- id: cyentia_iris_xtreme_2026
+  title: Information Risk Insights Study — Xtreme Edition 2026
+  publisher: Cyentia Institute
+  source_type: cyber_loss_research
+  url: https://www.cyentia.com/wp-content/uploads/2026/10/IRIS2026-Xtreme.pdf
+  publication_date: '2026-10-27'
+  access_mode: public_pdf
+  intended_use:
+  - tail loss
+  - exceedance
+  - loss magnitude
+  - sector modifiers
+  usage_notes: 'Registered 2026-10-27, the day it was published. Read for ADR-0008
+    exceedance above everything else: 5 of 11 published impact maxima declare
+    none_known, and a study of the costliest 5% of incidents is the likeliest public
+    source of a stated exceedance this corpus has seen. Unread on all five properties
+    at registration — nothing here may be cited until it is.
+
+    Two things to check before any figure is taken. The denominator is extreme events,
+    not all events, so no rate from it is a rate over organizations; it is the same
+    payer-base shape the audit records elsewhere and it will be easy to mistranslate.
+    And it is not a successor edition to cyentia_iris_2022 or cyentia_iris_2025 — the
+    Xtreme line is a separate study of the tail, so engine/editions.py must not treat
+    it as superseding either.
+
+    It also carries 205 incidents extracted from SEC 8-K filings, against the 36 in
+    this project''s own loss-event registry, which ADR-0017 retires at the first
+    release on or after 2026-11-01. That is context for the retirement write-up, not
+    grounds to revisit it.
+
+    '
+  url_stability: dated
+
 - id: cyentia_iris_2022
   title: Information Risk Insights Study 2022
   publisher: Cyentia Institute

@@ -6,7 +6,7 @@
 > for that job and no one doing it, so this is us doing it: reading the public reports everyone
 > cites, one at a time, and writing down what each one actually publishes.
 >
-> **65 of 75 read. Zero publish a mode.**
+> **66 of 76 read. Zero publish a mode.**
 >
 > Every answer is pinned to a document hash with the passage quoted, so you can check us rather
 > than trust us.
@@ -24,7 +24,7 @@ Asked of every source, in the same words, so two people's answers can be compare
 | **3** | Does it say **how often losses go bigger** than a given size? | exceedance |
 | **4** | Can you tell **who was measured** — which countries, industries, sizes? | population |
 
-Read on 65 sources so far, the answers are **0**, 14, 20 and 52. The first one is the finding.
+Read on 66 sources so far, the answers are **0**, 15, 21 and 53. The first one is the finding.
 
 **[Read the audit →](https://raviaxo.github.io/RiskShard/audit.html)** · or
 **[read one source and send back four answers](https://github.com/raviaxo/RiskShard/issues/new?template=read_a_source.md)**
@@ -108,7 +108,7 @@ ours, each derived mechanically and re-runnable, and each published before anyon
 
 And one that is not about us:
 
-- **Zero of 65 public cyber-loss sources publish a mode.** Every three-point estimate
+- **Zero of 66 public cyber-loss sources publish a mode.** Every three-point estimate
   composes as a beta-PERT whose middle parameter is the mode — the most probable single
   value, and the number the output is most sensitive to. No source read publishes one: not
   the national statistics offices, not the police reporting bodies, not the insurers. IBM's
@@ -119,7 +119,7 @@ And one that is not about us:
   The same reading found the opposite of what we expected everywhere else: Cyentia publishes
   full loss distributions, DSIT states the cost of the top 5% of UK cases, Sophos states what
   share of ransom payments passed $5M. Every answer is pinned to a document hash with the
-  passage quoted, and **the coverage is published beside the claim — 65 read, 10 held only as
+  passage quoted, and **the coverage is published beside the claim — 66 read, 10 held only as
   a pointer**, because a count without its denominator is how you get quoted wrong.
 
 None of this says the sources are wrong, and none of it says the outputs are too high or

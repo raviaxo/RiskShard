@@ -2614,4 +2614,70 @@ audit:
           affected organizations accompanies the loss totals, so the figures cannot be reduced
           to a per-event or per-organization quantity. This supersedes the CSA Cybersecurity
           Health Report 2023 as the current Singapore statistics source.
+  - source_id: cyentia_iris_xtreme_2026
+    artifact_sha256: 58c39f0385b31ad95878e6cb05f4f0e8307504b68c51079320d5510556c31f4a
+    artifact: sources/raw/cyentia_iris_xtreme_2026.pdf
+    properties:
+      mode:
+        basis: verified_against_artifact
+        publishes: false
+        verified_on: '2026-10-27'
+        detail: >-
+          No modal or most-likely value for any loss quantity. Central tendencies are medians
+          and percentiles throughout: "The median extreme event now costs $100M - double what it
+          was in our last study" (2020 Xtreme: $47M), and Figure 2 tracks "median (50th) and
+          95th percentile losses for all incidents". The report reasons carefully about central
+          tendency and never reaches for a mode, consistent with every other source in this
+          corpus.
+      distribution:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-10-27'
+        detail: >-
+          Yes, and in the dimension that matters most here. Figure 8 is "Extreme event losses as
+          a percentage of annual revenue" with the shape given in the narrative: a third under
+          1% of annual revenue, another quarter in the 1-10% range, 13% in 10-100%, and "nearly
+          3 in 10 extreme events (29%) generated losses that exceeded the victim's entire annual
+          revenue". Figure 2 gives a 15-year time series of the median and 95th percentile. Note
+          the report flags that the most extreme ratios cluster on cryptocurrency exchange hacks
+          while stating "they are not outliers".
+      exceedance:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-10-27'
+        detail: >-
+          Yes, stated rather than derived, and in three forms. The extreme threshold is itself
+          an exceedance: "our primary criterion for extreme cyber events anchors on the 95th
+          percentile for inflation-adjusted loss magnitude across all incidents over the last 15
+          years. That designation currently applies to any cyber event that racks up at least
+          $32M". A revenue-relative one: 29% of extreme events exceed the victim's annual
+          revenue. And simulated likelihoods of reaching an extreme loss - 2% via one dominant
+          loss over 4 years, 1% via multiple smaller losses, 0.2% for the stated combination.
+          The 95th percentile has risen 19.1x since 2008, to $281.3M.
+      population:
+        basis: verified_against_artifact
+        publishes: true
+        verified_on: '2026-10-27'
+        detail: >-
+          136 extreme cyber events over five years, being the costliest 5% of financial losses
+          across all security incidents, together accounting for $26.4 billion in documented
+          losses. Drawn from Zywave Cyber Loss Data enriched with Feedly threat intelligence and
+          Board Cybersecurity SEC 8-K data. A separate cut examines 205 incidents filed after
+          the 2023 SEC material-incident rule. Publicly reported events, so the same reporting
+          bias the IRIS line documents elsewhere applies.
+      denominator:
+        basis: verified_against_artifact
+        publishes: true
+        base: stated
+        verified_on: '2026-10-27'
+        detail: >-
+          States its base plainly and repeatedly, and the base is the thing a reader will get
+          wrong. Every percentage runs over EXTREME events - the costliest 5%, n=136, each at or
+          above $32M - never over all incidents and never over organizations. "A third of
+          extreme events cost less than 1% of annual revenue" is a third of 136 qualifying
+          events, not a third of anything that happens to a company. The 205-incident SEC cut
+          carries its own separate base and the report keeps the two apart, noting "there is
+          little overlap between material and extreme events in this study". Read 2026-10-27 by
+          text extraction from the stored artifact with the quoted passages verified verbatim,
+          not by visual reading of the laid-out page.
 

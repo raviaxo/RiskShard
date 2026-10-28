@@ -286,6 +286,7 @@ class FindingElevenTests(unittest.TestCase):
     """
 
     QUANTILES = {
+        "cyentia_iris_xtreme_2026",
         "cyentia_iris_2025",
         "cyentia_iris_2022",
         "cyentia_iris_ransomware",
