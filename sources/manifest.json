@@ -547,6 +547,31 @@
       "usage_notes": "Use as a ransomware-specific source. If a direct PDF is later available, add it as a separate registry entry.\n"
     },
     {
+      "access_mode": "public_pdf",
+      "content_length": 2172201,
+      "content_type": "application/pdf",
+      "final_url": "https://www.cyentia.com/wp-content/uploads/2026/10/IRIS2026-Xtreme.pdf",
+      "gathered_at": "2026-10-27T16:18:01Z",
+      "http_status": 200,
+      "id": "cyentia_iris_xtreme_2026",
+      "intended_use": [
+        "tail loss",
+        "exceedance",
+        "loss magnitude",
+        "sector modifiers"
+      ],
+      "publication_date": "2026-10-27",
+      "publisher": "Cyentia Institute",
+      "raw_path": "sources/raw/cyentia_iris_xtreme_2026.pdf",
+      "sha256": "58c39f0385b31ad95878e6cb05f4f0e8307504b68c51079320d5510556c31f4a",
+      "source_type": "cyber_loss_research",
+      "status": "fetched",
+      "title": "Information Risk Insights Study \u2014 Xtreme Edition 2026",
+      "url": "https://www.cyentia.com/wp-content/uploads/2026/10/IRIS2026-Xtreme.pdf",
+      "url_stability": "dated",
+      "usage_notes": "Registered 2026-10-27, the day it was published. Read for ADR-0008 exceedance above everything else: 5 of 11 published impact maxima declare none_known, and a study of the costliest 5% of incidents is the likeliest public source of a stated exceedance this corpus has seen. Unread on all five properties at registration \u2014 nothing here may be cited until it is.\nTwo things to check before any figure is taken. The denominator is extreme events, not all events, so no rate from it is a rate over organizations; it is the same payer-base shape the audit records elsewhere and it will be easy to mistranslate. And it is not a successor edition to cyentia_iris_2022 or cyentia_iris_2025 \u2014 the Xtreme line is a separate study of the tail, so engine/editions.py must not treat it as superseding either.\nIt also carries 205 incidents extracted from SEC 8-K filings, against the 36 in this project's own loss-event registry, which ADR-0017 retires at the first release on or after 2026-11-01. That is context for the retirement write-up, not grounds to revisit it.\n"
+    },
+    {
       "access_mode": "public_html",
       "content_length": 107670,
       "content_type": "text/html; charset=UTF-8",

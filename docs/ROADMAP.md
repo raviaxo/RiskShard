@@ -35,8 +35,8 @@ Every registered source read on all four properties: does it publish a **mode**,
 
 | | |
 | --- | ---: |
-| sources read on all four properties | **65 of 75** |
-| answers verified against a stored artifact | **260 of 300** |
+| sources read on all four properties | **66 of 76** |
+| answers verified against a stored artifact | **264 of 304** |
 | sources held only as a pointer, needing a person | **10** |
 | sources unread but readable | **0** |
 
@@ -130,17 +130,17 @@ smaller claim than a complete audit, and the smaller claim is the true one.
 
 [**raviaxo.github.io/RiskShard/audit.html**](https://raviaxo.github.io/RiskShard/audit.html)
 
-All 75 registered sources, four questions each. Every answer states what it was checked against,
+All 76 registered sources, four questions each. Every answer states what it was checked against,
 carries the document's SHA-256 and the date it was read, and can be disputed from its own row.
 
 The four-questions table is the finding in one place, counted against what has actually been read:
 
 | property | publishes | of sources read |
 | --- | ---: | ---: |
-| mode | **0** | 65 |
-| distribution | 14 | 65 |
-| exceedance | 20 | 65 |
-| population | 52 | 65 |
+| mode | **0** | 66 |
+| distribution | 15 | 66 |
+| exceedance | 21 | 66 |
+| population | 53 | 66 |
 
 Built by `scripts/build_audit_page.py` from `sources/audit.yaml` and deployed with the explorer.
 Nothing on it is hand-written. Nine tests pin the things a table quietly gets wrong: a count

@@ -48,16 +48,16 @@ observation or estimate. So this is not a gap in some shards — the schema coul
 if a source published one.
 
 **How far that goes beyond our own corpus is now measured rather than implied.**
-[ADR-0015](adr/0015-the-source-audit.md) audits the 75 registered sources on what they publish,
+[ADR-0015](adr/0015-the-source-audit.md) audits the 76 registered sources on what they publish,
 and a source-level claim counts only when a human has read the stored artifact:
 
 | | |
 | --- | --- |
-| registered sources **read** | **65 of 75** |
-| …publishing a **mode** | **0 of 65** |
-| …publishing a **distribution** over loss or frequency | **14 of 65** |
-| …publishing an **exceedance** statement | **20 of 65** |
-| …that measure a **population** they name | **52 of 65** |
+| registered sources **read** | **66 of 76** |
+| …publishing a **mode** | **0 of 66** |
+| …publishing a **distribution** over loss or frequency | **15 of 66** |
+| …publishing an **exceedance** statement | **21 of 66** |
+| …that measure a **population** they name | **53 of 66** |
 | held only as a landing page, a press release or no artifact — **unanswerable** | **10** |
 | readable in principle, not yet read | **0** |
 
@@ -545,14 +545,14 @@ asking the second, and until now the page only answered the first.
 
 The audit's second question asks whether a source publishes a distribution, and records yes or no.
 **That answer conflates two things a practitioner cannot use interchangeably.** Of the **65** sources
-read, **14** publish a distribution at all. Of those:
+read, **15** publish a distribution at all. Of those:
 
 | | | |
 | --- | ---: | --- |
-| **percentiles you can model a range from** | **6** | Cyentia IRIS 2025, IRIS 2022, IRIS Ransomware; Verizon DBIR 2026 and DBIR 2025 (quantile dot plots); UK DSIT 2026 (cost quantiles) |
+| **percentiles you can model a range from** | **7** | Cyentia IRIS 2025, IRIS 2022, IRIS Ransomware, IRIS Xtreme 2026; Verizon DBIR 2026 and DBIR 2025 (quantile dot plots); UK DSIT 2026 (cost quantiles) |
 | **bands only** | **8** | Sophos global 2023, 2024 and 2026; Sophos financial services 2025; Sophos manufacturing 2025; Sophos enterprise 2025; Japan NPA 2025; Singapore Police 2025 |
 
-So **6 of 65 sources — roughly one in eleven — publish the spread in a form you could fit a
+So **7 of 66 sources — roughly one in nine — publish the spread in a form you could fit a
 distribution to.** A banded chart tells you the shape exists; it does not give you the quantiles,
 and several of the banded ones add a median without the tails.
 
