@@ -177,14 +177,15 @@ waiting on you.***
 
 ## Restart point
 
-**2026-10-26. `main` at `b60270a`, 542 tests, evidence clean, preflight clean, tree clean,
-`main` == `origin/main`, no branch and no PR open. `v0.13.0` is the current release.**
+**2026-10-27 session closed. `main` at `ea5cab6`, 542 tests, evidence clean, preflight clean, tree
+clean, `main` == `origin/main`, no branch and no PR open. `v0.13.0` is the current release.**
 
-⚠️ **The doctor reads `needs_review`, on one line only: the strength ledger, because
-[#205](https://github.com/raviaxo/RiskShard/pull/205)'s schema change moved the pack fingerprint to
-`5d936733f4a6`. That is the documented normal state of an unreleased pack change, not a red, and
-step 5 of the M4 runbook clears it.** Recorded because the previous restart point said "doctor pass
-on all 18" and a reader comparing them would otherwise think something broke.
+⚠️ **The doctor reads `needs_review` on one line only: the strength ledger.** 17 of 18 checks
+pass. The ADR-0023 schema change and the IRIS Xtreme registration both moved the pack fingerprint,
+now `0e81ecb75adb`, and the ledger records at release. That is the documented normal state of an
+unreleased pack change, not a red, and **step 5 of the [M4 runbook](m4_runbook.md) clears it.**
+Recorded because an earlier restart point said "doctor pass on all 18" and a reader comparing them
+would otherwise think something broke.
 
 *This block said `ddcdd40` / 531 tests / no release owed until 2026-10-26, which was true at the
 2026-10-22 close and four days and two merged PRs out of date by the time anyone read it. The queue
@@ -373,8 +374,9 @@ either rebase them at close, or close before opening them.*
 | | what | why it is first |
 | --- | --- | --- |
 | **A** | **Execute M4 on/after 2026-11-01** | Dated, pre-committed, and the retirement shape is already written (restart point). Cut the release, publish both measured metrics, retire the trial, keep the 36 events as a dataset with no claim on the shards, write the outcome ADR, reconcile ADR-0005/0012/0017/0022 + roadmap M4/M5 + `loss_events/README.md` + the schema's now-vestigial `contribution` block + the doctor line + CHANGELOG. **Execute it; do not publish it** — owner's steer |
-| **B** | ✅ **GATE PASSED 2026-10-26, and the build is not approved by it** | The only genuine product improvement left on the table, and the only route to a shipping claim. [ADR-0019](../adr/0019-borrowing-cannot-answer-an-unpublished-cell.md) names three things that would move the specificity inversion: more shards (closed by ADR-0016 part 2), **the reader picks the donor**, and evidence declared per cell (the ADR-0006 depth axis, far heavier). Route 2 is the live one. ⚠️ **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md)'s amendment sets the gate and it is not optional:** such a design is *not* bound by ADR-0018's two coverage preconditions, and *not* excused from measurement either — it is gated on **stating, and then measuring, its own version of "nothing here" before it reaches the page.** The ADR pre-states the hypothesis to beat: *"a feature whose most common output is 'this figure is entirely borrowed' may teach readers to distrust"*, on an 84.6% floor. **This may well be declined on its own measurement, exactly as U2 was** — that is the process working and it is cheap, because the condition is stated before a line is written |
+| **B** | ✅ **GATE PASSED 2026-10-26 — not approved to build, and now outranked by E** | The only genuine product improvement left on the table, and the only route to a shipping claim. [ADR-0019](../adr/0019-borrowing-cannot-answer-an-unpublished-cell.md) names three things that would move the specificity inversion: more shards (closed by ADR-0016 part 2), **the reader picks the donor**, and evidence declared per cell (the ADR-0006 depth axis, far heavier). Route 2 is the live one. ⚠️ **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md)'s amendment sets the gate and it is not optional:** such a design is *not* bound by ADR-0018's two coverage preconditions, and *not* excused from measurement either — it is gated on **stating, and then measuring, its own version of "nothing here" before it reaches the page.** The ADR pre-states the hypothesis to beat: *"a feature whose most common output is 'this figure is entirely borrowed' may teach readers to distrust"*, on an 84.6% floor. **This may well be declined on its own measurement, exactly as U2 was** — that is the process working and it is cheap, because the condition is stated before a line is written |
 | **C** | **The audit-complete claim is the publishable one and it is available now** | *"The audit is complete, of the obtainable corpus"* — 65 of 75 read on all four properties, 10 classified unobtainable with the reason recorded, every answer verified against the publisher's own file. A finished product milestone rather than a self-audit, which is what the steer asks for. **Available exactly once**, so spend it deliberately |
+| **E** | 🆕 **Re-read `cyentia_iris_2025` for the revenue-banded exceedance** | **The best product candidate on the board, added 2026-10-27.** 5 of 11 published maxima declare `none_known`, and IRIS 2025 carries 50th/95th percentile losses by revenue band — $12.3M at the 95th for $100M–$1B, $9.1M for under $100M. **Every org profile sits in one of those two bands.** Our exceedance record for that source captured the overall $32M and not the breakdown, so this is the eighth "recorded as owed, turned out to be held". It beats B because it makes a **published number more correct** rather than adding a surface, which is ADR-0009's test. ⚠️ Not a swap: it is all-cause cyber loss, not threat-specific, so putting it behind a BEC or breach maximum is an ADR-0007 coherence judgment and needs its own ADR |
 | **D** | **Watch for a row or a dispute** | Either moves M3 and M5 off zero for the first time. Not forceable |
 
 **Item B has a result, 2026-10-26.** The reader-chosen donor passed the gate ADR-0019 said it
@@ -949,6 +951,65 @@ shards are now source-backed. This is the Sunday post.
 
   *Process note: this work was completed and green on 2026-09-29 and sat in an unpushed branch for
   23 days. Nothing rotted, but nothing was visible either.*
+
+- 2026-10-27 — **The denominator became the audit's fifth question, and the week's real work came
+  out of a publishing steer rather than the queue.** Six commits,
+  [#205](https://github.com/raviaxo/RiskShard/pull/205) and
+  [#206](https://github.com/raviaxo/RiskShard/pull/206).
+
+  **[ADR-0023](../adr/0023-the-denominator-is-a-declared-property.md) written, accepted,
+  implemented and then narrowed by its own measurement.** The audit asked four questions and none
+  of them asked what a published percentage is a percentage *of* — the error this corpus most often
+  catches other people making, recorded nowhere. `engine/denominator.py` generated the premise
+  rather than asserting it: **0 of 65 declared, 36 incidental, 29 silent.** ADR-0018's amendment
+  required the failure condition first, so section 3 fixed it before any reading — *read 15, and if
+  any single `base` holds more than 85%, retire rather than spend the remaining 50.* `stated` held
+  **12 of 15, 80.0%**. It cleared **by three points**, on a batch generated by stratified
+  proportional sampling rather than chosen. Clearing a bar is not being worth the programme, so the
+  corpus-wide re-read was dropped and the property kept for sources whose base is unclear.
+  `screen()` replaces the queue at **precision 30%, recall 100% on 15** — a conservative filter, not
+  a precise one, and its ceiling is recorded: it reads our own prose, so it can only measure what
+  our prose happened to mention. `cyentia_iris_2022` is nominated and is the *strongest* `stated` in
+  the batch.
+
+  **15 records written, each stating its own method.** Read by text extraction from the stored
+  artifact with passages verified verbatim, not visually — weaker than the other four properties,
+  and the file header's old *"a human read the stored artifact"* line is corrected rather than left
+  standing. ASD turned out to be the NPA pattern again: two denominators, both counted, kept
+  apart — 84,700 reports received against 1,200 incidents responded to. Verizon's base is
+  **breaches, not organizations**.
+
+  **The fourth generated-artifact gap, found where the 2026-09-28 close said to look.**
+  `README.md`'s strength table is generated from the progress ledger and nothing checked the
+  committed table against the committed ledger. **It was current** — preventive, unlike the three
+  before it. `tests/test_readme_progress_is_current.py` pins it, verified against a perturbed value
+  and a dropped row.
+
+  **Item B's gate passed, and passing is not approval.** The reader-chosen donor was measured
+  against a condition committed in a *separate earlier commit* so the order is in git rather than
+  claimed: 28.0% and 1.8% against two 50% bars, over 271 tied cells. ⚠️ The run surfaced what the
+  condition did not ask about — the **median spread between tied donors is 8.83×**, so a reader
+  choosing on a facet that does not drive loss is wrong by nearly an order of magnitude and believes
+  it more, not less, because they chose it. Recorded as owed, **not** used to decline, because
+  retrofitting a third condition after seeing the distribution is what ADR-0017 stands against.
+
+  **IRIS Xtreme 2026 registered and read the day it published**, taking the audit to **66 of 76,
+  0 unread** — M1 complete again at a bigger number. Its own population is extreme events ≥$32M, so
+  its absolute figures cannot touch ten of eleven shards. ⚠️ **The most useful table in it is
+  captioned "Source: IRIS 2025"** — a report held and read here already, carrying 50th/95th
+  percentile losses by revenue band ($12.3M and $9.1M at the 95th) and **every org profile sits in
+  one of those two bands.** Our exceedance record for that source captured the overall $32M and not
+  the breakdown. **Eighth time a source recorded as owed turned out to be held.** Recorded, not
+  acted on: all-cause rather than threat-specific, so it is an ADR-0007 coherence judgment.
+
+  *Adding one source moved every published coverage figure and **nine surfaces** had to follow it,
+  every one caught by a test rather than by reading.* Tests 534 → 542.
+
+  ⚠️ **`gather_sources.py` has no single-source mode.** Running it re-fetched everything, changed
+  **73 of 74 sha256 hashes** because HTML differs on every fetch, and dropped a source from the
+  manifest when its fetch 404'd. Reverted, and the one entry spliced instead. Local-only residue:
+  **31 HTML artifacts on this machine no longer match their recorded hash**; the 43 PDFs do, the
+  committed manifest holds the originals, and the mismatch is detectable.
 
 - 2026-09-28 (fifth objective) — **v0.13.0 cut, tagged and released; the ledger is clear and the
   doctor passes all 18 checks.** #203. Cut to clear the strength ledger, which had read
