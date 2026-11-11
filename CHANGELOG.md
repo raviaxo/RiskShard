@@ -5,6 +5,72 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.14.0 — 2026-11-11
+
+**The registry trial is retired on its own criterion, and a maximum can finally say where it sits
+in a published distribution.** A governance release: **no parameter value moves**, and the
+portfolio figures are identical to v0.13.0.
+
+**The kill criterion fired, on the date it was given.**
+[ADR-0017](docs/adr/0017-the-kill-criterion-gets-a-clock.md) §2 set the measurement at the first
+release cut on or after 2026-11-01. It was taken on 2026-11-11, before anything was cut, by
+`trial_metrics()` — the meter ADR-0022 built five weeks earlier. **Both metrics read zero:** 0 of
+11 shards cite a registry entry (**0 *could***, 10 on country-and-threat mismatch and 1 blocked
+because citing would trade an exceedance statement for provenance), and 0 entries were contributed
+from outside the project. §4 had pre-decided what that means, so
+[ADR-0025](docs/adr/0025-the-registry-trial-is-retired.md) retires the trial rather than extending
+it.
+
+**The 36 events survive, with no claim on the shards.** ADR-0017's Alternatives pre-specified the
+shape and nothing is deleted: `loss_events/` keeps its records, schema and tests, and citations may
+still pin them. What it loses is standing — no shard parameter may cite an entry, and the registry
+makes no claim to calibrate anything. `trial_metrics()` stays as the record of the result, the
+doctor's loss-event line becomes a retirement record that still prints both counts, and the
+schema's `contribution` block is kept and **labelled vestigial**, which costs less than migrating
+36 records.
+
+**Both zeros are true and neither is about adoption.** Carried across verbatim from ADR-0022,
+written before the measurement so it is a pre-commitment and not a rationalisation: *the registry
+was built on a corpus that structurally cannot serve the grid it was meant to serve, and was
+forbidden from growing into a shape that could.*
+
+*The date did not move, and the ten-day gap is recorded rather than smoothed over.* The release
+was cut on 2026-11-11, which satisfies "on or after 2026-11-01" literally. The numbers could not
+have changed in that window — no shard can begin citing without a parameter change and no
+contribution route exists — so these are the numbers 2026-11-01 would have read. What slipped was
+the queue, which carried *"the measurement is 10 days away"* for ten days past the trigger.
+
+**M5 is re-measured, not closed.** Its three questions — has anyone cited, disputed, or applied the
+standard — do not depend on the registry. All three still read zero on 2026-11-11: 4 stars, 0
+forks, 0 external pull requests, 0 issues or discussions from anyone but the owner.
+
+**The release step that clears the strength ledger had never worked.**
+`scripts/strength_ledger.py record` — the command the M4 runbook names — called
+`build_axis_totals(ROOT)` without importing it from **2026-08-13 (v0.7.0) until today**: a
+`NameError` on every invocation, for 90 days across seven releases. It was invisible because the
+ledger was in fact being written by `scripts/data_pack_manifest.py`, which imports the helper
+correctly and records an entry when it cuts a pack, so the ledger always looked current while the
+documented path was dead. `package_smoke.py` cannot catch this class — it checks entry points are
+*importable callables*, and a `NameError` inside a function body passes that cleanly.
+`tests/test_strength_ledger_cli.py` now executes all four subcommands and is verified to fail when
+the import is stripped. Two further runbook defects were found the same way and are corrected in
+[`docs/internal/m4_runbook.md`](docs/internal/m4_runbook.md): the pack must be cut **before** the
+explorer, or citations pin to the previous release, and the suite must run **again** after the
+release steps rewrite the artifacts that tests pin.
+
+**A maximum now says where it sits in a published loss distribution**
+([ADR-0024](docs/adr/0024-the-published-bracket.md), Proposed;
+[#207](https://github.com/raviaxo/RiskShard/pull/207)). ADR-0008 reasoned from scarcity — tail
+quantiles are *"rare and mostly commercial"*, and finding 3 said we had not found one *"publicly,
+anywhere."* Cyentia IRIS 2025 publishes 50th and 95th percentile losses **by revenue tier**, and
+`sources/audit.yaml` had recorded that source as verified against the report, quoting its
+95th-percentile sentence, since 2026-08-15. **Our own audit held the refutation of our own
+published finding for 88 days, and nothing compared the two surfaces.** `engine/tail_bracket.py`
+places all 11 published maxima against the tier for their own org profile: **5 of 11 sit at or
+below the 95th percentile of all-cause loss for their tier**, including both of the portfolio's
+only `modeled_quantile` maxima, whose 82nd percentile is over ransom payers rather than a
+population. Nothing is re-anchored and no value moves — see finding 12 and withdrawn claim 3.
+
 ## v0.13.0 — 2026-09-28
 
 **The kill criterion can now measure both of its halves, and three generated artifacts that

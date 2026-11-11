@@ -51,12 +51,17 @@ def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
 
 
 def loss_event_check(root):
-    """ADR-0012: the registry is a bounded trial, so its state is reported every run.
+    """The registry's state, reported every run — now as a retirement record.
 
-    The two trial numbers are surfaced deliberately. The kill criterion is that if no
-    shard cites an entry and nobody outside contributes one within two release cycles,
-    the registry is retired rather than carried — and a criterion nobody can see is a
-    criterion nobody applies.
+    ADR-0012 adopted the registry as a bounded trial and pre-committed its ending.
+    ADR-0017 fixed the measurement at the first release on or after 2026-11-01.
+    That measurement was taken on 2026-11-11: both metrics read zero, and
+    ADR-0025 retired the trial on its own criterion.
+
+    The two trial numbers are still surfaced, deliberately. A criterion nobody can
+    see is a criterion nobody applies — and a *retired* trial whose numbers stop
+    being visible is indistinguishable from one that was quietly dropped. So this
+    check keeps printing what it always printed and now says how it ended.
     """
     from engine.loss_events import (
         citation_candidates,
@@ -99,11 +104,17 @@ def loss_event_check(root):
             "status": "fail",
             "detail": f"{len(errors)} error(s): {errors[0]}",
         }
-    # ADR-0017: the kill criterion is a DATE now, not a release count, because a
-    # release count is under our own control and the last one elapsed in a day. The
-    # doctor carries the date so nobody has to remember it — the same reason it prints
-    # "0 cite, N could" rather than just "0 cite".
-    detail += "; ADR-0017 kill criterion re-measures at the first release on or after 2026-11-01"
+    # ADR-0025: the criterion fired. It was a DATE rather than a release count because
+    # a release count is under our own control; the date was 2026-11-01, the first
+    # release on or after it was cut on 2026-11-11, and both metrics read zero. The
+    # line now records the outcome instead of the pending date — but it still prints
+    # "0 cite, N could" and still prints both counts, so the result stays auditable
+    # rather than becoming a sentence in an ADR nobody re-runs.
+    detail += (
+        "; ADR-0012 trial RETIRED 2026-11-11 on its own criterion (ADR-0017 kill "
+        "criterion measured zero on both metrics, ADR-0025) - the 36 events are kept "
+        "as a published dataset with no claim on the shards"
+    )
     return {"name": "loss events", "status": "pass", "detail": detail}
 
 

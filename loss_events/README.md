@@ -4,6 +4,24 @@ Publicly documented cyber loss events with quantified financial impact. Governed
 [`../schemas/loss_event_schema.json`](../schemas/loss_event_schema.json) and decided by
 [ADR-0012](../docs/adr/0012-loss-event-registry-bounded-trial.md), which supersedes ADR-0005.
 
+> ## ⚠️ This trial is retired
+>
+> **The ADR-0012 bounded trial was retired on 2026-11-11, on its own pre-committed criterion.**
+> [ADR-0017](../docs/adr/0017-the-kill-criterion-gets-a-clock.md) fixed the measurement at the
+> first release on or after 2026-11-01; it was taken on 2026-11-11 and **both metrics read zero** —
+> 0 of 11 shards cite an entry (0 *could*), 0 entries contributed from outside.
+> [ADR-0025](../docs/adr/0025-the-registry-trial-is-retired.md) records the outcome.
+>
+> **The 36 events are kept as a published dataset with no claim on the shards.** Nothing is
+> deleted and citations may pin it. What it lost is standing: **no shard parameter may cite a
+> registry entry, and this registry makes no claim to calibrate anything.** The typing of the 48
+> amounts — 12 of which are not event costs — remains its most useful property, and the three
+> things it cannot do, below, are why.
+>
+> Both zeros are true and **neither is about adoption**: the registry was built on a corpus that
+> structurally cannot serve the grid it was meant to serve, and was forbidden from growing into a
+> shape that could.
+
 **A record here describes one organisation's one incident.** That is what makes it different in
 kind from everything in [`../evidence/`](../evidence/), where a record describes a *cell* — a
 country × sector × size × threat population. Different question, different schema, different
@@ -73,7 +91,7 @@ python docs/internal/research/loss_event_extraction.py > loss_events/sec_filings
 python scripts/riskshard_doctor.py        # the registry has its own gate
 ```
 
-## This is a bounded trial
+## This was a bounded trial, and it ended
 
 ADR-0012 adopted the registry **with a retirement test**, measured at two release cycles:
 
@@ -84,7 +102,7 @@ ADR-0012 adopted the registry **with a retirement test**, measured at two releas
 than none, because it implies a currency it does not have. `trial_metrics()` computes both numbers
 and the doctor prints them every run, so the criterion is visible rather than remembered.
 
-### First reading: 0 shards cite an entry, and **0 could**
+### Every reading, first to last: 0 shards cite an entry, and **0 could**
 
 That second number is the one that matters, and it is why `citation_candidates()` exists. *"Nobody
 cited an entry"* argues for retirement only if somebody **could** have. Measured across all 11
@@ -99,10 +117,17 @@ shards:
   and a registry entry carries none by rule. **Swapping would trade an exceedance statement for
   provenance**, which is a regression under [ADR-0008](../docs/adr/0008-the-governed-tail.md).
 
-So the trial is **still running, not failing**. Zero citations here means *nothing fits yet*, not
-*nobody bothered*, and the two are different results with different consequences. What would change
-it: a non-US slice, BEC events, or a shard whose maximum currently declares `none_known` and finds
-a country-and-threat match. Seven maxima do declare `none_known` — none of them is US.
+**This section said "the trial is still running, not failing" from 2026-08-14 until the
+measurement.** That was true every time it was read and it is now the record of a trial that ran
+its course. Zero citations here means *nothing fits yet*, not *nobody bothered* — and that
+distinction **argued for retirement rather than against it**, because a registry that cannot serve
+the shards is not waiting on readers.
 
-Expansion beyond this slice — other jurisdictions, PACER, regulator penalty registers — is not
-authorized and needs its own decision once the maintenance path is proven.
+What would have changed it: a non-US slice, BEC events, or a shard whose maximum declares
+`none_known` and finds a country-and-threat match. None arrived, and under
+[ADR-0016](../docs/adr/0016-the-audit-is-the-product.md) the registry was never permitted to grow
+into the shape that would have supplied them.
+
+Expansion beyond this slice — other jurisdictions, PACER, regulator penalty registers — was never
+authorized and is now moot. Reopening any of it takes a new ADR and a measured defect, not a
+change of mind.

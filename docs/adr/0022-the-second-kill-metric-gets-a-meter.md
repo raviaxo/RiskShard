@@ -1,6 +1,8 @@
 # ADR-0022 — The second kill-criterion metric gets a meter, not a new definition
 
-- **Status:** Accepted (2026-09-28)
+- **Status:** Accepted (2026-09-28) — the meter it built delivered a **measured** zero on
+  2026-11-11, which retired the trial it metered ([ADR-0025](0025-the-registry-trial-is-retired.md)). The `contribution` block it
+  made required is now vestigial and deliberately kept
 - **Date:** 2026-09-28
 - **Deciders:** repo owner
 - **Instruments:** [`0017-the-kill-criterion-gets-a-clock.md`](0017-the-kill-criterion-gets-a-clock.md),

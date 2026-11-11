@@ -180,6 +180,7 @@ model parameters trace to a reviewed public source over time.
 <!-- strength-ledger:begin (regenerate with: python scripts/strength_ledger.py markdown) -->
 | Release | Date | Source-backed params | Cell-matched | Shards 6/6 | Bridged/est. |
 | --- | --- | --- | --- | --- | --- |
+| 2026.11.11 | 2026-11-11 | 66 / 66 | 7 | 11 / 11 | 0 |
 | 2026.09.28 | 2026-09-28 | 66 / 66 | 7 | 11 / 11 | 0 |
 | 2026.09.27 | 2026-09-27 | 66 / 66 | 7 | 11 / 11 | 0 |
 | 2026.08.23 | 2026-08-23 | 66 / 66 | 7 | 11 / 11 | 0 |
@@ -195,6 +196,8 @@ model parameters trace to a reviewed public source over time.
 | 2026.08.01 | 2026-08-01 | 66 / 66 | 28 | 11 / 11 | 0 |
 | 2026.07.24 | 2026-07-24 | 66 / 66 (+2) | — | 11 / 11 (+1) | 0 (-2) |
 | 2026.07.24 | 2026-07-24 | 64 / 66 | — | 10 / 11 | 2 |
+
+**2026.11.11-v0.14.0 —** A governance release: no parameter value moved. The ADR-0012 registry trial was measured on its pre-committed criterion and retired - 0 of 11 shards cite an entry (0 could), 0 entries contributed from outside (ADR-0025); the 36 events are kept as a published dataset with no claim on the shards. Separately, every published maximum is now placed against IRIS 2025's revenue-banded loss percentiles (ADR-0024): 5 of 11 sit at or below the 95th percentile of all-cause loss for their own tier, including both of the portfolio's only modeled_quantile maxima. Read that as the exceedance axis gaining a population to compare against, not as evidence changing - nothing was re-anchored.
 
 **2026.08.23-v0.11.1 —** No parameter, source value or caveat changed. The data pack moved because sources/registry.yaml did: ponemon_dtex_cost_insider_risks_2023 is declared manual_download rather than public_html, because its registered URL is an announcement page and the gatherer could never have reached the report. Read this tick as the audit getting one source further, not as evidence changing.
 
