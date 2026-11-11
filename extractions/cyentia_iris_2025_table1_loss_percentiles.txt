@@ -1,0 +1,29 @@
+Cyentia Institute — Information Risk Insights Study (IRIS) 2025, "It's About Time"
+Table 1: Loss statistics by revenue tier
+Source artifact: sources/raw/cyentia_iris_2025.pdf  (source_id: cyentia_iris_2025)
+Extracted 2026-11-11 with `pdftotext -layout`, verbatim below.
+
+                                                                                Loss percentile
+
+                                    Revenue                                      50%            95%
+
+                                    More than $10B                              $2.2M      $266.2M
+                                    $1B to $10B                                 $1.8M       $61.8M
+                                    $100M to $1B                              $466.7K       $12.3M
+                                    Less than $100M                           $357.0K         $9.1M
+                                                            Source: IRIS 2025 (Cyentia Institute)
+
+                                        Table 1: Loss statistics by revenue tier
+
+Accompanying body text (same spread):
+  "the size-based differences in loss magnitude are especially prominent for extreme (95th
+   percentile) events. There's a longer tail for larger organizations."
+  "The top 5% of loss events continue to exceed the annual revenue of affected firms."
+
+Footnote 16 (verbatim): "You may notice that we switch between the 95th and 90th percentile for
+losses to represent the concept of extreme events. We generally use the 95th for long, fixed time
+periods."
+
+NOTE ON PROVENANCE: every prior RiskShard extraction of cyentia_iris_2025 cites "Public source
+page key findings" — i.e. sources/raw/cyentia_iris_2025.html, a 4,113-character summary page that
+contains no percentile and no revenue tier. This table is in the report PDF only.

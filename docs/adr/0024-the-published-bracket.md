@@ -1,0 +1,140 @@
+# ADR-0024 — A maximum is placed in a published distribution, not re-anchored onto one
+
+- **Status:** **Proposed** (2026-11-11) — the measurement is done and committed; the three
+  declines below are the owner's to accept
+- **Date:** 2026-11-11
+- **Deciders:** repo owner
+- **Prompted by:** [Finding 12](../FINDINGS.md) — this repo's own source audit had recorded the
+  exceedance denominator that ADR-0008, an engine docstring and finding 3 published as missing
+- **Related:** [`0008-the-governed-tail.md`](0008-the-governed-tail.md) (this corrects its
+  premise and keeps its vocabulary), [`0007-construct-coherence.md`](0007-construct-coherence.md)
+  (the all-cause/threat-specific question), [`0009-what-riskshard-is-and-is-not.md`](0009-what-riskshard-is-and-is-not.md)
+  (the test that decides declines 1 and 2)
+
+## Context
+
+[ADR-0008](0008-the-governed-tail.md) gave a maximum a third declared axis — *what, if anything,
+is known about being exceeded* — and recorded that the portfolio could mostly answer only
+`none_known`. The reason it gave was scarcity. `engine/exceedance.py` told readers that published
+loss distributions with tail quantiles are *"rare and mostly commercial"*, and
+[finding 3](../FINDINGS.md) closed by saying we had not found one *"publicly, anywhere."*
+
+**The premise was fair when written and was never revised.** ADR-0008 is dated 2026-08-07 and
+finding 3 was derived 2026-08-13. Cyentia's IRIS 2025 — which publishes 50th and 95th percentile
+losses by revenue tier in its Table 1 — entered the corpus on **2026-08-15**, eight days and two
+days later respectively.
+
+**It did not sit unread.** `sources/audit.yaml` records `cyentia_iris_2025` as
+`verified_against_artifact` against the report that same day, and the `exceedance` property quotes
+it: *"The typical (median) incident costs about $600K, while more extreme (95th percentile) losses
+swell to $32 million."* The audit calls it the most complete distribution in the corpus.
+
+The evidence record anchoring `impact.max` on that source tells the opposite story. Extracted
+2026-06-03 from the publisher's 4,113-character summary page — two months before the report was
+obtained — it carries `exceedance_basis: none_known` and a `limitations` line reading *"not a
+formal percentile for this scenario."*
+
+**So the defect is not a missed number. It is that two governed surfaces in this repository held
+contradictory answers about the same figure for 88 days, and nothing compared them.** ADR-0015 and
+[ADR-0016](0016-the-audit-is-the-product.md) made the audit the product; no path routes an audit
+answer back to the evidence records citing that source, and a finding published the absence of a
+denominator the audit had already written down. `docs/internal/NEXT_STEPS.md` recorded this on 2026-10-27 as the **eighth** time
+a source recorded as owed turned out to be held, and that count is as of that date.
+
+**But it is a different class from the other seven, and the difference matters.**
+`engine.intake.blocked_but_held` exists to fail the doctor on that pattern — it finds sources the
+audit calls unreadable for which a candidate document is nevertheless on disk. It cannot catch this
+one, and no stretch of it would. `cyentia_iris_2025` is not blocked, not missing and not unread:
+it is registered, held, and **verified against the report on all four audit properties.**
+
+*We said we lacked a source and did not* is a check we have. **The check we do not have is whether
+what the audit learned ever reached the records that cite the same source** — or the findings that
+reason about it. The audit is a per-source surface and the evidence records are a per-parameter
+surface, and nothing in the repo reads one against the other.
+
+## Decision
+
+**A shard's maximum is placed against the published distribution for its own org profile's revenue
+tier, and nothing is re-anchored.** `engine/tail_bracket.py` computes it; the numbers live in a
+committed verbatim extract of the source table and nowhere else, so prose cannot drift from them.
+
+Three things follow, and two of them are declines.
+
+### 1. The bracket is reported, and it is not a new `exceedance_basis` value
+
+A bracket says *this value sits below (or above) the published 95th percentile for its tier*. That
+is weaker than `modeled_quantile`, which ADR-0008 defines as **a stated percentile** of a published
+distribution. We do not know the anchor's percentile; we know which side of one point it falls on.
+
+Minting a fifth vocabulary value for it is **declined** under [ADR-0009](0009-what-riskshard-is-and-is-not.md):
+it makes the method more sophisticated without making any published number more correct. The
+exceedance ladder stays a claim ladder. The bracket is reported as a finding and, when the next
+increment lands, as a caveat on the record — not as a rung.
+
+### 2. No anchor moves onto the IRIS figure
+
+Swapping a documented-event maximum for the tier's 95th percentile would buy a stated quantile and
+**pay for it in provenance** — exactly the trade ADR-0008 refused in the other direction when it
+declined to swap `us_finance_data_breach_midmarket`'s `observed_rank` maximum for a registry entry.
+
+It is also worse than neutral in at least one case. `au_finance_ransomware_midmarket` anchors on
+Latitude's disclosed AUD 76M; the tier 95th is USD 9.1M. The swap would move a published maximum
+**down by a factor of six**, replacing a real Australian financial-services loss with an all-cause
+global percentile. **Declined.**
+
+### 3. The denominator under a `modeled_quantile` is now visible, and it is narrower than it reads
+
+The portfolio's only two quantified maxima — DE and JP manufacturing — both sit at **0.41×** their
+tier's 95th percentile. Their $5M threshold is at the 82nd percentile *of ransom payments made by
+organisations that paid*, a self-selected denominator. Against all-cause loss for a firm of their
+size it is unremarkable.
+
+Both statements are true and they are not the same instrument. ADR-0008's vocabulary records *what
+kind* of exceedance statement a record carries; it does not record **what population the statement
+is over**, and until now nothing in the repo could tell a reader that two `modeled_quantile`
+records might be answering about different worlds. Recorded here as a live limitation of the axis,
+not fixed here.
+
+## Scope
+
+**Decided here:** the placement, the two declines, and the correction of ADR-0008's premise.
+
+**Built 2026-11-11:** `engine/tail_bracket.py`, the committed source extract at
+`extractions/cyentia_iris_2025_table1_loss_percentiles.txt`, `tests/test_tail_bracket.py`
+(13 tests, the prose check verified to fail on a one-digit drift), finding 12, withdrawn claim 3,
+and the correction to `engine/exceedance.py`'s docstring.
+
+**Deliberately not built here, and owed:** the bracket does not yet appear on any record or any
+reader-facing surface. The five maxima it most concerns still carry `limitations` text written
+before the distribution was found. That is a `evidence/` change, which moves the data-pack
+fingerprint and takes its own PR — see open question 1.
+
+## Open questions
+
+1. **Does the bracket reach the reader, or stay a finding?** The honest case for putting it on the
+   explorer and the evidence report is that a reader treating a maximum as an outer bound is
+   exactly the reader who needs to know the population routinely exceeds it. The case against is
+   that an all-cause distribution sitting beside a threat-specific anchor invites precisely the
+   construct confusion [ADR-0007](0007-construct-coherence.md) exists to prevent. **Not decided.**
+
+2. **Should the axis record its denominator?** Decision 3 shows two `modeled_quantile` records
+   making statements over different populations with nothing distinguishing them. A fix is a new
+   field, which is a new declared axis, which AGENTS.md permits only from a defect measured in our
+   own data. This *is* such a defect — it is measured above. Recorded as a candidate, not opened.
+
+3. **How much of the corpus was read off the wrong artifact?** Not opened by this ADR, but
+   **sized** by it, because an unsized question gets deferred forever.
+
+   *Measured 2026-11-11, by hand — this count is not yet generated by anything:* the corpus holds
+   **129 artifacts across 122 stems**, and **6 stems hold both a web page and a PDF of the same
+   source** — the three Cyentia IRIS reports, Interos 2022, NetDiligence 2025 and Ponemon/DTEX 2023.
+   **21 evidence records draw on those six. 9 of the 21 cite the summary or press page rather than
+   the report, and all 9 are Cyentia.**
+
+   So the pattern finding 12 caught is not a one-off; it is nine records, of which this ADR re-reads
+   the properties behind one. The other eight have not been checked against their reports.
+
+   **The check that would own this number does not exist yet** and is the obvious candidate: flag
+   any evidence record whose source has a richer artifact on disk than the one its extraction cites.
+   `engine.intake.blocked_but_held` is the near neighbour and cannot see it, for the reason given in
+   *Context*.

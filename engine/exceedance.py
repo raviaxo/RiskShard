@@ -13,10 +13,20 @@ see `docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md`, where the per-event mean runs
 bounding it, and moving that one anchor swings P(event > AUD 20M) from 0% to 23%.
 
 `none_known` is a legal value and, today, the common one. That is the point. It is
-not a placeholder waiting to be cleared: published loss distributions with tail
-quantiles are rare and mostly commercial. What the declaration buys is that a
+not a placeholder waiting to be cleared. What the declaration buys is that a
 reader stops mistaking *the largest loss we found* for *the largest loss that can
 happen*.
+
+**Corrected 2026-11-11.** This docstring used to add that published loss
+distributions with tail quantiles are "rare and mostly commercial", and finding 3
+said we had not found one publicly, anywhere. Both were fair when written and
+neither was revised when the counter-example arrived six to eight days later:
+Cyentia IRIS 2025 publishes loss percentiles by revenue tier in its Table 1, and
+`sources/audit.yaml` has recorded that source as verified against the report,
+quoting its 95th-percentile sentence, since 2026-08-15. The audit held the
+refutation of the finding for 88 days. `engine/tail_bracket.py` reads the table;
+finding 12 records what it found, including that 5 of 11 published maxima sit at
+or below the 95th percentile for their own revenue tier.
 
 Like coherence, this reads the **calibration-selected** anchors, because those are
 the ones the simulation composes.
