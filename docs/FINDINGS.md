@@ -201,7 +201,9 @@ the modeled average. **A figure mostly driven by an anchor that admits no exceed
 a figure resting on one observation.**
 
 The missing thing is a denominator: how often a loss of size X is exceeded, across a known
-population. We have not found one, publicly, anywhere — see finding 7.
+population. **This finding said we had not found one publicly, anywhere. That was wrong, and
+it was wrong about a report we already held** — see [finding 12](#12--our-own-source-audit-recorded-the-exceedance-denominator-we-published-as-missing)
+and [Withdrawn claim 3](#withdrawn-claim-3--no-public-exceedance-denominator-exists-2026-11-11).
 
 ### 4 — Seven of our sixty-six parameters are drawn from the population they are used for
 
@@ -569,6 +571,85 @@ from answers already read, and it is pinned by a test that fails if a new distri
 left unclassified or if either list changes. Making it a column on the audit page would be a schema
 change and would need its own ADR under Change Control — worth doing only if a reader asks for it.
 
+### 12 — Our own source audit recorded the exceedance denominator we published as missing
+
+*Derived by [`engine/tail_bracket.py`](../engine/tail_bracket.py) · measured 2026-11-11 ·
+source table at [`extractions/cyentia_iris_2025_table1_loss_percentiles.txt`](../extractions/cyentia_iris_2025_table1_loss_percentiles.txt)*
+
+[Finding 3](#3--most-maxima-bound-nothing) closed by saying what was missing: *a denominator — how
+often a loss of size X is exceeded, across a known population* — and then, flatly, that we had not
+found one publicly, anywhere. [ADR-0008](adr/0008-the-governed-tail.md) was built around that
+scarcity, and `engine/exceedance.py` still told readers such distributions are *"rare and mostly
+commercial."* Both claims were fair when written: ADR-0008 is dated 2026-08-07 and finding 3
+was derived 2026-08-13, and the report was not in the corpus yet. It arrived on **2026-08-15** —
+eight days after the ADR and two days after the finding. **Neither was revised.**
+
+**Cyentia's IRIS 2025 publishes one.** It has been in this repository since **2026-08-15**, and
+the part that matters is *where*: not unread on a disk, but **written down in our own source
+audit.**
+
+`sources/audit.yaml` records `cyentia_iris_2025` as `verified_against_artifact` against
+`sources/raw/cyentia_iris_2025.pdf`, verified 2026-08-15, and its `exceedance` property quotes the
+report directly — *"The typical (median) incident costs about $600K, while more extreme (95th
+percentile) losses swell to $32 million"*, and *"The top 5% of loss events continue to exceed the
+annual revenue of affected firms."* The audit calls this source **the most complete distribution in
+the corpus.**
+
+Meanwhile the evidence record anchoring on that same source, extracted on 2026-06-03 from
+`sources/raw/cyentia_iris_2025.html` — a 4,113-character summary page, two months before the report
+was obtained — carries `exceedance_basis: none_known` and a `limitations` line reading *"not a
+formal percentile for this scenario."* **It is the 95th percentile, and our own audit says so.**
+
+The extraction was never revisited when the report arrived. So for **88 days** two governed surfaces
+in this repository held contradictory answers about the same number, and nothing compared them.
+Table 1 — the revenue-banded version used below — was the part neither surface had read.
+
+#### Where the portfolio's maxima actually sit
+
+Each published shard's selected `impact.max`, converted to USD at the disclosed rate, against the
+95th percentile for **its own org profile's revenue tier** — the only comparison the source
+licenses. Nothing here re-anchors anything; no published value moves.
+
+| shard | declared basis | anchor (USD) | tier 95th (USD) | ratio |
+| --- | --- | --- | --- | --- |
+| `au_finance_bec_midmarket` | `none_known` | 1,918,106 | 9,100,000 | **0.21×** | ⚠️
+| `de_industrial_ransomware_midmarket` | `modeled_quantile` | 5,000,000 | 12,300,000 | **0.41×** | ⚠️
+| `jp_manufacturing_ransomware_midmarket` | `modeled_quantile` | 5,000,000 | 12,300,000 | **0.41×** | ⚠️
+| `us_finance_bec_midmarket` | `none_known` | 6,400,000 | 9,100,000 | **0.70×** | ⚠️
+| `sg_finance_bec_midmarket` | `none_known` | 6,660,000 | 9,100,000 | **0.73×** | ⚠️
+| `us_finance_data_breach_midmarket` | `observed_rank` | 11,500,000 | 9,100,000 | **1.26×** |
+| `ca_finance_data_breach_midmarket` | `observed_rank` | 15,000,000 | 9,100,000 | **1.65×** |
+| `gb_finance_data_breach_midmarket` | `none_known` | 15,025,276 | 9,100,000 | **1.65×** |
+| `fr_finance_data_breach_midmarket` | `population_ceiling` | 23,280,000 | 9,100,000 | **2.56×** |
+| `au_finance_data_breach_midmarket` | `population_ceiling` | 35,940,000 | 9,100,000 | **3.95×** |
+| `au_finance_ransomware_midmarket` | `none_known` | 54,628,800 | 9,100,000 | **6.00×** |
+
+**5 of 11** published maxima sit **at or below** the 95th
+percentile of all-cause loss for their own revenue tier. For those five, the number a reader is
+invited to treat as the outer bound is one that **more than 5% of incidents in that tier exceed**.
+`au_finance_bec_midmarket` is the sharpest: its stress case is **a fifth** of the tier's 95th
+percentile.
+
+#### The part that stings
+
+**The two shards carrying the portfolio's only `modeled_quantile` maxima are in that group**, both
+at 0.41×. Their $5M ransom threshold is genuinely at the 82nd percentile — *of ransom payments made
+by organisations that paid*. Against all-cause loss for a $100M–$1B firm it is unremarkable. The
+exceedance statement ADR-0008 celebrated is true, and it is narrower than it reads: a declared
+quantile on a self-selected denominator is not the same instrument as a quantile on the population,
+and until now nothing in the repo could tell them apart.
+
+#### What this does not do
+
+It does not mint a new `exceedance_basis`. A bracket — *this value is below the published 95th* —
+is weaker than a stated percentile, and ADR-0008's vocabulary is deliberately a claim ladder.
+It also does not swap any anchor onto the IRIS figure: that would trade documented-event
+provenance for distributional context, which is the trade
+[ADR-0008](adr/0008-the-governed-tail.md) already refused in the other direction. See
+[ADR-0024](adr/0024-the-published-bracket.md).
+
+---
+
 ## What we got wrong
 
 A project that publishes its reasoning has to publish its corrections at the same volume. These are
@@ -613,6 +694,23 @@ our seven undeclared maxima lack.
 Measurement showed it does not: **0 of 37 entries carry a breach cost.** The premise was right in
 general and wrong about this dataset in particular. Recorded here because it was asserted before it
 was checked, which is the part worth remembering.
+
+### Withdrawn claim 3 — "no public exceedance denominator exists" (2026-11-11)
+
+[Finding 3](#3--most-maxima-bound-nothing) stated that the denominator our maxima lack had not been
+found *"publicly, anywhere"*, and [`engine/exceedance.py`](../engine/exceedance.py) told readers
+that published loss distributions with tail quantiles are *"rare and mostly commercial."*
+[ADR-0008](adr/0008-the-governed-tail.md) reasoned from that scarcity.
+
+**One was already in the corpus, and we had already read it.** The report arrived on 2026-08-15 —
+eight days after the ADR, two days after the finding — and `sources/audit.yaml` records it the same
+day as `verified_against_artifact`, with the `exceedance` property quoting *"more extreme (95th
+percentile) losses swell to $32 million."*
+
+The claim was never re-checked against the repo's own audit, which contradicted it for **88 days**.
+The evidence record kept a `none_known` basis and a *"not a formal percentile"* caveat throughout.
+**The audit is the product ([ADR-0016](adr/0016-the-audit-is-the-product.md)), and nothing routes
+its answers back to the records that cite the same source.** See [finding 12](#12--our-own-source-audit-recorded-the-exceedance-denominator-we-published-as-missing).
 
 ### Framings retired
 
