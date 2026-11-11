@@ -1,6 +1,8 @@
 # ADR-0005 — Documented loss-event registry
 
-- **Status:** Superseded by [ADR-0012](0012-loss-event-registry-bounded-trial.md) (2026-08-13)
+- **Status:** Superseded by [ADR-0012](0012-loss-event-registry-bounded-trial.md) (2026-08-13),
+  whose trial was then **retired 2026-11-11** ([ADR-0025](0025-the-registry-trial-is-retired.md)). This is no longer a live
+  proposal; reopening it takes a new ADR and a measured defect
   — previously Deferred (2026-07-31)
 - **Date:** 2026-07-29
 - **Deciders:** repo owner

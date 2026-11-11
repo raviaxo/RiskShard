@@ -246,7 +246,7 @@
             "required": [
               "origin"
             ],
-            "description": "Who supplied this record. Required on every record, because ADR-0017's second kill-criterion metric counts entries contributed from outside the project and an absent field cannot be told apart from a zero. Until 2026-09-28 no field existed, so `trial_metrics` returned None and the roadmap published the owner's assertion; ADR-0022 replaced that with a meter.",
+            "description": "Who supplied this record. VESTIGIAL since 2026-11-11 and deliberately kept: ADR-0025 retired the ADR-0012 trial this field metered, and keeping a required field that nothing now decides costs less than migrating 36 records. Originally required because ADR-0017's second kill-criterion metric counts entries contributed from outside the project and an absent field cannot be told apart from a zero. Until 2026-09-28 no field existed, so `trial_metrics` returned None and the roadmap published the owner's assertion; ADR-0022 replaced that with a meter, five weeks before the measurement retired the trial. That order was correct and the cost is named in ADR-0025.",
             "properties": {
               "origin": {
                 "type": "string",

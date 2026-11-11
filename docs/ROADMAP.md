@@ -210,7 +210,17 @@ with it and the open question never needs answering. The design input that shape
 not a gate; whether its author returns changes nothing about the schedule. Recording that here so
 the milestone stops reading as blocked on a person.
 
-## Track A · M4 — The registry decision · **2026-11-01, fixed**
+## Track A · M4 — The registry decision · ✅ **DONE 2026-11-11 — the registry is retired**
+
+**Measured 2026-11-11, at the first release cut on or after 2026-11-01, exactly as
+[ADR-0017](adr/0017-the-kill-criterion-gets-a-clock.md) §2 required. Both metrics read zero and the
+trial is retired on its own criterion — [ADR-0025](adr/0025-the-registry-trial-is-retired.md).**
+The 36 events are kept as a published dataset with no claim on the shards; nothing is deleted.
+
+*The date did not move. The release was cut ten days after the trigger rather than on it, which
+satisfies "on or after" literally — and the numbers could not have changed in that window, because
+no shard can begin citing an entry without a parameter change and no contribution route exists.
+What slipped was the queue, not the criterion; ADR-0025 records the distinction.*
 
 [ADR-0017](adr/0017-the-kill-criterion-gets-a-clock.md) pre-committed this date and states in
 writing that **it does not move again**. At the first release on or after 2026-11-01, count:
@@ -231,6 +241,11 @@ If neither has moved, the registry retires. **No external readership at the date
 for another extension** — it is grounds for retiring it and publishing that the trial never got a
 fair test. The doctor prints the date on every run.
 
+**That is what happened.** Neither moved, the registry retired, and the doctor's loss-event line
+now records the outcome instead of the pending date. Both zeros are true and neither is about
+adoption: the registry was built on a corpus that structurally cannot serve the grid it was meant
+to serve, and was forbidden from growing into a shape that could.
+
 ## Track A · M5 — The adoption test · measured at M4
 
 Whether any of this is used, stated as numbers rather than impressions:
@@ -239,9 +254,16 @@ Whether any of this is used, stated as numbers rather than impressions:
 - has anyone **disputed** a row?
 - has anyone **applied the standard** to a source we did not read?
 
-**All three read zero, measured 2026-09-27.** None of them can be generated from this
-repository — a citation, a dispute and an outside application all happen elsewhere — so each carries
-the date it was last checked rather than the word *today*. Published either way.
+**All three read zero, re-measured 2026-11-11** (previously 2026-09-27; the reading did not
+change). None of them can be generated from this repository — a citation, a dispute and an outside
+application all happen elsewhere — so each carries the date it was last checked rather than the
+word *today*. Published either way.
+
+*What was checked on 2026-11-11, so the zero is a reading and not a shrug:* 4 stars, 0 forks,
+**0 external pull requests**, and **0 issues or discussions opened by anyone but the owner** (the
+two authoring handles, `raviaxo` and `salonso-r7`, are both his). **M5 is not closed by M4** — its
+three questions do not depend on the registry, and it remains the project's only honest adoption
+reading.
 
 ---
 

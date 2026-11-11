@@ -155,7 +155,14 @@ def registry_summary(root):
 
 
 def trial_metrics(root):
-    """The two numbers ADR-0012's kill criterion is decided on.
+    """The two numbers ADR-0012's kill criterion was decided on.
+
+    **The criterion fired. Measured 2026-11-11: both metrics zero, and
+    [ADR-0025](../docs/adr/0025-the-registry-trial-is-retired.md) retired the trial.**
+    This function is no longer a live criterion — it is the record of how the trial
+    ended, and it must keep returning those numbers. The doctor keeps printing them,
+    because a retired trial whose numbers stop being visible is indistinguishable from
+    one that was quietly dropped.
 
     `shards_citing_a_registry_entry` — how many shards anchor `impact.max` on a registry
     id rather than a one-off.
@@ -168,13 +175,13 @@ def trial_metrics(root):
     criterion working, so [ADR-0022](../docs/adr/0022-the-second-kill-metric-gets-a-meter.md)
     made `contribution` a required block on every record and this a count.
 
-    What the count can and cannot say, because the number is due on 2026-11-01 and will
-    be read by someone who was not here: it counts *accepted records*, so it reads zero
-    while nobody has contributed one **and** while nobody has been asked to. Those are
-    the same number and a different fact. ADR-0017 section 4 settled that case in
-    advance — no external readership at the date is grounds for retiring the registry,
-    not for extending it again — so the meter is here to make the zero honest, not to
-    rescue it.
+    What the count can and cannot say, written before the measurement and left standing
+    because it is exactly what the measurement turned out to mean: it counts *accepted
+    records*, so it reads zero while nobody has contributed one **and** while nobody has
+    been asked to. Those are the same number and a different fact. ADR-0017 section 4
+    settled that case in advance — no external readership at the date is grounds for
+    retiring the registry, not for extending it again — so the meter was here to make
+    the zero honest, not to rescue it. It did that, and the zero retired the trial.
     """
     root = Path(root)
     events = load_loss_events(root)

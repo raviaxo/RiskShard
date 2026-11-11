@@ -1,6 +1,8 @@
 # ADR-0017 — The kill criterion gets a clock, and this is the only time it moves
 
-- **Status:** Accepted (2026-08-16)
+- **Status:** Accepted (2026-08-16) — **executed 2026-11-11.** The measurement was taken at the
+  first release on or after 2026-11-01 as §2 required, both metrics read zero, and §4 retired the
+  registry; see [ADR-0025](0025-the-registry-trial-is-retired.md). The date did not move
 - **Date:** 2026-08-16
 - **Deciders:** repo owner
 - **Amends:** [`0012-loss-event-registry-bounded-trial.md`](0012-loss-event-registry-bounded-trial.md)

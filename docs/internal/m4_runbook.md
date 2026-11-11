@@ -81,12 +81,41 @@ python scripts/build_social_card.py --check
 python -m unittest discover -s tests           # test_evidence_report_is_current and
 python scripts/validate_evidence.py            # test_readme_progress_is_current are in here
 python scripts/contributor_preflight.py
-python scripts/strength_ledger.py record       # clears the ledger's needs_review
-python scripts/strength_ledger.py markdown     # regenerates the README table
+python scripts/data_pack_manifest.py --release <id>   # ← CUT THE PACK FIRST (see below)
+python scripts/strength_ledger.py record --release <id> --date <date> --note "..."
+python scripts/strength_ledger.py markdown --write   # regenerates the README table
 python scripts/build_explorer.py
+python scripts/build_audit_page.py
+python scripts/build_reports.py
+python scripts/build_social_card.py
 python scripts/build_explorer.py --archive     # ← THE STEP THAT WAS SKIPPED ON v0.12.0
+python -m unittest discover -s tests           # AGAIN - the steps above rewrite tracked
+                                               # artifacts that tests pin
 python scripts/riskshard_doctor.py             # must read pass on all 18
 ```
+
+**Corrected 2026-11-11, while running it. Three things in the block above were wrong, and the
+release caught all three rather than a gate catching them.**
+
+1. **The pack has to be cut first.** `build_explorer.py` pins citations to the newest artifact in
+   `data_pack_releases/`, so running it before `data_pack_manifest.py --release <id>` produces an
+   explorer pinned to the *previous* release. Observed: it printed *"citations pin to release
+   2026.09.28-v0.13.0"* on a v0.14.0 tree. The release id convention is `<YYYY.MM.DD>-v<version>`.
+2. **`strength_ledger.py record` was broken, and had been since 2026-08-13.** It called
+   `build_axis_totals(ROOT)` without importing it, so the subcommand this runbook names to clear
+   the ledger raised `NameError` for 90 days across seven releases. The ledger was being written
+   the whole time by `data_pack_manifest.py`, which imports the helper correctly and records an
+   entry when it cuts a pack — so the symptom was invisible. `package_smoke.py` could not catch it:
+   it checks entry points are *importable callables*, which a NameError inside a function body
+   passes. `tests/test_strength_ledger_cli.py` now runs every subcommand and is verified to fail
+   when the import is stripped.
+3. **The suite has to run again at the end.** `strength_ledger markdown --write`, the pack cut and
+   the archive all rewrite tracked files that tests pin (`test_readme_progress_is_current`,
+   `test_release_archives`, `test_readiness`). Running the suite only before those steps proves
+   nothing about what gets tagged.
+
+*Also worth knowing: `markdown` needs `--write` to touch the README, and `record` requires
+`--release`; both are no-ops or errors without them.*
 
 Then tag **the merge commit**, not the branch head, and cut the GitHub release.
 

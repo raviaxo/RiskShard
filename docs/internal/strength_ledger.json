@@ -403,6 +403,38 @@
         "shards_tail_driven": 7
       },
       "release_version": "2026.09.28-v0.13.0"
+    },
+    {
+      "data_pack_version": "2026.11.11",
+      "date": "2026-11-11",
+      "fingerprint": "749540a5b1f6bb8c6e4b27b9e1837ff8268d41f149cf201563c67737fae033fb",
+      "grades": {
+        "benchmark_review_candidate": 6,
+        "governed_starter": 5
+      },
+      "metrics": {
+        "families_coherent": 4,
+        "families_mixed": 18,
+        "floor_central_tendency": 7,
+        "likely_anchors": 11,
+        "likely_central_tendency": 8,
+        "likely_not_a_mode": 11,
+        "maxima": 11,
+        "maxima_none_known": 5,
+        "maxima_quantified": 4,
+        "params_bridged": 0,
+        "params_cell_matched": 7,
+        "params_cross_cell": 59,
+        "params_cross_country": 15,
+        "params_missing": 0,
+        "params_source_backed": 66,
+        "params_total": 66,
+        "shards": 11,
+        "shards_fully_sourced": 11,
+        "shards_tail_driven": 7
+      },
+      "note": "A governance release: no parameter value moved. The ADR-0012 registry trial was measured on its pre-committed criterion and retired - 0 of 11 shards cite an entry (0 could), 0 entries contributed from outside (ADR-0025); the 36 events are kept as a published dataset with no claim on the shards. Separately, every published maximum is now placed against IRIS 2025's revenue-banded loss percentiles (ADR-0024): 5 of 11 sit at or below the 95th percentile of all-cause loss for their own tier, including both of the portfolio's only modeled_quantile maxima. Read that as the exceedance axis gaining a population to compare against, not as evidence changing - nothing was re-anchored.",
+      "release_version": "2026.11.11-v0.14.0"
     }
   ]
 }

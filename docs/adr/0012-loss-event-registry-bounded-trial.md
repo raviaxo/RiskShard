@@ -1,6 +1,7 @@
 # ADR-0012 — The loss-event registry, as a bounded trial
 
-- **Status:** Accepted (2026-08-13)
+- **Status:** Accepted (2026-08-13) — **the trial it adopted is RETIRED (2026-11-11) on the
+  criterion in decision 5**, measured zero on both metrics; see [ADR-0025](0025-the-registry-trial-is-retired.md)
 - **Date:** 2026-08-13
 - **Deciders:** repo owner
 - **Supersedes:** [`0005-documented-loss-event-registry.md`](0005-documented-loss-event-registry.md)

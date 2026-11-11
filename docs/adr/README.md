@@ -15,19 +15,19 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0002](0002-portable-scenario-seed.md) | Portable scenario seeds (machine-independent simulation) | Accepted |
 | [0003](0003-shared-impact-bridges.md) | Shared, named impact bridges | Accepted (parts 1–2); stored `population_match` superseded by 0013 |
 | [0004](0004-citable-parameter-identifiers.md) | Citable parameter identifiers | Accepted |
-| [0005](0005-documented-loss-event-registry.md) | Documented loss-event registry | Superseded by 0012 |
+| [0005](0005-documented-loss-event-registry.md) | Documented loss-event registry | Superseded by 0012; trial retired by [0025](0025-the-registry-trial-is-retired.md) (2026-11-11) |
 | [0006](0006-depth-over-breadth.md) | Depth over breadth | Accepted |
 | [0007](0007-construct-coherence.md) | Declared measurement basis and range coherence | Proposed |
 | [0008](0008-the-governed-tail.md) | The governed tail: a maximum must say what it bounds | Accepted |
 | [0009](0009-what-riskshard-is-and-is-not.md) | What RiskShard is, and what it is not (scope) | Accepted |
 | [0010](0010-where-riskshard-stops.md) | Where RiskShard stops: the evidence object is the product | Accepted |
 | [0011](0011-fit-is-a-facet-set.md) | Fit is a facet set, not a score | Accepted (corrected 2026-08-14) |
-| [0012](0012-loss-event-registry-bounded-trial.md) | The loss-event registry, as a bounded trial | Accepted |
+| [0012](0012-loss-event-registry-bounded-trial.md) | The loss-event registry, as a bounded trial | Accepted; **trial retired** by [0025](0025-the-registry-trial-is-retired.md) (2026-11-11) |
 | [0013](0013-fit-is-derived-not-stored.md) | Fit is derived against a target, not stored on the record | Accepted |
 | [0014](0014-the-reader-supplies-the-target.md) | The reader supplies the target | Accepted (control superseded by [0018](0018-the-target-selector-failed-measurement.md), 2026-08-19) |
 | [0015](0015-the-source-audit.md) | The source audit: what a source publishes is not what we extracted | Accepted |
 | [0016](0016-the-audit-is-the-product.md) | The source audit is the product; the shards are the demonstration | Accepted |
-| [0017](0017-the-kill-criterion-gets-a-clock.md) | The kill criterion gets a clock, and this is the only time it moves | Accepted |
+| [0017](0017-the-kill-criterion-gets-a-clock.md) | The kill criterion gets a clock, and this is the only time it moves | Accepted; **executed** 2026-11-11 ([0025](0025-the-registry-trial-is-retired.md)) |
 | [0018](0018-the-target-selector-failed-measurement.md) | The reader-supplied target selector failed measurement, and is retired | Accepted |
 | [0019](0019-borrowing-cannot-answer-an-unpublished-cell.md) | Nearest-shard borrowing cannot answer an unpublished cell, and is declined | **Proposed** (2026-08-23) |
 | [0020](0020-declared-exclusions.md) | A publisher left out on purpose is declared, never silent | Accepted (2026-09-21) |
@@ -35,3 +35,4 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0022](0022-the-second-kill-metric-gets-a-meter.md) | The second kill-criterion metric gets a meter, not a new definition | Accepted (2026-09-28) |
 | [0023](0023-the-denominator-is-a-declared-property.md) | The denominator becomes a declared property of an audited source | Accepted (2026-10-24), scope narrowed 2026-10-26 |
 | [0024](0024-the-published-bracket.md) | A maximum is placed in a published distribution, not re-anchored onto one | **Proposed** (2026-11-11) |
+| [0025](0025-the-registry-trial-is-retired.md) | The registry trial is retired on its own criterion, and the 36 events survive it | Accepted (2026-11-11) |

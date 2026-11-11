@@ -34,6 +34,7 @@ from engine.slot_roles import build_portfolio_slot_roles  # noqa: E402
 from engine.readiness import build_readiness_dashboard  # noqa: E402
 from engine.strength_ledger import (  # noqa: E402
     LEDGER_RELPATH,
+    build_axis_totals,
     format_progress_markdown,
     latest_delta,
     record_snapshot,
