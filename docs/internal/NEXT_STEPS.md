@@ -177,9 +177,26 @@ waiting on you.***
 
 ## Restart point
 
-**2026-11-11 session: M4 executed and the registry is retired. `v0.14.0` cut.** 555+ tests,
-evidence clean, preflight clean. Two PRs: [#207](https://github.com/raviaxo/RiskShard/pull/207)
-merged (the published bracket), and the M4 release branch.
+**2026-11-11 session closed. `main` at `59086b4` == `origin/main`, tree clean, no local branch and
+no open PR. `v0.14.0` is the current release and its pinned citation was fetched live at 200.
+560 tests pass, evidence clean, preflight clean, and the doctor reads pass on all 18 — including
+the strength ledger, caught up at `2026.11.11` (`749540a5b1f6`).**
+
+**M4 executed: the registry trial is retired on its own criterion** ([ADR-0025](../adr/0025-the-registry-trial-is-retired.md)),
+and **item E is done and turned out to be a bigger finding than the breakdown it went looking for**
+([ADR-0024](../adr/0024-the-published-bracket.md), **Proposed — two declines await the owner**).
+Both PRs merged: [#207](https://github.com/raviaxo/RiskShard/pull/207) and
+[#208](https://github.com/raviaxo/RiskShard/pull/208). No parameter value moved in either.
+
+**GitHub Actions is green on `main`:** `CI [push]` completed **success** and `Deploy explorer to
+Pages` completed **success**, so the matrix run across the other Python versions passed and the two
+files added today — `engine/tail_bracket.py` and `tests/test_strength_ledger_cli.py` — are clean on
+every supported interpreter, not just 3.14.6.
+
+*Worth knowing for the next release: Actions was backlogged for ~40 minutes earlier in the session.
+PR #207's CI sat `queued` and never attached to the PR checks rollup, so both PRs were merged on
+local green. That was the right call and it is not a habit to adopt — the local run covers every
+`ci.yml` step but only one interpreter.*
 
 *This block said "2026-10-27 session closed, `main` at `ea5cab6`, 542 tests … `v0.13.0` is the
 current release" and, three lines down, that the 2026-11-01 measurement was **10 days away**. It
@@ -188,6 +205,10 @@ go stale on this exact field, and the first one's own note said the queue is the
 this state — when it lags, every surface that trusts it lags too. The measurement itself was not
 harmed (see ADR-0025: the numbers could not have changed in the window), but the queue told the
 next session the opposite of the truth.*
+
+⚠️ **Superseded 2026-11-11 — the doctor now reads pass on all 18; `v0.14.0` cleared the ledger.
+The block below described the pre-release state and is kept because it explains why an unreleased
+pack change is not a red.**
 
 ⚠️ **The doctor reads `needs_review` on one line only: the strength ledger.** 17 of 18 checks
 pass. The ADR-0023 schema change and the IRIS Xtreme registration both moved the pack fingerprint,
@@ -416,6 +437,7 @@ either rebase them at close, or close before opening them.*
 | **B** | ✅ **GATE PASSED 2026-10-26 — not approved to build, and now outranked by E** | The only genuine product improvement left on the table, and the only route to a shipping claim. [ADR-0019](../adr/0019-borrowing-cannot-answer-an-unpublished-cell.md) names three things that would move the specificity inversion: more shards (closed by ADR-0016 part 2), **the reader picks the donor**, and evidence declared per cell (the ADR-0006 depth axis, far heavier). Route 2 is the live one. ⚠️ **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md)'s amendment sets the gate and it is not optional:** such a design is *not* bound by ADR-0018's two coverage preconditions, and *not* excused from measurement either — it is gated on **stating, and then measuring, its own version of "nothing here" before it reaches the page.** The ADR pre-states the hypothesis to beat: *"a feature whose most common output is 'this figure is entirely borrowed' may teach readers to distrust"*, on an 84.6% floor. **This may well be declined on its own measurement, exactly as U2 was** — that is the process working and it is cheap, because the condition is stated before a line is written |
 | **C** | **The audit-complete claim is the publishable one and it is available now** | *"The audit is complete, of the obtainable corpus"* — 65 of 75 read on all four properties, 10 classified unobtainable with the reason recorded, every answer verified against the publisher's own file. A finished product milestone rather than a self-audit, which is what the steer asks for. **Available exactly once**, so spend it deliberately |
 | **E** | ✅ **DONE 2026-11-11 — read, and it found more than the breakdown (ADR-0024, #207)** | **The best product candidate on the board, added 2026-10-27.** 5 of 11 published maxima declare `none_known`, and IRIS 2025 carries 50th/95th percentile losses by revenue band — $12.3M at the 95th for $100M–$1B, $9.1M for under $100M. **Every org profile sits in one of those two bands.** Our exceedance record for that source captured the overall $32M and not the breakdown, so this is the eighth "recorded as owed, turned out to be held". It beats B because it makes a **published number more correct** rather than adding a surface, which is ADR-0009's test. ⚠️ Not a swap: it is all-cause cyber loss, not threat-specific, so putting it behind a BEC or breach maximum is an ADR-0007 coherence judgment and needs its own ADR |
+| **F** | 🆕 **Re-read the 8 remaining page-sourced Cyentia records, then build the audit-to-evidence check** | **The best product candidate on the board, added 2026-11-11 and born from a defect measured in our own data.** ADR-0024 found that the audit's answers never reach the evidence records citing the same source — and held a refutation of a published finding for 88 days. *Sized 2026-11-11, by hand:* 6 sources are held as both a web page and a report, 21 evidence records draw on those six, and **9 of the 21 cite the page**; all 9 are Cyentia, one produced the contradiction, **8 have never been checked against their reports.** Clears ADR-0009 (makes published numbers more correct) and AGENTS.md's bar for new machinery. `engine.intake.blocked_but_held` is the near neighbour and structurally cannot see this class |
 | **D** | **Watch for a row or a dispute** | Either moves M3 and M5 off zero for the first time. Not forceable |
 
 **Item B has a result, 2026-10-26.** The reader-chosen donor passed the gate ADR-0019 said it
@@ -1060,3 +1082,51 @@ shards are now source-backed. This is the Sunday post.
   check against a fresh render. This release ships its own archive in the same commit, unlike
   v0.12.0. **Three of the day's five objectives were the same defect in different clothes** — a
   generated artifact whose regeneration is a manual step nobody checks. Tests 521 → 523.
+
+- 2026-11-11 — **Item E read the report, and M4 retired the registry on its own criterion.
+  `v0.14.0` cut, tagged and released; pinned citation verified live at 200.** Two objectives,
+  both approved mid-session, [#207](https://github.com/raviaxo/RiskShard/pull/207) and
+  [#208](https://github.com/raviaxo/RiskShard/pull/208) merged. Tests 542 → 560. No parameter
+  value moves in either.
+
+  **Item E found something better than the breakdown it went looking for.** IRIS 2025 Table 1
+  publishes 50th/95th percentile losses by revenue tier, and `sources/audit.yaml` has recorded that
+  source as `verified_against_artifact` — quoting its own 95th-percentile sentence — since
+  **2026-08-15**. Meanwhile the evidence record citing it kept `exceedance_basis: none_known` and a
+  *"not a formal percentile"* caveat. **Two governed surfaces held contradictory answers about the
+  same figure for 88 days and nothing compared them.** ADR-0008's scarcity premise, finding 3's
+  *"we have not found one, publicly, anywhere"* and `engine/exceedance.py`'s *"rare and mostly
+  commercial"* were all fair when written — the report arrived eight days after the ADR and two
+  after the finding, and none was revised. Finding 12, withdrawn claim 3,
+  [ADR-0024](../adr/0024-the-published-bracket.md) (**Proposed**). `engine/tail_bracket.py` places
+  all 11 published maxima against their own profile's tier: **5 of 11 sit at or below the 95th
+  percentile of all-cause loss**, `au_finance_bec_midmarket` at 0.21×, and **both of the
+  portfolio's only `modeled_quantile` maxima are in that group at 0.41×** — their 82nd percentile
+  is over ransom *payers*, a self-selected denominator the axis cannot distinguish from a
+  population quantile. Nothing re-anchored; two declines recorded rather than taken.
+
+  **M4 executed exactly as pre-committed.** Measured before anything was cut: **0 of 11 shards cite
+  a registry entry (0 could), 0 entries contributed from outside.** ADR-0017 §4 retires rather than
+  extends, so [ADR-0025](../adr/0025-the-registry-trial-is-retired.md) ends the trial and keeps the
+  36 events as a published dataset with no claim on the shards. **The date did not move** — §2 said
+  the first release on or after 2026-11-01 and this is it — but the queue did: the restart point
+  carried *"10 days away"* for ten days past the trigger, the second consecutive restart point to
+  go stale on that field. The numbers could not have changed in the window, and ADR-0025 keeps
+  those two failures separate.
+
+  ⚠️ **Running the runbook found three defects in its own step 5, and the first had been live for 90
+  days.** `scripts/strength_ledger.py record` — the command named to clear the ledger — called
+  `build_axis_totals(ROOT)` **without importing it**, from 2026-08-13 (v0.7.0) until today:
+  `NameError` on every invocation across seven releases. Invisible because
+  `data_pack_manifest.py` imports it correctly and writes the ledger when it cuts a pack, so the
+  ledger always looked current while the documented path was dead. `package_smoke.py` structurally
+  cannot catch it — it checks entry points are *importable callables*, and a `NameError` in a
+  function body passes. `tests/test_strength_ledger_cli.py` runs all four subcommands and is
+  verified to fail when the import is stripped. Also: the pack must be cut **before**
+  `build_explorer.py` or citations pin to the previous release (observed on a v0.14.0 tree), and
+  the suite must run **again** after the release steps rewrite artifacts that tests pin. All three
+  corrected in the runbook rather than fixed silently.
+
+  **M5 was corrected, not closed.** A first draft of ADR-0025 said it depended on a registry
+  citation existing; it does not. Re-measured the same day and still zero on all three: 4 stars,
+  0 forks, 0 external PRs, 0 issues or discussions from anyone but the owner.
