@@ -44,7 +44,7 @@ by. If you cannot find it in under five minutes, the report has not earned
 a place in that paper.
 
 What I am working on from here is making that findable without reading all
-65 reports yourself. For every headline figure, what it was divided by, and
+66 reports yourself. For every headline figure, what it was divided by, and
 whether the publisher stated it or you have to work it out.
 
 Link in the first comment.
@@ -53,7 +53,7 @@ Link in the first comment.
 FIRST COMMENT
 ---------------------------------------------------------------------------
 
-The audit so far. 65 public cyber-loss reports, four questions each, every
+The audit so far. 66 public cyber-loss reports, four questions each, every
 answer checked against the publisher's own file.
 
 raviaxo.github.io/RiskShard
@@ -121,7 +121,10 @@ sophos_state_ransomware_2026
 The 100-attacked / 20-paid illustration is arithmetic, not a measured
 payment rate, and is written so a reader can see it is an illustration.
 
-65 read / 10 unobtainable of 75 registered — generated, not typed.
+66 read / 10 unobtainable of 76 registered — generated, not typed.
+Refreshed 2026-11-12 from engine.source_audit; the draft carried 65 of 75 from
+2026-10-24 and IRIS Xtreme 2026 was registered and read in between. Re-measure
+before sending — this file is prose and nothing generates it.
 
 ---------------------------------------------------------------------------
 CONFLICT

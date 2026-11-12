@@ -5,8 +5,8 @@ import stat
 import tempfile
 from pathlib import Path
 
-from scripts.build_social_card import (DEFAULT_HEADLINE, _month_year, default_outcome,
-                                       main, money, rasterise, render)
+from scripts.build_social_card import (DEFAULT_HEADLINE, OUTCOME_KINDS, _month_year,
+                                       default_outcome, main, money, rasterise, render)
 
 
 FIELDS = {
@@ -134,3 +134,51 @@ class CardCarriesTheCurrentMessageTests(unittest.TestCase):
             default_outcome(),
         )
 
+
+class AuditOutcomeTests(unittest.TestCase):
+    """The audit-complete framing (queue item C) carries four numbers, and not one is typed.
+
+    Added 2026-11-12 with the framing itself. The post this card accompanies claims the
+    audit is *finished*, which is a completeness claim — the one kind of claim that is
+    worthless the moment its denominator drifts. The sibling `mode` framing already went
+    stale twice as a hand-written line, so this one is asserted against the engine from
+    the day it is born rather than after it has embarrassed anybody.
+    """
+
+    def _live(self):
+        from engine.project_paths import find_project_root
+        from engine.source_audit import PROPERTIES, build_source_audit, publishable_claim
+
+        view = build_source_audit(find_project_root())
+        claims = {prop: publishable_claim(view["sources"], prop) for prop in PROPERTIES}
+        return view["coverage"], claims
+
+    def test_every_number_in_the_audit_outcome_comes_from_the_audit(self):
+        coverage, claims = self._live()
+        line = default_outcome(kind="audit")
+        read = coverage["sources_fully_verified"]
+        self.assertIn(f"{read} of {coverage['sources']} read", line)
+        self.assertIn(f"{coverage['sources'] - read} recorded as unobtainable", line)
+        self.assertIn(f"{claims['distribution']['publishes']} publish a distribution", line)
+        self.assertIn(
+            f"{claims['population']['does_not_publish']} do not let you name", line)
+
+    def test_the_audit_framing_claims_completeness_only_while_nothing_is_unread(self):
+        """`finished` is true because `unverified` is 0, not because 66 is a big number.
+
+        If a source is ever registered and left unread, the claim on the card and in the
+        post stops being true and this fails — which is the only thing standing between
+        "complete, of the obtainable corpus" and an overclaim.
+        """
+        coverage, _ = self._live()
+        self.assertEqual(
+            coverage["unverified"], 0,
+            "a registered source is unread — the audit-complete card and "
+            "docs/internal/MSG-2026-11-12-audit-complete-post.txt both overclaim until "
+            "it is read or recorded as unobtainable",
+        )
+
+    def test_the_default_framing_is_unchanged_by_the_new_one(self):
+        self.assertEqual(default_outcome(), default_outcome(kind="mode"))
+        self.assertIn("mode", DEFAULT_HEADLINE.lower())
+        self.assertEqual(sorted(OUTCOME_KINDS), ["audit", "mode"])

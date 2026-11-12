@@ -1,7 +1,11 @@
 # ADR-0024 — A maximum is placed in a published distribution, not re-anchored onto one
 
-- **Status:** **Proposed** (2026-11-11) — the measurement is done and committed; the three
-  declines below are the owner's to accept
+- **Status:** **Accepted** (2026-11-12) — both declines accepted by the owner unchanged. *The
+  Proposed status line said **three** declines and the Decision section carries **two**; decision 3
+  records a limitation rather than declining anything. Corrected on acceptance and noted here rather
+  than edited away, because a hand-written count in a status line is exactly the figure with no
+  owner that AGENTS.md warns about.* Open questions 1 and 2 remain open and are **not** accepted
+  here.
 - **Date:** 2026-11-11
 - **Deciders:** repo owner
 - **Prompted by:** [Finding 12](../FINDINGS.md) — this repo's own source audit had recorded the
