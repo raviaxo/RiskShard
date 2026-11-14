@@ -177,6 +177,31 @@ waiting on you.***
 
 ## Restart point
 
+**2026-11-14 session closed. `main` at `9e0df12` == `origin/main`, tree clean, no local branch,
+no open PR, and the three `shard/*` branches behind #209–#211 are gone from `origin`. `v0.14.0`
+is still the current release. 579 tests pass (560 at the last close), evidence clean, preflight
+clean, and the doctor reads 18 of 19 — the nineteenth check is new this session (`artifact fit`),
+and the single `needs_review` is the strength ledger, left amber deliberately: the pack moved to
+`f9c2befadfbe` and the recommendation is to batch the release with item F rather than cut
+`v0.14.1` for a caveat change.**
+
+**Three PRs merged, each green on 3.11 / 3.12 / 3.13 in Actions and on local 3.14.6:**
+[#209](https://github.com/raviaxo/RiskShard/pull/209) drafted and carded the audit-complete claim
+and accepted [ADR-0024](../adr/0024-the-published-bracket.md);
+[#210](https://github.com/raviaxo/RiskShard/pull/210) placed the five `none_known` maxima on their
+own records; [#211](https://github.com/raviaxo/RiskShard/pull/211) built
+`engine/artifact_fit.py` and the doctor check that corrected ADR-0024's own hand count.
+**The claim was published** — item C is spent, and it is the first adoption lever pulled since both
+ADR-0012 kill metrics measured zero.
+
+*Housekeeping worth recording once: `gh pr merge --delete-branch` reported success on all three but
+the remote-tracking refs still listed `origin/shard/*` afterwards. They were already deleted —
+plain `git fetch` does not prune, so `git branch -r` lied for the length of the close. `git fetch
+--prune` is the check, not `git fetch`.*
+
+*The 2026-11-11 close block is kept below. Its "pass on all 18" was true when written and is not
+now, for a reason that is a decision rather than a regression.*
+
 **2026-11-11 session closed. `main` at `59086b4` == `origin/main`, tree clean, no local branch and
 no open PR. `v0.14.0` is the current release and its pinned citation was fetched live at 200.
 560 tests pass, evidence clean, preflight clean, and the doctor reads pass on all 18 — including
@@ -497,7 +522,7 @@ either rebase them at close, or close before opening them.*
 | **B** | ✅ **GATE PASSED 2026-10-26 — not approved to build, and now outranked by E** | The only genuine product improvement left on the table, and the only route to a shipping claim. [ADR-0019](../adr/0019-borrowing-cannot-answer-an-unpublished-cell.md) names three things that would move the specificity inversion: more shards (closed by ADR-0016 part 2), **the reader picks the donor**, and evidence declared per cell (the ADR-0006 depth axis, far heavier). Route 2 is the live one. ⚠️ **[ADR-0018](../adr/0018-the-target-selector-failed-measurement.md)'s amendment sets the gate and it is not optional:** such a design is *not* bound by ADR-0018's two coverage preconditions, and *not* excused from measurement either — it is gated on **stating, and then measuring, its own version of "nothing here" before it reaches the page.** The ADR pre-states the hypothesis to beat: *"a feature whose most common output is 'this figure is entirely borrowed' may teach readers to distrust"*, on an 84.6% floor. **This may well be declined on its own measurement, exactly as U2 was** — that is the process working and it is cheap, because the condition is stated before a line is written |
 | **C** | ✅ **SENT 2026-11-14 — the claim is spent, and it was the first thing published since the 2026-10-22 steer** | *"The audit is complete, of the obtainable corpus"* — **66 of 76** read on all four properties (the table said 65 of 75 until 2026-11-12; IRIS Xtreme 2026 was registered and read in between, which is the fourth time a hand-written figure in this file has aged), 10 recorded unobtainable with the reason, 0 unread, 1 publisher declared excluded. Draft at [`MSG-2026-11-12-audit-complete-post.txt`](MSG-2026-11-12-audit-complete-post.txt), native image at `docs/card-audit-complete.png`, both generated from `engine.source_audit`. A finished product milestone rather than a self-audit, which is what the steer asks for. **Available exactly once**, and now spent. Posted to LinkedIn with the owner's edits; the published-vs-drafted diff is recorded in `~/business-os/comms/ventures/riskshard/voice.md` (2026-11-14), which retired this file's "no colons" rule and split the list rules by venue. **This is the first ADR-0012-class lever pulled since both metrics measured zero**, so what happens next on the repo's adoption surfaces is now observable rather than hypothetical |
 | **E** | ✅ **DONE 2026-11-11 — read, and it found more than the breakdown (ADR-0024, #207)** | **The best product candidate on the board, added 2026-10-27.** 5 of 11 published maxima declare `none_known`, and IRIS 2025 carries 50th/95th percentile losses by revenue band — $12.3M at the 95th for $100M–$1B, $9.1M for under $100M. **Every org profile sits in one of those two bands.** Our exceedance record for that source captured the overall $32M and not the breakdown, so this is the eighth "recorded as owed, turned out to be held". It beats B because it makes a **published number more correct** rather than adding a surface, which is ADR-0009's test. ⚠️ Not a swap: it is all-cause cyber loss, not threat-specific, so putting it behind a BEC or breach maximum is an ADR-0007 coherence judgment and needs its own ADR |
-| **F** | 🆕 **Re-read the 8 remaining page-sourced Cyentia records, then build the audit-to-evidence check** | **The best product candidate on the board, added 2026-11-11 and born from a defect measured in our own data.** ADR-0024 found that the audit's answers never reach the evidence records citing the same source — and held a refutation of a published finding for 88 days. *Sized 2026-11-11, by hand:* 6 sources are held as both a web page and a report, 21 evidence records draw on those six, and **9 of the 21 cite the page**; all 9 are Cyentia, one produced the contradiction, **8 have never been checked against their reports.** Clears ADR-0009 (makes published numbers more correct) and AGENTS.md's bar for new machinery. `engine.intake.blocked_but_held` is the near neighbour and structurally cannot see this class |
+| **F** | 🟡 **The check is BUILT 2026-11-14; the re-reads are not — and the population is 26, not 8** | **The best product candidate on the board, added 2026-11-11 and born from a defect measured in our own data.** ADR-0024 found that the audit's answers never reach the evidence records citing the same source — and held a refutation of a published finding for 88 days. *Sized 2026-11-11, by hand:* 6 sources are held as both a web page and a report, 21 evidence records draw on those six, and **9 of the 21 cite the page**; all 9 are Cyentia, one produced the contradiction, **8 have never been checked against their reports.** Clears ADR-0009 (makes published numbers more correct) and AGENTS.md's bar for new machinery. `engine.intake.blocked_but_held` is the near neighbour and structurally cannot see this class. ⚠️ **That hand sizing is wrong and is left standing because the correction is the point.** Generated by `engine/artifact_fit.py` on 2026-11-14: **26 records across 7 sources, and 12 of them are not Cyentia** — five NetDiligence, four Sophos, two Ponemon/DTEX, one IBM; plus **28** records citing something other than the stored artifact and **21** with no manifest entry at all, which is unmeasured rather than clean. The check half of this item is done; **the re-reads are the open half and they got three times larger** |
 | **D** | **Watch for a row or a dispute** | Either moves M3 and M5 off zero for the first time. Not forceable |
 
 **Item B has a result, 2026-10-26.** The reader-chosen donor passed the gate ADR-0019 said it
@@ -1190,3 +1215,47 @@ shards are now source-backed. This is the Sunday post.
   **M5 was corrected, not closed.** A first draft of ADR-0025 said it depended on a registry
   citation existing; it does not. Re-measured the same day and still zero on all three: 4 stars,
   0 forks, 0 external PRs, 0 issues or discussions from anyone but the owner.
+
+- 2026-11-14 — **The claim was published, the accept was spent, and the check that built itself
+  corrected the ADR that scoped it.** Three PRs, all merged and all green on 3.11/3.12/3.13:
+  [#209](https://github.com/raviaxo/RiskShard/pull/209),
+  [#210](https://github.com/raviaxo/RiskShard/pull/210),
+  [#211](https://github.com/raviaxo/RiskShard/pull/211). 560 → 579 tests.
+
+  **Item C is sent.** *"The source audit is finished, of everything we could obtain"* went to
+  LinkedIn with the owner's edits — the first ADR-0012-class adoption lever pulled since both kill
+  metrics measured zero, and the first publication since the 2026-10-22 steer. Every figure in it
+  is generated from `engine.source_audit`, including the card, which gained a second outcome
+  framing (`--outcome-kind audit`) rather than a hand-passed string. The drafted-vs-posted diff is
+  recorded in `~/business-os/comms/ventures/riskshard/voice.md`: the no-colons rule is **retired**,
+  list rules split by venue, and a writerly closing clause was cut for the fourth consecutive diff.
+
+  **Three public figures were wrong and two of them nearly shipped.** The first comment said
+  *"free, MIT"* — the repo is **AGPL-3.0-only**, caught before posting. *"65 of 75"* was stale in
+  the queue table and in the unsent denominator post; live is **66 of 76**. And ADR-0024's status
+  line said **three** declines over a Decision section carrying **two**. None of the three had an
+  owner; all three are the same defect AGENTS.md names.
+
+  **[ADR-0024](../adr/0024-the-published-bracket.md) accepted, and the work it released was done
+  the same day.** Both declines stand. The five `none_known` maxima now state where they sit in the
+  published distribution — **three of the five sit below their tier's 95th percentile** (0.21×,
+  0.70×, 0.73×), so what we publish as a maximum is a figure the population exceeds more than 5% of
+  the time, and the record says so. `tests/test_placed_maxima.py` pins it and asserts both declines.
+  Open question 1 turned out **partly answered by construction**: `limitations` renders into
+  `docs/EVIDENCE_REPORT.md`, so the placement reached readers in the same commit — found by a
+  failing test, not by the plan.
+
+  **`engine/artifact_fit.py` is the path ADR-0024 said did not exist**, and its first build was
+  wrong in the way that matters most. It read `sources/raw/` — a directory deliberately not
+  distributed — so it found 21 records on this machine and **zero on CI**, reporting a clean corpus
+  to everyone who clones. Caught by CI, not by review. Rebuilt on the committed manifest, which is
+  portable *and* the better question: it surfaced Sophos, IBM and NetDiligence records the disk
+  version structurally could not see. `fit_report` returns `None`, not `0`, for the local-only
+  count so "we did not look" cannot be read as "we looked and found none". Doctor 18 → 19 checks.
+
+  **Built, it immediately falsified the hand count that scoped it, in the direction that makes the
+  work bigger:** not *"9 of the 21, all Cyentia"* but **26 records across 7 sources, 12 of them not
+  Cyentia**, plus 21 records with no manifest entry at all. The ADR carries the correction with the
+  original left standing. **The re-reads are the open half**, and
+  `sophos_manufacturing_ransomware_extreme_case_threshold_usd_2025` is among them — the anchor
+  behind the DE and JP `modeled_quantile` maxima, so this reaches published numbers.
