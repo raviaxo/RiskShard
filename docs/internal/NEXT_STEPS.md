@@ -286,17 +286,29 @@ often a fair permalink, and `tests/test_artifact_fit.py` owns the number.
 
 ⚠️ **Built, it immediately corrected the hand count that scoped it, in the direction that makes the
 problem bigger.** ADR-0024 sized this as *"9 of the 21, and all 9 are Cyentia."* Generated it is
-**21 of 21, and 7 are not Cyentia** — five NetDiligence, two Ponemon/DTEX. Sources held twice is
-**7**, not 6 (`census_susb_2022` is a page plus a spreadsheet). Two populations the hand count could
-not see at all: **28** records cite something other than the stored artifact, and **21** records have
-no manifest entry, so they are unmeasured rather than clean. The ADR carries the correction with the
-original left standing — it is this project's own rule landing on its own ADR.
+**26 records across 7 sources, and 12 are not Cyentia** — five NetDiligence, four Sophos, two
+Ponemon/DTEX, one IBM. Two populations the hand count could not see at all: **28** records cite
+something other than the stored artifact, and **21** records have no manifest entry, so they are
+unmeasured rather than clean. The ADR carries the correction with the original left standing — it is
+this project's own rule landing on its own ADR.
 
-🔵 **Next, and it is now the biggest single piece of evidence work on the board: re-read the 21
-flagged records against their reports.** It was scoped as 8. One of the 21 produced the
-contradiction ADR-0024 is named for; the other twenty have never been checked. This is anchor work
-and goes one record at a time with the owner approving each, per the standing cadence — it is not a
-single-session job and should not be started as one.
+⚠️ **And the first build of the check was itself wrong, caught by CI and not by review.** It read
+`sources/raw/` from disk — a directory deliberately not distributed — so it found 21 records on this
+machine and **zero everywhere else**, reporting a clean corpus to anyone who cloned it. Rebuilt on
+the manifest, which is committed. That is portable *and* the better question: the disk version could
+only flag a source whose page we also happened to archive, and asking the manifest surfaced the
+Sophos, IBM and NetDiligence records it had missed. **The lesson generalises past this check —
+anything resting on `sources/raw/` reports a false clean to every reader but one**, and
+`fit_report` now returns `None` rather than `0` for the local-only count so the two are
+distinguishable.
+
+🔵 **Next, and it is now the biggest single piece of evidence work on the board: re-read the 26
+flagged records against their reports.** It was scoped as 8. One produced the contradiction
+ADR-0024 is named for; the other twenty-five have never been checked, and the list is not
+bookkeeping — `sophos_manufacturing_ransomware_extreme_case_threshold_usd_2025` is the anchor behind
+the DE and JP `modeled_quantile` maxima. This is anchor work and goes one record at a time with the
+owner approving each, per the standing cadence — it is not a single-session job and should not be
+started as one.
 
 📅 **Dated decision, 2026-11-21: the ADR-0016 breadth fork.** Item C was sent 2026-11-14 and is the
 first adoption lever pulled since both kill metrics measured zero. The fork — amend ADR-0016 to
