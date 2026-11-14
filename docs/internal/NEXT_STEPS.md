@@ -257,10 +257,34 @@ open. *A stale figure was corrected on the way: the Proposed status line said **
 and the Decision section carries **two** — decision 3 records a limitation rather than declining
 anything. The correction is noted in the ADR rather than edited away.*
 
-⚠️ **The accept releases work that is now owed and is not yet done:** the five records whose
-`limitations` still read as they did before the IRIS distribution was found. That is a caveat
-getting quieter by default, it is an `evidence/` change, it moves the data-pack fingerprint, and it
-takes its own PR. **It is the first thing the next session should pick up.**
+✅ **DONE 2026-11-14 — the five records carry the placement.** The accept released it and it was
+picked up the same arc rather than queued. All five `none_known` maxima now state where they sit in
+the published distribution, generated from `engine/tail_bracket.py` and pinned by
+`tests/test_placed_maxima.py` (verified to fail on all five when the p95 moves by one dollar).
+**Three of the five sit below their tier's 95th percentile** — 0.21×, 0.70×, 0.73× — so what was
+published as a maximum is a figure the population exceeds more than 5% of the time, and now says so.
+Nothing was re-anchored and no rung was minted; both declines are asserted by the test file.
+
+⚠️ **The pack fingerprint moved `749540a5b1f6` → `f9c2befadfbe` and the strength ledger reads
+`needs_review` until a release is cut.** That is the documented normal state of an unreleased pack
+change, not a red — and the recommendation is **not** to cut `v0.14.1` for one caveat change, but to
+batch the release with item F. Recorded so the next session does not read the amber as a defect,
+and does not forget it either.
+
+⚠️ **ADR-0024 open question 1 turned out to be partly answered by construction.** `limitations`
+renders into the published `docs/EVIDENCE_REPORT.md`, so putting the placement on the record put it
+in front of readers in the same commit — the test suite caught it, not the plan. The remaining
+undecided piece is narrower: whether the bracket becomes a *displayed field* on the explorer rather
+than prose inside a caveat. The ADR records which half went and why it is acceptable.
+
+🔵 **Next: item F** — re-read the 8 page-sourced Cyentia records against their reports, then build
+the audit-to-evidence check.
+
+📅 **Dated decision, 2026-11-21: the ADR-0016 breadth fork.** Item C was sent 2026-11-14 and is the
+first adoption lever pulled since both kill metrics measured zero. The fork — amend ADR-0016 to
+reopen shard breadth, or keep the freeze — is re-decided on that date **against what the post
+actually produced**, which is the first reader evidence this project has ever had to decide it on.
+A date, not a deferral: if nothing arrives, that is itself the answer and it gets recorded as one.
 **The retirement shape is already pre-specified** in that ADR's alternatives and does not need
 deciding on the day: *"Retire the trial but keep the 36 events as a published dataset with no
 claim on the shards… if the date arrives with both metrics at zero, this is the shape retirement

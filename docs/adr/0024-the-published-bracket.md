@@ -113,6 +113,35 @@ reader-facing surface. The five maxima it most concerns still carry `limitations
 before the distribution was found. That is a `evidence/` change, which moves the data-pack
 fingerprint and takes its own PR — see open question 1.
 
+✅ **Built 2026-11-14, three days later.** All five `none_known` maxima now carry the placement in
+their `limitations`, generated from `engine/tail_bracket.py` rather than typed, and pinned by
+`tests/test_placed_maxima.py` — which asserts the p95, the converted USD value, the ratio and the
+meaning sentence against the live engine on every run, and was verified to fail on all five when
+the p95 is moved by one dollar. **Three of the five sit below their tier's 95th percentile**
+(0.21×, 0.70×, 0.73×), so the caveat tells a reader that the figure they are treating as an outer
+bound is one the population exceeds more than 5% of the time. No `exceedance_basis` changed, no
+anchor moved, and no fifth rung was minted — the two declines above are asserted by that same test
+file rather than left to good intentions. The data-pack fingerprint moved `749540a5b1f6` →
+`f9c2befadfbe`; the strength ledger records at release and reads `needs_review` until one is cut,
+which is the documented normal state of an unreleased pack change.
+
+⚠️ **Open question 1 is partly answered by construction, and that was not noticed until the test
+suite said so.** `limitations` is rendered into [`docs/EVIDENCE_REPORT.md`](../EVIDENCE_REPORT.md),
+which is published — so writing the placement onto the record *put it in front of readers in the
+same commit*, and `tests/test_evidence_report_is_current.py` failed until the report was
+regenerated. The ADR-0007 risk open question 1 was weighing is therefore live now, not deferred.
+Two things make it acceptable rather than accidental: the caveat names itself as an all-cause
+distribution placed against a threat-specific anchor, in those words and asserted by a test; and a
+caveat that a maximum is routinely exceeded is of no use to the one reader who most needs it if it
+is held back pending a display decision.
+
+**What remains genuinely undecided** is narrower than the question as written — whether the bracket
+becomes a *displayed field* on the explorer, beside the value, rather than prose inside a caveat.
+That is the version ADR-0007 argues about, and it is not decided here.
+
+*Recorded this way because the alternative was to regenerate a published report and say nothing. An
+open question answered as a side effect is still answered, and the ADR has to say which half went.*
+
 ## Open questions
 
 1. **Does the bracket reach the reader, or stay a finding?** The honest case for putting it on the
