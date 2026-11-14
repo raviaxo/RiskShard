@@ -34,5 +34,5 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0021](0021-track-b-is-closed.md) | Track B is closed, and the defect it existed for is left standing in the open | Accepted (2026-09-27) |
 | [0022](0022-the-second-kill-metric-gets-a-meter.md) | The second kill-criterion metric gets a meter, not a new definition | Accepted (2026-09-28) |
 | [0023](0023-the-denominator-is-a-declared-property.md) | The denominator becomes a declared property of an audited source | Accepted (2026-10-24), scope narrowed 2026-10-26 |
-| [0024](0024-the-published-bracket.md) | A maximum is placed in a published distribution, not re-anchored onto one | **Proposed** (2026-11-11) |
+| [0024](0024-the-published-bracket.md) | A maximum is placed in a published distribution, not re-anchored onto one | Accepted (2026-11-12) |
 | [0025](0025-the-registry-trial-is-retired.md) | The registry trial is retired on its own criterion, and the 36 events survive it | Accepted (2026-11-11) |

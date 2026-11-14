@@ -1,0 +1,159 @@
+DRAFT — LinkedIn, RiskShard, the audit is complete
+Status: unsent. Queue item C. Available exactly once — this claim becomes
+true only the first time it is said.
+
+Every figure below is generated from the repo, not typed. Measured 2026-11-12.
+No colons in the post body, per owner note 2026-10-24.
+
+Native image: docs/card-audit-complete.png (generated, outcome-kind=audit).
+
+---------------------------------------------------------------------------
+POST
+---------------------------------------------------------------------------
+
+🔷 RiskShard Update (Open cyber-loss evidence)
+
+The source audit is finished, of everything we could obtain.
+
+76 public cyber-loss reports registered. 66 read against the publisher's own
+file. The other 10 we could not obtain, and each one records why.
+
+Four questions, asked of every one of the 66.
+
+Does it publish a most-likely value.
+Does it publish a distribution, or only point statistics.
+Does it say how often a loss of a given size is exceeded.
+Can you name the population that was measured, from the report itself.
+
+15 of the 66 publish a distribution. 21 state an exceedance over a named
+population. 13 do not let you name the population at all.
+
+That last one is the filter most of us skip. If you cannot say who was
+measured, you cannot say whether the figure describes companies like yours.
+
+For nine of the ten we could not read, what is public is a page about the
+report rather than the report — a summary, a press release, a landing page.
+The tenth was retired by its publisher. Each is recorded as a gap with a
+reason rather than left blank.
+
+One publisher is excluded outright, on a conflict of mine. The name is
+withheld, the exclusion is published, and the gap is counted.
+
+Every answer is pinned to the sha256 of the file it was read from, so next
+year's edition goes stale loudly instead of quietly. The reading is extracted
+text, which means a figure printed only inside a chart image would not have
+been seen, and every record says so.
+
+Next is the denominator. For every headline figure, what it was divided by,
+and whether the publisher stated it or you have to work it out.
+
+Link in the first comment.
+
+---------------------------------------------------------------------------
+FIRST COMMENT
+---------------------------------------------------------------------------
+
+raviaxo.github.io/RiskShard
+
+Every row is the publisher's own words with the passage quoted, the file
+hash, and the date it was read. Free, open source, no signup.
+
+If a report you rely on is not in there, say which one.
+
+---------------------------------------------------------------------------
+HOW THIS WAS BUILT, AGAINST THE VOICE FILE
+---------------------------------------------------------------------------
+
+Labeled update header, not an aphorism opener. No runway — the first
+sentence is the claim.
+
+No reveal signposting. The four questions are listed flat rather than
+introduced as something surprising.
+
+The caveats are in the body, not the comments. A completeness claim that
+puts its exclusions below the fold is the quieter-caveat move, and this post
+exists to be the opposite of that.
+
+No "that's on me." Nothing went wrong here — the voice file's 2026-08-16
+correction says contrition on a shipped improvement reads as performance.
+
+Closes forward and first person, not with an instruction to the reader.
+
+Zero colons in the body.
+
+---------------------------------------------------------------------------
+HELD BACK, DELIBERATELY
+---------------------------------------------------------------------------
+
+"0 of 66 publish a mode" is not used here. It is the whole payload of the
+mode post, written since 2026-08-16 and still unsent. Spending it inside a
+completeness post wastes both.
+
+No ask for copies of the nine gated reports. There is a working route for a
+human who holds one (sources/raw/ plus record_manual_artifacts.py) and it is
+the entire remainder of M1 — but publicly soliciting gated vendor PDFs is not
+something to put in front of a CISO. If the owner wants that ask, it goes in
+a reply to whoever raises the gap, not in the post.
+
+---------------------------------------------------------------------------
+CAUGHT BEFORE SENDING
+---------------------------------------------------------------------------
+
+The first comment read "Free, MIT, no signup." The repo is AGPL-3.0-only
+(LICENSE, pyproject.toml, README). Corrected to "free, open source" rather
+than naming a licence in a post, because the licence is not the point of the
+comment and a named one is another figure with nothing watching it.
+
+---------------------------------------------------------------------------
+PROVENANCE
+---------------------------------------------------------------------------
+
+All figures from engine.source_audit, measured 2026-11-12 on data pack
+2026.11.12 / 749540a5b1f6.
+
+  build_source_audit(ROOT)["coverage"]
+    sources ........................ 76
+    sources_fully_verified ......... 66
+    blocked_no_artifact ............ 40 slots = 10 sources
+    unverified ..................... 0     <- what makes "finished" true
+
+  publishable_claim(rows, prop), read = 66 for all four
+    mode ........................... 0 publish
+    distribution ................... 15 publish
+    exceedance ..................... 21 publish
+    population ..................... 53 publish, 13 do not
+
+  The nine-vs-one split of the unobtainable ten is read from the per-source
+  `detail` text in sources/audit.yaml. Nine hold a page about the report
+  (IBM Canada / France / UK 2025, CESIN 2025, MYOB 2024, AFP 2025 and 2026,
+  Sophos financial services and manufacturing 2024). The tenth,
+  first_epss_data_stats, was retired by FIRST — re-measured 2026-09-27, the
+  page did not move, the statistics are no longer published anywhere.
+
+  The exclusion is ADR-0020, one publisher, name withheld, declared
+  2026-09-21 before any source from them was registered.
+
+  "extracted text, not visual reading" is the verification method stated in
+  the header of sources/audit.yaml and is quoted here rather than softened.
+
+The card's outcome line is generated by scripts/build_social_card.py
+--outcome-kind audit, so it cannot drift from the audit. The headline is
+editorial and carries no number.
+
+---------------------------------------------------------------------------
+CONFLICT
+---------------------------------------------------------------------------
+
+Ser's employer competes with several vendors whose reports sit in this
+corpus. ADR-0020 excludes one publisher and withholds the name; that name
+must not appear anywhere in this repo or in this post.
+
+The post body names no vendor at all. The nine are described as a class
+("a page about the report rather than the report") and the publishers are
+named only in the provenance section of this file, which is internal. That
+is deliberate — a public post from someone at a competitor, listing nine
+rivals' reports as unobtainable, is a different post than the one intended,
+whatever the wording.
+
+No version of this reads as a competitive attack, and no version of it reads
+as a confession. It is a finished piece of work being announced.

@@ -52,21 +52,41 @@ SITE_URL = "raviaxo.github.io/RiskShard"
 # sees on a shared link, so it was contradicting the page it linked to.
 DEFAULT_HEADLINE = "No public source publishes a <em>mode.</em>"
 
-def default_outcome(root=None):
-    """The card's own coverage, generated rather than typed.
-
-    This line was hand-written and went stale twice inside three days as the audit
-    moved. Every other number on the card is generated from repo data; there was no
-    reason this one was not, and a stale denominator on a shared link is the exact
-    failure this project exists to argue against.
-    """
-    from engine.source_audit import build_source_audit
-    coverage = build_source_audit(root or ROOT)["coverage"]
+def _outcome_mode(coverage, claims):
     return (
         f"Every risk estimate needs a most-likely loss. We read "
         f"{coverage['sources_fully_verified']} of {coverage['sources']} public cyber-loss "
         f"sources and <b>not one publishes it</b>, so what goes in the slot is a published mean."
     )
+
+
+def _outcome_audit(coverage, claims):
+    read = coverage["sources_fully_verified"]
+    return (
+        f"Four questions, asked of every public cyber-loss report we could obtain. "
+        f"<b>{read} of {coverage['sources']} read</b>, the other "
+        f"{coverage['sources'] - read} recorded as unobtainable with the reason. "
+        f"{claims['distribution']['publishes']} publish a distribution; "
+        f"{claims['population']['does_not_publish']} do not let you name who was measured."
+    )
+
+
+# Registered framings for the card's outcome line. Both are GENERATED from the
+# audit, never typed: this line was hand-written once and went stale twice inside
+# three days, which is the exact failure this project argues against. A new framing
+# is a function here, not a string passed on the command line.
+OUTCOME_KINDS = {
+    "mode": _outcome_mode,
+    "audit": _outcome_audit,
+}
+
+
+def default_outcome(root=None, kind="mode"):
+    """The card's own coverage, generated rather than typed."""
+    from engine.source_audit import PROPERTIES, build_source_audit, publishable_claim
+    view = build_source_audit(root or ROOT)
+    claims = {prop: publishable_claim(view["sources"], prop) for prop in PROPERTIES}
+    return OUTCOME_KINDS[kind](view["coverage"], claims)
 
 
 DEFAULT_OUTCOME = None  # resolved at build time by default_outcome()
@@ -230,6 +250,8 @@ def main(argv=None):
     parser.add_argument("--feature-param", default=DEFAULT_PARAM)
     parser.add_argument("--headline", default=DEFAULT_HEADLINE)
     parser.add_argument("--outcome", default=None)
+    parser.add_argument("--outcome-kind", default="mode", choices=sorted(OUTCOME_KINDS),
+                        help="Which generated outcome line to render (default: mode).")
     parser.add_argument("--output", type=Path, default=ROOT / "docs" / "social-card.html")
     parser.add_argument("--png", type=Path, default=ROOT / "docs" / "social-card.png")
     parser.add_argument("--check", action="store_true",
@@ -239,7 +261,8 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     fields = build_fields(ROOT, args.feature_shard, args.feature_param,
-                          args.headline, args.outcome or default_outcome(ROOT))
+                          args.headline,
+                          args.outcome or default_outcome(ROOT, args.outcome_kind))
     markup = render(fields)
 
     if args.check:
