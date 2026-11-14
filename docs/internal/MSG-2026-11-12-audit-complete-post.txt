@@ -1,6 +1,9 @@
 DRAFT — LinkedIn, RiskShard, the audit is complete
-Status: unsent. Queue item C. Available exactly once — this claim becomes
-true only the first time it is said.
+Status: SENT 2026-11-14, LinkedIn, with the owner's edits. Queue item C is
+spent — this claim was available exactly once and has now been said.
+The sent text differs from the draft below; the diff is recorded in
+~/business-os/comms/ventures/riskshard/voice.md (section dated 2026-11-14).
+The draft is kept unedited so the diff stays readable.
 
 Every figure below is generated from the repo, not typed. Measured 2026-11-12.
 No colons in the post body, per owner note 2026-10-24.
