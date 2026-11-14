@@ -277,8 +277,26 @@ in front of readers in the same commit — the test suite caught it, not the pla
 undecided piece is narrower: whether the bracket becomes a *displayed field* on the explorer rather
 than prose inside a caveat. The ADR records which half went and why it is acceptable.
 
-🔵 **Next: item F** — re-read the 8 page-sourced Cyentia records against their reports, then build
-the audit-to-evidence check.
+🟡 **Item F — the check is BUILT 2026-11-14; the re-reads are not, and the population grew.**
+`engine/artifact_fit.py` is the path ADR-0024 said did not exist: it reads what each evidence record
+cites against the artifact that was stored and verified, and flags the pair that produced the
+88-day contradiction — a record citing a page while a report of the same source sits on disk. It is
+a doctor check (the count went **18 → 19**), it reports rather than gates because a landing page is
+often a fair permalink, and `tests/test_artifact_fit.py` owns the number.
+
+⚠️ **Built, it immediately corrected the hand count that scoped it, in the direction that makes the
+problem bigger.** ADR-0024 sized this as *"9 of the 21, and all 9 are Cyentia."* Generated it is
+**21 of 21, and 7 are not Cyentia** — five NetDiligence, two Ponemon/DTEX. Sources held twice is
+**7**, not 6 (`census_susb_2022` is a page plus a spreadsheet). Two populations the hand count could
+not see at all: **28** records cite something other than the stored artifact, and **21** records have
+no manifest entry, so they are unmeasured rather than clean. The ADR carries the correction with the
+original left standing — it is this project's own rule landing on its own ADR.
+
+🔵 **Next, and it is now the biggest single piece of evidence work on the board: re-read the 21
+flagged records against their reports.** It was scoped as 8. One of the 21 produced the
+contradiction ADR-0024 is named for; the other twenty have never been checked. This is anchor work
+and goes one record at a time with the owner approving each, per the standing cadence — it is not a
+single-session job and should not be started as one.
 
 📅 **Dated decision, 2026-11-21: the ADR-0016 breadth fork.** Item C was sent 2026-11-14 and is the
 first adoption lever pulled since both kill metrics measured zero. The fork — amend ADR-0016 to

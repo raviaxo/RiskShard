@@ -39,6 +39,7 @@ def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
         source_audit_check(root),
         edition_check(root),
         held_source_check(root),
+        artifact_fit_check(root),
         intake_check(root),
         ledger_check(root),
         release_archive_check(root),
@@ -222,6 +223,35 @@ def held_source_check(root):
         "detail": (f"{len(held)} blocked source(s) already have a document in the intake "
                    f"register — e.g. {first['source_id']} matches {first['file']} "
                    f"({first['words']} words, {first['status']})"),
+    }
+
+
+def artifact_fit_check(root):
+    """Does each evidence record cite the artifact that was stored and verified?
+
+    ADR-0024 found two governed surfaces in this repository holding contradictory
+    answers about the same source for 88 days. `sources/audit.yaml` had read
+    Cyentia IRIS 2025's report and quoted its 95th-percentile sentence; the
+    evidence record anchoring a maximum on that source had been extracted from
+    the publisher's summary page two months earlier and said no percentile
+    existed. Nothing compared them, and `held_source_check` above structurally
+    could not: the source was registered, held, and verified on all four audit
+    properties. Nothing was blocked, missing or unread.
+
+    Reports rather than fails, for the same reason the editions check reports:
+    a landing page is often the only citable permalink, so a mismatch is a
+    candidate for re-reading and not a defect on its face. What it makes
+    impossible is for the count to be wrong without anyone noticing — ADR-0024
+    sized this by hand as "9 of the 21, all Cyentia" and it is 21 of 21 with 7
+    of them from two other publishers.
+    """
+    from engine.artifact_fit import fit_report, summary_line
+
+    report = fit_report(root)
+    return {
+        "name": "artifact fit",
+        "status": "pass",
+        "detail": summary_line(report),
     }
 
 
