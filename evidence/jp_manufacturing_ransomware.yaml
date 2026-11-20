@@ -312,10 +312,10 @@ records:
     source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025
     publication_date: "2025-12-04"
     extraction_date: "2026-07-14"
-    citation_detail: "Ransom demands, payments and attack recovery costs section; mean recovery cost excluding ransoms paid was USD 1.3M in 2025."
-    extraction_notes: Sophos reported mean ransomware recovery cost excluding ransom payments of USD 1.3 million for manufacturing and production organizations.
-    normalization_notes: Stored directly in USD as a manufacturing-sector likely-impact bridge for Japan until Japan manufacturing loss data is available.
-    limitations: Global survey of organizations hit by ransomware; not Japan-specific and excludes ransom payments.
+    citation_detail: 'Recovery costs section; the report states that the AVERAGE recovery cost, excluding any ransom payments, dropped 24% to USD 1.3M in 2025 from USD 1.7M in 2024, on a base of n=332. The report does not say mean or median here, and the same report writes "average (median)" for its ransom figures, so the statistic is unqualified in the source.'
+    extraction_notes: 'Sophos reported the average ransomware recovery cost excluding ransom payments as USD 1.3 million for manufacturing and production organizations. Corrected on 2026-11-20 from "mean" during the ADR-0024 artifact-fit re-read - the report says only "average" here while writing "average (median)" elsewhere, so it distinguishes the two and this record had resolved its silence in our own favour.'
+    normalization_notes: 'Stored directly in USD as a manufacturing-sector likely-impact bridge for Japan until Japan manufacturing loss data is available. USD 1.3M is the report prose figure; Chart 11 publishes USD 1.27M for manufacturing and production specifically, on the same base of n=332. The prose rounding is what the publisher states and is kept, with the more precise chart figure recorded here rather than substituted.'
+    limitations: 'Global survey of organizations hit by ransomware; not Japan-specific and excludes ransom payments. Base stated in the report - n=332 manufacturing and production organizations for 2025, n=378 for 2024, n=205 for 2023. The blog page this record cites does not carry that base.'
     confidence: medium
     evidence_type: source_backed
     measurement_basis: cost_component
@@ -338,14 +338,14 @@ records:
     publication_date: "2025-12-04"
     extraction_date: "2026-08-16"
     citation_detail: 'Ransoms section: "extreme payments of $5 million or more - accounting for 18% of payments in 2025 - up from 15% last year", alongside extreme demands of $5 million or more accounting for a fifth (20%) of demands.'
-    extraction_notes: 'Read from the report on 2026-08-16, replacing an earlier extraction that recorded only that extreme $5M+ cases had appeared. The share is stated in prose, so the threshold now carries a published exceedance rather than none.'
+    extraction_notes: 'Read from the report on 2026-08-16, replacing an earlier extraction that recorded only that extreme $5M+ cases had appeared. The share is stated in prose, so the threshold now carries a published exceedance rather than none. Re-read against the held report on 2026-11-20 as part of the ADR-0024 artifact-fit campaign; the quoted passage matched the publisher file exactly and no value moved.'
     normalization_notes: Stored as a manufacturing-sector stress threshold, not as a formal maximum.
-    limitations: 'A ransom PAYMENT threshold, not a total event loss - the shard composes it as an impact maximum and those are different quantities. Not Japan-specific: the survey is global manufacturing and production. The 18% exceedance is over organizations that paid a ransom, a narrower and self-selected denominator than all organizations attacked.'
+    limitations: 'A ransom PAYMENT threshold, not a total event loss - the shard composes it as an impact maximum and those are different quantities. Not Japan-specific: the survey is global manufacturing and production. The 18% exceedance is over organizations that paid a ransom, a narrower and self-selected denominator than all organizations attacked. The denominator is also thin - n=67 payments in 2025, so the 82nd percentile is read off about 12 organizations and the 2024 comparison is drawn against n=157. Treat the percentile as directional, not precise.'
     confidence: medium
     evidence_type: source_backed
     measurement_basis: observed_extremum
     exceedance_basis: modeled_quantile
-    exceedance_detail: '18% of ransom payments made by manufacturing and production organizations were $5 million or more in 2025, up from 15% in 2024 (Sophos, State of Ransomware in Manufacturing and Production 2025, ransom payments section). $5M therefore sits at the 82nd percentile of that published payment distribution. The exceedance is over organizations that PAID a ransom, not over all organizations attacked.'
+    exceedance_detail: '18% of ransom payments made by manufacturing and production organizations were $5 million or more in 2025, up from 15% in 2024 (Sophos, State of Ransomware in Manufacturing and Production 2025, ransom payments section). $5M therefore sits at the 82nd percentile of that published payment distribution. The exceedance is over organizations that PAID a ransom, not over all organizations attacked. The base is stated in the report and it is small - Chart 8 reads n=67 for 2025 and n=157 for 2024, so 18% is about 12 organizations and the 2024 figure of 15% was about 24. The share rose while the count roughly halved, because the number of manufacturing organizations disclosing a payment fell 57%. Verified against the held report on 2026-11-20 (ADR-0023 - the blog page this record cites does not carry the base).'
     applicability:
       industries: [manufacturing]
       countries: [global]
