@@ -335,6 +335,35 @@ the DE and JP `modeled_quantile` maxima. This is anchor work and goes one record
 owner approving each, per the standing cadence — it is not a single-session job and should not be
 started as one.
 
+✅ **Record 1 of 26 is read, 2026-11-20** ([#212](https://github.com/raviaxo/RiskShard/pull/212)).
+`sophos_state_ransomware_manufacturing_2025`, taken first because it is the anchor behind **both**
+`modeled_quantile` maxima in the portfolio — four records, two claims, `sha256` verified against the
+manifest. **The quotes held**, so the flag was a citation mismatch rather than an unread record, and
+that is the first thing learned about the other 25. **What the blog page could not show was the
+base.** Chart 8 reads `n=67` for 2025 and `n=157` for 2024, so *"18% of payments were $5M or more,
+up from 15%"* is **about twelve organizations, up from about twenty-four** — the share rose while
+the count roughly halved. A reader taking the 82nd percentile as a population statement is reading
+twelve responses. Two smaller corrections rode along: *"mean"* where the report says only
+*"average"* (and writes *"average (median)"* elsewhere, so it distinguishes them), and Chart 11's
+USD 1.27M against the USD 1.3M prose figure we store. `exceedance_basis` was checked expecting a
+mislabel and **survived**. No value moved.
+`tests/test_sophos_manufacturing_bases.py` owns every figure.
+
+🚩 **The campaign cannot record its own progress, and this needs deciding before record 2.**
+`artifact fit` still reports **26** after the re-read, correctly — the records still cite the
+publisher's page, and the check has no concept of *"read against the report on date X"*. Re-read all
+26 and the count stays 26, so the one number that would show the work is structurally incapable of
+moving. Three shapes, none chosen: a per-record field the check reads; repoint
+`source_url_or_citation` at the report and lose a dated permalink; or have the check read the
+re-read date out of `extraction_notes`, which is prose. **This is a strategic decision with no owner
+doc** — AGENTS.md says surface it and stop, so it is surfaced and nothing is built.
+
+🔹 **Measured defect, small, deliberately not fixed in #212.** An unknown module id crashes with
+`TypeError: 'NoneType' object is not subscriptable` at `engine/evidence_packs.py:156` instead of
+saying the shard does not exist. Found by typing `de_industrial_ransomware` (the evidence filename)
+where `de_industrial_ransomware_midmarket` (the module id) was wanted. One objective per session;
+it is recorded rather than swept in.
+
 📅 **Dated decision, 2026-11-21: the ADR-0016 breadth fork.** Item C was sent 2026-11-14 and is the
 first adoption lever pulled since both kill metrics measured zero. The fork — amend ADR-0016 to
 reopen shard breadth, or keep the freeze — is re-decided on that date **against what the post
@@ -1259,3 +1288,42 @@ shards are now source-backed. This is the Sunday post.
   original left standing. **The re-reads are the open half**, and
   `sophos_manufacturing_ransomware_extreme_case_threshold_usd_2025` is among them — the anchor
   behind the DE and JP `modeled_quantile` maxima, so this reaches published numbers.
+
+- 2026-11-20 — **The re-read campaign opened on its highest-stakes record, and the base was the
+  finding.** [#212](https://github.com/raviaxo/RiskShard/pull/212). Record 1 of 26:
+  `sophos_state_ransomware_manufacturing_2025`, the anchor behind both `modeled_quantile` maxima
+  (DE and JP), read against the held report with the `sha256` verified against the manifest.
+  588 tests pass (579 before).
+
+  **The quotes held exactly, so the `artifact_fit` flag means "cites a page", not "was never
+  read."** That is the single most useful thing learned for the remaining 25 — the population is
+  not 26 unexamined records.
+
+  **The blog page could not carry the base, and the base is the story.** Chart 8 reads `n=67`
+  (2025) and `n=157` (2024). *"18% of payments were $5M or more, up from 15%"* is about **twelve
+  organizations, up from about twenty-four**: the share rose while the count roughly halved,
+  because disclosure fell 57% between editions. The record said only *"up from 15%"*, which tells
+  a reader the opposite of what happened to the evidence. Now on the face of the number, in
+  `limitations` and `exceedance_detail` independently, per ADR-0023.
+
+  **Two smaller corrections, both the same species.** `citation_detail` and `extraction_notes`
+  said *"mean"* where the report says only *"average"* — and the same report writes *"average
+  (median)"* for its ransom figures, so it distinguishes the two and we had resolved its silence
+  in our own favour. And Chart 11 publishes **USD 1.27M** for manufacturing specifically against
+  the **USD 1.3M** prose figure we store; the prose rounding is kept because it is what the
+  publisher states, and the finer figure is recorded rather than discarded.
+
+  **`exceedance_basis` was checked expecting a mislabel and survived.** A published banded
+  distribution with the share stated in prose fits ADR-0008's `modeled_quantile`; `observed_rank`
+  would have been wrong. **No value moved**, both shards calibrate with 0 warnings and simulate.
+
+  **The test that owns these figures was toothless on its first pass, and a mutation run caught
+  it.** It joined `limitations` and `exceedance_detail` before searching, so stripping the base
+  from one field still passed because the other carried it. Asserting each field on its own makes
+  the mutation fail. Worth generalising: a guard that searches concatenated fields is weaker than
+  it reads, and the only way to know is to break the thing on purpose.
+
+  **Surfaced, not built: the campaign cannot record its own progress.** `artifact fit` still
+  reports 26 after the re-read, and will after all 26, because the check has no concept of "read
+  against the report on date X". A strategic decision with no owner doc, so it is surfaced per
+  AGENTS.md and nothing was built.
