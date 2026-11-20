@@ -133,10 +133,12 @@ records:
     source_url_or_citation: https://www.cyentia.com/publication/iris2025/
     publication_date: "2025-06-10"
     extraction_date: "2026-07-13"
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: 00706bbbfefcc7b6cc321dcbcc2347b3082af92572cbd55abd2239a901cf8f1c
     citation_detail: Public source page key findings; median losses rose toward USD 3M.
     extraction_notes: Reused the governed Cyentia median security-incident loss anchor for the Germany industrial starter.
-    normalization_notes: Stored directly in USD as an unselected comparison anchor after the Sophos manufacturing recovery-cost bridge was selected.
-    limitations: Global security-incident benchmark, not Germany-specific, ransomware-only, manufacturing-specific, mid-market-specific, or selected by the current calibration.
+    normalization_notes: 'Stored directly in USD as an unselected comparison anchor after the Sophos manufacturing recovery-cost bridge was selected. The publisher figure is USD 2,900,000 (Figure 10); USD 3,000,000 is the "almost $3 million" prose rounding carried by the summary page this record was extracted from. The rounding is kept because it is what the publisher states in prose, and the finer figure is recorded here rather than substituted.'
+    limitations: 'Global security-incident benchmark, not Germany-specific, ransomware-only, manufacturing-specific, mid-market-specific, or selected by the current calibration. Construct note added 2026-11-20 from the held report: this is NOT the median of the study loss distribution, which Figure 9 puts at USD 603,000. It is the 2024 endpoint of a 15-year trend (Figure 10, median rising from USD 189,900 in 2008 to USD 2,900,000 in 2024, a 15.20x increase), so it is a single-year median sitting about 4.8x above the pooled 2015-2024 median. Anyone comparing it against another source pooled median is off by roughly five-fold.'
     confidence: low
     evidence_type: source_backed
     measurement_basis: median_total_event_cost
@@ -185,14 +187,17 @@ records:
     source_url_or_citation: https://www.cyentia.com/publication/iris2025/
     publication_date: "2025-06-10"
     extraction_date: "2026-07-13"
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: 00706bbbfefcc7b6cc321dcbcc2347b3082af92572cbd55abd2239a901cf8f1c
     citation_detail: Public source page key findings; extreme events reached USD 32M.
     extraction_notes: Reused the governed Cyentia extreme security-incident loss anchor for the Germany industrial starter.
-    normalization_notes: Stored directly in USD as an unselected comparison anchor after the Sophos manufacturing stress threshold was selected.
-    limitations: Global security-incident benchmark, not Germany-specific, ransomware-only, manufacturing-specific, selected by the current calibration, or a formal percentile for this scenario.
+    normalization_notes: 'Stored directly in USD as an unselected comparison anchor after the Sophos manufacturing stress threshold was selected. Worth not reconciling later: the publisher key-findings page puts the 32M beside a 5-fold rise, but that rise belongs to the 90th percentile, which Figure 10 tracks from USD 6,000,000 in 2008 to USD 28,500,000 in 2024. The 32M is the pooled 95th percentile from Figure 9. They are different statistics and neither is wrong.'
+    limitations: 'Global security-incident benchmark, not Germany-specific, ransomware-only, manufacturing-specific, selected by the current calibration, or a formal percentile for this scenario. It IS a formal percentile - the 95th of the study reported-loss distribution - but of a global all-incident population rather than this scenario, so the percentile is real and the population is not ours. Corrected 2026-11-20: this field said the figure was not "a formal percentile for this scenario", which read as no percentile existing, and that reading is the ADR-0024 defect in its original form.'
     confidence: low
     evidence_type: source_backed
     measurement_basis: observed_extremum
-    exceedance_basis: none_known
+    exceedance_basis: 'modeled_quantile'
+    exceedance_detail: 'USD 32,000,000 is the 95th percentile of the distribution of reported losses for security incidents from 2015 to 2024 (Cyentia Institute, Information Risk Insights Study 2025, Figure 9, labelled "$32M (95%)", and the body text - "The typical (median) incident costs about $600K, while more extreme (95th percentile) losses swell to $32 million"). Roughly 5% of reported security incidents in that corpus exceed this figure. The exceedance is over LOSSES REPORTED IN PUBLIC RECORDS, not over all incidents - the study notes its losses tend to be direct costs identifiable from breach disclosures, public company filings and litigation, which biases the corpus toward events that became public. Read from the held report on 2026-11-20. This record declared none_known until then because it was extracted from the publisher summary page, which states the 32M figure without the percentile (ADR-0024, ADR-0026).'
     applicability:
       industries: [all]
       countries: [global]

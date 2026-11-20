@@ -166,23 +166,42 @@ class VerificationStateTests(unittest.TestCase):
             self.totals["cites_a_page_for_a_report_we_hold"],
         )
 
-    def test_the_first_re_read_is_counted(self):
-        """Four Sophos records were read against the publisher file on 2026-11-20."""
+    def test_the_re_reads_done_so_far_are_counted(self):
+        """The named records, not a total — the total is built to change.
+
+        The first version of this test asserted `len(verified) == 4`, and the
+        next re-read broke it: the IRIS 2025 group landed and the count went to
+        10. **A snapshot assertion on a progress counter guarantees a false
+        failure on the next piece of real work**, and a failing test that means
+        "the campaign advanced" trains someone to edit the number without
+        reading why. So this pins the records whose re-read is recorded, and the
+        invariants below pin the shape.
+        """
         verified = {
             e["evidence_id"] for e in self.flagged if e["verification"] == "verified"
         }
-        self.assertEqual(len(verified), 4)
-        self.assertTrue(
-            all(
-                e["verified_at"] == "2026-11-20"
-                for e in self.flagged
-                if e["evidence_id"] in verified
-            )
-        )
+        self.assertIn("sophos_manufacturing_ransomware_extreme_case_threshold_usd_2025", verified)
+        self.assertIn("cyentia_iris_2025_extreme_security_incident_loss_usd", verified)
+        for entry in self.flagged:
+            if entry["verification"] == "verified":
+                self.assertIsNotNone(entry["verified_at"], entry["evidence_id"])
 
-    def test_the_rest_are_unverified_and_that_is_not_clean(self):
-        """22 records nobody has checked. Absence of a reading is not a pass."""
-        self.assertEqual(self.totals["flagged_unverified"], 22)
+    def test_the_line_is_exercised_by_real_data_and_has_somewhere_left_to_go(self):
+        """Both ends matter.
+
+        Zero verified would mean the new field is decoration. Zero unverified
+        would mean the campaign is finished, which it is not — and if it ever is,
+        this failing is the right way to find out.
+        """
+        self.assertGreater(self.totals["flagged_verified"], 0)
+        self.assertGreater(self.totals["flagged_unverified"], 0)
+
+    def test_nothing_is_stale_right_now(self):
+        """No publisher in the flagged set has reissued a file since its re-read.
+
+        This one *should* fail when it stops being true: a stale record is a
+        record whose reading is of a document we no longer hold.
+        """
         self.assertEqual(self.totals["flagged_stale"], 0)
 
     def test_a_record_with_no_verification_reads_unverified(self):

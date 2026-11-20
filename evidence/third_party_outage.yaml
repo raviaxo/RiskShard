@@ -59,10 +59,12 @@ records:
     source_url_or_citation: https://www.cyentia.com/publication/iris2025/
     publication_date: "2025-06-10"
     extraction_date: "2026-07-21"
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: 00706bbbfefcc7b6cc321dcbcc2347b3082af92572cbd55abd2239a901cf8f1c
     citation_detail: Public source page key findings; median losses rose toward USD 3M.
     extraction_notes: Reused the governed Cyentia median security-incident loss anchor as a likely-impact bridge for the third-party-outage starter, correctly scoped to third_party_outage rather than borrowing a shard-tagged copy.
-    normalization_notes: Stored directly in USD as the likely single-event loss bridge until third-party-outage-specific loss evidence is reviewed.
-    limitations: GENERIC CROSS-CYBER BRIDGE. Global all-incident median, NOT third-party-outage-specific (excludes business-interruption/SLA-credit dynamics that dominate outage loss), not sector- or size-specific, and not a distribution quantile. The third-party-outage impact side rests entirely on generic cross-cyber loss bridges; revise when third-party-outage-specific loss evidence is reviewed.
+    normalization_notes: 'Stored directly in USD as the likely single-event loss bridge until third-party-outage-specific loss evidence is reviewed. The publisher figure is USD 2,900,000 (Figure 10); USD 3,000,000 is the "almost $3 million" prose rounding carried by the summary page this record was extracted from. The rounding is kept because it is what the publisher states in prose, and the finer figure is recorded here rather than substituted.'
+    limitations: 'GENERIC CROSS-CYBER BRIDGE. Global all-incident median, NOT third-party-outage-specific (excludes business-interruption/SLA-credit dynamics that dominate outage loss), not sector- or size-specific, and not a distribution quantile. The third-party-outage impact side rests entirely on generic cross-cyber loss bridges; revise when third-party-outage-specific loss evidence is reviewed. Construct note added 2026-11-20 from the held report: this is NOT the median of the study loss distribution, which Figure 9 puts at USD 603,000. It is the 2024 endpoint of a 15-year trend (Figure 10, median rising from USD 189,900 in 2008 to USD 2,900,000 in 2024, a 15.20x increase), so it is a single-year median sitting about 4.8x above the pooled 2015-2024 median. Anyone comparing it against another source pooled median is off by roughly five-fold.'
     confidence: low
     evidence_type: source_backed
     measurement_basis: median_total_event_cost

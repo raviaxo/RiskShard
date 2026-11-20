@@ -349,6 +349,43 @@ USD 1.27M against the USD 1.3M prose figure we store. `exceedance_basis` was che
 mislabel and **survived**. No value moved.
 `tests/test_sophos_manufacturing_bases.py` owns every figure.
 
+✅ **Records 2 to 7 are read, 2026-11-20 — the IRIS 2025 group, and the page was not wrong.**
+`cyentia_iris_2025`, six records, hash matching the manifest. **All six were extracted from the
+publisher's 4,111-character summary page**, which says accurately: *"Median losses from security
+incidents have increased 15x, rising from $190K to nearly $3M, with extreme events reaching $32M."*
+Every record quotes it faithfully. It is just thin, and the thinness cost two things sitting in
+plain sight in the report:
+
+- **`exceedance_basis: none_known` was false on three records.** Figure 9 is labelled `$32M (95%)`
+  and the body text reads *"more extreme (95th percentile) losses swell to $32 million"*. The
+  records said the figure was *"not a formal percentile for this scenario"*, which reads as no
+  percentile existing. **This is the ADR-0024 defect at record level**, and the correction is
+  `modeled_quantile` with the population and its public-record bias named. ADR-0024's declines are
+  untouched: the stored value already *is* the IRIS figure, so nothing is re-anchored onto it.
+- **The $3M is not the distribution's median.** The report holds two: Figure 9's pooled 2015-2024
+  median of **USD 603,000**, and Figure 10's trend, whose 2024 endpoint is **USD 2,900,000** after a
+  15.20x rise from USD 189,900. We store the trend endpoint — a single-year median sitting **4.8x
+  above the pooled one** — labelled as a global all-incident median with nothing saying which it
+  was. `impact.likely` for the third-party-outage drift-watch scenario **is** this record, on a
+  calibration whose own notes say its impact side rests entirely on these Cyentia bridges, so this
+  one reached a published figure.
+
+Two smaller corrections: the page puts the 32M beside a *5-fold rise* that belongs to the **90th**
+percentile (USD 6,000,000 to USD 28,500,000), so the records now keep the two statistics apart
+rather than inviting someone to reconcile them; and **two JP records claimed to be "selected" and
+were not** — the shard takes Sophos 1.3M/5M — a stale self-description only a read would find.
+No value moved. `tests/test_iris_2025_reread.py` owns every figure.
+
+📈 **The counter works: `artifact fit` reads 10 re-read, 16 not yet read.** It read 26 and 26 before
+ADR-0026.
+
+⚠️ **Two of yesterday's own tests failed on this, correctly, and the lesson generalises.** They
+asserted `flagged_verified == 4` and `flagged_unverified == 22` — a **snapshot assertion on a
+progress counter**, which guarantees a false failure on the next piece of real work and trains
+whoever hits it to edit the number without reading why. Replaced with the invariants that actually
+hold: the states partition the flagged total, named records are verified, both ends are non-zero,
+and nothing is stale. The last of those *should* fail when it stops being true.
+
 🚩 **The campaign cannot record its own progress, and this needs deciding before record 2.**
 `artifact fit` still reports **26** after the re-read, correctly — the records still cite the
 publisher's page, and the check has no concept of *"read against the report on date X"*. Re-read all
@@ -1353,3 +1390,20 @@ shards are now source-backed. This is the Sunday post.
   reports 26 after the re-read, and will after all 26, because the check has no concept of "read
   against the report on date X". A strategic decision with no owner doc, so it is surfaced per
   AGENTS.md and nothing was built.
+
+- 2026-11-20 (second entry) — **ADR-0026 built, and the IRIS 2025 group read on the back of it.**
+  Two PRs: [#213](https://github.com/raviaxo/RiskShard/pull/213) made a re-read a declared property
+  pinned to the artifact's hash, so the verification expires itself when a publisher reissues the
+  file; the IRIS re-read then took the count from 4 to **10 of 26**. 616 tests (588 at the first
+  entry today).
+
+  **The IRIS read is the cleanest proof of ADR-0024's thesis available**, because the publisher's
+  summary page is accurate. Six records quote it faithfully, and extracting from it instead of the
+  report cost a published 95th percentile (declared `none_known` on three records, stated twice in
+  the report) and a 4.8x construct ambiguity between two medians the report prints side by side.
+  Details in the restart point.
+
+  **Two tests written yesterday failed today and were right to.** `flagged_verified == 4` is a
+  snapshot assertion on a counter built to move. Generalised: a guard that pins a progress figure
+  will produce a false failure on the next real advance, and the failure teaches the reader to edit
+  the constant rather than check the claim. Invariants replaced them.

@@ -283,14 +283,17 @@ records:
     source_url_or_citation: https://www.cyentia.com/publication/iris2025/
     publication_date: "2025-06-10"
     extraction_date: "2026-06-03"
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: 00706bbbfefcc7b6cc321dcbcc2347b3082af92572cbd55abd2239a901cf8f1c
     citation_detail: Public source page key findings; median losses rose toward $3M, with extreme events reaching $32M.
     extraction_notes: Cyentia reported extreme security incidents reaching USD 32 million.
-    normalization_notes: Stored in source currency and selected as a stress loss anchor for a material data-breach scenario.
-    limitations: Global security-incident benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a formal percentile for this scenario.
+    normalization_notes: 'Stored in source currency and selected as a stress loss anchor for a material data-breach scenario. Worth not reconciling later: the publisher key-findings page puts the 32M beside a 5-fold rise, but that rise belongs to the 90th percentile, which Figure 10 tracks from USD 6,000,000 in 2008 to USD 28,500,000 in 2024. The 32M is the pooled 95th percentile from Figure 9. They are different statistics and neither is wrong.'
+    limitations: 'Global security-incident benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a formal percentile for this scenario. It IS a formal percentile - the 95th of the study reported-loss distribution - but of a global all-incident population rather than this scenario, so the percentile is real and the population is not ours. Corrected 2026-11-20: this field said the figure was not "a formal percentile for this scenario", which read as no percentile existing, and that reading is the ADR-0024 defect in its original form.'
     confidence: low
     evidence_type: source_backed
     measurement_basis: observed_extremum
-    exceedance_basis: none_known
+    exceedance_basis: 'modeled_quantile'
+    exceedance_detail: 'USD 32,000,000 is the 95th percentile of the distribution of reported losses for security incidents from 2015 to 2024 (Cyentia Institute, Information Risk Insights Study 2025, Figure 9, labelled "$32M (95%)", and the body text - "The typical (median) incident costs about $600K, while more extreme (95th percentile) losses swell to $32 million"). Roughly 5% of reported security incidents in that corpus exceed this figure. The exceedance is over LOSSES REPORTED IN PUBLIC RECORDS, not over all incidents - the study notes its losses tend to be direct costs identifiable from breach disclosures, public company filings and litigation, which biases the corpus toward events that became public. Read from the held report on 2026-11-20. This record declared none_known until then because it was extracted from the publisher summary page, which states the 32M figure without the percentile (ADR-0024, ADR-0026).'
     applicability:
       industries: [all]
       countries: [global]
