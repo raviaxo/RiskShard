@@ -83,8 +83,10 @@ records:
     source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
     publication_date: "2025-09-23"
     extraction_date: "2026-08-02"
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: 4014f4e7a52c55125e3287b2c61ca788f9ae133a8e49408d7e34ec35ba7166cb
     citation_detail: Claims from Canada section (page 49, Table 2, Canada Top Causes of Loss 2020-2024) reports the Hacker cause of loss at 8 claims with an average incident cost of USD 66K; verified in the gathered PDF text.
-    extraction_notes: Selected the Canadian Hacker-cause claims average as a conservative per-incident floor, replacing the Cyentia global all-cyber typical-loss bridge (USD 266K). Canadian insured-claims data is country-matched where Cyentia was global; the cause taxonomy is the remaining bridge.
+    extraction_notes: 'Selected the Canadian Hacker-cause claims average as a conservative per-incident floor, replacing the Cyentia global all-cyber typical-loss bridge (USD 266K). Canadian insured-claims data is country-matched where Cyentia was global; the cause taxonomy is the remaining bridge. Re-read against the held report on 2026-11-20 under the ADR-0026 campaign: the quoted figures, page and table references and N values all match the publisher file exactly. The artifact-fit flag on this record is a citation-URL mismatch - it cites the NetDiligence landing page while the stored artifact is the RSM-hosted PDF - and not an unread record.'
     normalization_notes: Stored in source currency USD; calibration converts to CAD with the explicit Bank of Canada FX assumption. An average of a small claims subset used as a floor anchor, not a true minimum quantile.
     limitations: N=8 Canadian Hacker claims over five years - a thin cell; an average used as a floor, not a minimum quantile. NetDiligence classifies claims by cause of loss, not outcome, so Hacker claims are unauthorized-intrusion claims that may or may not involve confirmed data compromise - the threat dimension remains bridged. All-sector dataset whose Canadian organizations average USD 654M annual revenue (enterprise-leaning vs the 85M CAD org profile). Insured claims only, so uninsured incidents and self-retained costs are invisible.
     confidence: medium
@@ -186,8 +188,10 @@ records:
     source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
     publication_date: "2025-09-23"
     extraction_date: "2026-08-02"
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: 4014f4e7a52c55125e3287b2c61ca788f9ae133a8e49408d7e34ec35ba7166cb
     citation_detail: Claims from Canada section (page 49) reports the average five-year total incident cost for Canadian claims at USD 874K with a documented maximum of USD 15M (N=84 claims, 2020-2024); verified in the gathered PDF text.
-    extraction_notes: Selected the documented maximum of the Canadian claims dataset as the stress anchor, replacing the Cyentia global extreme-event bridge (USD 32M). Canadian insured-claims data is country-matched where Cyentia was global; the all-cause dataset is the remaining threat bridge.
+    extraction_notes: 'Selected the documented maximum of the Canadian claims dataset as the stress anchor, replacing the Cyentia global extreme-event bridge (USD 32M). Canadian insured-claims data is country-matched where Cyentia was global; the all-cause dataset is the remaining threat bridge. Re-read against the held report on 2026-11-20 under the ADR-0026 campaign: the quoted figures, page and table references and N values all match the publisher file exactly. The artifact-fit flag on this record is a citation-URL mismatch - it cites the NetDiligence landing page while the stored artifact is the RSM-hosted PDF - and not an unread record.'
     normalization_notes: Stored in source currency USD; calibration converts to CAD with the explicit Bank of Canada FX assumption. A dataset maximum, not a formal percentile.
     limitations: The maximum of 84 Canadian insured claims across all causes of loss, 2020-2024 - not data-breach-specific (threat bridged) and not a formal tail percentile. Insured-claims data structurally truncates the tail - uninsured organizations, self-retained costs above policy limits, and outlier Canadian breach losses (e.g. enterprise-scale events such as Desjardins, an order of magnitude larger) are invisible; review may prefer the wider Cyentia global extreme (USD 32M) if tail conservatism outweighs country specificity. Canadian organizations in the dataset average USD 654M annual revenue (enterprise-leaning vs the 85M CAD org profile), which makes the maximum an upper-leaning midmarket stress rather than an understated one.
     confidence: medium
