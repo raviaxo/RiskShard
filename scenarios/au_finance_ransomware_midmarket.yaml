@@ -16,7 +16,7 @@ metadata:
     each bridge is recorded on its evidence record.
 
 frequency:
-  min: 0.1
+  min: 0.0036
   likely: 0.54
   max: 0.7
 

@@ -20,7 +20,7 @@ parameters:
     min:
       evidence_id: cyentia_global_ransomware_probability_2025
       transform: direct
-      rationale: Global ransomware likelihood floor from Cyentia IRIS Ransomware - no Australian floor construct exists (OAIC notification counts are not org-level prevalence), so the floor stays a global bridge.
+      rationale: Cyentia IRIS Ransomware Table 3 LOWER bound for the $10M to $100M revenue bracket this org profile sits in (0.36%). No Australian floor construct exists - OAIC notification counts are not org-level prevalence - so the floor stays a global bridge, but it is now the published lower bound rather than the published upper bound (ADR-0027).
     likely:
       evidence_id: sophos_2024_au_ransomware_attack_rate_likely
       transform: direct

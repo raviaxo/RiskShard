@@ -27,7 +27,10 @@ class CalibrationTests(unittest.TestCase):
 
         scenario = report["generated_scenario"]
 
-        self.assertEqual(scenario["frequency"], {"min": 0.1, "likely": 0.54, "max": 0.7})
+        # min moved 0.1 -> 0.0036 on 2026-11-20 (ADR-0027): the Cyentia figure used as a
+        # floor was the publisher's UPPER bound, and Table 3 publishes a lower bound for
+        # this org profile's own revenue bracket.
+        self.assertEqual(scenario["frequency"], {"min": 0.0036, "likely": 0.54, "max": 0.7})
         self.assertEqual(scenario["impact"]["min"], 97000)
         self.assertEqual(scenario["impact"]["likely"], 2310000)
         self.assertEqual(scenario["impact"]["max"], 76000000)

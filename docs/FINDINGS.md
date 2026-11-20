@@ -242,7 +242,7 @@ with seven exceptions*, which is what it always was.
 
 | | |
 | --- | --- |
-| records declaring `applicability` | **143 of 143** (required by schema) |
+| records declaring `applicability` | **145 of 145** (required by schema) |
 | …declaring the cell they were borrowed **for** rather than the population measured | **21 of 142** |
 | published parameter cards affected | **16 of 66** |
 | published figures that moved when all 21 were corrected | **0 of 66** |

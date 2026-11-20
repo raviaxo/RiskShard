@@ -37,3 +37,4 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0024](0024-the-published-bracket.md) | A maximum is placed in a published distribution, not re-anchored onto one | Accepted (2026-11-12) |
 | [0025](0025-the-registry-trial-is-retired.md) | The registry trial is retired on its own criterion, and the 36 events survive it | Accepted (2026-11-11) |
 | [0026](0026-a-re-read-is-a-declared-property.md) | A re-read is a declared property, pinned to the artifact's hash | Accepted (2026-11-20) |
+| [0027](0027-a-floor-is-the-published-lower-bound.md) | A frequency floor is the published lower bound, band-matched to the org profile | Accepted (2026-11-20) |
