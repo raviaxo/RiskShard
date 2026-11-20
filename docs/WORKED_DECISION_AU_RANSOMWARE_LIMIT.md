@@ -23,6 +23,19 @@ actually act on. That turns out to be the interesting part, so it is not confine
 > correspondingly weaker in magnitude and unchanged in direction. P(event > 20M) rose 22.93% →
 > **26.21%**. The 2025 figures are not restated here; the prior version is in git history.
 
+> **Re-run 2026-11-20 after ADR-0027, and the recommendation is unchanged again.**
+> `frequency.min` moved from **0.10 to 0.0036** — the Cyentia figure we used as a floor turned out
+> to be the publisher's *upper* bound, and Table 3 publishes a lower bound for this org profile's
+> own revenue bracket. **What survives:** everything the argument rests on. AUD 20M is still where
+> the marginal exposure flattens, still a **42%** reduction from 20M to 25M.
+> **What moved, and the distinction matters:** the **annualised** AVG fell **AUD 7,079,188 →
+> 6,850,459**, which is the correction doing its work — a lower floor means fewer cheap years.
+> The **per-event severity** figures also moved slightly (mean 14,229,567 → **14,316,830**, about
+> 0.6%), and that is **not** a modelling change: `impact.min`, `impact.likely` and `impact.max` are
+> untouched. The run seed is derived from the whole scenario file, so changing a frequency value
+> re-seeds the severity sampler. Recorded because a reader comparing the two versions would
+> otherwise conclude the severity model had changed, and it has not.
+
 ---
 
 ## 1. The inputs, and what each one actually measures
@@ -45,14 +58,14 @@ thought; it is section 4.
 
 Seeded run, 10,000 trials, BetaPert, seed 42:
 
-- **Annualised loss** — AVG **AUD 7,079,188** · P95 **18,728,959** · P99 **25,872,131**
+- **Annualised loss** — AVG **AUD 6,850,459** · P95 **18,498,497** · P99 **25,290,804**
 
 **These are not the numbers you size a limit against**, and this is the first trap. The
 annualised figures fold frequency into severity: they answer *"what do I lose in a year?"*
 An insurance limit applies **per occurrence**, so the right input is the severity distribution
 — the `impact` range alone:
 
-- **Per-event severity** — mean **AUD 14,229,567** · P95 **36,078,472** · P99 **47,370,001**
+- **Per-event severity** — mean **AUD 14,316,830** · P95 **36,181,768** · P99 **47,571,330**
 
 Anyone reading the shard's headline AVG of 7.1M and buying a 10M limit has quietly mixed up an
 annual aggregate with a per-event severity.
@@ -63,15 +76,15 @@ Per single event, from the severity distribution above:
 
 | limit (AUD) | P(event exceeds limit) | expected uncovered loss per event (AUD) |
 | ---: | ---: | ---: |
-| 1,000,000 | 96.18% | 13,245,365 |
-| 2,500,000 | 88.94% | 11,858,129 |
-| 5,000,000 | 76.80% | 9,790,654 |
-| 10,000,000 | 55.68% | 6,495,224 |
-| 15,000,000 | 39.40% | 4,142,646 |
-| 20,000,000 | 26.21% | 2,514,059 |
-| 25,000,000 | 16.68% | 1,459,694 |
-| 30,000,000 | 10.09% | 799,107 |
-| 50,000,000 | 0.66% | 28,102 |
+| 1,000,000 | 96.03% | 13,334,389 |
+| 2,500,000 | 88.92% | 11,948,524 |
+| 5,000,000 | 77.06% | 9,876,918 |
+| 10,000,000 | 56.40% | 6,562,427 |
+| 15,000,000 | 39.57% | 4,174,214 |
+| 20,000,000 | 26.31% | 2,543,295 |
+| 25,000,000 | 17.16% | 1,467,031 |
+| 30,000,000 | 10.10% | 798,926 |
+| 50,000,000 | 0.63% | 29,968 |
 
 **The naive answer:** a firm wanting ≤10% chance that a ransomware event exceeds its cover buys
 **AUD 30M**. If it can live with roughly one-in-four, **AUD 20M**.
@@ -80,7 +93,7 @@ Per single event, from the severity distribution above:
 
 ## 4. Why the naive answer is wrong, in dollars
 
-The severity distribution's **mean is AUD 14.2M — 6.16× its own mode of AUD 2.31M**. That is not
+The severity distribution's **mean is AUD 14.3M — 6.20× its own mode of AUD 2.31M**. That is not
 a modelling quirk to wave through. *(It was 14.8× against a mode of AUD 900k until the 2026 anchor
 landed on 2026-08-23. The ratio nearly halved because the mode tripled and the maximum did not move
 at all — which is itself the point of this section.)* It happens because a BetaPert is anchored on its maximum, and
@@ -110,9 +123,9 @@ Same floor, same mode, same seed. Only the maximum changes:
 
 | max anchor (AUD) | mean | P95 | P(>20M) | P(>30M) | what it is |
 | ---: | ---: | ---: | ---: | ---: | --- |
-| **76,000,000** | 14,229,567 | 36,078,472 | **26.21%** | **10.09%** | Latitude disclosure (published) |
-| 44,518,642 | 8,942,190 | 21,922,843 | 7.42% | 0.64% | Cyentia IRIS extreme, USD 32M @ RBA 0.7188 |
-| 9,000,000 | 3,076,317 | 5,977,607 | 0.00% | 0.00% | illustrative only — 10× the mode, not a source |
+| **76,000,000** | 14,316,830 | 36,181,768 | **26.31%** | **10.10%** | Latitude disclosure (published) |
+| 44,518,642 | 9,036,265 | 22,164,610 | 7.65% | 0.69% | Cyentia IRIS extreme, USD 32M @ RBA 0.7188 |
+| 9,000,000 | 3,068,140 | 5,933,690 | 0.00% | 0.00% | illustrative only — 10× the mode, not a source |
 
 The probability that a single event exceeds AUD 20M moves from **0% to 26%** depending on which
 maximum you pick. The frequency evidence, the floor, and the mode are untouched. **The limit

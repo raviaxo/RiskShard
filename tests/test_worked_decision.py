@@ -42,15 +42,21 @@ class WorkedDecisionFiguresTests(unittest.TestCase):
         tripled the mode without moving the maximum, so the ratio nearly halved to 6.16x
         while the claim it supports — that the maximum drives the mean — is untouched.
         The document says both numbers and why they differ.
+
+        **Re-seeded 2026-11-20 by ADR-0027**, which moved `frequency.min` and nothing on
+        the impact side. The severity parameters are identical; the figures shifted ~0.6%
+        only because `derive_scenario_seed` hashes the whole scenario file, so a frequency
+        edit re-seeds the severity sampler. The document records that, because a reader
+        comparing versions would otherwise read it as a modelling change.
         """
         mean = sum(self.severity) / TRIALS
-        self.assertAlmostEqual(mean, 14_229_567, delta=1)
-        self.assertAlmostEqual(mean / self.impact["likely"], 6.16, delta=0.01)
+        self.assertAlmostEqual(mean, 14_316_830, delta=1)
+        self.assertAlmostEqual(mean / self.impact["likely"], 6.20, delta=0.01)
 
     def test_exceedance_at_the_recommended_limit(self):
         over = [x - 20_000_000 for x in self.severity if x > 20_000_000]
-        self.assertAlmostEqual(len(over) / TRIALS, 0.2621, delta=0.0001)
-        self.assertAlmostEqual(sum(over) / TRIALS, 2_514_059, delta=1)
+        self.assertAlmostEqual(len(over) / TRIALS, 0.2631, delta=0.0001)
+        self.assertAlmostEqual(sum(over) / TRIALS, 2_543_295, delta=1)
 
     def test_the_max_anchor_alone_swings_the_decision(self):
         """0% to 23% on P(event > 20M) from the max anchor alone."""
@@ -58,11 +64,11 @@ class WorkedDecisionFiguresTests(unittest.TestCase):
         cyentia, _ = _severity(44_518_642)
         illustrative, _ = _severity(9_000_000)
         self.assertGreater(published, 0.22)
-        self.assertAlmostEqual(sum(1 for x in cyentia if x > 20_000_000) / TRIALS, 0.0742, delta=0.0001)
+        self.assertAlmostEqual(sum(1 for x in cyentia if x > 20_000_000) / TRIALS, 0.0765, delta=0.0001)
         self.assertEqual(sum(1 for x in illustrative if x > 20_000_000), 0)
 
     def test_document_quotes_the_figures_it_reasons_from(self):
-        for figure in ("14,229,567", "2,514,059", "26.21%", "76,000,000", "44,518,642"):
+        for figure in ("14,316,830", "2,543,295", "26.31%", "76,000,000", "44,518,642"):
             self.assertIn(figure, self.text, f"{figure} missing from the worked decision")
 
     def test_document_states_what_the_anchors_measure(self):
@@ -74,7 +80,7 @@ class WorkedDecisionFiguresTests(unittest.TestCase):
         config = fc.load_and_validate(str(ROOT / SCENARIO))
         seed = fc.derive_scenario_seed(42, SCENARIO, config, root=ROOT)
         _, annualised = fc.run_simulation(config, TRIALS, "pert", random.Random(seed))
-        self.assertAlmostEqual(sum(annualised) / TRIALS, 7_079_188, delta=1)
+        self.assertAlmostEqual(sum(annualised) / TRIALS, 6_850_459, delta=1)
         # The severity mean must exceed the annualised mean; frequency < 1 scales it down.
         self.assertGreater(sum(self.severity) / TRIALS, sum(annualised) / TRIALS)
 

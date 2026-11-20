@@ -17,7 +17,7 @@ parameters:
     min:
       evidence_id: cyentia_global_ransomware_probability_2025_de_context
       transform: direct
-      rationale: Global ransomware likelihood floor from Cyentia IRIS Ransomware.
+      rationale: Cyentia IRIS Ransomware Table 3 LOWER bound for the $100M to $1B revenue bracket this org profile sits in (1.20%). Was the 10% global aggregate UPPER bound until 2026-11-20 (ADR-0027).
     likely:
       evidence_id: bitkom_de_ransomware_damage_rate_2025
       transform: direct

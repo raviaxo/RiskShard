@@ -376,6 +376,65 @@ rather than inviting someone to reconcile them; and **two JP records claimed to 
 were not** — the shard takes Sophos 1.3M/5M — a stale self-description only a read would find.
 No value moved. `tests/test_iris_2025_reread.py` owns every figure.
 
+🔴 **Records 8 to 12 are read, 2026-11-20 — and this one moved three published numbers.**
+`cyentia_iris_ransomware`, five records, hash matching the manifest.
+[ADR-0027](../adr/0027-a-floor-is-the-published-lower-bound.md) is **Accepted** and implemented.
+
+**`frequency.min` on three shards was the publisher's UPPER bound.** The report says *"there is
+about a 10% **upper bound** chance that any given organization will experience at least one
+ransomware incident in the next 12 months"*, and describes building one high estimate and one lower
+bound, the upper being *"a more risk-averse view ... better suited to managing risk"*. Our records
+called 0.10 a *"global ransomware likelihood floor"*. **Our floor was their ceiling**, about twenty
+times the aggregate lower bound.
+
+**The cause is the finding.** The publisher's summary page — the document all five records cite —
+paraphrases it as *"approximately 10% of organizations are likely to experience a ransomware
+incident within the next year"*, with **no "upper bound" and no mention that a lower bound exists**.
+Our `extraction_notes` copied that nearly verbatim. The extraction was faithful to the document it
+read; **it read the wrong document.** Third instance of the ADR-0024 pattern, and the plainest
+statement yet of why the campaign is worth running: the failure mode is not careless reading.
+
+**Table 3 publishes the figure by revenue bracket, both bounds, and every org profile sits in a
+named bracket** above the study's own USD 10,000,000 cutoff:
+
+| shard | revenue | bracket | published lower | published upper | was |
+| --- | --- | --- | --- | --- | --- |
+| `au_finance_ransomware_midmarket` | 85M | $10M–$100M | **0.36%** | 11.32% | 10% |
+| `de_industrial_ransomware_midmarket` | 120M | $100M–$1B | **1.20%** | 9.83% | 10% |
+| `jp_manufacturing_ransomware_midmarket` | 130M | $100M–$1B | **1.20%** | 9.83% | 10% |
+
+**Simulated annual averages fell**: AU 7,079,188 → **6,850,459**; DE 583,555 → **559,088**; JP
+780,903 → **752,273**. The shards did not get safer — they stopped overstating their own best case.
+Scenarios and calibrations regenerated, drift check clean on all 15 pairs.
+
+✅ **The 51% manufacturing incident share is now recorded** (owner's call). It was in the same
+sentence that gave us the 15% financial-services figure in 2026-05, on both the page and the report,
+and only half the sentence was taken — with two manufacturing shards on the board. **Eighth
+"recorded as owed, turned out to be held."** Stored as `context.*`, with limitations stating it
+cannot be used as a frequency.
+
+✅ **All five `citation_detail` fields now quote a passage.** They said *"Key findings on the public
+IRIS Ransomware source page"* — a location, not a citation, with nothing in it to check.
+
+⚠️ **`docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md` was recomputed, and the distinction is recorded
+in it.** The **annualised** AVG fell 7,079,188 → 6,850,459, which is the correction working. The
+**per-event severity** figures moved ~0.6% too, and that is *not* a modelling change — the impact
+parameters are untouched, but `derive_scenario_seed` hashes the whole scenario file, so a frequency
+edit re-seeds the severity sampler. Written into the document because a reader comparing versions
+would otherwise read it as a severity change. The AUD 20M recommendation and its 42% flattening
+survive unchanged.
+
+⚠️ **The validator caught me shipping a wrong hash, on its first real use.** Two context records
+were written with the IRIS *2025* sha instead of the IRIS *Ransomware* one, and
+`artifact_verification_stale` fired immediately — a wrong hash is indistinguishable from a reissued
+file, which is the correct behaviour and the reason ADR-0026 pinned bytes rather than a date.
+
+📈 **`artifact fit`: 28 flagged, 17 re-read, 11 not yet.** The flagged total grew 26 → 28 because
+the two new manufacturing records cite the publisher page for a report we hold — **flagged and
+verified at once**, which is the state ADR-0026 made expressible. A test that pinned 26 was relaxed
+for the same reason the verified counters were: pinning a figure that ordinary evidence work moves
+converts progress into a build failure.
+
 📈 **The counter works: `artifact fit` reads 10 re-read, 16 not yet read.** It read 26 and 26 before
 ADR-0026.
 

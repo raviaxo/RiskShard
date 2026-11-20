@@ -35,7 +35,7 @@ extractions:
     source_url_or_citation: https://www.cyentia.com/publication/iris-ransomware/
     publication_date: "2025-04-21"
     extraction_date: "2026-07-13"
-    citation_detail: Key findings on the public IRIS Ransomware source page.
+    citation_detail: 'Table 3, Lower Bound, one or more ransomware events, for the revenue bracket this org profile sits in. Re-read from the held report on 2026-11-20 - the page this cites paraphrased the headline without the words "upper bound" (ADR-0027).'
     fact: Cyentia reported that approximately 10% of organizations are likely to experience a ransomware incident within the next year.
     value: 0.10
     unit: annual_probability

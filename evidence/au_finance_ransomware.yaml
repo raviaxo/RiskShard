@@ -34,7 +34,7 @@ records:
   - id: cyentia_global_ransomware_probability_2025
     title: Global organization ransomware likelihood
     parameter: frequency.min
-    value: 0.10
+    value: 0.0036
     unit: annual_probability
     source_id: cyentia_iris_ransomware
     source_name: Cyentia IRIS Ransomware
@@ -42,10 +42,12 @@ records:
     source_url_or_citation: https://www.cyentia.com/publication/iris-ransomware/
     publication_date: "2025-04-21"
     extraction_date: "2026-05-26"
-    citation_detail: Key findings on the public IRIS Ransomware source page.
-    extraction_notes: Cyentia reported that approximately 10% of organizations are likely to experience a ransomware incident within the next year.
-    normalization_notes: Stored as a generic global lower-frequency anchor; not used as an Australia financial-services calibrated rate by itself.
-    limitations: Global cross-sector estimate; not Australia-specific and not financial-services-specific.
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: d2bdaa1d7bf2a20ce8971a1fb4baad432b78d2462938ed55eff5ff0a5def7298
+    citation_detail: 'Table 3, Annual probability of a firm experiencing a given number of ransomware events, Lower Bound, revenue category $10M to $100M, one or more events: 0.36%. The report headline states it differently - "There is about a 10% upper bound chance that any given organization will experience at least one ransomware incident in the next 12 months" - and Figure 8 publishes both bound models.'
+    extraction_notes: 'Read from the held report on 2026-11-20 (ADR-0027). Replaces an extraction taken from the publisher summary page, which paraphrased the finding as "approximately 10% of organizations are likely to experience a ransomware incident within the next year" and dropped the words "upper bound". The report publishes a lower and an upper bound model (Figure 8) and bands both by revenue (Table 3). This org profile has USD 85,000,000 annual revenue, so it sits in the $10M to $100M bracket.'
+    normalization_notes: 'Stored as the published LOWER bound for this revenue bracket, which is what a frequency minimum is. The previous value was 0.10, the global aggregate UPPER bound, and that is described here rather than deleted: a minimum that was the publisher maximum is an error only a read of the report could find (ADR-0027).'
+    limitations: 'Global cross-sector model, not Australia-specific and not financial-services-specific. The published upper bound for this same bracket is 11.32%, so the publisher own uncertainty spans 0.36% to 11.32% and this record takes the low end deliberately. Cyentia states the upper bound is the more risk-averse view and better suited to managing risk, so this floor should be read alongside frequency.likely and frequency.max rather than on its own. Frequency statistics in this study cover organizations above USD 10,000,000 revenue only (footnote 7).'
     confidence: medium
     evidence_type: source_backed
     measurement_basis: org_prevalence_loss_event
@@ -227,7 +229,9 @@ records:
     source_url_or_citation: https://www.cyentia.com/publication/iris-ransomware/
     publication_date: "2025-04-21"
     extraction_date: "2026-05-26"
-    citation_detail: Key findings on the public IRIS Ransomware source page.
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: d2bdaa1d7bf2a20ce8971a1fb4baad432b78d2462938ed55eff5ff0a5def7298
+    citation_detail: 'Report key findings: "Ransomware claims 51% of incidents in the Manufacturing sector. Compare that with 15% for Financial Services." Verified against the held report on 2026-11-20. The previous value of this field named a page rather than quoting a passage.'
     extraction_notes: Cyentia reported that ransomware affects 15% of incidents in Financial Services.
     normalization_notes: Stored as contextual applicability evidence rather than a direct annual frequency.
     limitations: Incident-share statistic, not annual probability or loss magnitude; source page does not isolate Australia.
@@ -251,10 +255,12 @@ records:
     source_url_or_citation: https://www.cyentia.com/publication/iris-ransomware/
     publication_date: "2025-04-21"
     extraction_date: "2026-05-26"
-    citation_detail: Key findings on the public IRIS Ransomware source page.
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: d2bdaa1d7bf2a20ce8971a1fb4baad432b78d2462938ed55eff5ff0a5def7298
+    citation_detail: 'Report key findings: "Ransomware was behind 32% of all security incidents and 38% of financial losses from cyber events reported over the last five years." Verified against the held report on 2026-11-20. The previous value of this field named a page rather than quoting a passage, so there was nothing in it to check.'
     extraction_notes: Cyentia reported that ransomware accounted for 32% of all security incidents over the prior five years.
     normalization_notes: Stored as contextual threat-prevalence evidence rather than a scenario frequency.
-    limitations: Global cross-sector incident-share statistic; not Australia-specific and not financial-services-specific.
+    limitations: 'Global cross-sector incident-share statistic; not Australia-specific and not financial-services-specific. Verified 2026-11-20 and accurate. Worth carrying with it: the report adds that less than 10% of incidents affecting $100B+ enterprises are ransomware, while among companies under USD 100,000,000 the ratio is in the 30% to 40% range. So 32% is a cross-size aggregate and the mid-market figure these shards model is higher.'
     confidence: medium
     evidence_type: source_backed
     measurement_basis: context_statistic

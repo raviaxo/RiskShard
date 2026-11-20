@@ -41,8 +41,18 @@ class ArtifactFitTests(unittest.TestCase):
         self.assertIn("cyentia_iris_2025_extreme_security_incident_loss_usd", ids)
 
     def test_the_population_is_larger_than_the_hand_count_said(self):
-        """ADR-0024 hand-sized this as 9 records. Generated, it is 26."""
-        self.assertEqual(self.totals["cites_a_page_for_a_report_we_hold"], 26)
+        """ADR-0024 hand-sized this as 9 records. Generated, it was 26 and is not fixed.
+
+        The exact count is deliberately not pinned. It was 26 on 2026-11-14 and 28 on
+        2026-11-20, because adding evidence that cites a publisher page for a report we
+        hold **enlarges this population by design** — the two manufacturing-share records
+        added under ADR-0027 are flagged and verified at the same time, which is exactly
+        the state ADR-0026 made expressible. Pinning the number would turn ordinary
+        evidence work into a test failure, the same trap the verified/unverified counters
+        fell into. What matters and is pinned: it is far larger than the hand count, and
+        it spans more than one publisher.
+        """
+        self.assertGreater(self.totals["cites_a_page_for_a_report_we_hold"], 9)
         self.assertEqual(self.totals["sources_flagged"], 7)
 
     def test_it_is_not_a_cyentia_problem(self):

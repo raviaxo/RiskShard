@@ -76,7 +76,7 @@ extractions:
     source_url_or_citation: https://www.cyentia.com/publication/iris-ransomware/
     publication_date: "2025-04-21"
     extraction_date: "2026-05-26"
-    citation_detail: Key findings on the public IRIS Ransomware source page.
+    citation_detail: 'Table 3, Lower Bound, one or more ransomware events, for the revenue bracket this org profile sits in. Re-read from the held report on 2026-11-20 - the page this cites paraphrased the headline without the words "upper bound" (ADR-0027).'
     fact: Cyentia reported that approximately 10% of organizations are likely to experience a ransomware incident within the next year.
     value: 0.10
     unit: annual_probability
@@ -91,7 +91,7 @@ extractions:
     source_url_or_citation: https://www.cyentia.com/publication/iris-ransomware/
     publication_date: "2025-04-21"
     extraction_date: "2026-05-26"
-    citation_detail: Key findings on the public IRIS Ransomware source page.
+    citation_detail: 'Table 3, Lower Bound, one or more ransomware events, for the revenue bracket this org profile sits in. Re-read from the held report on 2026-11-20 - the page this cites paraphrased the headline without the words "upper bound" (ADR-0027).'
     fact: Cyentia reported that ransomware affects 15% of incidents in Financial Services.
     value: 0.15
     unit: share_of_sector_incidents
@@ -106,7 +106,7 @@ extractions:
     source_url_or_citation: https://www.cyentia.com/publication/iris-ransomware/
     publication_date: "2025-04-21"
     extraction_date: "2026-05-26"
-    citation_detail: Key findings on the public IRIS Ransomware source page.
+    citation_detail: 'Table 3, Lower Bound, one or more ransomware events, for the revenue bracket this org profile sits in. Re-read from the held report on 2026-11-20 - the page this cites paraphrased the headline without the words "upper bound" (ADR-0027).'
     fact: Cyentia reported that ransomware accounted for 32% of security incidents over the prior five years.
     value: 0.32
     unit: share_of_security_incidents

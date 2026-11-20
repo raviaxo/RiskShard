@@ -15,7 +15,7 @@ metadata:
     Frequency and impact share one "hit by ransomware" event basis.
 
 frequency:
-  min: 0.1
+  min: 0.012
   likely: 0.51
   max: 0.58
 
