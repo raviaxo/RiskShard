@@ -70,6 +70,8 @@ def validate_record_quality(record, manifest_by_id):
     if not record.get("citation_detail"):
         issues.append(issue("error", "citation_detail_missing", record_id, "Source-backed evidence must include citation_detail."))
 
+    issues.extend(validate_artifact_verification(record, source))
+
     if record.get("publication_date") != source.get("publication_date"):
         issues.append(
             issue(
@@ -111,6 +113,101 @@ def validate_record_quality(record, manifest_by_id):
             )
 
     return issues
+
+
+def validate_artifact_verification(record, source):
+    """ADR-0026 — a re-read is declared on the record and pinned to the bytes read.
+
+    The two fields travel together or not at all. Their absence means nobody has
+    checked this record against the publisher's file, which is not the same as
+    the record being clean, so absence is never reported here.
+
+    A hash that no longer matches the manifest is a **warning**, deliberately.
+    It is the design working: the publisher reissued the file, so our reading is
+    a reading of a document that is no longer the stored one and the record drops
+    back to unverified. That is something to look at again, not something wrong.
+    Malformed input is an error, because that is a typo rather than a finding.
+    """
+    issues = []
+    record_id = record["id"]
+    verified_at = record.get("artifact_verified_at")
+    verified_sha = record.get("artifact_verified_sha256")
+
+    if not verified_at and not verified_sha:
+        return issues
+
+    if bool(verified_at) != bool(verified_sha):
+        issues.append(
+            issue(
+                "error",
+                "artifact_verification_incomplete",
+                record_id,
+                "artifact_verified_at and artifact_verified_sha256 must be given together: "
+                "a date without a hash cannot expire, and a hash without a date cannot be audited.",
+            )
+        )
+        return issues
+
+    if not _looks_like_a_date(verified_at):
+        issues.append(
+            issue(
+                "error",
+                "artifact_verified_at_malformed",
+                record_id,
+                f"artifact_verified_at must be YYYY-MM-DD, got {verified_at!r}.",
+            )
+        )
+
+    if not _looks_like_a_sha256(verified_sha):
+        issues.append(
+            issue(
+                "error",
+                "artifact_verified_sha256_malformed",
+                record_id,
+                "artifact_verified_sha256 must be 64 lowercase hex characters.",
+            )
+        )
+        return issues
+
+    stored = (source.get("sha256") or "").lower()
+    if not stored:
+        issues.append(
+            issue(
+                "warning",
+                "artifact_verification_unpinnable",
+                record_id,
+                "The manifest holds no sha256 for this source, so the recorded verification "
+                "cannot expire when the publisher reissues the file.",
+            )
+        )
+    elif stored != verified_sha:
+        issues.append(
+            issue(
+                "warning",
+                "artifact_verification_stale",
+                record_id,
+                f"Verified on {verified_at} against a file whose hash is no longer the stored one. "
+                "The publisher has reissued it; the record needs re-reading.",
+            )
+        )
+
+    return issues
+
+
+def _looks_like_a_date(value):
+    import datetime
+
+    try:
+        datetime.date.fromisoformat(value)
+    except (TypeError, ValueError):
+        return False
+    return True
+
+
+def _looks_like_a_sha256(value):
+    return isinstance(value, str) and len(value) == 64 and all(
+        c in "0123456789abcdef" for c in value
+    )
 
 
 def issue(severity, code, record_id, message):

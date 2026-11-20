@@ -158,6 +158,8 @@ records:
     source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025
     publication_date: "2025-12-04"
     extraction_date: "2026-07-14"
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: c579c711f3004db660c547e4c73be6b0e4997cb5b76fffacabebacf928f99eae
     citation_detail: 'Recovery costs section; the report states that the AVERAGE recovery cost, excluding any ransom payments, dropped 24% to USD 1.3M in 2025 from USD 1.7M in 2024, on a base of n=332. The report does not say mean or median here, and the same report writes "average (median)" for its ransom figures, so the statistic is unqualified in the source.'
     extraction_notes: 'Sophos reported that the average cost of recovery, excluding any ransoms paid, dropped to USD 1.3 million for manufacturing and production organizations. Corrected on 2026-11-20 from "mean" during the ADR-0024 artifact-fit re-read - the report says only "average" here while writing "average (median)" elsewhere, so it distinguishes the two and this record had resolved its silence in our own favour.'
     normalization_notes: 'Stored directly in USD as a manufacturing-sector ransomware likely-loss bridge. USD 1.3M is the report prose figure; Chart 11 publishes USD 1.27M for manufacturing and production specifically, on the same base of n=332. The prose rounding is what the publisher states and is kept, with the more precise chart figure recorded here rather than substituted.'
@@ -209,6 +211,8 @@ records:
     source_url_or_citation: https://www.sophos.com/en-us/blog/the-state-of-ransomware-in-manufacturing-and-production-2025
     publication_date: "2025-12-04"
     extraction_date: "2026-08-16"
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: c579c711f3004db660c547e4c73be6b0e4997cb5b76fffacabebacf928f99eae
     citation_detail: 'Ransoms section: "extreme payments of $5 million or more - accounting for 18% of payments in 2025 - up from 15% last year", alongside extreme demands of $5 million or more accounting for a fifth (20%) of demands.'
     extraction_notes: 'Read from the report on 2026-08-16, replacing an earlier extraction that recorded only that extreme $5M+ cases had risen slightly. The share is stated in prose, so the threshold now carries a published exceedance rather than none. Re-read against the held report on 2026-11-20 as part of the ADR-0024 artifact-fit campaign; the quoted passage matched the publisher file exactly and no value moved.'
     normalization_notes: Stored as a manufacturing-sector stress threshold, not as a mathematically observed maximum.

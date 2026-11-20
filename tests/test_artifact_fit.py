@@ -22,7 +22,8 @@ its own work.
 import unittest
 
 from engine.artifact_fit import (artifacts_by_stem, fit_report, format_findings,
-                                 sources_held_twice, summary_line)
+                                 sources_held_twice, summary_line,
+                                 verification_state)
 from engine.project_paths import find_project_root
 
 ROOT = find_project_root()
@@ -136,3 +137,84 @@ class DoctorIntegrationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class VerificationStateTests(unittest.TestCase):
+    """ADR-0026 — the campaign can now count itself.
+
+    Before these fields existed, `artifact fit` reported 26 flagged records
+    before the first re-read and 26 after it. The re-read was real and found a
+    real defect (the Sophos 82nd percentile rests on n=67), but the only figure
+    that could have shown the work was structurally incapable of moving. These
+    tests own the figure that replaced it.
+    """
+
+    SOPHOS = "sophos_state_ransomware_manufacturing_2025"
+    SOPHOS_SHA = "c579c711f3004db660c547e4c73be6b0e4997cb5b76fffacabebacf928f99eae"
+
+    def setUp(self):
+        self.report = fit_report(ROOT)
+        self.totals = self.report["totals"]
+        self.flagged = self.report["cites_a_page_for_a_report_we_hold"]
+
+    def test_the_states_partition_the_flagged_population(self):
+        """Every flagged record is in exactly one state, and they sum to the whole."""
+        self.assertEqual(
+            self.totals["flagged_verified"]
+            + self.totals["flagged_stale"]
+            + self.totals["flagged_unverified"],
+            self.totals["cites_a_page_for_a_report_we_hold"],
+        )
+
+    def test_the_first_re_read_is_counted(self):
+        """Four Sophos records were read against the publisher file on 2026-11-20."""
+        verified = {
+            e["evidence_id"] for e in self.flagged if e["verification"] == "verified"
+        }
+        self.assertEqual(len(verified), 4)
+        self.assertTrue(
+            all(
+                e["verified_at"] == "2026-11-20"
+                for e in self.flagged
+                if e["evidence_id"] in verified
+            )
+        )
+
+    def test_the_rest_are_unverified_and_that_is_not_clean(self):
+        """22 records nobody has checked. Absence of a reading is not a pass."""
+        self.assertEqual(self.totals["flagged_unverified"], 22)
+        self.assertEqual(self.totals["flagged_stale"], 0)
+
+    def test_a_record_with_no_verification_reads_unverified(self):
+        self.assertEqual(verification_state({}, {"sha256": self.SOPHOS_SHA}), "unverified")
+
+    def test_a_date_without_a_hash_does_not_count_as_verified(self):
+        """The schema and the validator both reject it; the engine must not trust it."""
+        self.assertEqual(
+            verification_state({"artifact_verified_at": "2026-11-20"}, {"sha256": "abc"}),
+            "unverified",
+        )
+
+    def test_a_reissued_file_expires_the_verification_by_itself(self):
+        """The whole reason the hash is recorded rather than only the date.
+
+        Nobody has to notice that the publisher reissued the PDF. The manifest
+        hash moves, the recorded one does not, and the record falls back to
+        needing a re-read on the next doctor run.
+        """
+        record = {
+            "artifact_verified_at": "2026-11-20",
+            "artifact_verified_sha256": self.SOPHOS_SHA,
+        }
+        self.assertEqual(verification_state(record, {"sha256": self.SOPHOS_SHA}), "verified")
+        self.assertEqual(verification_state(record, {"sha256": "f" * 64}), "stale")
+
+    def test_the_summary_line_shows_the_progress_not_only_the_backlog(self):
+        line = summary_line(self.report)
+        self.assertIn("re-read against the publisher file", line)
+        self.assertIn("not yet read", line)
+        self.assertIn(str(self.totals["flagged_verified"]), line)
+
+    def test_the_summary_line_stays_quiet_about_stale_when_there_is_none(self):
+        """A zero in a doctor line reads as a finding. Nothing stale, nothing said."""
+        self.assertNotIn("stale", summary_line(self.report))
