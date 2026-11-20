@@ -435,6 +435,47 @@ verified at once**, which is the state ADR-0026 made expressible. A test that pi
 for the same reason the verified counters were: pinning a figure that ordinary evidence work moves
 converts progress into a build failure.
 
+✅ **Records 13 to 17 are read, 2026-11-20 — NetDiligence, and this one is the counter-example the
+campaign needed.** Five records, hash matching the manifest. **Four of the five verified exactly:**
+page numbers, figure numbers, N values and verbatim quotes all matched the publisher file. Someone
+had genuinely read the PDF when these were extracted, and two of the records say so. Both
+`ca_finance_data_breach_midmarket` and `us_finance_data_breach_midmarket` take their published
+`impact.max` from this source, so a bad read here would have been expensive.
+
+**This result is worth as much as a finding, and it needs saying out loud:** the flagged population
+is **not** 28 bad records. For four of these five the entire defect is a citation-URL mismatch — they
+cite the NetDiligence landing page while the stored artifact is the RSM-hosted PDF. That is now
+written on the records themselves, because a reader of the doctor line would otherwise conclude all
+28 are suspect.
+
+🟡 **The fifth had a real problem, and no value moved to fix it.**
+`us_finance_breach_impact_min_netdiligence_sme_crisis_usd` takes the USD 152,000 average
+crisis-services cost as `impact.min`. **Figure 11 is titled *"Where Crisis Services Costs >0"***, and
+the report states plainly that not every claim involves a crisis-services element, which is why its
+N values vary. So the figure is an average **conditional on crisis services being incurred**, used as
+a floor applied to every modelled event — as a floor it overstates, because the cheap claims are
+excluded from the average that produced it. The value is a defensible construct choice and stands;
+the omission was the defect. Its `citation_detail` also named neither page, figure nor N, the
+weakest of the five, and now names Figure 11 and N=4,712.
+
+🟢 **Recorded, not acted on:** the report publishes an observed minimum for that exact cell of **USD
+1,000** (financial-services SME sector table, N=579). Declining it is right — a USD 1,000 floor would
+put almost all the composed mass below the mode — but the published figure is now on the record so
+the choice is visible instead of implied.
+
+🔹 **Housekeeping, flagged not fixed:** `sources/raw/` holds the same NetDiligence artifact twice
+under two filenames with an identical sha256 (`netdiligence_cyber_claims_2025.pdf` and
+`netdiligence_cyber_claims_study_2025.pdf`). The second is referenced by nothing in the manifest.
+`sources/raw/` is gitignored so this is local-only, 9 MB, and deleting a file on the owner machine is
+not mine to do.
+
+🔧 **The scratchpad helper that shipped the wrong hash was hardened** rather than just corrected: the
+sha is now a required argument instead of a module-level default, so the failure mode cannot recur
+the same way.
+
+📈 **`artifact fit`: 28 flagged, 22 re-read, 6 not yet.** Remaining: `cyentia_iris_2022` (3),
+`ponemon_dtex_cost_insider_risks_2023` (2), `ibm_cost_data_breach_2025` (1).
+
 📈 **The counter works: `artifact fit` reads 10 re-read, 16 not yet read.** It read 26 and 26 before
 ADR-0026.
 

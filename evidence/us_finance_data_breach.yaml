@@ -83,10 +83,12 @@ records:
     source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
     publication_date: "2025-09-23"
     extraction_date: "2026-07-19"
-    citation_detail: NetDiligence reports an average crisis-services cost of USD 152,000 for SME cyber claims (organizations under USD 2B revenue).
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: 4014f4e7a52c55125e3287b2c61ca788f9ae133a8e49408d7e34ec35ba7166cb
+    citation_detail: 'Figure 11, Average Crisis Services and Incident Costs, SMEs, N=4,712 - five-year average crisis services cost USD 152,000, with yearly averages from USD 121,000 in 2020 to USD 144,000 in 2024. The same figure appears on the report summary panel as "SMEs / Crisis Services (N=4,712) / 152K". Figure 11 is titled "Where Crisis Services Costs >0". Read from the held report on 2026-11-20; the previous value of this field named neither a page nor a figure nor an N.'
     extraction_notes: Used the US SME crisis-services average as a conservative direct-response cost floor for a mid-market breach.
-    normalization_notes: Stored directly in USD. Selected as a material-cost floor, not expected total breach cost.
-    limitations: Insured-claim crisis-services subset; not full total loss; SME band is broad (under USD 2B revenue) and not isolated to financial services.
+    normalization_notes: 'Stored directly in USD. Selected as a material-cost floor, not expected total breach cost. The report publishes an observed minimum for this exact cell and it is far lower: the financial-services SME sector table gives a cost range starting at USD 1,000 (N=579, 2020-2024). This record is deliberately not that figure - a USD 1,000 floor would make the composed range almost all mass below the mode - but the published minimum is recorded here so the choice is visible rather than implied.'
+    limitations: 'Insured-claim crisis-services subset; not full total loss; SME band is broad (under USD 2B revenue) and not isolated to financial services. CONDITIONAL AVERAGE, recorded 2026-11-20 from the held report. Figure 11 is explicitly scoped to claims "Where Crisis Services Costs >0", and the report states that not every claim involves a crisis services element, which is why its N values vary. So USD 152,000 is the average GIVEN THAT crisis services were incurred, while this record is used as a floor applied to every modelled event. As a floor it therefore overstates: claims with no crisis services cost are excluded from the average that produced it. Base is N=4,712 SME claims.'
     confidence: medium
     evidence_type: source_backed
     measurement_basis: cost_component
@@ -108,8 +110,10 @@ records:
     source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
     publication_date: "2025-09-23"
     extraction_date: "2026-07-30"
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: 4014f4e7a52c55125e3287b2c61ca788f9ae133a8e49408d7e34ec35ba7166cb
     citation_detail: "Figure 45 (Average Incident Cost - Financial Services, SMEs, N=579) reports a five-year average incident cost of USD 329K, with yearly averages of 201K (2020), 284K (2021), 310K (2022), 517K (2023) and 434K (2024). The accompanying text states the average annual revenue of financial-services organizations in the sample was USD 113M (maximum USD 1.9B)."
-    extraction_notes: Replaced the all-sector SME average (USD 264,000) with the financial-services SME figure from the same study, so the central estimate matches the shard's industry as well as its country and size. Used the five-year average rather than the 2024 value (434K) because single years are volatile in this series - 2023 spiked to 517K - and the five-year figure is the study's own smoothed measure.
+    extraction_notes: 'Replaced the all-sector SME average (USD 264,000) with the financial-services SME figure from the same study, so the central estimate matches the shard''s industry as well as its country and size. Used the five-year average rather than the 2024 value (434K) because single years are volatile in this series - 2023 spiked to 517K - and the five-year figure is the study''s own smoothed measure. Re-read against the held report on 2026-11-20 under the ADR-0026 campaign: the quoted figures, page and table references and N values all match the publisher file exactly. The artifact-fit flag on this record is a citation-URL mismatch - it cites the NetDiligence landing page while the stored artifact is the RSM-hosted PDF - and not an unread record.'
     normalization_notes: Stored directly in USD. The sector sample's average annual revenue (USD 113M) sits squarely in the mid-market band, so this is the closest cell-matched central estimate available.
     limitations: "Insured-claim sample: covers claims of USD 1K or more that reached an insurer, so it excludes uninsured, self-absorbed and unreported losses, and is censored by policy limits and self-insured retentions. The SME band spans revenue up to USD 2B even though the financial-services sample averages USD 113M. Pooled 2020-2024 in nominal dollars with no inflation adjustment. RiskShard's mid_market band is defined by headcount while this segmentation is by revenue - the mapping is an explicit assumption, not a measurement."
     confidence: medium
@@ -133,8 +137,10 @@ records:
     source_url_or_citation: https://netdiligence.com/cyber-claims-study-2025-report/
     publication_date: "2025-09-23"
     extraction_date: "2026-07-30"
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: 4014f4e7a52c55125e3287b2c61ca788f9ae133a8e49408d7e34ec35ba7166cb
     citation_detail: "Financial Services section: \"Financial services claims accounted for 6% of all claims and 8% of total incident cost at SMEs. Total incident cost ranged from $1K to $11.5M.\" (N=579 claims, 2020-2024, organizations with average annual revenue of USD 113M.)"
-    extraction_notes: Replaced the previous ceiling (IBM's USD 5.56M financial-services industry *average*) with the largest incident cost actually observed among financial-services SME claims. An industry average is a measure of central tendency and was standing in for a tail; this is a real observed maximum for the shard's own cell.
+    extraction_notes: 'Replaced the previous ceiling (IBM''s USD 5.56M financial-services industry *average*) with the largest incident cost actually observed among financial-services SME claims. An industry average is a measure of central tendency and was standing in for a tail; this is a real observed maximum for the shard''s own cell. Re-read against the held report on 2026-11-20 under the ADR-0026 campaign: the quoted figures, page and table references and N values all match the publisher file exactly. The artifact-fit flag on this record is a citation-URL mismatch - it cites the NetDiligence landing page while the stored artifact is the RSM-hosted PDF - and not an unread record.'
     normalization_notes: Stored directly in USD. Selected as impact.max because it is the upper bound of the observed cost range for exactly this country, industry and size segment.
     limitations: "A single observed claim, not a modelled percentile - it is the maximum of 579 claims over five years, so it says nothing about how much worse a loss could be, and a larger sample would likely show a larger maximum. Insured-claim basis, so it is censored by policy limits and excludes uninsured or unreported losses. The SME band spans revenue up to USD 2B. Nominal 2020-2024 dollars, not inflation-adjusted."
     confidence: medium
