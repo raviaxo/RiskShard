@@ -358,6 +358,32 @@ moving. Three shapes, none chosen: a per-record field the check reads; repoint
 re-read date out of `extraction_notes`, which is prose. **This is a strategic decision with no owner
 doc** — AGENTS.md says surface it and stop, so it is surfaced and nothing is built.
 
+✅ **DECIDED AND BUILT 2026-11-20 — [ADR-0026](../adr/0026-a-re-read-is-a-declared-property.md) is
+Accepted.** The owner took the declared field *with the hash*, which is the half that matters:
+`artifact_verified_at` plus `artifact_verified_sha256` on the record, and the verification
+**expires itself** when the publisher reissues the file, because the manifest hash moves and the
+recorded one does not. Proven end to end by mutating the recorded hash — the doctor line went from
+*4 re-read* to *2 re-read, 2 stale* and the validator raised a warning naming the verification
+date. Malformed input is an error; stale is a warning; absence is silence, because most records
+have never been checked and saying so every run would drown the finding.
+
+**The doctor line now moves as the campaign runs:** *26 record(s) … (4 re-read against the
+publisher file and still matching, 22 not yet read).* It read 26 before and after the first
+re-read. The four Sophos records were backfilled in the same change so the first count is 4 rather
+than 0 and the new line is exercised by real data on its first run.
+
+*Both declined options are recorded in the ADR with the reasons: repointing
+`source_url_or_citation` at the report would make the flag vanish without anyone reading anything,
+and parsing the date out of `extraction_notes` puts the fact back in prose. Also recorded is why
+this is not method-sophistication creep: it fails ADR-0009's first test outright and stands on
+AGENTS.md's measured-defect bar plus ADR-0016 part 1 — it adds a column to a finite and shrinking
+table, not a parameter to an infinite one.*
+
+⚠️ **A hand count in `engine/doctor.py`'s own docstring was wrong in both figures** and is
+corrected in the same change. It said the flagged population was *"21 of 21 with 7 of them from two
+other publishers"*; it is 26 across 7 sources with 12 not Cyentia. It sat four lines below the
+sentence congratulating the module for making exactly that error impossible to go unnoticed.
+
 🔹 **Measured defect, small, deliberately not fixed in #212.** An unknown module id crashes with
 `TypeError: 'NoneType' object is not subscriptable` at `engine/evidence_packs.py:156` instead of
 saying the shard does not exist. Found by typing `de_industrial_ransomware` (the evidence filename)

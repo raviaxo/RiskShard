@@ -242,8 +242,16 @@ def artifact_fit_check(root):
     a landing page is often the only citable permalink, so a mismatch is a
     candidate for re-reading and not a defect on its face. What it makes
     impossible is for the count to be wrong without anyone noticing — ADR-0024
-    sized this by hand as "9 of the 21, all Cyentia" and it is 21 of 21 with 7
-    of them from two other publishers.
+    sized this by hand as "9 of the 21, all Cyentia" and it is **26 records
+    across 7 sources, 12 of them not Cyentia**. (This docstring itself carried
+    "21 of 21 with 7 of them from two other publishers" until 2026-11-20, which
+    was wrong in both figures: a hand count written beside the generator that
+    would have corrected it.)
+
+    Since ADR-0026 the line also splits the flagged population by whether anyone
+    has re-read the record against the publisher's file, and whether that reading
+    is still of the file we hold. Before that it read 26 before a re-read and 26
+    after one.
     """
     from engine.artifact_fit import fit_report, summary_line
 

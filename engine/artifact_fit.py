@@ -73,6 +73,34 @@ def stored_is_a_report(source):
     return (source.get("raw_path") or "").lower().endswith(REPORT_SUFFIXES)
 
 
+UNVERIFIED, VERIFIED, STALE = "unverified", "verified", "stale"
+
+
+def verification_state(record, source):
+    """Has anyone read this record against the publisher's file? (ADR-0026)
+
+    Three states, and the third is the reason the hash is recorded at all:
+
+      `unverified` — nobody has checked. **Not "clean"**; the same distinction
+        `unmanifested` carries. This is the default and most records are here.
+      `verified` — a human read the record against the stored artifact, and the
+        hash they read still matches the manifest.
+      `stale` — they did, and it no longer matches. The publisher reissued the
+        file, so the reading is of a document we no longer hold. The record falls
+        back to needing a re-read *by itself*, with nobody having to notice.
+
+    A date alone could not produce the third state, which is why ADR-0026 makes
+    the two fields travel together.
+    """
+    recorded = (record.get("artifact_verified_sha256") or "").lower()
+    if not recorded or not record.get("artifact_verified_at"):
+        return UNVERIFIED
+    stored = ((source or {}).get("sha256") or "").lower()
+    if stored and stored != recorded:
+        return STALE
+    return VERIFIED
+
+
 def artifacts_by_stem(root=None):
     """Stored artifacts grouped by stem. **Local only** — `sources/raw/` is not distributed.
 
@@ -141,6 +169,8 @@ def fit_report(root=None, records=None):
             "stored_artifact": stored,
             "stored_is_a_report": stored_is_a_report(source),
             "page_also_held": Path(source.get("raw_path") or "").stem in held_twice,
+            "verification": verification_state(record, source),
+            "verified_at": record.get("artifact_verified_at"),
         }
         mismatched.append(entry)
         if entry["stored_is_a_report"]:
@@ -159,6 +189,12 @@ def fit_report(root=None, records=None):
             "mismatched": len(mismatched),
             "cites_a_page_for_a_report_we_hold": len(flagged),
             "sources_flagged": len({e["source_id"] for e in flagged}),
+            # ADR-0026. The campaign's own progress bar: before this existed the
+            # flagged count was 26 before a re-read and 26 after one, so the only
+            # figure that could have shown the work was incapable of moving.
+            "flagged_verified": sum(1 for e in flagged if e["verification"] == VERIFIED),
+            "flagged_stale": sum(1 for e in flagged if e["verification"] == STALE),
+            "flagged_unverified": sum(1 for e in flagged if e["verification"] == UNVERIFIED),
             # Local-only. None, not 0, when sources/raw/ is absent — so a reader
             # can tell "we did not look" from "we looked and found none".
             "sources_held_twice": len(held_twice) if raw_available else None,
@@ -173,9 +209,13 @@ def summary_line(report):
     held_text = (f"{held} source(s) are held as both a page and a report"
                  if held is not None
                  else "sources/raw/ not present, so the page-also-held count is unmeasured")
+    stale = totals["flagged_stale"]
+    stale_text = f", {stale} stale" if stale else ""
     return (
         f"{totals['cites_a_page_for_a_report_we_hold']} evidence record(s) cite something "
-        f"other than the report we hold, across {totals['sources_flagged']} source(s); "
+        f"other than the report we hold, across {totals['sources_flagged']} source(s) "
+        f"({totals['flagged_verified']} re-read against the publisher file and still matching"
+        f"{stale_text}, {totals['flagged_unverified']} not yet read); "
         f"{totals['mismatched']} record(s) cite something other than the stored artifact; "
         f"{totals['unmanifested']} record(s) have no manifest entry to compare against; "
         f"{held_text}"

@@ -26,6 +26,8 @@
           "source_url_or_citation": { "type": "string" },
           "publication_date": { "type": "string" },
           "extraction_date": { "type": "string" },
+          "artifact_verified_at": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+          "artifact_verified_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
           "citation_detail": { "type": "string" },
           "extraction_notes": { "type": "string" },
           "normalization_notes": { "type": "string" },
