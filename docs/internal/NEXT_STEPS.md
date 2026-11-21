@@ -177,13 +177,24 @@ waiting on you.***
 
 ## Restart point
 
-**2026-11-20 session closed. `main` at `32a40fc` == `origin/main`, tree clean, no local branch, no
-open PR, no stray remote branch. `v0.14.0` is still the current release — and that is now the one
-thing on the board that should not stay true. 647 tests pass (560 at the 2026-11-11 close),
-evidence clean, preflight clean, and the doctor reads **18 of 19 pass**. The single `needs_review`
-is the strength ledger: the pack is `b5754a553527` and has moved six times today, so the
-"batch it with item F" recommendation has outlived itself — item F is closed and the release is
-owed.**
+**2026-11-20 session closed. `main` at `4ebae5b` == `origin/main`, tree clean, no local branch, no
+open PR, no stray remote branch. `v0.15.0` is the current release, tagged on the merge commit and
+serving: the pinned citation at `/r/2026.11.20-v0.15.0/` returns **200** and the served page is
+byte-identical to the committed archive. 647 tests pass (560 at the 2026-11-11 close), evidence
+clean, preflight clean, and **the doctor reads pass on all 19** — no amber line anywhere. That is
+the state the `v0.14.0` release left on 2026-11-11 (see the close block below), restored after six
+pack moves today. *The first draft of this sentence claimed it was the first all-pass since
+2026-10-24, which the block below contradicts. Caught by reading the file instead of recalling it,
+in the same block whose lesson is to do that.*
+
+*⚠️ This block was written an hour earlier saying `v0.14.0` is still the current release, 18 of 19,
+`main` at `32a40fc`, and "the release is owed". All four were false by the time anyone could have
+read it, because the release was cut after the close commit. **That is the third consecutive
+restart point to go stale on this exact field**, and the two notes below already say so about the
+two before it. Corrected on being asked whether the session was safe to close, which is later than
+it should have been caught and earlier than a reader would have hit it. The pattern is not
+carelessness: this block describes repo state, and writing it before the last state change
+guarantees it is wrong. **Write it last, or generate it.***
 
 **✅ THE ADR-0026 RE-READ CAMPAIGN IS COMPLETE.** `artifact fit` reads **28 re-read against the
 publisher file and still matching, 0 not yet read, 0 stale**. Six PRs merged today:
