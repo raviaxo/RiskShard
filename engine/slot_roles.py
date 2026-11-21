@@ -41,7 +41,16 @@ from engine.coherence import ANCHORS, NON_RANGE_PREFIXES
 MODAL_BASES = frozenset()
 
 #: Published central tendencies. A mean is not a mode and it is not a minimum.
-CENTRAL_TENDENCY_BASES = frozenset({"mean_total_event_cost", "median_total_event_cost"})
+CENTRAL_TENDENCY_BASES = frozenset(
+    {
+        "mean_total_event_cost",
+        "median_total_event_cost",
+        # ADR-0028. A geometric mean is a central tendency, so it belongs here. Leaving
+        # it out would have retired a published finding by renaming its subject: the
+        # three IRIS 2022 records sit in `min` slots and are flagged for exactly that.
+        "geometric_mean_total_event_cost",
+    }
+)
 
 #: Families this module assesses. See the scope note above.
 ASSESSED_FAMILIES = ("impact",)

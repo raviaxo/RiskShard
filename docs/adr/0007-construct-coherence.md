@@ -104,6 +104,7 @@ Impact-side bases:
 | --- | --- |
 | `mean_total_event_cost` | mean total cost per event |
 | `median_total_event_cost` | median total cost per event |
+| `geometric_mean_total_event_cost` | geometric mean total cost per event — added by [ADR-0028](0028-a-geometric-mean-is-its-own-basis.md); in IRIS 2022 the geomean is $266K against an arithmetic mean over $25M, so the two are not interchangeable |
 | `cost_component` | a named subset of total cost (crisis services, restoration, ransom paid, recovery excluding ransom) |
 | `single_documented_event_loss` | the loss from one named, documented incident |
 | `perceived_cost_self_reported` | cost as estimated by a survey respondent, not measured |

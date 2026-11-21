@@ -476,6 +476,81 @@ the same way.
 📈 **`artifact fit`: 28 flagged, 22 re-read, 6 not yet.** Remaining: `cyentia_iris_2022` (3),
 `ponemon_dtex_cost_insider_risks_2023` (2), `ibm_cost_data_breach_2025` (1).
 
+# ✅ THE RE-READ CAMPAIGN IS COMPLETE — 2026-11-20
+
+**`artifact fit` reads 28 re-read against the publisher file and still matching, 0 not yet read,
+0 stale.** Every evidence record that cites something other than the report we hold has now been
+checked against that report. It read **26 and 26** before [ADR-0026](../adr/0026-a-re-read-is-a-declared-property.md)
+made the count capable of moving.
+
+✅ **Records 18 to 23, the last six.** Three sources, three different kinds of outcome.
+
+**Cyentia IRIS 2022 — the label named the wrong statistic.** `$266K` is the **geometric mean**; the
+median is `$259K`, and Table 3 prints both on one row (N=1,893). Three records carried
+`median_total_event_cost`. IRIS **2025** confirms the convention changed, in its own footnote:
+*"Prior IRIS used the geometric mean for a typical loss."*
+[ADR-0028](../adr/0028-a-geometric-mean-is-its-own-basis.md) mints
+`geometric_mean_total_event_cost` — the 19th `measurement_basis` — rather than swapping the value to
+fit the dictionary. **No value moved**, which matters because
+`cyentia_iris_2022_typical_cyber_event_loss_usd` is `impact.min` for the third-party-outage
+drift-watch scenario. The same table shows why folding a geomean into `mean_total_event_cost` would
+have been worse than the original error: the **arithmetic mean of this distribution is over USD
+25,000,000**, about a hundred times the geomean, and the report says so itself. The new basis joins
+`CENTRAL_TENDENCY_BASES` — leaving it out would have retired three rows of published finding 1 by
+renaming their subject.
+
+**Ponemon/DTEX 2023 — two categories spliced together.** The malicious-insider record read *"an
+average of **6.2 incidents** and an average cost per incident of $701,500"*. The cost is right. **6.2
+is the CREDENTIAL-THEFT frequency**; criminal and malicious insider incidents average **6.9**
+(Figure 2). Both numbers are in the report, attached to different profiles. **No check caught it,
+and it stopped mattering only by accident** — the 2026 edition superseded the record for
+`impact.likely` and its extraction read Table 2 correctly. *An edition refresh is not a review*, and
+that is now written on the record. The credential-theft record ($679,621, **selected** as
+`impact.min`) verified exactly, and its hypothetical *"negligent insider incidents can cost far
+less"* is now the publisher's own figure: **USD 505,113**, the most frequent profile at 55% of
+incidents, **26% below our floor**.
+
+**IBM 2025 — exact, but quoted from a paraphrase.** `USD 4.44M` matches the report sentence
+verbatim. The citation had quoted a secondary paraphrase instead.
+
+⚠️ **A correction I owe from the IRIS 2025 work, recorded rather than quietly fixed.** That PR said
+the three `$32M` records were *"unselected comparison anchors"*. True of the **eleven shards**, and
+false of the repository: `cyentia_iris_2025_extreme_security_incident_loss_usd` is `impact.max` for
+**two drift-watch scenarios** — `au_finance_insider_misuse` and `au_finance_third_party_outage`. So
+the `none_known` → `modeled_quantile` correction **did** reach published exceedance statements, on
+two scenarios rather than none. A better outcome than claimed, and the claim was still wrong.
+
+⚠️ **A guard predicted its own retirement and was right.** `test_the_line_is_exercised_by_real_data`
+asserted both ends of the counter were non-zero, saying *"zero unverified would mean the campaign is
+finished, which it is not — and if it ever is, this failing is the right way to find out."* It fired
+today. The finished state now has an owner that asserts **zero unverified and zero stale**, because
+*nothing left to read* and *a publisher reissued a file* would otherwise look identical.
+
+## What the campaign produced, measured
+
+| | |
+| --- | --- |
+| records re-read | **28**, across 7 sources |
+| published numbers corrected | **3** frequency floors (ADR-0027) |
+| measurement bases corrected | **3** (ADR-0028) |
+| exceedance declarations corrected | **3** (`none_known` → `modeled_quantile`), reaching 2 scenarios |
+| records found already sound | **5** — four NetDiligence, one IBM |
+| ADRs written and accepted | **3** — 0026, 0027, 0028 |
+| held-but-unused figures recorded | **1** (the 51% manufacturing share) |
+| tests | 560 → **647** |
+
+**The single most useful result is not a correction.** In three of the five sources the extraction
+was *faithful to the document it read* — the publisher's own summary page — and the page had dropped
+a qualifier, a percentile or a denominator. **The failure mode is not careless reading. It is
+reading an accurate summary instead of the report.** That is the sentence the whole campaign earned,
+and it is the argument for ADR-0016's freeze: depth found a 20x error inside a shard we had already
+shipped.
+
+🔵 **Next, now that the queue's biggest item is closed:** the **21 records with no manifest entry**.
+They are unmeasured rather than clean and nobody has ever asked whether their citations match
+anything. And the release is now **three ADRs and six pack moves** past the point where batching was
+the cheap call.
+
 📈 **The counter works: `artifact fit` reads 10 re-read, 16 not yet read.** It read 26 and 26 before
 ADR-0026.
 
