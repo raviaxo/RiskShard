@@ -1,0 +1,496 @@
+{
+  "created_at": "2026-11-20T20:03:20",
+  "file_count": 93,
+  "fingerprint": "b5754a553527d83593cca29e8b4cad890b10b2abc64c37ff4318afc74266dc60",
+  "manifest": {
+    "file_count": 93,
+    "files": [
+      {
+        "path": "calibrations/au_finance_ai_enabled_fraud.yaml",
+        "sha256": "1350bb6dd7dc18e28b110e9620b6c5bb0d734f65b9dbfb477f549c5ad442c92f",
+        "size_bytes": 3649
+      },
+      {
+        "path": "calibrations/au_finance_business_email_compromise.yaml",
+        "sha256": "73cf8d1d36991fc88a9c850304adf52e78ec7c82f973a7ddb28e0c7b4cf7722d",
+        "size_bytes": 2852
+      },
+      {
+        "path": "calibrations/au_finance_data_breach.yaml",
+        "sha256": "c115d0423ea1b4f7d8ad7eabb34d981b833d21e90ef877c6fe504d73dbf4f64a",
+        "size_bytes": 3409
+      },
+      {
+        "path": "calibrations/au_finance_insider_misuse.yaml",
+        "sha256": "350f2f34f32e47e68057dc44bb60a91dcdc20ade5473589eee9c4a2e913b9a41",
+        "size_bytes": 4677
+      },
+      {
+        "path": "calibrations/au_finance_ransomware.yaml",
+        "sha256": "731ee01d7ca2f9806a8acd58d6d24374f6c78152fbfb2972aed5d969b60382c1",
+        "size_bytes": 3468
+      },
+      {
+        "path": "calibrations/au_finance_third_party_outage.yaml",
+        "sha256": "a6be8baa306c05832b7a239dbf5770f2f993fb2ae3e51c20bfd7827401df9ea7",
+        "size_bytes": 3445
+      },
+      {
+        "path": "calibrations/ca_finance_data_breach.yaml",
+        "sha256": "6044e2171996edfcce0132e9378015bbee6a090eb4371a2b9ff4717a6a81d83f",
+        "size_bytes": 3918
+      },
+      {
+        "path": "calibrations/de_industrial_ransomware.yaml",
+        "sha256": "37b6d564076d0bdb855f64c424cc4b8d54cfc43fa16c1da852e33a7cf35cf49b",
+        "size_bytes": 2138
+      },
+      {
+        "path": "calibrations/fr_finance_data_breach.yaml",
+        "sha256": "c51b19b74638de762fa09c4c4cfb52315c5eaaaccbcd12f098cda2b0e389a222",
+        "size_bytes": 3937
+      },
+      {
+        "path": "calibrations/fx_rates.yaml",
+        "sha256": "ea40466a256138012398d584f3c4535a936635fa25581b3ca5e63155aff2dd15",
+        "size_bytes": 5727
+      },
+      {
+        "path": "calibrations/gb_finance_data_breach.yaml",
+        "sha256": "c61fe0a8d9eb6563181d823f7271bc5ea26f4ed0dcd28b09a4ae15f8bdce0135",
+        "size_bytes": 2371
+      },
+      {
+        "path": "calibrations/gb_finance_data_breach_regulatory_chain.yaml",
+        "sha256": "984d118d34b1f340f70f35349ff4b1a986f48401ea8ff73e56bd698033d0b57b",
+        "size_bytes": 4094
+      },
+      {
+        "path": "calibrations/jp_manufacturing_ransomware.yaml",
+        "sha256": "a62438ebca9df9f96b5bac09468dc2112dc31e64eb0496870e7d4349b3c534ad",
+        "size_bytes": 2694
+      },
+      {
+        "path": "calibrations/sg_finance_bec.yaml",
+        "sha256": "43fb3070e1606eee52142c17563b847d860e30303ea8e0d61e45da6402221429",
+        "size_bytes": 3196
+      },
+      {
+        "path": "calibrations/us_finance_business_email_compromise.yaml",
+        "sha256": "fce8fce9c43fda412e4885999c52bb80e7e88cf1e09131cecc19ed345c6471c3",
+        "size_bytes": 2873
+      },
+      {
+        "path": "calibrations/us_finance_data_breach.yaml",
+        "sha256": "e315b5731fca0ab8608d9abce5e4bf5bfe6630c25d3affd2c23bbd7f69291cc6",
+        "size_bytes": 2412
+      },
+      {
+        "path": "evidence/ai_enabled_fraud.yaml",
+        "sha256": "cc8e26ab821d530a1274530993e951a88a0708926ab36793a593254b94de77b3",
+        "size_bytes": 9154
+      },
+      {
+        "path": "evidence/au_finance_bec.yaml",
+        "sha256": "32a0156d33083bf803037491542e3da0bc1993e6993c8e44a3f6f5a50ea28bf6",
+        "size_bytes": 25725
+      },
+      {
+        "path": "evidence/au_finance_data_breach.yaml",
+        "sha256": "5ae05b3623ca5c53bf66452d96c0269facfb905fe3cb8dce8b1269b940a3bdcf",
+        "size_bytes": 27731
+      },
+      {
+        "path": "evidence/au_finance_ransomware.yaml",
+        "sha256": "ba05f14c794bba8f84bc35df396b23d32c9d71b4d17c147c38662250f41b544b",
+        "size_bytes": 24067
+      },
+      {
+        "path": "evidence/ca_finance_data_breach.yaml",
+        "sha256": "ae19af0cd8f57a5cf38f169869254679fb7c3c6d15541ba6779aa3d883d5d218",
+        "size_bytes": 17855
+      },
+      {
+        "path": "evidence/de_industrial_ransomware.yaml",
+        "sha256": "dd4ee7807147ee13f4fdae510b935cb47184c656e28cd1be7cdfeb0972b5aee9",
+        "size_bytes": 22660
+      },
+      {
+        "path": "evidence/fr_finance_data_breach.yaml",
+        "sha256": "f5ff2fb869f92c2bf0d8b00f9caff0e836cf4fb2184db99d27d4f0ca2283f59e",
+        "size_bytes": 11234
+      },
+      {
+        "path": "evidence/gb_finance_data_breach.yaml",
+        "sha256": "5c38e2f8bab990eb3d62ed6d2a9e7a62a95bbcdf177134395c0e8383aacb4516",
+        "size_bytes": 10075
+      },
+      {
+        "path": "evidence/insider_misuse.yaml",
+        "sha256": "6a263e1ab1ecd6e49a706a3c4231f67a0bfa43810684e84293c4b1f3e9e242f9",
+        "size_bytes": 12949
+      },
+      {
+        "path": "evidence/jp_manufacturing_ransomware.yaml",
+        "sha256": "f0cca6c6bbd3dd4a2c988e6c3adbaa508cd58022c9b165a6840074665a1d98d4",
+        "size_bytes": 31867
+      },
+      {
+        "path": "evidence/regulatory_penalty_stage.yaml",
+        "sha256": "e6884242ee83ccc59e87e67df2ae5b139863d5a953f1f054843e47a2cb7afc8d",
+        "size_bytes": 8586
+      },
+      {
+        "path": "evidence/sg_finance_bec.yaml",
+        "sha256": "bbe8b791ae40e93cc06a510f52667cc4717fe91aed7c50a613d9f41db667aa02",
+        "size_bytes": 13641
+      },
+      {
+        "path": "evidence/third_party_outage.yaml",
+        "sha256": "ff468d35c7462f4fba2ee5448b12a4561b6fde0f5797dc219971819058fe1795",
+        "size_bytes": 13222
+      },
+      {
+        "path": "evidence/us_finance_bec.yaml",
+        "sha256": "51b34805c0833d9a14350ea997704c04711b3931b80dacd93039b3bc93ba7314",
+        "size_bytes": 19693
+      },
+      {
+        "path": "evidence/us_finance_data_breach.yaml",
+        "sha256": "1133f40191a6345b3f04d5872ad3e2b8e3dca6b6bccd1ec7819c84635f9a79f6",
+        "size_bytes": 12734
+      },
+      {
+        "path": "extractions/au_finance_bec_reviewed.yaml",
+        "sha256": "752d02e305d195b026814eaba49687923a59b205e912ca38d5c21d37fc348d32",
+        "size_bytes": 10084
+      },
+      {
+        "path": "extractions/au_finance_data_breach_reviewed.yaml",
+        "sha256": "bf7206be4b23c6d779401c6213cfbbe8521ce26c1859e3e7084496cfd6a75dfa",
+        "size_bytes": 12640
+      },
+      {
+        "path": "extractions/au_finance_ransomware_reviewed.yaml",
+        "sha256": "e111ed51a7ecdb7709bc6a60a8c8ff84593f0227eb70abab0cce2813de4a2761",
+        "size_bytes": 11301
+      },
+      {
+        "path": "extractions/ca_finance_data_breach_reviewed.yaml",
+        "sha256": "8a1b94f8770c73d4ab9c0bf253aa4196f273eb14e2c0b31512543fa1e0b1a2ae",
+        "size_bytes": 10277
+      },
+      {
+        "path": "extractions/cyentia_iris_2025_table1_loss_percentiles.txt",
+        "sha256": "c608f069fd0acd48448999e70bd5f4254c4c6f13e0a4cd917cc696ec23625623",
+        "size_bytes": 1820
+      },
+      {
+        "path": "extractions/de_industrial_ransomware_reviewed.yaml",
+        "sha256": "3d96852031f3ea4d236a15d4a0615979e04a20b378c574def3e4452ecc6c675d",
+        "size_bytes": 7828
+      },
+      {
+        "path": "extractions/fr_finance_data_breach_reviewed.yaml",
+        "sha256": "a3f0fe87c880c3f5e8d13deafa168f836f4b2068b55069ee4438914e43995b91",
+        "size_bytes": 9715
+      },
+      {
+        "path": "extractions/gb_finance_data_breach_reviewed.yaml",
+        "sha256": "2d172f911549cf353e2fea4ed829cdaeac154205b5a0dbf27871534c8233e70b",
+        "size_bytes": 6229
+      },
+      {
+        "path": "extractions/jp_manufacturing_ransomware_reviewed.yaml",
+        "sha256": "ef9dc891ead23604906ce5894a3d4ddca943e4ed2f2a9c37d010829b029afc44",
+        "size_bytes": 12807
+      },
+      {
+        "path": "extractions/sg_finance_bec_reviewed.yaml",
+        "sha256": "e0348790d973ff024022ad1f7c9faafd94d71b69ea71dc17fe1dcbf0493d23e5",
+        "size_bytes": 3472
+      },
+      {
+        "path": "extractions/us_finance_bec_reviewed.yaml",
+        "sha256": "b588a6779662d01a0eb06a8a38246d33f7589337df20ed2668f476080a836ef5",
+        "size_bytes": 2454
+      },
+      {
+        "path": "extractions/us_finance_data_breach_reviewed.yaml",
+        "sha256": "b17114bf989ce314f7fcf6d11fac80faa2cddd43182d87d6175872ee854c65a4",
+        "size_bytes": 5902
+      },
+      {
+        "path": "risk_modules/README.md",
+        "sha256": "67c1465d057ebe109af206877d4bca038c6cf56c21a68be8c762cd8ee76e9033",
+        "size_bytes": 657
+      },
+      {
+        "path": "risk_modules/au_finance_bec_midmarket.yaml",
+        "sha256": "c6193c962e96c0b4c3258528ecff792d4f1d57b5100dedee09035bd03b5bfdb2",
+        "size_bytes": 1275
+      },
+      {
+        "path": "risk_modules/au_finance_data_breach_midmarket.yaml",
+        "sha256": "706159eed04fe878b3d3abbd851fb8fce6d52ec944c3b3dee6d4a9a9829030c0",
+        "size_bytes": 1507
+      },
+      {
+        "path": "risk_modules/au_finance_ransomware_midmarket.yaml",
+        "sha256": "cedbecf1f52f69527a3bb2bfca81ee342c9448afb7b1f823b0b475e04e9b892e",
+        "size_bytes": 1824
+      },
+      {
+        "path": "risk_modules/ca_finance_data_breach_midmarket.yaml",
+        "sha256": "11d43b24ba0f5c540810471771ff4c408eb3db1e6bb7fcc2ab92c012666f56d0",
+        "size_bytes": 1548
+      },
+      {
+        "path": "risk_modules/de_industrial_ransomware_midmarket.yaml",
+        "sha256": "793e564da84971d8315712667585ed35e3a27f0b8f9bb223da60e52f52ea1a52",
+        "size_bytes": 1364
+      },
+      {
+        "path": "risk_modules/fr_finance_data_breach_midmarket.yaml",
+        "sha256": "2014436543dab00ca6d34ca58152f933f2882e247d7a33b75eb1b843f4e79dcd",
+        "size_bytes": 2054
+      },
+      {
+        "path": "risk_modules/gb_finance_data_breach_midmarket.yaml",
+        "sha256": "93fb6d10d03b19e47487aa7f204b9f15b812fdbd2db23add90a47b805c1e45a8",
+        "size_bytes": 1496
+      },
+      {
+        "path": "risk_modules/jp_manufacturing_ransomware_midmarket.yaml",
+        "sha256": "30b0f910b91a4b3b307d60e464850ca007c11525ad13f5aa442e4ef73ce701e9",
+        "size_bytes": 1611
+      },
+      {
+        "path": "risk_modules/sg_finance_bec_midmarket.yaml",
+        "sha256": "95eb0caa15b40005749f9811519a88a49801c0a3511ece4aa5f893b06da3a53f",
+        "size_bytes": 1329
+      },
+      {
+        "path": "risk_modules/us_finance_bec_midmarket.yaml",
+        "sha256": "31082f698698b379b8132f050edda05a2297544eedd885bb4fec3b94f95f251c",
+        "size_bytes": 1204
+      },
+      {
+        "path": "risk_modules/us_finance_data_breach_midmarket.yaml",
+        "sha256": "4bbe993315a3b0b82d4c8a524e5c28baefb36f36b55b27da91d2f9b27b0ad1af",
+        "size_bytes": 1745
+      },
+      {
+        "path": "scenarios/README.md",
+        "sha256": "915fbed546e7b8e09382bd7731897486301cc2e00e191c10410a722ffe2ec81a",
+        "size_bytes": 2107
+      },
+      {
+        "path": "scenarios/ai_enabled_fraud.yaml",
+        "sha256": "56ca7e329e8154d2035751b6f3041cd289caff186f160a852ea2fc99437cbc01",
+        "size_bytes": 860
+      },
+      {
+        "path": "scenarios/au_finance_ransomware_midmarket.yaml",
+        "sha256": "0cc3edf88f179e90ba24c06bbb6a28599c6c979ab28808099b4e69e936968d8f",
+        "size_bytes": 1014
+      },
+      {
+        "path": "scenarios/business_email_compromise.yaml",
+        "sha256": "e4402501fa959b63c95e25934b8465fb3d3a0e82f1db11f4332f24a63526c126",
+        "size_bytes": 709
+      },
+      {
+        "path": "scenarios/ca_finance_data_breach_midmarket.yaml",
+        "sha256": "e110fb2d2226c52714898408dd6d12d32253d24099960b8cf3412cec8713b732",
+        "size_bytes": 1068
+      },
+      {
+        "path": "scenarios/data_breach.yaml",
+        "sha256": "9a5647ef401f63268cce130714a0495b2a7945ea67c72fa0e197c5694320bc8b",
+        "size_bytes": 261
+      },
+      {
+        "path": "scenarios/de_industrial_ransomware_midmarket.yaml",
+        "sha256": "04f870f5b0430b0f6e49c28e3a8d18e42bd1388f13b25936af38044715ce1a0b",
+        "size_bytes": 602
+      },
+      {
+        "path": "scenarios/fin_ransomware_v1.yaml",
+        "sha256": "c65f20c3c5ed369ebaedaeb678540ba0cc106b06eab49a21fd35b43c443bc9ba",
+        "size_bytes": 231
+      },
+      {
+        "path": "scenarios/fr_finance_data_breach_midmarket.yaml",
+        "sha256": "fb8737400ae54c26419f5a77c5eeb6a508bf3073b9f9601e5181c8a187c2aa68",
+        "size_bytes": 1097
+      },
+      {
+        "path": "scenarios/gb_finance_data_breach_midmarket.yaml",
+        "sha256": "dbb42ea19bdbb2d47cfd424abbd2fbd38c33651dabdfeb90c4aa45ae86893435",
+        "size_bytes": 710
+      },
+      {
+        "path": "scenarios/gb_finance_data_breach_regulatory_chain.yaml",
+        "sha256": "e5341178fcfdb72cdd0f330f619d8ecc22eb0a4be5d420aeb16e16de80f25030",
+        "size_bytes": 1925
+      },
+      {
+        "path": "scenarios/insider_misuse.yaml",
+        "sha256": "f5827973342ffe7f4ded40fccf9902b279eee6ac7efe65255350f8bd7b22849d",
+        "size_bytes": 1134
+      },
+      {
+        "path": "scenarios/insider_threat.yaml",
+        "sha256": "ca969ac36b8d3fb7dba41a56f03d279fdea1e0edc4fa10053a0f52b563d76648",
+        "size_bytes": 181
+      },
+      {
+        "path": "scenarios/jp_manufacturing_ransomware_midmarket.yaml",
+        "sha256": "1ce3ab174d68ec2c0b402a16454ff5f32b3c71761877fa782fcadb59a17ff320",
+        "size_bytes": 915
+      },
+      {
+        "path": "scenarios/ransomware.yaml",
+        "sha256": "c18381b876b41c6c8ac61caa33e7c7e79a8972d041216df2277d62a1310b75a7",
+        "size_bytes": 185
+      },
+      {
+        "path": "scenarios/saas_ransomware.yaml",
+        "sha256": "de4822301fd381cd84cb3d432b579f61dee2c93ae6cb334b1ba8b67c7065f0fc",
+        "size_bytes": 304
+      },
+      {
+        "path": "scenarios/saas_ransomware_midmarket.yaml",
+        "sha256": "2422f10de2b4a0d47274910572e8d7a95d712c20ba7a7df53abbb78f2929b0d7",
+        "size_bytes": 468
+      },
+      {
+        "path": "scenarios/sg_finance_bec_midmarket.yaml",
+        "sha256": "23b055be45e314000fb3fee4d7adb89be32b425a9915ab802de59171a1c06840",
+        "size_bytes": 989
+      },
+      {
+        "path": "scenarios/third_party_outage.yaml",
+        "sha256": "412edeb10c66d275b88dae6adf1e0a7d571409dcfb8009e088a09675acfccb0b",
+        "size_bytes": 878
+      },
+      {
+        "path": "scenarios/us_finance_business_email_compromise.yaml",
+        "sha256": "00aa4cdc95f52379587541fdc3c3d7baa8a2b529198bea221c15ac30da733723",
+        "size_bytes": 568
+      },
+      {
+        "path": "scenarios/us_finance_data_breach_midmarket.yaml",
+        "sha256": "3da983a1d8a5f0114399f4cc04c1d665ca4b9bc6293fab5e56b8a69c01e8d124",
+        "size_bytes": 909
+      },
+      {
+        "path": "schemas/control_profile_schema.json",
+        "sha256": "3809c0f1b19a2fbf9b8651c9886b2e67980c127fcd68635a292e0c731bc995dc",
+        "size_bytes": 875
+      },
+      {
+        "path": "schemas/evidence_record_schema.json",
+        "sha256": "9e1ba4583a7d56e5dda6fd7f76898ce2add611833e001a6300653900eae107b5",
+        "size_bytes": 6272
+      },
+      {
+        "path": "schemas/extraction_schema.json",
+        "sha256": "ba1be5223f5f7d36f285d47463af4fc6e41f658f0f7edd83ba7c552947f77b7f",
+        "size_bytes": 1473
+      },
+      {
+        "path": "schemas/loss_event_schema.json",
+        "sha256": "e46532b4df9f6fceaeab1de760b2f4086243abc599beb75d1a6bb82305d4eb74",
+        "size_bytes": 11412
+      },
+      {
+        "path": "schemas/org_profile_schema.json",
+        "sha256": "c871edde5608d465cd054c8e1c6aaeb0a8fe4ff8b0f21fb37c3839146172e425",
+        "size_bytes": 1232
+      },
+      {
+        "path": "schemas/provenance_schema.json",
+        "sha256": "1ecf038d0b4e83552c3bac33af9046dcea3a36d2eee7a65e00fd88d80bf0790d",
+        "size_bytes": 1384
+      },
+      {
+        "path": "schemas/shard_schema.json",
+        "sha256": "c24a63ec10dabbf8ed54a20b518cb032df71a3998e49cfb04628c73bd56a5a56",
+        "size_bytes": 2712
+      },
+      {
+        "path": "schemas/source_audit_schema.json",
+        "sha256": "d78b307140b6db30f9c4e0096eec720f0f7da8efe3b75007fd27b994be90b78b",
+        "size_bytes": 5824
+      },
+      {
+        "path": "sources/manifest.json",
+        "sha256": "86f2989ae0828cc24629dd566fbc9c7dfab495ab3380873436780ffe99106703",
+        "size_bytes": 110367
+      },
+      {
+        "path": "sources/registry.yaml",
+        "sha256": "cee37dc4071aab1ae49747dd2e65d81719eab7dc5a95383be41e71eb0bbefa62",
+        "size_bytes": 78122
+      },
+      {
+        "path": "taxonomies/company_sizes.yaml",
+        "sha256": "fcafa0f25c857e17819120d4cb42b8aa33c9f9322fc96a4ccc95b2dfcf48aa47",
+        "size_bytes": 562
+      },
+      {
+        "path": "taxonomies/countries.yaml",
+        "sha256": "164be7e3f613217d5023fd3b039c3f2f4122a93083e51e952ac54e8ab4287d9c",
+        "size_bytes": 2003
+      },
+      {
+        "path": "taxonomies/country_priorities.yaml",
+        "sha256": "f3e12e7fd0d6824cdc3b5e0051757cfaf3233efede16d34ea3ed7d5e874d9041",
+        "size_bytes": 11426
+      },
+      {
+        "path": "taxonomies/industries.yaml",
+        "sha256": "60cc465cfef3f07b84ab7a7009080f3a44f8d1be0700c2c117af668c2794d23a",
+        "size_bytes": 788
+      },
+      {
+        "path": "taxonomies/source_types.yaml",
+        "sha256": "c0037f40a2597133defc53cde47b229257b154046a03ce3c9380d2e83f1468aa",
+        "size_bytes": 1999
+      },
+      {
+        "path": "taxonomies/threats.yaml",
+        "sha256": "0159298e6cbfb2df158fc9dc06769022a6fa1cc66de42490cba81a9e9b16dafd",
+        "size_bytes": 989
+      },
+      {
+        "path": "threat_library/starter_pack.yaml",
+        "sha256": "2be4c9f73a128c5249fc781e7c240c24e63c96280628ac4906e733b94eb724d6",
+        "size_bytes": 2929
+      }
+    ],
+    "fingerprint": "b5754a553527d83593cca29e8b4cad890b10b2abc64c37ff4318afc74266dc60",
+    "generated_at": "2026-11-20T20:03:20",
+    "pack_version": "2026.11.20",
+    "paths": [
+      "sources/registry.yaml",
+      "sources/manifest.json",
+      "evidence",
+      "extractions",
+      "calibrations",
+      "scenarios",
+      "taxonomies",
+      "threat_library",
+      "risk_modules",
+      "schemas"
+    ]
+  },
+  "notes": "The ADR-0026 re-read campaign: all 28 flagged evidence records read against the publisher file they cite, with three ADRs out of it (0026 a re-read is a declared property pinned to the artifact hash, 0027 a frequency floor is the published lower bound band-matched to the org profile, 0028 a geometric mean is its own measurement basis). Three published frequency floors, three measurement bases and three exceedance declarations corrected.",
+  "pack_version": "2026.11.20",
+  "release_type": "riskshard_data_pack_release",
+  "release_version": "2026.11.20-v0.15.0",
+  "source_manifest_path": "sources/manifest.json",
+  "source_manifest_sha256": "86f2989ae0828cc24629dd566fbc9c7dfab495ab3380873436780ffe99106703"
+}

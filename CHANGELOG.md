@@ -5,6 +5,87 @@ practitioner-beta cadence: RiskShard is a working beta, **not** a finished or
 human-certified product, and no grade in a release implies benchmark-grade —
 that remains a recorded human review decision.
 
+## v0.15.0 — 2026-11-20
+
+**Every evidence record that cited something other than the report we hold has now been read
+against that report.** 28 of 28, across 7 publishers, with three ADRs out of it. Three published
+frequency floors move — the only parameter values that change in this release — and all three move
+**down**, because the figure we were using as a floor turned out to be the publisher's ceiling.
+
+**The failure mode was not careless reading.** In three of the five sources the original extraction
+was *faithful to the document it read*: the publisher's own accurate summary page, which had
+dropped a qualifier, a percentile or a denominator the report printed in plain sight. That is the
+finding this release exists to publish, and it is a claim about public cyber-loss evidence rather
+than about this repository.
+
+### A re-read became a declared property
+
+[ADR-0026](docs/adr/0026-a-re-read-is-a-declared-property.md). `artifact_verified_at` and
+`artifact_verified_sha256` on the record, together or not at all. The hash is the load-bearing
+half: the verification **expires itself** when a publisher reissues the file, because the manifest
+hash moves and the recorded one does not. Before it existed, the check reported 26 flagged records
+before a re-read and 26 after one — the only figure that would have shown the work was incapable of
+moving. Malformed input is an error, a stale hash is a warning, and absence is silence.
+
+### Three published frequency floors were the publisher's upper bound
+
+[ADR-0027](docs/adr/0027-a-floor-is-the-published-lower-bound.md). Cyentia IRIS Ransomware states
+*"about a 10% **upper bound** chance"*, and builds an explicit lower bound alongside it. The
+publisher's summary page paraphrases this as *"approximately 10% of organizations are likely to
+experience a ransomware incident within the next year"*, dropping the qualifier — and our records
+called the result a *"global ransomware likelihood floor"*. Table 3 publishes both bounds by revenue
+bracket, and all three org profiles sit in a named bracket above the study's own $10M cutoff:
+
+| shard | bracket | `frequency.min` was | now |
+| --- | --- | ---: | ---: |
+| `au_finance_ransomware_midmarket` | $10M–$100M | 0.10 | **0.0036** |
+| `de_industrial_ransomware_midmarket` | $100M–$1B | 0.10 | **0.012** |
+| `jp_manufacturing_ransomware_midmarket` | $100M–$1B | 0.10 | **0.012** |
+
+Simulated annual averages fall accordingly (AU 7,079,188 → 6,850,459; DE 583,555 → 559,088; JP
+780,903 → 752,273). The shards are not safer — they have stopped overstating their own best case.
+The upper bound is deliberately *not* adopted as a maximum: `frequency.max` stays on country-survey
+evidence.
+
+### A geometric mean got its own name
+
+[ADR-0028](docs/adr/0028-a-geometric-mean-is-its-own-basis.md).
+`geometric_mean_total_event_cost` is the 19th `measurement_basis`. IRIS 2022's *"typical"* $266K is
+the geometric mean, not the median ($259K), and three records said `median_total_event_cost`. No
+value moved. Folding it into `mean_total_event_cost` would have been worse than the original error:
+in that same report the arithmetic mean is **over $25M**, about a hundred times the geomean, and the
+report says so itself. The new basis joins `CENTRAL_TENDENCY_BASES`, so it does not quietly retire
+three rows of finding 1 by renaming their subject.
+
+### Corrections to published caveats, no values moved
+
+- **IRIS 2025's `$32M` is a stated 95th percentile**, printed twice (Figure 9 is labelled
+  `$32M (95%)`). Three records declared `exceedance_basis: none_known` and said the figure was *"not
+  a formal percentile"*. Now `modeled_quantile`, with the public-record bias of the population
+  named. The correction reaches two drift-watch scenarios.
+- **The `$3M` IRIS 2025 median is a single-year trend endpoint**, not the distribution median —
+  Figure 9's pooled median is **$603K**, so our figure sits 4.8× above it, and now says so.
+- **The Sophos `$5M` threshold behind two `modeled_quantile` maxima rests on `n=67`** — about twelve
+  organizations. The share rose from 15% to 18% while the count roughly halved, because disclosure
+  fell 57% between editions.
+- **A NetDiligence floor was a conditional average.** Figure 11 is titled *"Where Crisis Services
+  Costs >0"*, so USD 152,000 is the average given the cost was incurred, used as a floor on every
+  event.
+- **A Ponemon record spliced two profiles**: 6.2 incidents is the credential-theft frequency, not
+  the malicious-insider one (6.9). No check caught it; an edition refresh superseded it by accident.
+- **Five records were found already sound** — four NetDiligence and one IBM, verified to the page,
+  figure and N. For those, the flag was a citation-URL mismatch and nothing more.
+- **The 51% manufacturing ransomware incident share** was in the same sentence that gave us the 15%
+  financial-services figure, and only half the sentence had been taken. Now recorded.
+
+### Reach and governance
+
+- `engine/artifact_fit.py` splits its flagged population into verified / stale / unverified, and the
+  doctor line moves as records are read.
+- `engine/evidence_quality.py` validates the verification pair; `engine/slot_roles.py` learns the new
+  basis; the evidence schema gains two optional fields and one enum value.
+- 647 tests, up from 560 at v0.14.0.
+
 ## v0.14.0 — 2026-11-11
 
 **The registry trial is retired on its own criterion, and a maximum can finally say where it sits
