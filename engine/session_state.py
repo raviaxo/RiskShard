@@ -5,13 +5,18 @@ session reads first to learn where the repository stands. Three consecutive
 restart points went stale on the same field, and each one recorded that its
 predecessor had.
 
-* The 2026-10-27 block said `v0.13.0` was current and the ADR-0017 measurement
-  was ten days away. It was ten days **past** by the time anyone read it.
-* The 2026-11-11 block said 542 tests and `main` at `ea5cab6`, two merged PRs
-  out of date.
+* The 2026-10-22 block said `ddcdd40`, 531 tests, and no release owed until
+  2026-10-26. It was four days and two merged PRs out of date when read.
+* The 2026-10-27 block said `ea5cab6`, 542 tests, `v0.13.0` current, and the
+  2026-11-01 measurement ten days away. It was ten days **past** when read.
 * The 2026-11-20 block said `v0.14.0` was still current, the doctor read 18 of
   19, and "the release is owed". All three were false within the hour, because
   the release was cut after the close commit that recorded them.
+
+(The first draft of this list conflated the first two incidents into one and
+dated the second by the close that caught it rather than the close that wrote
+it. Corrected by reading the file, which is the lesson of the thing being
+built.)
 
 The third one diagnosed itself correctly: *this block describes repo state, and
 writing it before the last state change guarantees it is wrong. Write it last,
