@@ -30,6 +30,15 @@ restart point, top blocker) so the next `/session:start` boots clean. A session
 is not "closed" until the tree is clean, open work is reported, and the owner docs
 match reality.
 
+**The restart point's facts are generated, not typed** (since 2026-11-21):
+`python scripts/session_state.py --write --run-tests`, run as the **last** step of the
+close, after the last thing that changed the repository. Three consecutive restart points
+went stale on the same field because each was written before the session's last state
+change — one was false within the hour, because the release was cut after it. The narrative
+around the block is still hand-written; branch, parity, tree, release, suite, gates and the
+doctor line are not. The doctor's `restart point` check reports when the block has been
+overtaken.
+
 ## Definition of done
 
 The canonical engineering rules and DoD live in

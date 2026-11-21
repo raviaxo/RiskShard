@@ -11,6 +11,10 @@ code before completing it.
    - `docs/internal/NEXT_STEPS.md` — its header gives the restart point, current top
      blocker, canonical-owner pointers, and maturity ladder; its tail is the active queue.
      (Capabilities live in the README; live coverage in the readiness tools.)
+     The restart point opens with a **generated** block of repo state. Trust it only as far
+     as its stated measurement date, and confirm it in step 2 — if the doctor's
+     `restart point` check reads `needs_review`, that block has been overtaken: report the
+     drift rather than repeating it.
 2. Confirm repo reality — do not trust memory:
    - `git log --oneline -5` and `git status -s`
    - `git fetch origin && git log --oneline origin/main -3`; flag any divergence.

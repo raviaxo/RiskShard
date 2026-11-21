@@ -43,6 +43,7 @@ def build_doctor_report(root=PROJECT_ROOT, *, run_tests=False):
         intake_check(root),
         ledger_check(root),
         release_archive_check(root),
+        restart_point_check(root),
         tests_check(root, run_tests=run_tests),
     ]
     return {
@@ -593,6 +594,49 @@ def release_archive_check(root):
         }
     except Exception as exc:  # never let the nudge crash the doctor
         return {"name": "release archives", "status": "needs_review", "detail": str(exc)}
+
+
+def restart_point_check(root):
+    """Flag a restart point that no longer describes the repository.
+
+    `docs/internal/NEXT_STEPS.md` opens with the block the next session reads
+    first, and **three consecutive restart points went stale on the same field**
+    — the current release — because each was written before the release that
+    followed it was cut. The third said `v0.14.0` was current, the doctor read
+    18 of 19 and "the release is owed"; all three were false within the hour.
+    The block is generated now (`scripts/session_state.py --write`), and this
+    check is what notices when the generated copy has been overtaken.
+
+    It compares two fields and no more: the current release and the data pack
+    fingerprint. Neither is moved by the docs-only commit that records them,
+    both are what actually went stale, and the fields that would make a lively
+    check — the head sha, the test count — are precisely the ones a correct
+    close commit invalidates. Pinning those would turn every advance into a
+    red, which this repository has already paid for twice.
+
+    Reports rather than fails: a stale restart point misleads the next session,
+    it does not break a build.
+    """
+    try:
+        from engine.session_state import restart_point_status
+
+        status = restart_point_status(root)
+        if status["drift"]:
+            detail = "; ".join(status["drift"])
+            if "--write" not in detail:
+                detail += " - scripts/session_state.py --write"
+            return {"name": "restart point", "status": "needs_review", "detail": detail}
+        recorded = status["recorded"] or {}
+        return {
+            "name": "restart point",
+            "status": "pass",
+            "detail": (
+                f"generated {recorded.get('generated_at', '?')} at "
+                f"{str(recorded.get('head', ''))[:7]}; release and data pack still current"
+            ),
+        }
+    except Exception as exc:  # never let the nudge crash the doctor
+        return {"name": "restart point", "status": "needs_review", "detail": str(exc)}
 
 
 def tests_check(root, *, run_tests=False):
