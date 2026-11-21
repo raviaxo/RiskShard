@@ -196,15 +196,21 @@ class VerificationStateTests(unittest.TestCase):
             if entry["verification"] == "verified":
                 self.assertIsNotNone(entry["verified_at"], entry["evidence_id"])
 
-    def test_the_line_is_exercised_by_real_data_and_has_somewhere_left_to_go(self):
-        """Both ends matter.
+    def test_the_line_is_exercised_by_real_data(self):
+        """Zero verified would mean the field is decoration.
 
-        Zero verified would mean the new field is decoration. Zero unverified
-        would mean the campaign is finished, which it is not — and if it ever is,
-        this failing is the right way to find out.
+        **This test used to assert both ends were non-zero**, on the reasoning
+        that "zero unverified would mean the campaign is finished, which it is
+        not — and if it ever is, this failing is the right way to find out."
+
+        It was, and it did: on 2026-11-20 the last six records were read and the
+        unverified count reached zero, so the assertion fired. Kept as a record
+        of a guard predicting its own retirement. The finished state now has an
+        owner in `tests/test_final_six_reread.py`, which asserts zero unverified
+        *and* zero stale — because "nothing left to read" and "a publisher
+        reissued a file" would otherwise look identical from here.
         """
         self.assertGreater(self.totals["flagged_verified"], 0)
-        self.assertGreater(self.totals["flagged_unverified"], 0)
 
     def test_nothing_is_stale_right_now(self):
         """No publisher in the flagged set has reissued a file since its re-read.

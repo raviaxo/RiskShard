@@ -233,13 +233,15 @@ records:
     source_url_or_citation: https://www.cyentia.com/publication/iris-2022/
     publication_date: "2022-01-01"
     extraction_date: "2026-06-03"
-    citation_detail: Public source page key findings; typical financial cost reported for a cyber event is $266K.
-    extraction_notes: Cyentia reported a typical financial cost of USD 266,000 for a cyber event.
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: 8cf45ef222a4375dba486bd942c5734796e65b93f181e3431e60efed0d491677
+    citation_detail: 'Table 3, loss magnitude statistics for 1,893 cyber events: geometric mean USD 266,000, median USD 259,000, minimum USD 32, first quartile USD 29,000, third quartile USD 2,000,000, 95th percentile USD 52,000,000, maximum USD 12,000,000,000. Figure 6 states the same pair as "Median loss: $259K / Geometric mean: $266K". Read from the held report on 2026-11-20; the previous value of this field quoted the publisher summary page, which says only "typical financial costs reported for a cyber event stand at $266K" without saying which statistic that is.'
+    extraction_notes: 'Cyentia reported a typical financial cost of USD 266,000 for a cyber event. Re-read against the held report on 2026-11-20 (ADR-0028). The USD 266,000 is the GEOMETRIC MEAN, not the median - the median is USD 259,000 - and this record carried measurement_basis: median_total_event_cost until then. IRIS 2025 confirms the convention changed, in its own footnote: "Prior IRIS used the geometric mean for a typical loss ... the median is better central measure for the updated distribution." The value is unchanged; the label was wrong and the right statistic had no name in our vocabulary.'
     normalization_notes: Stored in source currency and selected as a conservative lower loss anchor for a material data-breach scenario.
-    limitations: Global cyber-event benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a true minimum loss quantile.
+    limitations: 'Global cyber-event benchmark, not data-breach-only, Australia-specific, financial-services-specific, or a true minimum loss quantile. Published alongside and recorded 2026-11-20 so the figure we chose sits beside the ones we did not: median USD 259,000, minimum USD 32, first quartile USD 29,000, 95th percentile USD 52,000,000, over N=1,893 events. The arithmetic mean of the same distribution is over USD 25,000,000 and the report calls it "not a good measure of typical losses due to the long-tailed distribution" - which is why a geometric mean needed its own measurement_basis rather than being folded into mean_total_event_cost.'
     confidence: low
     evidence_type: source_backed
-    measurement_basis: median_total_event_cost
+    measurement_basis: 'geometric_mean_total_event_cost'
     applicability:
       industries: [all]
       countries: [global]

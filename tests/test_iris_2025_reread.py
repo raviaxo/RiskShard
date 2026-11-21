@@ -141,12 +141,25 @@ class IrisReReadTests(unittest.TestCase):
             self.assertIn("2,900,000", notes, record_id)
 
     def test_no_shard_maximum_is_an_iris_2025_record(self):
-        """A tripwire, not an invariant.
+        """A tripwire over the eleven shards, and the scope matters.
 
-        These three $32M records are unselected comparison anchors and their own
-        prose says so. If a calibration later selects one, this fails — which is
-        the point: the prose has to be rewritten in the same change, rather than
-        going stale the way the two JP "selected as a bridge" notes did.
+        **Corrected 2026-11-20.** When this was written the claim beside it was
+        that all three $32M records are unselected comparison anchors. That is
+        true of the **eleven shards** — which is all `build_portfolio_brackets`
+        reports, so the assertion was never wrong — and false of the repository:
+        `cyentia_iris_2025_extreme_security_incident_loss_usd` is `impact.max`
+        for **two drift-watch scenarios**, `au_finance_insider_misuse` and
+        `au_finance_third_party_outage`.
+
+        So the `none_known` -> `modeled_quantile` correction did reach published
+        exceedance statements, on two scenarios rather than none. That is a better
+        outcome than was claimed and the claim was still wrong, which is why it is
+        corrected here rather than left to read as an accident.
+
+        The tripwire stands as written: if a *shard* maximum ever becomes an IRIS
+        2025 record, the prose about comparison anchors has to be rewritten in the
+        same change rather than going stale the way the two JP "selected as a
+        bridge" notes did.
         """
         selected = {
             m.get("evidence_id") for m in build_portfolio_brackets(ROOT)["modules"]

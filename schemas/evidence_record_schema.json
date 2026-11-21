@@ -53,6 +53,7 @@
               "conditional_probability",
               "mean_total_event_cost",
               "median_total_event_cost",
+            "geometric_mean_total_event_cost",
               "cost_component",
               "single_documented_event_loss",
               "perceived_cost_self_reported",

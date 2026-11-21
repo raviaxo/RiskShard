@@ -38,3 +38,4 @@ recommendation; only the repo owner moves it to `Accepted`.
 | [0025](0025-the-registry-trial-is-retired.md) | The registry trial is retired on its own criterion, and the 36 events survive it | Accepted (2026-11-11) |
 | [0026](0026-a-re-read-is-a-declared-property.md) | A re-read is a declared property, pinned to the artifact's hash | Accepted (2026-11-20) |
 | [0027](0027-a-floor-is-the-published-lower-bound.md) | A frequency floor is the published lower bound, band-matched to the org profile | Accepted (2026-11-20) |
+| [0028](0028-a-geometric-mean-is-its-own-basis.md) | A geometric mean is its own measurement basis | Accepted (2026-11-20) |

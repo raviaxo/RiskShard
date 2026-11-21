@@ -59,14 +59,12 @@ records:
     source_url_or_citation: https://ponemonsullivanreport.com/2023/10/cost-of-insider-risks-global-report-2023/
     publication_date: "2023-10-01"
     extraction_date: "2026-07-24"
-    citation_detail: "Average cost per credential-theft insider incident was $679,621 (vs $701,500 for malicious insiders)."
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: 1103b630847fa8f308c79033521d8182eeb79f3836aa29fec3c501527d8ebe25
+    citation_detail: 'Credential theft incidents average USD 679,621 per incident, against USD 701,500 for malicious insiders and USD 505,113 for negligent or mistaken insiders. Verified against the held report on 2026-11-20.'
     extraction_notes: Selected the credential-theft average per-incident cost as an insider-specific lower anchor, replacing the prior generic cross-cyber Cyentia floor.
     normalization_notes: Stored directly in USD. This is the average cost of the lower-cost insider incident TYPE, used as the floor.
-    limitations: >
-      Average remediation cost per incident for one insider TYPE, NOT a true minimum —
-      minor or negligent insider incidents can cost far less, so this floor is
-      conservative-high. Global, cross-industry survey; not country- or sector-specific.
-      Insider-specific (an improvement over the prior generic cross-cyber bridge).
+    limitations: '> Average remediation cost per incident for one insider TYPE, NOT a true minimum — minor or negligent insider incidents can cost far less, so this floor is conservative-high. Global, cross-industry survey; not country- or sector-specific. Insider-specific (an improvement over the prior generic cross-cyber bridge). Made specific 2026-11-20 from the held report: the "minor or negligent insider incidents can cost far less" above is no longer hypothetical. The report publishes the figure - negligent or mistaken insiders caused 4,019 incidents, 55% of the total and the most frequent profile, at an average of USD 505,113 per incident. So the published average for the commonest insider incident type is about 26% BELOW this floor, which is the direction that matters for a minimum. Recorded rather than substituted, because this shard models deliberate misuse and a negligence average is a different population.'
     confidence: medium
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost
@@ -88,15 +86,12 @@ records:
     source_url_or_citation: https://ponemonsullivanreport.com/2023/10/cost-of-insider-risks-global-report-2023/
     publication_date: "2023-10-01"
     extraction_date: "2026-07-24"
-    citation_detail: "Malicious insiders accounted for an average of 6.2 incidents and an average cost per incident of $701,500."
-    extraction_notes: Selected the malicious-insider average per-incident cost as the insider-specific likely anchor for deliberate insider misuse, replacing the prior generic cross-cyber Cyentia median (~USD 3M).
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: 1103b630847fa8f308c79033521d8182eeb79f3836aa29fec3c501527d8ebe25
+    citation_detail: 'Malicious insiders accounted for 1,874 incidents (25% of all insider incidents), costing an average of USD 701,500 per incident. Read from the held report on 2026-11-20.'
+    extraction_notes: 'Selected the malicious-insider average per-incident cost as the insider-specific likely anchor for deliberate insider misuse, replacing the prior generic cross-cyber Cyentia median (~USD 3M). Corrected 2026-11-20 (ADR-0026 campaign). This field previously read "Malicious insiders accounted for an average of 6.2 incidents and an average cost per incident of $701,500". The cost is right and the frequency was NOT: Figure 2 gives 6.2 incidents for CREDENTIAL THEFT (up from 5.7 in 2022), while criminal and malicious insider incidents average 6.9 (up from 6.4). The record had taken the credential-theft count and attached it to the malicious-insider cost. Both numbers are in the report, on different profiles.'
     normalization_notes: Stored directly in USD as the likely single-event insider-misuse loss. Note this is materially lower than the prior generic all-cyber median because insider incidents typically cost less than the all-incident median.
-    limitations: >
-      Average remediation cost per malicious-insider incident; NOT a distribution
-      quantile and NOT a catastrophic tail (rare insider fraud/IP-theft reaches tens
-      of millions — carried by impact.max). Global, cross-industry survey; not
-      country- or sector-specific. Insider-specific (an improvement over the prior
-      generic cross-cyber bridge).
+    limitations: '> Average remediation cost per malicious-insider incident; NOT a distribution quantile and NOT a catastrophic tail (rare insider fraud/IP-theft reaches tens of millions — carried by impact.max). Global, cross-industry survey; not country- or sector-specific. Insider-specific (an improvement over the prior generic cross-cyber bridge). The conflation above is worth knowing for a reason beyond this record: it was never caught by a check, and it stopped mattering only by accident, because the 2026 edition superseded this record for impact.likely and its extraction read Table 2 correctly (6.3 incidents for the malicious profile). An edition refresh is not a review.'
     confidence: medium
     evidence_type: source_backed
     measurement_basis: mean_total_event_cost

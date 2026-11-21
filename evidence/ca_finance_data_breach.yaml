@@ -138,8 +138,10 @@ records:
     source_url_or_citation: https://www.ibm.com/think/x-force/2025-cost-of-a-data-breach-navigating-ai
     publication_date: "2025-07-30"
     extraction_date: "2026-07-13"
-    citation_detail: "IBM's newly released 2025 Cost of a Data Breach Report found that average global costs dropped to USD 4.44 million-down from USD 4.88 million, or 9%, in the year prior."
-    extraction_notes: Used IBM's primary public global data-breach cost anchor instead of secondary Canada regional coverage for the automated benchmark-review gate.
+    artifact_verified_at: "2026-11-20"
+    artifact_verified_sha256: e60c77ff14afe3d9d0f72dd5b2845329568735cc41567f45aaaf715b7952e910
+    citation_detail: 'Key findings: "The global average breach cost dropped to USD 4.44 million from USD 4.88 million in 2024, a 9% decrease". Verified against the held report on 2026-11-20; the previous value of this field quoted a secondary paraphrase ("IBM newly released 2025 Cost of a Data Breach Report found that ...") rather than the report sentence.'
+    extraction_notes: 'Used IBM''s primary public global data-breach cost anchor instead of secondary Canada regional coverage for the automated benchmark-review gate. Re-read against the held report on 2026-11-20: the figure is exact. The artifact-fit flag on this record is a citation-URL mismatch, not an unread record - it cites an ibm.com/think article while the stored artifact is the report PDF.'
     normalization_notes: Stored in source currency and converted to CAD through the explicit Bank of Canada FX assumption.
     limitations: Primary IBM source but global average across studied breached organizations; not Canada-specific, financial-services-specific, or size-band-specific. The secondary Canada row remains useful context but is not selected for benchmark-review automation.
     confidence: medium
