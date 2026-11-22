@@ -93,7 +93,7 @@ The point of governing evidence is that it lets you measure your own defects. Th
 ours, each derived mechanically and re-runnable, and each published before anyone asked:
 
 - **None of the 11 `impact.likely` anchors is a calibrated mode**, though the sampler
-  treats it as one — and no value in the 18-entry measurement vocabulary denotes a mode,
+  treats it as one — and no value in the 19-entry measurement vocabulary denotes a mode,
   so the schema could not express one. **8** carry a published mean or median instead;
   **7** use a central tendency as a floor, which is not a lower bound on loss.
 - **4 of 22 parameter families are coherent.** The other 18 compose anchors that measure
@@ -112,7 +112,10 @@ And one that is not about us:
   composes as a beta-PERT whose middle parameter is the mode — the most probable single
   value, and the number the output is most sensitive to. No source read publishes one: not
   the national statistics offices, not the police reporting bodies, not the insurers. IBM's
-  *Cost of a Data Breach* uses "average" 75 times and "median" zero times. **The industry
+  *Cost of a Data Breach* uses "average" 75 times and "median" zero times — read
+  **2026-08-16** against the held 2026 edition and recorded in the audit itself
+  (`ibm_cost_data_breach_2026`, artifact sha `0c7808f23134`), which is where that count
+  lives rather than here. **The industry
   standardised on a shape its evidence base does not produce**, and what goes in the slot is
   a published mean. [The audit →](docs/FINDINGS.md#1--no-anchor-we-hold-is-a-mode-and-the-schema-cannot-express-one)
 
@@ -140,7 +143,7 @@ named tool, re-runnable, with the corrections at the same volume as the results.
 obvious answer is wrong. It is also where the governance layer stops being bookkeeping:
 the shard's `impact.max` is one company's disclosed loss with no exceedance probability
 attached, and swapping it alone moves the chance a single event exceeds AUD 20M from
-0% to 23%. The limit decision is a decision about that one anchor.
+0% to 26%. The limit decision is a decision about that one anchor.
 
 ## Try it in one command
 
@@ -166,8 +169,8 @@ printf 'demo\nexit\n' | python scripts/riskshard_console.py
 ## Honest status
 
 RiskShard is a working practitioner beta, not a finished product. Shards are
-labeled by maturity: `governed_starter`, automated `benchmark_candidate`, and —
-only after a recorded human review decision — benchmark-grade. "Automated
+labeled by maturity: `governed_starter`, automated `benchmark_review_candidate`,
+and — only after a recorded human review decision — benchmark-grade. "Automated
 benchmark-ready" is never the same as "human-approved benchmark-grade," and the
 distinction stays visible everywhere results appear.
 ## Progress over time
@@ -253,7 +256,7 @@ the design is [ADR-0004](docs/adr/0004-citable-parameter-identifiers.md).
 - [**A decision made out loud**](docs/WORKED_DECISION_AU_RANSOMWARE_LIMIT.md) — how much
   ransomware cover an Australian mid-market financial firm should buy, including why the
   obvious answer is wrong. Swapping one anchor moves the chance a single event exceeds
-  AUD 20M from 0% to 23%; the limit decision *is* a decision about that anchor.
+  AUD 20M from 0% to 26%; the limit decision *is* a decision about that anchor.
 - [**Every parameter, with its source and caveat**](docs/EVIDENCE_REPORT.md) — regenerated
   with `python scripts/riskshard_modules.py provenance --all`.
 - [**A worked contribution, source to preflight**](docs/GOLDEN_CONTRIBUTOR_EXAMPLE.md) — one

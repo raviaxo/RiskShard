@@ -42,12 +42,18 @@ actually act on. That turns out to be the interesting part, so it is not confine
 
 | parameter | value | source | measures |
 | --- | --- | --- | --- |
-| `frequency.min` | 0.10 | Cyentia IRIS, global | `org_prevalence_loss_event` |
+| `frequency.min` | 0.0036 | Cyentia IRIS Ransomware, Table 3 lower bound, $10M–$100M revenue | `org_prevalence_loss_event` |
 | `frequency.likely` | 0.54 | Sophos 2024, Australia reading (n=330) | `org_prevalence_incident` |
 | `frequency.max` | 0.70 | Sophos 2023, Australia reading | `org_prevalence_incident` |
 | `impact.min` | AUD 97,000 | Business Queensland, medium-business cybercrime cost | `mean_total_event_cost` |
 | `impact.likely` | AUD 2,310,000 | Sophos AU **2026** mean recovery cost, **excluding ransom paid** | `cost_component` |
 | `impact.max` | AUD 76,000,000 | Latitude Financial 1H23 ASX disclosure | `single_documented_event_loss` |
+
+*Corrected 2026-11-22: this table published `frequency.min` as **0.10** for two days after the
+ADR-0027 re-run note above said it had moved to **0.0036** — a document contradicting its own
+amendment eight lines up. Caught by reading the table against `scenarios/au_finance_ransomware_midmarket.yaml`
+rather than against the prose, and now pinned by `tests/test_published_claims.py` so the next
+parameter move fails the suite instead of aging here.*
 
 Both ranges are **mixed** — the anchors are not readings of the same quantity. Hold that
 thought; it is section 4.
