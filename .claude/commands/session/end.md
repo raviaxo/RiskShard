@@ -22,8 +22,11 @@ orients correctly and no work is silently dropped.
 3. Reconcile the internal working doc so the next session boots clean:
    - `docs/internal/NEXT_STEPS.md` — mark completed objectives done; append ONE
      session-log line (absolute date + what shipped); ensure the active queue reflects
-     reality; and update the header's restart point / current top blocker (or state
+     reality; and update the restart point's **narrative** / current top blocker (or state
      "no active objective, no blocker"). Capabilities changed? Update the README, not here.
+   - **Do not type the repo-state facts** — branch, sha, parity, release, test count, gate
+     and doctor lines. Those are generated in step 6; writing them here is what went stale
+     three closes in a row.
    - If a doc edit is the only change, commit it (`-s`) so state is durable.
 
 4. Surface, don't bury:
@@ -34,5 +37,20 @@ orients correctly and no work is silently dropped.
 
 5. Write a tight close-out: what shipped, what is queued, and what needs me next.
 
-Rule: the session is not "closed" until the tree is clean, open work is reported,
-the gates are green (or the reds are named), and the owner docs match reality.
+6. **Last, after every other state change — generate the restart point:**
+
+   ```bash
+   python scripts/session_state.py --write --run-tests
+   ```
+
+   It measures branch, parity, tree, release, suite, gates and the doctor, and splices the
+   block at the head of `## Restart point`. Read what it wrote; commit it (`-s`).
+   **If anything changes repo state after this — a release cut, a PR merged, a commit — run
+   it again.** That ordering is the whole point: the three stale restart points before
+   2026-11-21 were each written before the session's last state change, and the worst of them
+   was false within the hour because the release was cut after it. The doctor's
+   `restart point` check is the backstop, not the fix.
+
+Rule: the session is not "closed" until the tree is clean, open work is reported, the gates
+are green (or the reds are named), the owner docs match reality, and the restart point was
+generated *after* the last thing that changed the repository.

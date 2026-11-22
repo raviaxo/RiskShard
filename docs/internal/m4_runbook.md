@@ -91,7 +91,9 @@ python scripts/build_social_card.py
 python scripts/build_explorer.py --archive     # ← THE STEP THAT WAS SKIPPED ON v0.12.0
 python -m unittest discover -s tests           # AGAIN - the steps above rewrite tracked
                                                # artifacts that tests pin
-python scripts/riskshard_doctor.py             # must read pass on all 18
+python scripts/riskshard_doctor.py             # must read `Status: pass` - the count of
+                                               # checks is not written down here, because
+                                               # this line said 18 after it became 19
 ```
 
 **Corrected 2026-11-11, while running it. Three things in the block above were wrong, and the
