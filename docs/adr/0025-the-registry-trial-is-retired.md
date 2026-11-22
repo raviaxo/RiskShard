@@ -155,6 +155,25 @@ retirement on an asserted number would have been a weaker claim than this one.
 `tests/test_release_archives.py` plus the pinned-citation guarantee in `docs/CITING.md` still
 apply to them.
 
+> **Amendment, 2026-11-22 — a consequence this ADR missed for eleven days.** Roadmap **M3b**
+> (amount shape and treatment) was re-gated on 2026-09-27 with an explicit rule: *"M3b labels loss
+> records, and loss records live in the registry — so if the registry retires at the 2026-11-01
+> measurement, M3b retires with it and the open question never needs answering."* The measurement
+> above retired the registry, so **M3b retired on 2026-11-11** and nothing said so until
+> 2026-11-22; `docs/ROADMAP.md` published "not started" throughout.
+>
+> The asymmetry is the part worth keeping. The paragraph above does this exact reconciliation for
+> **M5**, and does it well — it corrects an earlier draft of this ADR that had closed M5 wrongly,
+> and refreshes M5's date. The same question was never asked of M3b. Both milestones hung on the
+> same measurement; one was checked and one was not, which is how a pre-commitment fires without
+> anybody hearing it.
+>
+> Recorded here rather than in a new ADR because **no new decision is taken**: the rule was
+> pre-written on 2026-09-27, and [ADR-0017](0017-the-kill-criterion-gets-a-clock.md) §4
+> independently refuses extending a retired surface. Nothing migrates, and the
+> `estimated / accrued / received` axis is not built. Reopening needs a defect measured in the 36
+> events, not a better labelling idea.
+
 ## Alternatives considered
 
 **Extend the trial because the project has no readership yet.** Refused in advance by ADR-0017 §4,

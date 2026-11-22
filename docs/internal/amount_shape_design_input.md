@@ -1,6 +1,14 @@
 # Amount shape and accounting treatment — design input from John Flack, and what it costs
 
-*Received 2026-08-16 in GRC EC `#labs_demos`. Measured the same day. **Not yet built.***
+*Received 2026-08-16 in GRC EC `#labs_demos`. Measured the same day.*
+
+> 🔴 **RETIRED 2026-11-22 — this is design input for a milestone that no longer exists.** Roadmap
+> M3b retired with the registry on 2026-11-11 ([ADR-0025](../adr/0025-the-registry-trial-is-retired.md)),
+> on a rule pre-written on 2026-09-27, so the open question below dissolved rather than being
+> answered and **nothing here is built or owed.** Kept as written because it is a record of what an
+> outside reader contributed — the `recovery` answer was good and it is the only design input this
+> project has ever received from outside. The header said *"Not yet built"* until this banner
+> replaced it, which was true for three months and then quietly false for eleven days.
 
 > **RESOLVED 2026-08-21 — he answered `recovery` the same day it was asked.** Keep
 > `insurance_recovery` as the amount **type**, because the type says what the amount *is*;

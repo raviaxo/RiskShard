@@ -185,7 +185,30 @@ this milestone exists to not repeat.
 **Done means:** one person outside the project produces one audit row. Then the spec gets written
 from what confused them, rather than from what we imagine would.
 
-## Track A · M3b — Amount shape and treatment · **unblocked 2026-08-21, not started**
+## Track A · M3b — Amount shape and treatment · 🔴 **retired 2026-11-22 with the registry**
+
+**Retired by the rule written into this section on 2026-09-27, not by a new decision.** That rule
+is quoted below and it fired on 2026-11-11: the registry was retired on its own criterion
+([ADR-0025](adr/0025-the-registry-trial-is-retired.md)), and M3b labels **loss records**, which
+live in the registry. So M3b retires with it and the open question below **dissolves rather than
+being answered**. Nothing migrates, no schema changes, and the `estimated / accrued / received`
+axis is not built.
+
+**It took eleven days to record, and the gap is the finding.** ADR-0025 reconciled the *other*
+milestone that depended on the same measurement — its Consequences say *"M5 is not closed by M4"*,
+correcting an earlier draft of itself that had closed M5 wrongly, and refreshed M5's date — and it
+asked nothing about M3b, which that measurement did close. One dependent milestone was checked and
+the other was not, so this heading published **"not started"** for eleven days after its own
+pre-commitment had retired it. A pre-committed consequence needs a reader at the moment it fires;
+this one had a rule and nobody watching. Recorded as an amendment to ADR-0025 rather than as a new
+ADR, because no decision is taken here.
+
+**What would reopen it:** a defect **measured in the 36 events** that a treatment axis would fix,
+per [ADR-0009](adr/0009-what-riskshard-is-and-is-not.md) and
+[ADR-0017](adr/0017-the-kill-criterion-gets-a-clock.md) §4 — not a good idea about labelling. A
+retired dataset with no claim on any shard does not earn a schema change.
+
+*The section as written before the retirement is kept below, including the rule that retired it.*
 
 Split from M3 because it is a different specification of a different object: the four questions
 audit **sources**, this labels **loss records**. Bundling them made the whole milestone wait on one
