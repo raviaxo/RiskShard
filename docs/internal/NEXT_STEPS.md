@@ -1754,3 +1754,46 @@ shards are now source-backed. This is the Sunday post.
 
   *Worth noticing about the shape of the last two objectives: both were defects in things that
   describe state rather than in things that compute it. The suite was green through both.*
+
+- 2026-11-22 (second objective) — **The README was audited claim by claim against the tool behind
+  each one. Five were wrong, and the suite was green throughout.** The functionality level of the
+  empty-queue audit order, run after the roadmap level closed M3b.
+
+  **What was wrong.** The measurement vocabulary was described as **18 entries** two days after
+  ADR-0028 made it 19. The chance a single event exceeds AUD 20M was published as **23%** in two
+  places, where the worked decision the front page links to has said **26%** since 2026-08-23 —
+  three months of the README contradicting the document it points at. Shards were said to be
+  labelled `benchmark_candidate`, a legal label **no shard carries**: the registry reports
+  `benchmark_review_candidate` (6) and `governed_starter` (5), and `riskshard_modules.py list`
+  prints the former. The IBM word counts were restated with no measurement date and no pointer to
+  the audit record that owns them. And `WORKED_DECISION_AU_RANSOMWARE_LIMIT.md`'s own inputs table
+  published `frequency.min` as **0.10** for two days after the ADR-0027 amendment **eight lines
+  above it** said the value had moved to 0.0036.
+
+  **What was checked and found correct**, which is half the value of the exercise: 66 of 76 read;
+  the four-question answers 0 / 15 / 21 / 53; 10 held only as a pointer; 4 of 22 families coherent
+  and 18 mixed; 5 of 11 maxima `none_known`; 8 central-tendency mode slots and 7 central-tendency
+  floors; 11 `impact.likely` anchors; the `challenge` provenance example, which matches the tool's
+  output line for line; the strength-ledger table, which is generated. The documented
+  one-command demo ran end to end.
+
+  **One suspected contradiction was withdrawn by checking it.** The worked decision's amendment
+  says P(event > 20M) = 26.21% while its table says 26.31%, which reads like a defect and is not:
+  the 2026-11-20 re-run moved `frequency.min`, the run seed is derived from the whole scenario
+  file, so the severity sampler re-seeded and the table moved 0.1pp. The document already explains
+  this three lines further on. Recorded because I had it listed as a finding until I read the
+  paragraph.
+
+  **The fix is eight checks in `tests/test_published_claims.py`, and not one of them pins a
+  constant** — each compares a document against the artifact that owns its number: schema enum,
+  shard registry, scenario YAML, audit record, or another document. That distinction is the whole
+  lesson from the two progress-figure pins that failed on 2026-11-20: the answer is not *stop
+  checking documents*, it is *check them against their owner*, so the document is what has to move.
+
+  ⚠️ **One of the eight was toothless on its first run, caught by mutating the file.** The
+  measurement-date check read `assertIn(read_on, README.read_text())` and passed a mutation that
+  changed the date to 2026-11-12 — because the generated strength-ledger table further down the
+  same README carries a `2026-08-16` row. A document-wide substring check asserts that the file
+  contains a date somewhere, not that the claim carries its own. Now scoped to the claim's own
+  sentence, and all six mutations are caught. **This is the second time in two days that a guard
+  was weaker than it read, and both were found by mutation rather than by review.**
