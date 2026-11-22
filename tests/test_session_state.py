@@ -5,6 +5,7 @@ from pathlib import Path
 
 from engine.session_state import (
     BEGIN_MARKER,
+    parse_porcelain_paths,
     END_LINE,
     current_release,
     parse_restart_point,
@@ -132,6 +133,47 @@ class RenderTests(unittest.TestCase):
 
     def test_parse_returns_none_when_there_is_no_block(self):
         self.assertIsNone(parse_restart_point("## Restart point\n\nhand written, as it was.\n"))
+
+
+class PorcelainTests(unittest.TestCase):
+    """The columns cannot be trusted, and this is the bug that proved it.
+
+    `_git` strips its stdout, which eats the leading space of an unstaged first
+    line, so reading the path as `line[3:]` returned "cs/internal/NEXT_STEPS.md".
+    The block reported "1 uncommitted path(s)" for a tree whose only change was
+    the block itself — found by running the close ritual on 2026-11-22.
+    """
+
+    def test_the_stripped_first_line_still_yields_its_path(self):
+        self.assertEqual(
+            parse_porcelain_paths(["M docs/internal/NEXT_STEPS.md"]),
+            ["docs/internal/NEXT_STEPS.md"],
+        )
+
+    def test_every_status_shape_in_this_repo_s_closes(self):
+        self.assertEqual(
+            parse_porcelain_paths([
+                " M engine/doctor.py",
+                "M  AGENTS.md",
+                "MM tests/test_doctor.py",
+                "?? engine/session_state.py",
+                "A  scripts/session_state.py",
+                " D docs/old.md",
+                "",
+            ]),
+            ["engine/doctor.py", "AGENTS.md", "tests/test_doctor.py",
+             "engine/session_state.py", "scripts/session_state.py", "docs/old.md"],
+        )
+
+    def test_a_rename_reports_where_the_file_landed(self):
+        self.assertEqual(
+            parse_porcelain_paths(["R  docs/a.md -> docs/b.md"]),
+            ["docs/b.md"],
+        )
+
+    def test_a_quoted_path_loses_its_quotes(self):
+        self.assertEqual(parse_porcelain_paths(['?? "docs/with space.md"']),
+                         ["docs/with space.md"])
 
 
 class SpliceTests(unittest.TestCase):
