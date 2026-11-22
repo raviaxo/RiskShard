@@ -66,6 +66,27 @@ def _git(root, args):
         return ""
 
 
+def parse_porcelain_paths(lines):
+    """Paths out of `git status --porcelain` lines, without trusting the columns.
+
+    `--porcelain` puts the two status characters in columns 1-2, so `line[3:]` is
+    the documented way to read the path — and it was wrong here, because `_git`
+    strips its stdout and that eats the leading space of an unstaged first line.
+    The block then reported "1 uncommitted path(s)" for a tree whose only change
+    was the block itself. Found by running the close ritual rather than by a
+    test, which is why this is a function with one.
+    """
+    paths = []
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        parts = stripped.split(maxsplit=1)
+        path = parts[1] if len(parts) == 2 else parts[0]
+        paths.append(path.split(" -> ")[-1].strip().strip('"'))
+    return paths
+
+
 def git_state(root):
     """Branch, head, parity with the upstream, and what else is lying around."""
     branch = _git(root, ["branch", "--show-current"])
@@ -78,7 +99,7 @@ def git_state(root):
         if len(parts) == 2 and all(p.isdigit() for p in parts):
             behind, ahead = int(parts[0]), int(parts[1])
     dirty = [line for line in _git(root, ["status", "--porcelain"]).splitlines() if line.strip()]
-    dirty_paths = [line[3:].split(" -> ")[-1].strip().strip('"') for line in dirty]
+    dirty_paths = parse_porcelain_paths(dirty)
     branches = [b for b in _git(root, ["branch", "--format=%(refname:short)"]).splitlines() if b]
     return {
         "branch": branch,
