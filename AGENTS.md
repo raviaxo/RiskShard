@@ -69,6 +69,26 @@ real run of the affected path succeeds.** For a content/evidence change also run
   that rots into a fact that keeps. Git-history counts are the usual case: "14 commits went to the
   audit" was written on 2026-08-21 and was wrong by 2026-08-22, because writing it produced a
   fifteenth.
+- **A guard over a document is not done until a mutation makes it fail.** Decided
+  2026-11-25, after three guards in three days read stronger than they were and
+  **mutation found all three while review found none**: one searched two concatenated
+  fields and passed when either carried the value; `parse_porcelain_paths` had 28 tests
+  and not one had ever seen git's output; the README measurement-date check passed a
+  mutated date, because a generated table further down the same file carries a matching
+  one. So: *a test that reads a document, or parses an external tool's output, is not
+  done until one mutation of the thing it checks makes it fail.* Run it with
+  `scripts/mutation_probe.py` (it restores every file it touches, including when a run
+  raises) and say in the test's docstring what mutation was caught. **Mutate one
+  occurrence, never all of them** — replacing every copy of the README date would have
+  made the toothless guard fail and reported teeth it did not have, so the probe refuses
+  an ambiguous target until you name which copy the claim owns. **The probe covers the
+  document arm only, and this is the louder half of the caveat:** it cannot catch the
+  `parse_porcelain_paths` class, where nothing had ever run the real tool and so there
+  was nothing to mutate. That arm needs a test that consumes the tool's actual output at
+  least once, and no mutation run substitutes for it. The rule binds **new** guards; the
+  existing document-reading tests are a queued audit rather than a blocker, counted and
+  dated in [`docs/internal/NEXT_STEPS.md`](docs/internal/NEXT_STEPS.md) — which owns
+  that figure, so it is not repeated here.
 - **Nothing public that couldn't be shown to a CISO tomorrow.** See
   [`docs/PUBLISHABLE_REQUIREMENTS.md`](docs/PUBLISHABLE_REQUIREMENTS.md).
 - **One objective per session.** New important items go to `docs/internal/NEXT_STEPS.md`,
