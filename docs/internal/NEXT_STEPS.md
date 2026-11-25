@@ -256,6 +256,26 @@ rather than remembered. **What it deliberately does not pin is the head sha or t
 both are recorded with their measurement date, because the commit that writes the block changes
 the first and every honest advance changes the second.
 
+**Current top blocker, 2026-11-25: one unmerged branch awaiting the owner's push decision.**
+`shard/mutation-probe` carries this session's single commit — the mutation rule adopted in
+`AGENTS.md`, `engine/mutation.py` and `scripts/mutation_probe.py` that make it a tool rather than
+a remembered rule, and the `NEXT_STEPS` reconciliation of all three *Action owed* decisions. It is
+committed and signed off but **deliberately not pushed and has no PR**: `AGENTS.md` leaves pushing
+to the owner. Nothing else is in flight. *The restart point below was generated before that
+decision was taken — if the branch is pushed, merged, or a release is cut, regenerate it, because
+a push is exactly the kind of last-state-change that made three earlier restart points false.*
+
+**What this session produced, in prose.** The queue was empty, so the session decided rather than
+built: three *Action owed* items taken one at a time, all three resolved, one of them turned into
+the session's only commit. The two that did not become code are now the queue — the mode post's
+figures get generated rather than hand-patched (item 3 above, *Standing* 5, and the two QUEUED
+blocks under *This week*). **The session's own defect is the part worth carrying forward:** a
+committed guard, `test_no_withheld_name_appears_in_any_public_file`, failed the suite because the
+newly written queue block named the publisher ADR-0020 withholds. `docs/internal/` is internal by
+convention only; it is committed, so it is public. That happened on the day a rule was adopted on
+the evidence that review catches none of this class, and the author's review had indeed just
+walked past it.
+
 **What produced the state it records.** The 2026-11-20 session closed the ADR-0026 re-read
 campaign and cut `v0.15.0` on the merge commit, restoring the all-pass that the `v0.14.0` release
 left on 2026-11-11 (see the close block below) after six pack moves. Checked by hand that day and
@@ -1905,3 +1925,22 @@ shards are now source-backed. This is the Sunday post.
   contains a date somewhere, not that the claim carries its own. Now scoped to the claim's own
   sentence, and all six mutations are caught. **This is the second time in two days that a guard
   was weaker than it read, and both were found by mutation rather than by review.**
+
+- 2026-11-25 — **Three decisions, one of them built: the mutation rule is adopted and tooled.**
+  The queue was empty, so the session took the three *Action owed* items one at a time rather than
+  reaching for work. (1) The mutation rule is adopted, narrow and prospective, homed in `AGENTS.md`
+  rather than `CONTRIBUTING.md` — a change of mind from how the question was framed, because all
+  three instances were written by this project and contributors do not produce this defect class.
+  `engine/mutation.py` + `scripts/mutation_probe.py` make it a tool instead of a remembered rule,
+  and it was verified against the real 2026-11-22 guard in both forms (TOOTHLESS reverted,
+  HAS_TEETH scoped), not only a fixture. No ADR, recorded as a declined ADR on #219's precedent.
+  (2) The mode post will have its figures **generated**, not hand-patched a second time: it says 65
+  where the corpus reads 66 of 76, and its *"the other three went the other way"* line is wrong for
+  two of the three (distribution 15/51, exceedance 21/45, population 53/13). *Zero publish a mode*
+  holds at 0 of 66. (3) The 10 unobtainable sources are demoted off *Action owed* to *Standing* —
+  their stated reason for staying had been false since M1 closed 2026-09-27. **Two of this
+  session's own numbers were wrong and are corrected in place rather than edited away**, and a
+  committed guard caught the worse one: the queued block named the publisher ADR-0020 withholds,
+  and `test_no_withheld_name_appears_in_any_public_file` failed the suite on it. `docs/internal/`
+  is internal by convention only — it is committed, so it is public. Review had just walked past
+  it, on the day a rule was adopted on the evidence that review finds none of these.
