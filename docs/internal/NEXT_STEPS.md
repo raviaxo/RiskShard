@@ -43,28 +43,54 @@ waiting on you.***
    **It is the only lever that could move an ADR-0012 metric off zero**, and everything shipped in
    the last two arcs exists to catch the readers it would send.
 
-3. **Should a new document-reading guard have to be mutation-tested before it counts?**
-   Raised 2026-11-22, not decided, and it is yours because it changes the review bar in
-   [`CONTRIBUTING.md`](../../CONTRIBUTING.md) rather than any one file. **Two guards in two days
-   were weaker than they read, and mutation found both — review found neither.** The
-   `parse_porcelain_paths` tests had never seen git's output (28 of them, all written against a
-   hand-built state dict), and the IBM measurement-date check passed a mutated date because the
-   generated strength-ledger table further down the same README carries a matching one. The
-   2026-11-20 session had already recorded a third: *"a guard that searches concatenated fields is
-   weaker than it reads (a mutation run proved one toothless)"*. Three instances is a pattern, and
-   the cheap form of the rule is narrow — *a test that reads a document or parses an external
-   tool's output is not done until one mutation of the thing it checks makes it fail.* **Not
-   added:** it is an engineering-rule change, and AGENTS.md says a decision with no owner doc gets
-   surfaced, not taken quietly.
+3. ✅ **DECIDED AND DONE 2026-11-25 — the mutation rule is adopted, narrow and tooled.**
+   Raised 2026-11-22 on three guards in three days that read stronger than they were, with
+   mutation finding all three and review finding none. The rule as adopted: *a test that reads a
+   document, or parses an external tool's output, is not done until one mutation of the thing it
+   checks makes it fail.* It binds **new** guards only.
 
-2. **10 sources are held only as a pointer, and most of them never clear** (#188, measured
-   2026-08-23). IBM regional cuts, CESIN, MYOB, the *withdrawn* 2024 Sophos sector cuts (AFP
-   declined 2026-08-21). **Correction 2026-09-27: not one of the ten is fixable by a
-   person.** EPSS was the recorded exception; its page was not moved but **retired**, and no FIRST
-   page publishes those statistics now.
-   The rest have a route only if a human finds a copy: drop the file in `sources/raw/` under the
-   manifest filename and run `scripts/record_manual_artifacts.py`. The doctor prints the count on
-   every run, so this needs no reminder here — it is listed because it is the whole remainder of M1.
+   **Homed in [`AGENTS.md`](../../AGENTS.md), not `CONTRIBUTING.md`, and that was a change of mind
+   on the way.** This item said the decision changes the review bar in `CONTRIBUTING.md`. It does
+   not: all three instances were written by this project, external contributors bring sources and
+   evidence rather than document-reading guards, and `CONTRIBUTING.md` had no mutation or guard
+   language to amend. Putting it there would have raised the bar on contributors for a defect
+   class they do not produce, while leaving it absent from the operating contract its actual
+   authors read.
+
+   **Tooled rather than remembered**, because a rule typed into prose has nothing watching it —
+   the same lesson as the restart point, one level up. `engine/mutation.py` +
+   `scripts/mutation_probe.py` apply one mutation, run the guard in a fresh process, and restore
+   the file byte-for-byte including when the run raises.
+
+   *Two things the build found that the decision had not anticipated, both recorded because they
+   are the interesting part:*
+
+   - **Mutating every occurrence would have hidden the defect it was built for.** The README
+     carries the IBM date twice — once in the claim, once in a generated table below it. Replace
+     both and the toothless guard fails, because no copy remains, and the probe would have
+     reported teeth it did not have. Only the claim's own copy exposes it. So the probe mutates
+     exactly one occurrence and **refuses an ambiguous target** until the caller names which copy
+     the claim owns. The trap that hid the defect is now a loud error instead of a false pass.
+   - **A mistyped selector read as `BASELINE_RED`.** unittest reports an unloadable selector as a
+     failing test, so the first real probe run claimed a green guard was red. Found by using the
+     tool within a minute of finishing it, not by reviewing it; `selector_unresolved` is now its
+     own verdict. Review would not have caught this either, which is the rule's own thesis applied
+     to the rule's own tooling.
+
+   **Verified on the historical defect, not only on a fixture.** The 2026-11-22 guard was
+   temporarily reverted to its original `assertIn(read_on, README.read_text())` form and the probe
+   reported **TOOTHLESS**; restored, it reports **HAS_TEETH**. `README.md` and
+   `tests/test_published_claims.py` were both confirmed clean afterwards.
+
+   **The caveat got louder, not quieter.** The probe covers the *document* arm only. It cannot
+   catch the `parse_porcelain_paths` class, where no test had ever seen the real tool's output and
+   so there was nothing to mutate — a probe against a hand-built fixture passes happily. That arm
+   needs a test that consumes the tool's actual output once, and `AGENTS.md` says so.
+
+   **No ADR, and declining to write one is itself recorded** — the precedent is
+   [#219](https://github.com/raviaxo/RiskShard/pull/219) (session hygiene, shipped without an ADR
+   for the same reason). This changes an engineering practice and adds a tool; it moves no
+   published number and creates no declared axis, so ADR-0009's test does not reach it.
 
 5. ✅ **CLOSED 2026-08-23 — ADR-0007 open question 1**, on the terms recommended since 2026-08-09:
    no mix is acceptable or unacceptable in general, the duty is to label, admission is the
@@ -126,6 +152,17 @@ waiting on you.***
    section 4 already pre-decided that this is grounds for retiring the registry, not extending it.
 
 ### Standing — no action unless you overrule
+
+5. **The 10 unobtainable sources are the roadmap's, not this list's** (#188) —
+   [`../ROADMAP.md`](../ROADMAP.md) owns them, their reasons and the manual route
+   (`sources/raw/` + `scripts/record_manual_artifacts.py`); the audit page generates the names and
+   the doctor prints the count every run. *Demoted from "Action owed" 2026-11-25.* It failed that
+   list's own preface three ways, two of them in its own words: not one of the ten is fixable by a
+   person, it conceded it needed no reminder here, and its stated reason for staying — *"it is the
+   whole remainder of M1"* — had been false since **M1 closed 2026-09-27, of the obtainable
+   corpus** (`ROADMAP.md`, which also still carries the pre-closure sentence *"10 sources are the
+   rest of M1"* that seeded the drift). The set is unchanged at 10 across three months, which is
+   itself the evidence that none of them clear.
 
 6. **The anchor judgments on record live in [`docs/OPEN_JUDGMENT_CALLS.md`](../OPEN_JUDGMENT_CALLS.md)**,
    each with its documented alternative and a deep link to the number. *Corrected 2026-09-28: this
@@ -201,12 +238,13 @@ waiting on you.***
 ## Restart point
 
 <!-- BEGIN GENERATED RESTART POINT — generated by `scripts/session_state.py --write`; do not hand-edit.
-state: {"generated_at": "2026-11-24", "head": "0692be70253c18a5911a7ff5ad9876965f077d0a", "pack_fingerprint": "b5754a553527", "release_version": "v0.15.0"} -->
+state: {"generated_at": "2026-11-25", "head": "ac50d4d178a5bccebcac67df2a40ed2451760dd8", "pack_fingerprint": "b5754a553527", "release_version": "v0.15.0"} -->
 
-**Repo state, measured 2026-11-24 at `0692be7`.** `main` == `origin/main`; tree clean but for
-this file, uncommitted as written; no other local branch. No open PR. `v0.15.0` is the current
-release (`2026.11.20-v0.15.0`), pinned archive committed. 683 tests pass. Evidence clean,
-preflight clean. The doctor reads **pass on all 20**. Data pack `b5754a553527`.
+**Repo state, measured 2026-11-25 at `ac50d4d`.** `shard/mutation-probe` ==
+`origin/shard/mutation-probe`; tree clean; other local branch(es): `main`. **1 open PR(s).**
+`v0.15.0` is the current release (`2026.11.20-v0.15.0`), pinned archive committed. 692 tests
+pass. Evidence clean, preflight clean. The doctor reads **pass on all 20**. Data pack
+`b5754a553527`.
 
 <!-- END GENERATED RESTART POINT -->
 
@@ -218,6 +256,34 @@ generator is that note's own prescription — *write it last, or generate it* �
 rather than remembered. **What it deliberately does not pin is the head sha or the test count:**
 both are recorded with their measurement date, because the commit that writes the block changes
 the first and every honest advance changes the second.
+
+**Current top blocker, 2026-11-25: [#222](https://github.com/raviaxo/RiskShard/pull/222) is open
+and awaiting merge.** `shard/mutation-probe` carries the mutation rule adopted in `AGENTS.md`,
+`engine/mutation.py` and `scripts/mutation_probe.py` that make it a tool rather than a remembered
+rule, and the `NEXT_STEPS` reconciliation of all three *Action owed* decisions. Pushed and opened
+on the owner's instruction. Nothing else is in flight.
+
+*⚠️ This paragraph said the branch was "deliberately not pushed and has no PR", which was true
+when written and false fifteen minutes later when the owner said push.* It is corrected here
+rather than edited away, and the restart point above was **regenerated after the push** — which
+is the ordering the three stale restart points before 2026-11-21 bought, working as intended for
+the first time on a state change that happened *after* a close had already been written. The
+prose needed the same treatment as the generated block, and did not get it automatically: the
+generator owns the facts in that block and nothing else, so a hand-written sentence about repo
+state one paragraph below it still rots. **That is the next instance of this file's own
+pattern, and the honest fix is to stop writing repo state in prose here at all** — queued rather
+than taken, because it is a change to the close ritual.
+
+**What this session produced, in prose.** The queue was empty, so the session decided rather than
+built: three *Action owed* items taken one at a time, all three resolved, one of them turned into
+the session's only commit. The two that did not become code are now the queue — the mode post's
+figures get generated rather than hand-patched (item 3 above, *Standing* 5, and the two QUEUED
+blocks under *This week*). **The session's own defect is the part worth carrying forward:** a
+committed guard, `test_no_withheld_name_appears_in_any_public_file`, failed the suite because the
+newly written queue block named the publisher ADR-0020 withholds. `docs/internal/` is internal by
+convention only; it is committed, so it is public. That happened on the day a rule was adopted on
+the evidence that review catches none of this class, and the author's review had indeed just
+walked past it.
 
 **What produced the state it records.** The 2026-11-20 session closed the ADR-0026 re-read
 campaign and cut `v0.15.0` on the merge commit, restoring the all-pass that the `v0.14.0` release
@@ -912,6 +978,63 @@ reaching for work — and `/session:start` found the restart point already behin
 and the doctor's 20th check reports when the block has been overtaken. Tests 647 → **671**. It is
 session hygiene rather than product, so no ADR — recorded here because declining to write one is
 also a decision.
+
+**Shipped 2026-11-25, and the session was three decisions rather than one build.** The queue was
+empty again, so the session took the three items on *Action owed* one at a time and decided all
+three (see item 3 above and *Standing* 5). One of them became the build: the mutation rule,
+adopted and tooled. The other two are below.
+
+**QUEUED 2026-11-25 — next objective: generate the mode post's figures, then it is yours to post.**
+Decided this session in preference to posting it as-is, withdrawing it, or hand-patching the figure
+a second time. Measured today against `engine.source_audit`, the parked draft is wrong in three
+places and the third is the one that matters:
+
+- The headline and body say **65 sources**; the corpus reads **66 of 76** read on all four
+  properties. This is the **fifth** hand-written figure in this orbit to age.
+- *"Zero publish a mode"* — **holds, and on a bigger corpus**: 0 of 66, measured.
+- *"The other three questions … went the other way"* — **not supported as written.** Measured:
+  distribution **15 yes / 51 no**, exceedance **21 yes / 45 no**, population **53 yes / 13 no**.
+  Only population went the other way; two of the three are still mostly *no*. On the charitable
+  reading ("they are not zero like mode") it is a narrated number with nothing behind it, which
+  `AGENTS.md` counts as the same defect. The measured split is the more interesting line anyway.
+
+The route is the one the audit-complete post already used — copy and card generated from
+`engine.source_audit` rather than typed. **Any new guard pinning that copy is bound by the rule
+adopted today**, which is why this was sequenced second: writing it first would have meant writing
+a document-reading guard under the old bar.
+
+*Two status facts to fix while in there, both already overtaken by events.* The draft's header
+still reads 🔴 PARKED pending the owner's outside-activity position — but publishing
+resumed on **2026-11-14** when the audit-complete claim went out, so the hold is a stale label
+rather than a live state. And this file justifies the post as *"the only lever that could move an
+ADR-0012 metric off zero"*, which is spent: the registry retired on its own criterion on
+2026-11-01 (ADR-0025) and there is no metric left to move. The post's remaining case is product
+credibility, and it should be decided on that. **On the conflict axis the post is clean by
+construction** — ADR-0020's excluded publisher is absent from the corpus, so the post publishes
+nothing about them; its sharp fact is IBM's. The outside-activity declaration remains the owner's
+and remains unmade.
+
+⚠️ *This paragraph named that publisher in its first draft, and
+`test_no_withheld_name_appears_in_any_public_file` failed the suite on it.* The name is withheld
+under ADR-0020 precisely so that nothing in this repo publishes it, and `docs/internal/` is
+internal by convention only — it is committed, so it is public. Worth recording on the day the
+mutation rule was adopted: a guard with teeth caught a disclosure defect that the author's own
+review had just walked past, which is the same 3-for-3 pattern the rule was built on, this time
+with the guard already in place and working.
+
+**QUEUED 2026-11-25 — the retro mutation audit of existing document-reading guards.** Explicitly
+*not* a blocker on the rule, which binds new guards only. Scope, counted 2026-11-25 and
+reproducible rather than remembered:
+
+- **12** test files read a Markdown document directly —
+  `grep -rl -E 'read_text\(\)|open\(.*\.md' tests/*.py`
+- **32** read or merely name one — the union of that with ``grep -rl -E '\.md["'"'"']' tests/*.py``
+
+The audit starts at the 12. *The first count written for this was **24**, from a looser grep that
+also matched a `__pycache__` entry; it was wrong within the hour of being typed and is corrected
+here rather than edited away — and it happened inside the very item about guarding numbers.* The
+base rate when anyone has actually probed a guard is **3 for 3 toothless**, so this is likely to
+find real defects.
 
 **Withdrawn as publishing material 2026-10-22, both confession genre:** the front-door finding
 (#204) and the kill criterion firing. Both still happened and both are recorded; neither is a
@@ -1811,3 +1934,22 @@ shards are now source-backed. This is the Sunday post.
   contains a date somewhere, not that the claim carries its own. Now scoped to the claim's own
   sentence, and all six mutations are caught. **This is the second time in two days that a guard
   was weaker than it read, and both were found by mutation rather than by review.**
+
+- 2026-11-25 — **Three decisions, one of them built: the mutation rule is adopted and tooled.**
+  The queue was empty, so the session took the three *Action owed* items one at a time rather than
+  reaching for work. (1) The mutation rule is adopted, narrow and prospective, homed in `AGENTS.md`
+  rather than `CONTRIBUTING.md` — a change of mind from how the question was framed, because all
+  three instances were written by this project and contributors do not produce this defect class.
+  `engine/mutation.py` + `scripts/mutation_probe.py` make it a tool instead of a remembered rule,
+  and it was verified against the real 2026-11-22 guard in both forms (TOOTHLESS reverted,
+  HAS_TEETH scoped), not only a fixture. No ADR, recorded as a declined ADR on #219's precedent.
+  (2) The mode post will have its figures **generated**, not hand-patched a second time: it says 65
+  where the corpus reads 66 of 76, and its *"the other three went the other way"* line is wrong for
+  two of the three (distribution 15/51, exceedance 21/45, population 53/13). *Zero publish a mode*
+  holds at 0 of 66. (3) The 10 unobtainable sources are demoted off *Action owed* to *Standing* —
+  their stated reason for staying had been false since M1 closed 2026-09-27. **Two of this
+  session's own numbers were wrong and are corrected in place rather than edited away**, and a
+  committed guard caught the worse one: the queued block named the publisher ADR-0020 withholds,
+  and `test_no_withheld_name_appears_in_any_public_file` failed the suite on it. `docs/internal/`
+  is internal by convention only — it is committed, so it is public. Review had just walked past
+  it, on the day a rule was adopted on the evidence that review finds none of these.
